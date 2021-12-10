@@ -14,6 +14,7 @@ detection:
     Workstation: '*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3) | count(TargetUserName)
     by Workstation > 3
+  timeframe: 24h
 falsepositives:
 - Terminal servers
 - Jump servers

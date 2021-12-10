@@ -12,10 +12,10 @@ detection:
   SELECTION_3:
     EventID: 4663
   SELECTION_4:
-    ObjectName: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone\NonPackaged*'
-  SELECTION_5:
-    ObjectName: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam\NonPackaged*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 or SELECTION_5))
+    ObjectName:
+    - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone\NonPackaged*'
+    - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam\NonPackaged*'
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4)
 falsepositives:
 - Unknown
 id: 8cd538a4-62d5-4e83-810b-12d41e428d6e

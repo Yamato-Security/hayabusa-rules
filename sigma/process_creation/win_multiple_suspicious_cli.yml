@@ -48,6 +48,7 @@ detection:
     - '*icacls.exe*'
     - '*diskpart.exe*'
   condition: (SELECTION_1 and SELECTION_2) | count() by MachineName > 5
+  timeframe: 5m
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

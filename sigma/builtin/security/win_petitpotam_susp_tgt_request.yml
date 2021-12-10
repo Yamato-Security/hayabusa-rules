@@ -21,8 +21,8 @@ detection:
     IpAddress: ::1
   SELECTION_5:
     CertThumbprint: ''
-  condition: (((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
-    and  not (SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)
+    or (SELECTION_5)))
 falsepositives:
 - False positives are possible if the environment is using certificates for authentication.
   We recommend filtering Account_Name to the Domain Controller computer accounts.

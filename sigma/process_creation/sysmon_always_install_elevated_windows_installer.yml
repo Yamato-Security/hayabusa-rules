@@ -9,23 +9,29 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
+    Image: '*\Windows\Installer\\*'
+  SELECTION_3:
+    Image: '*msi*'
+  SELECTION_4:
+    Image:
+    - '*tmp'
+  SELECTION_5:
     User:
     - NT AUTHORITY\SYSTEM*
     - AUTORITE NT\Sys*
-  SELECTION_3:
-    Image: '*\Windows\Installer\\*'
-  SELECTION_4:
-    Image: '*msi*'
-  SELECTION_5:
-    Image:
-    - '*tmp'
   SELECTION_6:
     Image:
     - '*\msiexec.exe'
   SELECTION_7:
+    User:
+    - NT AUTHORITY\SYSTEM*
+    - AUTORITE NT\Sys*
+  SELECTION_8:
     IntegrityLevel: System
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7)))
+  SELECTION_9:
+    CommandLine: '*\system32\msiexec.exe /V'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or ((SELECTION_6 and SELECTION_7 and SELECTION_8) and  not (SELECTION_9))))
 falsepositives:
 - System administrator Usage
 - Penetration test
@@ -38,7 +44,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/08/26
+modified: 2021/12/09
 references:
 - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-48-638.jpg
 status: experimental

@@ -14,6 +14,7 @@ detection:
     IpAddress: '-'
   condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3)) | count(TargetUserName)
     by IpAddress > 10
+  timeframe: 24h
 falsepositives:
 - Terminal servers
 - Jump servers

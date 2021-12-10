@@ -10,6 +10,7 @@ detection:
   SELECTION_1:
     EventID: 4698
   condition: SELECTION_1 | count() by TaskName < 5
+  timeframe: 7d
 falsepositives:
 - Software installation
 - Software updates

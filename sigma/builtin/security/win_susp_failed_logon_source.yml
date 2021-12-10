@@ -38,8 +38,8 @@ detection:
     IpAddress:
     - fe80::*
     - fc00::*
-  condition: (SELECTION_1 and  not ((SELECTION_2 or SELECTION_3 or SELECTION_4 or
-    SELECTION_5)))
+  condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3) or (SELECTION_4
+    or SELECTION_5)))
 falsepositives:
 - Legitimate logon attempts over the internet
 - IPv4-to-IPv6 mapped IPs

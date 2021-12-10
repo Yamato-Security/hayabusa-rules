@@ -12,6 +12,7 @@ detection:
   SELECTION_2:
     EventID: 7045
   condition: (SELECTION_1 and SELECTION_2) | count() by ServiceName < 5
+  timeframe: 7d
 falsepositives:
 - Software installation
 - Software updates

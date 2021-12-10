@@ -9,15 +9,14 @@ detection:
   SELECTION_1:
     EventID: 4616
   SELECTION_2:
-    ProcessName: C:\Program Files\VMware\VMware Tools\vmtoolsd.exe
+    ProcessName:
+    - C:\Program Files\VMware\VMware Tools\vmtoolsd.exe
+    - C:\Windows\System32\VBoxService.exe
   SELECTION_3:
-    ProcessName: C:\Windows\System32\VBoxService.exe
-  SELECTION_4:
     ProcessName: C:\Windows\System32\svchost.exe
-  SELECTION_5:
+  SELECTION_4:
     SubjectUserSid: S-1-5-19
-  condition: (SELECTION_1 and  not (((SELECTION_2 or SELECTION_3) or (SELECTION_4
-    and SELECTION_5))))
+  condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3 and SELECTION_4)))
 falsepositives:
 - HyperV or other virtualization technologies with binary not listed in filter portion
   of detection

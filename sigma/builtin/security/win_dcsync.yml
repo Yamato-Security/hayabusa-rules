@@ -19,8 +19,8 @@ detection:
     - MSOL_*
   SELECTION_5:
     SubjectUserName: '*$'
-  condition: ((((SELECTION_1 and SELECTION_2) and  not (SELECTION_3)) and  not (SELECTION_4))
-    and  not (SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4)
+    or (SELECTION_5)))
 falsepositives:
 - Valid DC Sync that is not covered by the filters; please report
 - Local Domain Admin account used for Azure AD Connect
