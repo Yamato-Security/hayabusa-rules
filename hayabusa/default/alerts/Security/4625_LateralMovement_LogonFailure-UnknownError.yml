@@ -17,12 +17,13 @@ detection:
         Channel: Security
         EventID: 4625
     filter:
-        - SubStatus: "0xc0000064"
-        - SubStatus: "0xc000006a"
+        - SubStatus: "0xc0000064"   #Non-existent user
+        - SubStatus: "0xc000006a"   #Wrong password
     condition: selection and not filter
 falsepositives:
     - normal system usage
 tags:
 references:
 sample-evtx: ./sample-evtx/DeepBlueCLI/smb-password-guessing-security.evtx
+logsource: default
 ruletype: Hayabusa

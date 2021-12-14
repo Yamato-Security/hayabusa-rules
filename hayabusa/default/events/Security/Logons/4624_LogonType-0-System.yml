@@ -17,9 +17,11 @@ detection:
         Channel: Security
         EventID: 4624
         LogonType: 0
+    condition: selection
 falsepositives:
     - normal system usage
 tags:
 references:
 sample-evtx: 
+logsource: default
 ruletype: Hayabusa

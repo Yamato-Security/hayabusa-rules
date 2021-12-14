@@ -17,7 +17,7 @@ detection:
         Channel: Security
         EventID: 4720
     filter:
-        TargetUserName|endswith: "$"
+        TargetUserName|endswith: "$" #Filter out machine/computer accounts
     condition: selection and not filter
 falsepositives:
     - system administrator
@@ -27,4 +27,5 @@ tags:
 references:
     - https://attack.mitre.org/techniques/T1136/001/
 sample-evtx: ./sample-evtx/DeepBlueCLI/new-user-security.evtx
+logsource: default
 ruletype: Hayabusa

@@ -16,9 +16,11 @@ detection:
     selection:
         Channel: Security
         EventID: 4768
+    condition: selection
 falsepositives:
     - normal system usage
 tags:
 references:
 sample-evtx: 
+logsource: default
 ruletype: Hayabusa
