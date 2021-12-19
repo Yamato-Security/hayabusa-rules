@@ -13,7 +13,7 @@ id: 7616e857-8e41-4976-bc21-811d122b9fc9
 level: medium
 status: stable
 detection:
-    selection_basic:
+    selection_basic_info:
         Channel: Security
         EventID: 4648
     selection_TargetUserIsComputerAccount:
@@ -31,7 +31,7 @@ detection:
     selection_SuspiciousProcess:
         - ProcessName|endswith: "powershell.exe"
         - ProcessName|endswith: "WMIC.exe"
-    condition: selection_basic and selection_SuspiciousProcess and not (selection_TargetUserIsComputerAccount 
+    condition: selection_basic_info and selection_SuspiciousProcess and not (selection_TargetUserIsComputerAccount 
                and not filter_SubjectUserIsComputerAccount) and not filter_SystemAccounts and not filter_UsersAndTargetServerAreComputerAccounts
 falsepositives:
     - normal system usage

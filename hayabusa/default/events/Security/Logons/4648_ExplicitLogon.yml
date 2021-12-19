@@ -22,7 +22,7 @@ id: 8c1899fe-493d-4faf-aae1-0853a33a3278
 level: informational
 status: stable
 detection:
-    selection_basic:
+    selection_basic_info:
         Channel: Security
         EventID: 4648
     selection_TargetUserIsComputerAccount:
@@ -40,7 +40,7 @@ detection:
     filter_SystemAccounts:
         TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" #Filter out default Desktop Windows Manager and User Mode Driver Framework accounts
         IpAddress: "-"                                  #Don't filter if the IP address is remote to catch attackers who created backdoor accounts that look like DWM-12, etc..
-    condition: selection_basic and not (selection_TargetUserIsComputerAccount and not filter_SubjectUserIsComputerAccount) and not filter_SystemAccounts 
+    condition: selection_basic_info and not (selection_TargetUserIsComputerAccount and not filter_SubjectUserIsComputerAccount) and not filter_SystemAccounts 
                and not filter_UsersAndTargetServerAreComputerAccounts and not filter_SuspiciousProcess
 falsepositives:
     - normal system usage
