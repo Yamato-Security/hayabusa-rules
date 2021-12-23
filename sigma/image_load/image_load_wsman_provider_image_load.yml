@@ -30,6 +30,7 @@ detection:
     CommandLine:
     - '*svchost.exe -k netsvcs -p -s BITS*'
     - '*svchost.exe -k GraphicsPerfSvcGroup -s GraphicsPerfSvc*'
+    - '*svchost.exe -k NetworkService -p -s Wecsvc*'
   SELECTION_8:
     Image: C:\Windows\Microsoft.NET\Framework64\\*
   SELECTION_9:
@@ -43,7 +44,7 @@ level: medium
 logsource:
   category: image_load
   product: windows
-modified: 2021/12/03
+modified: 2021/12/16
 references:
 - https://twitter.com/chadtilbury/status/1275851297770610688
 - https://bohops.com/2020/05/12/ws-management-com-another-approach-for-winrm-lateral-movement/

@@ -43,9 +43,13 @@ detection:
   SELECTION_5:
     Image: '*Visual Studio*'
   SELECTION_6:
-    CommandLine: '*-k LocalSystemNetworkRestricted*'
+    CommandLine:
+    - '*-k LocalSystemNetworkRestricted*'
+    - '*-k UnistackSvcGroup -s WpnUserService*'
   SELECTION_7:
-    CommandLine: C:\WINDOWS\winsxs\*\TiWorker.exe -Embedding
+    CommandLine:
+    - C:\WINDOWS\winsxs\*\TiWorker.exe -Embedding
+    - C:\Windows\system32\svchost.exe -k netsvcs -p -s wuauserv
   condition: (SELECTION_1 and ((SELECTION_2 and (SELECTION_3 or SELECTION_4)) and  not
     (SELECTION_5 or SELECTION_6)) and  not (SELECTION_7))
 falsepositives:
@@ -60,7 +64,7 @@ level: high
 logsource:
   category: image_load
   product: windows
-modified: 2021/12/05
+modified: 2021/12/16
 references:
 - https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump
 - https://www.pinvoke.net/default.aspx/dbghelp/MiniDumpWriteDump.html

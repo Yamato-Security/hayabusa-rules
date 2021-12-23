@@ -1,0 +1,46 @@
+
+title: Suspicious Get Information for AD Groups or DoesNotRequirePreAuth User
+ruletype: Sigma
+author: frack113
+date: 2021/12/15
+description: "Adversaries may attempt to find domain-level groups and permission settings.\n\
+  The knowledge of domain-level permission groups can help adversaries determine which\
+  \ groups exist and which users belong to a particular group.\nAdversaries may use\
+  \ this information to determine which users have elevated permissions, such as domain\
+  \ administrators. \n"
+detection:
+  SELECTION_1:
+    Payload: '*get-ADPrincipalGroupMembership*'
+  SELECTION_10:
+    ContextInfo: '*DoesNotRequirePreAuth*'
+  SELECTION_2:
+    ContextInfo: '*get-ADPrincipalGroupMembership*'
+  SELECTION_3:
+    Payload: '*get-aduser*'
+  SELECTION_4:
+    Payload: '*-f *'
+  SELECTION_5:
+    Payload: '*-pr *'
+  SELECTION_6:
+    Payload: '*DoesNotRequirePreAuth*'
+  SELECTION_7:
+    ContextInfo: '*get-aduser*'
+  SELECTION_8:
+    ContextInfo: '*-f *'
+  SELECTION_9:
+    ContextInfo: '*-pr *'
+  condition: (SELECTION_1 or SELECTION_2 or (SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10))
+falsepositives:
+- administrator script
+id: 815bfc17-7fc6-4908-a55e-2f37b98cedb4
+level: low
+logsource:
+  category: ps_module
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1069.002/T1069.002.md
+status: experimental
+tags:
+- attack.discovery
+- attack.t1069.001

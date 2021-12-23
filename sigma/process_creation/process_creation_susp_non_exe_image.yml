@@ -9,11 +9,27 @@ description: Checks whether the image specified in a process creation event does
 detection:
   SELECTION_1:
     EventID: 1
+  SELECTION_10:
+    Image: '*.dat'
   SELECTION_2:
     Image: '*.exe'
   SELECTION_3:
     Image|re: ^$
-  condition: (SELECTION_1 and  not (SELECTION_2) and  not (SELECTION_3))
+  SELECTION_4:
+    Image: C:\Windows\Installer\MSI*
+  SELECTION_5:
+    ParentImage: C:\ProgramData\Avira\\*
+  SELECTION_6:
+    Image: C:\Windows\Temp\\*
+  SELECTION_7:
+    Image: '*\avira_speedup_setup_update.tmp'
+  SELECTION_8:
+    Image: '*.scr'
+  SELECTION_9:
+    Image: '*NVIDIA\NvBackend\\*'
+  condition: (SELECTION_1 and  not (SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4)
+    or (SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9
+    and SELECTION_10)))
 falsepositives:
 - unknown
 id: c09dad97-1c78-4f71-b127-7edb2b8e491a
@@ -21,6 +37,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2021/12/21
 references:
 - https://pentestlaboratories.com/2021/12/08/process-ghosting/
 status: experimental

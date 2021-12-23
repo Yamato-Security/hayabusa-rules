@@ -21,8 +21,13 @@ detection:
     - '*Microsoft\Windows\UpdateOrchestrator*'
     - '*Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTask\Index*'
     - '*Microsoft\Windows\Flighting\OneSettings\RefreshCache\Index*'
+  SELECTION_7:
+    Image: C:\WINDOWS\system32\svchost.exe
+  SELECTION_8:
+    TargetObject:
+    - '*Microsoft\Windows\WindowsUpdate\Scheduled Start\Index*'
   condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5)
-    and  not (SELECTION_6))
+    and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
@@ -30,7 +35,7 @@ level: medium
 logsource:
   category: registry_event
   product: windows
-modified: 2021/12/06
+modified: 2021/12/18
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 status: experimental

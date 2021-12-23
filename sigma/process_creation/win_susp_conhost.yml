@@ -10,7 +10,9 @@ detection:
     EventID: 1
   SELECTION_2:
     ParentImage: '*\conhost.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  SELECTION_3:
+    Provider_Name: SystemTraceProvider-Process
+  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
 falsepositives:
 - Unlikely, conhost is a child less process
 fields:
@@ -22,7 +24,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/06/27
+modified: 2021/12/17
 references:
 - http://www.hexacorn.com/blog/2020/05/25/how-to-con-your-host/
 status: experimental

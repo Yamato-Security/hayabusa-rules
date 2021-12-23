@@ -77,6 +77,7 @@ detection:
   SELECTION_4:
     SourceImage:
     - C:\WINDOWS\system32\taskmgr.exe
+    - C:\Windows\System32\perfmon.exe
   SELECTION_5:
     SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
   SELECTION_6:
@@ -107,7 +108,7 @@ level: high
 logsource:
   category: process_access
   product: windows
-modified: 2021/12/04
+modified: 2021/12/10
 references:
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html

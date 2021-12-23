@@ -39,6 +39,7 @@ detection:
     - '*\GitHubDesktop\Update.exe'
     - '*\RuntimeBroker.exe'
     - '*\backgroundTaskHost.exe'
+    - '*\GitHubDesktop.exe'
   SELECTION_12:
     SourceImage:
     - C:\Program Files (x86)\\*
@@ -58,6 +59,18 @@ detection:
   SELECTION_14:
     TargetImage:
     - C:\Windows\System32\RuntimeBroker.exe
+  SELECTION_15:
+    TargetImage:
+    - '*\Microsoft VS Code\Code.exe'
+  SELECTION_16:
+    CallTrace:
+    - '*|C:\WINDOWS\System32\RPCRT4.dll+*'
+  SELECTION_17:
+    SourceImage:
+    - C:\WINDOWS\Explorer.EXE
+  SELECTION_18:
+    TargetImage:
+    - C:\WINDOWS\system32\backgroundTaskHost.exe
   SELECTION_2:
     CallTrace: '*C:\WINDOWS\SYSTEM32\ntdll.dll+*'
   SELECTION_3:
@@ -76,7 +89,8 @@ detection:
     CallTrace: '*UNKNOWN*'
   condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
     or (SELECTION_6 and SELECTION_7 and SELECTION_8)) or (SELECTION_9 and SELECTION_10))
-    and  not (SELECTION_11 or SELECTION_12 or SELECTION_13 or SELECTION_14))
+    and  not ((SELECTION_11 or SELECTION_12 or SELECTION_13 or SELECTION_14 or SELECTION_15
+    or SELECTION_16) or (SELECTION_17 and SELECTION_18)))
 falsepositives:
 - SysInternals Process Explorer
 fields:
@@ -90,7 +104,7 @@ level: medium
 logsource:
   category: process_access
   product: windows
-modified: 2021/12/07
+modified: 2021/12/22
 references:
 - https://azure.microsoft.com/en-ca/blog/detecting-in-memory-attacks-with-sysmon-and-azure-security-center/
 status: experimental
