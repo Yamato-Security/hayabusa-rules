@@ -1,0 +1,39 @@
+name: Pipline for update Sigma rule
+# on: push
+
+jobs:
+  updateSigmaRule:
+    name: updateSigmaRule
+    runs-on: ubuntu-20.04
+    steps:
+      - name: clone hayabusa-repo
+        uses: actions/checkout@v2
+
+      - name: clone sigmac
+        uses: actions/checkout@v2
+        with:
+          repository: SigmaHQ/sigma
+          path: sigma-repo
+
+      - name: get Hayabusa backend for sigmac
+        run: |
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/convert.sh > sigma-repo/tools/sigma/convert.sh
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/splitter.py > sigma-repo/splitter.py
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/hayabusa.py > sigma-repo/hayabusa.py
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: setup Python for use script
+        run: |
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/requirements.txt > requirements.txt
+          cat requirements.txt
+          pip install -r requirements.txt
+
+      - name: test echo
+        run: |
+          cd sigma-repo
+          ls
+          python -V
