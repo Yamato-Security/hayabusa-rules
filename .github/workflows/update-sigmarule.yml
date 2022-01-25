@@ -54,10 +54,9 @@ jobs:
           if [[ "$(git status)" =~ "nothing to commit," ]]; then
             echo "change_exist=false" >> $GITHUB_ENV
           fi
-          git status
 
       - name: Create Pull Request
-        if: steps.create-text.outputs.change_exist == 'true'
+        if: env.change_exist == 'true'
         id: cpr
         uses: peter-evans/create-pull-request@v3
         with:
@@ -69,7 +68,7 @@ jobs:
           add-path:
             sigma/*
           body: |
-            Update report
+            ${{ env.action_date }} Update report
 
             <details><summary>New files</summary>
             ${{ steps.create-text.outputs.git_new }}
