@@ -43,7 +43,6 @@ jobs:
         id: create-text
         continue-on-error: true
         run: |
-          echo test >> test.txt
           echo "action_date=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "change_exist=true" >> $GITHUB_ENV
           git_new=$(git status -s | grep "??" | sed "s/?? /- /g" | sed -z 's/\n/\\n/g')
@@ -55,6 +54,7 @@ jobs:
           if [[ "$(git status)" =~ "nothing to commit," ]]; then
             echo "change_exist=false" >> $GITHUB_ENV
           fi
+          git status
 
       - name: Create Pull Request
         if: steps.create-text.outputs.change_exist == 'true'
