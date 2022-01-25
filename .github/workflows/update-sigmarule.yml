@@ -1,5 +1,5 @@
 name: Pipline for update Sigma rule
-# on: push
+on: push
 
 jobs:
   updateSigmaRule:
@@ -17,9 +17,9 @@ jobs:
 
       - name: get Hayabusa backend for sigmac
         run: |
-          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/convert.sh > sigma-repo/tools/sigma/convert.sh
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/convert.sh > sigma-repo/convert.sh
           curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/splitter.py > sigma-repo/splitter.py
-          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/hayabusa.py > sigma-repo/hayabusa.py
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/hayabusa.py > sigma-repo/tools/sigma/backends/hayabusa.py
 
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -32,8 +32,55 @@ jobs:
           cat requirements.txt
           pip install -r requirements.txt
 
-      - name: test echo
+      - name: Update sigma rules
         run: |
           cd sigma-repo
-          ls
-          python -V
+          sh convert.sh
+          rm -rf ../sigma
+          mv hayabusa_rules/rules/windows ../sigma
+
+      - name: Create Text
+        id: create-text
+        continue-on-error: true
+        run: |
+          echo test >> test.txt
+          echo "action_date=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
+          echo "change_exist=true" >> $GITHUB_ENV
+          git_new=$(git status -s | grep "??" | sed "s/?? /- /g" | sed -z 's/\n/\\n/g')
+          git_mod=$(git status | grep "modified:" | sed -e "s/\s*modified:\s*/- /g" | sed -z 's/\n/\\n/g')
+          git_del=$(git status | grep "deleted:"  | sed -e "s/\s*deleted:\s*/- /g" | sed -z 's/\n/\\n/g')
+          echo "::set-output name=git_new::$git_new"
+          echo "::set-output name=git_mod::$git_mod"
+          echo "::set-output name=git_del::$git_del"
+          if [[ "$(git status)" =~ "nothing to commit," ]]; then
+            echo "change_exist=false" >> $GITHUB_ENV
+          fi
+
+      - name: Create Pull Request
+        if: steps.create-text.outputs.change_exist == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Sigma Rule Update (${{ env.action_date }})
+          branch: update-sigmarule
+          delete-branch: true
+          title: '[Auto] Sigma Update report'
+          add-path:
+            sigma/*
+          body: |
+            Update report
+
+            <details><summary>New files</summary>
+            ${{ steps.create-text.outputs.git_new }}
+            </details>
+
+            <details><summary>Modified files</summary>
+            ${{ steps.create-text.outputs.git_mod }}
+            </details>
+
+            <details><summary>Deleted files</summary>
+            ${{ steps.create-text.outputs.git_del }}
+            </details>
+          assignees: itiB
+          reviewers: itiB
