@@ -13,12 +13,15 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
+    EventType: SetValue
+  SELECTION_5:
     TargetObject:
     - '*\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\UserAuthentication'
     - '*\CurrentControlSet\Control\Terminal Server\fDenyTSConnections'
-  SELECTION_5:
+  SELECTION_6:
     Details: DWORD (0x00000000)
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 fields:
@@ -31,7 +34,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/11/27
+modified: 2022/01/13
 references:
 - https://threathunterplaybook.com/notebooks/windows/05_defense_evasion/WIN-190407183310.html
 status: test

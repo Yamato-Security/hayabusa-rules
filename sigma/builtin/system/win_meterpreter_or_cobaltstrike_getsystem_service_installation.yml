@@ -24,6 +24,8 @@ detection:
     ImagePath: '*.dll,a*'
   SELECTION_17:
     ImagePath: '*/p:*'
+  SELECTION_18:
+    ImagePath: \\127.0.0.1\ADMIN$\\*
   SELECTION_2:
     EventID: 7045
   SELECTION_3:
@@ -43,7 +45,7 @@ detection:
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
     SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and
     SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14)
-    or (SELECTION_15 and SELECTION_16 and SELECTION_17)))
+    or (SELECTION_15 and SELECTION_16 and SELECTION_17) or SELECTION_18))
 falsepositives:
 - Highly unlikely
 fields:
@@ -56,13 +58,12 @@ level: critical
 logsource:
   product: windows
   service: system
-modified: 2021/11/30
+modified: 2022/01/16
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
 - https://blog.cobaltstrike.com/2014/04/02/what-happens-when-i-type-getsystem/
 status: experimental
 tags:
 - attack.privilege_escalation
-- attack.t1134
 - attack.t1134.001
 - attack.t1134.002

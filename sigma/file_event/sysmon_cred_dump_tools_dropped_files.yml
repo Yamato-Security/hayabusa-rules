@@ -36,7 +36,7 @@ detection:
     - '*\servpw64.exe'
     - '*\pwdump.exe'
     - '*\procdump64.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - Legitimate Administrator using tool for password recovery
 id: 8fbf3271-1ef6-4e94-8210-03c2317947f6
@@ -44,13 +44,12 @@ level: high
 logsource:
   category: file_event
   product: windows
-modified: 2021/11/27
+modified: 2022/01/11
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 status: test
 tags:
 - attack.credential_access
-- attack.t1003
 - attack.t1003.001
 - attack.t1003.002
 - attack.t1003.003

@@ -1,0 +1,26 @@
+
+title: Sysmon Process Hollowing Detection
+ruletype: Sigma
+author: Christopher Peacock '@securepeacock', SCYTHE '@scythe_io'
+date: 2022/01/25
+description: Detects when a memory process image does not match the disk image, indicative
+  of process hollowing.
+detection:
+  SELECTION_1:
+    EventID: 25
+  SELECTION_2:
+    Type: Image is replaced
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- There are no known false positives at this time
+id: c4b890e5-8d8c-4496-8c66-c805753817cd
+level: high
+logsource:
+  category: process_tampering
+  product: windows
+references:
+- https://twitter.com/SecurePeacock/status/1486054048390332423?s=20
+status: experimental
+tags:
+- attack.process_injection
+- attack.t1055.012

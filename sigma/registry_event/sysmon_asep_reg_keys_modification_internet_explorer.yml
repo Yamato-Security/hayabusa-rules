@@ -13,18 +13,20 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
+    EventType: SetValue
+  SELECTION_5:
     TargetObject:
     - '*\Software\Wow6432Node\Microsoft\Internet Explorer*'
     - '*\Software\Microsoft\Internet Explorer*'
-  SELECTION_5:
+  SELECTION_6:
     TargetObject:
     - '*\Toolbar*'
     - '*\Extensions*'
     - '*\Explorer Bars*'
-  SELECTION_6:
+  SELECTION_7:
     Details: (Empty)
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5)
-    and  not (SELECTION_6))
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5
+    and SELECTION_6) and  not (SELECTION_7))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
   keys for legitimate reason
@@ -39,7 +41,7 @@ level: medium
 logsource:
   category: registry_event
   product: windows
-modified: 2021/12/05
+modified: 2022/01/13
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

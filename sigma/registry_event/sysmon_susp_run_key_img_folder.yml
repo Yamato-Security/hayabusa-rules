@@ -13,10 +13,12 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
+    EventType: SetValue
+  SELECTION_5:
     TargetObject:
     - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\\*'
     - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\\*'
-  SELECTION_5:
+  SELECTION_6:
     Details:
     - '*C:\Windows\Temp\\*'
     - '*C:\$Recycle.bin\\*'
@@ -25,13 +27,13 @@ detection:
     - '*C:\Users\Default\\*'
     - '*C:\Users\Desktop\\*'
     - '*\AppData\Local\Temp\\*'
-  SELECTION_6:
+  SELECTION_7:
     Details:
     - '%Public%\\*'
     - wscript*
     - cscript*
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and (SELECTION_5
-    or SELECTION_6))
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5)
+    and (SELECTION_6 or SELECTION_7))
 falsepositives:
 - Software using weird folders for updates
 fields:
@@ -41,11 +43,10 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/10/30
+modified: 2022/01/13
 references:
 - https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html
 status: experimental
 tags:
 - attack.persistence
-- attack.t1060
 - attack.t1547.001

@@ -1,0 +1,35 @@
+
+title: Disable Windows IIS HTTP Logging
+ruletype: Sigma
+author: frack113
+date: 2022/01/09
+description: Disables HTTP logging on a Windows IIS web server as seen by Threat Group
+  3390 (Bronze Union)
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image: '*\appcmd.exe'
+  SELECTION_3:
+    CommandLine: '*set*'
+  SELECTION_4:
+    CommandLine: '*config*'
+  SELECTION_5:
+    CommandLine: '*/section:httplogging*'
+  SELECTION_6:
+    CommandLine: '*/dontLog:true*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
+falsepositives:
+- Unknown
+id: e4ed6030-ffe5-4e6a-8a8a-ab3c1ab9d94e
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.002/T1562.002.md#atomic-test-1---disable-windows-iis-http-logging
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.002

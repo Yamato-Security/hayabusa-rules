@@ -3,7 +3,7 @@ title: PurpleSharp Indicator
 ruletype: Sigma
 author: Florian Roth
 date: 2021/06/18
-description: Detect
+description: Detects the execution of the PurpleSharp adversary simulation tool
 detection:
   SELECTION_1:
     EventID: 1
@@ -12,8 +12,7 @@ detection:
     - '*xyz123456.exe*'
     - '*PurpleSharp*'
   SELECTION_3:
-    OriginalFileName:
-    - PurpleSharp.exe
+    OriginalFileName: PurpleSharp.exe
   condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - Unlikely
@@ -22,7 +21,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/07/06
+modified: 2022/01/12
 references:
 - https://github.com/mvelazc0/PurpleSharp
 status: experimental

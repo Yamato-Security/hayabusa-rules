@@ -16,6 +16,7 @@ detection:
     - '*\php-cgi.exe'
     - '*\tomcat.exe'
     - '*\UMWorkerProcess.exe'
+    - '*\ws_TomcatService.exe'
   SELECTION_3:
     Image:
     - '*\cmd.exe'
@@ -34,10 +35,9 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/01/06
 status: test
 tags:
 - attack.persistence
 - attack.t1505.003
-- attack.privilege_escalation
 - attack.t1190

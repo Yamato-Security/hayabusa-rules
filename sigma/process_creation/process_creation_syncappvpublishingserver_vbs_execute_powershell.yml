@@ -10,7 +10,7 @@ detection:
   SELECTION_2:
     CommandLine: '*\SyncAppvPublishingServer.vbs*'
   SELECTION_3:
-    CommandLine: '*"n;*'
+    CommandLine: '*"\n;*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -24,7 +24,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/09/12
+modified: 2022/01/24
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1216/T1216.md
 - https://lolbas-project.github.io/lolbas/Binaries/Syncappvpublishingserver/

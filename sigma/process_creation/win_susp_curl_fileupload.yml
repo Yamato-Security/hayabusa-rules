@@ -10,7 +10,12 @@ detection:
   SELECTION_2:
     Image: '*\curl.exe'
   SELECTION_3:
-    CommandLine: '* -F *'
+    CommandLine:
+    - '* -F *'
+    - '* -T *'
+    - '* --upload-file *'
+    - '* -d *'
+    - '* --data *'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Scripts created by developers and admins
@@ -22,11 +27,14 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/01/22
 references:
 - https://twitter.com/d1r4c/status/1279042657508081664
 - https://medium.com/@petehouston/upload-files-with-curl-93064dcccc76
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1105/T1105.md#atomic-test-19---curl-upload-file
+- https://curl.se/docs/manpage.html
 status: test
 tags:
 - attack.exfiltration
 - attack.t1567
+- attack.t1105

@@ -10,8 +10,7 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine:
-    - copy /y C:\windows\system32\cmd.exe C:\windows\system32\sethc.exe
+    CommandLine: copy /y C:\windows\system32\cmd.exe C:\windows\system32\sethc.exe
   condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
@@ -23,12 +22,11 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/06/11
+modified: 2022/01/11
 references:
 - https://www.fireeye.com/blog/threat-research/2017/03/apt29_domain_frontin.html
 - https://www.clearskysec.com/wp-content/uploads/2020/02/ClearSky-Fox-Kitten-Campaign-v1.pdf
 status: experimental
 tags:
-- attack.t1015
 - attack.t1546.008
 - attack.privilege_escalation

@@ -1,7 +1,7 @@
 
 title: Suspicious XOR Encoded PowerShell Command Line
 ruletype: Sigma
-author: Sami Ruohonen, Harish Segar (improvement)
+author: Sami Ruohonen, Harish Segar (improvement), Tim Shelton
 date: 2018/09/05
 description: Detects suspicious powershell process which includes bxor command, alternative
   obfuscation method to b64 encoded commands.
@@ -15,7 +15,10 @@ detection:
   SELECTION_4:
     CommandLine:
     - '*bxor*'
-    - '*join*'
+    - '*-join *'
+    - "*-join'*"
+    - '*-join"*'
+    - '*-join`*'
     - '*char*'
   SELECTION_5:
     ParentImage:
@@ -29,11 +32,10 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/01/10
 status: test
 tags:
 - attack.defense_evasion
-- attack.t1086
 - attack.t1059.001
 - attack.t1140
 - attack.t1027

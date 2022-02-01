@@ -26,6 +26,8 @@ detection:
   SELECTION_8:
     TargetObject:
     - '*Microsoft\Windows\WindowsUpdate\Scheduled Start\Index*'
+    - '*Microsoft\Windows\PushToInstall\Registration\Index*'
+    - '*Microsoft\Windows\GroupPolicy\{*}\Index*'
   condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5)
     and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
@@ -35,7 +37,7 @@ level: medium
 logsource:
   category: registry_event
   product: windows
-modified: 2021/12/18
+modified: 2022/01/05
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 status: experimental

@@ -8,54 +8,61 @@ detection:
   SELECTION_1:
     EventID: 12
   SELECTION_10:
-    Details: '*\AppData\Roaming\Dropbox\\*'
+    Details: '*\Microsoft.Teams.AddinLoader.dll*'
   SELECTION_11:
-    Details: '*\DropboxExt64.*.dll*'
+    Details: '*\AppData\Roaming\Dropbox\\*'
   SELECTION_12:
-    Details: '*TmopIEPlg.dll'
+    Details: '*\DropboxExt64.*.dll*'
   SELECTION_13:
+    Details: '*TmopIEPlg.dll'
+  SELECTION_14:
     Image:
     - C:\WINDOWS\system32\wuauclt.exe
     - C:\WINDOWS\system32\svchost.exe
-  SELECTION_14:
-    Image: '*C:\ProgramData\Microsoft\Windows Defender\Platform\\*'
   SELECTION_15:
-    Image: '*\MsMpEng.exe*'
+    Image: '*C:\ProgramData\Microsoft\Windows Defender\Platform\\*'
   SELECTION_16:
+    Image: '*\MsMpEng.exe*'
+  SELECTION_17:
     Details:
     - '*\FileRepository\nvmdi.inf*'
-  SELECTION_17:
-    Image: '*C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{*'
   SELECTION_18:
+    Image: '*C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{*'
+  SELECTION_19:
     Image: '*\setup.exe*'
   SELECTION_2:
     EventID: 13
+  SELECTION_20:
+    Image: '*\MicrosoftEdgeUpdateComRegisterShell64.exe'
+  SELECTION_21:
+    Image: C:\WINDOWS\SYSTEM32\dxdiag.exe
   SELECTION_3:
     EventID: 14
   SELECTION_4:
+    EventType: SetValue
+  SELECTION_5:
     TargetObject:
     - HKCR\CLSID\\*
     - HKCU\Software\Classes\CLSID\\*
-  SELECTION_5:
-    TargetObject: '*\InprocServer32\(Default)'
   SELECTION_6:
+    TargetObject: '*\InprocServer32\(Default)'
+  SELECTION_7:
     Details:
     - '*%%systemroot%%\system32\\*'
     - '*%%systemroot%%\SysWow64\\*'
-  SELECTION_7:
+  SELECTION_8:
     Details:
     - '*\AppData\Local\Microsoft\OneDrive\\*'
     - '*\FileCoAuthLib64.dll*'
     - '*\FileSyncShell64.dll*'
     - '*\FileSyncApi64.dll*'
-  SELECTION_8:
-    Details: '*\AppData\Local\Microsoft\TeamsMeetingAddin\\*'
   SELECTION_9:
-    Details: '*\Microsoft.Teams.AddinLoader.dll*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5)
-    and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9) or (SELECTION_10
-    and SELECTION_11) or (SELECTION_12) or (SELECTION_13) or (SELECTION_14 and SELECTION_15)
-    or (SELECTION_16) or (SELECTION_17 and SELECTION_18)))
+    Details: '*\AppData\Local\Microsoft\TeamsMeetingAddin\\*'
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5
+    and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9 and
+    SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13) or (SELECTION_14)
+    or (SELECTION_15 and SELECTION_16) or (SELECTION_17) or (SELECTION_18 and SELECTION_19
+    or SELECTION_20) or (SELECTION_21)))
 falsepositives:
 - Some installed utilities (i.e. OneDrive) may serve new COM objects at user-level
 id: a0ff33d8-79e4-4cef-b4f3-9dc4133ccd12
@@ -63,7 +70,7 @@ level: medium
 logsource:
   category: registry_event
   product: windows
-modified: 2021/12/21
+modified: 2022/01/19
 references:
 - https://www.cyberbit.com/blog/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
 - https://attack.mitre.org/techniques/T1546/015/

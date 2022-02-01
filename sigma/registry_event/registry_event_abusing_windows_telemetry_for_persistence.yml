@@ -16,8 +16,10 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
-    TargetObject: '*HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\\*'
+    EventType: SetValue
   SELECTION_5:
+    TargetObject: '*HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\\*'
+  SELECTION_6:
     Details:
     - '*.sh'
     - '*.exe'
@@ -32,7 +34,8 @@ detection:
     - '*.hta'
     - '*.msi'
     - '*.vbs'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - none
 fields:
@@ -45,7 +48,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/09/24
+modified: 2022/01/13
 references:
 - https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/
 status: experimental

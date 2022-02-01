@@ -18,7 +18,7 @@ detection:
     Image:
     - '*\System32\\*'
     - '*\SysNative\\*'
-    - '*\SysWowo64\\*'
+    - '*\SysWow64\\*'
   SELECTION_14:
     Image: '*\Mc.exe'
   SELECTION_15:
@@ -96,13 +96,12 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2020/11/28
+modified: 2022/01/28
 references:
 - http://www.hexacorn.com/blog/2016/03/10/beyond-good-ol-run-key-part-36/
 - https://countuponsecurity.com/2017/06/07/threat-hunting-in-the-enterprise-with-appcompatprocessor/
-status: experimental
+status: test
 tags:
 - attack.s0013
 - attack.defense_evasion
-- attack.t1073
 - attack.t1574.002

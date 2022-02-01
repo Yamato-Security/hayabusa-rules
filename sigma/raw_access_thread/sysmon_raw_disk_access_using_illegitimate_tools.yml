@@ -32,10 +32,6 @@ detection:
     - '*\svchost.exe'
     - '*\MsMpEng.exe'
     - '*\SearchApp.exe'
-    - '*C:\Windows\System32\taskhostw.exe'
-    - '*C:\Windows\System32\SrTasks.exe'
-    - '*C:\Windows\System32\dllhost.exe'
-    - '*C:\Windows\System32\DeviceCensus.exe'
   SELECTION_5:
     ProcessId: 4
   SELECTION_6:
@@ -46,10 +42,18 @@ detection:
     - C:\Windows\System32\backgroundTaskHost.exe
     - C:\Windows\System32\RuntimeBroker.exe
     - C:\Windows\System32\MoUsoCoreWorker.exe
+    - C:\Windows\System32\taskhostw.exe
+    - C:\Windows\System32\SrTasks.exe
+    - C:\Windows\System32\dllhost.exe
+    - C:\Windows\System32\DeviceCensus.exe
   SELECTION_7:
     Image: '*\Keybase\upd.exe'
+  SELECTION_8:
+    Image: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+  SELECTION_9:
+    Image: '*\MsMpEng.exe'
   condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3 and SELECTION_4)
-    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
+    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Legitimate Administrator using tool for raw access or ongoing forensic investigation
 fields:
@@ -62,10 +66,10 @@ level: medium
 logsource:
   category: raw_access_thread
   product: windows
-modified: 2021/12/22
+modified: 2022/01/02
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
-status: experimental
+status: test
 tags:
 - attack.defense_evasion
 - attack.t1006

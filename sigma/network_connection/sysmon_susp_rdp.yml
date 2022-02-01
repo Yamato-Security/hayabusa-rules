@@ -34,6 +34,7 @@ detection:
     - '*\System32\dns.exe'
     - '*\thor.exe'
     - '*\thor64.exe'
+    - '*\Passwordstate.exe'
   condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - Other Remote Desktop RDP tools
@@ -43,12 +44,11 @@ level: high
 logsource:
   category: network_connection
   product: windows
-modified: 2021/11/27
+modified: 2021/12/29
 references:
 - https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708
 status: test
 tags:
 - attack.lateral_movement
 - attack.t1021.001
-- attack.t1076
 - car.2013-07-002
