@@ -65,7 +65,7 @@ jobs:
           branch: update-sigmarule
           delete-branch: true
           title: '[Auto] Sigma Update report'
-          add-path:
+          add-paths:
             sigma/*
           body: |
             ${{ env.action_date }} Update report
