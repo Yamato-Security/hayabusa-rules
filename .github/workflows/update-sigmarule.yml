@@ -45,12 +45,12 @@ jobs:
         run: |
           echo "action_date=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "change_exist=true" >> $GITHUB_ENV
-          git_new=$(git status -s | grep "??" | sed "s/?? /- /g" | sed -z 's/\n/\\n/g')
-          git_mod=$(git status | grep "modified:" | sed -e "s/\s*modified:\s*/- /g" | sed -z 's/\n/\\n/g')
-          git_del=$(git status | grep "deleted:"  | sed -e "s/\s*deleted:\s*/- /g" | sed -z 's/\n/\\n/g')
-          echo "::set-output name=git_new::$git_new"
-          echo "::set-output name=git_mod::$git_mod"
-          echo "::set-output name=git_del::$git_del"
+          git_new=$(git status -s | grep "??" | sed "s/?? /- /g")
+          git_mod=$(git status | grep "modified:" | sed -e "s/\s*modified:\s*/- /g")
+          git_del=$(git status | grep "deleted:"  | sed -e "s/\s*deleted:\s*/- /g")
+          echo "::set-output name=git_new::${git_new//$'\n'/'%0A'}"
+          echo "::set-output name=git_mod::${git_mod//$'\n'/'%0A'}"
+          echo "::set-output name=git_del::${git_del//$'\n'/'%0A'}"
           if [[ "$(git status)" =~ "nothing to commit," ]]; then
             echo "change_exist=false" >> $GITHUB_ENV
           fi
@@ -71,15 +71,21 @@ jobs:
             ${{ env.action_date }} Update report
 
             <details><summary>New files</summary>
+
             ${{ steps.create-text.outputs.git_new }}
+
             </details>
 
             <details><summary>Modified files</summary>
+
             ${{ steps.create-text.outputs.git_mod }}
+
             </details>
 
             <details><summary>Deleted files</summary>
+
             ${{ steps.create-text.outputs.git_del }}
+
             </details>
           assignees: itiB
           reviewers: itiB
