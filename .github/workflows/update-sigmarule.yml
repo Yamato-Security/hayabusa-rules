@@ -1,5 +1,7 @@
 name: Pipline for update Sigma rule
-on: push
+on:
+  schedule:
+    - cron: '00 08 * * *'
 
 jobs:
   updateSigmaRule:
