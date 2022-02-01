@@ -29,15 +29,17 @@ jobs:
       - name: setup Python for use script
         run: |
           curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/requirements.txt > requirements.txt
-          cat requirements.txt
           pip install -r requirements.txt
+          rm requirements.txt
 
       - name: Update sigma rules
         run: |
-          cd sigma-repo
+          pushd sigma-repo
           sh convert.sh
           rm -rf ../sigma
           mv hayabusa_rules/rules/windows ../sigma
+          popd
+          rm -rf sigma-repo
 
       - name: Create Text
         id: create-text
@@ -65,8 +67,6 @@ jobs:
           branch: update-sigmarule
           delete-branch: true
           title: '[Auto] Sigma Update report'
-          add-paths:
-            sigma/*
           body: |
             ${{ env.action_date }} Update report
 
