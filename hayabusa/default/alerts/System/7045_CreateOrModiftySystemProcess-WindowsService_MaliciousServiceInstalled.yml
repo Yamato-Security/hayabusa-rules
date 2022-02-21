@@ -1,8 +1,8 @@
 author: Eric Conrad, Zach Mathis
 creation_date: 2020/11/08
-updated_date: 2021/11/23
+updated_date: 2022/02/07
 
-title: Malicious service installed
+title: Possibly Malicious Service Installed
 title_jp: 悪意のあるサービスがインストールされた
 details: 'Service: %ServiceName%  :  Path: %ImagePath%'
 details_jp: 'サービス: %ServiceName%  :  パス: %ImagePath%'
@@ -16,12 +16,17 @@ detection:
     selection:
         Channel: System
         EventID: 7045
-        ServiceName:
-            regexes: ./config/regex/detectlist_suspicous_services.txt
         ImagePath:
-            min_length: 1000
             allowlist: ./config/regex/allowlist_legitimate_services.txt
-    condition: selection
+    selection_SuspiciousServiceNames:
+        ServiceName:
+            - regexes: ./config/regex/detectlist_suspicous_services.txt
+            - min_length: 100
+    selection_SuspiciousPathNames:
+        ImagePath:
+            - regexes: ./config/regex/detectlist_suspicous_services.txt
+            - min_length: 300
+    condition: selection and (selection_SuspiciousServiceNames or selection_SuspiciousPathNames)
 falsepositives:
     - normal system usage
 tags:

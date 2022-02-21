@@ -1,0 +1,26 @@
+author: Zach Mathis
+creation_date: 2022/02/06
+updated_date: 2022/02/06
+
+title: Service Crashed
+title_jp: サービスがクラッシュされた
+details: 'Service: %param1%  :  Crash Count: %param2%  :  Action: %param5%'
+details_jp: 'サービス: %param1%  :  クラッシュ回数: %param2%  :  アクション: %param5%'
+description:
+description_jp: 
+
+id: d869bf31-92b3-4e21-a447-708f10156e7c
+level: low
+status: testing
+detection:
+    selection:
+       # Channel: System
+        EventID: 7031
+    condition: selection
+falsepositives:
+tags:
+    - attack.impact
+    - attack.t1499
+references:
+logsource: default
+ruletype: Hayabusa

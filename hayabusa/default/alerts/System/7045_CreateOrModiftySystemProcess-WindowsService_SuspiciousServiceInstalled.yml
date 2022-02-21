@@ -1,0 +1,32 @@
+author: Zach Mathis
+creation_date: 2022/02/06
+updated_date: 2022/02/06
+
+title: Suspicious service installed
+title_jp: 不信なサービスがインストールされた
+details: 'Service: %ServiceName%  :  Path: %ImagePath%  :  Account: %AccountName%  :  Start Type: %StartType%'
+details_jp: 'サービス: %ServiceName%  :  パス: %ImagePath%  :  アカウント: %AccountName%  :  スタートタイプ: %StartType%'
+description: A new service was installed. (Possibly malware.)
+description_jp: 新しいサービスがインストールされた。
+
+id: cc429813-21db-4019-b520-2f19648e1ef1
+level: high
+status: stable
+detection:
+    selection:
+        Channel: System
+        EventID: 7045
+    selection_cmd_in_path:
+        ImagePath|contains: cmd
+    selection_powershell_in_path:
+        ImagePath|contains: powershell
+    condition: selection and (selection_cmd_in_path or selection_powershell_in_path) 
+falsepositives:
+    - normal system usage
+tags:
+    - attack.persistence
+    - attack.t1543.003
+references:
+    - https://attack.mitre.org/techniques/T1543/003/
+logsource: default
+ruletype: Hayabusa

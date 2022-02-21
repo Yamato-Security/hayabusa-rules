@@ -2,8 +2,8 @@ author: Zach Mathis
 date: 2020/11/08
 modified: 2021/12/22
 
-title: Unknown process used a high privilege
-title_jp: 不明なプロセスが高い権限を使った
+title: Process ran with high privilege
+title_jp: プロセスが高い権限を使った
 details: 'Process: %ProcessName%  :  User: %SubjectUserName%  :  LogonID: %SubjectLogonId%'
 details_jp: 'プロセス名: %ProcessName%  :  ユーザ名: %SubjectUserName%  :  ログオンID: %SubjectLogonId%'
 description: |
@@ -31,6 +31,10 @@ detection:
         - ProcessName: C:\Windows\explorer.exe
         - ProcessName: C:\Windows\System32\SettingSyncHost.exe
         - ProcessName: C:\Windows\System32\sdiagnhost.exe
+        - ProcessName: C:\Windows\System32\dwm.exe
+        - ProcessName: C:\Windows\System32\WinSAT.exe
+        - ProcessName|endswith: ngentask.exe
+        - ProcessName: C:\Windows\System32\taskhostw.exe
         - ProcessName|startswith: C:\Program Files
         - SubjectUserName: LOCAL SERVICE
     condition: selection and not filter

@@ -1,0 +1,29 @@
+author: Zach Mathis
+date: 2022/02/05
+modified: 2022/02/05
+
+title: "Suspicious Command Line: Possible LOLBIN Abuse"
+title_jp: 
+details: 'Command Line: %CommandLine%  :  Path: %NewProcessName%  :  Process ID: %NewProcessId%  :  User: %SubjectUserName%  :  LogonID: %SubjectLogonId%'
+details_jp: 
+description: 
+description_jp: 
+
+id: 6c34b782-a5b5-4298-80f3-1918caf1f558
+level: low
+status: stable
+detection:
+    selection:
+        Channel: Security
+        EventID: 4688
+        CommandLine|contains: " " #We are not looking at GUI programs, etc... that do not have any arguments to lower false positives.
+        NewProcessName:
+            regexes: ./config/regex/LOLBAS_paths.txt
+    condition: selection
+falsepositives:
+    - normal system usage
+tags:
+references:
+sample-evtx: 
+logsource: non-default
+ruletype: Hayabusa
