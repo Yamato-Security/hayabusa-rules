@@ -1,8 +1,8 @@
 author: Eric Conrad, Zach Mathis
-creation_date: 2020/11/08
-updated_date: 2022/02/07
+date: 2020/11/08
+modified: 2022/02/07
 
-title: Event log service startup type changed to disabled
+title: Event Log Service Startup Type Changed To Disabled
 title_jp: イベントログサービスのスタートアップの種類が無効に変更された
 details: 'Old setting: %param2%  :  New setting: %param3%'
 details_jp: '設定前: %param2%  :  設定後: %param3%'
@@ -14,8 +14,8 @@ detection:
     selection:
         Channel: System
         EventID: 7040
-        param1: "Windows Event Log"
-        param3: "disabled"
+        param1: 'Windows Event Log'
+        param3: 'disabled'
     condition: selection
 falsepositives:
     - system administrator
