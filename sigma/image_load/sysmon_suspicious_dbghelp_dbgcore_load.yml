@@ -19,9 +19,7 @@ detection:
     Image:
     - '*\msbuild.exe'
     - '*\cmd.exe'
-    - '*\svchost.exe'
     - '*\rundll32.exe'
-    - '*\powershell.exe'
     - '*\word.exe'
     - '*\excel.exe'
     - '*\powerpnt.exe'
@@ -32,7 +30,6 @@ detection:
     - '*\wscript.exe'
     - '*\cscript.exe'
     - '*\mshta.exe'
-    - '*\regsvr32.exe'
     - '*\schtasks.exe'
     - '*\dnx.exe'
     - '*\regsvcs.exe'
@@ -50,6 +47,7 @@ detection:
     CommandLine:
     - C:\WINDOWS\winsxs\*\TiWorker.exe -Embedding
     - C:\Windows\system32\svchost.exe -k netsvcs -p -s wuauserv
+    - C:\Windows\System32\svchost.exe -k WerSvcGroup
   condition: (SELECTION_1 and ((SELECTION_2 and (SELECTION_3 or SELECTION_4)) and  not
     (SELECTION_5 or SELECTION_6)) and  not (SELECTION_7))
 falsepositives:
@@ -64,7 +62,7 @@ level: high
 logsource:
   category: image_load
   product: windows
-modified: 2021/12/16
+modified: 2022/02/21
 references:
 - https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump
 - https://www.pinvoke.net/default.aspx/dbghelp/MiniDumpWriteDump.html
@@ -72,5 +70,4 @@ references:
 status: test
 tags:
 - attack.credential_access
-- attack.t1003
 - attack.t1003.001

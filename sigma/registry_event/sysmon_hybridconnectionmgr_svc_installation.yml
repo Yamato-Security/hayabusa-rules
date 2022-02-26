@@ -15,8 +15,11 @@ detection:
   SELECTION_4:
     TargetObject: '*\Services\HybridConnectionManager*'
   SELECTION_5:
+    EventType: SetValue
+  SELECTION_6:
     Details: '*Microsoft.HybridConnectionManager.Listener.exe*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 or SELECTION_5))
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 or (SELECTION_5
+    and SELECTION_6)))
 falsepositives:
 - Unknown
 id: ac8866c7-ce44-46fd-8c17-b24acff96ca8
@@ -24,6 +27,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
+modified: 2022/01/13
 references:
 - https://twitter.com/Cyb3rWard0g/status/1381642789369286662
 status: experimental

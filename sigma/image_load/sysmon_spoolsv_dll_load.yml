@@ -10,7 +10,9 @@ detection:
   SELECTION_2:
     Image: '*spoolsv.exe'
   SELECTION_3:
-    ImageLoaded: '*\Windows\System32\spool\drivers\x64\3\\*'
+    ImageLoaded:
+    - '*\Windows\System32\spool\drivers\x64\3\\*'
+    - '*\Windows\System32\spool\drivers\x64\4\\*'
   SELECTION_4:
     ImageLoaded: '*.dll'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
@@ -21,9 +23,10 @@ level: informational
 logsource:
   category: image_load
   product: windows
-modified: 2021/08/24
+modified: 2022/02/09
 references:
 - https://github.com/hhlxf/PrintNightmare
+- https://github.com/ly4k/SpoolFool
 status: experimental
 tags:
 - attack.persistence

@@ -13,10 +13,13 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
-    TargetObject: '*Microsoft\Windows NT\CurrentVersion\SilentProcessExit*'
+    EventType: SetValue
   SELECTION_5:
+    TargetObject: '*Microsoft\Windows NT\CurrentVersion\SilentProcessExit*'
+  SELECTION_6:
     Details: '*MonitorProcess*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: c81fe886-cac0-4913-a511-2822d72ff505
@@ -24,6 +27,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
+modified: 2022/01/13
 references:
 - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
 - https://www.deepinstinct.com/2021/02/16/lsass-memory-dumps-are-stealthier-than-ever-before-part-2/

@@ -1,0 +1,30 @@
+
+title: Suspicious SSL Connection
+ruletype: Sigma
+author: frack113
+date: 2022/01/23
+description: Adversaries may employ a known encryption algorithm to conceal command
+  and control traffic rather than relying on any inherent protections provided by
+  a communication protocol.
+detection:
+  SELECTION_1:
+    ScriptBlockText: '*System.Net.Security.SslStream*'
+  SELECTION_2:
+    ScriptBlockText: '*Net.Security.RemoteCertificateValidationCallback*'
+  SELECTION_3:
+    ScriptBlockText: '*.AuthenticateAsClient*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- legitimate administrative script
+id: 195626f3-5f1b-4403-93b7-e6cfd4d6a078
+level: low
+logsource:
+  category: ps_script
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1573/T1573.md#atomic-test-1---openssl-c2
+- https://medium.com/walmartglobaltech/openssl-server-reverse-shell-from-windows-client-aee2dbfa0926
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1573

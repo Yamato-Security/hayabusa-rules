@@ -13,8 +13,10 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
-    TargetObject: '*\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run'
+    EventType: SetValue
   SELECTION_5:
+    TargetObject: '*\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run'
+  SELECTION_6:
     Details:
     - C:\Windows\Temp\\*
     - C:\ProgramData\\*
@@ -22,11 +24,11 @@ detection:
     - C:\Temp\\*
     - C:\Users\Public\\*
     - C:\Users\Default\\*
-  SELECTION_6:
+  SELECTION_7:
     Details:
     - '*\AppData\\*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and (SELECTION_5
-    or SELECTION_6))
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5)
+    and (SELECTION_6 or SELECTION_7))
 falsepositives:
 - Unknown
 fields:
@@ -37,11 +39,10 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/11/27
+modified: 2022/01/13
 references:
 - https://researchcenter.paloaltonetworks.com/2018/07/unit42-upatre-continues-evolve-new-anti-analysis-techniques/
 status: test
 tags:
 - attack.persistence
-- attack.t1060
 - attack.t1547.001

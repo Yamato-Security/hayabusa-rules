@@ -1,0 +1,26 @@
+
+title: Suspicious Redirection to Local Admin Share
+ruletype: Sigma
+author: Florian Roth
+date: 2022/01/16
+description: Detects a suspicious output redirection to the local admins share as
+  often found in malicious scripts or hacktool stagers
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine:
+    - '*> \\\\127.0.0.1\\admin$*'
+    - '*> \\\\localhost\\admin$*'
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- unknown
+id: ab9e3b40-0c85-4ba1-aede-455d226fd124
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/02/01
+references:
+- https://www.microsoft.com/security/blog/2022/01/15/destructive-malware-targeting-ukrainian-organizations/
+status: experimental

@@ -13,7 +13,9 @@ detection:
   SELECTION_3:
     DestinationPort: 5986
   SELECTION_4:
-    User: NT AUTHORITY\NETWORK SERVICE
+    User:
+    - '*AUTHORI*'
+    - '*AUTORI*'
   condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - Legitimate usage of remote PowerShell, e.g. remote administration and monitoring.
@@ -22,14 +24,12 @@ level: high
 logsource:
   category: network_connection
   product: windows
-modified: 2021/11/27
+modified: 2022/02/16
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190511223310.html
 status: test
 tags:
 - attack.execution
 - attack.t1059.001
-- attack.t1086
 - attack.lateral_movement
 - attack.t1021.006
-- attack.t1028

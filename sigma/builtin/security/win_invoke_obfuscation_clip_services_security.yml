@@ -6,12 +6,16 @@ date: 2020/10/13
 description: Detects Obfuscated use of Clip.exe to execute PowerShell
 detection:
   SELECTION_1:
-    Provider_Name: Service Control Manager
+    Provider_Name: Microsoft-Windows-Security-Auditing
   SELECTION_2:
     EventID: 4697
   SELECTION_3:
-    ServiceFileName|re: .*cmd.{0,5}(?:/c|/r).+clip(?:\.exe)?.{0,4}&&.+clipboard]::\(\s\\"\{\d\}.+\-f.+"
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    ServiceFileName: '*cmd*'
+  SELECTION_4:
+    ServiceFileName: '*&&*'
+  SELECTION_5:
+    ServiceFileName: '*clipboard]::*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 4edf51e1-cb83-4e1a-bc39-800e396068e3
@@ -19,7 +23,7 @@ level: high
 logsource:
   product: windows
   service: security
-modified: 2021/11/30
+modified: 2022/02/24
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 related:

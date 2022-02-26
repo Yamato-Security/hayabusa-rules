@@ -3,7 +3,8 @@ title: Office Security Settings Changed
 ruletype: Sigma
 author: Trent Liffick (@tliffick)
 date: 2020/05/22
-description: Detects registry changes to Office macro settings
+description: Detects registry changes to Office macro settings. The TrustRecords contain
+  information on executed macro-enabled documents. (see references)
 detection:
   SELECTION_1:
     EventID: 12
@@ -24,10 +25,11 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/07/12
+modified: 2022/01/10
 references:
-- Internal Research
+- https://twitter.com/inversecos/status/1494174785621819397
 - https://www.mcafee.com/blogs/other-blogs/mcafee-labs/zloader-with-a-new-infection-technique/
+- https://securelist.com/scarcruft-surveilling-north-korean-defectors-and-human-rights-activists/105074/
 status: experimental
 tags:
 - attack.defense_evasion

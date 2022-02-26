@@ -1,0 +1,30 @@
+
+title: Suspicious Execution of Shutdown
+ruletype: Sigma
+author: frack113
+date: 2022/01/01
+description: Use of the commandline to shutdown or reboot windows
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image: '*\shutdown.exe'
+  SELECTION_3:
+    CommandLine:
+    - '*/r *'
+    - '*/s *'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unknown
+id: 34ebb878-1b15-4895-b352-ca2eeb99b274
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1529/T1529.md
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/shutdown
+status: experimental
+tags:
+- attack.impact
+- attack.t1529

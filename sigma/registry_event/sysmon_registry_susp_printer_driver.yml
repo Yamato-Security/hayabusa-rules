@@ -13,13 +13,17 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
-    TargetObject: '*\Control\Print\Environments\Windows x64\Drivers*'
+    EventType: SetValue
   SELECTION_5:
-    TargetObject: '*\Manufacturer*'
+    TargetObject: '*\Control\Print\Environments\Windows x64\Drivers*'
   SELECTION_6:
+    TargetObject: '*\Manufacturer*'
+  SELECTION_7:
     Details: (Empty)
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+  SELECTION_8:
+    TargetObject: '*\CutePDF Writer v4.0\\*'
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8)))
 falsepositives:
 - Alerts on legitimate printer drivers that do not set any more details in the Manufacturer
   value
@@ -28,7 +32,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/11/27
+modified: 2022/02/09
 references:
 - https://twitter.com/SBousseaden/status/1410545674773467140
 status: test

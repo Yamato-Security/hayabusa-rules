@@ -16,7 +16,13 @@ detection:
     TargetObject: HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components*
   SELECTION_5:
     TargetObject: '*\StubPath'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+  SELECTION_6:
+    Details: '"C:\Program Files\Google\Chrome\Application\\*'
+  SELECTION_7:
+    Details: '*\Installer\chrmstp.exe" --configure-user-settings --verbose-logging
+      --system-level'
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5)
+    and  not ((SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Legitimate modification of the registry key by legitimate program
 id: c74d7efc-8826-45d9-b8bb-f04fac9e4eff
@@ -24,7 +30,7 @@ level: medium
 logsource:
   category: registry_event
   product: windows
-modified: 2021/11/27
+modified: 2022/02/15
 references:
 - https://twitter.com/pabraeken/status/990717080805789697
 - https://github.com/LOLBAS-Project/LOLBAS/blob/master/yml/OSBinaries/Runonce.yml

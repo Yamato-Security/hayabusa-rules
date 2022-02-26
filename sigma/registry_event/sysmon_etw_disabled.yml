@@ -12,10 +12,13 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
-    TargetObject: '*SOFTWARE\Microsoft\.NETFramework\ETWEnabled'
+    EventType: SetValue
   SELECTION_5:
+    TargetObject: '*SOFTWARE\Microsoft\.NETFramework\ETWEnabled'
+  SELECTION_6:
     Details: DWORD (0x00000000)
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - unknown
 id: bf4fc428-dcc3-4bbd-99fe-2422aeee2544
@@ -23,7 +26,7 @@ level: critical
 logsource:
   category: registry_event
   product: windows
-modified: 2021/11/27
+modified: 2022/01/13
 references:
 - https://twitter.com/_xpn_/status/1268712093928378368
 - https://social.msdn.microsoft.com/Forums/vstudio/en-US/0878832e-39d7-4eaf-8e16-a729c4c40975/what-can-i-use-e13c0d23ccbc4e12931bd9cc2eee27e4-for?forum=clr

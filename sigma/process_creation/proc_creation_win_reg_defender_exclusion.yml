@@ -1,0 +1,44 @@
+
+title: Registry Defender Exclusions
+ruletype: Sigma
+author: frack113
+date: 2022/02/13
+description: Qbot used reg.exe to add Defender folder exceptions for folders within
+  AppData and ProgramData.
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image: '*\reg.exe'
+  SELECTION_3:
+    CommandLine:
+    - '*HKLM\SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths\\*'
+    - '*HKLM\SOFTWARE\Microsoft\Microsoft Antimalware\Exclusions\Paths*'
+  SELECTION_4:
+    CommandLine: '*ADD *'
+  SELECTION_5:
+    CommandLine: '*/t *'
+  SELECTION_6:
+    CommandLine: '*REG_DWORD *'
+  SELECTION_7:
+    CommandLine: '*/v *'
+  SELECTION_8:
+    CommandLine: '*/d *'
+  SELECTION_9:
+    CommandLine: '*0*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
+falsepositives:
+- legitimate use
+id: 48917adc-a28e-4f5d-b729-11e75da8941f
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/
+- https://redcanary.com/threat-detection-report/threats/qbot/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001

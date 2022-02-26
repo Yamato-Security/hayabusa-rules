@@ -14,15 +14,18 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
+    EventType: SetValue
+  SELECTION_5:
     TargetObject:
     - '*\Keyboard Layout\Preload\\*'
     - '*\Keyboard Layout\Substitutes\\*'
-  SELECTION_5:
+  SELECTION_6:
     Details:
     - '*00000429*'
     - '*00050429*'
     - '*0000042a*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Administrators or users that actually use the selected keyboard layouts (heavily
   depends on the organisation's user base)
@@ -33,7 +36,7 @@ logsource:
   definition: 'Requirements: Sysmon config that monitors \Keyboard Layout\Preload
     subkey of the HKLU hives - see https://github.com/SwiftOnSecurity/sysmon-config/pull/92/files'
   product: windows
-modified: 2021/11/27
+modified: 2022/01/13
 references:
 - https://renenyffenegger.ch/notes/Windows/registry/tree/HKEY_CURRENT_USER/Keyboard-Layout/Preload/index
 - https://github.com/SwiftOnSecurity/sysmon-config/pull/92/files

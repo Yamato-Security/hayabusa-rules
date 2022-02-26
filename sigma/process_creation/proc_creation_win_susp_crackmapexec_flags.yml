@@ -1,0 +1,90 @@
+
+title: CrackMapExec Command Line Flags
+ruletype: Sigma
+author: Florian Roth
+date: 2022/02/25
+description: This rule detect common flag combinations used by CrackMapExec in order
+  to detect its use even if the binary has been replaced.
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_10:
+    CommandLine: '* mssql *'
+  SELECTION_11:
+    CommandLine: '* -u *'
+  SELECTION_12:
+    CommandLine: '* -p *'
+  SELECTION_13:
+    CommandLine: '* -M *'
+  SELECTION_14:
+    CommandLine: '* -d *'
+  SELECTION_15:
+    CommandLine: '* smb *'
+  SELECTION_16:
+    CommandLine: '* -u *'
+  SELECTION_17:
+    CommandLine: '* -H *'
+  SELECTION_18:
+    CommandLine: '* -M *'
+  SELECTION_19:
+    CommandLine: '* -o *'
+  SELECTION_2:
+    CommandLine:
+    - '* -M pe_inject *'
+  SELECTION_20:
+    CommandLine: '* smb *'
+  SELECTION_21:
+    CommandLine: '* -u *'
+  SELECTION_22:
+    CommandLine: '* -p *'
+  SELECTION_23:
+    CommandLine: '* --local-auth*'
+  SELECTION_24:
+    CommandLine: '* --local-auth*'
+  SELECTION_25:
+    CommandLine: '* -u *'
+  SELECTION_26:
+    CommandLine: '* -p *'
+  SELECTION_27:
+    CommandLine: '* 10.*'
+  SELECTION_28:
+    CommandLine: '* 192.168.*'
+  SELECTION_29:
+    CommandLine: '*/24 *'
+  SELECTION_3:
+    CommandLine: '* --local-auth*'
+  SELECTION_4:
+    CommandLine: '* -u *'
+  SELECTION_5:
+    CommandLine: '* -x *'
+  SELECTION_6:
+    CommandLine: '* --local-auth*'
+  SELECTION_7:
+    CommandLine: '* -u *'
+  SELECTION_8:
+    CommandLine: '* -p *'
+  SELECTION_9:
+    CommandLine: "* -H 'NTHASH'*"
+  condition: (SELECTION_1 and ((SELECTION_2 or (SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9) or (SELECTION_10
+    and SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14) or (SELECTION_15
+    and SELECTION_16 and SELECTION_17 and SELECTION_18 and SELECTION_19) or (SELECTION_20
+    and SELECTION_21 and SELECTION_22 and SELECTION_23)) or (SELECTION_24 and SELECTION_25
+    and SELECTION_26 and SELECTION_27 and SELECTION_28 and SELECTION_29)))
+falsepositives:
+- Unknown
+fields:
+- ComputerName
+- User
+- CommandLine
+id: 42a993dd-bb3e-48c8-b372-4d6684c4106c
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://mpgn.gitbook.io/crackmapexec/smb-protocol/authentication/checking-credentials-local
+- https://www.mandiant.com/resources/telegram-malware-iranian-espionage
+- https://www.infosecmatter.com/crackmapexec-module-library/?cmem=mssql-mimikatz
+- https://www.infosecmatter.com/crackmapexec-module-library/?cmem=smb-pe_inject
+status: experimental
