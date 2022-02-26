@@ -72,7 +72,7 @@ logsource: default
 ruletype: Hayabusa
 ```
 
-> ## 著者名欄
+> ## 作者セクション
 * **author [必須]**: 著者名（複数可）。
 * **contributor** [オプション]: 寄稿者の名前（細かい修正をした人）。
 * **date [必須]**: ルールが作成された日付。
