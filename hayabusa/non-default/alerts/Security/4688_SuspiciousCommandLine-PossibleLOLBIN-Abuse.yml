@@ -18,7 +18,7 @@ detection:
         EventID: 4688
         CommandLine|contains: " " #We are not looking at GUI programs, etc... that do not have any arguments to lower false positives.
         NewProcessName:
-            regexes: ./config/regex/LOLBAS_paths.txt
+            regexes: ./rules/config/regex/LOLBAS_paths.txt
     condition: selection
 falsepositives:
     - normal system usage
