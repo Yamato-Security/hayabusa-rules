@@ -13,15 +13,18 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
-    TargetObject: HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports*
+    EventType: SetValue
   SELECTION_5:
+    TargetObject: HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports*
+  SELECTION_6:
     Details:
     - '*.dll*'
     - '*.exe*'
     - '*.bat*'
     - '*.com*'
     - '*C:*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - New printer port install on host
 id: 7ec912f2-5175-4868-b811-ec13ad0f8567
@@ -29,7 +32,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/11/27
+modified: 2022/01/13
 references:
 - https://windows-internals.com/printdemon-cve-2020-1048/
 status: test

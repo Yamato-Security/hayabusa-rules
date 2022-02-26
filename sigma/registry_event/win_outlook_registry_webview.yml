@@ -13,14 +13,14 @@ detection:
     EventID: 14
   SELECTION_4:
     TargetObject:
-    - '*Software\Microsoft\Office\\*'
-    - '*Outlook\WebView\\*'
+    - '*\Software\Microsoft\Office\\*'
+    - '*\Outlook\WebView\\*'
   SELECTION_5:
-    TargetObject: '*URL'
+    TargetObject: '*\URL'
   SELECTION_6:
     TargetObject:
-    - '*Calendar*'
-    - '*Inbox*'
+    - '*\Calendar\\*'
+    - '*\Inbox\\*'
   condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
     and SELECTION_6)
 falsepositives:
@@ -32,7 +32,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/09/17
+modified: 2022/02/09
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=70
 - https://support.microsoft.com/en-us/topic/outlook-home-page-feature-is-missing-in-folder-properties-d207edb7-aa02-46c5-b608-5d9dbed9bd04?ui=en-us&rs=en-us&ad=us

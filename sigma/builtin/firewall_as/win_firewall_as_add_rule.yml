@@ -1,0 +1,33 @@
+
+title: Added Rule in Windows Firewall with Advanced Security
+ruletype: Sigma
+author: frack113
+date: 2022/02/19
+description: A rule has been modified in the Windows Firewall exception list
+detection:
+  SELECTION_1:
+    EventID: 2004
+  SELECTION_2:
+    Action: 2
+  SELECTION_3:
+    ApplicationPath:
+    - C:\Program Files\\*
+    - C:\Program Files (x86)\\*
+  SELECTION_4:
+    ModifyingApplication: C:\Windows\WinSxS\\*
+  SELECTION_5:
+    ModifyingApplication:
+    - C:\Windows\SysWOW64\msiexec.exe
+    - C:\Windows\System32\svchost.exe
+    - C:\Program Files\Windows Defender\MsMpEng.exe
+  condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3 or SELECTION_4 or
+    SELECTION_5)))
+id: cde0a575-7d3d-4a49-9817-b8004a7bf105
+level: medium
+logsource:
+  product: windows
+  service: firewall-as
+modified: 2022/02/22
+references:
+- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
+status: experimental

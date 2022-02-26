@@ -1,7 +1,7 @@
 
 title: Relevant Anti-Virus Event
 ruletype: Sigma
-author: Florian Roth
+author: Florian Roth, Arnim Rupp
 date: 2017/02/19
 description: This detection method points out highly relevant Antivirus events
 detection:
@@ -26,10 +26,15 @@ detection:
   - Xscan
   - Clearlog
   - ASPXSpy
+  - Ransom
+  - Filecoder
+  - CobaltStrike
   SELECTION_2:
   - Keygen
   - Crack
-  condition: ((SELECTION_1) and  not (SELECTION_2))
+  SELECTION_3:
+    Provider_Name: Aurora Agent
+  condition: ((SELECTION_1) and  not ((SELECTION_2) or (SELECTION_3)))
 falsepositives:
 - Some software piracy tools (key generators, cracks) are classified as hack tools
 id: 78bc5783-81d9-4d73-ac97-59f6db4f72a8
@@ -37,7 +42,11 @@ level: high
 logsource:
   product: windows
   service: application
-modified: 2021/11/20
+modified: 2022/02/05
+references:
+- https://www.virustotal.com/gui/file/13828b390d5f58b002e808c2c4f02fdd920e236cc8015480fa33b6c1a9300e31
+- https://www.virustotal.com/gui/file/15b57c1b68cd6ce3c161042e0f3be9f32d78151fe95461eedc59a79fc222c7ed
+- https://www.virustotal.com/gui/file/5092b2672b4cb87a8dd1c2e6047b487b95995ad8ed5e9fc217f46b8bfb1b8c01
 status: experimental
 tags:
 - attack.resource_development

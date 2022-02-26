@@ -43,6 +43,10 @@ detection:
   - Net.WebClient
   SELECTION_26:
   - .Download
+  SELECTION_27:
+  - (New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1
+  - (New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')
+  - Write-ChocolateyWarning
   SELECTION_3:
   - -nop
   SELECTION_4:
@@ -57,12 +61,12 @@ detection:
   - New-Object
   SELECTION_9:
   - -ep
-  condition: ((((SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4 and
+  condition: (((((SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4 and
     ((SELECTION_6 and SELECTION_7 and SELECTION_8) or SELECTION_5)) or (SELECTION_9
     and SELECTION_10 and SELECTION_11))) or (SELECTION_12 and SELECTION_13 and SELECTION_14
     and SELECTION_15)) or (SELECTION_16 and SELECTION_17 and SELECTION_18 and SELECTION_19
     and SELECTION_20 and SELECTION_21 and SELECTION_22)) or (SELECTION_23 and SELECTION_24
-    and SELECTION_25 and SELECTION_26))
+    and SELECTION_25 and SELECTION_26)) and  not ((SELECTION_27)))
 falsepositives:
 - Penetration tests
 id: fce5f582-cc00-41e1-941a-c6fabf0fdb8c
@@ -72,8 +76,8 @@ logsource:
     enabled for 4103
   product: windows
   service: powershell
+modified: 2022/02/21
 status: deprecated
 tags:
 - attack.execution
 - attack.t1059.001
-- attack.t1086

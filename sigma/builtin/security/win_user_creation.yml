@@ -8,7 +8,7 @@ description: Detects local user creation on windows servers, which shouldn't hap
   logs and not on your DC logs.
 detection:
   SELECTION_1:
-    provider_Name: Microsoft-Windows-Security-Auditing
+    Provider_Name: Microsoft-Windows-Security-Auditing
   SELECTION_2:
     EventID: 4720
   condition: (SELECTION_1 and SELECTION_2)
@@ -24,11 +24,10 @@ level: low
 logsource:
   product: windows
   service: security
-modified: 2021/11/30
+modified: 2021/01/17
 references:
 - https://patrick-bareiss.com/detecting-local-user-creation-in-ad-with-sigma/
 status: test
 tags:
 - attack.persistence
-- attack.t1136
 - attack.t1136.001

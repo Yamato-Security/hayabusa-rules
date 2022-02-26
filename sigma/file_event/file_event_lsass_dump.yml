@@ -19,7 +19,11 @@ detection:
     - '*\lsass_2*'
     - '*\lsassdump*'
     - '*\lsassdmp*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  SELECTION_4:
+    TargetFilename: '*\lsass*'
+  SELECTION_5:
+    TargetFilename: '*.dmp*'
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - Unknown
 id: a5a2d357-1ab8-4675-a967-ef9990a59391
@@ -27,6 +31,7 @@ level: high
 logsource:
   category: file_event
   product: windows
+modified: 2022/02/06
 references:
 - https://www.google.com/search?q=procdump+lsass
 - https://medium.com/@markmotig/some-ways-to-dump-lsass-exe-c4a75fdc49bf
@@ -37,4 +42,3 @@ status: experimental
 tags:
 - attack.credential_access
 - attack.t1003.001
-- attack.t1003

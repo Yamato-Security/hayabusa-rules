@@ -56,23 +56,34 @@ detection:
     - C:\WINDOWS\system32\taskhostw.exe
     - C:\WINDOWS\system32\ctfmon.exe
     - C:\WINDOWS\system32\NhNotifSys.exe
+    - C:\Windows\ImmersiveControlPanel\SystemSettings.exe
+    - C:\Windows\explorer.exe
   SELECTION_14:
-    TargetImage:
-    - C:\Windows\System32\RuntimeBroker.exe
+    TargetImage: C:\Windows\System32\RuntimeBroker.exe
   SELECTION_15:
-    TargetImage:
-    - '*\Microsoft VS Code\Code.exe'
+    TargetImage: '*\Microsoft VS Code\Code.exe'
   SELECTION_16:
-    CallTrace:
-    - '*|C:\WINDOWS\System32\RPCRT4.dll+*'
+    CallTrace: '*|C:\WINDOWS\System32\RPCRT4.dll+*'
   SELECTION_17:
     SourceImage:
     - C:\WINDOWS\Explorer.EXE
   SELECTION_18:
     TargetImage:
     - C:\WINDOWS\system32\backgroundTaskHost.exe
+    - C:\WINDOWS\explorer.exe
+  SELECTION_19:
+    SourceImage: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
   SELECTION_2:
     CallTrace: '*C:\WINDOWS\SYSTEM32\ntdll.dll+*'
+  SELECTION_20:
+    SourceImage: '*\MsMpEng.exe'
+  SELECTION_21:
+    SourceImage: '*\eclipse.exe'
+  SELECTION_22:
+    CallTrace:
+    - '*\jre\bin\java.dll*'
+    - '*|C:\Windows\SYSTEM32\windows.storage.dll+*'
+    - '*\configuration\org.eclipse.osgi\\*'
   SELECTION_3:
     CallTrace: '*|C:\WINDOWS\System32\KERNELBASE.dll+*'
   SELECTION_4:
@@ -90,7 +101,8 @@ detection:
   condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
     or (SELECTION_6 and SELECTION_7 and SELECTION_8)) or (SELECTION_9 and SELECTION_10))
     and  not ((SELECTION_11 or SELECTION_12 or SELECTION_13 or SELECTION_14 or SELECTION_15
-    or SELECTION_16) or (SELECTION_17 and SELECTION_18)))
+    or SELECTION_16) or (SELECTION_17 and SELECTION_18) or (SELECTION_19 and SELECTION_20)
+    or (SELECTION_21 and SELECTION_22)))
 falsepositives:
 - SysInternals Process Explorer
 fields:
@@ -104,7 +116,7 @@ level: medium
 logsource:
   category: process_access
   product: windows
-modified: 2021/12/22
+modified: 2022/02/16
 references:
 - https://azure.microsoft.com/en-ca/blog/detecting-in-memory-attacks-with-sysmon-and-azure-security-center/
 status: experimental
@@ -113,4 +125,3 @@ tags:
 - attack.defense_evasion
 - attack.t1055.001
 - attack.t1055.002
-- attack.t1055

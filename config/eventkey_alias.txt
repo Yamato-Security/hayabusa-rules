@@ -3,7 +3,9 @@ AccessMask,Event.EventData.AccessMask
 Accesses,Event.EventData.Accesses
 AccountName,Event.EventData.AccountName
 Account_Name,Event.EventData.Account_Name
+Action,Event.EventData.Action
 AllowedToDelegateTo,Event.EventData.AllowedToDelegateTo
+ApplicationPath,Event.EventData.ApplicationPath
 AttributeLDAPDisplayName,Event.EventData.AttributeLDAPDisplayName
 AttributeValue,Event.EventData.AttributeValue
 AuditPolicyChanges,Event.EventData.AuditPolicyChanges
@@ -58,6 +60,7 @@ HostApplication,Event.EventData.HostApplication
 HostName,Event.EventData.HostName
 HostVersion,Event.EventData.HostVersion
 Image,Event.EventData.Image
+image,Event.EventData.Image
 ImageLoaded,Event.EventData.ImageLoaded
 ImagePath,Event.EventData.ImagePath
 Imphash,Event.EventData.Hashes
@@ -81,6 +84,7 @@ MachineName,Event.EventData.MachineName
 MemberName,Event.EventData.MemberName
 MemberSid,Event.EventData.MemberSid
 Message,Event.EventData
+ModifyingApplication,Event.EventData.ModifyingApplication
 NewName,Event.EventData.NewName
 NewTemplateContent, Event.EventData.NewTemplateContent
 NewUacValue,Event.EventData.NewUacValue
@@ -96,6 +100,7 @@ ObjectValueName,Event.EventData.ObjectValueName
 OldUacValue,Event.EventData.OldUacValue
 Origin,Event.EventData.Origin
 OriginalFileName,Event.EventData.OriginalFileName
+OriginalFilename,Event.EventData.OriginalFileName
 param1,Event.EventData.param1
 param2,Event.EventData.param2
 param3,Event.EventData.param3
@@ -110,6 +115,7 @@ PasswordLastSet,Event.EventData.PasswordLastSet
 Path,Event.EventData.Path
 Payload,Event.EventData.Payload
 PipeName,Event.EventData.PipeName
+PossibleCause,Event.UserData.PossibleCause
 PreAuthType,Event.EventData.PreAuthType
 PrivilegeList,Event.EventData.PrivilegeList
 ProcessCommandLine,Event.EventData.ProcessCommandLine
@@ -117,9 +123,11 @@ ProcessId,Event.EventData.ProcessId
 ProcessName,Event.EventData.ProcessName
 Product,Event.EventData.Product
 Properties,Event.EventData.Properties
+Provider,Event.UserData.Provider
 ProviderName,Event.System.Provider_Name
 Provider_Name,Event.System.Provider_Name
 QNAME,Event.EventData.QNAME
+Query,Event.UserData.Query
 QueryName,Event.EventData.QueryName
 QueryResults,Event.EventData.QueryResults
 QueryStatus,Event.EventData.QueryStatus

@@ -12,9 +12,9 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
-    Details: DWORD (0x00000001)
-  SELECTION_5:
     EventType: SetValue
+  SELECTION_5:
+    Details: DWORD (0x00000001)
   SELECTION_6:
     TargetObject:
     - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware
@@ -24,8 +24,8 @@ detection:
     - HKLM\SYSTEM\CurrentControlSet\Services\WinDefend
     - HKLM\SOFTWARE\Microsoft\Windows Defender
     - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and ((SELECTION_5
-    and SELECTION_6) or SELECTION_7))
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and (SELECTION_6 or SELECTION_7))
 falsepositives:
 - Administrator actions
 id: a64e4198-c1c8-46a5-bc9c-324c86455fd4
@@ -33,7 +33,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/10/18
+modified: 2022/01/13
 references:
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-antivirus/troubleshoot-windows-defender-antivirus
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md
@@ -44,5 +44,4 @@ related:
 status: experimental
 tags:
 - attack.defense_evasion
-- attack.t1089
 - attack.t1562.001

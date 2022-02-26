@@ -17,7 +17,9 @@ detection:
     - '0x1010'
     - '0x410'
   SELECTION_4:
-    SourceImage: C:\Program Files\WindowsApps\\*
+    SourceImage:
+    - C:\Program Files\WindowsApps\\*
+    - C:\Windows\System32\\*
   SELECTION_5:
     SourceImage: '*\GamingServices.exe'
   condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4
@@ -33,7 +35,7 @@ level: high
 logsource:
   category: process_access
   product: windows
-modified: 2021/11/30
+modified: 2022/01/28
 references:
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html

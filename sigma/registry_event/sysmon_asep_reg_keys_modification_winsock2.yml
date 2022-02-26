@@ -13,15 +13,21 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
-    TargetObject: '*\System\CurrentControlSet\Services\WinSock2\Parameters*'
+    EventType: SetValue
   SELECTION_5:
+    TargetObject: '*\System\CurrentControlSet\Services\WinSock2\Parameters*'
+  SELECTION_6:
     TargetObject:
     - '*\Protocol_Catalog9\Catalog_Entries*'
     - '*\NameSpace_Catalog5\Catalog_Entries*'
-  SELECTION_6:
+  SELECTION_7:
     Details: (Empty)
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5)
-    and  not (SELECTION_6))
+  SELECTION_8:
+    Image: C:\Windows\System32\MsiExec.exe
+  SELECTION_9:
+    Image: C:\Windows\syswow64\MsiExec.exe
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5
+    and SELECTION_6) and  not (SELECTION_7 or SELECTION_8 or SELECTION_9))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
   keys for legitimate reason
@@ -36,7 +42,7 @@ level: medium
 logsource:
   category: registry_event
   product: windows
-modified: 2021/12/05
+modified: 2022/02/16
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

@@ -23,6 +23,8 @@ detection:
     - '*dismhost.exe'
     - '*taskhostw.exe'
     - '*\clussvc.exe'
+    - '*\thor64.exe'
+    - '*\thor.exe'
   SELECTION_4:
     Image: '*c:\windows\\*'
   condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3 and SELECTION_4))
@@ -33,6 +35,7 @@ level: high
 logsource:
   category: image_load
   product: windows
+modified: 2022/02/21
 references:
 - 1bd85e1caa1415ebdc8852c91e37bbb7
 - https://twitter.com/am0nsec/status/1412232114980982787
