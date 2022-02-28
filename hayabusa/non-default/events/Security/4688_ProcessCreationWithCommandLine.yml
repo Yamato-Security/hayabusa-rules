@@ -16,6 +16,7 @@ detection:
     selection:
         Channel: Security
         EventID: 4688
+        Version: 1      #Command line information is only in version 1.
     condition: selection
 falsepositives:
     - normal system usage
