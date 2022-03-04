@@ -1,4 +1,7 @@
 # Automatic conversion of Sigma to Hayabusa rules
+
+[**English**] | [\[日本語\]](Readme-Japanese.md)
+
 [![python](https://img.shields.io/badge/python-3.8-blue)](https://www.python.org/)
 ![version](https://img.shields.io/badge/Platform-Win-green)
 ![version](https://img.shields.io/badge/Platform-Lin-green)

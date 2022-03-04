@@ -1,4 +1,7 @@
 # SIGMAからHayabusaルールへの自動変換
+
+[\[English\]](README.md) | [**日本語**]
+
 [![python](https://img.shields.io/badge/python-3.8-blue)](https://www.python.org/)
 ![version](https://img.shields.io/badge/Platform-Win-green)
 ![version](https://img.shields.io/badge/Platform-Lin-green)
