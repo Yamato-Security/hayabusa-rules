@@ -1,0 +1,17 @@
+title: test
+ruletype: SIGMA
+author: test
+date: 2021/12/4
+description: "simple test\n"
+detection:
+  SELECTION_1:
+    EventID: 4100
+  condition: SELECTION_1
+falsepositives:
+- Unknown
+id: 000000000-0000-0000-0000-000000000000
+level: medium
+logsource:
+  product: windows
+  service: security
+status: experimental

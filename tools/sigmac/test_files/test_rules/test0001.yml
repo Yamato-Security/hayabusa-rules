@@ -1,0 +1,17 @@
+title: test
+id: 000000000-0000-0000-0000-000000000000
+description: |
+    simple test
+status: experimental
+date: 2021/12/4
+author: test
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 4100
+    condition: selection
+falsepositives:
+    - Unknown
+level: medium
