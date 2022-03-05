@@ -657,4 +657,4 @@ detection:
 # Converting sigma rules to hayabusa format
 We have created a backend for sigmac to convert rules from sigma to hayabusa format [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac).
 
-The documentation for how to use it is [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmacREADME.md).
+The documentation for how to use it is [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac/README.md).
