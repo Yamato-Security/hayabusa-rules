@@ -1,0 +1,34 @@
+author: Zach Mathis
+date: 2022/03/05
+modified:  2022/03/05
+
+title: Code Integrity Problem - Possible Modification
+title_jp: コードの整合性による問題 - 改ざんされた可能性がある
+details: 'File: %param1%'
+details_jp: 'ファイル: %param1%'
+description: Detects when hashes are not correct or a file does not meet Windows' security requirements.
+description_jp: 
+
+id: 
+level: low
+status: test
+detection:
+    selection:
+        Channel: Security
+        EventID: 
+            - 5038 
+            - 6281
+            - 6410
+    condition: selection
+falsepositives:
+    - most likely not malicious
+    - disk device error
+tags:
+    - attack.defense_evasion
+references:
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-5038
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-6281
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-6410
+sample-evtx: 
+logsource: non-default
+ruletype: Hayabusa

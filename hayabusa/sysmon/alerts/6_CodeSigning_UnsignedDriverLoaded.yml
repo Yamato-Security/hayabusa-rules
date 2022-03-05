@@ -1,0 +1,30 @@
+author: Zach Mathis
+date: 2022/03/05
+modified:  2022/03/05
+
+title: Unsigned Driver Loaded
+title_jp: ロードされたドライバが署名されていない
+details: 'Path: %ImageLoaded%'
+details_jp: 'パス: %ImageLoaded%'
+description: 
+description_jp: 
+
+id: c837dd6d-0c91-4593-aeab-f6a1f3ca1961
+level: high
+status: test
+detection:
+    selection:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID:  6
+    filter:
+        Signed: true
+    condition: selection and not filter
+falsepositives:
+tags:
+    - attack.defense_evasion
+    - attack.t1553.002
+references:
+    - https://attack.mitre.org/techniques/T1553/002/
+sample-evtx: 
+logsource: sysmon
+ruletype: Hayabusa
