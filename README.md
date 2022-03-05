@@ -5,6 +5,40 @@
  [ <b>English</b> ] | [<a href="README-Japanese.md">日本語</a>]
 </div>
 
+- [About creating rule files](#about-creating-rule-files)
+  - [Rule file format](#rule-file-format)
+- [Detection field](#detection-field)
+  - [Selection fundamentals](#selection-fundamentals)
+    - [How to write AND and OR logic](#how-to-write-and-and-or-logic)
+    - [Eventkeys](#eventkeys)
+      - [Eventkey Aliases](#eventkey-aliases)
+      - [Caution: Undefined Eventkey Aliases](#caution-undefined-eventkey-aliases)
+    - [How to use XML attributes in conditions](#how-to-use-xml-attributes-in-conditions)
+    - [grep search](#grep-search)
+    - [EventData](#eventdata)
+    - [Abnormal patterns in EventData](#abnormal-patterns-in-eventdata)
+  - [Pipes](#pipes)
+  - [Wildcards](#wildcards)
+  - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
+    - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
+  - [condition](#condition)
+  - [not logic](#not-logic)
+  - [Aggregation conditions (Count rules)](#aggregation-conditions-count-rules)
+    - [Basics](#basics)
+    - [Four patterns for aggregation conditions:](#four-patterns-for-aggregation-conditions)
+    - [Pattern 1 example:](#pattern-1-example)
+    - [Pattern 2 example:](#pattern-2-example)
+    - [Pattern 3 example:](#pattern-3-example)
+    - [Pattern 4 example:](#pattern-4-example)
+    - [Count rule output:](#count-rule-output)
+- [Rule creation advice](#rule-creation-advice)
+    - [Instead of:](#instead-of)
+    - [Please do this:](#please-do-this)
+    - [Instead of:](#instead-of-1)
+    - [Please do this:](#please-do-this-1)
+    - [Or ideally something like this:](#or-ideally-something-like-this)
+- [Converting sigma rules to hayabusa format](#converting-sigma-rules-to-hayabusa-format)
+
 # About creating rule files
 Hayabusa detection rules are written in [YAML](https://en.wikipedia.org/wiki/YAML) format.
 They are a subset of sigma rules with some additions. We are trying to make them as close to sigma rules as possible so that it is easy to convert Hayabusa rules back to sigma to give back to the community.
