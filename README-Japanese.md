@@ -653,6 +653,6 @@ detection:
 ```
 
 # SigmaルールからHayabusaルール形式への自動変換
-SigmaルールからHayabusaルール形式に自動で変換する[ツール](https://github.com/Yamato-Security/hayabusa/tree/main/tools/sigmac)を作成しました。
+SigmaルールからHayabusaルール形式に自動で変換する[ツール](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac)を作成しました。
 
-使用方法は[こちら](https://github.com/Yamato-Security/hayabusa/blob/main/tools/sigmac/README-Japanese.md)を参照してください。
+使用方法は[こちら](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac/README-Japanese.md)を参照してください。
