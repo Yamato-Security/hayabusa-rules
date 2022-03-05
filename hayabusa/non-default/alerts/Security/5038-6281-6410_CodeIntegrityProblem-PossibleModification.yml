@@ -9,16 +9,16 @@ details_jp: 'ファイル: %param1%'
 description: Detects when hashes are not correct or a file does not meet Windows' security requirements.
 description_jp: 
 
-id: 
-level: low
+id: 0c871345-668e-4b71-bdad-61e42ecc31e3
+level: low  # This should be high but is set as low due to almost all false positives & negatives.
 status: test
 detection:
     selection:
         Channel: Security
         EventID: 
-            - 5038 
-            - 6281
-            - 6410
+            - 5038  # Image hash of a file is not valid. 
+            - 6281  # Page hashes of an image file are not valid
+            - 6410  # File does not meet the security requirements to load into a process.
     condition: selection
 falsepositives:
     - most likely not malicious
