@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: clone hayabusa-repo
         uses: actions/checkout@v2
+        with:
+          ref: develop
 
       - name: clone sigmac
         uses: actions/checkout@v2
@@ -66,7 +68,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Sigma Rule Update (${{ env.action_date }})
-          branch: update-sigmarule
+          branch: rules/auto-sigma-update
           delete-branch: true
           title: '[Auto] Sigma Update report'
           body: |
