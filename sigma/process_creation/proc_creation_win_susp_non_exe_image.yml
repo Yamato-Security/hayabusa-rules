@@ -1,0 +1,100 @@
+
+title: Execution of Suspicious File Type Extension
+ruletype: Sigma
+author: Max Altgelt
+date: 2021/12/09
+description: Checks whether the image specified in a process creation event doesn't
+  refer to an .exe file (caused by process ghosting or other unorthodox methods to
+  start a process)
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_10:
+    Image: '*.dat'
+  SELECTION_11:
+    Image:
+    - C:\Windows\System32\\*
+    - C:\Windows\SysWOW64\\*
+  SELECTION_12:
+    Image: '*.com'
+  SELECTION_13:
+    Image: '*\WinSCP.com'
+  SELECTION_14:
+    Image: '*C:\Users\\*'
+  SELECTION_15:
+    Image: '*\AppData\\*'
+  SELECTION_16:
+    Image: '*.tmp*'
+  SELECTION_17:
+    Image: '*CodeSetup*'
+  SELECTION_18:
+    Image: '*\program\soffice.bin'
+  SELECTION_19:
+    Image:
+    - C:\Program Files\EMC NetWorker\Management\GST\apache\cgi-bin\update_jnlp.cgi
+    - C:\Program Files (x86)\EMC NetWorker\Management\GST\apache\cgi-bin\update_jnlp.cgi
+  SELECTION_2:
+    Image:
+    - '*.exe'
+    - '*.tmp'
+  SELECTION_20:
+    Image:
+    - C:\Program Files (x86)\WINPAKPRO\\*
+    - C:\Program Files\WINPAKPRO\\*
+  SELECTION_21:
+    Image: '*.ngn'
+  SELECTION_22:
+    Image:
+    - C:\Program Files (x86)\MyQ\Server\pcltool.dll
+    - C:\Program Files\MyQ\Server\pcltool.dll
+  SELECTION_23:
+    Image:
+    - C:\Program Files\Microsoft Visual Studio\\*
+    - C:\Program Files (x86)\Microsoft Visual Studio*
+  SELECTION_24:
+    Image: '*.com'
+  SELECTION_25:
+    Image: C:\Config.Msi\\*
+  SELECTION_26:
+    Image:
+    - '*.rbf'
+    - '*.rbs'
+  SELECTION_3:
+    Image|re: ^$
+  SELECTION_4:
+    Image:
+    - Registry
+    - MemCompression
+  SELECTION_5:
+    Image:
+    - '-'
+    - ''
+  SELECTION_6:
+    Image: C:\Windows\Installer\MSI*
+  SELECTION_7:
+    ParentImage:
+    - C:\ProgramData\Avira\\*
+    - C:\Windows\System32\DriverStore\FileRepository\\*
+  SELECTION_8:
+    Image: '*.scr'
+  SELECTION_9:
+    Image: '*NVIDIA\NvBackend\\*'
+  condition: (SELECTION_1 and  not (SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4)
+    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9
+    and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13) or (SELECTION_14
+    and SELECTION_15 and SELECTION_16 and SELECTION_17) or (SELECTION_18) or (SELECTION_19)
+    or (SELECTION_20 and SELECTION_21) or (SELECTION_22) or (SELECTION_23 and SELECTION_24)
+    or (SELECTION_25 and SELECTION_26)))
+falsepositives:
+- unknown
+id: c09dad97-1c78-4f71-b127-7edb2b8e491a
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/02/16
+references:
+- https://pentestlaboratories.com/2021/12/08/process-ghosting/
+status: experimental
+tags:
+- attack.defense_evasion

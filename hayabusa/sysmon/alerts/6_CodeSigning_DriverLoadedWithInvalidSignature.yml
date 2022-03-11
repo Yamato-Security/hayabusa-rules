@@ -1,0 +1,31 @@
+author: Zach Mathis
+date: 2022/03/05
+modified:  2022/03/05
+
+title: Invalid Driver Signature
+title_jp: ドライバが不正な証明書で署名された
+details: 'Path: %ImageLoaded%  :  Signature: %Signature%'
+details_jp: 'パス: %ImageLoaded%  :  証明書: %Signature%'
+description: Loaded driver was signed with an invalid signature.
+description_jp: ロードされたドライバは不正な証明書で署名された。
+
+id: 1f666722-3948-40a2-9d78-d9d374477a90
+level: high
+status: test
+detection:
+    selection:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID:  6
+        Signed: true
+    filter:
+        SignatureStatus: Valid
+    condition: selection and not filter
+falsepositives:
+tags:
+    - attack.defense_evasion
+    - attack.t1553.002
+references:
+    - https://attack.mitre.org/techniques/T1553/002/
+sample-evtx: 
+logsource: sysmon
+ruletype: Hayabusa

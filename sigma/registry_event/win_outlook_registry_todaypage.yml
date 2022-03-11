@@ -17,13 +17,15 @@ detection:
     - '*Software\Microsoft\Office\\*'
     - '*\Outlook\Today\\*'
   SELECTION_5:
-    TargetObject: '*Stamp'
+    EventType: SetValue
   SELECTION_6:
-    Details: DWORD (0x00000001)
+    TargetObject: '*Stamp'
   SELECTION_7:
+    Details: DWORD (0x00000001)
+  SELECTION_8:
     TargetObject: '*UserDefinedUrl'
   condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and ((SELECTION_5
-    and SELECTION_6) or SELECTION_7))
+    and SELECTION_6 and SELECTION_7) or SELECTION_8))
 falsepositives:
 - unknown
 fields:
@@ -33,6 +35,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
+modified: 2022/01/13
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=70
 status: experimental

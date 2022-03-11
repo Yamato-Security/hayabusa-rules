@@ -7,49 +7,51 @@ description: Raw disk access using illegitimate tools, possible defence evasion
 detection:
   SELECTION_1:
     EventID: 9
+  SELECTION_10:
+    Image:
+    - C:\Program Files\\*
+    - C:\Program Files (x86)\\*
+  SELECTION_11:
+    Image: '*C:\Users\\*'
+  SELECTION_12:
+    Image: '*\AppData\\*'
+  SELECTION_13:
+    Image: '*\Microsoft\\*'
+  SELECTION_14:
+    Image: C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost*
+  SELECTION_15:
+    Image: '*\StartMenuExperienceHost.exe'
   SELECTION_2:
     Device: '*floppy*'
   SELECTION_3:
     Image:
     - C:\Windows\System32\\*
     - C:\Windows\SystemApps\\*
+    - C:\Windows\WinSxS\\*
+    - C:\Windows\servicing\\*
+    - C:\Windows\CCM\\*
+    - C:\Windows\uus\\*
+    - C:\Windows\WinSxs\\*
   SELECTION_4:
-    Image:
-    - '*\wmiprvse.exe'
-    - '*\sdiagnhost.exe'
-    - '*\searchindexer.exe'
-    - '*\csrss.exe'
-    - '*\defrag.exe'
-    - '*\smss.exe'
-    - '*\vssvc.exe'
-    - '*\compattelrunner.exe'
-    - '*\wininit.exe'
-    - '*\autochk.exe'
-    - '*\taskhost.exe'
-    - '*\dfsrs.exe'
-    - '*\vds.exe'
-    - '*\lsass.exe'
-    - '*\svchost.exe'
-    - '*\MsMpEng.exe'
-    - '*\SearchApp.exe'
-    - '*C:\Windows\System32\taskhostw.exe'
-    - '*C:\Windows\System32\SrTasks.exe'
-    - '*C:\Windows\System32\dllhost.exe'
-    - '*C:\Windows\System32\DeviceCensus.exe'
-  SELECTION_5:
     ProcessId: 4
+  SELECTION_5:
+    Image:
+    - C:\Windows\UUS\amd64\MoUsoCoreWorker.exe
+    - C:\Windows\explorer.exe
   SELECTION_6:
     Image:
-    - C:\Program Files\Bitdefender Antivirus Free\updatesrv.exe
-    - C:\Program Files\Bitdefender Antivirus Free\downloader.exe
-    - C:\Program Files\Bitdefender Antivirus Free\vsserv.exe
-    - C:\Windows\System32\backgroundTaskHost.exe
-    - C:\Windows\System32\RuntimeBroker.exe
-    - C:\Windows\System32\MoUsoCoreWorker.exe
+    - System
+    - Registry
   SELECTION_7:
     Image: '*\Keybase\upd.exe'
-  condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3 and SELECTION_4)
-    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
+  SELECTION_8:
+    Image: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+  SELECTION_9:
+    Image: '*\MsMpEng.exe'
+  condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3) or (SELECTION_4)
+    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)
+    or (SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14
+    and SELECTION_15)))
 falsepositives:
 - Legitimate Administrator using tool for raw access or ongoing forensic investigation
 fields:
@@ -58,14 +60,14 @@ fields:
 - ProcessID
 - Device
 id: db809f10-56ce-4420-8c86-d6a7d793c79c
-level: medium
+level: low
 logsource:
   category: raw_access_thread
   product: windows
-modified: 2021/12/22
+modified: 2022/02/21
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
-status: experimental
+status: test
 tags:
 - attack.defense_evasion
 - attack.t1006

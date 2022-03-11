@@ -12,7 +12,9 @@ detection:
     TargetImage: '*\lsass.exe'
   SELECTION_3:
     SourceImage: C:\Windows\system32\wsmprovhost.exe
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  SELECTION_4:
+    GrantedAccess: '0x80000000'
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - low
 id: aa35a627-33fb-4d04-a165-d33b4afca3e8
@@ -28,10 +30,7 @@ tags:
 - attack.credential_access
 - attack.execution
 - attack.t1003.001
-- attack.t1003
 - attack.t1059.001
-- attack.t1086
 - attack.lateral_movement
 - attack.t1021.006
-- attack.t1028
 - attack.s0002

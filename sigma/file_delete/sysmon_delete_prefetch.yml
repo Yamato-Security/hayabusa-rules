@@ -16,7 +16,9 @@ detection:
   SELECTION_5:
     Image: C:\windows\system32\svchost.exe
   SELECTION_6:
-    User: NT AUTHORITY\SYSTEM
+    User:
+    - NT AUTHORITY\SYSTEM*
+    - AUTORITE NT\Sys*
   condition: ((SELECTION_1 or SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
     (SELECTION_5 and SELECTION_6))
 falsepositives:
@@ -26,6 +28,7 @@ level: high
 logsource:
   category: file_delete
   product: windows
+modified: 2022/01/15
 status: experimental
 tags:
 - attack.defense_evasion

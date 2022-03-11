@@ -1,5 +1,5 @@
 
-title: Eventlog Cleared
+title: Security Eventlog Cleared
 ruletype: Sigma
 author: Florian Roth
 date: 2017/01/10
@@ -9,10 +9,12 @@ detection:
   SELECTION_1:
     EventID: 517
   SELECTION_2:
-    EventID: 1102
+    Provider_Name: Security
   SELECTION_3:
+    EventID: 1102
+  SELECTION_4:
     Provider_Name: Microsoft-Windows-Eventlog
-  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
+  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4))
 falsepositives:
 - Rollout of log collection agents (the setup routine often includes a reset of the
   local Eventlog)
@@ -22,7 +24,7 @@ level: high
 logsource:
   product: windows
   service: security
-modified: 2021/10/13
+modified: 2022/02/24
 references:
 - https://twitter.com/deviouspolack/status/832535435960209408
 - https://www.hybrid-analysis.com/sample/027cc450ef5f8c5f653329641ec1fed91f694e0d229928963b30f6b0d7d3a745?environmentId=100
@@ -32,6 +34,5 @@ related:
 status: experimental
 tags:
 - attack.defense_evasion
-- attack.t1070
 - attack.t1070.001
 - car.2016-04-002

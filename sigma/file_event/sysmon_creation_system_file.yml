@@ -1,7 +1,7 @@
 
 title: File Created with System Process Name
 ruletype: Sigma
-author: Sander Wiebing
+author: Sander Wiebing, Tim Shelton
 date: 2020/05/26
 description: Detects the creation of an executable with a system process name in a
   suspicious folder
@@ -44,13 +44,19 @@ detection:
     - C:\Windows\WinSxS\\*
     - \SystemRoot\System32\\*
   SELECTION_4:
-    Image: '*\Windows\System32\dism.exe'
+    Image:
+    - '*\Windows\System32\dism.exe'
+    - '*\TiWorker.exe'
   SELECTION_5:
     TargetFilename: C:\$WINDOWS.~BT\\*
   SELECTION_6:
     Image: C:\$WINDOWS.~BT\Sources\SetupHost.exe
-  condition: (SELECTION_1 and (SELECTION_2 and  not (SELECTION_3 and SELECTION_4))
-    and  not (SELECTION_5 and SELECTION_6))
+  SELECTION_7:
+    TargetFilename: '*\RuntimeBroker.exe'
+  SELECTION_8:
+    Image: C:\Windows\system32\wbengine.exe
+  condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3 and SELECTION_4)
+    or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - System processes copied outside the default folder
 fields:
@@ -60,9 +66,8 @@ level: high
 logsource:
   category: file_event
   product: windows
-modified: 2021/10/28
+modified: 2022/02/22
 status: test
 tags:
 - attack.defense_evasion
-- attack.t1036
 - attack.t1036.005

@@ -1,0 +1,52 @@
+
+title: SAM Dump File Creation
+ruletype: Sigma
+author: Florian Roth
+date: 2022/02/11
+description: Detects the creation of files that look like exports of the local SAM
+  (Security Account Manager)
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    TargetFilename:
+    - '*\Temp\sam'
+    - '*\sam.sav'
+    - '*\Intel\sam'
+    - '*\sam.hive'
+    - '*\Perflogs\sam'
+    - '*\ProgramData\sam'
+    - '*\Users\Public\sam'
+    - '*\AppData\Local\sam'
+    - '*\AppData\Roaming\sam'
+    - '*_ShadowSteal.zip'
+    - '*\Documents\SAM.export'
+  SELECTION_3:
+    TargetFilename: c:\sam
+  SELECTION_4:
+    TargetFilename:
+    - '*\hive_sam_*'
+    - '*\sam.save*'
+    - '*\sam.export*'
+    - '*\~reg_sam.save*'
+    - '*\sam_backup*'
+    - '*\sam.bck*'
+    - '*\sam.backup*'
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4))
+falsepositives:
+- Rare cases of administrative activity
+id: 4e87b8e2-2ee9-4b2a-a715-4727d297ece0
+level: high
+logsource:
+  category: file_event
+  product: windows
+references:
+- https://github.com/search?q=CVE-2021-36934
+- https://github.com/cube0x0/CVE-2021-36934
+- https://www.google.com/search?q=%22reg.exe+save%22+sam
+- https://github.com/HuskyHacks/ShadowSteal
+- https://github.com/FireFart/hivenightmare
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.002

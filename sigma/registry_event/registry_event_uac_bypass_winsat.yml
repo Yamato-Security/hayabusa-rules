@@ -13,15 +13,17 @@ detection:
   SELECTION_3:
     EventID: 14
   SELECTION_4:
-    TargetObject: '*\Root\InventoryApplicationFile\winsat.exe|*'
+    EventType: SetValue
   SELECTION_5:
-    TargetObject: '*\LowerCaseLongPath'
+    TargetObject: '*\Root\InventoryApplicationFile\winsat.exe|*'
   SELECTION_6:
-    Details: c:\users\\*
+    TargetObject: '*\LowerCaseLongPath'
   SELECTION_7:
+    Details: c:\users\\*
+  SELECTION_8:
     Details: '*\appdata\local\temp\system32\winsat.exe'
   condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Unknown
 id: 6597be7b-ac61-4ac8-bef4-d3ec88174853
@@ -29,6 +31,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
+modified: 2022/01/13
 references:
 - https://github.com/hfiref0x/UACME
 status: experimental

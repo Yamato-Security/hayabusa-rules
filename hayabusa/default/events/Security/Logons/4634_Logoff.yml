@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2021/11/26
+modified: 2022/02/10
 
 title: Logoff
 title_jp: ログオフ
@@ -17,7 +17,8 @@ detection:
         Channel: Security
         EventID: 4634
     filter:
-        TargetUserName|endswith: "$"    #filter out computer/machine accounts
+        - TargetUserName|endswith: "$"    #Computer/machine accounts
+        - TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" #System users
     condition: selection and not filter
 falsepositives:
     - normal system usage

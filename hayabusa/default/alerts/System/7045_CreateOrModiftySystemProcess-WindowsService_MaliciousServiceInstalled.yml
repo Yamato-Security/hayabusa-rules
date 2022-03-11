@@ -1,13 +1,13 @@
 author: Eric Conrad, Zach Mathis
-creation_date: 2020/11/08
-updated_date: 2021/11/23
+date: 2020/11/08
+modified: 2022/02/07
 
-title: Malicious service installed
-title_jp: 悪意のあるサービスがインストールされた
+title: Malicious Service Possibly Installed
+title_jp: 悪意のあるサービスがインストールされた可能性がある
 details: 'Service: %ServiceName%  :  Path: %ImagePath%'
 details_jp: 'サービス: %ServiceName%  :  パス: %ImagePath%'
-description: Malicious service was installed based on suspicious entries in ./config/regex/regexes_suspicous_service.txt
-description_jp: Malicious service was installed based on suspicious entries in ./config/regex/regexes_suspicous_service.txt
+description: Malicious service was installed based on suspicious entries in ./rules/config/regex/regexes_suspicous_service.txt
+description_jp: Malicious service was installed based on suspicious entries in ./rules/config/regex/regexes_suspicous_service.txt
 
 id: dbbfd9f3-9508-478b-887e-03ddb9236909
 level: high
@@ -16,12 +16,17 @@ detection:
     selection:
         Channel: System
         EventID: 7045
-        ServiceName:
-            regexes: ./config/regex/detectlist_suspicous_services.txt
         ImagePath:
-            min_length: 1000
-            allowlist: ./config/regex/allowlist_legitimate_services.txt
-    condition: selection
+            allowlist: ./rules/config/regex/allowlist_legitimate_services.txt
+    selection_SuspiciousServiceNames:
+        ServiceName:
+            - regexes: ./rules/config/regex/detectlist_suspicous_services.txt
+            - min_length: 100
+    selection_SuspiciousPathNames:
+        ImagePath:
+            - regexes: ./rules/config/regex/detectlist_suspicous_services.txt
+            - min_length: 300
+    condition: selection and (selection_SuspiciousServiceNames or selection_SuspiciousPathNames)
 falsepositives:
     - normal system usage
 tags:

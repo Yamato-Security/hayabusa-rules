@@ -17,7 +17,9 @@ detection:
         Channel: Security
         EventID: 4624
         LogonType: 2
-    condition: selection
+    filter:
+        IpAddress: "-"
+    condition: selection and not filter
 falsepositives:
     - normal system usage
 tags:

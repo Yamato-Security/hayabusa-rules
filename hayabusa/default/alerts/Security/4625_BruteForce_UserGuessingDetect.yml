@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2021/12/20
-modified: 2021/12/22
+modified: 2022/02/07
 
 title: User Guessing Attempt
 title_jp: ユーザ名推測の試行
@@ -17,7 +17,7 @@ detection:
         Channel: Security
         EventID: 4625
         SubStatus: "0xc0000064" #Username does not exist
-    condition: selection | count() by IpAddress >= 5
+    condition: selection | count(TargetUserName) by IpAddress > 3 
     timeframe: 5m
 falsepositives:
 tags:

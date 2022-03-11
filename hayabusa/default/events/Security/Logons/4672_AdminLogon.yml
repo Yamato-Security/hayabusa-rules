@@ -21,6 +21,7 @@ detection:
         - SubjectUserName: "LOCAL SERVICE"
         - SubjectUserName: "NETWORK SERVICE"
         - SubjectUserName|endswith: "$"
+        - SubjectUserName: "DWM-1"
     condition: selection and not filter
 falsepositives:
     - normal system usage

@@ -8,8 +8,16 @@ detection:
   SELECTION_1:
     EventID: 4697
   SELECTION_2:
-    ServiceFileName|re: (?i).*new-object.*(?:system\.io\.compression\.deflatestream|system\.io\.streamreader).*text\.encoding\]::ascii.*readtoend
-  condition: (SELECTION_1 and SELECTION_2)
+    ServiceFileName: '*new-object*'
+  SELECTION_3:
+    ServiceFileName: '*text.encoding]::ascii*'
+  SELECTION_4:
+    ServiceFileName: '*readtoend*'
+  SELECTION_5:
+    ServiceFileName:
+    - '*system.io.compression.deflatestream*'
+    - '*system.io.streamreader*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - unknown
 id: 7a922f1b-2635-4d6c-91ef-af228b198ad3
@@ -17,7 +25,7 @@ level: medium
 logsource:
   product: windows
   service: security
-modified: 2021/09/18
+modified: 2022/02/03
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 related:
