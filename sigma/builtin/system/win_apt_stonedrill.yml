@@ -1,20 +1,21 @@
 
 title: StoneDrill Service Install
-ruletype: Sigma
 author: Florian Roth
 date: 2017/03/07
 description: This method detects a service install of the malicious Microsoft Network
   Realtime Inspection Service service described in StoneDrill report by Kaspersky
 detection:
   SELECTION_1:
-    Provider_Name: Service Control Manager
+    Channel: System
   SELECTION_2:
-    EventID: 7045
+    Provider_Name: Service Control Manager
   SELECTION_3:
-    ServiceName: NtsSrv
+    EventID: 7045
   SELECTION_4:
+    ServiceName: NtsSrv
+  SELECTION_5:
     ServiceFileName: '* LocalService'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unlikely
 id: 9e987c6c-4c1e-40d8-bd85-dd26fba8fdd6

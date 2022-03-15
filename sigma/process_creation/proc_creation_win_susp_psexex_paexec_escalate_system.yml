@@ -1,22 +1,19 @@
 
 title: PsExec/PAExec Escalation to LOCAL SYSTEM
-ruletype: Sigma
 author: Florian Roth
 date: 2021/11/23
 description: Detects suspicious flags used by PsExec and PAExec to escalate a command
   line to LOCAL_SYSTEM rights
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*PsExec*'
     - '*PAExec*'
     - '*accepteula*'
     - '*cmd /c *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* -s cmd.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Admins that use PsExec or PAExec to escalate to the SYSTEM account for maintenance
   purposes (rare)

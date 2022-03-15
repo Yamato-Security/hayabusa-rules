@@ -1,19 +1,16 @@
 
 title: Powershell AMSI Bypass via .NET Reflection
-ruletype: Sigma
 author: Markus Neis
 date: 2018/08/17
 description: Detects Request to amsiInitFailed that can be used to disable AMSI Scanning
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*System.Management.Automation.AmsiUtils*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*amsiInitFailed*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Potential Admin Activity
 id: 30edb182-aa75-42c0-b0a9-e998bb29067c

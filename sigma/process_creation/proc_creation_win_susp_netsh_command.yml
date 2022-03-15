@@ -1,27 +1,24 @@
 
 title: Suspicious Netsh Discovery Command
-ruletype: Sigma
 author: frack113
 date: 2021/12/07
 description: Adversaries may look for details about the network configuration and
   settings of systems they access or through information discovery of remote systems
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*netsh *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*advfirewall *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*firewall *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*show *'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*rule *'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '*name=all*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+    and SELECTION_6)
 falsepositives:
 - administrator, hotline ask to user
 id: 0e4164da-94bc-450d-a7be-a4b176179f1f

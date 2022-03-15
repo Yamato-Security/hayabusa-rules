@@ -1,17 +1,10 @@
 
 title: Suspicious Encoded Scripts in a WMI Consumer
-ruletype: Sigma
 author: Florian Roth
 date: 2021/09/01
 description: Detects suspicious encoded payloads in WMI Event Consumers
 detection:
   SELECTION_1:
-    EventID: 19
-  SELECTION_2:
-    EventID: 20
-  SELECTION_3:
-    EventID: 21
-  SELECTION_4:
     Destination:
     - '*V3JpdGVQcm9jZXNzTWVtb3J5*'
     - '*dyaXRlUHJvY2Vzc01lbW9ye*'
@@ -22,7 +15,7 @@ detection:
     - '*VGhpcyBwcm9ncmFtIG11c3QgYmUgcnVuIHVuZGVyIFdpbjMy*'
     - '*RoaXMgcHJvZ3JhbSBtdXN0IGJlIHJ1biB1bmRlciBXaW4zM*'
     - '*UaGlzIHByb2dyYW0gbXVzdCBiZSBydW4gdW5kZXIgV2luMz*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4)
+  condition: SELECTION_1
 falsepositives:
 - Unknown
 fields:

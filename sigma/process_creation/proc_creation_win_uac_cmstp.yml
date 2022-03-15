@@ -1,20 +1,17 @@
 
 title: Bypass UAC via CMSTP
-ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
 date: 2019/10/24
 description: Detect child processes of automatically elevated instances of Microsoft
   Connection Manager Profile Installer (cmstp.exe).
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\cmstp.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*/s*'
     - '*/au*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Legitimate use of cmstp.exe utility by legitimate user
 fields:

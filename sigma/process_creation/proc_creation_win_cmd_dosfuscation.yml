@@ -1,13 +1,10 @@
 
 title: Suspicious Dosfuscation Character in Commandline
-ruletype: Sigma
 author: frack113
 date: 2022/02/15
 description: Posssible Payload Obfuscation
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*^^*'
     - '*,;,*'
@@ -15,7 +12,7 @@ detection:
     - '* s^et *'
     - '* s^e^t *'
     - '* se^t *'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - legitimate use
 id: a77c1610-fc73-4019-8e29-0f51efc04a51

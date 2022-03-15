@@ -1,6 +1,5 @@
 
 title: Replace Desktop Wallpaper by Powershell
-ruletype: Sigma
 author: frack113
 date: 2021/12/26
 description: |
@@ -8,16 +7,21 @@ description: |
   This may take the form of modifications to internal websites, or directly to user systems with the replacement of the desktop wallpaper
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Get-ItemProperty*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*Registry::*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*HKEY_CURRENT_USER\Control Panel\Desktop\\*'
+    ScriptBlockText: '*Get-ItemProperty*'
   SELECTION_4:
-    ScriptBlockText: '*WallPaper*'
+    ScriptBlockText: '*Registry::*'
   SELECTION_5:
+    ScriptBlockText: '*HKEY_CURRENT_USER\Control Panel\Desktop\\*'
+  SELECTION_6:
+    ScriptBlockText: '*WallPaper*'
+  SELECTION_7:
     ScriptBlockText: '*SystemParametersInfo(20,0,*,3)*'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4) or SELECTION_5)
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+    SELECTION_5 and SELECTION_6) or SELECTION_7))
 falsepositives:
 - Unknown
 id: c5ac6a1e-9407-45f5-a0ce-ca9a0806a287

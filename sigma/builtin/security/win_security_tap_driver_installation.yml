@@ -1,16 +1,17 @@
 
 title: Tap Driver Installation
-ruletype: Sigma
 author: Daniil Yugoslavskiy, Ian Davis, oscd.community
 date: 2019/10/24
 description: Well-known TAP software installation. Possible preparation for data exfiltration
   using tunnelling techniques
 detection:
   SELECTION_1:
-    EventID: 4697
+    Channel: Security
   SELECTION_2:
+    EventID: 4697
+  SELECTION_3:
     ServiceFileName: '*tap0901*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate OpenVPN TAP insntallation
 id: 9c8afa4d-0022-48f0-9456-3712466f9701

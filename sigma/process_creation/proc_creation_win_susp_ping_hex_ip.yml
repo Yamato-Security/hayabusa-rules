@@ -1,17 +1,14 @@
 
 title: Ping Hex IP
-ruletype: Sigma
 author: Florian Roth
 date: 2018/03/23
 description: Detects a ping command that uses a hex encoded IP address
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\ping.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*0x*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unlikely, because no sane admin pings IP addresses in a hexadecimal form
 fields:

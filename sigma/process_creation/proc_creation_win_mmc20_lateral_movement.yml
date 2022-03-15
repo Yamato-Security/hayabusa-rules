@@ -1,6 +1,5 @@
 
 title: MMC20 Lateral Movement
-ruletype: Sigma
 author: '@2xxeformyshirt (Security Risk Advisors) - rule; Teymur Kheirkhabarov (idea)'
 date: 2020/03/04
 description: Detects MMC20.Application Lateral Movement; specifically looks for the
@@ -8,14 +7,12 @@ description: Detects MMC20.Application Lateral Movement; specifically looks for 
   svchost.exe
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\svchost.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\mmc.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*-Embedding*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unlikely
 id: f1f3bf22-deb2-418d-8cce-e1a45e46a5bd

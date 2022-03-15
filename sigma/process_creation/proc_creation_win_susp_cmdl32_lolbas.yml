@@ -1,21 +1,18 @@
 
 title: Suspicious Cmdl32 Execution
-ruletype: Sigma
 author: frack113
 date: 2021/11/03
 description: lolbas Cmdl32 is use to download a payload to evade antivirus
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\cmdl32.exe'
-  SELECTION_3:
+  SELECTION_2:
     OriginalFileName: CMDL32.EXE
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/vpn *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*/lan *'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5))
+  condition: ((SELECTION_1 or SELECTION_2) and (SELECTION_3 and SELECTION_4))
 falsepositives:
 - unknown
 id: f37aba28-a9e6-4045-882c-d5004043b337

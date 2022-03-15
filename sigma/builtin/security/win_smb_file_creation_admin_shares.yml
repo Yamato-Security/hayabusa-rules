@@ -1,20 +1,22 @@
 
 title: SMB Create Remote File Admin Share
-ruletype: Sigma
 author: Jose Rodriguez (@Cyb3rPandaH), OTR (Open Threat Research)
 date: 2020/08/06
 description: Look for non-system accounts SMB accessing a file with write (0x2) access
   mask via administrative share (i.e C$).
 detection:
   SELECTION_1:
-    EventID: 5145
+    Channel: Security
   SELECTION_2:
-    ShareName: '*C$'
+    EventID: 5145
   SELECTION_3:
-    AccessMask: '0x2'
+    ShareName: '*C$'
   SELECTION_4:
+    AccessMask: '0x2'
+  SELECTION_5:
     SubjectUserName: '*$'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
 - Unknown
 id: b210394c-ba12-4f89-9117-44a2464b9511

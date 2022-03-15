@@ -1,6 +1,5 @@
 
 title: User Couldn't Call a Privileged Service 'LsaRegisterLogonProcess'
-ruletype: Sigma
 author: Roberto Rodriguez (source), Ilyas Ochkov (rule), oscd.community
 date: 2019/10/24
 description: The 'LsaRegisterLogonProcess' function verifies that the application
@@ -8,14 +7,16 @@ description: The 'LsaRegisterLogonProcess' function verifies that the applicatio
   privilege set. Possible Rubeus tries to get a handle to LSA.
 detection:
   SELECTION_1:
-    Provider_Name: Microsoft-Windows-Security-Auditing
+    Channel: Security
   SELECTION_2:
-    EventID: 4673
+    Provider_Name: Microsoft-Windows-Security-Auditing
   SELECTION_3:
-    Service: LsaRegisterLogonProcess()
+    EventID: 4673
   SELECTION_4:
+    Service: LsaRegisterLogonProcess()
+  SELECTION_5:
     Keywords: '0x8010000000000000'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 6daac7fc-77d1-449a-a71a-e6b4d59a0e54

@@ -1,6 +1,5 @@
 
 title: Monitoring For Persistence Via BITS
-ruletype: Sigma
 author: Sreeman
 date: 2020/10/29
 description: BITS will allow you to schedule a command to execute after a successful
@@ -11,12 +10,23 @@ description: BITS will allow you to schedule a command to execute after a succes
   program after being downloaded
 detection:
   SELECTION_1:
-    EventID: 1
+    CommandLine: '*bitsadmin*'
   SELECTION_2:
-    CommandLine|re: (?i).*bitsadmin.*/SetNotifyCmdLine.*(%COMSPEC%|cmd.exe|regsvr32.exe).*
+    CommandLine: '*/SetNotifyCmdLine*'
   SELECTION_3:
-    CommandLine|re: (?i).*bitsadmin.*/Addfile.*(http|https|ftp|ftps):.*
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+    CommandLine:
+    - '*%COMSPEC%*'
+    - '*cmd.exe*'
+    - '*regsvr32.exe*'
+  SELECTION_4:
+    CommandLine: '*/Addfile*'
+  SELECTION_5:
+    CommandLine:
+    - '*http:*'
+    - '*https:*'
+    - '*ftp:*'
+    - '*ftps:*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - None observed yet.
 fields:
@@ -26,7 +36,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/07/15
+modified: 2022/03/07
 references:
 - https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html
 - http://0xthem.blogspot.com/2014/03/t-emporal-persistence-with-and-schtasks.html

@@ -1,17 +1,18 @@
 
 title: HybridConnectionManager Service Installation
-ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2021/04/12
 description: Rule to detect the Hybrid Connection Manager service installation.
 detection:
   SELECTION_1:
-    EventID: 4697
+    Channel: Security
   SELECTION_2:
-    ServiceName: HybridConnectionManager
+    EventID: 4697
   SELECTION_3:
+    ServiceName: HybridConnectionManager
+  SELECTION_4:
     ServiceFileName: '*HybridConnectionManager*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate use of Hybrid Connection Manager via Azure function apps.
 id: 0ee4d8a5-4e67-4faf-acfa-62a78457d1f2

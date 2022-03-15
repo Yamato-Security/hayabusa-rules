@@ -1,18 +1,15 @@
 
 title: Network Reconnaissance Activity
-ruletype: Sigma
 author: Florian Roth
 date: 2022/02/07
 description: Detects a set of suspicious network related commands often used in recon
   stages
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*nslookup*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*_ldap._tcp.dc._msdcs.*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

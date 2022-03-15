@@ -1,6 +1,5 @@
 
 title: DCERPC SMB Spoolss Named Pipe
-ruletype: Sigma
 author: OTR (Open Threat Research)
 date: 2018/11/28
 description: Detects the use of the spoolss named pipe over SMB. This can be used
@@ -8,12 +7,14 @@ description: Detects the use of the spoolss named pipe over SMB. This can be use
   enabled.
 detection:
   SELECTION_1:
-    EventID: 5145
+    Channel: Security
   SELECTION_2:
-    ShareName: \\\*\IPC$
+    EventID: 5145
   SELECTION_3:
+    ShareName: \\\*\IPC$
+  SELECTION_4:
     RelativeTargetName: spoolss
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Domain Controllers acting as printer servers too? :)
 id: 214e8f95-100a-4e04-bb31-ef6cba8ce07e

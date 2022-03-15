@@ -1,6 +1,5 @@
 
 title: Suspicious Get Information for AD Groups or DoesNotRequirePreAuth User
-ruletype: Sigma
 author: frack113
 date: 2021/12/15
 description: "Adversaries may attempt to find domain-level groups and permission settings.\n\
@@ -10,27 +9,32 @@ description: "Adversaries may attempt to find domain-level groups and permission
   \ administrators. \n"
 detection:
   SELECTION_1:
-    Payload: '*get-ADPrincipalGroupMembership*'
+    EventID: 4103
   SELECTION_10:
+    ContextInfo: '*-f *'
+  SELECTION_11:
+    ContextInfo: '*-pr *'
+  SELECTION_12:
     ContextInfo: '*DoesNotRequirePreAuth*'
   SELECTION_2:
-    ContextInfo: '*get-ADPrincipalGroupMembership*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    Payload: '*get-aduser*'
+    Payload: '*get-ADPrincipalGroupMembership*'
   SELECTION_4:
-    Payload: '*-f *'
+    ContextInfo: '*get-ADPrincipalGroupMembership*'
   SELECTION_5:
-    Payload: '*-pr *'
+    Payload: '*get-aduser*'
   SELECTION_6:
-    Payload: '*DoesNotRequirePreAuth*'
+    Payload: '*-f *'
   SELECTION_7:
-    ContextInfo: '*get-aduser*'
+    Payload: '*-pr *'
   SELECTION_8:
-    ContextInfo: '*-f *'
+    Payload: '*DoesNotRequirePreAuth*'
   SELECTION_9:
-    ContextInfo: '*-pr *'
-  condition: (SELECTION_1 or SELECTION_2 or (SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10))
+    ContextInfo: '*get-aduser*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9 and SELECTION_10
+    and SELECTION_11 and SELECTION_12)))
 falsepositives:
 - administrator script
 id: 815bfc17-7fc6-4908-a55e-2f37b98cedb4

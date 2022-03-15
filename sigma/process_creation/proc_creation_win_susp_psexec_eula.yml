@@ -1,17 +1,14 @@
 
 title: Psexec Accepteula Condition
-ruletype: Sigma
 author: omkar72 - https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html
 date: 2020/10/30
 description: Detect ed user accept agreement execution in psexec commandline
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\psexec.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*accepteula*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Administrative scripts.
 fields:

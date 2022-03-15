@@ -1,20 +1,17 @@
 
 title: Suspicious SYSTEM User Process Creation
-ruletype: Sigma
 author: Florian Roth (rule), David ANDRE (additional keywords)
 date: 2021/12/20
 description: Detects a suspicious process creation as SYSTEM user (suspicious program
   or command line parameter)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     IntegrityLevel: System
-  SELECTION_3:
+  SELECTION_2:
     User:
     - '*AUTHORI*'
     - '*AUTORI*'
-  SELECTION_4:
+  SELECTION_3:
     Image:
     - '*\calc.exe'
     - '*\wscript.exe'
@@ -23,7 +20,7 @@ detection:
     - '*\mshta.exe'
     - '*\forfiles.exe'
     - '*\ping.exe'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine:
     - '*sc stop *'
     - '* -NoP *'
@@ -64,7 +61,7 @@ detection:
     - '*;iex(*'
     - '*MiniDump*'
     - '*net user *'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and (SELECTION_4 or SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Administrative activity
 - Scripts and administrative tools used in the monitored environment

@@ -1,28 +1,24 @@
 
 title: Hermetic Wiper TG Process Patterns
-ruletype: Sigma
 author: Florian Roth
 date: 2022/02/25
 description: This rule detects process execution patterns found in intrusions related
   to the Hermetic Wiper malware attacks against Ukraine in February 2022
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\policydefinitions\postgresql.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*CSIDL_SYSTEM_DRIVE\temp\sys.tmp*'
     - '* 1> \\127.0.0.1\ADMIN$\__16*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*powershell -c *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*\comsvcs.dll MiniDump *'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*\winupd.log full*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or (SELECTION_4 and SELECTION_5
-    and SELECTION_6)))
+  condition: (SELECTION_1 or SELECTION_2 or (SELECTION_3 and SELECTION_4 and SELECTION_5))
 falsepositives:
 - Unknown
 id: 2f974656-6d83-4059-bbdf-68ac5403422f

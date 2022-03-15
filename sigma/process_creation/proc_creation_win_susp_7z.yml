@@ -1,24 +1,21 @@
 
 title: Compress Data and Lock With Password for Exfiltration With 7-ZIP
-ruletype: Sigma
 author: frack113
 date: 2021/07/27
 description: An adversary may compress or encrypt data that is collected prior to
   exfiltration using 3rd party utilities
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*7z.exe*'
     - '*7za.exe*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* -p*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '* a *'
     - '* u *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Command line parameter combinations that contain all included strings
 fields:

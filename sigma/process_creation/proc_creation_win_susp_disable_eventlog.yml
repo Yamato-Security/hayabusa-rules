@@ -1,24 +1,21 @@
 
 title: Disable or Delete Windows Eventlog
-ruletype: Sigma
 author: Florian Roth
 date: 2021/02/11
 description: Detects command that is used to disable or delete Windows eventlog via
   logman Windows utility
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*logman *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*stop *'
     - '*delete *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*EventLog-System*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate deactivation by administrative staff
 - Installer tools that disable services, e.g. before log collection agent installation

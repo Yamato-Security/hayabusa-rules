@@ -1,20 +1,17 @@
 
 title: Cmd.exe CommandLine Path Traversal
-ruletype: Sigma
 author: xknow @xknow_infosec
 date: 2020/06/11
 description: detects the usage of path traversal in cmd.exe indicating possible command/argument
   confusion/hijacking
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentCommandLine: '*cmd*'
-  SELECTION_3:
+  SELECTION_2:
     ParentCommandLine: '*/c*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/../../*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - (not much) some benign Java tools may product false-positive commandlines for loading
   libraries

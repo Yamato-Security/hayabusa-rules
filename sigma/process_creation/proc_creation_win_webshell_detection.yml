@@ -1,16 +1,17 @@
 
 title: Webshell Detection With Command Line Keywords
-ruletype: Sigma
 author: Florian Roth, Jonhnathan Ribeiro, Anton Kutepov, oscd.community
 date: 2017/01/01
 description: Detects certain command line parameters often used during reconnaissance
   activity via web shells
 detection:
   SELECTION_1:
-    EventID: 1
+    ParentImage:
+    - '*\w3wp.exe'
+    - '*\php-cgi.exe'
+    - '*\nginx.exe'
+    - '*\httpd.exe'
   SELECTION_10:
-    CommandLine: '* /node:*'
-  SELECTION_11:
     Image:
     - '*\whoami.exe'
     - '*\systeminfo.exe'
@@ -23,42 +24,38 @@ detection:
     - '*\vssadmin.exe'
     - '*\wevtutil.exe'
     - '*\tasklist.exe'
-  SELECTION_12:
+  SELECTION_11:
     CommandLine:
     - '* Test-NetConnection *'
     - '*dir \\*'
   SELECTION_2:
     ParentImage:
-    - '*\w3wp.exe'
-    - '*\php-cgi.exe'
-    - '*\nginx.exe'
-    - '*\httpd.exe'
-  SELECTION_3:
-    ParentImage:
     - '*\apache*'
     - '*\tomcat*'
-  SELECTION_4:
+  SELECTION_3:
     Image:
     - '*\net.exe'
     - '*\net1.exe'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine:
     - '* user *'
     - '* use *'
     - '* group *'
-  SELECTION_6:
+  SELECTION_5:
     Image: '*\ping.exe'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '* -n *'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine:
     - '*&cd&echo*'
     - '*cd /d *'
-  SELECTION_9:
+  SELECTION_8:
     Image: '*\wmic.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and (((SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7) or SELECTION_8) or (SELECTION_9
-    and SELECTION_10) or SELECTION_11 or SELECTION_12))
+  SELECTION_9:
+    CommandLine: '* /node:*'
+  condition: ((SELECTION_1 or SELECTION_2) and (((SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6) or SELECTION_7) or (SELECTION_8 and SELECTION_9)
+    or SELECTION_10 or SELECTION_11))
 falsepositives:
 - unknown
 fields:

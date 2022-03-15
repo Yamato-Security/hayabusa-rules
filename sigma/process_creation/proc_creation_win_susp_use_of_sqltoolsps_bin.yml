@@ -1,6 +1,5 @@
 
 title: SQL Client Tools PowerShell Session Detection
-ruletype: Sigma
 author: Agro (@agro_sev) oscd.communitly
 date: 2020/10/13
 description: This rule detects execution of a PowerShell code through the sqltoolsps.exe
@@ -9,17 +8,14 @@ description: This rule detects execution of a PowerShell code through the sqltoo
   utility helps to bypass protection mechanisms based on the analysis of these logs.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\sqltoolsps.exe'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage: '*\sqltoolsps.exe'
-  SELECTION_4:
+  SELECTION_3:
     OriginalFileName: \sqltoolsps.exe
-  SELECTION_5:
+  SELECTION_4:
     ParentImage: '*\smss.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4) and  not
-    (SELECTION_5))
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - Direct PS command execution through SQLToolsPS.exe is uncommon, childprocess sqltoolsps.exe
   spawned by smss.exe is a legitimate action.

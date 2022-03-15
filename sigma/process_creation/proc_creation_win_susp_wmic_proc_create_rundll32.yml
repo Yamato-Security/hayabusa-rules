@@ -1,17 +1,14 @@
 
 title: Suspicious WMI Execution Using Rundll32
-ruletype: Sigma
 author: Florian Roth
 date: 2020/10/12
 description: Detects WMI executing rundll32
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*process call create*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*rundll32*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 fields:

@@ -1,29 +1,26 @@
 
 title: Squirrel Lolbin
-ruletype: Sigma
 author: Karneades / Markus Neis, Jonhnathan Ribeiro, oscd.community
 date: 2019/11/12
 description: Detects Possible Squirrel Packages Manager as Lolbin
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\update.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*--processStart*'
     - '*--processStartAndWait*'
     - '*--createShortcut*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*.exe*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*C:\Users\\*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*\AppData\Local\Discord\Update.exe*'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '* --processStart Discord.exe*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5 and SELECTION_6 and SELECTION_7)))
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not ((SELECTION_4
+    and SELECTION_5 and SELECTION_6)))
 falsepositives:
 - 1Clipboard
 - Beaker Browser

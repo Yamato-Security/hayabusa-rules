@@ -1,6 +1,5 @@
 
 title: Change User Agents with WebRequest
-ruletype: Sigma
 author: frack113
 date: 2022/01/23
 description: "Adversaries may communicate using application layer protocols associated\
@@ -9,10 +8,14 @@ description: "Adversaries may communicate using application layer protocols asso
   \ will be embedded within the protocol traffic between the client and server. \n"
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Invoke-WebRequest*'
+    EventID: 4104
   SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*Invoke-WebRequest*'
+  SELECTION_4:
     ScriptBlockText: '*-UserAgent *'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: d4488827-73af-4f8d-9244-7b7662ef046e

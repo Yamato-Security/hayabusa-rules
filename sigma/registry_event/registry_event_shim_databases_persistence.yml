@@ -1,0 +1,31 @@
+
+title: Registry Key Creation or Modification for Shim DataBase
+author: frack113
+date: 2021/12/30
+description: |
+  Adversaries may establish persistence and/or elevate privileges by executing malicious content triggered by application shims.
+  The Microsoft Windows Application Compatibility Infrastructure/Framework (Application Shim) was created to allow for backward compatibility of software as the operating system codebase changes over time
+detection:
+  SELECTION_1:
+    TargetObject:
+    - HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB\\*
+    - HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom\\*
+  SELECTION_2:
+    EventType: SetValue
+  SELECTION_3:
+    Details: ''
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+falsepositives:
+- Unknown
+id: dfb5b4e8-91d0-4291-b40a-e3b0d3942c45
+level: medium
+logsource:
+  category: registry_event
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.011/T1546.011.md#atomic-test-3---registry-key-creation-andor-modification-events-for-sdb
+- https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html
+status: experimental
+tags:
+- attack.persistence
+- attack.t1546.011

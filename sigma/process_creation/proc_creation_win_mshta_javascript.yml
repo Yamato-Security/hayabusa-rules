@@ -1,17 +1,14 @@
 
 title: Mshta JavaScript Execution
-ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
 date: 2019/10/24
 description: Identifies suspicious mshta.exe commands.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\mshta.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*javascript*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - unknown
 fields:

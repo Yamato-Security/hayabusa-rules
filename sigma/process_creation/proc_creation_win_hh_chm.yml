@@ -1,17 +1,14 @@
 
 title: HH.exe Execution
-ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Dan Beavin), oscd.community
 date: 2019/10/24
 description: Identifies usage of hh.exe executing recently modified .chm files.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\hh.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*.chm*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - unlike
 fields:

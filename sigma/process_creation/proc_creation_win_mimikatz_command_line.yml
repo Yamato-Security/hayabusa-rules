@@ -1,18 +1,15 @@
 
 title: Mimikatz Command Line
-ruletype: Sigma
 author: Teymur Kheirkhabarov, oscd.community, David ANDRE (additional keywords), Tim
   Shelton
 date: 2019/10/22
 description: Detection well-known mimikatz command line arguments
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*DumpCreds*'
     - '*invoke-mimikatz*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*rpc*'
     - '*token*'
@@ -24,10 +21,10 @@ detection:
     - '*privilege*'
     - '*process*'
     - '*vault*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*::*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine:
     - '*aadcookie*'
     - '*detours*'
@@ -40,14 +37,14 @@ detection:
     - '*preshutdown*'
     - '*mstsc*'
     - '*multirdp*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine:
     - '*::*'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine:
     - '*function Convert-GuidToCompressedGuid*'
-  condition: (SELECTION_1 and ((SELECTION_2 or (SELECTION_3 and SELECTION_4)) or (SELECTION_5
-    and SELECTION_6)) and  not ((SELECTION_7)))
+  condition: (((SELECTION_1 or (SELECTION_2 and SELECTION_3)) or (SELECTION_4 and
+    SELECTION_5)) and  not ((SELECTION_6)))
 falsepositives:
 - Legitimate Administrator using tool for password recovery
 id: a642964e-bead-4bed-8910-1bb4d63e3b4d

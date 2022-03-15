@@ -1,6 +1,5 @@
 
 title: Detection of PowerShell Execution via Sqlps.exe
-ruletype: Sigma
 author: Agro (@agro_sev) oscd.community
 date: 2020/10/10
 description: This rule detects execution of a PowerShell code through the sqlps.exe
@@ -9,17 +8,14 @@ description: This rule detects execution of a PowerShell code through the sqlps.
   protection mechanisms based on the analysis of these logs.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\sqlps.exe'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage: '*\sqlps.exe'
-  SELECTION_4:
+  SELECTION_3:
     OriginalFileName: \sqlps.exe
-  SELECTION_5:
+  SELECTION_4:
     ParentImage: '*\sqlagent.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4) and  not
-    (SELECTION_5))
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - Direct PS command execution through SQLPS.exe is uncommon, childprocess sqlps.exe
   spawned by sqlagent.exe is a legitimate action.

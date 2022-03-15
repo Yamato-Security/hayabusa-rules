@@ -1,11 +1,14 @@
 
 title: Accessing WinAPI in PowerShell
-ruletype: Sigma
 author: Nikita Nazarov, oscd.community
 date: 2020/10/06
 description: Detecting use WinAPI Functions in PowerShell
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*WaitForSingleObject*'
     - '*QueueUserApc*'
@@ -52,7 +55,7 @@ detection:
     - '*msvcrt*'
     - '*ntdll*'
     - '*secur32*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Carbon PowerShell Module (https://github.com/webmd-health-services/Carbon)
 id: 03d83090-8cba-44a0-b02f-0b756a050306

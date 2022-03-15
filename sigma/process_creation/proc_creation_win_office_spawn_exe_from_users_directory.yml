@@ -1,28 +1,24 @@
 
 title: MS Office Product Spawning Exe in User Dir
-ruletype: Sigma
 author: Jason Lynch
 date: 2019/04/02
 description: Detects an executable in the users directory started from Microsoft Word,
   Excel, Powerpoint, Publisher or Visio
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage:
     - '*\WINWORD.EXE'
     - '*\EXCEL.EXE'
     - '*\POWERPNT.exe'
     - '*\MSPUB.exe'
     - '*\VISIO.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: C:\users\\*
-  SELECTION_4:
+  SELECTION_3:
     Image: '*.exe'
-  SELECTION_5:
+  SELECTION_4:
     Image: '*\Teams.exe'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - unknown
 fields:

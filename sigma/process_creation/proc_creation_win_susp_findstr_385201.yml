@@ -1,18 +1,15 @@
 
 title: Suspicious Findstr 385201 Execution
-ruletype: Sigma
 author: frack113
 date: 2021/12/16
 description: Discovery of an installed Sysinternals Sysmon service using driver altitude
   (even if the name is changed).
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\findstr.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* 385201*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: 37db85d1-b089-490a-a59a-c7b6f984f480

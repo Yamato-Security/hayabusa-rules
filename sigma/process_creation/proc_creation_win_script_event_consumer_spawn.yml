@@ -1,16 +1,13 @@
 
 title: Script Event Consumer Spawning Process
-ruletype: Sigma
 author: Sittikorn S
 date: 2021/06/21
 description: Detects a suspicious child process of Script Event Consumer (scrcons.exe).
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage:
     - '*\scrcons.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\svchost.exe'
     - '*\dllhost.exe'
@@ -23,7 +20,7 @@ detection:
     - '*\rundll32.exe'
     - '*\msiexec.exe'
     - '*\msbuild.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - unknown
 fields:

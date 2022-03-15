@@ -1,19 +1,20 @@
 
 title: smbexec.py Service Installation
-ruletype: Sigma
 author: Omer Faruk Celik
 date: 2018/03/20
 description: Detects the use of smbexec.py tool by detecting a specific service installation
 detection:
   SELECTION_1:
-    Provider_Name: Service Control Manager
+    Channel: System
   SELECTION_2:
-    EventID: 7045
+    Provider_Name: Service Control Manager
   SELECTION_3:
-    ServiceName: BTOBTO
+    EventID: 7045
   SELECTION_4:
+    ServiceName: BTOBTO
+  SELECTION_5:
     ServiceFileName: '*\execute.bat'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Penetration Test
 - Unknown

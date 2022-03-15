@@ -1,18 +1,15 @@
 
 title: InfDefaultInstall.exe .inf Execution
-ruletype: Sigma
 author: frack113
 date: 2021/07/13
 description: Executes SCT script using scrobj.dll from a command in entered into a
   specially prepared INF file.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*InfDefaultInstall.exe *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*.inf*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 fields:

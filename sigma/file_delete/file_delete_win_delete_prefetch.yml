@@ -1,0 +1,29 @@
+
+title: Prefetch File Deletion
+author: Cedric MAURUGEON
+date: 2021/09/29
+description: Detects the deletion of a prefetch file (AntiForensic)
+detection:
+  SELECTION_1:
+    TargetFilename: C:\Windows\Prefetch\\*
+  SELECTION_2:
+    TargetFilename: '*.pf'
+  SELECTION_3:
+    Image: C:\windows\system32\svchost.exe
+  SELECTION_4:
+    User:
+    - NT AUTHORITY\SYSTEM*
+    - AUTORITE NT\Sys*
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3 and SELECTION_4))
+falsepositives:
+- Unknown
+id: 0a1f9d29-6465-4776-b091-7f43b26e4c89
+level: high
+logsource:
+  category: file_delete
+  product: windows
+modified: 2022/01/15
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1070.004

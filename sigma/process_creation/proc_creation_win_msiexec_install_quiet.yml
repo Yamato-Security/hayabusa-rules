@@ -1,6 +1,5 @@
 
 title: Suspicious Msiexec Quiet Install
-ruletype: Sigma
 author: frack113
 date: 2022/01/16
 description: |
@@ -8,14 +7,12 @@ description: |
   Msiexec.exe is the command-line utility for the Windows Installer and is thus commonly associated with executing installation packages (.msi)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\msiexec.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* /i*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* /q*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitim script
 id: 79a87aa6-e4bd-42fc-a5bb-5e6fbdcd62f5

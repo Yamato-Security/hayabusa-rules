@@ -1,20 +1,17 @@
 
 title: PowerShell DownloadFile
-ruletype: Sigma
 author: Florian Roth
 date: 2020/08/28
 description: Detects the execution of powershell, a WebClient object creation and
   the invocation of DownloadFile in a single command line
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*powershell*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*.DownloadFile*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*System.Net.WebClient*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 8f70ac5f-1f6f-4f8e-b454-db19561216c5

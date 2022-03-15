@@ -1,6 +1,5 @@
 
 title: Mounted Share Deleted
-ruletype: Sigma
 author: oscd.community, @redcanary, Zach Stanford @svch0st
 date: 2020/10/08
 description: Detects when when a mounted share is removed. Adversaries may remove
@@ -8,16 +7,14 @@ description: Detects when when a mounted share is removed. Adversaries may remov
   operation
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\net.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\net1.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*share*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*/delete*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Administrators or Power users may remove their shares via cmd line
 id: cb7c4a03-2871-43c0-9bbb-18bbdb079896

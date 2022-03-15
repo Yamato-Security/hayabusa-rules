@@ -1,23 +1,24 @@
 
 title: Windows Credential Editor
-ruletype: Sigma
 author: Florian Roth
 date: 2019/12/31
 description: Detects the use of Windows Credential Editor (WCE)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Imphash:
     - a53a02b997935fd8eedcb5f7abab9b9f
     - e96a73c7bf33a464c510ede582318bf2
+  SELECTION_2:
+    Hashes:
+    - '*IMPHASH=a53a02b997935fd8eedcb5f7abab9b9f*'
+    - '*IMPHASH=e96a73c7bf33a464c510ede582318bf2*'
   SELECTION_3:
     CommandLine: '*.exe -S'
   SELECTION_4:
     ParentImage: '*\services.exe'
   SELECTION_5:
     Image: '*\clussvc.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4)) and  not
+  condition: (((SELECTION_1 or SELECTION_2) or (SELECTION_3 and SELECTION_4)) and  not
     (SELECTION_5))
 falsepositives:
 - Another service that uses a single -s command line switch
@@ -26,7 +27,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/07/15
+modified: 2022/03/04
 references:
 - https://www.ampliasecurity.com/research/windows-credentials-editor/
 status: experimental

@@ -1,6 +1,5 @@
 
 title: Detected Windows Software Discovery
-ruletype: Sigma
 author: Nikita Nazarov, oscd.community
 date: 2020/10/16
 description: Adversaries may attempt to enumerate software for a variety of reasons,
@@ -8,14 +7,19 @@ description: Adversaries may attempt to enumerate software for a variety of reas
   has a version of software that is vulnerable.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*get-itemProperty*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*\software\\*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*select-object*'
+    ScriptBlockText: '*get-itemProperty*'
   SELECTION_4:
+    ScriptBlockText: '*\software\\*'
+  SELECTION_5:
+    ScriptBlockText: '*select-object*'
+  SELECTION_6:
     ScriptBlockText: '*format-table*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Legitimate administration activities
 id: 2650dd1a-eb2a-412d-ac36-83f06c4f2282

@@ -1,13 +1,14 @@
 
 title: LDAP Reconnaissance / Active Directory Enumeration
-ruletype: Sigma
 author: Adeem Mawani
 date: 2021/06/22
 description: Detects possible Active Directory enumeration via LDAP
 detection:
   SELECTION_1:
-    EventID: 30
+    Channel: Microsoft-Windows-LDAP-Client/Debug
   SELECTION_2:
+    EventID: 30
+  SELECTION_3:
     SearchFilter:
     - '*(groupType:1.2.840.113556.1.4.803:=2147483648)*'
     - '*(groupType:1.2.840.113556.1.4.803:=2147483656)*'
@@ -38,15 +39,15 @@ detection:
     - '*(primaryGroupID=515)*'
     - '*(primaryGroupID=512)*'
     - '*Domain Admins*'
-  SELECTION_3:
-    EventID: 30
   SELECTION_4:
+    EventID: 30
+  SELECTION_5:
     SearchFilter:
     - '*(domainSid=*)*'
     - '*(objectSid=*)*'
-  SELECTION_5:
-    EventID: 30
   SELECTION_6:
+    EventID: 30
+  SELECTION_7:
     SearchFilter:
     - '*(userAccountControl:1.2.840.113556.1.4.803:=4194304)*'
     - '*(userAccountControl:1.2.840.113556.1.4.803:=2097152)*'
@@ -62,8 +63,8 @@ detection:
     - '*(accountExpires=0)*'
     - '*(adminCount=1)*'
     - '*ms-MCS-AdmPwd*'
-  condition: (((SELECTION_1 and SELECTION_2) and  not (SELECTION_3 and SELECTION_4))
-    or (SELECTION_5 and SELECTION_6))
+  condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3) and  not (SELECTION_4
+    and SELECTION_5)) or (SELECTION_6 and SELECTION_7)))
 id: 31d68132-4038-47c7-8f8e-635a39a7c174
 level: medium
 logsource:

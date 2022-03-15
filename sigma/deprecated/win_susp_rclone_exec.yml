@@ -1,13 +1,10 @@
 
 title: Rclone Execution via Command Line or PowerShell
-ruletype: Sigma
 author: Aaron Greetham (@beardofbinary) - NCC Group
 date: 2021/05/26
 description: Detects Rclone which is commonly used by ransomware groups for exfiltration
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '* pass *'
     - '* user *'
@@ -18,15 +15,15 @@ detection:
     - '* lsd *'
     - '* remote *'
     - '* ls *'
-  SELECTION_3:
+  SELECTION_2:
     Description: Rsync for cloud storage
-  SELECTION_4:
+  SELECTION_3:
     Image: '*\rclone.exe'
-  SELECTION_5:
+  SELECTION_4:
     ParentImage:
     - '*\PowerShell.exe'
     - '*\cmd.exe'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
+  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4)))
 falsepositives:
 - Legitimate Rclone usage (rare)
 id: cb7286ba-f207-44ab-b9e6-760d82b84253

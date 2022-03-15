@@ -1,18 +1,15 @@
 
 title: Run Whoami as Privileged User
-ruletype: Sigma
 author: Florian Roth
 date: 2022/01/28
 description: Detects a whoami.exe executed by privileged accounts that are often misused
   by threat actors
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     User: '*TrustedInstaller*'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\whoami.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: 79ce34ca-af29-4d0e-b832-fc1b377020db

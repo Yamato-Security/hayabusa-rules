@@ -1,12 +1,15 @@
 
 title: Code Integrity Blocked Driver Load
-ruletype: Sigma
 author: Florian Roth
 date: 2022/01/20
 description: Detects driver load events that got blocked by Windows code integrity
   checks
 detection:
-  condition: that did not meet the Microsoft signing level requirements
+  SELECTION_1:
+    Channel: Microsoft-Windows-CodeIntegrity/Operational
+  SELECTION_2:
+  - that did not meet the Microsoft signing level requirements
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: f8931561-97f5-4c46-907f-0a4a592e47a7

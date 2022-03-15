@@ -1,18 +1,15 @@
 
 title: Cmd Stream Redirection
-ruletype: Sigma
 author: frack113
 date: 2022/02/04
 description: Detects the redirection of an output stream of / within a Windows command
   line session
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\cmd.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*>*:*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: 70e68156-6571-427b-a6e9-4476a173a9b6

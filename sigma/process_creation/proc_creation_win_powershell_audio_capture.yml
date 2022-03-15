@@ -1,15 +1,12 @@
 
 title: Audio Capture via PowerShell
-ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
 date: 2019/10/24
 description: Detects audio capture via PowerShell Cmdlet.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*WindowsAudioDevice-Powershell-Cmdlet*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Legitimate audio capture by legitimate user.
 id: 932fb0d8-692b-4b0f-a26e-5643a50fe7d6

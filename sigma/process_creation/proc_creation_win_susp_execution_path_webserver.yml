@@ -1,27 +1,24 @@
 
 title: Execution in Webserver Root Folder
-ruletype: Sigma
 author: Florian Roth
 date: 2019/01/16
 description: Detects a suspicious program execution in a web service root folder (filter
   out false positives)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\wwwroot\\*'
     - '*\wmpub\\*'
     - '*\htdocs\\*'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*bin\\*'
     - '*\Tools\\*'
     - '*\SMSComponent\\*'
-  SELECTION_4:
+  SELECTION_3:
     ParentImage:
     - '*\services.exe'
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3 and SELECTION_4))
+  condition: (SELECTION_1 and  not (SELECTION_2 and SELECTION_3))
 falsepositives:
 - Various applications
 - Tools that include ping or nslookup command invocations

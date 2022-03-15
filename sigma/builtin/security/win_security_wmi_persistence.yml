@@ -1,18 +1,19 @@
 
 title: WMI Persistence
-ruletype: Sigma
 author: Florian Roth, Gleb Sukhodolskiy, Timur Zinniatullin oscd.community
 date: 2017/08/22
 description: Detects suspicious WMI event filter and command line event consumer based
   on WMI and Security Logs.
 detection:
   SELECTION_1:
-    EventID: 4662
+    Channel: Security
   SELECTION_2:
-    ObjectType: WMI Namespace
+    EventID: 4662
   SELECTION_3:
+    ObjectType: WMI Namespace
+  SELECTION_4:
     ObjectName: '*subscription*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown (data set is too small; further testing needed)
 id: f033f3f3-fd24-4995-97d8-a3bb17550a88

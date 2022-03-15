@@ -1,20 +1,17 @@
 
 title: Suspicious Recursif Takeown
-ruletype: Sigma
 author: frack113
 date: 2022/01/30
 description: Adversaries can interact with the DACLs using built-in Windows commands
   takeown which can grant adversaries higher permissions on specific files and folders
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\takeown.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/f *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/r*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Scripts created by developers and admins
 - Administrative activity

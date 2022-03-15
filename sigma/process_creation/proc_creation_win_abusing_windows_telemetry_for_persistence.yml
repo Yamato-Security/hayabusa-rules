@@ -1,6 +1,5 @@
 
 title: Abusing Windows Telemetry For Persistence
-ruletype: Sigma
 author: Sreeman
 date: 2020/09/29
 description: Windows telemetry makes use of the binary CompatTelRunner.exe to run
@@ -10,12 +9,10 @@ description: Windows telemetry makes use of the binary CompatTelRunner.exe to ru
   command without restriction of location or type.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*schtasks*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*\Application Experience\Microsoft Compatibility Appraiser*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - none
 fields:

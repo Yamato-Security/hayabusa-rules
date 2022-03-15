@@ -1,32 +1,29 @@
 
 title: Covenant Launcher Indicators
-ruletype: Sigma
 author: Florian Roth, Jonhnathan Ribeiro, oscd.community
 date: 2020/06/04
 description: Detects suspicious command lines used in Covenant luanchers
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*-Sta*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*-Nop*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*-Window*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*Hidden*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine:
     - '*-Command*'
     - '*-EncodedCommand*'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine:
     - '*sv o (New-Object IO.MemorySteam);sv d *'
     - '*mshta file.hta*'
     - '*GruntHTTP*'
     - '*-EncodedCommand cwB2ACAAbwAgA*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) or SELECTION_7))
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or SELECTION_6)
 id: c260b6db-48ba-4b4a-a76f-2f67644e99d2
 level: high
 logsource:

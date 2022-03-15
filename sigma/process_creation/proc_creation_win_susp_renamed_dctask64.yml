@@ -1,18 +1,15 @@
 
 title: Renamed ZOHO Dctask64
-ruletype: Sigma
 author: Florian Roth
 date: 2020/01/28
 description: Detects a renamed dctask64.exe used for process injection, command execution,
   process creation with a signed binary by ZOHO Corporation
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Hashes: '*6834B1B94E49701D77CCB3C0895E1AFD*'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\dctask64.exe'
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
+  condition: (SELECTION_1 and  not (SELECTION_2))
 falsepositives:
 - Unknown yet
 fields:

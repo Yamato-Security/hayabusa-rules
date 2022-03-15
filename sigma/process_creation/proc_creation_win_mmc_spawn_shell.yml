@@ -1,15 +1,12 @@
 
 title: MMC Spawning Windows Shell
-ruletype: Sigma
 author: Karneades, Swisscom CSIRT
 date: 2019/08/05
 description: Detects a Windows command line executable started from MMC
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\mmc.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\cmd.exe'
     - '*\powershell.exe'
@@ -19,10 +16,10 @@ detection:
     - '*\bash.exe'
     - '*\reg.exe'
     - '*\regsvr32.exe'
-  SELECTION_4:
+  SELECTION_3:
     Image:
     - '*\BITSADMIN*'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 fields:
 - CommandLine
 - Image

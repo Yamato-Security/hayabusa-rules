@@ -1,17 +1,14 @@
 
 title: Wsreset UAC Bypass
-ruletype: Sigma
 author: Florian Roth
 date: 2020/01/30
 description: Detects a method that uses Wsreset.exe tool that can be used to reset
   the Windows Store to bypass UAC
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage:
     - '*\WSreset.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Unknown sub processes of Wsreset.exe
 fields:

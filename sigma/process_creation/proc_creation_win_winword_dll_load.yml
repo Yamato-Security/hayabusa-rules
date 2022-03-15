@@ -1,17 +1,14 @@
 
 title: Winword.exe Loads Suspicious DLL
-ruletype: Sigma
 author: Victor Sergeev, oscd.community
 date: 2020/10/09
 description: Detects Winword.exe loading of custmom dll via /l cmd switch
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\winword.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/l*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 fields:

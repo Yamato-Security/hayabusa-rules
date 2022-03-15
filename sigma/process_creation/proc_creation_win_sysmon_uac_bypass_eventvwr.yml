@@ -1,17 +1,14 @@
 
 title: UAC Bypass via Event Viewer
-ruletype: Sigma
 author: Florian Roth
 date: 2017/03/19
 description: Detects UAC bypass method using Windows event viewer
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\eventvwr.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\mmc.exe'
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
+  condition: (SELECTION_1 and  not (SELECTION_2))
 falsepositives:
 - unknown
 fields:

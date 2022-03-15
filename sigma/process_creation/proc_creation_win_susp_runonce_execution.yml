@@ -1,23 +1,20 @@
 
 title: Run Once Task Execution as Configured in Registry
-ruletype: Sigma
 author: Avneet Singh @v3t0_, oscd.community
 date: 2020/10/18
 description: This rule detects the execution of Run Once task as configured in the
   registry
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\runonce.exe'
-  SELECTION_3:
+  SELECTION_2:
     Description:
     - Run Once Wrapper
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '* /AlternateShellStartup*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
 falsepositives:
 - Unknown
 id: 198effb6-6c98-4d0c-9ea3-451fa143c45c

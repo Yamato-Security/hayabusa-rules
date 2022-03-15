@@ -1,6 +1,5 @@
 
 title: Registry Entries For Azorult Malware
-ruletype: Sigma
 author: Trent Liffick
 date: 2020/05/08
 description: Detects the presence of a registry key created during Azorult execution
@@ -10,17 +9,10 @@ detection:
   SELECTION_2:
     EventID: 13
   SELECTION_3:
-    EventID: 14
-  SELECTION_4:
-    EventID: 12
-  SELECTION_5:
-    EventID: 13
-  SELECTION_6:
     TargetObject: '*SYSTEM\\*'
-  SELECTION_7:
+  SELECTION_4:
     TargetObject: '*\services\localNETService'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and (SELECTION_4 or SELECTION_5)
-    and SELECTION_6 and SELECTION_7)
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
 falsepositives:
 - unknown
 fields:

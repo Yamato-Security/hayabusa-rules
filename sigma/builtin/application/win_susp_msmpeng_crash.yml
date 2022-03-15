@@ -1,25 +1,26 @@
 
 title: Microsoft Malware Protection Engine Crash
-ruletype: Sigma
 author: Florian Roth
 date: 2017/05/09
 description: This rule detects a suspicious crash of the Microsoft Malware Protection
   Engine
 detection:
   SELECTION_1:
-    Provider_Name: Application Error
+    Channel: Application
   SELECTION_2:
-    EventID: 1000
+    Provider_Name: Application Error
   SELECTION_3:
-    Provider_Name: Windows Error Reporting
+    EventID: 1000
   SELECTION_4:
-    EventID: 1001
+    Provider_Name: Windows Error Reporting
   SELECTION_5:
-  - MsMpEng.exe
+    EventID: 1001
   SELECTION_6:
+  - MsMpEng.exe
+  SELECTION_7:
   - mpengine.dll
-  condition: (((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4)) and
-    (SELECTION_5 and SELECTION_6))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5))
+    and (SELECTION_6 and SELECTION_7))
 falsepositives:
 - MsMpEng.exe can crash when C:\ is full
 id: 6c82cf5c-090d-4d57-9188-533577631108

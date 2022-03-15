@@ -1,19 +1,16 @@
 
 title: Suspicious Userinit Child Process
-ruletype: Sigma
 author: Florian Roth (rule), Samir Bousseaden (idea)
 date: 2019/06/17
 description: Detects a suspicious child process of userinit
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\userinit.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*\netlogon\\*'
-  SELECTION_4:
+  SELECTION_3:
     Image: '*\explorer.exe'
-  condition: (SELECTION_1 and (SELECTION_2 and  not (SELECTION_3)) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and  not (SELECTION_2)) and  not (SELECTION_3))
 falsepositives:
 - Administrative scripts
 fields:

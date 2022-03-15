@@ -1,6 +1,5 @@
 
 title: Service Registry Permissions Weakness Check
-ruletype: Sigma
 author: frack113
 date: 2021/12/30
 description: |
@@ -9,10 +8,14 @@ description: |
   Windows stores local service configuration information in the Registry under HKLM\SYSTEM\CurrentControlSet\Services
 detection:
   SELECTION_1:
-    ScriptBlockText: '*get-acl*'
+    EventID: 4104
   SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*get-acl*'
+  SELECTION_4:
     ScriptBlockText: '*REGISTRY::HKLM\SYSTEM\CurrentControlSet\Services\\*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - legitimate administrative script
 id: 95afc12e-3cbb-40c3-9340-84a032e596a3

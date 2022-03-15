@@ -1,6 +1,5 @@
 
 title: Webshell Recon Detection Via CommandLine & Processes
-ruletype: Sigma
 author: Cian Heasley
 date: 2020/07/22
 description: Looking for processes spawned by web server components that indicate
@@ -8,27 +7,25 @@ description: Looking for processes spawned by web server components that indicat
   are installed.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage:
     - '*\apache*'
     - '*\tomcat*'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage:
     - '*\w3wp.exe'
     - '*\php-cgi.exe'
     - '*\nginx.exe'
     - '*\httpd.exe'
-  SELECTION_4:
+  SELECTION_3:
     Image:
     - '*\cmd.exe'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine:
     - '*perl --help*'
     - '*python --help*'
     - '*wget --help*'
     - '*perl -h*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5))
+  condition: ((SELECTION_1 or SELECTION_2) and (SELECTION_3 and SELECTION_4))
 falsepositives:
 - unknown
 fields:

@@ -1,21 +1,18 @@
 
 title: Renamed PAExec
-ruletype: Sigma
 author: Florian Roth
 date: 2021/05/22
 description: Detects suspicious renamed PAExec execution as often used by attackers
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Description: PAExec Application
-  SELECTION_3:
+  SELECTION_2:
     OriginalFileName: PAExec.exe
-  SELECTION_4:
+  SELECTION_3:
     Image:
     - '*\PAexec.exe'
     - '*\paexec.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 or SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Weird admins that rename their tools
 - Software companies that bundle PAExec with their software and rename it, so that

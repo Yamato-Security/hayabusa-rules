@@ -1,23 +1,20 @@
 
 title: Lolbins Process Creation with WmiPrvse
-ruletype: Sigma
 author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule)
 date: 2021/08/23
 description: This rule will monitor LOLBin process creations by wmiprvse. Add more
   LOLBins to rule logic if needed.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*regsvr32'
     - '*rundll32'
     - '*msiexec'
     - '*mshta'
     - '*verclsid'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage: '*\wbem\WmiPrvSE.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: 8a582fe2-0882-4b89-a82a-da6b2dc32937

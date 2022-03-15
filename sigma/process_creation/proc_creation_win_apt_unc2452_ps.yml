@@ -1,22 +1,19 @@
 
 title: UNC2452 PowerShell Pattern
-ruletype: Sigma
 author: Florian Roth
 date: 2021/01/20
 description: Detects a specific PowerShell command line pattern used by the UNC2452
   actors as mentioned in Microsoft and Symantec reports
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*Invoke-WMIMethod win32_process -name create -argumentlist*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*rundll32 c:\windows*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*wmic /node:*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*process call create "rundll32 c:\windows*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)))
+  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4))
 falsepositives:
 - Unknown, unlikely, but possible
 id: b7155193-8a81-4d8f-805d-88de864ca50c

@@ -1,6 +1,5 @@
 
 title: Discovery of a System Time
-ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
 date: 2019/10/24
 description: Identifies use of various commands to query a systems time. This technique
@@ -8,23 +7,21 @@ description: Identifies use of various commands to query a systems time. This te
   target system.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\net.exe'
     - '*\net1.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*time*'
-  SELECTION_4:
+  SELECTION_3:
     Image: '*\w32tm.exe'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*tz*'
-  SELECTION_6:
+  SELECTION_5:
     Image: '*\powershell.exe'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '*Get-Date*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7)))
+  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6))
 falsepositives:
 - Legitimate use of the system utilities to discover system time for legitimate reason
 id: b243b280-65fe-48df-ba07-6ddea7646427

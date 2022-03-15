@@ -1,21 +1,18 @@
 
 title: GALLIUM Artefacts
-ruletype: Sigma
 author: Tim Burrell
 date: 2020/02/07
 description: Detects artefacts associated with activity group GALLIUM - Microsoft
   Threat Intelligence Center indicators released in December 2019.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     sha1:
     - e570585edc69f9074cb5e8a790708336bd45ca0f
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*:\Program Files(x86)\\*'
     - '*:\Program Files\\*'
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
+  condition: (SELECTION_1 and  not (SELECTION_2))
 falsepositives:
 - unknown
 id: 18739897-21b1-41da-8ee4-5b786915a676

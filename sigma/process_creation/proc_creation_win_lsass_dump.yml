@@ -1,6 +1,5 @@
 
 title: LSASS Memory Dumping
-ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Tony Lambert), oscd.community
 date: 2019/10/24
 description: Detect creation of dump files containing the memory space of lsass.exe,
@@ -8,21 +7,19 @@ description: Detect creation of dump files containing the memory space of lsass.
   to export the memory space of lsass.exe which contains sensitive credentials.
 detection:
   SELECTION_1:
-    EventID: 1
+    CommandLine: '*lsass*'
   SELECTION_2:
-    CommandLine: '*lsass*'
-  SELECTION_3:
     CommandLine: '*.dmp*'
-  SELECTION_4:
+  SELECTION_3:
     Image: '*\werfault.exe'
-  SELECTION_5:
+  SELECTION_4:
     Image: '*\procdump*'
-  SELECTION_6:
+  SELECTION_5:
     Image: '*.exe'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '*lsass*'
-  condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
-    or (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+  condition: (((SELECTION_1 and SELECTION_2) and  not (SELECTION_3)) or (SELECTION_4
+    and SELECTION_5 and SELECTION_6))
 falsepositives:
 - Unlikely
 fields:

@@ -1,6 +1,5 @@
 
 title: Fsutil Suspicious Invocation
-ruletype: Sigma
 author: Ecco, E.M. Anhaus, oscd.community
 date: 2019/09/26
 description: Detects suspicious parameters of fsutil (deleting USN journal, configuring
@@ -8,16 +7,14 @@ description: Detects suspicious parameters of fsutil (deleting USN journal, conf
   NotPetya and others).
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\fsutil.exe'
-  SELECTION_3:
+  SELECTION_2:
     OriginalFileName: fsutil.exe
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*deletejournal*'
     - '*createjournal*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
 falsepositives:
 - Admin activity
 - Scripts and administrative tools used in the monitored environment

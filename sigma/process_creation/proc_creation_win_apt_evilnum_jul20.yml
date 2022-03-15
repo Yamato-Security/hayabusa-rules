@@ -1,25 +1,21 @@
 
 title: EvilNum Golden Chickens Deployment via OCX Files
-ruletype: Sigma
 author: Florian Roth
 date: 2020/07/10
 description: Detects Golden Chickens deployment method as used by Evilnum in report
   published in July 2020
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*regsvr32*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/s*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/i*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*\AppData\Roaming\\*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*.ocx*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 8acf3cfa-1e8c-4099-83de-a0c4038e18f0

@@ -1,18 +1,15 @@
 
 title: Curl Start Combination
-ruletype: Sigma
 author: Sreeman
 date: 2020/01/13
 description: Adversaries can use curl to download payloads remotely and execute them.
   Curl is included by default in Windows 10 build 17063 and later.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*curl*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* start *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Administrative scripts (installers)
 fields:

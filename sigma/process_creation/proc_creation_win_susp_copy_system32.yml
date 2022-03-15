@@ -1,6 +1,5 @@
 
 title: Suspicious Copy From or To System32
-ruletype: Sigma
 author: Florian Roth, Markus Neis, Tim Shelton (HAWK.IO)
 date: 2020/07/03
 description: Detects a suspicious copy command that copies a system program from System32
@@ -8,12 +7,10 @@ description: Detects a suspicious copy command that copies a system program from
   to a different location with a different name
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*xcopy*\System32\\*'
     - '*cmd.exe*/c*copy*\System32\\*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

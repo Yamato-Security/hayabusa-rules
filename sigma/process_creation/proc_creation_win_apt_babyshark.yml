@@ -1,18 +1,15 @@
 
 title: Baby Shark Activity
-ruletype: Sigma
 author: Florian Roth
 date: 2019/02/24
 description: Detects activity that could be related to Baby Shark malware
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - reg query "HKEY_CURRENT_USER\Software\Microsoft\Terminal Server Client\Default"
     - powershell.exe mshta.exe http*
     - cmd.exe /c taskkill /im cmd.exe
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - unknown
 id: 2b30fa36-3a18-402f-a22d-bf4ce2189f35

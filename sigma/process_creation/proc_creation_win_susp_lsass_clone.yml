@@ -1,18 +1,15 @@
 
 title: Suspicious LSASS Process Clone
-ruletype: Sigma
 author: Florian Roth, Samir Bousseaden
 date: 2021/11/27
 description: Detects a suspicious LSASS process process clone that could be a sign
   of process dumping activity
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\Windows\System32\lsass.exe'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage: '*\Windows\System32\lsass.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: c8da0dfd-4ed0-4b68-962d-13c9c884384e

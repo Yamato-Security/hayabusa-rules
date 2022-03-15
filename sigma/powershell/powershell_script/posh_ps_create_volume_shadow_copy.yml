@@ -1,18 +1,21 @@
 
 title: Create Volume Shadow Copy with Powershell
-ruletype: Sigma
 author: frack113
 date: 2022/01/12
 description: Adversaries may attempt to access or create a copy of the Active Directory
   domain database in order to steal credential information
 detection:
   SELECTION_1:
-    ScriptBlockText: '*win32_shadowcopy*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*).Create(*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
+    ScriptBlockText: '*win32_shadowcopy*'
+  SELECTION_4:
+    ScriptBlockText: '*).Create(*'
+  SELECTION_5:
     ScriptBlockText: '*ClientAccessible*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate PowerShell scripts
 id: afd12fed-b0ec-45c9-a13d-aa86625dac81

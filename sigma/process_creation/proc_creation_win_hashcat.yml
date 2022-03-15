@@ -1,22 +1,19 @@
 
 title: Password Cracking with Hashcat
-ruletype: Sigma
 author: frack113
 date: 2021/12/27
 description: Execute Hashcat.exe with provided SAM file from registry of Windows and
   Password list to crack against
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\hashcat.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*-a *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*-m 1000 *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*-r *'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4 and SELECTION_5)))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3 and SELECTION_4))
 falsepositives:
 - Tools that accidentally use the same command line flags and values
 id: 39b31e81-5f5f-4898-9c0e-2160cfc0f9bf

@@ -1,22 +1,19 @@
 
 title: Winrar Compressing Dump Files
-ruletype: Sigma
 author: Florian Roth
 date: 2022/01/04
 description: Detects a suspicious winrar execution that involves a file with a .dmp
   extension, which could be a step in a process of dump file exfiltration
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\rar.exe'
     - '*\winrar.exe'
-  SELECTION_3:
+  SELECTION_2:
     Description: Command line RAR
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: .dmp
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
 falsepositives:
 - Legitimate use of WinRAR with a command line in which .dmp appears incidentally
 id: 1ac14d38-3dfc-4635-92c7-e3fd1c5f5bfc

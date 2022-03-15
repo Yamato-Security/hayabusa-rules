@@ -1,19 +1,21 @@
 
 title: Possible Zerologon (CVE-2020-1472) Exploitation
-ruletype: Sigma
 author: Aleksandr Akhremchik, @aleqs4ndr, ocsd.community
 date: 2020/10/15
 description: Detects Netlogon Elevation of Privilege Vulnerability aka Zerologon (CVE-2020-1472)
 detection:
   SELECTION_1:
-    EventID: 4742
+    Channel: Security
   SELECTION_2:
-    SubjectUserName: ANONYMOUS LOGON
+    EventID: 4742
   SELECTION_3:
-    TargetUserName: '%DC-MACHINE-NAME%'
+    SubjectUserName: ANONYMOUS LOGON
   SELECTION_4:
+    TargetUserName: '%DC-MACHINE-NAME%'
+  SELECTION_5:
     PasswordLastSet: '-'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
 - automatic DC computer account password change
 - legitimate DC computer account password change

@@ -1,15 +1,12 @@
 
 title: Pandemic Registry Key
-ruletype: Sigma
 author: Florian Roth
 date: 2017/06/01
 description: Detects Pandemic Windows Implant
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*loaddll -a *'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - unknown
 fields:

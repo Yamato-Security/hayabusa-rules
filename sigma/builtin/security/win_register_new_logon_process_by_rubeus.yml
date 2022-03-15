@@ -1,15 +1,16 @@
 
 title: Register new Logon Process by Rubeus
-ruletype: Sigma
 author: Roberto Rodriguez (source), Ilyas Ochkov (rule), oscd.community
 date: 2019/10/24
 description: Detects potential use of Rubeus via registered new trusted logon process
 detection:
   SELECTION_1:
-    EventID: 4611
+    Channel: Security
   SELECTION_2:
+    EventID: 4611
+  SELECTION_3:
     LogonProcessName: User32LogonProcesss
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 12e6d621-194f-4f59-90cc-1959e21e69f7

@@ -1,6 +1,5 @@
 
 title: Mouse Lock Credential Gathering
-ruletype: Sigma
 author: Cian Heasley
 date: 2020/08/13
 description: In Kaspersky's 2020 Incident Response Analyst Report they listed legitimate
@@ -8,14 +7,12 @@ description: In Kaspersky's 2020 Incident Response Analyst Report they listed le
   incidents.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Product: '*Mouse Lock*'
-  SELECTION_3:
+  SELECTION_2:
     Company: '*Misc314*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*Mouse Lock_*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 or SELECTION_2 or SELECTION_3)
 falsepositives:
 - Legitimate uses of Mouse Lock software
 fields:

@@ -1,31 +1,28 @@
 
 title: CleanWipe Usage
-ruletype: Sigma
 author: Nasreddine Bencherchali @nas_bench
 date: 2021/12/18
 description: Detects the use of CleanWipe a tool usually used to delete Symantec antivirus.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\SepRemovalToolNative_x64.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\CATClean.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*--uninstall*'
-  SELECTION_5:
+  SELECTION_4:
     Image: '*\NetInstaller.exe'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*-r*'
-  SELECTION_7:
+  SELECTION_6:
     Image: '*\WFPUnins.exe'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine: '*/uninstall*'
-  SELECTION_9:
+  SELECTION_8:
     CommandLine: '*/enterprise*'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7 and SELECTION_8))
 falsepositives:
 - Legitimate administrative use
 id: f44800ac-38ec-471f-936e-3fa7d9c53100

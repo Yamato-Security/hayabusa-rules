@@ -1,28 +1,24 @@
 
 title: Imports Registry Key From a File
-ruletype: Sigma
 author: Oddvar Moe, Sander Wiebing, oscd.community
 date: 2020/10/07
 description: Detects the import of the specified file to the registry with regedit.exe.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\regedit.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* /i *'
     - '* /s *'
     - '*.reg*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '* /e *'
     - '* /a *'
     - '* /c *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine|re: :[^ \\\\]
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
-    and  not (SELECTION_5))
+  condition: (((SELECTION_1 and SELECTION_2) and  not (SELECTION_3)) and  not (SELECTION_4))
 falsepositives:
 - Legitimate import of keys
 - Evernote

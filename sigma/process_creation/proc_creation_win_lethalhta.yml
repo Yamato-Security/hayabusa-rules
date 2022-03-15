@@ -1,18 +1,15 @@
 
 title: MSHTA Spwaned by SVCHOST
-ruletype: Sigma
 author: Markus Neis
 date: 2018/06/07
 description: Detects MSHTA.EXE spwaned by SVCHOST as seen in LethalHTA and described
   in report
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\svchost.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\mshta.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: ed5d72a6-f8f4-479d-ba79-02f6a80d7471

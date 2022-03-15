@@ -1,15 +1,12 @@
 
 title: PsExec Service Start
-ruletype: Sigma
 author: Florian Roth
 date: 2018/03/13
 description: Detects a PsExec service start
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: C:\Windows\PSEXESVC.exe
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Administrative activity
 id: 3ede524d-21cc-472d-a3ce-d21b568d8db7

@@ -1,17 +1,14 @@
 
 title: Suspicious Atbroker Execution
-ruletype: Sigma
 author: Mateusz Wydra, oscd.community
 date: 2020/10/12
 description: Atbroker executing non-deafualt Assistive Technology applications
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*AtBroker.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*start*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*animations*'
     - '*audiodescription*'
@@ -40,7 +37,7 @@ detection:
     - '*windowtracking*'
     - '*windowtrackingtimeout*'
     - '*windowtrackingzorder*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Legitimate, non-default assistive technology applications execution
 id: f24bcaea-0cd1-11eb-adc1-0242ac120002

@@ -1,26 +1,23 @@
 
 title: NirCmd Tool Execution
-ruletype: Sigma
 author: Florian Roth, Nasreddine Bencherchali @nas_bench
 date: 2022/01/24
 description: Detects the use of NirCmd tool for command execution, which could be
   the result of legitimate administrative activity
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\nircmd.exe'
     - '*\nircmdc.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* execmd *'
     - '* exec2 *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '* copy *'
     - '* del *'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4)))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3))
 falsepositives:
 - Legitimate use by administrators
 fields:

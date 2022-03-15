@@ -1,20 +1,21 @@
 
 title: Successful Overpass the Hash Attempt
-ruletype: Sigma
 author: Roberto Rodriguez (source), Dominik Schaudel (rule)
 date: 2018/02/12
 description: Detects successful logon with logon type 9 (NewCredentials) which matches
   the Overpass the Hash behavior of e.g Mimikatz's sekurlsa::pth module.
 detection:
   SELECTION_1:
-    EventID: 4624
+    Channel: Security
   SELECTION_2:
-    LogonType: 9
+    EventID: 4624
   SELECTION_3:
-    LogonProcessName: seclogo
+    LogonType: 9
   SELECTION_4:
+    LogonProcessName: seclogo
+  SELECTION_5:
     AuthenticationPackageName: Negotiate
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Runas command-line tool using /netonly parameter
 id: 192a0330-c20b-4356-90b6-7b7049ae0b87

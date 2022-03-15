@@ -1,22 +1,19 @@
 
 title: Windows Network Enumeration
-ruletype: Sigma
 author: Endgame, JHasenbusch (ported for oscd.community)
 date: 2018/10/30
 description: Identifies attempts to enumerate hosts in a network using the built-in
   Windows net.exe tool.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\net.exe'
     - '*\net1.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*view*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*\\\\*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Legitimate use of net.exe utility by legitimate user
 fields:

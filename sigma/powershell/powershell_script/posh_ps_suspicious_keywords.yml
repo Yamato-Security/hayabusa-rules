@@ -1,12 +1,15 @@
 
 title: Suspicious PowerShell Keywords
-ruletype: Sigma
 author: Florian Roth, Perez Diego (@darkquassar)
 date: 2019/02/11
 description: Detects keywords that could indicate the use of some PowerShell exploitation
   framework
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*System.Reflection.Assembly.Load($*'
     - '*[System.Reflection.Assembly]::Load($*'
@@ -18,7 +21,7 @@ detection:
     - '*rundll32*'
     - '*Invoke-WMIMethod*'
     - '*http://127.0.0.1*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Penetration tests
 id: 1f49f2ab-26bc-48b3-96cc-dcffbc93eadf

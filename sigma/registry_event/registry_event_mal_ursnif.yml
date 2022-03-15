@@ -1,26 +1,18 @@
 
 title: Ursnif
-ruletype: Sigma
 author: megan201296
 date: 2019/02/13
 description: Detects new registry key created by Ursnif malware.
 detection:
   SELECTION_1:
-    EventID: 12
-  SELECTION_2:
-    EventID: 13
-  SELECTION_3:
-    EventID: 14
-  SELECTION_4:
     TargetObject: '*\Software\AppDataLow\Software\Microsoft\\*'
-  SELECTION_5:
+  SELECTION_2:
     TargetObject:
     - '*\SOFTWARE\AppDataLow\Software\Microsoft\Internet Explorer\\*'
     - '*\SOFTWARE\AppDataLow\Software\Microsoft\RepService\\*'
     - '*\SOFTWARE\AppDataLow\Software\Microsoft\IME\\*'
     - '*\SOFTWARE\AppDataLow\Software\Microsoft\Edge\\*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and  not
-    (SELECTION_5))
+  condition: (SELECTION_1 and  not (SELECTION_2))
 falsepositives:
 - Unknown
 id: 21f17060-b282-4249-ade0-589ea3591558

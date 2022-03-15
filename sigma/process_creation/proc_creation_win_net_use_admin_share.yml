@@ -1,22 +1,19 @@
 
 title: Mounted Windows Admin Shares with net.exe
-ruletype: Sigma
 author: oscd.community, Teymur Kheirkhabarov @HeirhabarovT, Zach Stanford @svch0st,
   wagga
 date: 2020/10/05
 description: Detects when an admin share is mounted using net.exe
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\net.exe'
     - '*\net1.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* use *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*\\\*\\*$*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Administrators
 id: 3abd6094-7027-475f-9630-8ab9be7b9725

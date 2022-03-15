@@ -1,16 +1,13 @@
 
 title: MSHTA Suspicious Execution 01
-ruletype: Sigma
 author: Diego Perez (@darkquassar), Markus Neis, Swisscom (Improve Rule)
 date: 2019/02/22
 description: Detection for mshta.exe suspicious execution patterns sometimes involving
   file polyglotism
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\mshta.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*vbscript*'
     - '*.jpg*'
@@ -21,7 +18,7 @@ detection:
     - '*.zip*'
     - '*.dll*'
     - '*.exe*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

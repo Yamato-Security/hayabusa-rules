@@ -1,28 +1,24 @@
 
 title: Office Applications Spawning Wmi Cli
-ruletype: Sigma
 author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule)
 date: 2021/08/23
 description: Initial execution of malicious document calls wmic to execute the file
   with regsvr32
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: \wbem\WMIC.exe
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*wmic *'
-  SELECTION_4:
+  SELECTION_3:
     OriginalFileName: wmic.exe
-  SELECTION_5:
+  SELECTION_4:
     Description: WMI Commandline Utility
-  SELECTION_6:
+  SELECTION_5:
     ParentImage:
     - '*winword.exe'
     - '*excel.exe'
     - '*powerpnt.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5)
-    and SELECTION_6)
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
 id: 518643ba-7d9c-4fa5-9f37-baed36059f6a

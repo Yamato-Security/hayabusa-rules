@@ -1,19 +1,16 @@
 
 title: Dumping Process via Sqldumper.exe
-ruletype: Sigma
 author: Kirill Kiryanov, oscd.community
 date: 2020/10/08
 description: Detects process dump via legitimate sqldumper.exe binary
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\sqldumper.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*0x0110*'
     - '*0x01100:40*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Legitimate MSSQL Server actions
 id: 23ceaf5c-b6f1-4a32-8559-f2ff734be516

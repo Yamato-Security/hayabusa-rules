@@ -1,6 +1,5 @@
 
 title: Enumeration via the Global Catalog
-ruletype: Sigma
 author: Chakib Gzenayi (@Chak092), Hosni Mribah
 date: 2020/05/11
 description: Detects enumeration of the global catalog (that can be performed using
@@ -8,14 +7,15 @@ description: Detects enumeration of the global catalog (that can be performed us
   width.
 detection:
   SELECTION_1:
-    EventID: 5156
+    Channel: Security
   SELECTION_2:
-    DestinationPort: 3268
+    EventID: 5156
   SELECTION_3:
+    DestinationPort: 3268
+  SELECTION_4:
     DestinationPort: 3269
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3)) | count() by SourceAddress
-    > 2000
-  timeframe: 1h
+  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4)) | count()
+    by SourceAddress > 2000
 falsepositives:
 - Exclude known DCs.
 id: 619b020f-0fd7-4f23-87db-3f51ef837a34

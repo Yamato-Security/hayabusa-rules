@@ -1,0 +1,29 @@
+
+title: Disable Microsoft Defender Firewall via Registry
+author: frack113
+date: 2022/01/09
+description: Adversaries may disable or modify system firewalls in order to bypass
+  controls limiting network usage
+detection:
+  SELECTION_1:
+    EventType: SetValue
+  SELECTION_2:
+    TargetObject: HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\\*
+  SELECTION_3:
+    TargetObject: '*\EnableFirewall'
+  SELECTION_4:
+    Details: DWORD (0x00000000)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 974515da-6cc5-4c95-ae65-f97f9150ec7f
+level: medium
+logsource:
+  category: registry_event
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.004/T1562.004.md#atomic-test-2---disable-microsoft-defender-firewall-via-registry
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.004

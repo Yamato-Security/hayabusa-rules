@@ -1,6 +1,5 @@
 
 title: Suspicious Reconnaissance Activity
-ruletype: Sigma
 analysis:
   recommendation: Check if the user that executed the commands is suspicious (e.g.
     service accounts, LOCAL_SYSTEM)
@@ -9,14 +8,12 @@ date: 2019/01/16
 description: Detects suspicious command line activity on Windows systems
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - net group "domain admins" /dom
     - net localgroup administrators
     - net group "enterprise admins" /dom
     - net accounts /dom
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Inventory tool runs
 - Penetration tests

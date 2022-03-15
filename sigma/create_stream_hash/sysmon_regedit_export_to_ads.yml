@@ -1,16 +1,13 @@
 
 title: Exports Registry Key To an Alternate Data Stream
-ruletype: Sigma
 author: Oddvar Moe, Sander Wiebing, oscd.community
 date: 2020/10/07
 description: Exports the target Registry key and hides it in the specified alternate
   data stream.
 detection:
   SELECTION_1:
-    EventID: 15
-  SELECTION_2:
     Image: '*\regedit.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Unknown
 fields:

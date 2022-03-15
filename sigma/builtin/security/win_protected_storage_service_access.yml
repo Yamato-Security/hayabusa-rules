@@ -1,18 +1,19 @@
 
 title: Protected Storage Service Access
-ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/08/10
 description: Detects access to a protected_storage service over the network. Potential
   abuse of DPAPI to extract domain backup keys from Domain Controllers
 detection:
   SELECTION_1:
-    EventID: 5145
+    Channel: Security
   SELECTION_2:
-    ShareName: '*IPC*'
+    EventID: 5145
   SELECTION_3:
+    ShareName: '*IPC*'
+  SELECTION_4:
     RelativeTargetName: protected_storage
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 45545954-4016-43c6-855e-eae8f1c369dc

@@ -1,15 +1,12 @@
 
 title: NirCmd Tool Execution As LOCAL SYSTEM
-ruletype: Sigma
 author: Florian Roth, Nasreddine Bencherchali @nas_bench
 date: 2022/01/24
 description: Detects the use of NirCmd tool for command execution as SYSTEM user
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '* runassystem *'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Legitimate use by administrators
 fields:

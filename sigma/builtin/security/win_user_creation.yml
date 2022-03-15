@@ -1,6 +1,5 @@
 
 title: Local User Creation
-ruletype: Sigma
 author: Patrick Bareiss
 date: 2019/04/18
 description: Detects local user creation on windows servers, which shouldn't happen
@@ -8,10 +7,12 @@ description: Detects local user creation on windows servers, which shouldn't hap
   logs and not on your DC logs.
 detection:
   SELECTION_1:
-    Provider_Name: Microsoft-Windows-Security-Auditing
+    Channel: Security
   SELECTION_2:
+    Provider_Name: Microsoft-Windows-Security-Auditing
+  SELECTION_3:
     EventID: 4720
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Domain Controller Logs
 - Local accounts managed by privileged account management tools

@@ -1,6 +1,5 @@
 
 title: Suspicious Get Information for SMB Share
-ruletype: Sigma
 author: frack113
 date: 2021/12/15
 description: "Adversaries may look for folders and drives shared on remote systems\
@@ -10,10 +9,14 @@ description: "Adversaries may look for folders and drives shared on remote syste
   \ file directories on various systems across a network. \n"
 detection:
   SELECTION_1:
-    Payload: '*get-smbshare*'
+    EventID: 4103
   SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    Payload: '*get-smbshare*'
+  SELECTION_4:
     ContextInfo: '*get-smbshare*'
-  condition: (SELECTION_1 or SELECTION_2)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - administrator script
 id: 6942bd25-5970-40ab-af49-944247103358

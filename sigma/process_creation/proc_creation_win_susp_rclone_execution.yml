@@ -1,20 +1,17 @@
 
 title: Rclone Execution via Command Line or PowerShell
-ruletype: Sigma
 author: Bhabesh Raj, Sittikorn S, Aaron Greetham (@beardofbinary) - NCC Group
 date: 2021/05/10
 description: Detects execution of RClone utility for exfiltration as used by various
   ransomwares strains like REvil, Conti, FiveHands, etc
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*--config *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*--no-check-certificate *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* copy *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine:
     - '*pass*'
     - '*user*'
@@ -32,16 +29,16 @@ detection:
     - '*transfers*'
     - '*multi-thread-streams*'
     - '*no-check-certificate *'
-  SELECTION_6:
+  SELECTION_5:
     Description: Rsync for cloud storage
-  SELECTION_7:
+  SELECTION_6:
     Image: '*\rclone.exe'
-  SELECTION_8:
+  SELECTION_7:
     ParentImage:
     - '*\PowerShell.exe'
     - '*\cmd.exe'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and (SELECTION_6 or (SELECTION_7 and SELECTION_8)))))
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) or (SELECTION_4 and (SELECTION_5
+    or (SELECTION_6 and SELECTION_7))))
 falsepositives:
 - Legitimate RClone use
 fields:

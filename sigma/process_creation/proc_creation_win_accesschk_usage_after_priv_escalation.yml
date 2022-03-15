@@ -1,6 +1,5 @@
 
 title: Accesschk Usage After Privilege Escalation
-ruletype: Sigma
 author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community
 date: 2020/10/13
 description: Accesschk is an access and privilege audit tool developed by SysInternal
@@ -8,14 +7,12 @@ description: Accesschk is an access and privilege audit tool developed by SysInt
   or not
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     IntegrityLevel: Medium
-  SELECTION_3:
+  SELECTION_2:
     Product: '*AccessChk'
-  SELECTION_4:
+  SELECTION_3:
     Description: '*Reports effective permissions*'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - System administrator Usage
 - Penetration test

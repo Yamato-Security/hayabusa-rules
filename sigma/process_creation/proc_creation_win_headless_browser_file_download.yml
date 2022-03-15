@@ -1,6 +1,5 @@
 
 title: File Download with Headless Browser
-ruletype: Sigma
 author: Sreeman, Florian Roth
 date: 2022/01/04
 description: This is an unusual method to download files. It starts a browser headless
@@ -8,18 +7,16 @@ description: This is an unusual method to download files. It starts a browser he
   files.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\msedge.exe'
     - '*\chrome.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*--headless*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*dump-dom*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*http*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - unknown
 fields:

@@ -1,22 +1,19 @@
 
 title: Reg Disable Security Service
-ruletype: Sigma
 author: Florian Roth, John Lambert (idea)
 date: 2021/07/14
 description: Detects a suspicious reg.exe invocation that looks as if it would disable
   an important security service
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*reg*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*add*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* /d 4*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '* /v Start*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine:
     - '*\Sense *'
     - '*\WinDefend*'
@@ -29,8 +26,7 @@ detection:
     - '*\SecurityHealthService*'
     - '*\wuauserv*'
     - '*\UsoSvc *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 - Other security solution installers

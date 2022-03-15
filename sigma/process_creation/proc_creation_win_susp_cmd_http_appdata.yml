@@ -1,6 +1,5 @@
 
 title: Command Line Execution with Suspicious URL and AppData Strings
-ruletype: Sigma
 author: Florian Roth, Jonhnathan Ribeiro, oscd.community
 date: 2019/01/16
 description: Detects a suspicious command line execution that includes an URL and
@@ -8,16 +7,14 @@ description: Detects a suspicious command line execution that includes an URL an
   > powershell)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\cmd.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*http*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*://*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*%AppData%*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - High
 fields:

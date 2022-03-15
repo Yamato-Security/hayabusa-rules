@@ -1,6 +1,5 @@
 
 title: Abusing Windows Telemetry For Persistence
-ruletype: Sigma
 author: Sreeman
 date: 2020/09/29
 description: Windows telemetry makes use of the binary CompatTelRunner.exe to run
@@ -10,16 +9,10 @@ description: Windows telemetry makes use of the binary CompatTelRunner.exe to ru
   command without restriction of location or type.
 detection:
   SELECTION_1:
-    EventID: 12
-  SELECTION_2:
-    EventID: 13
-  SELECTION_3:
-    EventID: 14
-  SELECTION_4:
     EventType: SetValue
-  SELECTION_5:
+  SELECTION_2:
     TargetObject: '*HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\\*'
-  SELECTION_6:
+  SELECTION_3:
     Details:
     - '*.sh'
     - '*.exe'
@@ -34,8 +27,7 @@ detection:
     - '*.hta'
     - '*.msi'
     - '*.vbs'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - none
 fields:

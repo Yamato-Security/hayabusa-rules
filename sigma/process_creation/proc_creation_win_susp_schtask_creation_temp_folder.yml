@@ -1,22 +1,19 @@
 
 title: Suspicious Scheduled Task Creation Involving Temp Folder
-ruletype: Sigma
 author: Florian Roth
 date: 2021/03/11
 description: Detects the creation of scheduled tasks that involves a temporary folder
   and runs only once
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\schtasks.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* /create *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* /sc once *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*\Temp\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Administrative activity
 - Software installation

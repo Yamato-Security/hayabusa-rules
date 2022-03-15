@@ -1,24 +1,20 @@
 
 title: WMI Spawning Windows PowerShell
-ruletype: Sigma
 author: Markus Neis / @Karneades
 date: 2019/04/03
 description: Detects WMI spawning PowerShell
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage:
     - '*\wmiprvse.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\powershell.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: 'null'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine|re: ^$
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
-    and  not (SELECTION_5))
+  condition: (((SELECTION_1 and SELECTION_2) and  not (SELECTION_3)) and  not (SELECTION_4))
 falsepositives:
 - AppvClient
 - CCM

@@ -1,16 +1,13 @@
 
 title: Rundll32 Without Parameters
-ruletype: Sigma
 author: Bartlomiej Czyz, Relativity
 date: 2021/01/31
 description: Detects rundll32 execution without parameters as observed when running
   Metasploit windows/smb/psexec exploit module
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: rundll32.exe
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Unknown
 fields:

@@ -1,26 +1,23 @@
 
 title: Suspicious AdvancedRun Runas Priv User
-ruletype: Sigma
 author: Florian Roth
 date: 2022/01/20
 description: Detects the execution of AdvancedRun utitlity in the context of the TrustedInstaller
   or SYSTEM account
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*/EXEFilename*'
     - '*/CommandLine*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* /RunAs 8 *'
     - '* /RunAs 4 *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*/RunAs 8'
     - '*/RunAs 4'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - Unknown
 id: fa00b701-44c6-4679-994d-5a18afa8a707

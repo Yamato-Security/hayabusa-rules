@@ -1,34 +1,31 @@
 
 title: Powershell Used To Disable Windows Defender AV Security Monitoring
-ruletype: Sigma
 author: ok @securonix invrep-de, oscd.community, frack113
 date: 2020/10/12
 description: Detects attackers attempting to disable Windows Defender using Powershell
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    CommandLine: '*start=disabled*'
-  SELECTION_2:
     Image: '*\powershell.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*-DisableBehaviorMonitoring $true*'
     - '*-DisableRuntimeMonitoring $true*'
+  SELECTION_3:
+    CommandLine: '*sc*'
   SELECTION_4:
-    CommandLine: '*sc*'
-  SELECTION_5:
     CommandLine: '*stop*'
+  SELECTION_5:
+    CommandLine: '*WinDefend*'
   SELECTION_6:
-    CommandLine: '*WinDefend*'
-  SELECTION_7:
     CommandLine: '*sc*'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine: '*config*'
-  SELECTION_9:
+  SELECTION_8:
     CommandLine: '*WinDefend*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10)))
+  SELECTION_9:
+    CommandLine: '*start=disabled*'
+  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9))
 falsepositives:
 - Minimal, for some older versions of dev tools, such as pycharm, developers were
   known to sometimes disable Windows Defender to improve performance, but this generally

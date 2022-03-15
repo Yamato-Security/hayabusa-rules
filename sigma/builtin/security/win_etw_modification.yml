@@ -1,19 +1,20 @@
 
 title: COMPlus_ETWEnabled Registry Modification
-ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2020/06/05
 description: Potential adversaries stopping ETW providers recording loaded .NET assemblies.
 detection:
   SELECTION_1:
-    EventID: 4657
+    Channel: Security
   SELECTION_2:
-    ObjectName: '*\SOFTWARE\Microsoft\.NETFramework'
+    EventID: 4657
   SELECTION_3:
-    ObjectValueName: ETWEnabled
+    ObjectName: '*\SOFTWARE\Microsoft\.NETFramework'
   SELECTION_4:
+    ObjectValueName: ETWEnabled
+  SELECTION_5:
     NewValue: '0'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - unknown
 id: a4c90ea1-2634-4ca0-adbb-35eae169b6fc

@@ -1,15 +1,12 @@
 
 title: COMPlus_ETWEnabled Command Line Arguments
-ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2020/05/02
 description: Potential adversaries stopping ETW providers recording loaded .NET assemblies.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*COMPlus_ETWEnabled=0*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - unknown
 id: 41421f44-58f9-455d-838a-c398859841d4

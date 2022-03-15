@@ -1,32 +1,33 @@
 
 title: CobaltStrike Service Installations
-ruletype: Sigma
 author: Florian Roth, Wojciech Lesicki
 date: 2021/05/26
 description: Detects known malicious service installs that appear in cases in which
   a Cobalt Strike beacon elevates privileges or lateral movement
 detection:
   SELECTION_1:
-    EventID: 4697
+    Channel: Security
   SELECTION_2:
-    ServiceFileName: '*ADMIN$*'
+    EventID: 4697
   SELECTION_3:
-    ServiceFileName: '*.exe*'
+    ServiceFileName: '*ADMIN$*'
   SELECTION_4:
-    ServiceFileName: '*%COMSPEC%*'
+    ServiceFileName: '*.exe*'
   SELECTION_5:
-    ServiceFileName: '*start*'
+    ServiceFileName: '*%COMSPEC%*'
   SELECTION_6:
-    ServiceFileName: '*powershell*'
+    ServiceFileName: '*start*'
   SELECTION_7:
-    ServiceFileName: '*powershell -nop -w hidden -encodedcommand*'
+    ServiceFileName: '*powershell*'
   SELECTION_8:
+    ServiceFileName: '*powershell -nop -w hidden -encodedcommand*'
+  SELECTION_9:
     ServiceFileName:
     - '*SUVYIChOZXctT2JqZWN0IE5ldC5XZWJjbGllbnQpLkRvd25sb2FkU3RyaW5nKCdodHRwOi8vMTI3LjAuMC4xO*'
     - '*lFWCAoTmV3LU9iamVjdCBOZXQuV2ViY2xpZW50KS5Eb3dubG9hZFN0cmluZygnaHR0cDovLzEyNy4wLjAuMT*'
     - '*JRVggKE5ldy1PYmplY3QgTmV0LldlYmNsaWVudCkuRG93bmxvYWRTdHJpbmcoJ2h0dHA6Ly8xMjcuMC4wLjE6*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5
-    and SELECTION_6) or SELECTION_7 or SELECTION_8))
+  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7) or SELECTION_8 or SELECTION_9))
 falsepositives:
 - Unknown
 id: d7a95147-145f-4678-b85d-d1ff4a3bb3f6

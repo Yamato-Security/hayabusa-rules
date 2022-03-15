@@ -1,16 +1,17 @@
 
 title: Suspicious PowerShell Download
-ruletype: Sigma
 author: Florian Roth
 date: 2017/03/05
 description: Detects suspicious PowerShell download command
 detection:
   SELECTION_1:
-  - System.Net.WebClient
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_2:
+  - System.Net.WebClient
+  SELECTION_3:
   - .DownloadFile(
   - .DownloadString(
-  condition: (SELECTION_1 and (SELECTION_2))
+  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3))
 falsepositives:
 - PowerShell scripts that download content from the Internet
 id: 65531a81-a694-4e31-ae04-f8ba5bc33759

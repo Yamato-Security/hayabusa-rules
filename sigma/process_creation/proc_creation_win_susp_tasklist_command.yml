@@ -1,6 +1,5 @@
 
 title: Suspicious Tasklist Discovery Command
-ruletype: Sigma
 author: frack113
 date: 2021/12/11
 description: Adversaries may attempt to get information about running processes on
@@ -8,12 +7,10 @@ description: Adversaries may attempt to get information about running processes 
   software/applications running on systems within the network
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*tasklist*'
-  SELECTION_3:
+  SELECTION_2:
     Image: C:\Windows\System32\tasklist.exe
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  condition: (SELECTION_1 or SELECTION_2)
 falsepositives:
 - administrator, hotline ask to user
 id: 63332011-f057-496c-ad8d-d2b6afb27f96

@@ -1,19 +1,16 @@
 
 title: Execution via WorkFolders.exe
-ruletype: Sigma
 author: Maxime Thiebaut (@0xThiebaut)
 date: 2021/10/21
 description: Detects using WorkFolders.exe to execute an arbitrary control.exe
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\control.exe'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage: '*\WorkFolders.exe'
-  SELECTION_4:
+  SELECTION_3:
     Image: C:\Windows\System32\control.exe
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Legitimate usage of the uncommon Windows Work Folders feature.
 id: 0bbc6369-43e3-453d-9944-cae58821c173

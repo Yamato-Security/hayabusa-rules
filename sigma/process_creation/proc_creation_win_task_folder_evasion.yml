@@ -1,6 +1,5 @@
 
 title: Tasks Folder Evasion
-ruletype: Sigma
 author: Sreeman
 date: 2020/01/13
 description: The Tasks folder in system32 and syswow64 are globally writable paths.
@@ -9,18 +8,16 @@ description: The Tasks folder in system32 and syswow64 are globally writable pat
   wscript, regsvr32, mshta, eventvwr
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*echo *'
     - '*copy *'
     - '*type *'
     - '*file createnew*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* C:\Windows\System32\Tasks\\*'
     - '* C:\Windows\SysWow64\Tasks\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 fields:

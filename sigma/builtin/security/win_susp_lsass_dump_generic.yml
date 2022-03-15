@@ -1,16 +1,17 @@
 
 title: Generic Password Dumper Activity on LSASS
-ruletype: Sigma
 author: Roberto Rodriguez, Teymur Kheirkhabarov, Dimitrios Slamaris, Mark Russinovich,
   Aleksey Potapov, oscd.community (update)
 date: 2019/11/01
 description: Detects process handle on LSASS process with certain access mask
 detection:
   SELECTION_1:
-    ObjectName: '*\lsass.exe'
+    Channel: Security
   SELECTION_2:
-    EventID: 4656
+    ObjectName: '*\lsass.exe'
   SELECTION_3:
+    EventID: 4656
+  SELECTION_4:
     AccessMask:
     - '*0x40*'
     - '*0x1400*'
@@ -24,13 +25,13 @@ detection:
     - '*0x1f1fff*'
     - '*0x1f2fff*'
     - '*0x1f3fff*'
-  SELECTION_4:
-    EventID: 4663
   SELECTION_5:
+    EventID: 4663
+  SELECTION_6:
     AccessList:
     - '*4484*'
     - '*4416*'
-  SELECTION_6:
+  SELECTION_7:
     ProcessName:
     - '*\wmiprvse.exe'
     - '*\taskmgr.exe'
@@ -47,7 +48,7 @@ detection:
     - '*\GamingServices.exe'
     - '*\svchost.exe'
     - '*\MsMpEng.exe'
-  SELECTION_7:
+  SELECTION_8:
     ProcessName:
     - C:\Windows\System32\\*
     - C:\Windows\SysWow64\\*
@@ -55,11 +56,11 @@ detection:
     - C:\Program Files\\*
     - C:\Windows\Temp\asgard2-agent\\*
     - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
-  SELECTION_8:
+  SELECTION_9:
     ProcessName:
     - C:\Program Files*
-  condition: ((SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and
-    SELECTION_5))) and  not ((SELECTION_6 and SELECTION_7) or (SELECTION_8)))
+  condition: (SELECTION_1 and (SELECTION_2 and ((SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6))) and  not ((SELECTION_7 and SELECTION_8) or (SELECTION_9)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason; update the whitelist
   with it

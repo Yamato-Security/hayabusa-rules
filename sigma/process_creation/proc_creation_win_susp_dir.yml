@@ -1,19 +1,16 @@
 
 title: Suspicious DIR Execution
-ruletype: Sigma
 author: frack113
 date: 2021/12/13
 description: Use dir to collect information
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*dir *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* /s*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* /b*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - unknown
 id: 7c9340a9-e2ee-4e43-94c5-c54ebbea1006

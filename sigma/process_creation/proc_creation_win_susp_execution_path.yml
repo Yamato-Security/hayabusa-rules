@@ -1,13 +1,10 @@
 
 title: Execution from Suspicious Folder
-ruletype: Sigma
 author: Florian Roth
 date: 2019/01/16
 description: Detects a suspicious execution from an uncommon folder
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\$Recycle.bin\\*'
     - '*\config\systemprofile\\*'
@@ -27,9 +24,9 @@ detection:
     - '*\Windows\security\\*'
     - '*\Windows\System32\Tasks\\*'
     - '*\Windows\Tasks\\*'
-  SELECTION_3:
+  SELECTION_2:
     Image: C:\Perflogs\\*
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  condition: (SELECTION_1 or SELECTION_2)
 falsepositives:
 - Unknown
 fields:

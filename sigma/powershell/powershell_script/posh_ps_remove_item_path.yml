@@ -1,16 +1,19 @@
 
 title: Use Remove-Item to Delete File
-ruletype: Sigma
 author: frack113
 date: 2022/01/15
 description: Powershell Remove-Item  with -Path to delete a file or a folder with
   "-Recurse"
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Remove-Item*'
+    EventID: 4104
   SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*Remove-Item*'
+  SELECTION_4:
     ScriptBlockText: '*-Path *'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate PowerShell scripts
 id: b8af5f36-1361-4ebe-9e76-e36128d947bf

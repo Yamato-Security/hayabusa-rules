@@ -1,14 +1,11 @@
 
 title: Activity Related to NTDS.dit Domain Hash Retrieval
-ruletype: Sigma
 author: Florian Roth, Michael Haag
 date: 2019/01/16
 description: Detects suspicious commands that could be related to activity that uses
   volume shadow copy to steal and retrieve hashes from the NTDS.dit file remotely
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - vssadmin.exe Delete Shadows
     - 'vssadmin create shadow /for=C:'
@@ -19,7 +16,7 @@ detection:
     - esentutl.exe /y /vss *\ntds.dit*
     - esentutl.exe /y /vss *\SAM
     - esentutl.exe /y /vss *\SYSTEM
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Administrative activity
 fields:

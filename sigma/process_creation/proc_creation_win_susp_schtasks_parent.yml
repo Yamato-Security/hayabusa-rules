@@ -1,29 +1,25 @@
 
 title: Suspicious Add Scheduled Task Parent
-ruletype: Sigma
 author: Florian Roth
 date: 2022/02/23
 description: Detects suspicious scheduled task creations from a parent stored in a
   temporary folder
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*schtasks.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/Create *'
-  SELECTION_4:
+  SELECTION_3:
     ParentImage:
     - '*\AppData\Local\\*'
     - '*\AppData\Roaming\\*'
     - '*\Temporary Internet*'
     - '*\Users\Public\\*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine:
     - '*update_task.xml*'
     - '*unattended.ini*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5)))
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)))
 falsepositives:
 - Software installers that run from temporary folders and also install scheduled tasks
 id: 9494479d-d994-40bf-a8b1-eea890237021

@@ -1,17 +1,14 @@
 
 title: Suspicious Commandline Escape
-ruletype: Sigma
 author: juju4
 date: 2018/12/11
 description: Detects suspicious process that use escape characters
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*h^t^t^p*'
     - '*h"t"t"p*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

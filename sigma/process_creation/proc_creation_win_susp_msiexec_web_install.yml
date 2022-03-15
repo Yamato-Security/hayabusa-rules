@@ -1,17 +1,14 @@
 
 title: MsiExec Web Install
-ruletype: Sigma
 author: Florian Roth
 date: 2018/02/09
 description: Detects suspicious msiexec process starts with web addresses as parameter
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '* msiexec*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*://*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

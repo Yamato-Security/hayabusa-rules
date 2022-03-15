@@ -1,14 +1,11 @@
 
 title: PowerShell Downgrade Attack
-ruletype: Sigma
 author: Harish Segar (rule)
 date: 2020/03/20
 description: Detects PowerShell downgrade attack by comparing the host versions with
   the actually used engine version 2.0
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '* -version 2 *'
     - '* -versio 2 *'
@@ -16,9 +13,9 @@ detection:
     - '* -vers 2 *'
     - '* -ver 2 *'
     - '* -ve 2 *'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\powershell.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Penetration Test
 - Unknown

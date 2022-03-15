@@ -1,6 +1,5 @@
 
 title: Explorer Root Flag Process Tree Break
-ruletype: Sigma
 author: Florian Roth
 date: 2019/06/29
 description: Detects a command line process that uses explorer.exe /root, which is
@@ -8,12 +7,10 @@ description: Detects a command line process that uses explorer.exe /root, which 
   instance of explorer
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*explorer.exe*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* /root,*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown how many legitimate software products use that method
 id: 949f1ffb-6e85-4f00-ae1e-c3c5b190d605

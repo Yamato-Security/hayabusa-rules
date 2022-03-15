@@ -1,25 +1,26 @@
 
 title: Metasploit Or Impacket Service Installation Via SMB PsExec
-ruletype: Sigma
 author: Bartlomiej Czyz, Relativity
 date: 2021/01/21
 description: Detects usage of Metasploit SMB PsExec (exploit/windows/smb/psexec) and
   Impacket psexec.py by triggering on specific service installation
 detection:
   SELECTION_1:
-    EventID: 4697
+    Channel: Security
   SELECTION_2:
-    ServiceFileName|re: ^%systemroot%\\[a-zA-Z]{8}\.exe$
+    EventID: 4697
   SELECTION_3:
-    ServiceName|re: (^[a-zA-Z]{4}$)|(^[a-zA-Z]{8}$)|(^[a-zA-Z]{16}$)
+    ServiceFileName|re: ^%systemroot%\\[a-zA-Z]{8}\.exe$
   SELECTION_4:
-    ServiceStartType: '3'
+    ServiceName|re: (^[a-zA-Z]{4}$)|(^[a-zA-Z]{8}$)|(^[a-zA-Z]{16}$)
   SELECTION_5:
-    ServiceType: '0x10'
+    ServiceStartType: '3'
   SELECTION_6:
+    ServiceType: '0x10'
+  SELECTION_7:
     ServiceName: PSEXESVC
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not (SELECTION_6))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6) and  not (SELECTION_7))
 falsepositives:
 - Possible, different agents with a 8 character binary and a 4, 8 or 16 character
   service name

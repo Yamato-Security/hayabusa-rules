@@ -1,6 +1,5 @@
 
 title: Remote PowerShell Session Host Process (WinRM)
-ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/09/12
 description: Detects remote PowerShell sections by monitoring for wsmprovhost (WinRM
@@ -8,12 +7,10 @@ description: Detects remote PowerShell sections by monitoring for wsmprovhost (W
   session).
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\wsmprovhost.exe'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage: '*\wsmprovhost.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  condition: (SELECTION_1 or SELECTION_2)
 falsepositives:
 - Legitimate usage of remote Powershell, e.g. for monitoring purposes.
 fields:

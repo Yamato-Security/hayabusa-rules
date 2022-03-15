@@ -1,18 +1,15 @@
 
 title: Powershell Reverse Shell Connection
-ruletype: Sigma
 author: FPT.EagleEye, wagga
 date: 2021/03/03
 description: Detects the Nishang Invoke-PowerShellTcpOneLine reverse shell
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\powershell.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*new-object system.net.sockets.tcpclient*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Administrative might use this function for checking network connectivity
 fields:

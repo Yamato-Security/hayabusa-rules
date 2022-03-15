@@ -1,17 +1,18 @@
 
 title: Remote Registry Management Using Reg Utility
-ruletype: Sigma
 author: Teymur Kheirkhabarov, oscd.community
 date: 2019/10/22
 description: Remote registry management using REG utility from non-admin workstation
 detection:
   SELECTION_1:
-    EventID: 5145
+    Channel: Security
   SELECTION_2:
-    RelativeTargetName: '*\winreg*'
+    EventID: 5145
   SELECTION_3:
+    RelativeTargetName: '*\winreg*'
+  SELECTION_4:
     IpAddress: '%Admins_Workstations%'
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - Legitimate usage of remote registry management by administrator
 id: 68fcba0d-73a5-475e-a915-e8b4c576827e

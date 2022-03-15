@@ -1,20 +1,17 @@
 
 title: Mshta Spawning Windows Shell
-ruletype: Sigma
 author: Florian Roth
 date: 2021/06/28
 description: Detects a suspicious child process of a mshta.exe process
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\mshta.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\powershell.exe'
     - '*\cmd.exe'
     - '*\WScript.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 fields:

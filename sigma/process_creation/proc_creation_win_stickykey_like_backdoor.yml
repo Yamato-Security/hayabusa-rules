@@ -1,6 +1,5 @@
 
 title: Sticky Key Like Backdoor Usage
-ruletype: Sigma
 author: Florian Roth, @twjackomo, Jonhnathan Ribeiro, oscd.community
 date: 2018/03/15
 description: Detects the usage and installation of a backdoor that uses an option
@@ -8,12 +7,10 @@ description: Detects the usage and installation of a backdoor that uses an optio
   screen
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\winlogon.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\cmd.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*sethc.exe*'
     - '*utilman.exe*'
@@ -21,7 +18,7 @@ detection:
     - '*Magnify.exe*'
     - '*Narrator.exe*'
     - '*DisplaySwitch.exe*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unlikely
 id: 2fdefcb3-dbda-401e-ae23-f0db027628bc
@@ -35,7 +32,7 @@ references:
 related:
 - id: baca5663-583c-45f9-b5dc-ea96a22ce542
   type: derived
-status: experimental
+status: test
 tags:
 - attack.privilege_escalation
 - attack.persistence

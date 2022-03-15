@@ -1,18 +1,15 @@
 
 title: Malicious Base64 Encoded PowerShell Keywords in Command Lines
-ruletype: Sigma
 author: John Lambert (rule)
 date: 2019/01/16
 description: Detects base64 encoded strings used in hidden malicious PowerShell command
   lines
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\powershell.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* hidden *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*AGkAdABzAGEAZABtAGkAbgAgAC8AdAByAGEAbgBzAGYAZQByA*'
     - '*aXRzYWRtaW4gL3RyYW5zZmVy*'
@@ -62,7 +59,7 @@ detection:
     - '*bQBlAG0AbQBvAHYAZQ*'
     - '*bWVtbW92Z*'
     - '*ZW1tb3Zl*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Penetration tests
 id: f26c6093-6f14-4b12-800f-0fcb46f5ffd0

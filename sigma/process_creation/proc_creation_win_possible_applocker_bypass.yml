@@ -1,14 +1,11 @@
 
 title: Possible Applocker Bypass
-ruletype: Sigma
 author: juju4
 date: 2019/01/16
 description: Detects execution of executables that can be used to bypass Applocker
   whitelisting
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*\msdt.exe*'
     - '*\installutil.exe*'
@@ -16,7 +13,7 @@ detection:
     - '*\regasm.exe*'
     - '*\msbuild.exe*'
     - '*\ieexec.exe*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

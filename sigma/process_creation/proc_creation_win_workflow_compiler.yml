@@ -1,20 +1,17 @@
 
 title: Microsoft Workflow Compiler
-ruletype: Sigma
 author: Nik Seetharaman, frack113
 date: 2019/01/16
 description: Detects invocation of Microsoft Workflow Compiler, which may permit the
   execution of arbitrary unsigned code.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\Microsoft.Workflow.Compiler.exe'
-  SELECTION_3:
+  SELECTION_2:
     OriginalFileName: Microsoft.Workflow.Compiler.exe
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*.xml*'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4)))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3))
 falsepositives:
 - Legitimate MWC use (unlikely in modern enterprise environments)
 fields:

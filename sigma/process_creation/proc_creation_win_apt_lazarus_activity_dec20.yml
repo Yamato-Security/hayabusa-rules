@@ -1,32 +1,29 @@
 
 title: Lazarus Activity
-ruletype: Sigma
 author: Florian Roth
 date: 2020/12/23
 description: Detects different process creation events as described in various threat
   reports on Lazarus group activity
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*reg.exe save hklm\sam %temp%\~reg_sam.save*'
     - '*1q2w3e4r@#$@#$@#$*'
     - '* -hp1q2w3e4 *'
     - '*.dat data03 10000 -p *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*process call create*'
+  SELECTION_3:
+    CommandLine: '* > %temp%\~*'
   SELECTION_4:
-    CommandLine: '* > %temp%\~*'
-  SELECTION_5:
     CommandLine: '*netstat -aon | find *'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '* > %temp%\~*'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine:
     - '*.255 10 C:\ProgramData\\*'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6) or SELECTION_7))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)
+    or SELECTION_6)
 falsepositives:
 - Overlap with legitimate process activity in some cases (especially selection 3 and
   4)

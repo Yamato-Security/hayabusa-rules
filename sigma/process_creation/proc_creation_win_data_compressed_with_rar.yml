@@ -1,6 +1,5 @@
 
 title: Data Compressed - rar.exe
-ruletype: Sigma
 author: Timur Zinniatullin, E.M. Anhaus, oscd.community
 date: 2019/10/21
 description: An adversary may compress data (e.g., sensitive documents) that is collected
@@ -8,12 +7,10 @@ description: An adversary may compress data (e.g., sensitive documents) that is 
   sent over the network.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\rar.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* a *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Highly likely if rar is a default archiver in the monitored environment.
 fields:

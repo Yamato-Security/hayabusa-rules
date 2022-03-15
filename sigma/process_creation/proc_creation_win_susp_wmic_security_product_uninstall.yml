@@ -1,21 +1,18 @@
 
 title: Wmic Uninstall Security Product
-ruletype: Sigma
 author: Florian Roth
 date: 2021/01/30
 description: Detects deinstallation of security products using WMIC utility
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*wmic*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*product where name=*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*call uninstall*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*/nointeractive*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine:
     - '*Antivirus*'
     - '*AVG *'
@@ -33,8 +30,7 @@ detection:
     - '*VirusScan*'
     - '*Webroot SecureAnywhere*'
     - '*Windows Defender*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate administration
 id: 847d5ff3-8a31-4737-a970-aeae8fe21765

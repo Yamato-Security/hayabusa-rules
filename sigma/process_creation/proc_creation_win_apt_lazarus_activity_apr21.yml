@@ -1,31 +1,28 @@
 
 title: Lazarus Activity
-ruletype: Sigma
 author: Bhabesh Raj
 date: 2021/04/20
 description: Detects different process creation events as described in Malwarebytes's
   threat report on Lazarus group activity
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*mshta*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*.zip*'
-  SELECTION_4:
+  SELECTION_3:
     ParentImage:
     - C:\Windows\System32\wbem\wmiprvse.exe
-  SELECTION_5:
+  SELECTION_4:
     Image:
     - C:\Windows\System32\mshta.exe
-  SELECTION_6:
+  SELECTION_5:
     ParentImage:
     - '*:\Users\Public\\*'
-  SELECTION_7:
+  SELECTION_6:
     Image:
     - C:\Windows\System32\rundll32.exe
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7)))
+  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6))
 falsepositives:
 - Should not be any false positives
 id: 4a12fa47-c735-4032-a214-6fab5b120670

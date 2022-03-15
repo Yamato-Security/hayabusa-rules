@@ -1,17 +1,14 @@
 
 title: SyncAppvPublishingServer Execute Arbitrary PowerShell Code
-ruletype: Sigma
 author: frack113
 date: 2021/07/12
 description: Executes arbitrary PowerShell code using SyncAppvPublishingServer.exe.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\SyncAppvPublishingServer.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*"n; *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - App-V clients
 fields:

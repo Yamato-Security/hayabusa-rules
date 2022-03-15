@@ -1,6 +1,5 @@
 
 title: Automated Collection Bookmarks Using Get-ChildItem PowerShell
-ruletype: Sigma
 author: frack113
 date: 2021/12/13
 description: |
@@ -9,19 +8,23 @@ description: |
   internal network resources such as servers, tools/dashboards, or other related infrastructure.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Get-ChildItem*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '* -Recurse *'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '* -Path *'
+    ScriptBlockText: '*Get-ChildItem*'
   SELECTION_4:
-    ScriptBlockText: '* -Filter Bookmarks*'
+    ScriptBlockText: '* -Recurse *'
   SELECTION_5:
-    ScriptBlockText: '* -ErrorAction SilentlyContinue*'
+    ScriptBlockText: '* -Path *'
   SELECTION_6:
+    ScriptBlockText: '* -Filter Bookmarks*'
+  SELECTION_7:
+    ScriptBlockText: '* -ErrorAction SilentlyContinue*'
+  SELECTION_8:
     ScriptBlockText: '* -Force*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Unknown
 id: e0565f5d-d420-4e02-8a68-ac00d864f9cf

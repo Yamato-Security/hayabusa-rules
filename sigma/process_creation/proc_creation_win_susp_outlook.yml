@@ -1,24 +1,20 @@
 
 title: Suspicious Execution from Outlook
-ruletype: Sigma
 author: Markus Neis
 date: 2018/12/27
 description: Detects EnableUnsafeClientMailRules used for Script Execution from Outlook
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*EnableUnsafeClientMailRules*'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage: '*\outlook.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*\\\\\*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*\\\*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*.exe*'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5))
 falsepositives:
 - unknown
 id: e212d415-0e93-435f-9e1a-f29005bb4723

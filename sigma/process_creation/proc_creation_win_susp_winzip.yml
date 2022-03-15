@@ -1,25 +1,22 @@
 
 title: Compress Data and Lock With Password for Exfiltration With WINZIP
-ruletype: Sigma
 author: frack113
 date: 2021/07/27
 description: An adversary may compress or encrypt data that is collected prior to
   exfiltration using 3rd party utilities
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*winzip.exe*'
     - '*winzip64.exe*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*-s"*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '* -min *'
     - '* -a *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: e2e80da2-8c66-4e00-ae3c-2eebd29f6b6d

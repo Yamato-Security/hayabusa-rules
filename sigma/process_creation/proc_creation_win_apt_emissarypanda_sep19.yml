@@ -1,18 +1,15 @@
 
 title: Emissary Panda Malware SLLauncher
-ruletype: Sigma
 author: Florian Roth
 date: 2018/09/03
 description: Detects the execution of DLL side-loading malware used by threat group
   Emissary Panda aka APT27
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\sllauncher.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\svchost.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: 9aa01d62-7667-4d3b-acb8-8cb5103e2014

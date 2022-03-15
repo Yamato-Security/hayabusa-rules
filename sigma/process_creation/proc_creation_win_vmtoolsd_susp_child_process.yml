@@ -1,16 +1,13 @@
 
 title: VMToolsd Suspicious Child Process
-ruletype: Sigma
 author: behops, Bhabesh Raj
 date: 2021/10/08
 description: Detects suspicious child process creations of VMware Tools process which
   may indicate persistence setup
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\vmtoolsd.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\cmd.exe'
     - '*\powershell.exe'
@@ -18,13 +15,13 @@ detection:
     - '*\regsvr32.exe'
     - '*\wscript.exe'
     - '*\cscript.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*\VMware\VMware Tools\poweron-vm-default.bat*'
     - '*\VMware\VMware Tools\poweroff-vm-default.bat*'
     - '*\VMware\VMware Tools\resume-vm-default.bat*'
     - '*\VMware\VMware Tools\suspend-vm-default.bat*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Legitimate use by adminstrator
 fields:

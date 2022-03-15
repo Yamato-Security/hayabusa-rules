@@ -1,0 +1,106 @@
+
+title: Suspicious GrantedAccess Flags on LSASS Access
+author: Florian Roth
+date: 2021/11/22
+description: Detects process access to LSASS memory with suspicious access flags
+detection:
+  SELECTION_1:
+    TargetImage: '*\lsass.exe'
+  SELECTION_10:
+    SourceImage: C:\WINDOWS\system32\MRT.exe
+  SELECTION_11:
+    GrantedAccess: '0x1418'
+  SELECTION_12:
+    SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
+  SELECTION_13:
+    SourceImage: C:\Windows\Temp\asgard2-agent\\*
+  SELECTION_14:
+    SourceImage:
+    - '*\thor64.exe'
+    - '*\thor.exe'
+  SELECTION_15:
+    GrantedAccess: '0x1fffff'
+  SELECTION_2:
+    GrantedAccess:
+    - '*30'
+    - '*50'
+    - '*70'
+    - '*90'
+    - '*B0'
+    - '*D0'
+    - '*F0'
+    - '*18'
+    - '*38'
+    - '*58'
+    - '*78'
+    - '*98'
+    - '*B8'
+    - '*D8'
+    - '*F8'
+    - '*1A'
+    - '*3A'
+    - '*5A'
+    - '*7A'
+    - '*9A'
+    - '*BA'
+    - '*DA'
+    - '*FA'
+    - '*0x14C2'
+  SELECTION_3:
+    SourceImage:
+    - C:\WINDOWS\system32\taskmgr.exe
+    - C:\Program Files\Malwarebytes\Anti-Malware\MBAMService.exe
+    - C:\PROGRAMDATA\MALWAREBYTES\MBAMSERVICE\ctlrupdate\mbupdatr.exe
+    - C:\WINDOWS\system32\taskhostw.exe
+    - C:\Users\\*\AppData\Local\Programs\Microsoft VS Code\Code.exe
+    - C:\Program Files\Windows Defender\MsMpEng.exe
+    - C:\Windows\SysWOW64\msiexec.exe
+    - C:\Windows\System32\msiexec.exe
+    - C:\Windows\System32\lsass.exe
+    - C:\WINDOWS\System32\perfmon.exe
+    - C:\Windows\System32\MRT.exe
+  SELECTION_4:
+    SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
+  SELECTION_5:
+    SourceImage: '*\MsMpEng.exe'
+  SELECTION_6:
+    SourceImage: C:\ProgramData\VMware\VMware Tools\\*
+  SELECTION_7:
+    SourceImage: '*\vmtoolsd.exe'
+  SELECTION_8:
+    SourceImage:
+    - C:\Progra Files\\*
+    - C:\Progra Files (x86)\\*
+  SELECTION_9:
+    SourceImage:
+    - '*Antivirus*'
+  condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4
+    and SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
+    or (SELECTION_10 and SELECTION_11) or (SELECTION_12) or (SELECTION_13 and SELECTION_14
+    and SELECTION_15)))
+falsepositives:
+- Legitimate software accessing LSASS process for legitimate reason
+fields:
+- User
+- SourceImage
+- GrantedAccess
+id: a18dd26b-6450-46de-8c91-9659150cf088
+level: high
+logsource:
+  category: process_access
+  product: windows
+modified: 2022/03/13
+references:
+- https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
+- https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
+- https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
+- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+- http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
+related:
+- id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
+  type: obsoletes
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.001
+- attack.s0002

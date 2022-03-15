@@ -1,16 +1,13 @@
 
 title: Suspicious Serv-U Process Pattern
-ruletype: Sigma
 author: Florian Roth
 date: 2021/07/14
 description: Detects a suspicious process pattern which could be a sign of an exploited
   Serv-U service
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\Serv-U.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\cmd.exe'
     - '*\powershell.exe'
@@ -26,7 +23,7 @@ detection:
     - '*\msiexec.exe'
     - '*\forfiles.exe'
     - '*\scriptrunner.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Legitimate uses in which users or programs use the SSH service of Serv-U for remote
   command execution

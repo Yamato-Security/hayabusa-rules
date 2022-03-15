@@ -1,0 +1,29 @@
+
+title: Suspicious Screensaver Binary File Creation
+author: frack113
+date: 2021/12/29
+description: |
+  Adversaries may establish persistence by executing malicious content triggered by user inactivity.
+  Screensavers are programs that execute after a configurable time of user inactivity and consist of Portable Executable (PE) files with a .scr file extension
+detection:
+  SELECTION_1:
+    TargetFilename: '*.scr'
+  SELECTION_2:
+    Image:
+    - '*\Kindle.exe'
+    - '*\Bin\ccSvcHst.exe'
+  condition: (SELECTION_1 and  not ((SELECTION_2)))
+falsepositives:
+- Unknown
+id: 97aa2e88-555c-450d-85a6-229bcd87efb8
+level: medium
+logsource:
+  category: file_event
+  product: windows
+modified: 2022/01/10
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.002/T1546.002.md
+status: experimental
+tags:
+- attack.persistence
+- attack.t1546.002

@@ -1,21 +1,18 @@
 
 title: Possible Shim Database Persistence via sdbinst.exe
-ruletype: Sigma
 author: Markus Neis
 date: 2019/01/16
 description: Detects installation of a new shim using sdbinst.exe. A shim can be used
   to load malicious DLLs into applications.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\sdbinst.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*.sdb*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*iisexpressshim.sdb*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Unknown
 id: 517490a7-115a-48c6-8862-1a481504d5a8

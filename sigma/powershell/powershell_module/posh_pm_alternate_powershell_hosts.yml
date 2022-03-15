@@ -1,18 +1,22 @@
 
 title: Alternate PowerShell Hosts
-ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/08/11
 description: Detects alternate PowerShell hosts potentially bypassing detections looking
   for powershell.exe
 detection:
   SELECTION_1:
-    ContextInfo: '*'
+    EventID: 4103
   SELECTION_2:
-    ContextInfo: '*powershell.exe*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
+    ContextInfo: '*'
+  SELECTION_4:
+    ContextInfo: '*powershell.exe*'
+  SELECTION_5:
     ContextInfo: '*ConfigSyncRun.exe*'
-  condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3)))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+    or (SELECTION_5)))
 falsepositives:
 - Programs using PowerShell directly without invocation of a dedicated interpreter
 - MSP Detection Searcher

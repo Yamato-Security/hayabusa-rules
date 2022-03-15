@@ -1,6 +1,5 @@
 
 title: Change Default File Association
-ruletype: Sigma
 author: Timur Zinniatullin, oscd.community
 date: 2019/10/21
 description: When a file is opened, the default program used to open the file (also
@@ -11,14 +10,12 @@ description: When a file is opened, the default program used to open the file (a
   to call an arbitrary program when a file with the given extension is opened.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*cmd*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/c*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*assoc*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Admin activity
 fields:

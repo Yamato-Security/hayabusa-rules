@@ -1,27 +1,23 @@
 
 title: PowerShell Download from URL
-ruletype: Sigma
 author: Florian Roth, oscd.community, Jonhnathan Ribeiro
 date: 2019/01/16
 description: Detects a Powershell process that contains download commands in its command
   line string
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\powershell.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*new-object*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*net.webclient).*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*download*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine:
     - '*string(*'
     - '*file(*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - unknown
 fields:

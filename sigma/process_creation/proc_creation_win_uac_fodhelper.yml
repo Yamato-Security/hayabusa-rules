@@ -1,16 +1,13 @@
 
 title: Bypass UAC via Fodhelper.exe
-ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Tony Lambert), oscd.community
 date: 2019/10/24
 description: Identifies use of Fodhelper.exe to bypass User Account Control. Adversaries
   use this technique to execute privileged processes.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\fodhelper.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Legitimate use of fodhelper.exe utility by legitimate user
 fields:

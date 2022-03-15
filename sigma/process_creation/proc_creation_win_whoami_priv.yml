@@ -1,6 +1,5 @@
 
 title: Run Whoami Showing Privileges
-ruletype: Sigma
 author: Florian Roth
 date: 2021/05/05
 description: Detects a whoami.exe executed with the /priv command line flag instructing
@@ -8,12 +7,10 @@ description: Detects a whoami.exe executed with the /priv command line flag inst
   escalation attempt.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\whoami.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/priv*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Administrative activity (rare lookups on current privileges)
 id: 97a80ec7-0e2f-4d05-9ef4-65760e634f6b

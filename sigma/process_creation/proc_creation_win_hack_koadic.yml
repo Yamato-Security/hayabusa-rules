@@ -1,21 +1,18 @@
 
 title: Koadic Execution
-ruletype: Sigma
 author: wagga, Jonhnathan Ribeiro, oscd.community
 date: 2020/01/12
 description: Detects command line parameters used by Koadic hack tool
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\cmd.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/q*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/c*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*chcp*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Pentest
 fields:

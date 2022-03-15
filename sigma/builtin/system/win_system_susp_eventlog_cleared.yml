@@ -1,16 +1,17 @@
 
 title: System Eventlog Cleared
-ruletype: Sigma
 author: Florian Roth
 date: 2017/01/10
 description: One of the Windows Eventlogs has been cleared. e.g. caused by "wevtutil
   cl" command execution
 detection:
   SELECTION_1:
-    EventID: 104
+    Channel: System
   SELECTION_2:
+    EventID: 104
+  SELECTION_3:
     Provider_Name: Microsoft-Windows-Eventlog
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Rollout of log collection agents (the setup routine often includes a reset of the
   local Eventlog)

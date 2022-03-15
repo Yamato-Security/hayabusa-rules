@@ -1,21 +1,18 @@
 
 title: Suspicious Add Scheduled Command Pattern
-ruletype: Sigma
 author: Florian Roth
 date: 2022/02/23
 description: Detects suspicious scheduled task creations with commands that are uncommon
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*schtasks.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/Create *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*/sc minute *'
     - '*/ru system *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine:
     - '*cmd.exe /c *'
     - '*cmd /c*'
@@ -27,16 +24,16 @@ detection:
     - '*.DownloadString*'
     - '*.DownloadFile*'
     - '*FromBase64String*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*/xml C:\Users\\*'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '*\AppData\Local\\*'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine: '*wscript.exe*'
-  SELECTION_9:
+  SELECTION_8:
     CommandLine: '*\AppData\\*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
-    SELECTION_5) or ((SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9))))
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+    ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8))))
 falsepositives:
 - Software installers that run from temporary folders and also install scheduled tasks
 id: f2c64357-b1d2-41b7-849f-34d2682c0fad

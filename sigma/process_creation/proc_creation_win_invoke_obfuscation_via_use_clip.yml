@@ -1,15 +1,12 @@
 
 title: Invoke-Obfuscation Via Use Clip
-ruletype: Sigma
 author: Nikita Nazarov, oscd.community
 date: 2020/10/09
 description: Detects Obfuscated Powershell via use Clip.exe in Scripts
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine|re: (?i).*?echo.*clip.*&&.*(Clipboard|i`?n`?v`?o`?k`?e`?).*
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Unknown
 id: e1561947-b4e3-4a74-9bdd-83baed21bdb5

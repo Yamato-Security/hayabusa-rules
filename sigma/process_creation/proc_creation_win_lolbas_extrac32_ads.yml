@@ -1,19 +1,16 @@
 
 title: Suspicious Extrac32 Alternate Data Stream Execution
-ruletype: Sigma
 author: frack113
 date: 2021/11/26
 description: Extract data from cab file and hide it in an alternate data stream
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*extrac32.exe*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*.cab*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine|re: :[^\\\\]
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - unknown
 id: 4b13db67-0c45-40f1-aba8-66a1a7198a1e

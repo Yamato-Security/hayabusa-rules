@@ -1,21 +1,18 @@
 
 title: DarkSide Ransomware Pattern
-ruletype: Sigma
 author: Florian Roth
 date: 2021/05/14
 description: Detects DarkSide Ransomware and helpers
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - "*=[char][byte]('0x'+*"
     - '* -work worker0 -path *'
-  SELECTION_3:
+  SELECTION_2:
     ParentCommandLine: '*DllHost.exe /Processid:{3E5FC7F9-9A51-4367-9063-A120244FBEC7}*'
-  SELECTION_4:
+  SELECTION_3:
     Image: '*\AppData\Local\Temp\\*'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4)))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3))
 falsepositives:
 - Unknown
 - UAC bypass method used by other malware

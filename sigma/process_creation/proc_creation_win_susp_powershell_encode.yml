@@ -1,25 +1,22 @@
 
 title: Suspicious Execution of Powershell with Base64
-ruletype: Sigma
 author: frack113
 date: 2022/01/02
 description: Commandline to lauch powershell with a base64 payload
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\powershell.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* -e *'
     - '* -en *'
     - '* -enc *'
     - '* -enco*'
     - '* -ec *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '* -Encoding *'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Unknown
 id: fb843269-508c-4b76-8b8d-88679db22ce7

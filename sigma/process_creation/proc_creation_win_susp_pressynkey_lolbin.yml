@@ -1,23 +1,19 @@
 
 title: NodejsTools PressAnyKey Lolbin
-ruletype: Sigma
 author: Florian Roth
 date: 2022/01/11
 description: Detects a certain command line flag combination used by Microsoft.NodejsTools.PressAnyKey.exe
   that can be used to execute any other binary
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*Microsoft.NodejsTools.PressAnyKey.exe normal *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*.exe normal *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*.exe'
-  SELECTION_5:
+  SELECTION_4:
     Image: '*\Microsoft\NodeJsTools\NodeJsTools*'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4)) and  not
-    ((SELECTION_5)))
+  condition: ((SELECTION_1 or (SELECTION_2 and SELECTION_3)) and  not ((SELECTION_4)))
 falsepositives:
 - Other tools with the same command line flag combination
 - Legitimate uses as part of Visual Studio development

@@ -1,6 +1,5 @@
 
 title: Format.com FileSystem LOLBIN
-ruletype: Sigma
 author: Florian Roth
 date: 2022/01/04
 description: Detects the execution of format.com with a suspicious filesystem selection
@@ -8,19 +7,17 @@ description: Detects the execution of format.com with a suspicious filesystem se
   malicious DLL files or other programs
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\format.com'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/fs:*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*/fs:FAT*'
     - '*/fs:exFAT*'
     - '*/fs:NTFS*'
     - '*/fs:UDF*'
     - '*/fs:ReFS*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)))
+  condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3)))
 falsepositives:
 - unknown
 id: 9fb6b26e-7f9e-4517-a48b-8cac4a1b6c60

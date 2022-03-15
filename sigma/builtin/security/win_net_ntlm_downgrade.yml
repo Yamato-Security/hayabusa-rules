@@ -1,24 +1,26 @@
 
 title: NetNTLM Downgrade Attack
-ruletype: Sigma
 author: Florian Roth, wagga
 date: 2018/03/20
 description: Detects NetNTLM downgrade attack
 detection:
   SELECTION_1:
-    EventID: 4657
+    Channel: Security
   SELECTION_2:
-    ObjectName: '*\REGISTRY\MACHINE\SYSTEM*'
+    EventID: 4657
   SELECTION_3:
-    ObjectName: '*ControlSet*'
+    ObjectName: '*\REGISTRY\MACHINE\SYSTEM*'
   SELECTION_4:
-    ObjectName: '*\Control\Lsa*'
+    ObjectName: '*ControlSet*'
   SELECTION_5:
+    ObjectName: '*\Control\Lsa*'
+  SELECTION_6:
     ObjectValueName:
     - LmCompatibilityLevel
     - NtlmMinClientSec
     - RestrictSendingNTLMTraffic
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: d3abac66-f11c-4ed0-8acb-50cc29c97eed

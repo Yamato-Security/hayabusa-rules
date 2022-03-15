@@ -1,15 +1,12 @@
 
 title: Suspicious Shells Spawn by Java
-ruletype: Sigma
 author: Andreas Hunkeler (@Karneades), Florian Roth
 date: 2021/12/17
 description: Detects suspicious shell spawn from Java host process (e.g. log4j exploitation)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\java.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\sh.exe'
     - '*\bash.exe'
@@ -31,7 +28,7 @@ detection:
     - '*\mftrace.exe'
     - '*\AppVLP.exe'
     - '*\curl.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Legitimate calls to system binaries
 - Company specific internal usage

@@ -1,15 +1,12 @@
 
 title: MavInject Process Injection
-ruletype: Sigma
 author: Florian Roth
 date: 2018/12/12
 description: Detects process injection using the signed Windows tool Mavinject32.exe
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '* /INJECTRUNNING *'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - unknown
 id: 17eb8e57-9983-420d-ad8a-2c4976c22eb8

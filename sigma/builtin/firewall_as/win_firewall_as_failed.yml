@@ -1,13 +1,14 @@
 
 title: Failed to Load Policy in Windows Firewall with Advanced Security
-ruletype: Sigma
 author: frack113
 date: 2022/02/19
 description: The Windows Firewall service failed to load Group Policy.
 detection:
   SELECTION_1:
+    Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
+  SELECTION_2:
     EventID: 2009
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2)
 id: 7ec15688-fd24-4177-ba43-1a950537ee39
 level: low
 logsource:

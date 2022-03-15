@@ -1,20 +1,17 @@
 
 title: Suspicious Use of PsLogList
-ruletype: Sigma
 author: Nasreddine Bencherchali @nas_bench
 date: 2021/12/18
 description: Threat actors can use the PsLogList utility to dump event log in order
   to extract admin accounts and perform account discovery.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     OriginalFileName: '*psloglist*'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\psloglist.exe'
     - '*\psloglist64.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*-d*'
     - '*/d*'
@@ -22,12 +19,11 @@ detection:
     - '*/x*'
     - '*-s*'
     - '*/s*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*security*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*accepteula*'
-  condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) or (SELECTION_4 and SELECTION_5
-    and SELECTION_6)))
+  condition: ((SELECTION_1 or SELECTION_2) or (SELECTION_3 and SELECTION_4 and SELECTION_5))
 falsepositives:
 - Another tool that uses the command line switches of PsLogList
 - Legitimate use of PsLogList by an administrator

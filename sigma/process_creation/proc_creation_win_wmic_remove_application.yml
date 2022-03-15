@@ -1,17 +1,14 @@
 
 title: WMI Uninstall An Application
-ruletype: Sigma
 author: frac113
 date: 2022/01/28
 description: Uninstall an application with wmic
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\WMIC.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*call uninstall*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: b53317a0-8acf-4fd1-8de8-a5401e776b96

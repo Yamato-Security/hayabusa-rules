@@ -1,13 +1,10 @@
 
 title: Encoded IEX
-ruletype: Sigma
 author: Florian Roth
 date: 2019/08/23
 description: Detects a base64 encoded IEX command string in a process command line
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*SUVYIChb*'
     - '*lFWCAoW*'
@@ -21,7 +18,21 @@ detection:
     - '*SUVYIChOZX*'
     - '*lFWCAoTmV3*'
     - '*JRVggKE5ld*'
-  condition: (SELECTION_1 and SELECTION_2)
+  SELECTION_2:
+    CommandLine:
+    - '*SQBFAFgAIAAoAFsA*'
+    - '*kARQBYACAAKABbA*'
+    - '*JAEUAWAAgACgAWw*'
+    - '*aQBlAHgAIAAoAFsA*'
+    - '*kAZQB4ACAAKABbA*'
+    - '*pAGUAeAAgACgAWw*'
+    - '*aQBlAHgAIAAoAE4AZQB3A*'
+    - '*kAZQB4ACAAKABOAGUAdw*'
+    - '*pAGUAeAAgACgATgBlAHcA*'
+    - '*SQBFAFgAIAAoAE4AZQB3A*'
+    - '*kARQBYACAAKABOAGUAdw*'
+    - '*JAEUAWAAgACgATgBlAHcA*'
+  condition: (SELECTION_1 or SELECTION_2)
 falsepositives:
 - unknown
 fields:
@@ -32,7 +43,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/03/07
 status: test
 tags:
 - attack.execution

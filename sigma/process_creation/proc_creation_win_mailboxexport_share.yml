@@ -1,20 +1,17 @@
 
 title: Suspicious PowerShell Mailbox Export to Share
-ruletype: Sigma
 author: Florian Roth
 date: 2021/08/07
 description: Detects a PowerShell New-MailboxExportRequest that exports a mailbox
   to a local share, as used in ProxyShell exploitations
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*New-MailboxExport*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* -Mailbox *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* -FilePath \\\\127.0.0.1\\C$*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - unknown
 fields:

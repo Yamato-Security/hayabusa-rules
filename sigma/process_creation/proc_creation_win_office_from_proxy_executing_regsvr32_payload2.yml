@@ -1,6 +1,5 @@
 
 title: Excel Proxy Executing Regsvr32 With Payload
-ruletype: Sigma
 author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule)
 date: 2021/08/23
 description: Excel called wmic to finally proxy execute regsvr32 with the payload.
@@ -10,31 +9,29 @@ description: Excel called wmic to finally proxy execute regsvr32 with the payloa
   LOLBins in command-line with parent Office application processes.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentCommandLine:
     - '*regsvr32*'
     - '*rundll32*'
     - '*msiexec*'
     - '*mshta*'
     - '*verclsid*'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\wbem\WMIC.exe'
-  SELECTION_4:
+  SELECTION_3:
     ParentCommandLine: '*wmic *'
-  SELECTION_5:
+  SELECTION_4:
     ParentImage:
     - '*winword.exe'
     - '*excel.exe'
     - '*powerpnt.exe'
-  SELECTION_6:
+  SELECTION_5:
     ParentCommandLine: '*process*'
-  SELECTION_7:
+  SELECTION_6:
     ParentCommandLine: '*create*'
-  SELECTION_8:
+  SELECTION_7:
     ParentCommandLine: '*call*'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4) and SELECTION_5
-    and SELECTION_6 and SELECTION_7 and SELECTION_8)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: c0e1c3d5-4381-4f18-8145-2583f06a1fe5

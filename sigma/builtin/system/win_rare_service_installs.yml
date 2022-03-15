@@ -1,6 +1,5 @@
 
 title: Rare Service Installs
-ruletype: Sigma
 author: Florian Roth
 date: 2017/03/08
 description: Detects rare service installs that only appear a few times per time frame
@@ -8,11 +7,13 @@ description: Detects rare service installs that only appear a few times per time
   services
 detection:
   SELECTION_1:
-    Provider_Name: Service Control Manager
+    Channel: System
   SELECTION_2:
+    Provider_Name: Service Control Manager
+  SELECTION_3:
     EventID: 7045
-  condition: (SELECTION_1 and SELECTION_2) | count() by ServiceName < 5
-  timeframe: 7d
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3) | count() by ServiceName
+    < 5
 falsepositives:
 - Software installation
 - Software updates

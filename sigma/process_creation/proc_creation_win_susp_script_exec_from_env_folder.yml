@@ -1,34 +1,31 @@
 
 title: Script Interpreter Execution From Suspicious Folder
-ruletype: Sigma
 author: Florian Roth
 date: 2022/02/08
 description: Detects a suspicious script executions in temporary folders or folders
   accessible by environment variables
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\powershell.exe'
     - '*\mshta.exe'
     - '*\wscript.exe'
     - '*\cscript.exe'
     - '*\cmd.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* -w hidden *'
     - '* -ep bypass *'
     - '*/e:vbscript *'
     - '*/e:javascript *'
-  SELECTION_4:
+  SELECTION_3:
     OriginalFileName:
     - powershell.exe
     - mshta.exe
     - wscript.exe
     - cscript.exe
     - cmd.exe
-  SELECTION_5:
+  SELECTION_4:
     Image:
     - '*\Windows\Temp*'
     - '*\Temporary Internet*'
@@ -36,7 +33,7 @@ detection:
     - '*\AppData\Roaming\Temp*'
     - '*C:\Users\Public\\*'
     - '*C:\Perflogs\\*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4) and SELECTION_5)
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4)
 falsepositives:
 - Unknown
 id: 1228c958-e64e-4e71-92ad-7d429f4138ba

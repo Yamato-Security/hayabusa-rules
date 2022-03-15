@@ -1,18 +1,15 @@
 
 title: Direct Autorun Keys Modification
-ruletype: Sigma
 author: Victor Sergeev, Daniil Yugoslavskiy, oscd.community
 date: 2019/10/25
 description: Detects direct modification of autostart extensibility point (ASEP) in
   registry using reg.exe.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\reg.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*add*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*\software\Microsoft\Windows\CurrentVersion\Run*'
     - '*\software\Microsoft\Windows\CurrentVersion\RunOnce*'
@@ -24,7 +21,7 @@ detection:
     - '*\software\Microsoft\Windows NT\CurrentVersion\Windows*'
     - '*\software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders*'
     - '*\system\CurrentControlSet\Control\SafeBoot\AlternateShell*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
   keys for legitimate reasons.

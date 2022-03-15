@@ -1,18 +1,15 @@
 
 title: Findstr Launching .lnk File
-ruletype: Sigma
 author: Trent Liffick
 date: 2020/05/01
 description: Detects usage of findstr to identify and execute a lnk file as seen within
   the HHS redirect attack
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\findstr.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*.lnk'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - unknown
 fields:

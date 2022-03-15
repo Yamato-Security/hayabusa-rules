@@ -1,24 +1,21 @@
 
 title: Suspicious Driver Install by pnputil.exe
-ruletype: Sigma
 author: Hai Vaknin @LuxNoBulIshit, Avihay eldad  @aloneliassaf, Austin Songer @austinsonger
 date: 2021/09/30
 description: Detects when a possible suspicious driver is being installed via pnputil.exe
   lolbin
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*-i*'
     - '*/install*'
     - '*-a*'
     - '*/add-driver*'
     - '*.inf*'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\pnputil.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Pnputil.exe being used may be performed by a system administrator.
 - Verify whether the user identity, user agent, and/or hostname should be making changes

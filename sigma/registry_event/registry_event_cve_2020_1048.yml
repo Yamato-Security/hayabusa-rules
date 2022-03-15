@@ -1,0 +1,35 @@
+
+title: Suspicious New Printer Ports in Registry (CVE-2020-1048)
+author: EagleEye Team, Florian Roth, NVISO
+date: 2020/05/13
+description: Detects a new and suspicious printer port creation in Registry that could
+  be an attempt to exploit CVE-2020-1048
+detection:
+  SELECTION_1:
+    EventType: SetValue
+  SELECTION_2:
+    TargetObject: HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports*
+  SELECTION_3:
+    Details:
+    - '*.dll*'
+    - '*.exe*'
+    - '*.bat*'
+    - '*.com*'
+    - '*C:*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- New printer port install on host
+id: 7ec912f2-5175-4868-b811-ec13ad0f8567
+level: high
+logsource:
+  category: registry_event
+  product: windows
+modified: 2022/01/13
+references:
+- https://windows-internals.com/printdemon-cve-2020-1048/
+status: test
+tags:
+- attack.persistence
+- attack.execution
+- attack.defense_evasion
+- attack.t1112

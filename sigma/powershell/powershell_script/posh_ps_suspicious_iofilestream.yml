@@ -1,18 +1,21 @@
 
 title: Suspicious IO.FileStream
-ruletype: Sigma
 author: frack113
 date: 2022/01/09
 description: Open a handle on the drive volume via the \\.\ DOS device path specifier
   and perform direct access read of the first few bytes of the volume.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*New-Object*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*IO.FileStream*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*\\.\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    ScriptBlockText: '*New-Object*'
+  SELECTION_4:
+    ScriptBlockText: '*IO.FileStream*'
+  SELECTION_5:
+    ScriptBlockText: '*\\\\.\\\*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate PowerShell scripts
 id: 70ad982f-67c8-40e0-a955-b920c2fa05cb
@@ -21,7 +24,7 @@ logsource:
   category: ps_script
   definition: Script block logging must be enabled
   product: windows
-modified: 2022/01/10
+modified: 2022/03/05
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1006/T1006.md
 status: experimental

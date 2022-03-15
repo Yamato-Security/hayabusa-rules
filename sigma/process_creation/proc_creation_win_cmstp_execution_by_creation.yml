@@ -1,16 +1,13 @@
 
 title: CMSTP Execution Process Creation
-ruletype: Sigma
 author: Nik Seetharaman
 date: 2018/07/16
 description: Detects various indicators of Microsoft Connection Manager Profile Installer
   execution
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\cmstp.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Legitimate CMSTP use (unlikely in modern enterprise environments)
 fields:

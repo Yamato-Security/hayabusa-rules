@@ -1,6 +1,5 @@
 
 title: ADCSPwn Hack Tool
-ruletype: Sigma
 author: Florian Roth
 date: 2021/07/31
 description: Detects command line parameters used by ADCSPwn, a tool to escalate privileges
@@ -8,12 +7,10 @@ description: Detects command line parameters used by ADCSPwn, a tool to escalate
   relaying to the certificate service
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '* --adcs *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* --port *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - unlikely
 id: cd8c163e-a19b-402e-bdd5-419ff5859f12
@@ -23,7 +20,7 @@ logsource:
   product: windows
 references:
 - https://github.com/bats3c/ADCSPwn
-status: experimental
+status: test
 tags:
 - attack.credential_access
 - attack.t1557.001

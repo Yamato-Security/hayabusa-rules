@@ -1,17 +1,14 @@
 
 title: Suspicious Plink Remote Forwarding
-ruletype: Sigma
 author: Florian Roth
 date: 2021/01/19
 description: Detects suspicious Plink tunnel remote forarding to a local port
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Description: Command-line SSH, Telnet, and Rlogin client
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* -R *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Administrative activity using a remote port forwarding to a local port
 id: 48a61b29-389f-4032-b317-b30de6b95314

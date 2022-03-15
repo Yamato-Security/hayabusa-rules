@@ -1,6 +1,5 @@
 
 title: Suspicious Where Execution
-ruletype: Sigma
 author: frack113
 date: 2021/12/13
 description: |
@@ -9,14 +8,12 @@ description: |
   internal network resources such as servers, tools/dashboards, or other related infrastructure.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\where.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*Bookmarks*'
     - '*places.sqlite*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - unknown
 id: 725a9768-0f5e-4cb3-aec2-bc5719c6831a

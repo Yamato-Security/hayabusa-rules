@@ -1,19 +1,16 @@
 
 title: Application Whitelisting Bypass via Bginfo
-ruletype: Sigma
 author: Beyu Denis, oscd.community
 date: 2019/10/26
 description: Execute VBscript code that is referenced within the *.bgi file.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\bginfo.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/popup*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/nolicprompt*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: aaf46cdc-934e-4284-b329-34aa701e3771

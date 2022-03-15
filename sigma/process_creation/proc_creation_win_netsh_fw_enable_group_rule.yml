@@ -1,31 +1,28 @@
 
 title: Netsh Allow Group Policy on Microsoft Defender Firewall
-ruletype: Sigma
 author: frack113
 date: 2022/01/09
 description: Adversaries may  modify system firewalls in order to bypass controls
   limiting network usage
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\netsh.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*advfirewall*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*firewall*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*set*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*rule*'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '*group=*'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine: '*new*'
-  SELECTION_9:
+  SELECTION_8:
     CommandLine: '*enable=Yes*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Legitimate administration
 id: 347906f3-e207-4d18-ae5b-a9403d6bcdef

@@ -1,14 +1,11 @@
 
 title: SMB Relay Attack Tools
-ruletype: Sigma
 author: Florian Roth
 date: 2021/07/24
 description: Detects different hacktools used for relay attacks on Windows for privilege
   escalation
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*PetitPotam*'
     - '*RottenPotato*'
@@ -22,7 +19,7 @@ detection:
     - '*\Responder.exe*'
     - '*\smbrelayx*'
     - '*\ntlmrelayx*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*Invoke-Tater*'
     - '* smbrelay*'
@@ -30,7 +27,15 @@ detection:
     - '*cme smb *'
     - '* /ntlm:NTLMhash *'
     - '*Invoke-PetitPotam*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  SELECTION_3:
+    Image:
+    - '*HotPotatoes6*'
+    - '*HotPotatoes 6*'
+    - '*HotPotatoes7*'
+    - '*HotPotatoes 7*'
+    - '*HotPotatoes Help*'
+    - '*HotPotatoes Tutorial*'
+  condition: ((SELECTION_1 or SELECTION_2) and  not ((SELECTION_3)))
 falsepositives:
 - Legitimate files with these rare hacktool names
 id: 5589ab4f-a767-433c-961d-c91f3f704db1
@@ -38,7 +43,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/07/26
+modified: 2022/03/03
 references:
 - https://attack.mitre.org/techniques/T1557/001/
 - https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/
@@ -46,7 +51,7 @@ references:
 - https://github.com/ohpe/juicy-potato
 - https://hunter2.gitbook.io/darthsidious/other/war-stories/domain-admin-in-30-minutes
 - https://hunter2.gitbook.io/darthsidious/execution/responder-with-ntlm-relay-and-empire
-status: experimental
+status: test
 tags:
 - attack.execution
 - attack.t1557.001

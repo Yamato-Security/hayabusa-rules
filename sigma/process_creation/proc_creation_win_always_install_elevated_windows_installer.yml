@@ -1,36 +1,32 @@
 
 title: Always Install Elevated Windows Installer
-ruletype: Sigma
 author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community
 date: 2020/10/13
 description: This rule looks for Windows Installer service (msiexec.exe) trying to
   install MSI packages with SYSTEM privilege
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    ParentCommandLine: '*\system32\msiexec.exe /V'
-  SELECTION_2:
     User:
     - '*AUTHORI*'
     - '*AUTORI*'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\Windows\Installer\\*'
-  SELECTION_4:
+  SELECTION_3:
     Image: '*msi*'
-  SELECTION_5:
+  SELECTION_4:
     Image: '*tmp'
-  SELECTION_6:
+  SELECTION_5:
     Image: '*\msiexec.exe'
-  SELECTION_7:
+  SELECTION_6:
     IntegrityLevel: System
-  SELECTION_8:
+  SELECTION_7:
     ParentImage: C:\Windows\System32\services.exe
-  SELECTION_9:
+  SELECTION_8:
     CommandLine: '*\system32\msiexec.exe /V'
-  condition: (SELECTION_1 and (SELECTION_2 and ((SELECTION_3 and SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7))) and  not ((SELECTION_8) or (SELECTION_9 or
-    SELECTION_10)))
+  SELECTION_9:
+    ParentCommandLine: '*\system32\msiexec.exe /V'
+  condition: ((SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6))) and  not ((SELECTION_7) or (SELECTION_8 or SELECTION_9)))
 falsepositives:
 - System administrator Usage
 - Penetration test

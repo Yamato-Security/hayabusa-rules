@@ -1,12 +1,15 @@
 
 title: Malicious Nishang PowerShell Commandlets
-ruletype: Sigma
 author: Alec Costello
 date: 2019/05/16
 description: Detects Commandlet names and arguments from the Nishang exploitation
   framework
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*Add-ConstrainedDelegationBackdoor*'
     - '*Set-DCShadowPermissions*'
@@ -78,7 +81,7 @@ detection:
     - '*NotAllNameSpaces*'
     - '*exfill*'
     - '*FakeDC*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Penetration testing
 id: f772cee9-b7c2-4cb2-8f07-49870adc02e0

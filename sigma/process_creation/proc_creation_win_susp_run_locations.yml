@@ -1,17 +1,14 @@
 
 title: Suspicious Process Start Locations
-ruletype: Sigma
 author: juju4, Jonhnathan Ribeiro, oscd.community
 date: 2019/01/16
 description: Detects suspicious process run from unusual locations
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*:\RECYCLER\\*'
     - '*:\SystemVolumeInformation\\*'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - C:\Windows\Tasks\\*
     - C:\Windows\debug\\*
@@ -21,7 +18,7 @@ detection:
     - C:\Windows\addins\\*
     - C:\Windows\cursors\\*
     - C:\Windows\system32\tasks\\*
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  condition: (SELECTION_1 or SELECTION_2)
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

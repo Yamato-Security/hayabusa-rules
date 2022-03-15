@@ -1,6 +1,5 @@
 
 title: Suspicious Get Local Groups Information
-ruletype: Sigma
 author: frack113
 date: 2021/12/12
 description: |
@@ -9,14 +8,18 @@ description: |
   Adversaries may use this information to determine which users have elevated permissions, such as the users found within the local administrators group.
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*get-localgroup*'
     - '*Get-LocalGroupMember*'
-  SELECTION_2:
+  SELECTION_4:
     ScriptBlockText: '*Get-WMIObject*'
-  SELECTION_3:
+  SELECTION_5:
     ScriptBlockText: '*Win32_Group*'
-  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - unknown
 id: fa6a5a45-3ee2-4529-aa14-ee5edc9e29cb

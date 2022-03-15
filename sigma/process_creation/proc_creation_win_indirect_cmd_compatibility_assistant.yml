@@ -1,16 +1,13 @@
 
 title: Indirect Command Execution By Program Compatibility Wizard
-ruletype: Sigma
 author: A. Sungurov , oscd.community
 date: 2020/10/12
 description: Detect indirect command execution via Program Compatibility Assistant
   pcwrun.exe
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\pcwrun.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Need to use extra processing with 'unique_count' / 'filter' to focus on outliers
   as opposed to commonly seen artifacts

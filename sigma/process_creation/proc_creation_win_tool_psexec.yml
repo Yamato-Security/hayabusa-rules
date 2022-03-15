@@ -1,18 +1,15 @@
 
 title: PsExec Tool Execution
-ruletype: Sigma
 author: Thomas Patzke
 date: 2017/06/12
 description: Detects PsExec service installation and execution events (service and
   Sysmon)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\PSEXESVC.exe'
-  SELECTION_3:
+  SELECTION_2:
     User: NT AUTHORITY\SYSTEM*
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - unknown
 fields:

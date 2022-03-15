@@ -1,22 +1,19 @@
 
 title: CrackMapExec Command Execution
-ruletype: Sigma
 author: Thomas Patzke
 date: 2020/05/22
 description: Detect various execution methods of the CrackMapExec pentesting framework
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*cmd.exe /Q /c * 1> \\\\*\\*\\* 2>&1'
     - '*cmd.exe /C * > \\\\*\\*\\* 2>&1'
     - '*cmd.exe /C * > *\\Temp\\* 2>&1'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*powershell.exe -exec bypass -noni -nop -w 1 -C "*'
     - '*powershell.exe -noni -nop -w 1 -enc *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 fields:

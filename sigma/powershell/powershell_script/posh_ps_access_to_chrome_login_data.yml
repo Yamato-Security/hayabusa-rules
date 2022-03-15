@@ -1,6 +1,5 @@
 
 title: Accessing Encrypted Credentials from Google Chrome Login Database
-ruletype: Sigma
 author: frack113
 date: 2021/12/20
 description: |
@@ -9,14 +8,18 @@ description: |
   Web browsers typically store the credentials in an encrypted format within a credential store.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Copy-Item*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*-Destination*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
+    ScriptBlockText: '*Copy-Item*'
+  SELECTION_4:
+    ScriptBlockText: '*-Destination*'
+  SELECTION_5:
     ScriptBlockText:
     - '*\Google\Chrome\User Data\Default\Login Data*'
     - '*\Google\Chrome\User Data\Default\Login Data For Account*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 98f4c75c-3089-44f3-b733-b327b9cd9c9d

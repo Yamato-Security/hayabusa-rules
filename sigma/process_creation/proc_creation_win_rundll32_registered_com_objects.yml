@@ -1,23 +1,20 @@
 
 title: Rundll32 Registered COM Objects
-ruletype: Sigma
 author: frack113
 date: 2022/02/13
 description: load malicious registered COM objects
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\rundll32.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*-sta *'
     - '*–localserver *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*{*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*}*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - legitimate use
 id: f1edd233-30b5-4823-9e6a-c4171b24d316

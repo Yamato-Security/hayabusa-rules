@@ -1,20 +1,17 @@
 
 title: Dotnet.exe Exec Dll and Execute Unsigned Code LOLBIN
-ruletype: Sigma
 author: Beyu Denis, oscd.community
 date: 2020/10/18
 description: dotnet.exe will execute any DLL and execute unsigned code
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*.dll'
     - '*.csproj'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\dotnet.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - System administrator Usage
 - Penetration test

@@ -1,22 +1,19 @@
 
 title: Turla Group Commands May 2020
-ruletype: Sigma
 author: Florian Roth
 date: 2020/05/26
 description: Detects commands used by Turla group as reported by ESET in May 2020
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*tracert -h 10 yahoo.com*'
     - '*.WSqmCons))|iex;*'
     - '*Fr`omBa`se6`4Str`ing*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*net use https://docs.live.net*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*@aol.co.uk*'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4)))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3))
 falsepositives:
 - Unknown
 id: 9e2e51c5-c699-4794-ba5a-29f5da40ac0c

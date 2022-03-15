@@ -1,6 +1,5 @@
 
 title: Overwrite Deleted Data with Cipher
-ruletype: Sigma
 author: frack113
 date: 2021/12/26
 description: |
@@ -8,12 +7,10 @@ description: |
   Data destruction is likely to render stored data irrecoverable by forensic techniques through overwriting files or data on local and remote drives
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\cipher.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* /w:*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - unknown
 id: 4b046706-5789-4673-b111-66f25fe99534

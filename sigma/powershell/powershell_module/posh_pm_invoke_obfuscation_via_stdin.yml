@@ -1,13 +1,16 @@
 
 title: Invoke-Obfuscation Via Stdin
-ruletype: Sigma
 author: Nikita Nazarov, oscd.community
 date: 2020/10/12
 description: Detects Obfuscated Powershell via Stdin in Scripts
 detection:
   SELECTION_1:
+    EventID: 4103
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     Payload|re: (?i).*(set).*&&\s?set.*(environment|invoke|\$\{?input).*&&.*"
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: c72aca44-8d52-45ad-8f81-f96c4d3c755e

@@ -1,21 +1,18 @@
 
 title: RdrLeakDiag Process Dump
-ruletype: Sigma
 author: Florian Roth
 date: 2022/01/04
 description: Detects uses of the rdrleakdiag.exe LOLOBIN utility to dump process memory
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*/fullmemdmp*'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\rdrleakdiag.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* /o *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '* /p *'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
+  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4)))
 falsepositives:
 - Unknown
 id: 6355a919-2e97-4285-a673-74645566340d

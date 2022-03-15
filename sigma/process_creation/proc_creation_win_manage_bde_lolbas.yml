@@ -1,18 +1,15 @@
 
 title: Suspicious Usage of the Manage-bde.wsf Script
-ruletype: Sigma
 author: oscd.community, Natalia Shornikova
 date: 2020/10/13
 description: Detects a usage of the manage-bde.wsf script that may indicate an attempt
   of proxy execution from script
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*cscript*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*manage-bde.wsf*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: c363385c-f75d-4753-a108-c1a8e28bdbda

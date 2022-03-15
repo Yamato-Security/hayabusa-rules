@@ -1,24 +1,20 @@
 
 title: Windows 10 Scheduled Task SandboxEscaper 0-day
-ruletype: Sigma
 author: Olaf Hartong
 date: 2019/05/22
 description: Detects Task Scheduler .job import arbitrary DACL write\par
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\schtasks.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/change*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/TN*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*/RU*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*/RP*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 931b6802-d6a6-4267-9ffa-526f57f22aaf

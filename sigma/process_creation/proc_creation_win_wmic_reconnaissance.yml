@@ -1,25 +1,21 @@
 
 title: Suspicious WMI Reconnaissance
-ruletype: Sigma
 author: frack113
 date: 2022/01/01
 description: An adversary might use WMI to list Processes running on the compromised
   host or list installed Software hotfix and patches.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\WMIC.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*process*'
     - '*qfe*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*call*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*create*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4
-    and SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3 and SELECTION_4))
 falsepositives:
 - Unknown
 id: 221b251a-357a-49a9-920a-271802777cc0

@@ -1,19 +1,20 @@
 
 title: RDP Login from Localhost
-ruletype: Sigma
 author: Thomas Patzke
 date: 2019/01/28
 description: RDP login with localhost source address may be a tunnelled login
 detection:
   SELECTION_1:
-    EventID: 4624
+    Channel: Security
   SELECTION_2:
-    LogonType: 10
+    EventID: 4624
   SELECTION_3:
+    LogonType: 10
+  SELECTION_4:
     IpAddress:
     - ::1
     - 127.0.0.1
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 51e33403-2a37-4d66-a574-1fda1782cc31

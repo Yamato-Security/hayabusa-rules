@@ -1,19 +1,16 @@
 
 title: Ke3chang Registry Key Modifications
-ruletype: Sigma
 author: Markus Neis, Swisscom
 date: 2020/06/18
 description: Detects Registry modifications performed by Ke3chang malware in campaigns
   running in 2019 and 2020
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*-Property DWORD -name DisableFirstRunCustomize -value 2 -Force*'
     - '*-Property String -name Check_Associations -value*'
     - '*-Property DWORD -name IEHarden -value 0 -Force*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Will need to be looked for combinations of those processes
 id: 7b544661-69fc-419f-9a59-82ccc328f205

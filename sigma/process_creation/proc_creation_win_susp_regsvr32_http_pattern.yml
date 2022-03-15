@@ -1,6 +1,5 @@
 
 title: Suspicious Regsvr32 HTTP IP Pattern
-ruletype: Sigma
 author: Florian Roth
 date: 2022/01/11
 description: Detects a certain command line flag combination used by regsvr32 when
@@ -8,12 +7,10 @@ description: Detects a certain command line flag combination used by regsvr32 wh
   and a IP address and not FQDN
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '* /s*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* /u*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '* /i:http://1*'
     - '* /i:http://2*'
@@ -24,7 +21,7 @@ detection:
     - '* /i:http://7*'
     - '* /i:http://8*'
     - '* /i:http://9*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - FQDNs that start with a number
 id: 2dd2c217-bf68-437a-b57c-fe9fd01d5de8

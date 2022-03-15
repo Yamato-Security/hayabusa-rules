@@ -1,16 +1,13 @@
 
 title: Suspicious PowerShell Parameter Substring
-ruletype: Sigma
 author: Florian Roth (rule), Daniel Bohannon (idea), Roberto Rodriguez (Fix)
 date: 2019/01/16
 description: Detects suspicious PowerShell invocation with a parameter substring
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\Powershell.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* -windowstyle h *'
     - '* -windowstyl h*'
@@ -120,7 +117,7 @@ detection:
     - '* /exe bypass*'
     - '* /ex bypass*'
     - '* /ep bypass*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Penetration tests
 id: 36210e0d-5b19-485d-a087-c096088885f0

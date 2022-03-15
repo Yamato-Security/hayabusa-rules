@@ -1,16 +1,13 @@
 
 title: Regsvr32 Command Line Without DLL
-ruletype: Sigma
 author: Florian Roth
 date: 2019/07/17
 description: Detects a regsvr.exe execution that doesn't contain a DLL in the command
   line
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\regsvr32.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*.dll*'
     - '*.ocx*'
@@ -18,12 +15,12 @@ detection:
     - '*.ax*'
     - '*.bav*'
     - '*.ppl*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine|re: ^$
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: ''
-  condition: (SELECTION_1 and ((SELECTION_2 and  not (SELECTION_3)) and  not (SELECTION_4))
-    and  not (SELECTION_5))
+  condition: (((SELECTION_1 and  not (SELECTION_2)) and  not (SELECTION_3)) and  not
+    (SELECTION_4))
 falsepositives:
 - Unknown
 fields:

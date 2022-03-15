@@ -1,14 +1,11 @@
 
 title: Reconnaissance Activity with Net Command
-ruletype: Sigma
 author: Florian Roth, Markus Neis
 date: 2018/08/22
 description: Detects a set of commands often used in recon stages by different attack
   groups
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - tasklist
     - net time
@@ -20,7 +17,7 @@ detection:
     - nslookup
     - hostname.exe
     - netstat -an
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*\net1 start'
     - '*\net1 user /domain'
@@ -29,9 +26,7 @@ detection:
     - '*\net1 group "Exchange Trusted Subsystem" /domain'
     - '*\net1 accounts /domain'
     - '*\net1 user net localgroup administrators'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3)) | count() by CommandLine
-    > 4
-  timeframe: 15s
+  condition: (SELECTION_1 or SELECTION_2) | count() by CommandLine > 4
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

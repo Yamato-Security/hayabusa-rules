@@ -1,6 +1,5 @@
 
 title: Windows Screen Capture with CopyFromScreen
-ruletype: Sigma
 author: frack113
 date: 2021/12/28
 description: |
@@ -8,8 +7,12 @@ description: |
   Screen capturing functionality may be included as a feature of a remote access tool used in post-compromise operations
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText: '*.CopyFromScreen*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: d4a11f63-2390-411c-9adf-d791fd152830

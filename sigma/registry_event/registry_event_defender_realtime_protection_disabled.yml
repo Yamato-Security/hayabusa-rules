@@ -1,20 +1,13 @@
 
 title: Windows Defender Real-Time Protection Disabled
-ruletype: Sigma
 author: AlertIQ
 date: 2021/10/18
 description: Detects disabling Windows Defender Real-Time Protection by modifying
   registry
 detection:
   SELECTION_1:
-    EventID: 12
-  SELECTION_2:
-    EventID: 13
-  SELECTION_3:
-    EventID: 14
-  SELECTION_4:
     EventType: SetValue
-  SELECTION_5:
+  SELECTION_2:
     TargetObject:
     - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring
     - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableIOAVProtection
@@ -22,16 +15,15 @@ detection:
     - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableRealtimeMonitoring
     - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable
     - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\SpyNet\DisableBlockAtFirstSeen
-  SELECTION_6:
+  SELECTION_3:
     Details: DWORD (0x00000001)
-  SELECTION_7:
+  SELECTION_4:
     TargetObject:
     - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\SpyNet\SpynetReporting
     - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\SpyNet\SubmitSamplesConsent
-  SELECTION_8:
+  SELECTION_5:
     Details: DWORD (0x00000000)
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and ((SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - Administrator actions
 id: fd115e64-97c7-491f-951c-fc8da7e042fa

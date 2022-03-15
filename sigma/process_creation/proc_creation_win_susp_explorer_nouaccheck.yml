@@ -1,6 +1,5 @@
 
 title: Explorer NOUACCHECK Flag
-ruletype: Sigma
 author: Florian Roth
 date: 2022/02/23
 description: Detects suspicious starts of explorer.exe that use the /NOUACCHECK flag
@@ -8,12 +7,10 @@ description: Detects suspicious starts of explorer.exe that use the /NOUACCHECK 
   any UAC checks
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\explorer.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/NOUACCHECK*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown how many legitimate software products use that method
 id: 534f2ef7-e8a2-4433-816d-c91bccde289b

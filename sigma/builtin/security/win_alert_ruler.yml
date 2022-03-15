@@ -1,21 +1,23 @@
 
 title: Hacktool Ruler
-ruletype: Sigma
 author: Florian Roth
 date: 2017/05/31
 description: This events that are generated when using the hacktool Ruler by Sensepost
 detection:
   SELECTION_1:
-    EventID: 4776
+    Channel: Security
   SELECTION_2:
-    Workstation: RULER
+    EventID: 4776
   SELECTION_3:
-    EventID: 4624
+    Workstation: RULER
   SELECTION_4:
-    EventID: 4625
+    EventID: 4624
   SELECTION_5:
+    EventID: 4625
+  SELECTION_6:
     WorkstationName: RULER
-  condition: ((SELECTION_1 and SELECTION_2) or ((SELECTION_3 or SELECTION_4) and SELECTION_5))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or ((SELECTION_4 or SELECTION_5)
+    and SELECTION_6)))
 falsepositives:
 - Go utilities that use staaldraad awesome NTLM library
 id: 24549159-ac1b-479c-8175-d42aea947cae

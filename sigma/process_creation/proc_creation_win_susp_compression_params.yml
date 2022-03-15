@@ -1,19 +1,16 @@
 
 title: Suspicious Compression Tool Parameters
-ruletype: Sigma
 author: Florian Roth, Samir Bousseaden
 date: 2019/10/15
 description: Detects suspicious command line arguments of common data compression
   tools
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     OriginalFileName:
     - 7z*.exe
     - '*rar.exe'
     - '*Command*Line*RAR*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* -p*'
     - '* -ta*'
@@ -21,9 +18,9 @@ detection:
     - '* -sdel*'
     - '* -dw*'
     - '* -hp*'
-  SELECTION_4:
+  SELECTION_3:
     ParentImage: C:\Program*
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - unknown
 id: 27a72a60-7e5e-47b1-9d17-909c9abafdcd

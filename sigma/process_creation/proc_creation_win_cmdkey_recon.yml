@@ -1,17 +1,14 @@
 
 title: Cmdkey Cached Credentials Recon
-ruletype: Sigma
 author: jmallette
 date: 2019/01/16
 description: Detects usage of cmdkey to look for cached credentials
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\cmdkey.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* /list*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Legitimate administrative tasks
 fields:

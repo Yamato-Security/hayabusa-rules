@@ -1,6 +1,5 @@
 
 title: Suspicious LDAP-Attributes Used
-ruletype: Sigma
 author: xknow @xknow_infosec
 date: 2019/03/24
 description: Detects the usage of particular AttributeLDAPDisplayNames, which are
@@ -8,15 +7,17 @@ description: Detects the usage of particular AttributeLDAPDisplayNames, which ar
   commonly used in companies.
 detection:
   SELECTION_1:
-    EventID: 5136
+    Channel: Security
   SELECTION_2:
-    AttributeValue: '*'
+    EventID: 5136
   SELECTION_3:
+    AttributeValue: '*'
+  SELECTION_4:
     AttributeLDAPDisplayName:
     - primaryInternationalISDNNumber
     - otherFacsimileTelephoneNumber
     - primaryTelexNumber
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Companies, who may use these default LDAP-Attributes for personal information
 id: d00a9a72-2c09-4459-ad03-5e0a23351e36

@@ -1,18 +1,15 @@
 
 title: Snatch Ransomware
-ruletype: Sigma
 author: Florian Roth
 date: 2020/08/26
 description: Detects specific process characteristics of Snatch ransomware word document
   droppers
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*shutdown /r /f /t 00*'
     - '*net stop SuperBackupMan*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Scripts that shutdown the system immediately and reboot them in safe mode are unlikely
 fields:

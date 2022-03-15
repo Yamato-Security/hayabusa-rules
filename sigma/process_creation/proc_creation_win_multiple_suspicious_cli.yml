@@ -1,13 +1,10 @@
 
 title: Quick Execution of a Series of Suspicious Commands
-ruletype: Sigma
 author: juju4
 date: 2019/01/16
 description: Detects multiple suspicious process in a limited timeframe
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*arp.exe*'
     - '*at.exe*'
@@ -47,8 +44,7 @@ detection:
     - '*wbadmin.exe*'
     - '*icacls.exe*'
     - '*diskpart.exe*'
-  condition: (SELECTION_1 and SELECTION_2) | count() by MachineName > 5
-  timeframe: 5m
+  condition: SELECTION_1 | count() by MachineName > 5
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment

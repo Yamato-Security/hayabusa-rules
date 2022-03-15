@@ -1,14 +1,11 @@
 
 title: Windows Suspicious Use Of Web Request in CommandLine
-ruletype: Sigma
 author: James Pemberton / @4A616D6573
 date: 2019/10/24
 description: Detects the use of various web request with commandline tools or Windows
   PowerShell command,methods (including aliases)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*Invoke-WebRequest*'
     - '*iwr *'
@@ -16,7 +13,7 @@ detection:
     - '*curl *'
     - '*Net.WebClient*'
     - '*Start-BitsTransfer*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Use of Get-Command and Get-Help modules to reference Invoke-WebRequest and Start-BitsTransfer.
 id: 9fc51a3c-81b3-4fa7-b35f-7c02cf10fd2d

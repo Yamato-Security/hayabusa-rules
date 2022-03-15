@@ -1,21 +1,23 @@
 
 title: Invoke-Obfuscation CLIP+ Launcher
-ruletype: Sigma
 author: Jonathan Cheong, oscd.community
 date: 2020/10/13
 description: Detects Obfuscated use of Clip.exe to execute PowerShell
 detection:
   SELECTION_1:
-    Provider_Name: Microsoft-Windows-Security-Auditing
+    Channel: Security
   SELECTION_2:
-    EventID: 4697
+    Provider_Name: Microsoft-Windows-Security-Auditing
   SELECTION_3:
-    ServiceFileName: '*cmd*'
+    EventID: 4697
   SELECTION_4:
-    ServiceFileName: '*&&*'
+    ServiceFileName: '*cmd*'
   SELECTION_5:
+    ServiceFileName: '*&&*'
+  SELECTION_6:
     ServiceFileName: '*clipboard]::*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: 4edf51e1-cb83-4e1a-bc39-800e396068e3

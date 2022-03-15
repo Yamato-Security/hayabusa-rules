@@ -1,22 +1,19 @@
 
 title: Suspicious Curl File Upload
-ruletype: Sigma
 author: Florian Roth
 date: 2020/07/03
 description: Detects a suspicious curl process start the adds a file to a web request
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\curl.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* -F *'
     - '* -T *'
     - '* --upload-file *'
     - '* -d *'
     - '* --data *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Scripts created by developers and admins
 fields:

@@ -1,6 +1,5 @@
 
 title: Suspicious Use of Procdump on LSASS
-ruletype: Sigma
 author: Florian Roth
 date: 2018/10/30
 description: Detects suspicious uses of the SysInternals Procdump utility by using
@@ -9,14 +8,12 @@ description: Detects suspicious uses of the SysInternals Procdump utility by usi
   executable.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '* -ma *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* lsass*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* ls*'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - Unlikely, because no one should dump an lsass process memory
 - Another tool that uses the command line switches of Procdump
@@ -28,7 +25,7 @@ logsource:
 modified: 2021/02/02
 references:
 - Internal Research
-status: experimental
+status: stable
 tags:
 - attack.defense_evasion
 - attack.t1036

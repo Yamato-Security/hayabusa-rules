@@ -1,20 +1,17 @@
 
 title: Renamed jusched.exe
-ruletype: Sigma
 author: Markus Neis, Swisscom
 date: 2019/06/04
 description: Detects renamed jusched.exe used by cobalt group
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Description: Java Update Scheduler
-  SELECTION_3:
+  SELECTION_2:
     Description: Java(TM) Update Scheduler
-  SELECTION_4:
+  SELECTION_3:
     Image:
     - '*\jusched.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 or SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - penetration tests, red teaming
 id: edd8a48c-1b9f-4ba1-83aa-490338cd1ccb

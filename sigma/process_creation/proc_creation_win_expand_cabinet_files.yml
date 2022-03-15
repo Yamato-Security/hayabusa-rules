@@ -1,17 +1,14 @@
 
 title: Cabinet File Expansion
-ruletype: Sigma
 author: Bhabesh Raj
 date: 2021/07/30
 description: Adversaries can use the inbuilt expand utility to decompress cab files
   as seen in recent Iranian MeteorExpress attack
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\expand.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*.cab*'
     - '*/F:*'
@@ -20,7 +17,7 @@ detection:
     - '*C:\Public\\*'
     - '*\AppData\Local\Temp\\*'
     - '*\AppData\Roaming\Temp\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - System administrator Usage
 fields:

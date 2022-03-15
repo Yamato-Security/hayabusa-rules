@@ -1,18 +1,15 @@
 
 title: Indirect Command Execution
-ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
 date: 2019/10/24
 description: Detect indirect command execution via Program Compatibility Assistant
   (pcalua.exe or forfiles.exe).
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage:
     - '*\pcalua.exe'
     - '*\forfiles.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Need to use extra processing with 'unique_count' / 'filter' to focus on outliers
   as opposed to commonly seen artifacts.

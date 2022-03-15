@@ -1,20 +1,21 @@
 
 title: Remote Task Creation via ATSVC Named Pipe
-ruletype: Sigma
 author: Samir Bousseaden
 date: 2019/04/03
 description: Detects remote task creation via at.exe or API interacting with ATSVC
   namedpipe
 detection:
   SELECTION_1:
-    EventID: 5145
+    Channel: Security
   SELECTION_2:
-    ShareName: \\\*\IPC$
+    EventID: 5145
   SELECTION_3:
-    RelativeTargetName: atsvc
+    ShareName: \\\*\IPC$
   SELECTION_4:
+    RelativeTargetName: atsvc
+  SELECTION_5:
     Accesses: '*WriteData*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - pentesting
 id: f6de6525-4509-495a-8a82-1f8b0ed73a00

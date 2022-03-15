@@ -1,36 +1,33 @@
 
 title: Default PowerSploit and Empire Schtasks Persistence
-ruletype: Sigma
 author: Markus Neis, @Karneades
 date: 2018/03/06
 description: Detects the creation of a schtask via PowerSploit or Empire Default Configuration.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    CommandLine: '*powershell*'
-  SELECTION_2:
     ParentImage: '*\powershell.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\schtasks.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/Create*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*/SC*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine:
     - '*ONLOGON*'
     - '*DAILY*'
     - '*ONIDLE*'
     - '*Updater*'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '*/TN*'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine: '*Updater*'
-  SELECTION_9:
+  SELECTION_8:
     CommandLine: '*/TR*'
+  SELECTION_9:
+    CommandLine: '*powershell*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10)
+    and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
 falsepositives:
 - False positives are possible, depends on organisation and processes
 id: 56c217c3-2de2-479b-990f-5c109ba8458f

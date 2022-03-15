@@ -1,0 +1,72 @@
+
+title: Windows Hacktool Imphash
+author: Florian Roth
+date: 2022/03/04
+description: Detects the use of Windows hacktools based on their import hash (imphash)
+  even if the files have been renamed
+detection:
+  SELECTION_1:
+    Imphash:
+    - bcca3c247b619dcd13c8cdff5f123932
+    - 3a19059bd7688cb88e70005f18efc439
+    - 9da6d5d77be11712527dcab86df449a3
+    - a6e01bc1ab89f8d91d9eab72032aae88
+    - d21bbc50dcc169d7b4d0f01962793154
+    - 9528a0e91e28fbb88ad433feabca2456
+    - 4c1b52a19748428e51b14c278d0f58e3
+    - 725bb81dc24214f6ecacc0cfb36ad30d
+    - 672b13f4a0b6f27d29065123fe882dfc
+    - 0c106686a31bfe2ba931ae1cf6e9dbc6
+    - 23867a89c2b8fc733be6cf5ef902f2d1
+    - 9fb060c2977a9d9b782440b98d410c3e
+    - b18a1401ff8f444056d29450fbc0a6ce
+    - 13f08707f759af6003837a150a371ba1
+    - 749a7bb1f0b4c4455949c0b2bf7f9e9f
+    - 94cb940a1a6b65bed4d5a8f849ce9793
+    - 1781f06048a7e58b323f0b9259be798b
+    - cb567f9498452721d77a451374955f5f
+    - 730073214094cd328547bf1f72289752
+    - 6eefd92bffbfb27f378b81c09ca96786
+    - ac615fb1d93576fa3c26077a619c9144
+    - dc25ee78e2ef4d36faa0badf1e7461c9
+    - 17b461a082950fc6332228572138b80c
+    - c547f2e66061a8dffb6f5a3ff63c0a74
+    - 0588081ab0e63ba785938467e1b10cca
+  SELECTION_2:
+    Hashes:
+    - '*IMPHASH=bcca3c247b619dcd13c8cdff5f123932*'
+    - '*IMPHASH=3a19059bd7688cb88e70005f18efc439*'
+    - '*IMPHASH=9da6d5d77be11712527dcab86df449a3*'
+    - '*IMPHASH=a6e01bc1ab89f8d91d9eab72032aae88*'
+    - '*IMPHASH=d21bbc50dcc169d7b4d0f01962793154*'
+    - '*IMPHASH=9528a0e91e28fbb88ad433feabca2456*'
+    - '*IMPHASH=4c1b52a19748428e51b14c278d0f58e3*'
+    - '*IMPHASH=725bb81dc24214f6ecacc0cfb36ad30d*'
+    - '*IMPHASH=672b13f4a0b6f27d29065123fe882dfc*'
+    - '*IMPHASH=0c106686a31bfe2ba931ae1cf6e9dbc6*'
+    - '*IMPHASH=23867a89c2b8fc733be6cf5ef902f2d1*'
+    - '*IMPHASH=9fb060c2977a9d9b782440b98d410c3e*'
+    - '*IMPHASH=b18a1401ff8f444056d29450fbc0a6ce*'
+    - '*IMPHASH=13f08707f759af6003837a150a371ba1*'
+    - '*IMPHASH=749a7bb1f0b4c4455949c0b2bf7f9e9f*'
+    - '*IMPHASH=94cb940a1a6b65bed4d5a8f849ce9793*'
+    - '*IMPHASH=1781f06048a7e58b323f0b9259be798b*'
+    - '*IMPHASH=cb567f9498452721d77a451374955f5f*'
+    - '*IMPHASH=730073214094cd328547bf1f72289752*'
+    - '*IMPHASH=6eefd92bffbfb27f378b81c09ca96786*'
+    - '*IMPHASH=ac615fb1d93576fa3c26077a619c9144*'
+    - '*IMPHASH=dc25ee78e2ef4d36faa0badf1e7461c9*'
+    - '*IMPHASH=17b461a082950fc6332228572138b80c*'
+    - '*IMPHASH=c547f2e66061a8dffb6f5a3ff63c0a74*'
+    - '*IMPHASH=0588081ab0e63ba785938467e1b10cca*'
+  condition: (SELECTION_1 or SELECTION_2)
+falsepositives:
+- Legitimate use of one of these tools
+id: 24e3e58a-646b-4b50-adef-02ef935b9fc8
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- Internal Research
+status: experimental

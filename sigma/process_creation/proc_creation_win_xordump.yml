@@ -1,21 +1,18 @@
 
 title: XORDump Use
-ruletype: Sigma
 author: Florian Roth
 date: 2022/01/28
 description: Detects suspicious use of XORDump process memory dumping utility
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\xordump.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* -process lsass.exe *'
     - '* -m comsvcs *'
     - '* -m dbghelp *'
     - '* -m dbgcore *'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  condition: (SELECTION_1 or SELECTION_2)
 falsepositives:
 - Another tool that uses the command line switches of XORdump
 id: 66e563f9-1cbd-4a22-a957-d8b7c0f44372

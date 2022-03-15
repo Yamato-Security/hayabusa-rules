@@ -1,14 +1,11 @@
 
 title: Shells Spawned by Web Servers
-ruletype: Sigma
 author: Thomas Patzke
 date: 2019/01/16
 description: Web servers that spawn shell processes could be the result of a successfully
   placed web shell or an other attack
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage:
     - '*\w3wp.exe'
     - '*\httpd.exe'
@@ -17,14 +14,14 @@ detection:
     - '*\tomcat.exe'
     - '*\UMWorkerProcess.exe'
     - '*\ws_TomcatService.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\cmd.exe'
     - '*\sh.exe'
     - '*\bash.exe'
     - '*\powershell.exe'
     - '*\bitsadmin.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Particular web applications may spawn a shell process legitimately
 fields:

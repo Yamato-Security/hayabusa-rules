@@ -1,20 +1,17 @@
 
 title: Suspicious Control Panel DLL Load
-ruletype: Sigma
 author: Florian Roth
 date: 2017/04/15
 description: Detects suspicious Rundll32 execution from control.exe as used by Equation
   Group and Exploit Kits
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\System32\control.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\rundll32.exe '
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*Shell32.dll*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Unknown
 fields:

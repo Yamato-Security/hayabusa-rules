@@ -1,0 +1,137 @@
+
+title: CurrentVersion Autorun Keys Modification
+author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
+  oscd.community, Tim Shelton, frack113 (split)
+date: 2019/10/25
+description: Detects modification of autostart extensibility point (ASEP) in registry.
+detection:
+  SELECTION_1:
+    EventType: SetValue
+  SELECTION_10:
+    TargetObject: '*DropboxExt*'
+  SELECTION_11:
+    Details: '*A251-47B7-93E1-CDD82E34AF8B}'
+  SELECTION_12:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Opera Browser Assistant'
+  SELECTION_13:
+    Details: C:\Program Files\Opera\assistant\browser_assistant.exe
+  SELECTION_14:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\iTunesHelper'
+  SELECTION_15:
+    Details: '"C:\Program Files\iTunes\iTunesHelper.exe"'
+  SELECTION_16:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\zoommsirepair'
+  SELECTION_17:
+    Details: '"C:\Program Files\Zoom\bin\installer.exe" /repair'
+  SELECTION_18:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Greenshot'
+  SELECTION_19:
+    Details: C:\Program Files\Greenshot\Greenshot.exe
+  SELECTION_2:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion*'
+  SELECTION_20:
+    TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\Run\GoogleDriveFS'
+  SELECTION_21:
+    Details: C:\Program Files\Google\Drive File Stream\\*
+  SELECTION_22:
+    Details: '*\GoogleDriveFS.exe --startup_mode'
+  SELECTION_23:
+    TargetObject: '*GoogleDrive*'
+  SELECTION_24:
+    Details:
+    - '{CFE8B367-77A7-41D7-9C90-75D16D7DC6B6}'
+    - '{A8E52322-8734-481D-A7E2-27B309EF8D56}'
+    - '{C973DA94-CBDF-4E77-81D1-E5B794FBD146}'
+    - '{51EF1569-67EE-4AD6-9646-E726C3FFC8A2}'
+  SELECTION_25:
+    Details: C:\Windows\system32\cmd.exe /q /c rmdir /s /q "C:\Users\\*
+  SELECTION_26:
+    Details: '*\AppData\Local\Microsoft\OneDrive\\*'
+  SELECTION_27:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\{c60fd5ac-367d-4e3a-a975-f157502ac30a}'
+  SELECTION_28:
+    Details: '*\AppData\Local\Package Cache\{c60fd5ac-367d-4e3a-a975-f157502ac30a}\python*'
+  SELECTION_29:
+    Details: '*.exe" /burn.runonce'
+  SELECTION_3:
+    TargetObject:
+    - '*\ShellServiceObjectDelayLoad*'
+    - '*\Run\\*'
+    - '*\RunOnce\\*'
+    - '*\Policies\System\Shell*'
+    - '*\Policies\Explorer\Run*'
+    - '*\Group Policy\Scripts\Startup*'
+    - '*\Group Policy\Scripts\Shutdown*'
+    - '*\Group Policy\Scripts\Logon*'
+    - '*\Group Policy\Scripts\Logoff*'
+    - '*\Explorer\ShellServiceObjects*'
+    - '*\Explorer\ShellIconOverlayIdentifiers*'
+    - '*\Explorer\ShellExecuteHooks*'
+    - '*\Explorer\SharedTaskScheduler*'
+    - '*\Explorer\Browser Helper Objects*'
+    - '*\Authentication\PLAP Providers*'
+    - '*\Authentication\Credential Providers*'
+    - '*\Authentication\Credential Provider Filters*'
+  SELECTION_30:
+    Image:
+    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
+    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
+  SELECTION_31:
+    Image: '*\OfficeClickToRun.exe'
+  SELECTION_32:
+    Image: C:\Program Files\Windows Defender\MsMpEng.exe
+  SELECTION_4:
+    Details: (Empty)
+  SELECTION_5:
+    TargetObject: '*\NgcFirst\ConsecutiveSwitchCount'
+  SELECTION_6:
+    Image:
+    - '*\AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe'
+    - '*\AppData\Roaming\Spotify\Spotify.exe'
+  SELECTION_7:
+    Image:
+    - C:\WINDOWS\system32\devicecensus.exe
+    - C:\Program Files\Microsoft OneDrive\StandaloneUpdater\OneDriveSetup.exe
+    - C:\Program Files\KeePass Password Safe 2\ShInstUtil.exe
+    - C:\Program Files\Everything\Everything.exe
+    - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+  SELECTION_8:
+    Image:
+    - C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\\*
+    - C:\Program Files (x86)\Microsoft\EdgeWebView\\*
+    - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe*
+  SELECTION_9:
+    Image: C:\Windows\system32\regsvr32.exe
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not ((SELECTION_4
+    or SELECTION_5 or SELECTION_6 or SELECTION_7) or (SELECTION_8) or (SELECTION_9
+    and SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14
+    and SELECTION_15) or (SELECTION_16 and SELECTION_17) or (SELECTION_18 and SELECTION_19)
+    or (SELECTION_20 and SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24)
+    or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28 and SELECTION_29)
+    or (SELECTION_30 and SELECTION_31) or (SELECTION_32)))
+falsepositives:
+- Legitimate software automatically (mostly, during installation) sets up autorun
+  keys for legitimate reason
+- Legitimate administrator sets up autorun keys for legitimate reason
+fields:
+- SecurityID
+- ObjectName
+- OldValueType
+- NewValueType
+id: 20f0ee37-5942-4e45-b7d5-c5b5db9df5cd
+level: medium
+logsource:
+  category: registry_event
+  product: windows
+modified: 2022/03/03
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
+- https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
+- https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
+related:
+- id: 17f878b8-9968-4578-b814-c4217fc5768c
+  type: derived
+status: experimental
+tags:
+- attack.persistence
+- attack.t1547.001

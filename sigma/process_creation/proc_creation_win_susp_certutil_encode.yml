@@ -1,20 +1,17 @@
 
 title: Certutil Encode
-ruletype: Sigma
 author: Florian Roth, Jonhnathan Ribeiro, oscd.community
 date: 2019/02/24
 description: Detects suspicious a certutil command that used to encode files, which
   is sometimes used for data exfiltration
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\certutil.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*-f*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*-encode*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - unknown
 id: e62a9f0c-ca1e-46b2-85d5-a6da77f86d1a

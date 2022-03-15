@@ -1,6 +1,5 @@
 
 title: Domain Trust Discovery
-ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Tony Lambert), oscd.community,
   omkar72
 date: 2019/10/24
@@ -8,27 +7,25 @@ description: Identifies execution of nltest.exe and dsquery.exe for domain trust
   This technique is used by attackers to enumerate Active Directory trusts.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\nltest.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*domain_trusts*'
     - '*all_trusts*'
     - '*/trusted_domains*'
     - '*/dclist*'
+  SELECTION_3:
+    Image: '*\dsquery.exe'
   SELECTION_4:
-    Image: '*\dsquery.exe'
+    CommandLine: '*trustedDomain*'
   SELECTION_5:
-    CommandLine: '*trustedDomain*'
-  SELECTION_6:
     Image: '*\dsquery.exe'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '*-filter*'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine: '*trustedDomain*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
+  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7))
 falsepositives:
 - Legitimate use of the utilities by legitimate user for legitimate reason
 id: 3bad990e-4848-4a78-9530-b427d854aac0

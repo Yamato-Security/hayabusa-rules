@@ -1,20 +1,20 @@
 
 title: Failed Logins with Different Accounts from Single Source System
-ruletype: Sigma
 author: Florian Roth
 date: 2017/01/10
 description: Detects suspicious failed logins with different user accounts from a
   single source system
 detection:
   SELECTION_1:
-    EventID: 4776
+    Channel: Security
   SELECTION_2:
-    TargetUserName: '*'
+    EventID: 4776
   SELECTION_3:
+    TargetUserName: '*'
+  SELECTION_4:
     Workstation: '*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3) | count(TargetUserName)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4) | count(TargetUserName)
     by Workstation > 3
-  timeframe: 24h
 falsepositives:
 - Terminal servers
 - Jump servers

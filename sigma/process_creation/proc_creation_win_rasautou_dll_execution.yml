@@ -1,22 +1,19 @@
 
 title: DLL Execution via Rasautou.exe
-ruletype: Sigma
 author: Julia Fomina, oscd.community
 date: 2020/10/09
 description: Detects using Rasautou.exe for loading arbitrary .DLL specified in -d
   option and executes the export specified in -p.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\rasautou.exe'
-  SELECTION_3:
+  SELECTION_2:
     OriginalFileName: rasdlui.exe
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*-d*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*-p*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5))
+  condition: ((SELECTION_1 or SELECTION_2) and (SELECTION_3 and SELECTION_4))
 falsepositives:
 - Unlikely
 id: cd3d1298-eb3b-476c-ac67-12847de55813

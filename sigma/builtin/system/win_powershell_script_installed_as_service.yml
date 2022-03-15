@@ -1,19 +1,20 @@
 
 title: PowerShell Scripts Installed as Services
-ruletype: Sigma
 author: oscd.community, Natalia Shornikova
 date: 2020/10/06
 description: Detects powershell script installed as a Service
 detection:
   SELECTION_1:
-    Provider_Name: Service Control Manager
+    Channel: System
   SELECTION_2:
-    EventID: 7045
+    Provider_Name: Service Control Manager
   SELECTION_3:
+    EventID: 7045
+  SELECTION_4:
     ImagePath:
     - '*powershell*'
     - '*pwsh*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: a2e5019d-a658-4c6a-92bf-7197b54e2cae

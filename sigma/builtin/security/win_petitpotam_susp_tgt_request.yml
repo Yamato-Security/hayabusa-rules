@@ -1,6 +1,5 @@
 
 title: PetitPotam Suspicious Kerberos TGT Request
-ruletype: Sigma
 author: Mauricio Velazco, Michael Haag
 date: 2021/09/02
 description: Detect suspicious Kerberos TGT requests. Once an attacer obtains a computer
@@ -12,17 +11,19 @@ description: Detect suspicious Kerberos TGT requests. Once an attacer obtains a 
   to the Domain Controller computer accounts.
 detection:
   SELECTION_1:
-    EventID: 4768
+    Channel: Security
   SELECTION_2:
-    TargetUserName: '*$'
+    EventID: 4768
   SELECTION_3:
-    CertThumbprint: '*'
+    TargetUserName: '*$'
   SELECTION_4:
-    IpAddress: ::1
+    CertThumbprint: '*'
   SELECTION_5:
+    IpAddress: ::1
+  SELECTION_6:
     CertThumbprint: ''
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)
-    or (SELECTION_5)))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - False positives are possible if the environment is using certificates for authentication.
   We recommend filtering Account_Name to the Domain Controller computer accounts.

@@ -1,6 +1,5 @@
 
 title: Mimikatz Detection LSASS Access
-ruletype: Sigma
 author: Sherif Eldeeb
 date: 2017/10/18
 description: Detects process access to LSASS which is typical for Mimikatz (0x1000
@@ -8,22 +7,19 @@ description: Detects process access to LSASS which is typical for Mimikatz (0x10
   versions", 0x0010 PROCESS_VM_READ)
 detection:
   SELECTION_1:
-    EventID: 10
-  SELECTION_2:
     TargetImage: '*\lsass.exe'
-  SELECTION_3:
+  SELECTION_2:
     GrantedAccess:
     - '0x1410'
     - '0x1010'
     - '0x410'
-  SELECTION_4:
+  SELECTION_3:
     SourceImage:
     - C:\Program Files\WindowsApps\\*
     - C:\Windows\System32\\*
-  SELECTION_5:
+  SELECTION_4:
     SourceImage: '*\GamingServices.exe'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4
-    and SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3 and SELECTION_4))
 falsepositives:
 - Some security products access LSASS in this way.
 fields:

@@ -1,15 +1,12 @@
 
 title: Suspicious Execution of Systeminfo
-ruletype: Sigma
 author: frack113
 date: 2022/01/01
 description: Use of systeminfo to get information
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\systeminfo.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Unknown
 id: 0ef56343-059e-4cb6-adc1-4c3c967c5e46

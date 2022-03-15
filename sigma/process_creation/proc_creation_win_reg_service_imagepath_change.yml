@@ -1,6 +1,5 @@
 
 title: Service ImagePath Change with Reg.exe
-ruletype: Sigma
 author: frack113
 date: 2021/12/30
 description: |
@@ -9,21 +8,19 @@ description: |
   Windows stores local service configuration information in the Registry under HKLM\SYSTEM\CurrentControlSet\Services
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\reg.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*add *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*HKLM\SYSTEM\CurrentControlSet\Services\\*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*/v *'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*ImagePath *'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '*/d *'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+    and SELECTION_6)
 falsepositives:
 - unknown
 id: 9b0b7ac3-6223-47aa-a3fd-e8f211e637db

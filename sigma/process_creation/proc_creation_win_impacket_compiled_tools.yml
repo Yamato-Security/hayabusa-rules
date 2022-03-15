@@ -1,14 +1,11 @@
 
 title: Impacket Tool Execution
-ruletype: Sigma
 author: Florian Roth
 date: 2021/07/24
 description: Detects the execution of different compiled Windows binaries of the impacket
   toolset (based on names or part of their names - could lead to false positives)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\goldenPac*'
     - '*\karmaSMB*'
@@ -21,7 +18,7 @@ detection:
     - '*\smbrelayx*'
     - '*\wmiexec*'
     - '*\wmipersist*'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\atexec_windows.exe'
     - '*\dcomexec_windows.exe'
@@ -47,7 +44,7 @@ detection:
     - '*\sniff_windows.exe'
     - '*\split_windows.exe'
     - '*\ticketer_windows.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  condition: (SELECTION_1 or SELECTION_2)
 falsepositives:
 - Legitimate use of the impacket tools
 id: 4627c6ae-6899-46e2-aa0c-6ebcb1becd19

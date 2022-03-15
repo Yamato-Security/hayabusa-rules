@@ -1,36 +1,32 @@
 
 title: Dism Remove Online Package
-ruletype: Sigma
 author: frack113
 date: 2022/01/16
 description: Deployment Image Servicing and Management tool. DISM is used to enumerate,
   install, uninstall, configure, and update features and packages in Windows images
 detection:
   SELECTION_1:
-    EventID: 1
+    Image: '*\DismHost.exe'
   SELECTION_10:
-    CommandLine: '*/FeatureName:*'
-  SELECTION_11:
     CommandLine: '*/Remove*'
   SELECTION_2:
-    Image: '*\DismHost.exe'
-  SELECTION_3:
     ParentCommandLine: '*/online*'
-  SELECTION_4:
+  SELECTION_3:
     ParentCommandLine: '*/Disable-Feature*'
-  SELECTION_5:
+  SELECTION_4:
     ParentCommandLine: '*/FeatureName:*'
-  SELECTION_6:
+  SELECTION_5:
     ParentCommandLine: '*/Remove*'
-  SELECTION_7:
+  SELECTION_6:
     Image: '*\Dism.exe'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine: '*/online*'
-  SELECTION_9:
+  SELECTION_8:
     CommandLine: '*/Disable-Feature*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10
-    and SELECTION_11)))
+  SELECTION_9:
+    CommandLine: '*/FeatureName:*'
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10))
 falsepositives:
 - Legitim script
 id: 43e32da2-fdd0-4156-90de-50dfd62636f9

@@ -1,22 +1,19 @@
 
 title: Suspicious AdFind Execution
-ruletype: Sigma
 author: FPT.EagleEye Team, omkar72, oscd.community
 date: 2020/09/26
 description: Detects the execution of a AdFind for Active Directory enumeration
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*objectcategory*'
     - '*trustdmp*'
     - '*dcmodes*'
     - '*dclist*'
     - '*computers_pwdnotreqd*'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\adfind.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Administrative activity
 id: 75df3b17-8bcc-4565-b89b-c9898acef911

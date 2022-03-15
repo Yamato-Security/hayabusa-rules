@@ -1,6 +1,5 @@
 
 title: Windows Cmd Delete File
-ruletype: Sigma
 author: frack113
 date: 2022/01/15
 description: "Adversaries may delete files left behind by the actions of their intrusion\
@@ -10,19 +9,16 @@ description: "Adversaries may delete files left behind by the actions of their i
   \ a post-intrusion process to minimize the adversary's footprint. \n"
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*del *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/f*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*rmdir*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*/s*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*/q*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5
-    and SELECTION_6)))
+  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4 and SELECTION_5))
 falsepositives:
 - Legitim script
 id: 379fa130-190e-4c3f-b7bc-6c8e834485f3

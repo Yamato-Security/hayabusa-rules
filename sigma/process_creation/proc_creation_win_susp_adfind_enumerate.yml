@@ -1,15 +1,12 @@
 
 title: Suspicious AdFind Enumerate
-ruletype: Sigma
 author: frack113
 date: 2021/12/13
 description: Detects the execution of a AdFind for enumeration
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\adfind.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*lockoutduration*'
     - '*lockoutthreshold*'
@@ -19,11 +16,11 @@ detection:
     - '*minpwdlength*'
     - '*pwdhistorylength*'
     - '*pwdproperties*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*-sc admincountdmp*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*-sc exchaddresses*'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4))
 falsepositives:
 - Administrative activity
 id: 455b9d50-15a1-4b99-853f-8d37655a4c1b

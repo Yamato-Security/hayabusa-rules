@@ -1,20 +1,17 @@
 
 title: Terminal Service Process Spawn
-ruletype: Sigma
 author: Florian Roth
 date: 2019/05/22
 description: Detects a process spawned by the terminal service server process (this
   could be an indicator for an exploitation of CVE-2019-0708)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentCommandLine: '*\svchost.exe*'
-  SELECTION_3:
+  SELECTION_2:
     ParentCommandLine: '*termsvcs*'
-  SELECTION_4:
+  SELECTION_3:
     Image: '*\rdpclip.exe'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Unknown
 id: 1012f107-b8f1-4271-af30-5aed2de89b39

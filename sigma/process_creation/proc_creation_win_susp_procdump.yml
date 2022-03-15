@@ -1,6 +1,5 @@
 
 title: Suspicious Use of Procdump
-ruletype: Sigma
 author: Florian Roth
 date: 2021/02/02
 description: Detects suspicious uses of the SysInternals Procdump utility by using
@@ -9,12 +8,10 @@ description: Detects suspicious uses of the SysInternals Procdump utility by usi
   executable.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '* -ma *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* -accepteula *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Another tool that uses the command line switches of Procdump
 - Legitimate use of procdump by a developer or administrator

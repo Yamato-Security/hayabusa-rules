@@ -1,0 +1,84 @@
+
+title: CurrentVersion NT Autorun Keys Modification
+author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
+  oscd.community, Tim Shelton, frack113 (split)
+date: 2019/10/25
+description: Detects modification of autostart extensibility point (ASEP) in registry.
+detection:
+  SELECTION_1:
+    EventType: SetValue
+  SELECTION_10:
+    Image: '*\DropboxUpdate.exe'
+  SELECTION_11:
+    TargetObject: '*\Image File Execution Options\DropboxUpdate.exe\DisableExceptionChainValidation'
+  SELECTION_12:
+    Image:
+    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
+    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
+  SELECTION_13:
+    Image: '*\OfficeClickToRun.exe'
+  SELECTION_2:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion*'
+  SELECTION_3:
+    TargetObject:
+    - '*\Winlogon\VmApplet*'
+    - '*\Winlogon\Userinit*'
+    - '*\Winlogon\Taskman*'
+    - '*\Winlogon\Shell*'
+    - '*\Winlogon\GpExtensions*'
+    - '*\Winlogon\AppSetup*'
+    - '*\Winlogon\AlternateShells\AvailableShells*'
+    - '*\Windows\IconServiceLib*'
+    - '*\Windows\Appinit_Dlls*'
+    - '*\Image File Execution Options*'
+    - '*\Font Drivers*'
+    - '*\Drivers32*'
+    - '*\Windows\Run*'
+    - '*\Windows\Load*'
+  SELECTION_4:
+    Details: (Empty)
+  SELECTION_5:
+    Image: C:\Program Files (x86)\Microsoft\Temp\\*
+  SELECTION_6:
+    Image: '*\MicrosoftEdgeUpdate.exe'
+  SELECTION_7:
+    TargetObject:
+    - '*\ClickToRunStore\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\\*'
+    - '*\ClickToRun\REGISTRY\MACHINE\Software\Microsoft\Windows NT\CurrentVersion\\*'
+  SELECTION_8:
+    Image:
+    - C:\Program Files\Microsoft Office\root\integration\integrator.exe
+    - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+  SELECTION_9:
+    TargetObject:
+    - '*\Image File Execution Options\OSPPREARM.EXE\DisableExceptionChainValidation'
+    - '*\Image File Execution Options\LICLUA.EXE\DisableExceptionChainValidation'
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)
+    or (SELECTION_5 and SELECTION_6) or (SELECTION_7 or SELECTION_8 or SELECTION_9)
+    or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13)))
+falsepositives:
+- Legitimate software automatically (mostly, during installation) sets up autorun
+  keys for legitimate reason
+- Legitimate administrator sets up autorun keys for legitimate reason
+fields:
+- SecurityID
+- ObjectName
+- OldValueType
+- NewValueType
+id: cbf93e5d-ca6c-4722-8bea-e9119007c248
+level: medium
+logsource:
+  category: registry_event
+  product: windows
+modified: 2022/03/03
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
+- https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
+- https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
+related:
+- id: 17f878b8-9968-4578-b814-c4217fc5768c
+  type: derived
+status: experimental
+tags:
+- attack.persistence
+- attack.t1547.001

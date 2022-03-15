@@ -1,6 +1,5 @@
 
 title: Suspicious RazerInstaller Explorer Subprocess
-ruletype: Sigma
 author: Florian Roth, Maxime Thiebaut
 date: 2021/08/23
 description: Detects a explorer.exe sub process of the RazerInstaller software which
@@ -8,14 +7,12 @@ description: Detects a explorer.exe sub process of the RazerInstaller software w
   can also be exploited to escalate privileges to LOCAL SYSTEM
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage: '*\RazerInstaller.exe'
-  SELECTION_3:
+  SELECTION_2:
     IntegrityLevel: System
-  SELECTION_4:
+  SELECTION_3:
     Image: C:\Windows\Installer\Razer\Installer\\*
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - User selecting a different installation folder (check for other sub processes of
   this explorer.exe process)

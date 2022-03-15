@@ -1,19 +1,21 @@
 
 title: Suspicious Kerberos RC4 Ticket Encryption
-ruletype: Sigma
 author: Florian Roth
 date: 2017/02/06
 description: Detects service ticket requests using RC4 encryption type
 detection:
   SELECTION_1:
-    EventID: 4769
+    Channel: Security
   SELECTION_2:
-    TicketOptions: '0x40810000'
+    EventID: 4769
   SELECTION_3:
-    TicketEncryptionType: '0x17'
+    TicketOptions: '0x40810000'
   SELECTION_4:
+    TicketEncryptionType: '0x17'
+  SELECTION_5:
     ServiceName: $*
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
 - Service accounts used on legacy systems (e.g. NetApp)
 - Windows Domains with DFL 2003 and legacy systems

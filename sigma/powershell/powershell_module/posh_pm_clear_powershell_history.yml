@@ -1,24 +1,28 @@
 
 title: Clear PowerShell History
-ruletype: Sigma
 author: Ilyas Ochkov, Jonhnathan Ribeiro, Daniil Yugoslavskiy, oscd.community
 date: 2019/10/25
 description: Detects keywords that could indicate clearing PowerShell history
 detection:
   SELECTION_1:
+    EventID: 4103
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     Payload:
     - '*del*'
     - '*Remove-Item*'
     - '*rm*'
-  SELECTION_2:
-    Payload: '*(Get-PSReadlineOption).HistorySavePath*'
-  SELECTION_3:
-    Payload: '*Set-PSReadlineOption*'
   SELECTION_4:
-    Payload: '*–HistorySaveStyle*'
+    Payload: '*(Get-PSReadlineOption).HistorySavePath*'
   SELECTION_5:
+    Payload: '*Set-PSReadlineOption*'
+  SELECTION_6:
+    Payload: '*–HistorySaveStyle*'
+  SELECTION_7:
     Payload: '*SaveNothing*'
-  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4 and SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Legitimate PowerShell scripts
 id: f99276ad-d122-4989-a09a-d00904a5f9d2

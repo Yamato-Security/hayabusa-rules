@@ -1,22 +1,19 @@
 
 title: Suspicious PowerShell Invocation Based on Parent Process
-ruletype: Sigma
 author: Florian Roth
 date: 2019/01/16
 description: Detects suspicious powershell invocations from interpreters or unusual
   programs
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage:
     - '*\wscript.exe'
     - '*\cscript.exe'
-  SELECTION_3:
+  SELECTION_2:
     Image: '*\powershell.exe'
-  SELECTION_4:
+  SELECTION_3:
     CurrentDirectory: '*\Health Service State\\*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Microsoft Operations Manager (MOM)
 - Other scripts

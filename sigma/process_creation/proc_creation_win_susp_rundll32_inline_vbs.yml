@@ -1,22 +1,19 @@
 
 title: Suspicious Rundll32 Invoking Inline VBScript
-ruletype: Sigma
 author: Florian Roth
 date: 2021/03/05
 description: Detects suspicious process related to rundll32 based on command line
   that invokes inline VBScript as seen being used by UNC2452
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*rundll32.exe*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*Execute*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*RegRead*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*window.close*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 1cc50f3f-1fc8-4acf-b2e9-6f172e1fdebd

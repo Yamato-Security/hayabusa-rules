@@ -1,20 +1,17 @@
 
 title: GfxDownloadWrapper.exe Downloads File from Suspicious URL
-ruletype: Sigma
 author: Victor Sergeev, oscd.community
 date: 2020/10/09
 description: Detects when GfxDownloadWrapper.exe downloads file from non standard
   URL
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\GfxDownloadWrapper.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*gameplayapi.intel.com*'
-  SELECTION_4:
+  SELECTION_3:
     ParentImage: '*\GfxDownloadWrapper.exe'
-  condition: (SELECTION_1 and (SELECTION_2 and  not (SELECTION_3)) and  not (SELECTION_4))
+  condition: ((SELECTION_1 and  not (SELECTION_2)) and  not (SELECTION_3))
 falsepositives:
 - Unknown
 fields:

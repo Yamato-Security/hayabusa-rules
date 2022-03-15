@@ -1,6 +1,5 @@
 
 title: Suspicious NT Resource Kit Auditpol Usage
-ruletype: Sigma
 author: Nasreddine Bencherchali @nas_bench
 date: 2021/12/18
 description: Threat actors can use an older version of the auditpol binary available
@@ -9,8 +8,6 @@ description: Threat actors can use an older version of the auditpol binary avail
   policies as well as restoring a custom policy owned by the threat actor.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*/logon:none*'
     - '*/system:none*'
@@ -19,7 +16,7 @@ detection:
     - '*/object:none*'
     - '*/process:none*'
     - '*/policy:none*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Unknown
 id: c6c56ada-612b-42d1-9a29-adad3c5c2c1e

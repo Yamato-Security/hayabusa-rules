@@ -1,0 +1,50 @@
+
+title: VBScript Payload Stored in Registry
+author: Florian Roth
+date: 2021/03/05
+description: Detects VBScript content stored into registry keys as seen being used
+  by UNC2452 group
+detection:
+  SELECTION_1:
+    EventType: SetValue
+  SELECTION_2:
+    TargetObject: '*Software\Microsoft\Windows\CurrentVersion*'
+  SELECTION_3:
+    Details:
+    - '*vbscript*'
+    - '*jscript*'
+    - '*mshtml*'
+    - '*RunHTMLApplication*'
+    - '*Execute(*'
+    - '*CreateObject*'
+    - '*RegRead*'
+    - '*window.close*'
+  SELECTION_4:
+    TargetObject: '*Software\Microsoft\Windows\CurrentVersion\Run*'
+  SELECTION_5:
+    Image: '*\msiexec.exe'
+  SELECTION_6:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\\*'
+  SELECTION_7:
+    Details:
+    - '*\Microsoft.NET\Primary Interop Assemblies\Microsoft.mshtml.dll*'
+    - '*<\Microsoft.mshtml,fileVersion=*'
+    - '*FL_Microsoft_mshtml_dll_____X86.*'
+    - '*Microsoft_mshtml_dll_1_____X86.*'
+    - '*<\Microsoft.mshtml,culture=*'
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)
+    or (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Unknown
+id: 46490193-1b22-4c29-bdd6-5bf63907216f
+level: high
+logsource:
+  category: registry_event
+  product: windows
+modified: 2022/03/04
+references:
+- https://www.microsoft.com/security/blog/2021/03/04/goldmax-goldfinder-sibot-analyzing-nobelium-malware/
+status: experimental
+tags:
+- attack.persistence
+- attack.t1547.001

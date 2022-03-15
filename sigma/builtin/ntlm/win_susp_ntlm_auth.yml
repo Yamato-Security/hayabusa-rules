@@ -1,16 +1,17 @@
 
 title: NTLM Logon
-ruletype: Sigma
 author: Florian Roth
 date: 2018/06/08
 description: Detects logons using NTLM, which could be caused by a legacy source or
   attackers
 detection:
   SELECTION_1:
-    EventID: 8002
+    Channel: Microsoft-Windows-NTLM/Operational
   SELECTION_2:
+    EventID: 8002
+  SELECTION_3:
     ProcessName: '*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legacy hosts
 id: 98c3bcf1-56f2-49dc-9d8d-c66cf190238b

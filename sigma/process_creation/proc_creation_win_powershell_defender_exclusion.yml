@@ -1,37 +1,29 @@
 
 title: Powershell Defender Exclusion
-ruletype: Sigma
 author: Florian Roth
 date: 2021/04/29
 description: Detects requests to exclude files, folders or processes from Antivirus
   scanning using PowerShell cmdlets
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*Add-MpPreference *'
     - '*Set-MpPreference *'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* -ExclusionPath *'
     - '* -ExclusionExtension *'
     - '* -ExclusionProcess *'
-  SELECTION_4:
-    CommandLine:
-    - '*QWRkLU1wUHJlZmVyZW5jZ*'
-    - '*FkZC1NcFByZWZlcmVuY2*'
-    - '*BZGQtTXBQcmVmZXJlbmNl*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or SELECTION_4))
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Possible Admin Activity
 - Other Cmdlets that may use the same parameters
 id: 17769c90-230e-488b-a463-e05c08e9d48f
-level: high
+level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/01/19
+modified: 2022/03/04
 references:
 - https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/configure-process-opened-file-exclusions-microsoft-defender-antivirus
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md

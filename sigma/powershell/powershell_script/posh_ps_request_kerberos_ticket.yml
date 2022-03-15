@@ -1,6 +1,5 @@
 
 title: Request A Single Ticket via PowerShell
-ruletype: Sigma
 author: frack113
 date: 2021/12/28
 description: |
@@ -9,8 +8,12 @@ description: |
   A successful execution will output the SPNs for the endpoint in question.
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText: '*System.IdentityModel.Tokens.KerberosRequestorSecurityToken*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - unknown
 id: a861d835-af37-4930-bcd6-5b178bfb54df

@@ -1,6 +1,5 @@
 
 title: Suspicious Encoded PowerShell Command Line
-ruletype: Sigma
 author: Florian Roth, Markus Neis, Jonhnathan Ribeiro, Daniil Yugoslavskiy, Anton
   Kutepov, oscd.community
 date: 2018/09/03
@@ -8,20 +7,16 @@ description: Detects suspicious powershell process starts with base64 encoded co
   (e.g. Emotet)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    CommandLine: '*remotesigned *'
+    CommandLine: '* -e*'
   SELECTION_2:
-    CommandLine: '* -e*'
-  SELECTION_3:
     CommandLine: '* JAB*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* -w*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '* hidden *'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '* -e*'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine:
     - '* BA^J*'
     - '* SUVYI*'
@@ -32,13 +27,15 @@ detection:
     - '* IAB*'
     - '* UwB*'
     - '* cwB*'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine:
     - '*.exe -ENCOD *'
-  SELECTION_9:
+  SELECTION_8:
     CommandLine: '* -ExecutionPolicy*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7) or SELECTION_8) and  not (SELECTION_9 and SELECTION_10))
+  SELECTION_9:
+    CommandLine: '*remotesigned *'
+  condition: (((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6) or SELECTION_7) and  not (SELECTION_8 and SELECTION_9))
 id: ca2092a1-c273-4878-9b4b-0d60115bf5ea
 level: high
 logsource:

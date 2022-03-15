@@ -1,20 +1,17 @@
 
 title: Java Running with Remote Debugging
-ruletype: Sigma
 author: Florian Roth
 date: 2019/01/16
 description: Detects a JAVA process running with remote debugging allowing more than
   just localhost to connect
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*transport=dt_socket,address=*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*address=127.0.0.1*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*address=localhost*'
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 and  not (SELECTION_2 or SELECTION_3))
 falsepositives:
 - unknown
 fields:

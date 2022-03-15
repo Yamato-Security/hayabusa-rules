@@ -1,13 +1,10 @@
 
 title: Suspicious Service Binary Directory
-ruletype: Sigma
 author: Florian Roth
 date: 2021/03/09
 description: Detects a service binary running in a suspicious directory
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image:
     - '*\Users\Public\\*'
     - '*\$Recycle.bin*'
@@ -20,11 +17,11 @@ detection:
     - '*\Windows\Fonts\\*'
     - '*\Windows\IME\\*'
     - '*\Windows\addins\\*'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage:
     - '*\services.exe'
     - '*\svchost.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: 883faa95-175a-4e22-8181-e5761aeb373c

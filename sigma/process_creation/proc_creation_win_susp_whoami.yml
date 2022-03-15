@@ -1,16 +1,13 @@
 
 title: Whoami Execution
-ruletype: Sigma
 author: Florian Roth
 date: 2018/08/13
 description: Detects the execution of whoami, which is often used by attackers after
   exloitation / privilege escalation but rarely used by administrators
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\whoami.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Admin activity
 - Scripts and administrative tools used in the monitored environment

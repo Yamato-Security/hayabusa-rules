@@ -1,28 +1,24 @@
 
 title: ShimCache Flush
-ruletype: Sigma
 author: Florian Roth
 date: 2021/02/01
 description: Detects actions that clear the local ShimCache and remove forensic evidence
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*rundll32*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*apphelp.dll*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*ShimFlushCache*'
     - '*#250*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*kernel32.dll*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine:
     - '*BaseFlushAppcompatCache*'
     - '*#46*'
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6)))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - Unknown
 fields:

@@ -1,22 +1,19 @@
 
 title: UAC Bypass Abusing Winsat Path Parsing - Process
-ruletype: Sigma
 author: Christian Burkard
 date: 2021/08/30
 description: Detects the pattern of UAC Bypass using a path parsing issue in winsat.exe
   (UACMe 52)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     IntegrityLevel:
     - High
     - System
-  SELECTION_3:
+  SELECTION_2:
     ParentImage: '*\AppData\Local\Temp\system32\winsat.exe'
-  SELECTION_4:
+  SELECTION_3:
     ParentCommandLine: '*C:\Windows \system32\winsat.exe*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 7a01183d-71a2-46ad-ad5c-acd989ac1793

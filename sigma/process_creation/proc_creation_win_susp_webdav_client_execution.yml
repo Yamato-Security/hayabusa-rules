@@ -1,6 +1,5 @@
 
 title: Suspicious WebDav Client Execution
-ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2020/05/02
 description: A General detection for svchost.exe spawning rundll32.exe with command
@@ -8,12 +7,10 @@ description: A General detection for svchost.exe spawning rundll32.exe with comm
   of exfiltration or use of WebDav to launch code (hosted on WebDav Server).
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\rundll32.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*C:\windows\system32\davclnt.dll,DavSetCookie*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - unknown
 id: 2dbd9d3d-9e27-42a8-b8df-f13825c6c3d5

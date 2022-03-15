@@ -1,21 +1,18 @@
 
 title: VeeamBackup Database Credentials Dump
-ruletype: Sigma
 author: frack113
 date: 2021/12/20
 description: Detects dump of credentials in VeeamBackup dbo
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\sqlcmd.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*SELECT*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*TOP*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*[VeeamBackup].[dbo].[Credentials]*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: b57ba453-b384-4ab9-9f40-1038086b4e53

@@ -1,22 +1,24 @@
 
 title: WCE wceaux.dll Access
-ruletype: Sigma
 author: Thomas Patzke
 date: 2017/06/14
 description: Detects wceaux.dll access while WCE pass-the-hash remote command execution
   on source host
 detection:
   SELECTION_1:
-    EventID: 4656
+    Channel: Security
   SELECTION_2:
-    EventID: 4658
+    EventID: 4656
   SELECTION_3:
-    EventID: 4660
+    EventID: 4658
   SELECTION_4:
-    EventID: 4663
+    EventID: 4660
   SELECTION_5:
+    EventID: 4663
+  SELECTION_6:
     ObjectName: '*\wceaux.dll'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3 or SELECTION_4) and SELECTION_5)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5)
+    and SELECTION_6)
 falsepositives:
 - Penetration testing
 id: 1de68c67-af5c-4097-9c85-fe5578e09e67

@@ -1,17 +1,14 @@
 
 title: Run PowerShell Script from Redirected Input Stream
-ruletype: Sigma
 author: Moriarty Meng (idea), Anton Kutepov (rule), oscd.community
 date: 2020/10/17
 description: Detects PowerShell script execution via input stream redirect
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\powershell.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine|re: \s-\s*<
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Unknown
 id: c83bf4b5-cdf0-437c-90fa-43d734f7c476

@@ -1,14 +1,11 @@
 
 title: Automated Collection Command Prompt
-ruletype: Sigma
 author: frack113
 date: 2021/07/28
 description: Once established within a system or network, an adversary may use automated
   techniques for collecting internal data.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '*.doc*'
     - '*.docx*'
@@ -19,20 +16,20 @@ detection:
     - '*.rtf*'
     - '*.pdf*'
     - '*.txt*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*dir *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '* /b *'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '* /s *'
-  SELECTION_6:
+  SELECTION_5:
     OriginalFileName: FINDSTR.EXE
-  SELECTION_7:
+  SELECTION_6:
     CommandLine:
     - '* /e *'
     - '* /si *'
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7)))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6)))
 falsepositives:
 - Unknown
 id: f576a613-2392-4067-9d1a-9345fb58d8d1

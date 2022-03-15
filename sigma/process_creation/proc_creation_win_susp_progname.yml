@@ -1,16 +1,13 @@
 
 title: Suspicious Program Names
-ruletype: Sigma
 author: Florian Roth
 date: 2022/02/11
 description: Detects suspicious patterns in program names or folders that are often
   found in malicious samples or hacktools
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\CVE-202*'
-  SELECTION_3:
+  SELECTION_2:
     Image:
     - '*\poc.exe'
     - '*\artifact.exe'
@@ -21,7 +18,7 @@ detection:
     - '*obfuscated.exe'
     - '*obfusc.exe'
     - '*\meterpreter'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*inject.ps1*'
     - '*Invoke-CVE*'
@@ -52,7 +49,7 @@ detection:
     - '*Hound.ps1*'
     - '*encode.ps1*'
     - '*powercat.ps1*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 or SELECTION_2 or SELECTION_3)
 falsepositives:
 - Legitimate tools that accidentally match on the searched patterns
 fields:

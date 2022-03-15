@@ -1,11 +1,14 @@
 
 title: MSExchange Transport Agent Installation
-ruletype: Sigma
 author: Tobias Michalski
 date: 2021/06/08
 description: Detects the Installation of a Exchange Transport Agent
 detection:
-  condition: Install-TransportAgent
+  SELECTION_1:
+    Channel: MSExchange Management
+  SELECTION_2:
+  - Install-TransportAgent
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - legitimate installations of exchange TransportAgents. AssemblyPath is a good indicator
   for this.

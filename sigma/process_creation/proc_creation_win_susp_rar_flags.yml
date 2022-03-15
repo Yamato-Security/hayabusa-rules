@@ -1,6 +1,5 @@
 
 title: Rar with Password or Compression Level
-ruletype: Sigma
 author: '@ROxPinTeddy'
 date: 2020/05/12
 description: Detects the use of rar.exe, on the command line, to create an archive
@@ -8,15 +7,13 @@ description: Detects the use of rar.exe, on the command line, to create an archi
   of malicious actions.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '* -hp*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '* -m*'
     - '* a *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Legitimate use of Winrar command line version
 - Other command line tools, that use these flags

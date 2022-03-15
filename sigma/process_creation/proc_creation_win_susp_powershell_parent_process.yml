@@ -1,13 +1,10 @@
 
 title: Suspicious PowerShell Parent Process
-ruletype: Sigma
 author: Teymur Kheirkhabarov, Harish Segar (rule)
 date: 2020/03/20
 description: Detects a suspicious parents of powershell.exe
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     ParentImage:
     - '*\mshta.exe'
     - '*\rundll32.exe'
@@ -39,18 +36,17 @@ detection:
     - '*\php-cgi.exe'
     - '*\jbosssvc.exe'
     - '*MicrosoftEdgeSH.exe'
-  SELECTION_3:
+  SELECTION_2:
     ParentImage: '*tomcat*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*powershell*'
     - '*pwsh*'
-  SELECTION_5:
+  SELECTION_4:
     Description: Windows PowerShell
-  SELECTION_6:
+  SELECTION_5:
     Product: PowerShell Core 6
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and (SELECTION_4 or SELECTION_5
-    or SELECTION_6))
+  condition: ((SELECTION_1 or SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Other scripts
 id: 754ed792-634f-40ae-b3bc-e0448d33f695

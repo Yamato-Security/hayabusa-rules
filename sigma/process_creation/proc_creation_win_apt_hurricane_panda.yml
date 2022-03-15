@@ -1,22 +1,19 @@
 
 title: Hurricane Panda Activity
-ruletype: Sigma
 author: Florian Roth
 date: 2019/03/04
 description: Detects Hurricane Panda Activity
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: '*localgroup*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*admin*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/add*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine:
     - '*\Win64.exe*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) or SELECTION_4)
 falsepositives:
 - Unknown
 id: 0eb2107b-a596-422e-b123-b389d5594ed7

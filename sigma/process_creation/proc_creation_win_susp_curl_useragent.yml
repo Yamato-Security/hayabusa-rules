@@ -1,22 +1,19 @@
 
 title: Suspicious Curl Change User Agents
-ruletype: Sigma
 author: frack113
 date: 2022/01/23
 description: Detects a suspicious curl process start on Windows with set useragent
   options
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\curl.exe'
-  SELECTION_3:
+  SELECTION_2:
     Product: The curl executable
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '* -A *'
     - '* --user-agent *'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
 falsepositives:
 - Scripts created by developers and admins
 - Administrative activity

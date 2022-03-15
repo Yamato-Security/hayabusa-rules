@@ -1,6 +1,5 @@
 
 title: Using Sticky-keys To Obtain Unauthenticated, Privileged Console Access
-ruletype: Sigma
 author: Sreeman
 date: 2020/02/18
 description: By replacing the sticky keys executable with the local admins CMD executable,
@@ -8,10 +7,8 @@ description: By replacing the sticky keys executable with the local admins CMD e
   to the system. When the sticky keys are "activated" the privilleged shell is launched.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine: copy /y C:\windows\system32\cmd.exe C:\windows\system32\sethc.exe
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: SELECTION_1
 falsepositives:
 - Unknown
 fields:

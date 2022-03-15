@@ -1,6 +1,5 @@
 
 title: Suspicious Msiexec Execute Arbitrary DLL
-ruletype: Sigma
 author: frack113
 date: 2022/01/16
 description: |
@@ -8,18 +7,16 @@ description: |
   Msiexec.exe is the command-line utility for the Windows Installer and is thus commonly associated with executing installation packages (.msi)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\msiexec.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* /y*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine:
     - '*\MsiExec.exe" /Y "C:\Program Files\Bonjour\mdnsNSP.dll*'
     - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Bonjour\mdnsNSP.dll*'
     - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Apple Software Update\ScriptingObjectModel.dll*'
     - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Apple Software Update\SoftwareUpdateAdmin.dll*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)))
+  condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3)))
 falsepositives:
 - Legitimate script
 id: 6f4191bb-912b-48a8-9ce7-682769541e6d

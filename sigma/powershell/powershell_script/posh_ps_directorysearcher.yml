@@ -1,22 +1,26 @@
 
 title: DirectorySearcher Powershell Exploitation
-ruletype: Sigma
 author: frack113
 date: 2022/02/12
 description: Enumerates Active Directory to determine computers that are joined to
   the domain
 detection:
   SELECTION_1:
-    ScriptBlockText: '*New-Object *'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*System.DirectoryServices.DirectorySearcher*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*.PropertiesToLoad.Add*'
+    ScriptBlockText: '*New-Object *'
   SELECTION_4:
-    ScriptBlockText: '*.findall()*'
+    ScriptBlockText: '*System.DirectoryServices.DirectorySearcher*'
   SELECTION_5:
+    ScriptBlockText: '*.PropertiesToLoad.Add*'
+  SELECTION_6:
+    ScriptBlockText: '*.findall()*'
+  SELECTION_7:
     ScriptBlockText: '*Properties.name*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: 1f6399cf-2c80-4924-ace1-6fcff3393480

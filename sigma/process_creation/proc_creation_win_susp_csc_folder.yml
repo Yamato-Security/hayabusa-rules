@@ -1,31 +1,28 @@
 
 title: Suspicious Csc.exe Source File Folder
-ruletype: Sigma
 author: Florian Roth
 date: 2019/08/24
 description: Detects a suspicious execution of csc.exe, which uses a source in a suspicious
   folder (e.g. AppData)
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\csc.exe'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine:
     - '*\AppData\\*'
     - '*\Windows\Temp\\*'
-  SELECTION_4:
+  SELECTION_3:
     ParentImage: C:\Program Files*
-  SELECTION_5:
+  SELECTION_4:
     ParentImage:
     - '*\sdiagnhost.exe'
     - '*\w3wp.exe'
     - '*\choco.exe'
-  SELECTION_6:
+  SELECTION_5:
     ParentCommandLine:
     - '*\ProgramData\Microsoft\Windows Defender Advanced Threat Protection*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4
-    or SELECTION_5 or SELECTION_6))
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3 or SELECTION_4 or
+    SELECTION_5))
 falsepositives:
 - https://twitter.com/gN3mes1s/status/1206874118282448897
 - https://twitter.com/gabriele_pippi/status/1206907900268072962

@@ -1,0 +1,26 @@
+
+title: Delete Log from Application
+author: frack113
+date: 2022/01/16
+description: Deletion of log files is a known anti-forensic technique
+detection:
+  SELECTION_1:
+    TargetFilename: '*.log'
+  SELECTION_2:
+    TargetFilename: '*\TeamViewer_*'
+  SELECTION_3:
+    Image: C:\Windows\system32\svchost.exe
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+falsepositives:
+- unknown
+id: b1decb61-ed83-4339-8e95-53ea51901720
+level: low
+logsource:
+  category: file_delete
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1070.004/T1070.004.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1070.004

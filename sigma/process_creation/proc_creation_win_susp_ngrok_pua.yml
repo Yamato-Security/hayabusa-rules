@@ -1,6 +1,5 @@
 
 title: Ngrok Usage
-ruletype: Sigma
 author: Florian Roth
 date: 2021/05/14
 description: Detects the use of Ngrok, a utility used for port forwarding and tunneling,
@@ -8,32 +7,30 @@ description: Detects the use of Ngrok, a utility used for port forwarding and tu
   Involved domains are bin.equinox.io for download and *.ngrok.io for connections.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     CommandLine:
     - '* tcp 139*'
     - '* tcp 445*'
     - '* tcp 3389*'
     - '* tcp 5985*'
     - '* tcp 5986*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '* start *'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*--all*'
-  SELECTION_5:
+  SELECTION_4:
     CommandLine: '*--config*'
-  SELECTION_6:
+  SELECTION_5:
     CommandLine: '*.yml*'
-  SELECTION_7:
+  SELECTION_6:
     Image:
     - '*ngrok.exe'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine:
     - '* tcp *'
     - '* http *'
     - '* authtoken *'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7))
 falsepositives:
 - Another tool that uses the command line switches of Ngrok
 - ngrok http 3978 (https://docs.microsoft.com/en-us/azure/bot-service/bot-service-debug-channel-ngrok?view=azure-bot-service-4.0)

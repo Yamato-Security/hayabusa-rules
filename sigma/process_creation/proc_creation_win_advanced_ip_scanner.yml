@@ -1,20 +1,17 @@
 
 title: Advanced IP Scanner
-ruletype: Sigma
 author: '@ROxPinTeddy, Nasreddine Bencherchali @nas_bench'
 date: 2020/05/12
 description: Detects the use of Advanced IP Scanner. Seems to be a popular tool for
   ransomware groups.
 detection:
   SELECTION_1:
-    EventID: 1
-  SELECTION_2:
     Image: '*\advanced_ip_scanner*'
-  SELECTION_3:
+  SELECTION_2:
     CommandLine: '*/portable*'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*/lng*'
-  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4)))
+  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3))
 falsepositives:
 - Legitimate administrative use
 id: bef37fa2-f205-4a7b-b484-0759bfd5f86f
