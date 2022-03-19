@@ -41,6 +41,7 @@
 
 # About creating rule files
 Hayabusa detection rules are written in [YAML](https://en.wikipedia.org/wiki/YAML) format.
+Hayabusa rules extension should be yml.
 They are a subset of sigma rules with some additions. We are trying to make them as close to sigma rules as possible so that it is easy to convert Hayabusa rules back to sigma to give back to the community.
 Hayabusa rules can express complex detection rules by combining not only simple string matching but also regular expressions, `AND`, `OR`, and other conditions.
 In this section, we will explain how to write Hayabusa detection rules.
