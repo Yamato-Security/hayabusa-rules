@@ -5,6 +5,14 @@
   [<a href="README.md">English</a>] | [<b>日本語</b>]
 </div>
 
+# Hayabusa-Rulesについて
+
+こちらは、[hayabusa](https://github.com/Yamato-Security/hayabusa)の検知ルールのレポジトリです。
+
+# 目次
+
+- [Hayabusa-Rulesについて](#hayabusa-rulesについて)
+- [目次](#目次)
 - [ルールファイル作成について](#ルールファイル作成について)
   - [ルールファイル形式](#ルールファイル形式)
 - [detectionフィールド](#detectionフィールド)
@@ -38,9 +46,9 @@
     - [OKな例：](#okな例)
     - [良い例：](#良い例-1)
 - [SigmaルールからHayabusaルール形式への自動変換](#sigmaルールからhayabusaルール形式への自動変換)
+
 # ルールファイル作成について
-Hayabusaの検知ルールは[YAML](https://en.wikipedia.org/wiki/YAML) 形式で記述されています。
-検知ルールファイルの拡張子は必ず`.yml`にしてください。
+Hayabusaの検知ルールは[YAML](https://en.wikipedia.org/wiki/YAML)形式で記述され、ファイル拡張子は必ず`.yml`にしてください。(`.yaml`ファイルは無視されます。)
 単純な文字列のマッチングだけでなく、正規表現や`AND`、`OR`などの条件を組み合わせて複雑な検知ルールを表現することができます。
 本節ではHayabusaの検知ルールの書き方について説明します。
 
