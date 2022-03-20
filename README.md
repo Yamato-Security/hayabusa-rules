@@ -5,6 +5,14 @@
  [ <b>English</b> ] | [<a href="README-Japanese.md">日本語</a>]
 </div>
 
+# About Hayabusa-Rules
+
+This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabusa) detections rules.
+
+# Table of Contents
+
+- [About Hayabusa-Rules](#about-hayabusa-rules)
+- [Table of Contents](#table-of-contents)
 - [About creating rule files](#about-creating-rule-files)
   - [Rule file format](#rule-file-format)
 - [Detection field](#detection-field)
@@ -40,7 +48,7 @@
 - [Converting sigma rules to hayabusa format](#converting-sigma-rules-to-hayabusa-format)
 
 # About creating rule files
-Hayabusa detection rules are written in [YAML](https://en.wikipedia.org/wiki/YAML) format.
+Hayabusa detection rules are written in [YAML](https://en.wikipedia.org/wiki/YAML) format with a file extension of `.yml`. (`.yaml` files will be ignored.)
 They are a subset of sigma rules with some additions. We are trying to make them as close to sigma rules as possible so that it is easy to convert Hayabusa rules back to sigma to give back to the community.
 Hayabusa rules can express complex detection rules by combining not only simple string matching but also regular expressions, `AND`, `OR`, and other conditions.
 In this section, we will explain how to write Hayabusa detection rules.
