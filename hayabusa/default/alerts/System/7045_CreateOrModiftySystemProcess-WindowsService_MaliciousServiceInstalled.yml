@@ -1,17 +1,20 @@
 author: Eric Conrad, Zach Mathis
 date: 2020/11/08
-modified: 2022/02/07
+modified: 2022/03/22
 
 title: Malicious Service Possibly Installed
 title_jp: 悪意のあるサービスがインストールされた可能性がある
-details: 'Service: %ServiceName%  :  Path: %ImagePath%'
-details_jp: 'サービス: %ServiceName%  :  パス: %ImagePath%'
+details: 'Svc: %ServiceName% | Path: %ImagePath%'
+details_jp: 'サービス: %ServiceName% | パス: %ImagePath%'
 description: Malicious service was installed based on suspicious entries in ./rules/config/regex/regexes_suspicous_service.txt
 description_jp: Malicious service was installed based on suspicious entries in ./rules/config/regex/regexes_suspicous_service.txt
 
 id: dbbfd9f3-9508-478b-887e-03ddb9236909
 level: high
 status: test
+logsource:
+    product: windows
+    service: system
 detection:
     selection:
         Channel: System
@@ -34,5 +37,4 @@ tags:
     - attack.t1543.003
 references:
     - https://attack.mitre.org/techniques/T1543/003/
-logsource: default
 ruletype: Hayabusa
