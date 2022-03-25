@@ -1,17 +1,21 @@
 author: Zach Mathis
 date: 2021/12/16
-modified: 2021/12/16
+modified: 2022/03/22
 
 title: Network Share Access
 title_jp: ネットワーク共有へのアクセス
-details: 'User: %SubjectUserName%  :  Share Name: %ShareName%  :  Share Path: %ShareLocalPath%  :  IP Address: %IpAddress%  :  LogonID: %SubjectLogonId%'
-details_jp: 'ユーザ: %SubjectUserName%  :  共有名: %ShareName%  :  共有パス: %ShareLocalPath%  :  IPアドレス: %IpAddress%  :  ログオンID: %SubjectLogonId%'
+details: 'User: %SubjectUserName% | Share Name: %ShareName% | Share Path: %ShareLocalPath% | IP Addr: %IpAddress% | LID: %SubjectLogonId%'
+details_jp: 'ユーザ: %SubjectUserName% | 共有名: %ShareName% | 共有パス: %ShareLocalPath% | IPアドレス: %IpAddress% | ログオンID: %SubjectLogonId%'
 description: 
 description_jp: 
 
 id: 15d042c1-07c6-4e16-ae7d-e0e556ccd9a8
 level: informational
 status: stable
+logsource:
+    product: windows
+    service: security
+    description: Logging needs to be turned on.
 detection:
     selection:
         Channel: Security
@@ -24,5 +28,4 @@ tags:
     - attack.collection
 references:
 sample-evtx: ./EVTX-to-MITRE-Attack/TA0007-Discovery/T1135.xxx-Network Share Discovery/ID5140-5145-Bloodhound-SharpHound enumeration via SMB.evtx
-logsource: non-default
 ruletype: Hayabusa

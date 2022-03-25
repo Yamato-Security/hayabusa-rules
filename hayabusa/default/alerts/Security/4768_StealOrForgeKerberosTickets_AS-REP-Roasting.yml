@@ -1,6 +1,6 @@
 author: Yusuke Matsui, Yamato Security
 date: 2020/11/08
-modified: 2021/11/26
+modified: 2022/03/22
 
 title: Possible AS-REP Roasting
 title_jp: AS-REPロースティングの可能性
@@ -12,6 +12,9 @@ description_jp: For each account found without preauthentication, an adversary m
 id: dee2a01e-5d7c-45b4-aec3-ad9722f2165a
 level: medium
 status: testing
+logsource:
+    product: windows
+    service: security
 detection:
     selection:
         Channel: Security
@@ -27,5 +30,4 @@ tags:
 references:
     - https://attack.mitre.org/techniques/T1558/004/
 sample-evtx: 
-logsource: default
 ruletype: Hayabusa

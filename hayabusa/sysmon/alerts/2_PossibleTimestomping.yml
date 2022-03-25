@@ -1,0 +1,63 @@
+author: Zach Mathis
+date: 2022/03/22
+modified: 2022/03/22
+
+title: Possible Timestomping
+details: 'Path: %TargetFilename% | Process: %Image% | CreationUtcTime: %CreationUtcTime% | PreviousCreationUtcTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
+description: |
+    The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
+    This event helps tracking the real creation time of a file. 
+    Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system. 
+    Note that many processes legitimately change the creation time of a file; it does not necessarily indicate malicious activity.
+
+id: f03e34c4-6432-4a30-9ae2-76ae6329399a
+level: low
+status: stable
+logsource:
+    product: windows
+    service: sysmon
+    definition: Sysmon needs to be installed and configured.
+detection:
+    selection_basic:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 2
+    condition: selection_basic
+falsepositives:
+    - unknown
+tags:
+    - t1070.006
+    - attack.defense_evasion
+references:
+    - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+    - https://attack.mitre.org/techniques/T1070/006/
+ruletype: Hayabusa
+
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+    <System>
+        <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"/>
+        <EventID>2</EventID>
+        <Version>4</Version>
+        <Level>4</Level>
+        <Task>2</Task>
+        <Opcode>0</Opcode>
+        <Keywords>0x8000000000000000</Keywords>
+        <TimeCreated SystemTime="2019-04-30T10:13:42.052113000Z"/>
+        <EventRecordID>8931</EventRecordID>
+        <Correlation/>
+        <Execution ProcessID="1956" ThreadID="1636"/>
+        <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+        <Computer>IEWIN7</Computer>
+        <Security UserID="S-1-5-18"/>
+    </System>
+    <EventData>
+        <Data Name="RuleName"/>
+        <Data Name="UtcTime">2019-04-30 10:13:42.052</Data>
+        <Data Name="ProcessGuid">{365ABB72-16CD-5CC8-0000-0010483A0600}</Data>
+        <Data Name="ProcessId">2836</Data>
+        <Data Name="Image">C:\Windows\Explorer.EXE</Data>
+        <Data Name="TargetFilename">C:\Users\IEUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\bs.ps1</Data>
+        <Data Name="CreationUtcTime">2016-02-02 15:30:02.000</Data>
+        <Data Name="PreviousCreationUtcTime">2019-04-30 10:12:45.583</Data>
+    </EventData>
+    </Event>

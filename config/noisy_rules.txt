@@ -8,3 +8,8 @@ add2ef8d-dc91-4002-9e7e-f2702369f53a # ./rules/sigma/builtin/security/win_susp_f
 196a29c2-e378-48d8-ba07-8a9e61f7fab9 # ./rules/sigma/builtin/security/win_susp_failed_logons_explicit_credentials.yml
 72124974-a68b-4366-b990-d30e0b2a190d # ./rules/sigma/builtin/security/win_metasploit_authentication.yml
 dae8171c-5ec6-4396-b210-8466585b53e9 # "SCM Database Privileged Operation" Detects unprivelidged users attempting priv'd things. Can possible detect things like psexec but may have false positives and should probably be medium alert instead of critical.
+0090ea60-f4a2-43a8-8657-3a9a4ddcf547 # Sysmon 6 Driver Loaded - Unknown Signature. It is not possible to list up all good signatures so will be many false positives.
+8b8db936-172e-4bb7-9f84-ccc954d51d93 # Sysmon 7 DLL Loaded - No Alerts
+1703ba97-b2c2-4071-a241-a16d017d25d3 # Sysmon 12 Registry Key Create/Delete
+9f5663ce-6205-4753-b486-fb8498d1fae5 # Sysmon 13 Registry Key Value Set
+3546ce10-19b4-4c4c-9658-f4f3b5d27ae9 # Sysmon 15 Registry Key Value Rename
