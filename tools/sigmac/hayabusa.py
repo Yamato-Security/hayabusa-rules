@@ -33,8 +33,11 @@ class HayabusaBackend(SingleTextQueryBackend):
     name_idx = 1
     selection_prefix = "SELECTION_{0}"
     name_2_selection = OrderedDict()
+    configfile = None
 
     def __init__(self, sigmaconfig, options):
+        if "configfile" in options:
+            self.configfile = options["configfile"]
         super().__init__(sigmaconfig)
         self.re_init()
 
@@ -267,10 +270,12 @@ class HayabusaBackend(SingleTextQueryBackend):
             # なんかタイトルは先頭に来てほしいので、そのための処理
             # parsed.sigmaParser.parsedyamlがOrderedDictならこんなことしなくていい、後で別のやり方があるか調べる
             # 順番固定してもいいかも
-            bs.write("title: " + parsed_yaml["title"]+"\n")
+            bs.write("title: " + parsed_yaml["title"] + "\n")
             bs.write("ruletype: Sigma\n")
+            if self.configfile is not None:
+                bs.write("config: " + self.configfile + "\n")
             del parsed_yaml["title"]
-            
+
             # detectionの部分をクリアする前にtimeframeだけ確保しておく。
             timeframe = None
             if "timeframe" in parsed_yaml["detection"]:
