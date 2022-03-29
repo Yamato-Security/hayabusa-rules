@@ -37,33 +37,33 @@ ruletype: Hayabusa
 
 sample-evtx: |
     <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
-    <System>
-        <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385F-C22A-43E0-BF4C-06F5698FFBD9}" />
-        <EventID>24</EventID>
-        <Version>5</Version>
-        <Level>4</Level>
-        <Task>24</Task>
-        <Opcode>0</Opcode>
-        <Keywords>0x8000000000000000</Keywords>
-        <TimeCreated SystemTime="2021-04-16T03:57:35.124166400Z" />
-        <EventRecordID>13339</EventRecordID>
-        <Correlation />
-        <Execution ProcessID="3500" ThreadID="3824" />
-        <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
-        <Computer>w19-ex-111.Win2019.local</Computer>
-        <Security UserID="S-1-5-18" />
-    </System>
-    <EventData>
-        <Data Name="RuleName">-</Data>
-        <Data Name="UtcTime">2021-04-16 03:57:35.123</Data>
-        <Data Name="ProcessGuid">{ff9115ad-7aff-6078-4000-000000002c00}</Data>
-        <Data Name="ProcessId">4832</Data>
-        <Data Name="User"> NT AUTHORITY\SYSTEM</Data>
-        <Data Name="Image">C:\Windows\System32\rdpclip.exe</Data>
-        <Data Name="Session">2</Data>
-        <Data Name="ClientInfo">user: WIN2019\admin hostname: EndPoint342</Data>
-        <Data Name="Hashes">SHA1=9EB203E8CD0DA806D91D6C2EB9669C28E29D5330,MD5=234A0C813539AB6B2CCAE02EAD314381,SHA256=48ED6A8C89DB330140D82BA0FE8F1D901645A0E18262172E6CDACE57C18B9720,IMPHASH=00000000000000000000000000000000
-        <Data Name="IsExecutable">false</Data>
-        <Data Name="Archived">true</Data>
-    </Data>   </EventData>
+        <System>
+            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385F-C22A-43E0-BF4C-06F5698FFBD9}" />
+            <EventID>24</EventID>
+            <Version>5</Version>
+            <Level>4</Level>
+            <Task>24</Task>
+            <Opcode>0</Opcode>
+            <Keywords>0x8000000000000000</Keywords>
+            <TimeCreated SystemTime="2021-04-16T03:57:35.124166400Z" />
+            <EventRecordID>13339</EventRecordID>
+            <Correlation />
+            <Execution ProcessID="3500" ThreadID="3824" />
+            <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+            <Computer>w19-ex-111.Win2019.local</Computer>
+            <Security UserID="S-1-5-18" />
+        </System>
+        <EventData>
+            <Data Name="RuleName">-</Data>
+            <Data Name="UtcTime">2021-04-16 03:57:35.123</Data>
+            <Data Name="ProcessGuid">{ff9115ad-7aff-6078-4000-000000002c00}</Data>
+            <Data Name="ProcessId">4832</Data>
+            <Data Name="User"> NT AUTHORITY\SYSTEM</Data>
+            <Data Name="Image">C:\Windows\System32\rdpclip.exe</Data>
+            <Data Name="Session">2</Data>
+            <Data Name="ClientInfo">user: WIN2019\admin hostname: EndPoint342</Data>
+            <Data Name="Hashes">SHA1=9EB203E8CD0DA806D91D6C2EB9669C28E29D5330,MD5=234A0C813539AB6B2CCAE02EAD314381,SHA256=48ED6A8C89DB330140D82BA0FE8F1D901645A0E18262172E6CDACE57C18B9720,IMPHASH=00000000000000000000000000000000</Data>
+            <Data Name="IsExecutable">false</Data>
+            <Data Name="Archived">true</Data>
+        </EventData>
     </Event>
