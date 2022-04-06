@@ -7,6 +7,10 @@ description: Adversaries may abuse the Windows Task Scheduler to perform task sc
   for initial or recurring execution of malicious code
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*New-ScheduledTaskAction*'
     - '*New-ScheduledTaskTrigger*'
@@ -14,18 +18,18 @@ detection:
     - '*New-ScheduledTaskSettingsSet*'
     - '*New-ScheduledTask*'
     - '*Register-ScheduledTask*'
-  SELECTION_2:
-    ScriptBlockText: '*Invoke-CimMethod*'
-  SELECTION_3:
-    ScriptBlockText: '*-ClassName*'
   SELECTION_4:
-    ScriptBlockText: '*PS_ScheduledTask*'
+    ScriptBlockText: '*Invoke-CimMethod*'
   SELECTION_5:
-    ScriptBlockText: '*-NameSpace*'
+    ScriptBlockText: '*-ClassName*'
   SELECTION_6:
+    ScriptBlockText: '*PS_ScheduledTask*'
+  SELECTION_7:
+    ScriptBlockText: '*-NameSpace*'
+  SELECTION_8:
     ScriptBlockText: '*Root\Microsoft\Windows\TaskScheduler*'
-  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: 363eccc0-279a-4ccf-a3ab-24c2e63b11fb

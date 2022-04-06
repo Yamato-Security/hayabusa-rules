@@ -6,14 +6,18 @@ date: 2020/06/29
 description: Detects renamed powershell
 detection:
   SELECTION_1:
-    HostName: ConsoleHost
+    EventID: 400
   SELECTION_2:
+    Channel: Windows PowerShell
+  SELECTION_3:
+    HostName: ConsoleHost
+  SELECTION_4:
     HostApplication:
     - powershell.exe*
     - C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe*
-  condition: (SELECTION_1 and  not (SELECTION_2))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
-- unknown
+- Unknown
 id: 30a8cb77-8eb3-4cfb-8e79-ad457c5a4592
 level: low
 logsource:

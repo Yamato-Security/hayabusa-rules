@@ -8,19 +8,21 @@ description: Detects a threat actor creating a file named `iertutil.dll` in the 
   DLL Hijack scenario.
 detection:
   SELECTION_1:
-    EventID: 11
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_2:
-    Image: System
+    EventID: 11
   SELECTION_3:
-    TargetFilename: '*\Internet Explorer\iertutil.dll'
+    Image: System
   SELECTION_4:
-    EventID: 7
+    TargetFilename: '*\Internet Explorer\iertutil.dll'
   SELECTION_5:
-    Image: '*\Internet Explorer\iexplore.exe'
+    EventID: 7
   SELECTION_6:
+    Image: '*\Internet Explorer\iexplore.exe'
+  SELECTION_7:
     ImageLoaded: '*\Internet Explorer\iertutil.dll'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5
-    and SELECTION_6))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Unknown
 id: e554f142-5cf3-4e55-ace9-a1b59e0def65

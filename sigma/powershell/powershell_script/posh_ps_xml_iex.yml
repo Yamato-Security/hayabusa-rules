@@ -9,17 +9,22 @@ description: |
   Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code
 detection:
   SELECTION_1:
-    ScriptBlockText: '*New-Object*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*System.Xml.XmlDocument*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*.Load*'
+    ScriptBlockText: '*New-Object*'
   SELECTION_4:
+    ScriptBlockText: '*System.Xml.XmlDocument*'
+  SELECTION_5:
+    ScriptBlockText: '*.Load*'
+  SELECTION_6:
   - IEX
   - Invoke-Expression
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
+    and (SELECTION_6))
 falsepositives:
-- legitimate administrative script
+- Legitimate administrative script
 id: 6c6c6282-7671-4fe9-a0ce-a2dcebdc342b
 level: medium
 logsource:

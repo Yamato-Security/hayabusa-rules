@@ -7,14 +7,16 @@ description: Detects removal of an exported Exchange mailbox which could be to c
   tracks from ProxyShell exploit
 detection:
   SELECTION_1:
-  - Remove-MailboxExportRequest
+    Channel: MSExchange Management
   SELECTION_2:
-  - ' -Identity '
+  - Remove-MailboxExportRequest
   SELECTION_3:
+  - ' -Identity '
+  SELECTION_4:
   - ' -Confirm "False"'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- unknown
+- Unknown
 id: 09570ae5-889e-43ea-aac0-0e1221fb3d95
 level: high
 logsource:

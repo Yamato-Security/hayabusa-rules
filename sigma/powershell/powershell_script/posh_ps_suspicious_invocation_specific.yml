@@ -6,83 +6,88 @@ date: 2017/03/05
 description: Detects suspicious PowerShell invocation command parameters
 detection:
   SELECTION_1:
-    ScriptBlockText: '*-nop*'
+    EventID: 4104
   SELECTION_10:
-    ScriptBlockText: '* -c *'
+    ScriptBlockText: '*-noni*'
   SELECTION_11:
-    ScriptBlockText: '*iex*'
+    ScriptBlockText: '*-nop*'
   SELECTION_12:
-    ScriptBlockText: '*New-Object*'
+    ScriptBlockText: '* -c *'
   SELECTION_13:
-    ScriptBlockText: '* -w *'
-  SELECTION_14:
-    ScriptBlockText: '*hidden*'
-  SELECTION_15:
-    ScriptBlockText: '*-ep*'
-  SELECTION_16:
-    ScriptBlockText: '*bypass*'
-  SELECTION_17:
-    ScriptBlockText: '*-Enc*'
-  SELECTION_18:
-    ScriptBlockText: '*powershell*'
-  SELECTION_19:
-    ScriptBlockText: '*reg*'
-  SELECTION_2:
-    ScriptBlockText: '* -w *'
-  SELECTION_20:
-    ScriptBlockText: '*add*'
-  SELECTION_21:
-    ScriptBlockText: '*HKCU\software\microsoft\windows\currentversion\run*'
-  SELECTION_22:
-    ScriptBlockText: '*bypass*'
-  SELECTION_23:
-    ScriptBlockText: '*-noprofile*'
-  SELECTION_24:
-    ScriptBlockText: '*-windowstyle*'
-  SELECTION_25:
-    ScriptBlockText: '*hidden*'
-  SELECTION_26:
-    ScriptBlockText: '*new-object*'
-  SELECTION_27:
-    ScriptBlockText: '*system.net.webclient*'
-  SELECTION_28:
-    ScriptBlockText: '*.download*'
-  SELECTION_29:
     ScriptBlockText: '*iex*'
-  SELECTION_3:
-    ScriptBlockText: '*hidden*'
-  SELECTION_30:
+  SELECTION_14:
     ScriptBlockText: '*New-Object*'
+  SELECTION_15:
+    ScriptBlockText: '* -w *'
+  SELECTION_16:
+    ScriptBlockText: '*hidden*'
+  SELECTION_17:
+    ScriptBlockText: '*-ep*'
+  SELECTION_18:
+    ScriptBlockText: '*bypass*'
+  SELECTION_19:
+    ScriptBlockText: '*-Enc*'
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_20:
+    ScriptBlockText: '*powershell*'
+  SELECTION_21:
+    ScriptBlockText: '*reg*'
+  SELECTION_22:
+    ScriptBlockText: '*add*'
+  SELECTION_23:
+    ScriptBlockText: '*HKCU\software\microsoft\windows\currentversion\run*'
+  SELECTION_24:
+    ScriptBlockText: '*bypass*'
+  SELECTION_25:
+    ScriptBlockText: '*-noprofile*'
+  SELECTION_26:
+    ScriptBlockText: '*-windowstyle*'
+  SELECTION_27:
+    ScriptBlockText: '*hidden*'
+  SELECTION_28:
+    ScriptBlockText: '*new-object*'
+  SELECTION_29:
+    ScriptBlockText: '*system.net.webclient*'
+  SELECTION_3:
+    ScriptBlockText: '*-nop*'
+  SELECTION_30:
+    ScriptBlockText: '*.download*'
   SELECTION_31:
-    ScriptBlockText: '*Net.WebClient*'
+    ScriptBlockText: '*iex*'
   SELECTION_32:
-    ScriptBlockText: '*.Download*'
+    ScriptBlockText: '*New-Object*'
   SELECTION_33:
+    ScriptBlockText: '*Net.WebClient*'
+  SELECTION_34:
+    ScriptBlockText: '*.Download*'
+  SELECTION_35:
     ScriptBlockText:
     - "*(New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1*"
     - "*(New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')*"
     - '*Write-ChocolateyWarning*'
   SELECTION_4:
-    ScriptBlockText: '* -c *'
-  SELECTION_5:
-    ScriptBlockText: '*[Convert]::FromBase64String*'
-  SELECTION_6:
     ScriptBlockText: '* -w *'
-  SELECTION_7:
+  SELECTION_5:
     ScriptBlockText: '*hidden*'
+  SELECTION_6:
+    ScriptBlockText: '* -c *'
+  SELECTION_7:
+    ScriptBlockText: '*[Convert]::FromBase64String*'
   SELECTION_8:
-    ScriptBlockText: '*-noni*'
+    ScriptBlockText: '* -w *'
   SELECTION_9:
-    ScriptBlockText: '*-nop*'
-  condition: (((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10
-    and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14 and SELECTION_15
-    and SELECTION_16 and SELECTION_17) or (SELECTION_18 and SELECTION_19 and SELECTION_20
-    and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24 and SELECTION_25
-    and SELECTION_26 and SELECTION_27 and SELECTION_28) or (SELECTION_29 and SELECTION_30
-    and SELECTION_31 and SELECTION_32)) and  not ((SELECTION_33)))
+    ScriptBlockText: '*hidden*'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+    SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9 and
+    SELECTION_10 and SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14)
+    or (SELECTION_15 and SELECTION_16 and SELECTION_17 and SELECTION_18 and SELECTION_19)
+    or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
+    and SELECTION_25 and SELECTION_26 and SELECTION_27 and SELECTION_28 and SELECTION_29
+    and SELECTION_30) or (SELECTION_31 and SELECTION_32 and SELECTION_33 and SELECTION_34))
+    and  not ((SELECTION_35)))
 falsepositives:
-- Penetration tests
+- Unknown
 id: ae7fbf8e-f3cb-49fd-8db4-5f3bed522c71
 level: high
 logsource:

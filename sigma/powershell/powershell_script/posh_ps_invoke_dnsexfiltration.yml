@@ -7,21 +7,25 @@ description: DNSExfiltrator allows for transfering (exfiltrate) a file over a DN
   request covert channel
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Invoke-DNSExfiltrator*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '* -i *'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '* -d *'
+    ScriptBlockText: '*Invoke-DNSExfiltrator*'
   SELECTION_4:
-    ScriptBlockText: '* -p *'
+    ScriptBlockText: '* -i *'
   SELECTION_5:
-    ScriptBlockText: '* -doh *'
+    ScriptBlockText: '* -d *'
   SELECTION_6:
+    ScriptBlockText: '* -p *'
+  SELECTION_7:
+    ScriptBlockText: '* -doh *'
+  SELECTION_8:
     ScriptBlockText: '* -t *'
-  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
-- legitim script
+- Legitimate script
 id: d59d7842-9a21-4bc6-ba98-64bfe0091355
 level: high
 logsource:

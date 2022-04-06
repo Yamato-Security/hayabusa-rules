@@ -6,10 +6,12 @@ date: 2020/10/09
 description: Detects Obfuscated Powershell via use Clip.exe in Scripts
 detection:
   SELECTION_1:
-    EventID: 4697
+    Channel: Security
   SELECTION_2:
+    EventID: 4697
+  SELECTION_3:
     ServiceFileName|re: (?i).*?echo.*clip.*&&.*(Clipboard|i`?n`?v`?o`?k`?e`?).*
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 1a0a2ff1-611b-4dac-8216-8a7b47c618a6

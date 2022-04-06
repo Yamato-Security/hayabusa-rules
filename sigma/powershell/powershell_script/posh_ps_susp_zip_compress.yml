@@ -7,14 +7,19 @@ description: Use living off the land tools to zip a file and stage it in the Win
   temporary folder for later exfiltration
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Compress-Archive *'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '* -Path *'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '* -DestinationPath *'
+    ScriptBlockText: '*Compress-Archive *'
   SELECTION_4:
+    ScriptBlockText: '* -Path *'
+  SELECTION_5:
+    ScriptBlockText: '* -DestinationPath *'
+  SELECTION_6:
     ScriptBlockText: '*$env:TEMP\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: b7a3c9a3-09ea-4934-8864-6a32cacd98d9

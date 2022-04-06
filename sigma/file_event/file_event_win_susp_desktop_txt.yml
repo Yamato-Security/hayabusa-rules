@@ -1,0 +1,34 @@
+
+title: Suspicious Creation TXT File in User Desktop
+ruletype: Sigma
+author: frack113
+date: 2021/12/26
+description: Ransomware create txt file in the user Desktop
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\cmd.exe'
+  SELECTION_4:
+    TargetFilename: '*\Users\\*'
+  SELECTION_5:
+    TargetFilename: '*\Desktop\\*'
+  SELECTION_6:
+    TargetFilename: '*.txt'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
+falsepositives:
+- Unknown
+id: caf02a0a-1e1c-4552-9b48-5e070bd88d11
+level: high
+logsource:
+  category: file_event
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1486/T1486.md#atomic-test-5---purelocker-ransom-note
+status: experimental
+tags:
+- attack.impact
+- attack.t1486

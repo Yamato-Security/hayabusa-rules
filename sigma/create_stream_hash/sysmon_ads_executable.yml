@@ -9,12 +9,14 @@ detection:
   SELECTION_1:
     EventID: 15
   SELECTION_2:
-    Hashes: '*IMPHASH=*'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    Hashes: '*IMPHASH=*'
+  SELECTION_4:
     Hashes: '*IMPHASH=00000000000000000000000000000000*'
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
-- unknown
+- Unknown
 fields:
 - TargetFilename
 - Image

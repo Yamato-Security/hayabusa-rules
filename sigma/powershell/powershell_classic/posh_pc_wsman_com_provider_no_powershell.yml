@@ -7,10 +7,12 @@ description: Detects suspicious use of the WSMAN provider without PowerShell.exe
   the host application.
 detection:
   SELECTION_1:
-    ProviderName: WSMan
+    Channel: Windows PowerShell
   SELECTION_2:
+    ProviderName: WSMan
+  SELECTION_3:
     HostApplication: '*powershell*'
-  condition: (SELECTION_1 and  not (SELECTION_2))
+  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
 falsepositives:
 - Unknown
 id: df9a0e0e-fedb-4d6c-8668-d765dfc92aa7

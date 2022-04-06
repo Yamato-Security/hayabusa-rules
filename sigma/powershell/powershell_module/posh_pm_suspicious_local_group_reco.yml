@@ -10,25 +10,29 @@ description: "Adversaries may attempt to find local system groups and permission
   \ users found within the local administrators group. \n"
 detection:
   SELECTION_1:
+    EventID: 4103
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     Payload:
     - '*get-localgroup*'
     - '*Get-LocalGroupMember*'
-  SELECTION_2:
+  SELECTION_4:
     ContextInfo:
     - '*get-localgroup*'
     - '*Get-LocalGroupMember*'
-  SELECTION_3:
-    Payload: '*Get-WMIObject*'
-  SELECTION_4:
-    Payload: '*Win32_Group*'
   SELECTION_5:
-    ContextInfo: '*Get-WMIObject*'
+    Payload: '*Get-WMIObject*'
   SELECTION_6:
+    Payload: '*Win32_Group*'
+  SELECTION_7:
+    ContextInfo: '*Get-WMIObject*'
+  SELECTION_8:
     ContextInfo: '*Win32_Group*'
-  condition: (SELECTION_1 or SELECTION_2 or (SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
+    and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
-- administrator script
+- Administrator script
 id: cef24b90-dddc-4ae1-a09a-8764872f69fc
 level: low
 logsource:

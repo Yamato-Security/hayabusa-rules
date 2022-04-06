@@ -7,17 +7,21 @@ description: Detects the use of various web request POST or PUT methods (includi
   aliases) via Windows PowerShell command
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*Invoke-WebRequest*'
     - '*iwr *'
-  SELECTION_2:
+  SELECTION_4:
     ScriptBlockText: '*-Method *'
-  SELECTION_3:
+  SELECTION_5:
   - ' Put '
   - ' Post '
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and SELECTION_4 and (SELECTION_5))
 falsepositives:
-- legitim script
+- Legitimate script
 id: d2e3f2f6-7e09-4bf2-bc5d-90186809e7fb
 level: medium
 logsource:

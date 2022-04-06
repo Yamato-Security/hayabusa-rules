@@ -6,10 +6,12 @@ date: 2020/10/15
 description: Detects Obfuscated use of Environment Variables to execute PowerShell
 detection:
   SELECTION_1:
-    EventID: 4697
+    Channel: Security
   SELECTION_2:
+    EventID: 4697
+  SELECTION_3:
     ServiceFileName|re: .*cmd.{0,5}(?:/c|/r)(?:\s|)"set\s[a-zA-Z]{3,6}.*(?:\{\d\}){1,}\\"\s+?\-f(?:.*\)){1,}.*"
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: dcf2db1f-f091-425b-a821-c05875b8925a

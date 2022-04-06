@@ -8,10 +8,14 @@ description: Detects when when a mounted share is removed. Adversaries may remov
   operation
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*Remove-SmbShare*'
     - '*Remove-FileShare*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Administrators or Power users may remove their shares via cmd line
 id: 66a4d409-451b-4151-94f4-a55d559c49b0

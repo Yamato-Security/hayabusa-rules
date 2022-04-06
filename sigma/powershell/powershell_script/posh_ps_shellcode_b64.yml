@@ -6,12 +6,16 @@ date: 2018/11/17
 description: Detects Base64 encoded Shellcode
 detection:
   SELECTION_1:
-    ScriptBlockText: '*AAAAYInlM*'
+    EventID: 4104
   SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*AAAAYInlM*'
+  SELECTION_4:
     ScriptBlockText:
     - '*OiCAAAAYInlM*'
     - '*OiJAAAAYInlM*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 16b37b70-6fcf-4814-a092-c36bd3aafcbd

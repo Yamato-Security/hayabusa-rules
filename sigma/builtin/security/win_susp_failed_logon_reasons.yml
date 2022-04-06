@@ -7,10 +7,12 @@ description: This method uses uncommon error codes on failed logons to determine
   activity and tampering with accounts that have been disabled or somehow restricted.
 detection:
   SELECTION_1:
-    EventID: 4625
+    Channel: Security
   SELECTION_2:
-    EventID: 4776
+    EventID: 4625
   SELECTION_3:
+    EventID: 4776
+  SELECTION_4:
     Status:
     - '0xC0000072'
     - '0xC000006F'
@@ -18,9 +20,10 @@ detection:
     - '0xC0000413'
     - '0xC000018C'
     - '0xC000015B'
-  SELECTION_4:
+  SELECTION_5:
     SubjectUserSid: S-1-0-0
-  condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and  not (SELECTION_4))
+  condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
 - User using a disabled account
 id: 9eb99343-d336-4020-a3cd-67f3819e68ee

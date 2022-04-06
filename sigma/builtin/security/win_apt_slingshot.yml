@@ -7,10 +7,12 @@ description: Detects the deactivation and disabling of the Scheduled defragmenta
   task as seen by Slingshot APT group
 detection:
   SELECTION_1:
-    EventID: 4701
+    Channel: Security
   SELECTION_2:
+    EventID: 4701
+  SELECTION_3:
     TaskName: \Microsoft\Windows\Defrag\ScheduledDefrag
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: c5a178bf-9cfb-4340-b584-e4df39b6a3e7

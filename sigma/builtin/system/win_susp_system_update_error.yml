@@ -6,21 +6,23 @@ date: 2021/12/04
 description: Windows Update get some error Check if need a 0-days KB
 detection:
   SELECTION_1:
-    Provider_Name: Microsoft-Windows-WindowsUpdateClient
+    Channel: System
   SELECTION_2:
-    EventID: 16
+    Provider_Name: Microsoft-Windows-WindowsUpdateClient
   SELECTION_3:
-    EventID: 20
+    EventID: 16
   SELECTION_4:
-    EventID: 24
+    EventID: 20
   SELECTION_5:
-    EventID: 213
+    EventID: 24
   SELECTION_6:
+    EventID: 213
+  SELECTION_7:
     EventID: 217
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5
-    or SELECTION_6))
+  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4 or SELECTION_5
+    or SELECTION_6 or SELECTION_7))
 falsepositives:
-- unknown
+- Unknown
 id: 13cfeb75-9e33-4d04-b0f7-ab8faaa95a59
 level: low
 logsource:

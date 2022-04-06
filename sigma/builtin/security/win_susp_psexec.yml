@@ -8,19 +8,22 @@ description: detects execution of psexec or paexec with renamed service name, th
   uses a different psexec client other than sysinternal one
 detection:
   SELECTION_1:
-    EventID: 5145
+    Channel: Security
   SELECTION_2:
-    ShareName: \\\*\IPC$
+    EventID: 5145
   SELECTION_3:
+    ShareName: \\\*\IPC$
+  SELECTION_4:
     RelativeTargetName:
     - '*-stdin'
     - '*-stdout'
     - '*-stderr'
-  SELECTION_4:
+  SELECTION_5:
     RelativeTargetName: PSEXESVC*
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
-- nothing observed so far
+- Unknown
 id: c462f537-a1e3-41a6-b5fc-b2c2cef9bf82
 level: high
 logsource:

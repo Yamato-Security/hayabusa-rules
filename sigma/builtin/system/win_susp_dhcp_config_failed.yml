@@ -7,14 +7,16 @@ description: This rule detects a DHCP server error in which a specified Callout 
   (in registry) could not be loaded
 detection:
   SELECTION_1:
-    EventID: 1031
+    Channel: System
   SELECTION_2:
-    EventID: 1032
+    EventID: 1031
   SELECTION_3:
-    EventID: 1034
+    EventID: 1032
   SELECTION_4:
+    EventID: 1034
+  SELECTION_5:
     Provider_Name: Microsoft-Windows-DHCP-Server
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
 id: 75edd3fd-7146-48e5-9848-3013d7f0282c

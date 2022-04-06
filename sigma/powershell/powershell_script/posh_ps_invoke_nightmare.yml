@@ -6,8 +6,12 @@ date: 2021/08/09
 description: Detects Commandlet name for PrintNightmare exploitation.
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText: '*Invoke-Nightmare*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 6d3f1399-a81c-4409-aff3-1ecfe9330baf
