@@ -5,14 +5,18 @@ date: 2022/01/30
 description: Detects the creation of log files during a TeamViewer remote session
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename:
     - '*\TeamViewer\RemotePrinting\tvprint.db'
     - '*\TeamViewer\TVNetwork.log'
-  SELECTION_2:
+  SELECTION_4:
     TargetFilename: '*\TeamViewer*'
-  SELECTION_3:
+  SELECTION_5:
     TargetFilename: '*_Logfile.log*'
-  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - Legitimate uses of TeamViewer in an organisation
 id: 162ab1e4-6874-4564-853c-53ec3ab8be01

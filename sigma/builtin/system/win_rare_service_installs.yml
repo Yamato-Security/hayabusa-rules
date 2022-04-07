@@ -1,5 +1,6 @@
 
-title: Rare Service Installs
+title: Rare Service Installations
+ruletype: Sigma
 author: Florian Roth
 date: 2017/03/08
 description: Detects rare service installs that only appear a few times per time frame
@@ -14,6 +15,7 @@ detection:
     EventID: 7045
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3) | count() by ServiceName
     < 5
+  timeframe: 7d
 falsepositives:
 - Software installation
 - Software updates
@@ -22,7 +24,7 @@ level: low
 logsource:
   product: windows
   service: system
-modified: 2021/11/30
+modified: 2022/03/21
 status: test
 tags:
 - attack.persistence

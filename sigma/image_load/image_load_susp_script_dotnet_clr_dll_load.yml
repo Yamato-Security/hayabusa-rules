@@ -5,18 +5,22 @@ date: 2020/10/14
 description: Detects CLR DLL being loaded by an scripting applications
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     Image:
     - '*\wscript.exe'
     - '*\cscript.exe'
     - '*\mshta.exe'
-  SELECTION_2:
+  SELECTION_4:
     ImageLoaded:
     - '*\clr.dll'
     - '*\mscoree.dll'
     - '*\mscorlib.dll'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- unknown
+- Unknown
 id: 4508a70e-97ef-4300-b62b-ff27992990ea
 level: high
 logsource:

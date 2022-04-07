@@ -5,6 +5,12 @@ date: 2017/11/06
 description: Detects the creation of a named pipe used by known APT malware
 detection:
   SELECTION_1:
+    EventID: 17
+  SELECTION_2:
+    EventID: 18
+  SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
     PipeName:
     - \isapi_http
     - \isapi_dg
@@ -32,7 +38,8 @@ detection:
     - \bc367
     - \bc31a7
     - \testPipe
-  condition: SELECTION_1
+    - \dce_3d
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: fe3ac066-98bb-432a-b1e7-a5229cb39d4a
@@ -46,7 +53,7 @@ logsource:
     https://github.com/olafhartong/sysmon-modular. How to test detection? You can
     check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575
   product: windows
-modified: 2021/10/30
+modified: 2022/03/15
 references:
 - https://securelist.com/wild-neutron-economic-espionage-threat-actor-returns-with-new-tricks/71275/
 - https://securelist.com/faq-the-projectsauron-apt/75533/
@@ -59,6 +66,7 @@ references:
 - https://us-cert.cisa.gov/ncas/analysis-reports/ar19-304a
 - https://download.bitdefender.com/resources/files/News/CaseStudies/study/115/Bitdefender-Whitepaper-PAC-A4-en-EN1.pdf
 - https://unit42.paloaltonetworks.com/emissary-panda-attacks-middle-east-government-sharepoint-servers/
+- https://thedfirreport.com/2022/02/21/qbot-and-zerologon-lead-to-full-domain-compromise/
 status: experimental
 tags:
 - attack.defense_evasion

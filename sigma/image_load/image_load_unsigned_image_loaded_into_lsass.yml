@@ -5,10 +5,14 @@ date: 2019/10/22
 description: Loading unsigned image (DLL, EXE) into LSASS process
 detection:
   SELECTION_1:
-    Image: '*\lsass.exe'
+    EventID: 7
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\lsass.exe'
+  SELECTION_4:
     Signed: 'false'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Valid user connecting using RDP
 id: 857c8db3-c89b-42fb-882b-f681c7cf4da2

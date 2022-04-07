@@ -8,23 +8,27 @@ description: "Adversaries may steal data by exfiltrating it over an un-encrypted
   \ server. \n"
 detection:
   SELECTION_1:
-    DestinationPort: 25
+    EventID: 3
   SELECTION_2:
-    DestinationPort: 587
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    DestinationPort: 465
+    DestinationPort: 25
   SELECTION_4:
-    DestinationPort: 2525
+    DestinationPort: 587
   SELECTION_5:
-    Initiated: 'true'
+    DestinationPort: 465
   SELECTION_6:
+    DestinationPort: 2525
+  SELECTION_7:
+    Initiated: 'true'
+  SELECTION_8:
     Image:
     - '*\thunderbird.exe'
     - '*\outlook.exe'
-  SELECTION_7:
+  SELECTION_9:
     Image: C:\Program Files\Microsoft\Exchange Server\\*
-  condition: (((SELECTION_1 or SELECTION_2 or SELECTION_3 or SELECTION_4) and SELECTION_5)
-    and  not ((SELECTION_6) or (SELECTION_7)))
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or SELECTION_5
+    or SELECTION_6) and SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9)))
 falsepositives:
 - Other SMTP tools
 id: 9976fa64-2804-423c-8a5b-646ade840773

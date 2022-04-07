@@ -1,26 +1,38 @@
 
 title: Suspicious GrantedAccess Flags on LSASS Access
+ruletype: Sigma
 author: Florian Roth
 date: 2021/11/22
 description: Detects process access to LSASS memory with suspicious access flags
 detection:
   SELECTION_1:
-    TargetImage: '*\lsass.exe'
+    EventID: 10
   SELECTION_10:
-    SourceImage: C:\WINDOWS\system32\MRT.exe
+    SourceImage:
+    - C:\Progra Files\\*
+    - C:\Progra Files (x86)\\*
   SELECTION_11:
-    GrantedAccess: '0x1418'
+    SourceImage:
+    - '*Antivirus*'
   SELECTION_12:
-    SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
+    SourceImage: C:\WINDOWS\system32\MRT.exe
   SELECTION_13:
-    SourceImage: C:\Windows\Temp\asgard2-agent\\*
+    GrantedAccess: '0x1418'
   SELECTION_14:
+    SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
+  SELECTION_15:
+    SourceImage: C:\Windows\Temp\asgard2-agent\\*
+  SELECTION_16:
     SourceImage:
     - '*\thor64.exe'
     - '*\thor.exe'
-  SELECTION_15:
+  SELECTION_17:
     GrantedAccess: '0x1fffff'
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetImage: '*\lsass.exe'
+  SELECTION_4:
     GrantedAccess:
     - '*30'
     - '*50'
@@ -46,7 +58,7 @@ detection:
     - '*DA'
     - '*FA'
     - '*0x14C2'
-  SELECTION_3:
+  SELECTION_5:
     SourceImage:
     - C:\WINDOWS\system32\taskmgr.exe
     - C:\Program Files\Malwarebytes\Anti-Malware\MBAMService.exe
@@ -59,25 +71,18 @@ detection:
     - C:\Windows\System32\lsass.exe
     - C:\WINDOWS\System32\perfmon.exe
     - C:\Windows\System32\MRT.exe
-  SELECTION_4:
-    SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
-  SELECTION_5:
-    SourceImage: '*\MsMpEng.exe'
   SELECTION_6:
-    SourceImage: C:\ProgramData\VMware\VMware Tools\\*
+    SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
   SELECTION_7:
-    SourceImage: '*\vmtoolsd.exe'
+    SourceImage: '*\MsMpEng.exe'
   SELECTION_8:
-    SourceImage:
-    - C:\Progra Files\\*
-    - C:\Progra Files (x86)\\*
+    SourceImage: C:\ProgramData\VMware\VMware Tools\\*
   SELECTION_9:
-    SourceImage:
-    - '*Antivirus*'
-  condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4
-    and SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-    or (SELECTION_10 and SELECTION_11) or (SELECTION_12) or (SELECTION_13 and SELECTION_14
-    and SELECTION_15)))
+    SourceImage: '*\vmtoolsd.exe'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
+    or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
+    or (SELECTION_15 and SELECTION_16 and SELECTION_17)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason
 fields:

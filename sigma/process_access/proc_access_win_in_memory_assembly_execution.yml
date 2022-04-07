@@ -16,6 +16,18 @@ detection:
   SELECTION_1:
     CallTrace: '*C:\WINDOWS\SYSTEM32\ntdll.dll+*'
   SELECTION_10:
+    CallTrace: '*UNKNOWN*'
+  SELECTION_11:
+    GrantedAccess:
+    - '0x1F0FFF'
+    - '0x1F1FFF'
+    - '0x143A'
+    - '0x1410'
+    - '0x1010'
+    - '0x1F2FFF'
+    - '0x1F3FFF'
+    - '0x1FFFFF'
+  SELECTION_12:
     SourceImage:
     - '*\Windows\System32\sdiagnhost.exe'
     - '*\procexp64.exe'
@@ -29,7 +41,7 @@ detection:
     - '*\RuntimeBroker.exe'
     - '*\backgroundTaskHost.exe'
     - '*\GitHubDesktop.exe'
-  SELECTION_11:
+  SELECTION_13:
     SourceImage:
     - C:\Program Files (x86)\\*
     - C:\Program Files\\*
@@ -39,7 +51,7 @@ detection:
     - C:\Windows\Microsoft.NET\Framework*
     - C:\WINDOWS\System32\DriverStore\\*
     - C:\Windows\System32\WindowsPowerShell\\*
-  SELECTION_12:
+  SELECTION_14:
     SourceImage:
     - C:\Users\\*\AppData\Local\Programs\Microsoft VS Code\Code.exe
     - C:\WINDOWS\system32\taskhostw.exe
@@ -47,63 +59,56 @@ detection:
     - C:\WINDOWS\system32\NhNotifSys.exe
     - C:\Windows\ImmersiveControlPanel\SystemSettings.exe
     - C:\Windows\explorer.exe
-  SELECTION_13:
-    TargetImage: C:\Windows\System32\RuntimeBroker.exe
-  SELECTION_14:
-    TargetImage: '*\Microsoft VS Code\Code.exe'
   SELECTION_15:
-    CallTrace: '*|C:\WINDOWS\System32\RPCRT4.dll+*'
+    TargetImage: C:\Windows\System32\RuntimeBroker.exe
   SELECTION_16:
+    TargetImage: '*\Microsoft VS Code\Code.exe'
+  SELECTION_17:
+    CallTrace: '*|C:\WINDOWS\System32\RPCRT4.dll+*'
+  SELECTION_18:
     SourceImage:
     - C:\WINDOWS\Explorer.EXE
-  SELECTION_17:
+  SELECTION_19:
     TargetImage:
     - C:\WINDOWS\system32\backgroundTaskHost.exe
     - C:\WINDOWS\explorer.exe
-  SELECTION_18:
-    SourceImage: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
-  SELECTION_19:
-    SourceImage: '*\MsMpEng.exe'
   SELECTION_2:
-    CallTrace: '*|C:\WINDOWS\System32\KERNELBASE.dll+*'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_20:
-    SourceImage: '*\eclipse.exe'
+    SourceImage: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
   SELECTION_21:
+    SourceImage: '*\MsMpEng.exe'
+  SELECTION_22:
+    SourceImage: '*\eclipse.exe'
+  SELECTION_23:
     CallTrace:
     - '*\jre\bin\java.dll*'
     - '*|C:\Windows\SYSTEM32\windows.storage.dll+*'
     - '*\configuration\org.eclipse.osgi\\*'
-  SELECTION_22:
+  SELECTION_24:
     SourceImage: C:\Windows\system32\OpenWith.exe
-  SELECTION_23:
+  SELECTION_25:
     TargetImage: C:\Windows\Explorer.EXE
   SELECTION_3:
-    CallTrace: '*|UNKNOWN(*'
+    CallTrace: '*C:\WINDOWS\SYSTEM32\ntdll.dll+*'
   SELECTION_4:
-    CallTrace: '*)*'
+    CallTrace: '*|C:\WINDOWS\System32\KERNELBASE.dll+*'
   SELECTION_5:
-    CallTrace: '*UNKNOWN(*'
+    CallTrace: '*|UNKNOWN(*'
   SELECTION_6:
-    CallTrace: '*)|UNKNOWN(*'
+    CallTrace: '*)*'
   SELECTION_7:
-    CallTrace: '*)'
+    CallTrace: '*UNKNOWN(*'
   SELECTION_8:
-    CallTrace: '*UNKNOWN*'
+    CallTrace: '*)|UNKNOWN(*'
   SELECTION_9:
-    GrantedAccess:
-    - '0x1F0FFF'
-    - '0x1F1FFF'
-    - '0x143A'
-    - '0x1410'
-    - '0x1010'
-    - '0x1F2FFF'
-    - '0x1F3FFF'
-    - '0x1FFFFF'
-  condition: ((((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6 and SELECTION_7)) or (SELECTION_8 and SELECTION_9)) and  not ((SELECTION_10
-    or SELECTION_11 or SELECTION_12 or SELECTION_13 or SELECTION_14 or SELECTION_15)
-    or (SELECTION_16 and SELECTION_17) or (SELECTION_18 and SELECTION_19) or (SELECTION_20
-    and SELECTION_21) or (SELECTION_22 and SELECTION_23)))
+    CallTrace: '*)'
+  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4 and
+    SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9))
+    or (SELECTION_10 and SELECTION_11)) and  not ((SELECTION_12 or SELECTION_13 or
+    SELECTION_14 or SELECTION_15 or SELECTION_16 or SELECTION_17) or (SELECTION_18
+    and SELECTION_19) or (SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23)
+    or (SELECTION_24 and SELECTION_25)))
 falsepositives:
 - SysInternals Process Explorer
 fields:
@@ -113,11 +118,11 @@ fields:
 - TargetImage
 - CallTrace
 id: 5f113a8f-8b61-41ca-b90f-d374fa7e4a39
-level: medium
+level: low
 logsource:
   category: process_access
   product: windows
-modified: 2022/03/04
+modified: 2022/03/16
 references:
 - https://azure.microsoft.com/en-ca/blog/detecting-in-memory-attacks-with-sysmon-and-azure-security-center/
 status: experimental

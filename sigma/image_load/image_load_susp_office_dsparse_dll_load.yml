@@ -5,15 +5,19 @@ date: 2020/02/19
 description: Detects DSParse DLL being loaded by an Office Product
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     Image:
     - '*\winword.exe'
     - '*\powerpnt.exe'
     - '*\excel.exe'
     - '*\outlook.exe'
-  SELECTION_2:
+  SELECTION_4:
     ImageLoaded:
     - '*\dsparse.dll*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Alerts on legitimate macro usage as well, will need to filter as appropriate
 id: a2a3b925-7bb0-433b-b508-db9003263cc4

@@ -6,10 +6,14 @@ description: Detects the usage of ADSI (LDAP) operations by tools. This may also
   tools like LDAPFragger.
 detection:
   SELECTION_1:
-    TargetFilename: '*\Local\Microsoft\Windows\SchCache\\*'
+    EventID: 11
   SELECTION_2:
-    TargetFilename: '*.sch'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    TargetFilename: '*\Local\Microsoft\Windows\SchCache\\*'
+  SELECTION_4:
+    TargetFilename: '*.sch'
+  SELECTION_5:
     Image:
     - C:\windows\system32\svchost.exe
     - C:\windows\system32\dllhost.exe
@@ -18,7 +22,10 @@ detection:
     - C:\Windows\CCM\CcmExec.exe
     - C:\Program Files\Cylance\Desktop\CylanceSvc.exe
     - C:\Windows\System32\wbem\WmiPrvSE.exe
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+  SELECTION_6:
+    Image: C:\Windows\ccmsetup\autoupgrade\ccmsetup*
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - Other legimate tools, which do ADSI (LDAP) operations, e.g. any remoting activity
   by MMC, Powershell, Windows etc.
@@ -27,7 +34,7 @@ level: high
 logsource:
   category: file_event
   product: windows
-modified: 2022/02/21
+modified: 2022/03/26
 references:
 - https://medium.com/@ivecodoe/detecting-ldapfragger-a-newly-released-cobalt-strike-beacon-using-ldap-for-c2-communication-c274a7f00961
 - https://blog.fox-it.com/2020/03/19/ldapfragger-command-and-control-over-ldap-attributes/

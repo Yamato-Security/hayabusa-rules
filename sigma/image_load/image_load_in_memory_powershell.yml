@@ -6,10 +6,14 @@ description: Detects loading of essential DLL used by PowerShell, but not by the
   powershell.exe. Detects meterpreter's "load powershell" extension.
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded:
     - '*\System.Management.Automation.Dll'
     - '*\System.Management.Automation.ni.Dll'
-  SELECTION_2:
+  SELECTION_4:
     Image:
     - '*\powershell.exe'
     - '*\powershell_ise.exe'
@@ -28,18 +32,18 @@ detection:
     - '*\ServiceHub.SettingsHost.exe'
     - '*\ServiceHub.Host.CLR.x86.exe'
     - '*\Citrix\ConfigSync\ConfigSyncRun.exe'
-  SELECTION_3:
+  SELECTION_5:
     Image:
     - C:\Program Files (x86)\Microsoft Visual Studio\\*
     - C:\Program Files\Microsoft Visual Studio\\*
-  SELECTION_4:
+  SELECTION_6:
     Image: C:\Windows\Temp\asgard2-agent\\*
-  SELECTION_5:
+  SELECTION_7:
     Image:
     - '*\thor64.exe'
     - '*\thor.exe'
-  condition: (SELECTION_1 and  not ((SELECTION_2 or SELECTION_3) or (SELECTION_4 and
-    SELECTION_5)))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+    or SELECTION_5) or (SELECTION_6 and SELECTION_7)))
 enrichment:
 - EN_0001_cache_sysmon_event_id_1_info
 - EN_0003_enrich_other_sysmon_events_with_event_id_1_data

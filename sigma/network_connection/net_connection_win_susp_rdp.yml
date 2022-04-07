@@ -6,10 +6,14 @@ description: Detects Non-Standard Tools Connecting to TCP port 3389 indicating p
   lateral movement
 detection:
   SELECTION_1:
-    DestinationPort: 3389
+    EventID: 3
   SELECTION_2:
-    Initiated: 'true'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    DestinationPort: 3389
+  SELECTION_4:
+    Initiated: 'true'
+  SELECTION_5:
     Image:
     - '*\mstsc.exe'
     - '*\RTSApp.exe'
@@ -32,9 +36,10 @@ detection:
     - '*\thor.exe'
     - '*\thor64.exe'
     - '*\Passwordstate.exe'
-  SELECTION_4:
+  SELECTION_6:
     Image: C:\Program Files\SplunkUniversalForwarder\bin\\*
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3 or SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5 or SELECTION_6))
 falsepositives:
 - Other Remote Desktop RDP tools
 - domain controller using dns.exe

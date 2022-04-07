@@ -6,6 +6,10 @@ description: Detects DNS queries for ip lookup services such as api.ipify.org no
   originating from a browser process.
 detection:
   SELECTION_1:
+    EventID: 22
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     QueryName:
     - canireachthe.net
     - ipv4.icanhazip.com
@@ -22,7 +26,7 @@ detection:
     - ipinfo.io
     - ipv4bot.whatismyipaddress.com
     - freegeoip.app
-  SELECTION_2:
+  SELECTION_4:
     Image:
     - '*\chrome.exe'
     - '*\iexplore.exe'
@@ -31,7 +35,7 @@ detection:
     - '*\opera.exe'
     - '*\msedge.exe'
     - '*\vivaldi.exe'
-  condition: (SELECTION_1 and  not (SELECTION_2))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Legitimate usage of ip lookup services such as ipify API
 id: ec82e2a5-81ea-4211-a1f8-37a0286df2c2

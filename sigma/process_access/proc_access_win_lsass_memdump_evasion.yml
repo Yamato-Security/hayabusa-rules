@@ -7,13 +7,17 @@ description: Detects a possible process memory dump that uses the white-listed f
   Defender interference
 detection:
   SELECTION_1:
-    TargetImage: '*\lsass.exe'
+    EventID: 10
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetImage: '*\lsass.exe'
+  SELECTION_4:
     SourceImage:
     - '*\TrolleyExpress.exe'
     - '*\ProcessDump.exe'
     - '*\dump64.exe'
-  SELECTION_3:
+  SELECTION_5:
     GrantedAccess:
     - '*10'
     - '*30'
@@ -41,7 +45,7 @@ detection:
     - '*FA'
     - '*0x14C2'
     - '*FF'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unlikely, since these tools shouldn't access lsass.exe at all
 id: 4be8b654-0c01-4c9d-a10c-6b28467fc651

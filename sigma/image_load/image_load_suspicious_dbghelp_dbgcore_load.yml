@@ -9,10 +9,14 @@ description: Detects the load of dbghelp/dbgcore DLL (used to make memory dumps)
   and transfer it over the network back to the attacker's machine.
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded:
     - '*\dbghelp.dll'
     - '*\dbgcore.dll'
-  SELECTION_2:
+  SELECTION_4:
     Image:
     - '*\msbuild.exe'
     - '*\cmd.exe'
@@ -32,23 +36,28 @@ detection:
     - '*\regsvcs.exe'
     - '*\sc.exe'
     - '*\scriptrunner.exe'
-  SELECTION_3:
-    Signed: 'FALSE'
-  SELECTION_4:
-    Image: '*Visual Studio*'
   SELECTION_5:
+    ImageLoaded:
+    - '*\dbghelp.dll'
+    - '*\dbgcore.dll'
+  SELECTION_6:
+    Signed: 'FALSE'
+  SELECTION_7:
+    Image: '*Visual Studio*'
+  SELECTION_8:
     CommandLine:
     - '*-k LocalSystemNetworkRestricted*'
     - '*-k UnistackSvcGroup -s WpnUserService*'
-  SELECTION_6:
+  SELECTION_9:
     CommandLine:
     - C:\WINDOWS\winsxs\*\TiWorker.exe -Embedding
     - C:\Windows\system32\svchost.exe -k netsvcs -p -s wuauserv
     - C:\Windows\System32\svchost.exe -k WerSvcGroup
-  condition: (((SELECTION_1 and (SELECTION_2 or SELECTION_3)) and  not (SELECTION_4
-    or SELECTION_5)) and  not (SELECTION_6))
+  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6)) and  not (SELECTION_7 or SELECTION_8)) and  not
+    (SELECTION_9))
 falsepositives:
-- Penetration tests
+- Unknown
 fields:
 - ComputerName
 - User

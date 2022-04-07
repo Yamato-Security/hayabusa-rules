@@ -1,0 +1,47 @@
+
+title: Dism Remove Online Package
+author: frack113
+date: 2022/01/16
+description: Deployment Image Servicing and Management tool. DISM is used to enumerate,
+  install, uninstall, configure, and update features and packages in Windows images
+detection:
+  SELECTION_1:
+    Image: '*\DismHost.exe'
+  SELECTION_10:
+    CommandLine: '*/Disable-Feature*'
+  SELECTION_11:
+    CommandLine: '*/FeatureName:*'
+  SELECTION_12:
+    CommandLine: '*/Remove*'
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\DismHost.exe'
+  SELECTION_4:
+    ParentCommandLine: '*/online*'
+  SELECTION_5:
+    ParentCommandLine: '*/Disable-Feature*'
+  SELECTION_6:
+    ParentCommandLine: '*/FeatureName:*'
+  SELECTION_7:
+    ParentCommandLine: '*/Remove*'
+  SELECTION_8:
+    Image: '*\Dism.exe'
+  SELECTION_9:
+    CommandLine: '*/online*'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+    SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9 and
+    SELECTION_10 and SELECTION_11 and SELECTION_12)))
+falsepositives:
+- Legitim script
+id: 43e32da2-fdd0-4156-90de-50dfd62636f9
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md#atomic-test-26---disable-windows-defender-with-dism
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001

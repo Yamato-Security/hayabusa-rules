@@ -7,12 +7,16 @@ description: Detects threat actors proxy executing code and bypassing applicatio
   an XSL file (i.e js, vbs, etc).
 detection:
   SELECTION_1:
-    Image: '*\wmic.exe'
+    EventID: 7
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\wmic.exe'
+  SELECTION_4:
     ImageLoaded:
     - '*\jscript.dll'
     - '*\vbscript.dll'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Apparently, wmic os get lastboottuptime loads vbscript.dll
 id: 06ce37c2-61ab-4f05-9ff5-b1a96d18ae32

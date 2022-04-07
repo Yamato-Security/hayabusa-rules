@@ -1,0 +1,38 @@
+
+title: Suspicious Netsh Discovery Command
+author: frack113
+date: 2021/12/07
+description: Adversaries may look for details about the network configuration and
+  settings of systems they access or through information discovery of remote systems
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    CommandLine: '*netsh *'
+  SELECTION_4:
+    CommandLine: '*advfirewall *'
+  SELECTION_5:
+    CommandLine: '*firewall *'
+  SELECTION_6:
+    CommandLine: '*show *'
+  SELECTION_7:
+    CommandLine: '*rule *'
+  SELECTION_8:
+    CommandLine: '*name=all*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)
+falsepositives:
+- Administrator, hotline ask to user
+id: 0e4164da-94bc-450d-a7be-a4b176179f1f
+level: low
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1016/T1016.md#atomic-test-2---list-windows-firewall-rules
+status: experimental
+tags:
+- attack.discovery
+- attack.t1016

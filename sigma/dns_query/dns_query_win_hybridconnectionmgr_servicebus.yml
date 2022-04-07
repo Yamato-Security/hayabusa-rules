@@ -6,10 +6,14 @@ description: Detects Azure Hybrid Connection Manager services querying the Azure
   bus service
 detection:
   SELECTION_1:
-    QueryName: '*servicebus.windows.net*'
+    EventID: 22
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    QueryName: '*servicebus.windows.net*'
+  SELECTION_4:
     Image: '*HybridConnectionManager*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate use of Azure Hybrid Connection Manager and the Azure Service Bus service
 id: 7bd3902d-8b8b-4dd4-838a-c6862d40150d

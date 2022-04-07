@@ -6,12 +6,16 @@ description: Detects a program that invoked suspicious DNS queries known from Co
   Strike beacons
 detection:
   SELECTION_1:
+    EventID: 22
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     QueryName:
     - aaa.stage.*
     - post.1*
-  SELECTION_2:
+  SELECTION_4:
     QueryName: '*.stage.123456.*'
-  condition: (SELECTION_1 or SELECTION_2)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Unknown
 fields:

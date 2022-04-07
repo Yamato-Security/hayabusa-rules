@@ -5,6 +5,10 @@ date: 2021/11/20
 description: Detects a Windows executable that writes files to suspicious folders
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     Image:
     - '*\cmd.exe'
     - '*\powershell.exe'
@@ -14,11 +18,11 @@ detection:
     - '*\bash.exe'
     - '*\msbuild.exe'
     - '*\certutil.exe'
-  SELECTION_2:
+  SELECTION_4:
     TargetFilename:
     - '*C:\Users\Public*'
     - '*C:\PerfLogs*'
-  SELECTION_3:
+  SELECTION_5:
     Image:
     - '*\schtasks.exe'
     - '*\wmic.exe'
@@ -26,13 +30,14 @@ detection:
     - '*\forfiles.exe'
     - '*\scriptrunner.exe'
     - '*\certutil.exe'
-  SELECTION_4:
+  SELECTION_6:
     TargetFilename:
     - '*C:\Users\Public*'
     - '*C:\PerfLogs*'
     - '*\AppData\\*'
     - '*C:\Windows\Temp*'
-  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Unknown
 fields:

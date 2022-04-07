@@ -5,6 +5,10 @@ date: 2022/01/23
 description: A office file with macro is created from a commandline or a script
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename:
     - '*.docm'
     - '*.dotm'
@@ -13,15 +17,15 @@ detection:
     - '*.potm'
     - '*.pptm'
     - '*.pptx'
-  SELECTION_2:
+  SELECTION_4:
     Image:
     - '*\cmd.exe'
     - '*\powershell.exe'
-  SELECTION_3:
+  SELECTION_5:
     ParentImage:
     - '*\cmd.exe'
     - '*\powershell.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unknown
 id: b1c50487-1967-4315-a026-6491686d860e

@@ -5,19 +5,23 @@ date: 2020/09/09
 description: Detects LSASS process access by LaZagne for credential dumping.
 detection:
   SELECTION_1:
-    TargetImage: '*\lsass.exe'
+    EventID: 10
   SELECTION_2:
-    CallTrace: '*C:\\Windows\\SYSTEM32\\ntdll.dll+*'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    CallTrace: '*|C:\\Windows\\System32\\KERNELBASE.dll+*'
+    TargetImage: '*\lsass.exe'
   SELECTION_4:
-    CallTrace: '*_ctypes.pyd+*'
+    CallTrace: '*C:\\Windows\\SYSTEM32\\ntdll.dll+*'
   SELECTION_5:
-    CallTrace: '*python27.dll+*'
+    CallTrace: '*|C:\\Windows\\System32\\KERNELBASE.dll+*'
   SELECTION_6:
+    CallTrace: '*_ctypes.pyd+*'
+  SELECTION_7:
+    CallTrace: '*python27.dll+*'
+  SELECTION_8:
     GrantedAccess: '0x1FFFFF'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Unknown
 id: 4b9a8556-99c4-470b-a40c-9c8d02c77ed0

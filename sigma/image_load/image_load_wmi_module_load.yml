@@ -5,6 +5,10 @@ date: 2019/08/10
 description: Detects non wmiprvse loading WMI modules
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded:
     - '*\wmiclnt.dll'
     - '*\WmiApRpl.dll'
@@ -15,7 +19,7 @@ detection:
     - '*\WMINet_Utils.dll'
     - '*\wbemsvc.dll'
     - '*\fastprox.dll'
-  SELECTION_2:
+  SELECTION_4:
     Image:
     - '*\WmiPrvSE.exe'
     - '*\WmiApSrv.exe'
@@ -40,11 +44,12 @@ detection:
     - '*\MsMpEng.exe'
     - '*\thor64.exe'
     - '*\thor.exe'
-  SELECTION_3:
+  SELECTION_5:
     Image:
     - C:\Program Files\\*
     - C:\Program Files (x86)\\*
-  condition: ((SELECTION_1 and  not (SELECTION_2)) and  not (SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not (SELECTION_4))
+    and  not (SELECTION_5))
 falsepositives:
 - Unknown
 fields:

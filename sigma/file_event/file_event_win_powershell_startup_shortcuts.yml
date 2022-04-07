@@ -11,12 +11,16 @@ description: Attempts to detect PowerShell writing startup shortcuts. This proce
   of a malicious DLL"
 detection:
   SELECTION_1:
-    Image: '*\powershell.exe'
+    EventID: 11
   SELECTION_2:
-    TargetFilename: '*\start menu\programs\startup\\*'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    Image: '*\powershell.exe'
+  SELECTION_4:
+    TargetFilename: '*\start menu\programs\startup\\*'
+  SELECTION_5:
     TargetFilename: '*.lnk'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 - Depending on your environment accepted applications may leverage this at times.

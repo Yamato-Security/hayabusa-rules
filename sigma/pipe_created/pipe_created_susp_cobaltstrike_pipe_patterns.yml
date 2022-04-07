@@ -6,6 +6,12 @@ description: Detects the creation of a named pipe with a pattern found in Cobalt
   malleable C2 profiles
 detection:
   SELECTION_1:
+    EventID: 17
+  SELECTION_2:
+    EventID: 18
+  SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
     PipeName:
     - \mojo.5688.8052.183894939787088877*
     - \mojo.5688.8052.35780273329370473*
@@ -27,15 +33,15 @@ detection:
     - \f4c3*
     - \fullduplex_*
     - \rpc_*
-  SELECTION_2:
+  SELECTION_5:
     PipeName:
     - \demoagent_11
     - \demoagent_22
-  SELECTION_3:
+  SELECTION_6:
     PipeName: \Winsock2\CatalogChangeListener-*
-  SELECTION_4:
+  SELECTION_7:
     PipeName: '*-0,'
-  SELECTION_5:
+  SELECTION_8:
     PipeName:
     - \wkssvc
     - \spoolss
@@ -44,8 +50,8 @@ detection:
     - \SearchTextHarvester
     - \PGMessagePipe
     - \MsFteWds
-  condition: (((SELECTION_1 or SELECTION_2) or (SELECTION_3 and SELECTION_4)) and  not
-    (SELECTION_5))
+  condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and ((SELECTION_4 or
+    SELECTION_5) or (SELECTION_6 and SELECTION_7)) and  not (SELECTION_8))
 falsepositives:
 - Chrome instances using the exactly same name pipe named mojo.something
 id: 85adeb13-4fc9-4e68-8a4a-c7cb2c336eb7

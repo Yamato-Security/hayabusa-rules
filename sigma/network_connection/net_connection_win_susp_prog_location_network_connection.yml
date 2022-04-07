@@ -6,6 +6,10 @@ description: Detects programs with network connections running in suspicious fil
   system locations
 detection:
   SELECTION_1:
+    EventID: 3
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     Image:
     - '*\Users\All Users\\*'
     - '*\Users\Default\\*'
@@ -16,15 +20,15 @@ detection:
     - '*\Windows\Fonts\\*'
     - '*\Windows\IME\\*'
     - '*\Windows\addins\\*'
-  SELECTION_2:
+  SELECTION_4:
     Image:
     - '*\$Recycle.bin'
-  SELECTION_3:
+  SELECTION_5:
     Image:
     - C:\Perflogs\\*
-  condition: (SELECTION_1 or SELECTION_2 or SELECTION_3)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
-- unknown
+- Unknown
 id: 7b434893-c57d-4f41-908d-6a17bf1ae98f
 level: high
 logsource:

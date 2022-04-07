@@ -6,8 +6,14 @@ description: Adversaries may delete or remove built-in operating system data and
   off services designed to aid in the recovery of a corrupted system to prevent recovery.
 detection:
   SELECTION_1:
-    Image: '*cmd.exe'
+    EventID: 23
   SELECTION_2:
+    EventID: 26
+  SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
+    Image: '*cmd.exe'
+  SELECTION_5:
     TargetFilename:
     - '*.VHD'
     - '*.bac'
@@ -17,7 +23,7 @@ detection:
     - '*.set'
     - '*.win'
     - '*.dsk'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitime usage
 id: 06125661-3814-4e03-bfa2-1e4411c60ac3

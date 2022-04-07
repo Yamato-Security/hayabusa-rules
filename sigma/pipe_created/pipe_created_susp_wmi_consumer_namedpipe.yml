@@ -5,8 +5,14 @@ date: 2021/09/01
 description: Detects the WMI Event Consumer service scrcons.exe creating a named pipe
 detection:
   SELECTION_1:
+    EventID: 17
+  SELECTION_2:
+    EventID: 18
+  SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
     Image: '*\scrcons.exe'
-  condition: SELECTION_1
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 493fb4ab-cdcc-4c4f-818c-0e363bd1e4bb

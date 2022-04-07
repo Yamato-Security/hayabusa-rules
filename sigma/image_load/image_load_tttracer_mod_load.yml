@@ -6,11 +6,15 @@ description: Detects usage of Time Travel Debugging Utility. Adversaries can exe
   malicious processes and dump processes, such as lsass.exe, via tttracer.exe.
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded:
     - '*\ttdrecord.dll'
     - '*\ttdwriter.dll'
     - '*\ttdloader.dll'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate usage by software developers/testers
 id: e76c8240-d68f-4773-8880-5c6f63595aaf

@@ -8,8 +8,12 @@ description: "Adversaries may execute their own malicious payloads by hijacking 
   \ so that Windows will choose the adversary's executable to launch. \n"
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename: C:\program.exe
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 8c3c76ca-8f8b-4b1d-aaf3-81aebcd367c9

@@ -6,12 +6,16 @@ description: Detects suspicious processes that write (copy) a Active Directory d
   (ntds.dit) file
 detection:
   SELECTION_1:
-    TargetFilename: '*\ntds.dit'
+    EventID: 11
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFilename: '*\ntds.dit'
+  SELECTION_4:
     Image:
     - '*\powershell.exe'
     - '*\cmd.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 11b1ed55-154d-4e82-8ad7-83739298f720

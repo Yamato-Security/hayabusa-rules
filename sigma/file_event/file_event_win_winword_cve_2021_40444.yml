@@ -6,18 +6,25 @@ description: Detects file creation patterns noticeable during the exploitation o
   CVE-2021-40444
 detection:
   SELECTION_1:
-    Image: \winword.exe
+    EventID: 11
   SELECTION_2:
-    TargetFilename: '*.cab'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    TargetFilename: '*\Windows\INetCache*'
+    Image: \winword.exe
   SELECTION_4:
-    TargetFilename: '*\AppData\Local\Temp\\*'
+    TargetFilename: '*.cab'
   SELECTION_5:
+    TargetFilename: '*\Windows\INetCache*'
+  SELECTION_6:
+    Image: \winword.exe
+  SELECTION_7:
+    TargetFilename: '*\AppData\Local\Temp\\*'
+  SELECTION_8:
     TargetFilename: '*.inf*'
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)))
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+    SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
-- unknown
+- Unknown
 fields:
 - TargetFilename
 id: 60c0a111-787a-4e8a-9262-ee485f3ef9d5

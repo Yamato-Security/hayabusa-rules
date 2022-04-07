@@ -7,10 +7,14 @@ description: |
   Msiexec.exe is the command-line utility for the Windows Installer and is thus commonly associated with executing installation packages (.msi)
 detection:
   SELECTION_1:
-    Initiated: 'true'
+    EventID: 3
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Initiated: 'true'
+  SELECTION_4:
     Image: '*\msiexec.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate msiexec over networks
 id: 8e5e38e4-5350-4c0b-895a-e872ce0dd54f

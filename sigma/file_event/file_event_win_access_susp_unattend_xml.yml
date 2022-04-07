@@ -7,8 +7,12 @@ description: |
   If these files exist, their contents will be displayed. They are used to store credentials/answers during the unattended windows install process
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename: '*\unattend.xml'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 1a3d42dd-3763-46b9-8025-b5f17f340dfb

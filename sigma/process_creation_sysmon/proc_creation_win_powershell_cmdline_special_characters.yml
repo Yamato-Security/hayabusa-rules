@@ -1,0 +1,63 @@
+
+title: Suspicious PowerShell Command Line
+author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
+  (fp)
+date: 2020/10/15
+description: Detects the PowerShell command lines with special characters
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_10:
+    CommandLine|re: .*\^.*\^.*\^.*\^.*\^.*
+  SELECTION_11:
+    Image: '*\powershell.exe'
+  SELECTION_12:
+    CommandLine|re: .*`.*`.*`.*`.*`.*
+  SELECTION_13:
+    ParentImage: C:\Program Files\Amazon\SSM\ssm-document-worker.exe
+  SELECTION_14:
+    Image: '*\powershell.exe'
+  SELECTION_15:
+    CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*
+  SELECTION_16:
+    CommandLine:
+    - '*new EventSource("Microsoft.Windows.Sense.Client.Management"*'
+    - '*public static extern bool InstallELAMCertificateInfo(SafeFileHandle handle);*'
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\powershell.exe'
+  SELECTION_4:
+    CommandLine|re: .*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*
+  SELECTION_5:
+    Image: '*\powershell.exe'
+  SELECTION_6:
+    CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*
+  SELECTION_7:
+    Image: '*\powershell.exe'
+  SELECTION_8:
+    CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*
+  SELECTION_9:
+    Image: '*\powershell.exe'
+  condition: ((SELECTION_1 and SELECTION_2) and ((((((SELECTION_3 and SELECTION_4)
+    or (SELECTION_5 and SELECTION_6)) or (SELECTION_7 and SELECTION_8)) or (SELECTION_9
+    and SELECTION_10)) or (SELECTION_11 and SELECTION_12)) and  not (SELECTION_13))
+    and  not ((SELECTION_14 and SELECTION_15 and SELECTION_16)))
+falsepositives:
+- Unlikely
+- Amazon SSM Document Worker
+- Windows Defender ATP
+id: d7bcd677-645d-4691-a8d4-7a5602b780d1
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/08
+references:
+- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=64
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1027
+- attack.execution
+- attack.t1059.001

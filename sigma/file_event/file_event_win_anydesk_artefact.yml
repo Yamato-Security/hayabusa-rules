@@ -12,14 +12,18 @@ description: "An adversary may use legitimate desktop support and remote access 
   \ \n"
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename:
     - '*\AppData\Roaming\AnyDesk\user.conf*'
     - '*\AppData\Roaming\AnyDesk\system.conf*'
-  SELECTION_2:
+  SELECTION_4:
     TargetFilename: '*.temp'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- legitimate use
+- Legitimate use
 id: 0b9ad457-2554-44c1-82c2-d56a99c42377
 level: medium
 logsource:

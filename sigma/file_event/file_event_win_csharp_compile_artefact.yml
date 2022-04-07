@@ -8,8 +8,12 @@ description: |
   This can be used to unpack a payload for execution
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename: '*.cmdline'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: e4a74e34-ecde-4aab-b2fb-9112dd01aed0

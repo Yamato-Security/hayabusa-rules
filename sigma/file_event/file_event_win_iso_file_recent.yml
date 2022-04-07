@@ -7,15 +7,19 @@ description: Detects the creation of recent element file that points to an .ISO,
   on server systems but on workstations users should rarely mount .iso or .img files.
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename:
     - '*.iso.lnk'
     - '*.img.lnk'
     - '*.vhd.lnk'
     - '*.vhdx.lnk'
-  SELECTION_2:
+  SELECTION_4:
     TargetFilename:
     - '*\Microsoft\Windows\Recent\\*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Cases in which a user mounts an image file for legitimate reasons
 id: 4358e5a5-7542-4dcb-b9f3-87667371839b

@@ -6,14 +6,18 @@ description: Detects potential use of UIPromptForCredentials functions by lookin
   for some of the DLLs needed for it.
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded:
     - '*\credui.dll'
     - '*\wincredui.dll'
-  SELECTION_2:
+  SELECTION_4:
     OriginalFileName:
     - credui.dll
     - wincredui.dll
-  SELECTION_3:
+  SELECTION_5:
     Image:
     - C:\Windows\System32\\*
     - C:\Windows\explorer.exe*
@@ -23,9 +27,10 @@ detection:
     - C:\Windows\ImmersiveControlPanel\SystemSettings.exe*
     - C:\Users\\*\AppData\Local\Microsoft\OneDrive\OneDrive.exe*
     - C:\Users\\*\AppData\Roaming\Spotify\Spotify.exe*
-  SELECTION_4:
+  SELECTION_6:
     Image: '*\opera_autoupdate.exe'
-  condition: ((SELECTION_1 or SELECTION_2) and  not (SELECTION_3 or SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
+    (SELECTION_5 or SELECTION_6))
 falsepositives:
 - other legitimate processes loading those DLLs in your environment.
 id: 9ae01559-cf7e-4f8e-8e14-4c290a1b4784

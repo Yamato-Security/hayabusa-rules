@@ -8,12 +8,14 @@ detection:
   SELECTION_1:
     EventID: 10
   SELECTION_2:
-    TargetImage: '*\lsass.exe'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    SourceImage: C:\Windows\System32\rundll32.exe
+    TargetImage: '*\lsass.exe'
   SELECTION_4:
+    SourceImage: C:\Windows\System32\rundll32.exe
+  SELECTION_5:
     CallTrace: '*comsvcs.dll*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: a49fa4d5-11db-418c-8473-1e014a8dd462

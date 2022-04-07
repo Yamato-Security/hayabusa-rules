@@ -8,10 +8,12 @@ detection:
   SELECTION_1:
     EventID: 10
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     CallTrace: UNKNOWN*
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- unknown
+- Unknown
 id: 3f3f3506-1895-401b-9cc3-e86b16e630d0
 level: critical
 logsource:

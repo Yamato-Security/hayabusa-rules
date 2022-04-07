@@ -1,0 +1,35 @@
+
+title: PowerShell Logging Disabled
+ruletype: Sigma
+author: frack113
+date: 2022/04/02
+description: Detects the modification of the registry of the currently logged in user
+  to disable PowerShell module logging, script block logging or transcription and
+  script execution logging
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetObject:
+    - '*SOFTWARE\Policies\Microsoft\Windows\PowerShell\ModuleLogging\EnableModuleLogging'
+    - '*SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging\EnableScriptBlockLogging'
+    - '*SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription\EnableTranscripting'
+    - '*SOFTWARE\Policies\Microsoft\Windows\PowerShell\EnableScripts'
+  SELECTION_4:
+    Details: DWORD (0x00000000)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: fecfd1a1-cc78-4313-a1ea-2ee2e8ec27a7
+level: medium
+logsource:
+  category: registry_set
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1112/T1112.md#atomic-test-32---windows-powershell-logging-disabled
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1564.001

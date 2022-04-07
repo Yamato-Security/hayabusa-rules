@@ -6,6 +6,10 @@ description: Detects well-known credential dumping tools execution via service e
   events
 detection:
   SELECTION_1:
+    EventID: 6
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded:
     - '*fgexec*'
     - '*dumpsvc*'
@@ -14,7 +18,7 @@ detection:
     - '*gsecdump*'
     - '*servpw*'
     - '*pwdump*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate Administrator using credential dumping tool for password recovery
 id: df5ff0a5-f83f-4a5b-bba1-3e6a3f6f6ea2

@@ -7,12 +7,16 @@ description: Detects suspicious activity in which the MSExchangeMailboxReplicati
   exploitation
 detection:
   SELECTION_1:
-    Image: '*\MSExchangeMailboxReplication.exe'
+    EventID: 11
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\MSExchangeMailboxReplication.exe'
+  SELECTION_4:
     TargetFilename:
     - '*.aspx'
     - '*.asp'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 7280c9f3-a5af-45d0-916a-bc01cb4151c9

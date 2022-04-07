@@ -1,13 +1,18 @@
 
 title: Suspicious NTDS.DIT Creation
+ruletype: Sigma
 author: Florian Roth
 date: 2022/03/11
 description: Detects suspicious creations of a file named ntds.dit, e.g. by a PowerShell
   parent or in a suspicious directory or a suspicious one liner
 detection:
   SELECTION_1:
-    TargetFilename: '*\ntds.dit'
+    EventID: 11
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFilename: '*\ntds.dit'
+  SELECTION_4:
     ParentImage:
     - '*\powershell.exe'
     - '*\wscript.exe'
@@ -16,7 +21,7 @@ detection:
     - '*\php-cgi.exe'
     - '*\nginx.exe'
     - '*\httpd.exe'
-  SELECTION_3:
+  SELECTION_5:
     ParentImage:
     - '*\apache*'
     - '*\tomcat*'
@@ -24,13 +29,14 @@ detection:
     - '*\Temp\\*'
     - '*\Public\\*'
     - '*\PerfLogs\\*'
-  SELECTION_4:
+  SELECTION_6:
     Image:
     - '*\AppData\\*'
     - '*\Temp\\*'
     - '*\Public\\*'
     - '*\PerfLogs\\*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5
+    or SELECTION_6))
 falsepositives:
 - Unknown
 id: 4e7050dd-e548-483f-b7d6-527ab4fa784d

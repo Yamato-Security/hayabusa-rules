@@ -1,0 +1,39 @@
+
+title: Disabled IE Security Features
+author: Florian Roth
+date: 2020/06/19
+description: Detects command lines that indicate unwanted modifications to registry
+  keys that disable important Internet Explorer security features
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    CommandLine: '* -name IEHarden *'
+  SELECTION_4:
+    CommandLine: '* -value 0 *'
+  SELECTION_5:
+    CommandLine: '* -name DEPOff *'
+  SELECTION_6:
+    CommandLine: '* -value 1 *'
+  SELECTION_7:
+    CommandLine: '* -name DisableFirstRunCustomize *'
+  SELECTION_8:
+    CommandLine: '* -value 2 *'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+falsepositives:
+- Unknown, maybe some security software installer disables these features temporarily
+id: fb50eb7a-5ab1-43ae-bcc9-091818cb8424
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2021/11/27
+references:
+- https://unit42.paloaltonetworks.com/operation-ke3chang-resurfaces-with-new-tidepool-malware/
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1562.001

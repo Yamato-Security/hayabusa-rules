@@ -8,12 +8,14 @@ detection:
   SELECTION_1:
     EventID: 10
   SELECTION_2:
-    SourceImage: '*:\Windows\SysWOW64\\*'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    GrantedAccess: '0x1fffff'
+    SourceImage: '*:\Windows\SysWOW64\\*'
   SELECTION_4:
+    GrantedAccess: '0x1fffff'
+  SELECTION_5:
     CallTrace: UNKNOWN(0000000000000000)|UNKNOWN(0000000000000000)|*
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 4f6c43e2-f989-4ea5-bcd8-843b49a0317c

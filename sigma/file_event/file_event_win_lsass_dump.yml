@@ -6,6 +6,10 @@ description: Detects file names used by different memory dumping tools to create
   memory dump of the LSASS process memory, which contains user credentials
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename:
     - '*\lsass.dmp'
     - '*\lsass.zip'
@@ -13,21 +17,21 @@ detection:
     - '*\Temp\dumpert.dmp'
     - '*\Andrew.dmp'
     - '*\Coredump.dmp'
-  SELECTION_2:
+  SELECTION_4:
     TargetFilename:
     - '*\lsass_2*'
     - '*\lsassdump*'
     - '*\lsassdmp*'
-  SELECTION_3:
-    TargetFilename: '*\lsass*'
-  SELECTION_4:
-    TargetFilename: '*.dmp*'
   SELECTION_5:
-    TargetFilename: '*SQLDmpr*'
+    TargetFilename: '*\lsass*'
   SELECTION_6:
+    TargetFilename: '*.dmp*'
+  SELECTION_7:
+    TargetFilename: '*SQLDmpr*'
+  SELECTION_8:
     TargetFilename: '*.mdmp'
-  condition: (SELECTION_1 or SELECTION_2 or (SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
+    and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: a5a2d357-1ab8-4675-a967-ef9990a59391

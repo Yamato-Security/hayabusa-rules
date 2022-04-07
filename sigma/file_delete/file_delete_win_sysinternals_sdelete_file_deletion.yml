@@ -6,10 +6,16 @@ description: A General detection to trigger for the deletion of files by Sysinte
   SDelete. It looks for the common name pattern used to rename files.
 detection:
   SELECTION_1:
+    EventID: 23
+  SELECTION_2:
+    EventID: 26
+  SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
     TargetFilename:
     - '*.AAA'
     - '*.ZZZ'
-  condition: SELECTION_1
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitime usage of SDelete
 id: 6ddab845-b1b8-49c2-bbf7-1a11967f64bc

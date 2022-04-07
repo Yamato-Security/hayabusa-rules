@@ -1,0 +1,36 @@
+
+title: Password Cracking with Hashcat
+author: frack113
+date: 2021/12/27
+description: Execute Hashcat.exe with provided SAM file from registry of Windows and
+  Password list to crack against
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\hashcat.exe'
+  SELECTION_4:
+    CommandLine: '*-a *'
+  SELECTION_5:
+    CommandLine: '*-m 1000 *'
+  SELECTION_6:
+    CommandLine: '*-r *'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5
+    and SELECTION_6)))
+falsepositives:
+- Tools that accidentally use the same command line flags and values
+id: 39b31e81-5f5f-4898-9c0e-2160cfc0f9bf
+level: critical
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/30
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1110.002/T1110.002.md#atomic-test-1---password-cracking-with-hashcat
+- https://hashcat.net/wiki/doku.php?id=hashcat
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1110.002

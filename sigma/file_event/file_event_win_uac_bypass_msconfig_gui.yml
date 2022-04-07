@@ -5,10 +5,14 @@ date: 2021/08/30
 description: Detects the pattern of UAC Bypass using a msconfig GUI hack (UACMe 55)
 detection:
   SELECTION_1:
-    TargetFilename: C:\Users\\*
+    EventID: 11
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFilename: C:\Users\\*
+  SELECTION_4:
     TargetFilename: '*\AppData\Local\Temp\pkgmgr.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 41bb431f-56d8-4691-bb56-ed34e390906f

@@ -6,26 +6,30 @@ description: Detects the load of advapi31.dll by a process running in an uncommo
   folder
 detection:
   SELECTION_1:
-    ImageLoaded: '*\advapi32.dll'
+    EventID: 7
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    ImageLoaded: '*\advapi32.dll'
+  SELECTION_4:
     Image:
     - C:\Windows\\*
     - C:\Program Files (x86)\\*
     - C:\Program Files\\*
-  SELECTION_3:
-    Image: C:\ProgramData\Microsoft\Windows Defender\platform\\*
-  SELECTION_4:
-    Image: '*\MpCmdRun.exe'
   SELECTION_5:
-    Image: C:\Users\\*
+    Image: C:\ProgramData\Microsoft\Windows Defender\platform\\*
   SELECTION_6:
-    Image: '*\AppData\Local\Microsoft\OneDrive\\*'
+    Image: '*\MpCmdRun.exe'
   SELECTION_7:
+    Image: C:\Users\\*
+  SELECTION_8:
+    Image: '*\AppData\Local\Microsoft\OneDrive\\*'
+  SELECTION_9:
     Image: '*FileCoAuth.exe'
-  condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3 and SELECTION_4)
-    or (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+    or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
-- unknown
+- Unknown
 id: d813d662-785b-42ca-8b4a-f7457d78d5a9
 level: informational
 logsource:

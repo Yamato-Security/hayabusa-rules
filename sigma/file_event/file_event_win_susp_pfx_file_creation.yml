@@ -6,8 +6,12 @@ description: A general detection for processes creating PFX files. This could be
   indicator of an adversary exporting a local certificate to a PFX file.
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename: '*.pfx'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - System administrators managing certififcates.
 id: dca1b3e8-e043-4ec8-85d7-867f334b5724

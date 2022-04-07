@@ -5,17 +5,21 @@ date: 2020/10/06
 description: Attempts to load dismcore.dll after dropping it
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     Image:
     - '*\dism.exe'
-  SELECTION_2:
+  SELECTION_4:
     ImageLoaded:
     - '*\dismcore.dll'
-  SELECTION_3:
+  SELECTION_5:
     ImageLoaded:
     - C:\Windows\System32\Dism\dismcore.dll
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
-- Pentests
 - Actions of a legitimate telnet client
 id: a5ea83a7-05a5-44c1-be2e-addccbbd8c03
 level: high

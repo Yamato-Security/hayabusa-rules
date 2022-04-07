@@ -8,36 +8,41 @@ detection:
   SELECTION_1:
     ImagePath: '*cmd*'
   SELECTION_10:
-    ImagePath: '*/c*'
-  SELECTION_11:
-    ImagePath: '*echo*'
-  SELECTION_12:
     ImagePath: '*\pipe\\*'
+  SELECTION_11:
+    ImagePath: '*cmd.exe*'
+  SELECTION_12:
+    ImagePath: '*/c*'
   SELECTION_13:
-    ImagePath: '*rundll32*'
+    ImagePath: '*echo*'
   SELECTION_14:
-    ImagePath: '*.dll,a*'
+    ImagePath: '*\pipe\\*'
   SELECTION_15:
+    ImagePath: '*rundll32*'
+  SELECTION_16:
+    ImagePath: '*.dll,a*'
+  SELECTION_17:
     ImagePath: '*/p:*'
   SELECTION_2:
-    ImagePath: '*/c*'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    ImagePath: '*echo*'
+    ImagePath: '*cmd*'
   SELECTION_4:
-    ImagePath: '*\pipe\\*'
-  SELECTION_5:
-    ImagePath: '*%COMSPEC%*'
-  SELECTION_6:
     ImagePath: '*/c*'
-  SELECTION_7:
+  SELECTION_5:
     ImagePath: '*echo*'
-  SELECTION_8:
+  SELECTION_6:
     ImagePath: '*\pipe\\*'
+  SELECTION_7:
+    ImagePath: '*%COMSPEC%*'
+  SELECTION_8:
+    ImagePath: '*/c*'
   SELECTION_9:
-    ImagePath: '*cmd.exe*'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9 and SELECTION_10
-    and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14 and SELECTION_15))
+    ImagePath: '*echo*'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+    SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and
+    SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14)
+    or (SELECTION_15 and SELECTION_16 and SELECTION_17)))
 falsepositives:
 - Highly unlikely
 fields:

@@ -1,5 +1,6 @@
 
 title: Rare GrantedAccess Flags on LSASS Access
+ruletype: Sigma
 author: Florian Roth
 date: 2022/03/13
 description: Detects process access to LSASS memory with suspicious access flags 0x410
@@ -8,44 +9,54 @@ detection:
   SELECTION_1:
     TargetImage: '*\lsass.exe'
   SELECTION_10:
-    SourceImage: '*\vmtoolsd.exe'
+    SourceImage:
+    - '*\PROCEXP64.EXE'
+    - '*\PROCEXP.EXE'
   SELECTION_11:
+    SourceImage: C:\ProgramData\VMware\VMware Tools\\*
+  SELECTION_12:
+    SourceImage: '*\vmtoolsd.exe'
+  SELECTION_13:
     SourceImage:
     - C:\Progra Files\\*
     - C:\Progra Files (x86)\\*
-  SELECTION_12:
+  SELECTION_14:
     SourceImage:
     - '*Antivirus*'
-  SELECTION_13:
-    SourceImage: C:\WINDOWS\system32\wbem\wmiprvse.exe
-  SELECTION_14:
-    SourceImage: C:\Windows\sysWOW64\wbem\wmiprvse.exe
   SELECTION_15:
-    SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
+    SourceImage: C:\WINDOWS\system32\wbem\wmiprvse.exe
   SELECTION_16:
-    SourceImage: C:\Windows\Temp\asgard2-agent\\*
+    SourceImage: C:\Windows\sysWOW64\wbem\wmiprvse.exe
   SELECTION_17:
+    SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
+  SELECTION_18:
+    SourceImage: C:\Windows\Temp\asgard2-agent\\*
+  SELECTION_19:
     SourceImage:
     - '*\thor64.exe'
     - '*\thor.exe'
-  SELECTION_18:
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_20:
     SourceImage:
     - C:\Program Files\\*
     - C:\Program Files (x86)\\*
     - C:\WINDOWS\system32\\*
-  SELECTION_19:
-    SourceImage: '*C:\Users\\*'
-  SELECTION_2:
-    GrantedAccess: '*10'
-  SELECTION_20:
-    SourceImage: '*\AppData\Local\\*'
   SELECTION_21:
+    SourceImage: '*C:\Users\\*'
+  SELECTION_22:
+    SourceImage: '*\AppData\Local\\*'
+  SELECTION_23:
     SourceImage:
     - '*\Microsoft VS Code\Code.exe'
     - '*\software_reporter_tool.exe'
     - '*\DropboxUpdate.exe'
     - '*\MBAMInstallerService.exe'
   SELECTION_3:
+    TargetImage: '*\lsass.exe'
+  SELECTION_4:
+    GrantedAccess: '*10'
+  SELECTION_5:
     SourceImage:
     - C:\WINDOWS\system32\taskmgr.exe
     - C:\Program Files\Malwarebytes\Anti-Malware\MBAMService.exe
@@ -57,25 +68,19 @@ detection:
     - C:\Windows\System32\msiexec.exe
     - C:\Windows\System32\lsass.exe
     - C:\WINDOWS\System32\perfmon.exe
-  SELECTION_4:
-    SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
-  SELECTION_5:
-    SourceImage: '*\MsMpEng.exe'
   SELECTION_6:
-    SourceImage: C:\Program Files\WindowsApps\\*
+    SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
   SELECTION_7:
-    SourceImage: '*\GamingServices.exe'
+    SourceImage: '*\MsMpEng.exe'
   SELECTION_8:
-    SourceImage:
-    - '*\PROCEXP64.EXE'
-    - '*\PROCEXP.EXE'
+    SourceImage: C:\Program Files\WindowsApps\\*
   SELECTION_9:
-    SourceImage: C:\ProgramData\VMware\VMware Tools\\*
-  condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4
-    and SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9
-    and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13) or (SELECTION_14)
-    or (SELECTION_15) or (SELECTION_16 and SELECTION_17) or (SELECTION_18) or (SELECTION_19
-    and SELECTION_20 and SELECTION_21)))
+    SourceImage: '*\GamingServices.exe'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
+    or (SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14)
+    or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18 and SELECTION_19)
+    or (SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason
 fields:

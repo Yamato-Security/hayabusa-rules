@@ -6,6 +6,10 @@ description: Malware can use mountable Virtual Hard Disk .vhd file to encapsulat
   payloads and evade security controls
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     Image:
     - '*chrome.exe'
     - '*firefox.exe'
@@ -15,9 +19,9 @@ detection:
     - '*iexplorer.exe'
     - '*brave.exe'
     - '*opera.exe'
-  SELECTION_2:
+  SELECTION_4:
     TargetFilename: '*.vhd*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate user creation
 id: 8468111a-ef07-4654-903b-b863a80bbc95

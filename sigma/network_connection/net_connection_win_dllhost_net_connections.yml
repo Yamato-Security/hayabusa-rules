@@ -5,10 +5,14 @@ date: 2020/07/13
 description: Detects Dllhost that communicates with public IP addresses
 detection:
   SELECTION_1:
-    Image: '*\dllhost.exe'
+    EventID: 3
   SELECTION_2:
-    Initiated: 'true'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    Image: '*\dllhost.exe'
+  SELECTION_4:
+    Initiated: 'true'
+  SELECTION_5:
     DestinationIp:
     - 10.*
     - 192.168.*
@@ -28,10 +32,11 @@ detection:
     - 172.29.*
     - 172.30.*
     - 172.31.*
-  SELECTION_4:
+  SELECTION_6:
     DestinationIp:
     - 0:0:0:0:0:0:0:1
-  condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4)))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - Communication to other corporate systems that use IP addresses from public address
   spaces

@@ -6,10 +6,14 @@ description: A General detection for files being created in the Windows startup 
   This could be an indicator of persistence.
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename: '*ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- unknown
+- Unknown
 id: 2aa0a6b4-a865-495b-ab51-c28249537b75
 level: low
 logsource:

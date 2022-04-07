@@ -9,8 +9,12 @@ description: Detects abusing Azure Browser SSO by requesting OAuth 2.0 refresh t
   as that user.
 detection:
   SELECTION_1:
-    ImageLoaded: '*MicrosoftAccountTokenProvider.dll'
+    EventID: 7
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    ImageLoaded: '*MicrosoftAccountTokenProvider.dll'
+  SELECTION_4:
     Image:
     - '*\BackgroundTaskHost.exe'
     - '*\devenv.exe'
@@ -20,12 +24,13 @@ detection:
     - '*\AppData\Local\Microsoft\OneDrive\OneDrive.exe'
     - '*\msedgewebview2.exe'
     - '*\OneDrive.exe'
-  SELECTION_3:
+  SELECTION_5:
     Image:
     - C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
-  condition: (SELECTION_1 and  not (SELECTION_2 or SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
+    or SELECTION_5))
 falsepositives:
-- unknown
+- Unknown
 id: 50f852e6-af22-4c78-9ede-42ef36aa3453
 level: high
 logsource:

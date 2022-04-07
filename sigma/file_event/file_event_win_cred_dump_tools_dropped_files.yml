@@ -6,6 +6,10 @@ description: Files with well-known filenames (parts of credential dump software 
   files produced by them) creation
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename:
     - '*\pwdump*'
     - '*\kirbi*'
@@ -13,7 +17,7 @@ detection:
     - '*\wce_ccache*'
     - '*\wce_krbtkts*'
     - '*\fgdump-log*'
-  SELECTION_2:
+  SELECTION_4:
     TargetFilename:
     - '*\test.pwd'
     - '*\lsremora64.dll'
@@ -33,7 +37,7 @@ detection:
     - '*\servpw64.exe'
     - '*\pwdump.exe'
     - '*\procdump64.exe'
-  condition: (SELECTION_1 or SELECTION_2)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Legitimate Administrator using tool for password recovery
 id: 8fbf3271-1ef6-4e94-8210-03c2317947f6

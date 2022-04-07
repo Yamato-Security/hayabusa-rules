@@ -7,6 +7,8 @@ description: Detects the attack technique pass the hash which is used to move la
 detection:
   SELECTION_1:
     Channel: Security
+  SELECTION_10:
+    TargetUserName: ANONYMOUS LOGON
   SELECTION_2:
     EventID: 4624
   SELECTION_3:
@@ -18,16 +20,15 @@ detection:
   SELECTION_6:
     KeyLength: '0'
   SELECTION_7:
-    LogonType: '9'
+    EventID: 4624
   SELECTION_8:
-    LogonProcessName: seclogo
+    LogonType: '9'
   SELECTION_9:
-    TargetUserName: ANONYMOUS LOGON
-  condition: (SELECTION_1 and (SELECTION_2 and ((SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8))) and  not (SELECTION_9))
+    LogonProcessName: seclogo
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)) and  not (SELECTION_10))
 falsepositives:
 - Administrator activity
-- Penetration tests
 id: 8eef149c-bd26-49f2-9e5a-9b00e3af499b
 level: medium
 logsource:

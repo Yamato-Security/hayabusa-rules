@@ -14,7 +14,7 @@ detection:
   SELECTION_4:
     ServiceName: NtsSrv
   SELECTION_5:
-    ServiceFileName: '* LocalService'
+    ImagePath: '* LocalService'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unlikely

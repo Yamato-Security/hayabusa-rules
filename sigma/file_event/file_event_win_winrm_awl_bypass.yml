@@ -6,14 +6,18 @@ description: Detects execution of attacker-controlled WsmPty.xsl or WsmTxt.xsl v
   winrm.vbs and copied cscript.exe (can be renamed)
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename:
     - '*WsmPty.xsl'
     - '*WsmTxt.xsl'
-  SELECTION_2:
+  SELECTION_4:
     TargetFilename:
     - C:\Windows\System32\\*
     - C:\Windows\SysWOW64\\*
-  condition: (SELECTION_1 and  not (SELECTION_2))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unlikely
 id: d353dac0-1b41-46c2-820c-d7d2561fc6ed

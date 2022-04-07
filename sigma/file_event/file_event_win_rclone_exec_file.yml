@@ -5,10 +5,14 @@ date: 2021/05/26
 description: Detects Rclone config file being created
 detection:
   SELECTION_1:
-    TargetFilename: '*:\Users\\*'
+    EventID: 11
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFilename: '*:\Users\\*'
+  SELECTION_4:
     TargetFilename: '*\.config\rclone\\*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate Rclone usage (rare)
 id: 34986307-b7f4-49be-92f3-e7a4d01ac5db

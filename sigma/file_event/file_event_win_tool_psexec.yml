@@ -6,10 +6,14 @@ description: Detects PsExec service installation and execution events (service a
   Sysmon)
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename: '*\PSEXESVC.exe'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- unknown
+- Unknown
 fields:
 - EventID
 - CommandLine

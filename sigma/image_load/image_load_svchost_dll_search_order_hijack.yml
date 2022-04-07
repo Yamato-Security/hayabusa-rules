@@ -9,19 +9,24 @@ description: IKEEXT and SessionEnv service, as they call LoadLibrary on files th
   machine.
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     Image:
     - '*\svchost.exe'
-  SELECTION_2:
+  SELECTION_4:
     ImageLoaded:
     - '*\tsmsisrv.dll'
     - '*\tsvipsrv.dll'
     - '*\wlbsctrl.dll'
-  SELECTION_3:
+  SELECTION_5:
     ImageLoaded:
     - C:\Windows\WinSxS\\*
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
-- Pentest
+- Unknown
 id: 602a1f13-c640-4d73-b053-be9a2fa58b77
 level: high
 logsource:

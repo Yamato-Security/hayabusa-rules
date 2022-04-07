@@ -7,12 +7,16 @@ description: Detects DNS queries to a TeamViewer domain only resolved by a TeamV
   for obfuscation)
 detection:
   SELECTION_1:
+    EventID: 22
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     QueryName:
     - taf.teamviewer.com
     - udp.ping.teamviewer.com
-  SELECTION_2:
+  SELECTION_4:
     Image: '*TeamViewer*'
-  condition: (SELECTION_1 and  not (SELECTION_2))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown binary names of TeamViewer
 - Other programs that also lookup the observed domain

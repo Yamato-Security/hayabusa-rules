@@ -7,8 +7,12 @@ description: A sigma rule detecting an unidetefied attacker who used phishing em
   campaign in 2016.
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename: '*ds7002.lnk*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 id: 3a3f81ca-652c-482b-adeb-b1c804727f74
 level: high
 logsource:

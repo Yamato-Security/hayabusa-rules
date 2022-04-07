@@ -5,19 +5,25 @@ date: 2021/05/25
 description: Detects the creation of a named pipe as used by CobaltStrike
 detection:
   SELECTION_1:
-    PipeName: '*\MSSE-*'
+    EventID: 17
   SELECTION_2:
-    PipeName: '*-server*'
+    EventID: 18
   SELECTION_3:
-    PipeName: \postex_*
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_4:
-    PipeName: \postex_ssh_*
+    PipeName: '*\MSSE-*'
   SELECTION_5:
-    PipeName: \status_*
+    PipeName: '*-server*'
   SELECTION_6:
+    PipeName: \postex_*
+  SELECTION_7:
+    PipeName: \postex_ssh_*
+  SELECTION_8:
+    PipeName: \status_*
+  SELECTION_9:
     PipeName: \msagent_*
-  condition: ((SELECTION_1 and SELECTION_2) or SELECTION_3 or SELECTION_4 or SELECTION_5
-    or SELECTION_6)
+  condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and ((SELECTION_4 and
+    SELECTION_5) or SELECTION_6 or SELECTION_7 or SELECTION_8 or SELECTION_9))
 falsepositives:
 - Unknown
 id: d5601f8c-b26f-4ab0-9035-69e11a8d4ad2

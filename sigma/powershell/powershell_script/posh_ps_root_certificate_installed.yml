@@ -10,12 +10,15 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*Cert:\LocalMachine\Root*'
-  SELECTION_4:
     ScriptBlockText: '*Move-Item*'
+  SELECTION_4:
+    ScriptBlockText: '*Cert:\LocalMachine\Root*'
   SELECTION_5:
     ScriptBlockText: '*Import-Certificate*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and (SELECTION_4 or SELECTION_5))
+  SELECTION_6:
+    ScriptBlockText: '*Cert:\LocalMachine\Root*'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Help Desk or IT may need to manually add a corporate Root CA on occasion. Need to
   test if GPO push doesn't trigger FP

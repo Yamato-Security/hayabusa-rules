@@ -6,8 +6,12 @@ description: Detects various indicators of Microsoft Connection Manager Profile 
   execution
 detection:
   SELECTION_1:
+    EventID: 10
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     CallTrace: '*cmlua.dll*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate CMSTP use (unlikely in modern enterprise environments)
 fields:
@@ -26,8 +30,10 @@ status: stable
 tags:
 - attack.defense_evasion
 - attack.t1218.003
+- attack.t1191
 - attack.execution
 - attack.t1559.001
+- attack.t1175
 - attack.g0069
 - attack.g0080
 - car.2019-04-001

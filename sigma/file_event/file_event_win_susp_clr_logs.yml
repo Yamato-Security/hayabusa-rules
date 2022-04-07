@@ -6,10 +6,14 @@ description: Detects suspicious .NET assembly executions. Could detect using Cob
   Strike's command execute-assembly.
 detection:
   SELECTION_1:
-    TargetFilename: '*\AppData\Local\Microsoft\CLR*'
+    EventID: 11
   SELECTION_2:
-    TargetFilename: '*\UsageLogs\\*'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    TargetFilename: '*\AppData\Local\Microsoft\CLR*'
+  SELECTION_4:
+    TargetFilename: '*\UsageLogs\\*'
+  SELECTION_5:
     TargetFilename:
     - '*mshta*'
     - '*cscript*'
@@ -18,7 +22,7 @@ detection:
     - '*wmic*'
     - '*rundll32*'
     - '*svchost*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - https://twitter.com/SBousseaden/status/1388064061087260675 - rundll32.exe with zzzzInvokeManagedCustomActionOutOfProc
   in command line and msiexec.exe as parent process

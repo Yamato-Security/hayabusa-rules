@@ -12,8 +12,12 @@ description: "An adversary may use legitimate desktop support and remote access 
   \ \n"
 detection:
   SELECTION_1:
+    EventID: 22
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     QueryName: '*.logmein.com'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: ed785237-70fa-46f3-83b6-d264d1dc6eb4

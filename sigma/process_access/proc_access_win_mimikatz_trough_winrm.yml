@@ -6,12 +6,17 @@ description: Detects usage of mimikatz through WinRM protocol by monitoring acce
   to lsass process by wsmprovhost.exe.
 detection:
   SELECTION_1:
-    TargetImage: '*\lsass.exe'
+    EventID: 10
   SELECTION_2:
-    SourceImage: C:\Windows\system32\wsmprovhost.exe
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    TargetImage: '*\lsass.exe'
+  SELECTION_4:
+    SourceImage: C:\Windows\system32\wsmprovhost.exe
+  SELECTION_5:
     GrantedAccess: '0x80000000'
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
 - low
 id: aa35a627-33fb-4d04-a165-d33b4afca3e8

@@ -5,14 +5,18 @@ date: 2021/06/29
 description: Detect DLL Load from Spooler Service backup folder
 detection:
   SELECTION_1:
-    Image: '*spoolsv.exe'
+    EventID: 7
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*spoolsv.exe'
+  SELECTION_4:
     ImageLoaded:
     - '*\Windows\System32\spool\drivers\x64\3\\*'
     - '*\Windows\System32\spool\drivers\x64\4\\*'
-  SELECTION_3:
+  SELECTION_5:
     ImageLoaded: '*.dll'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Loading of legitimate driver
 id: 02fb90de-c321-4e63-a6b9-25f4b03dfd14

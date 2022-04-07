@@ -6,8 +6,12 @@ description: Detects the use of Advanced IP Scanner. Seems to be a popular tool 
   ransomware groups.
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename: '*\AppData\Local\Temp\Advanced IP Scanner 2*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate administrative use
 id: fed85bf9-e075-4280-9159-fbe8a023d6fa

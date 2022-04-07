@@ -5,6 +5,10 @@ date: 2021/10/26
 description: Detects process connections to a Monero crypto mining pool
 detection:
   SELECTION_1:
+    EventID: 3
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     DestinationHostname:
     - pool.minexmr.com
     - fr.minexmr.com
@@ -28,7 +32,7 @@ detection:
     - pool.hashvault.pro
     - moneroocean.stream
     - monerocean.stream
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate use of crypto miners
 id: fa5b1358-b040-4403-9868-15f7d9ab6329

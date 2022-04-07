@@ -15,6 +15,7 @@ detection:
     TargetUserName: '*$'
   condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
     | count(TargetUserName) by IpAddress > 10
+  timeframe: 24h
 falsepositives:
 - Vulnerability scanners
 - Misconfigured systems

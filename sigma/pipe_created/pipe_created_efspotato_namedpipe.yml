@@ -5,10 +5,16 @@ date: 2021/08/23
 description: Detects the pattern of a pipe name as used by the tool EfsPotato
 detection:
   SELECTION_1:
+    EventID: 17
+  SELECTION_2:
+    EventID: 18
+  SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
     PipeName:
     - '*\pipe\\*'
     - '*\pipe\srvsvc*'
-  condition: SELECTION_1
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 637f689e-b4a5-4a86-be0e-0100a0a33ba2

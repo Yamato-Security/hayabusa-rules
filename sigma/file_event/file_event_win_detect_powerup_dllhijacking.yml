@@ -8,12 +8,15 @@ description: Powerup tool's Write Hijack DLL exploits DLL hijacking for privileg
   (debug.bat by default).
 detection:
   SELECTION_1:
-    Image: '*\powershell.exe'
+    EventID: 11
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\powershell.exe'
+  SELECTION_4:
     TargetFilename: '*.bat'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- Pentest
 - Any powershell script that creates bat files
 id: 602a1f13-c640-4d73-b053-be9a2fa58b96
 level: high

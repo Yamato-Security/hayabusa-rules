@@ -6,14 +6,18 @@ description: Detects suspect access to svchost process memory such as that used 
   Invoke-Phantom to kill the winRM windows event logging service.
 detection:
   SELECTION_1:
-    TargetImage: '*\WINDOWS\System32\svchost.exe'
+    EventID: 10
   SELECTION_2:
-    GrantedAccess: '0x1F3FFF'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    TargetImage: '*\WINDOWS\System32\svchost.exe'
+  SELECTION_4:
+    GrantedAccess: '0x1F3FFF'
+  SELECTION_5:
     CallTrace: '*UNKNOWN*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
-- unknown
+- Unknown
 id: 166e9c50-8cd9-44af-815d-d1f0c0e90dde
 level: high
 logsource:

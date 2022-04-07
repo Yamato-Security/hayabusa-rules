@@ -6,8 +6,12 @@ description: Detects the creation of files that contain Kerberos tickets based o
   an extension used by the popular tool Mimikatz
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename: '*.kirbi'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unlikely
 id: 9e099d99-44c2-42b6-a6d8-54c3545cab29

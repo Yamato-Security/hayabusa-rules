@@ -5,8 +5,12 @@ date: 2020/10/06
 description: Detecting Code injection with PowerShell in another process
 detection:
   SELECTION_1:
+    EventID: 8
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     SourceImage: '*\powershell.exe'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: eeb2e3dc-c1f4-40dd-9bd5-149ee465ad50

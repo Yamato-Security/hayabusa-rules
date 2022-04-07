@@ -5,12 +5,18 @@ date: 2020/05/10
 description: Detecting use PsExec via Pipe Creation/Access to pipes
 detection:
   SELECTION_1:
+    EventID: 17
+  SELECTION_2:
+    EventID: 18
+  SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
     PipeName:
     - psexec*
     - paexec*
     - remcom*
     - csexec*
-  condition: SELECTION_1
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate Administrator activity
 id: 9e77ed63-2ecf-4c7b-b09d-640834882028

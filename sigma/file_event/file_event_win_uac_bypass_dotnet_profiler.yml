@@ -6,10 +6,14 @@ description: Detects the pattern of UAC Bypass using .NET Code Profiler and mmc.
   DLL hijacking (UACMe 39)
 detection:
   SELECTION_1:
-    TargetFilename: C:\Users\\*
+    EventID: 11
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFilename: C:\Users\\*
+  SELECTION_4:
     TargetFilename: '*\AppData\Local\Temp\pe386.dll'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 93a19907-d4f9-4deb-9f91-aac4692776a6

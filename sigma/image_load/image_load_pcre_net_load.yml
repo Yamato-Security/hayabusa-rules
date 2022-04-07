@@ -5,8 +5,12 @@ date: 2020/10/29
 description: Detects processes loading modules related to PCRE.NET package
 detection:
   SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded: '*\AppData\Local\Temp\ba9ea7344a4a5f591d6e5dc32a13494b\\*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 84b0a8f3-680b-4096-a45b-e9a89221727c

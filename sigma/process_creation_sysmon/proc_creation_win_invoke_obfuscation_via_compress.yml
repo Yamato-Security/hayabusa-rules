@@ -1,0 +1,38 @@
+
+title: Invoke-Obfuscation COMPRESS OBFUSCATION
+author: Timur Zinniatullin, oscd.community
+date: 2020/10/18
+description: Detects Obfuscated Powershell via COMPRESS OBFUSCATION
+detection:
+  SELECTION_1:
+    CommandLine: '*new-object*'
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    CommandLine: '*new-object*'
+  SELECTION_4:
+    CommandLine: '*text.encoding]::ascii*'
+  SELECTION_5:
+    CommandLine:
+    - '*system.io.compression.deflatestream*'
+    - '*system.io.streamreader*'
+  SELECTION_6:
+    CommandLine: '*readtoend'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
+falsepositives:
+- Unknown
+id: 7eedcc9d-9fdb-4d94-9c54-474e8affc0c7
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/07
+references:
+- https://github.com/Neo23x0/sigma/issues/1009
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1027
+- attack.execution
+- attack.t1059.001

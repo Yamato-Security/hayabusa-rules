@@ -6,6 +6,10 @@ description: Detects the creation of files that look like exports of the local S
   (Security Account Manager)
 detection:
   SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     TargetFilename:
     - '*\Temp\sam'
     - '*\sam.sav'
@@ -18,9 +22,9 @@ detection:
     - '*\AppData\Roaming\sam'
     - '*_ShadowSteal.zip'
     - '*\Documents\SAM.export'
-  SELECTION_2:
+  SELECTION_4:
     TargetFilename: c:\sam
-  SELECTION_3:
+  SELECTION_5:
     TargetFilename:
     - '*\hive_sam_*'
     - '*\sam.save*'
@@ -29,7 +33,7 @@ detection:
     - '*\sam_backup*'
     - '*\sam.bck*'
     - '*\sam.backup*'
-  condition: (SELECTION_1 or SELECTION_2 or SELECTION_3)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Rare cases of administrative activity
 id: 4e87b8e2-2ee9-4b2a-a715-4727d297ece0

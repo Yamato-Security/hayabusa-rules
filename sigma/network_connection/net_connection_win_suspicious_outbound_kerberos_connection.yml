@@ -6,17 +6,22 @@ description: Detects suspicious outbound network activity via kerberos default p
   indicating possible lateral movement or first stage PrivEsc via delegation.
 detection:
   SELECTION_1:
-    DestinationPort: 88
+    EventID: 3
   SELECTION_2:
-    Initiated: 'true'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    DestinationPort: 88
+  SELECTION_4:
+    Initiated: 'true'
+  SELECTION_5:
     Image:
     - '*\lsass.exe'
     - '*\opera.exe'
     - '*\chrome.exe'
     - '*\firefox.exe'
     - '*\tomcat\bin\tomcat8.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
 - Other browsers
 id: e54979bd-c5f9-4d6c-967b-a04b19ac4c74

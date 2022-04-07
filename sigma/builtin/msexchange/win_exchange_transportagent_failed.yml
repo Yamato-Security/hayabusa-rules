@@ -12,7 +12,7 @@ detection:
   - Install-TransportAgent
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- legitimate installations of exchange TransportAgents. AssemblyPath is a good indicator
+- Legitimate installations of exchange TransportAgents. AssemblyPath is a good indicator
   for this.
 fields:
 - AssemblyPath

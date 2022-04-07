@@ -5,8 +5,14 @@ date: 2019/09/12
 description: Detects execution of PowerShell
 detection:
   SELECTION_1:
+    EventID: 17
+  SELECTION_2:
+    EventID: 18
+  SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
     PipeName: \PSHost*
-  condition: SELECTION_1
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: ac7102b4-9e1e-4802-9b4f-17c5524c015c
