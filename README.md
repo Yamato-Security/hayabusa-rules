@@ -5,8 +5,17 @@
  [ <b>English</b> ] | [<a href="README-Japanese.md">日本語</a>]
 </div>
 
+# About Hayabusa-Rules
+
+This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabusa) detections rules.
+
+# Table of Contents
+
+- [About Hayabusa-Rules](#about-hayabusa-rules)
+- [Table of Contents](#table-of-contents)
 - [About creating rule files](#about-creating-rule-files)
   - [Rule file format](#rule-file-format)
+- [Details Abbreviations](#details-abbreviations)
 - [Detection field](#detection-field)
   - [Selection fundamentals](#selection-fundamentals)
     - [How to write AND and OR logic](#how-to-write-and-and-or-logic)
@@ -40,7 +49,7 @@
 - [Converting sigma rules to hayabusa format](#converting-sigma-rules-to-hayabusa-format)
 
 # About creating rule files
-Hayabusa detection rules are written in [YAML](https://en.wikipedia.org/wiki/YAML) format.
+Hayabusa detection rules are written in [YAML](https://en.wikipedia.org/wiki/YAML) format with a file extension of `.yml`. (`.yaml` files will be ignored.)
 They are a subset of sigma rules with some additions. We are trying to make them as close to sigma rules as possible so that it is easy to convert Hayabusa rules back to sigma to give back to the community.
 Hayabusa rules can express complex detection rules by combining not only simple string matching but also regular expressions, `AND`, `OR`, and other conditions.
 In this section, we will explain how to write Hayabusa detection rules.
@@ -51,60 +60,71 @@ Example:
 ```yaml
 #Author section
 author: Zach Mathis
-date: 2020/11/08
-modified: 2021/12/22
+date: 2022/03/22
+modified: 2022/03/22
 
 #Alert section
-title: Process Ran With High Privilege
-title_jp: プロセスが高い権限を使った
-details: 'Process: %ProcessName%  :  User: %SubjectUserName%  :  LogonID: %SubjectLogonId%'
-details_jp: 'プロセス名: %ProcessName%  :  ユーザ名: %SubjectUserName%  :  ログオンID: %SubjectLogonId%'
+title: Possible Timestomping
+details: 'Path: %TargetFilename% | Process: %Image% | CreationUtcTime: %CreationUtcTime% | PreviousCreationUtcTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
 description: |
-    Malware may generate a 4673 event (A privileged service was called) when dumping hashes or wiping disk. 
-    For example, mimikatz will generate 4 logs using SeTcbPrivilege (Act as part of the OS.) 
-    Disk wipers like bcwipe will also generate this.
-    More legitimate filepaths may have to be added to the filter.
-    This is marked as a medium alert as there is a high possibility for false positives.
-description_jp: 
+    The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
+    This event helps tracking the real creation time of a file. 
+    Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system. 
+    Note that many processes legitimately change the creation time of a file; it does not necessarily indicate malicious activity.
 
 #Rule section
-id: 5b6e58ee-c231-4a54-9eee-af2577802e08
-level: medium
+id: f03e34c4-6432-4a30-9ae2-76ae6329399a
+level: low
 status: stable
+logsource:
+    product: windows
+    service: sysmon
+    definition: Sysmon needs to be installed and configured.
 detection:
-    selection:
-        Channel: Security
-        EventID: 4673
-    filter: 
-        - ProcessName: C:\Windows\System32\net.exe
-        - ProcessName: C:\Windows\System32\lsass.exe
-        - ProcessName: C:\Windows\System32\audiodg.exe
-        - ProcessName: C:\Windows\System32\svchost.exe
-        - ProcessName: C:\Windows\System32\mmc.exe
-        - ProcessName: C:\Windows\System32\net.exe
-        - ProcessName: C:\Windows\explorer.exe
-        - ProcessName: C:\Windows\System32\SettingSyncHost.exe
-        - ProcessName: C:\Windows\System32\sdiagnhost.exe
-        - ProcessName: C:\Windows\System32\dwm.exe
-        - ProcessName: C:\Windows\System32\WinSAT.exe
-        - ProcessName|endswith: ngentask.exe
-        - ProcessName: C:\Windows\System32\taskhostw.exe
-        - ProcessName|startswith: C:\Program Files
-        - SubjectUserName: LOCAL SERVICE
-    condition: selection and not filter
+    selection_basic:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 2
+    condition: selection_basic
 falsepositives:
-    - normal system usage
+    - unknown
 tags:
-    - attack.credential_access
-    - attack.t1003.001
-    - attack.t1561
-    - attack.impact
+    - t1070.006
+    - attack.defense_evasion
 references:
-    - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4673
-    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4673
-sample-evtx: ./sample-evtx/DeepBlueCLI/mimikatz-privesc-hashdump.evtx
-logsource: default
+    - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+    - https://attack.mitre.org/techniques/T1070/006/
 ruletype: Hayabusa
+
+#Sample XML Event
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+    <System>
+        <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"/>
+        <EventID>2</EventID>
+        <Version>4</Version>
+        <Level>4</Level>
+        <Task>2</Task>
+        <Opcode>0</Opcode>
+        <Keywords>0x8000000000000000</Keywords>
+        <TimeCreated SystemTime="2019-04-30T10:13:42.052113000Z"/>
+        <EventRecordID>8931</EventRecordID>
+        <Correlation/>
+        <Execution ProcessID="1956" ThreadID="1636"/>
+        <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+        <Computer>IEWIN7</Computer>
+        <Security UserID="S-1-5-18"/>
+    </System>
+    <EventData>
+        <Data Name="RuleName"/>
+        <Data Name="UtcTime">2019-04-30 10:13:42.052</Data>
+        <Data Name="ProcessGuid">{365ABB72-16CD-5CC8-0000-0010483A0600}</Data>
+        <Data Name="ProcessId">2836</Data>
+        <Data Name="Image">C:\Windows\Explorer.EXE</Data>
+        <Data Name="TargetFilename">C:\Users\IEUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\bs.ps1</Data>
+        <Data Name="CreationUtcTime">2016-02-02 15:30:02.000</Data>
+        <Data Name="PreviousCreationUtcTime">2019-04-30 10:12:45.583</Data>
+    </EventData>
+    </Event>
 ```
 
 > ## Author section
@@ -116,7 +136,7 @@ ruletype: Hayabusa
 > ## Alert section
 * **title [required]**: Rule file title. This will also be the name of the alert that gets displayed so the briefer the better. (Should not be longer than 85 characters.)
 * **title_jp** [optional]: The title in Japanese.
-* details [optional]: The details of the alert that gets displayed. Please output any fields in the Windows event log that are useful for analysis. Fields are seperated by `"  :  "` (two spaces on both sides). Field placeholders are enclosed with a `%` (Example: `%MemberName%`) and need to be defined in `rules/config/eventkey_alias.txt`. (Explained below.)
+* details [optional]: The details of the alert that gets displayed. Please output any fields in the Windows event log that are useful for analysis. Fields are seperated by `" | "`. Field placeholders are enclosed with a `%` (Example: `%MemberName%`) and need to be defined in `rules/config/eventkey_alias.txt`. (Explained below.)
 * **details_jp** [optional]: The details message in Japanese.
 * **description** [optional]: A description of the rule. This does not get displayed so you can make this long and detailed.
 * **description_jp** [optional]: The description in Japanese.
@@ -125,6 +145,7 @@ ruletype: Hayabusa
 * **id [required]**: A randomly generated version 4 UUID used to uniquely identify the rule. You can generate one [here](https://www.uuidgenerator.net/version4).
 * **level [required]**: Severity level based on [sigma's definition](https://github.com/SigmaHQ/sigma/wiki/Specification). Please write one of the following: `informational`,`low`,`medium`,`high`,`critical`
 * **status[required]**: `stable` for tested rules and `testing` for rules that need to be tested.
+* **logsource [required]**: Same as the sigma logsource in order to be compatible with sigma rules.
 * **detection  [required]**: The detection logic goes here. (Explained below.)
 * **falsepositives [required]**: The possibilities for false positives. For example: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`. If it is unknown, please write `unknown`.
 * **tags** [optional]: If the technique is a [LOLBINS/LOLBAS](https://lolbas-project.github.io/) technique, please add the `lolbas` tag. If the alert can be mapped to a technique in the [MITRE ATT&CK](https://attack.mitre.org/) framework, please add the tactic ID (Example: `attack.t1098`) and any applicable tactics below:
@@ -143,13 +164,25 @@ ruletype: Hayabusa
     * `attack.exfiltration` -> Exfiltration
     * `attack.resource_development` -> Resource Development  
 * **references** [optional]: Any links to references.
-* **sample-evtx [required]**: File path or URL to an event log file that this rule will detect.
-* **logsource [required]**: The source of where the log comes from. Please specify one of the following:
-  * `default`: For logs that are turned on in Windows by default.
-  * `non-default`: For logs that need to be turned on through group policy, security baselines, etc...
-  * `sysmon`: Logs that require sysmon to be installed.
-* **non-default-setting** [optional]: Explanation of how to turn on the log setting for `non-default` log sources.
 * **ruletype [required]**: `Hayabusa` for hayabusa rules. Rules automatically converted from sigma Windows rules will be `Sigma`.
+
+> ## Sample XML Event
+* **sample-evtx [required]**: Starting forward, we ask rule authors to include sample XML events for their rules.
+
+# Details Abbreviations
+The following abbreviations are used in the details output in order to make the output as concise as possible:
+
+* `Addr` -> Address
+* `Auth` -> Authentication
+* `Cmd` -> Command
+* `Dst` -> Destination
+* `LID` -> Logon ID
+* `Src` -> Source
+* `Svr` -> Server
+* `Svc` -> Service
+* `Tgt` -> Target
+* `PID` -> Process ID
+* `PGUID` -> Process GUID (Global Unique ID)
 
 # Detection field
 ## Selection fundamentals
@@ -228,7 +261,7 @@ detection:
 ```
 
 #### Caution: Undefined Eventkey Aliases
-Not all eventkey aliases are defined in `rules/config/eventkey_alias.txt`. If you are not getting the correct data in the `details`(Alert details) message, and instead are getting results like `%EventID%` or if the selection in your detection logic is not working properly, then you need to update `rules/config/eventkey_alias.txt` with a new alias.
+Not all eventkey aliases are defined in `rules/config/eventkey_alias.txt`. If you are not getting the correct data in the `details`(Alert details) message, and instead are getting results like `%EventID%` or if the selection in your detection logic is not working properly, then you need to update `rules/config/eventkey_alias.txt` with a new alias. 
 
 ### How to use XML attributes in conditions
 XML elements may have attributes set by adding a space to the element. For example, `Name` in `Provider Name` below is an XML attribute of the `Provider` element. 

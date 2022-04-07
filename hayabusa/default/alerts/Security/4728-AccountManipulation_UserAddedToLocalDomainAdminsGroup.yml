@@ -1,17 +1,20 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2021/12/22
+modified: 2022/03/22
 
 title: User Added To Local Domain Admins Group
 title_jp: ユーザがローカルドメイン管理者グループに追加された
-details: 'SID: %MemberSid%  :  Group: %TargetUserName%  :  LogonID: %SubjectLogonId%'
-details_jp: 'SID: %MemberSid%  :  グループ名: %TargetUserName%  :  ログオンID: %SubjectLogonId%'
+details: 'SID: %MemberSid% | Group: %TargetUserName% | LID: %SubjectLogonId%'
+details_jp: 'SID: %MemberSid% | グループ名: %TargetUserName% | ログオンID: %SubjectLogonId%'
 description: A user was added to the local Domain Admins group.
 description_jp: ユーザがドメイン管理者グループに追加された。
 
 id: bc58e432-959f-464d-812e-d60ce5d46fa1
 level: high
 status: stable
+logsource:
+    product: windows
+    service: security
 detection:
     selection:
         Channel: Security
@@ -26,5 +29,4 @@ tags:
 references:
     - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=4732
 sample-evtx: ./sample-evtx/EVTX-to-MITRE-Attack/TA0003-Persistence/T1098.xxx-Account manipulation/ID4728-4756-Member added to sensitive domain groups.evtx
-logsource: default
 ruletype: Hayabusa

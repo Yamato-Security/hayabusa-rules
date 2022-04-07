@@ -1,11 +1,11 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2021/11/26
+modified: 2022/03/22
 
 title: Logon Type 10 - RDP (Remote Interactive)
 title_jp: ログオンタイプ 10 - RDP (リモートインタラクティブ)
-details: 'User: %TargetUserName%  :  Workstation: %WorkstationName%  :  IP Address: %IpAddress%  :  LogonID: %TargetLogonId%  :  (Warning: Credentials are stored in memory)'
-details_jp: 'ユーザ: %TargetUserName%  :  端末: %WorkstationName%  :  IPアドレス: %IpAddress%  :  ログオンID: %TargetLogonId%  :  (注意: 資格情報がメモリに格納される)'
+details: 'User: %TargetUserName% | Computer: %WorkstationName% | IP Addr: %IpAddress% | LID: %TargetLogonId% | (Warning: Credentials are stored in memory)'
+details_jp: 'ユーザ: %TargetUserName% | 端末: %WorkstationName% | IPアドレス: %IpAddress% | ログオンID: %TargetLogonId% | (注意: 資格情報がメモリに格納される)'
 description: Prints logon information. 
 description_jp: Prints logon information.
 
@@ -23,5 +23,4 @@ falsepositives:
 tags:
 references:
 sample-evtx: 
-logsource: default
 ruletype: Hayabusa

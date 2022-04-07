@@ -5,8 +5,17 @@
   [<a href="README.md">English</a>] | [<b>日本語</b>]
 </div>
 
+# Hayabusa-Rulesについて
+
+こちらは、[hayabusa](https://github.com/Yamato-Security/hayabusa)の検知ルールのレポジトリです。
+
+# 目次
+
+- [Hayabusa-Rulesについて](#hayabusa-rulesについて)
+- [目次](#目次)
 - [ルールファイル作成について](#ルールファイル作成について)
   - [ルールファイル形式](#ルールファイル形式)
+- [Details出力の省略](#details出力の省略)
 - [detectionフィールド](#detectionフィールド)
   - [selectionの基礎知識](#selectionの基礎知識)
     - [論理積(AND)と論理和(OR)の書き方](#論理積andと論理和orの書き方)
@@ -38,8 +47,9 @@
     - [OKな例：](#okな例)
     - [良い例：](#良い例-1)
 - [SigmaルールからHayabusaルール形式への自動変換](#sigmaルールからhayabusaルール形式への自動変換)
+
 # ルールファイル作成について
-Hayabusaの検知ルールは[YAML](https://en.wikipedia.org/wiki/YAML) 形式で記述されています。
+Hayabusaの検知ルールは[YAML](https://en.wikipedia.org/wiki/YAML)形式で記述され、ファイル拡張子は必ず`.yml`にしてください。(`.yaml`ファイルは無視されます。)
 単純な文字列のマッチングだけでなく、正規表現や`AND`、`OR`などの条件を組み合わせて複雑な検知ルールを表現することができます。
 本節ではHayabusaの検知ルールの書き方について説明します。
 
@@ -49,60 +59,71 @@ Hayabusaの検知ルールは[YAML](https://en.wikipedia.org/wiki/YAML) 形式�
 ```yaml
 #作者セクション
 author: Zach Mathis
-date: 2020/11/08
-modified: 2021/12/22
+date: 2022/03/22
+modified: 2022/03/22
 
 #アラートセクション
-title: Process Ran With High Privilege
-title_jp: プロセスが高い権限を使った
-details: 'Process: %ProcessName%  :  User: %SubjectUserName%  :  LogonID: %SubjectLogonId%'
-details_jp: 'プロセス名: %ProcessName%  :  ユーザ名: %SubjectUserName%  :  ログオンID: %SubjectLogonId%'
+title: Possible Timestomping
+details: 'Path: %TargetFilename% | Process: %Image% | CreationUtcTime: %CreationUtcTime% | PreviousCreationUtcTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
 description: |
-    Malware may generate a 4673 event (A privileged service was called) when dumping hashes or wiping disk. 
-    For example, mimikatz will generate 4 logs using SeTcbPrivilege (Act as part of the OS.) 
-    Disk wipers like bcwipe will also generate this.
-    More legitimate filepaths may have to be added to the filter.
-    This is marked as a medium alert as there is a high possibility for false positives.
-description_jp: 
+    The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
+    This event helps tracking the real creation time of a file. 
+    Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system. 
+    Note that many processes legitimately change the creation time of a file; it does not necessarily indicate malicious activity.
 
 #ルールセクション
-id: 5b6e58ee-c231-4a54-9eee-af2577802e08
-level: medium
+id: f03e34c4-6432-4a30-9ae2-76ae6329399a
+level: low
 status: stable
+logsource:
+    product: windows
+    service: sysmon
+    definition: Sysmon needs to be installed and configured.
 detection:
-    selection:
-        Channel: Security
-        EventID: 4673
-    filter: 
-        - ProcessName: C:\Windows\System32\net.exe
-        - ProcessName: C:\Windows\System32\lsass.exe
-        - ProcessName: C:\Windows\System32\audiodg.exe
-        - ProcessName: C:\Windows\System32\svchost.exe
-        - ProcessName: C:\Windows\System32\mmc.exe
-        - ProcessName: C:\Windows\System32\net.exe
-        - ProcessName: C:\Windows\explorer.exe
-        - ProcessName: C:\Windows\System32\SettingSyncHost.exe
-        - ProcessName: C:\Windows\System32\sdiagnhost.exe
-        - ProcessName: C:\Windows\System32\dwm.exe
-        - ProcessName: C:\Windows\System32\WinSAT.exe
-        - ProcessName|endswith: ngentask.exe
-        - ProcessName: C:\Windows\System32\taskhostw.exe
-        - ProcessName|startswith: C:\Program Files
-        - SubjectUserName: LOCAL SERVICE
-    condition: selection and not filter
+    selection_basic:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 2
+    condition: selection_basic
 falsepositives:
-    - normal system usage
+    - unknown
 tags:
-    - attack.credential_access
-    - attack.t1003.001
-    - attack.t1561
-    - attack.impact
+    - t1070.006
+    - attack.defense_evasion
 references:
-    - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4673
-    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4673
-sample-evtx: ./sample-evtx/DeepBlueCLI/mimikatz-privesc-hashdump.evtx
-logsource: default
+    - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+    - https://attack.mitre.org/techniques/T1070/006/
 ruletype: Hayabusa
+
+#XMLイベントのサンプル
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+    <System>
+        <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"/>
+        <EventID>2</EventID>
+        <Version>4</Version>
+        <Level>4</Level>
+        <Task>2</Task>
+        <Opcode>0</Opcode>
+        <Keywords>0x8000000000000000</Keywords>
+        <TimeCreated SystemTime="2019-04-30T10:13:42.052113000Z"/>
+        <EventRecordID>8931</EventRecordID>
+        <Correlation/>
+        <Execution ProcessID="1956" ThreadID="1636"/>
+        <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+        <Computer>IEWIN7</Computer>
+        <Security UserID="S-1-5-18"/>
+    </System>
+    <EventData>
+        <Data Name="RuleName"/>
+        <Data Name="UtcTime">2019-04-30 10:13:42.052</Data>
+        <Data Name="ProcessGuid">{365ABB72-16CD-5CC8-0000-0010483A0600}</Data>
+        <Data Name="ProcessId">2836</Data>
+        <Data Name="Image">C:\Windows\Explorer.EXE</Data>
+        <Data Name="TargetFilename">C:\Users\IEUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\bs.ps1</Data>
+        <Data Name="CreationUtcTime">2016-02-02 15:30:02.000</Data>
+        <Data Name="PreviousCreationUtcTime">2019-04-30 10:12:45.583</Data>
+    </EventData>
+    </Event>
 ```
 
 > ## 作者セクション
@@ -114,7 +135,7 @@ ruletype: Hayabusa
 > ## アラートセクション
 * **title [必須]**: ルールファイルのタイトル。これは表示されるアラートの名前にもなるので、簡潔であるほどよいです。(85文字以下でなければなりません。)
 * **title_jp** [オプション]: 日本語のタイトルです。
-* **details** [オプション]: 表示されるアラートの詳細です。Windowsイベントログの中で解析に有効なフィールドがあれば出力してください。フィールドは `" : "` で区切られます（両側ともスペース2つ）。フィールドのプレースホルダは `%` で囲まれ (例: `%MemberName%`) 、`rules/config_eventkey_alias.txt` で定義する必要があります。(以下で説明します)
+* **details** [オプション]: 表示されるアラートの詳細です。Windowsイベントログの中で解析に有効なフィールドがあれば出力してください。フィールドは `" | "` で区切られます。フィールドのプレースホルダは `%` で囲まれ (例: `%MemberName%`) 、`rules/config_eventkey_alias.txt` で定義する必要があります。(以下で説明します)
 * **details_jp** [オプション]: 日本語の出力メッセージ。
 * **description** [オプション]: ルールの説明。これは表示されないので、長く詳細に記述することができます。
 * **description_jp** [オプション]: 日本語の説明文です。
@@ -123,6 +144,7 @@ ruletype: Hayabusa
 * **id [必須]**: ルールを一意に識別するために使用される、ランダムに生成されたバージョン4のUUIDです。 [ここ](https://www.uuidgenerator.net/version4) で生成することができます。
 * **level [必須]**: [sigmaルールの定義](https://github.com/SigmaHQ/sigma/wiki/Specification)に基づく重要度レベル。 以下のいずれかを記述してください。 `informational`,`low`,`medium`,`high`,`critical`
 * **status[必須]**: テスト済みのルールには `stable` を、テストが必要なルールには `testing` を指定します。
+* **logsource [required]**: Sigmaルールと互換性があるようにSigmaのlogsource定義と同様。
 * **detection  [必須]**: 検知ロジックはここに入ります。(以下で説明します。)
 * **falsepositives [必須]**: 誤検知の可能性について記載を行います。例: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`。 不明な場合は `unknown` と記述してください。
 * **tags** [オプション]: [LOLBINS/LOLBAS](https://lolbas-project.github.io/)という手法を利用している場合、`lolbas` タグを追加してください。アラートを[MITRE ATT&CK](https://attack.mitre.org/) フレームワークにマッピングできる場合は、以下のリストから該当するものを追加してください。戦術ID（例：`attack.t1098`）を指定することも可能です。
@@ -141,14 +163,26 @@ ruletype: Hayabusa
     * `attack.exfiltration` -> Exfiltration
     * `attack.resource_development` -> Resource Development 
 * **references** [オプション]: 参考文献への任意のリンク。
-* **sample-evtx [必須]**: このルールが検知するイベントログファイルへのファイルパスまたはURL。
-* **logsource [必須]**: ログの出所。以下のいずれかを指定してください。
-  * `default`: Windowsでデフォルトで有効になっているログの場合等
-  * `non-default`: グループポリシーやセキュリティベースラインなどで有効にする必要があるログ用。
-  * `sysmon`: sysmonのインストールが必要なログ。
-* **non-default-setting** [オプション]: `non-default` のログソースのログ設定をオンにする方法の説明です。
 * **ruletype [必須]**: Hayabusaルールには `Hayabusa` を指定します。SigmaのWindowsルールから自動変換されたルールは `Sigma` になります。
 
+> ## Sample XML Event
+* **sample-evtx [required]**: Starting forward, we ask rule authors to include sample XML events for their rules.
+
+# Details出力の省略
+できるだけ簡潔にするために、以下の略語を使用しています:
+
+* `Addr` -> Address
+* `Auth` -> Authentication
+* `Cmd` -> Command
+* `Dst` -> Destination
+* `LID` -> Logon ID
+* `Src` -> Source
+* `Svr` -> Server
+* `Svc` -> Service
+* `Tgt` -> Target
+* `PID` -> Process ID
+* `PGUID` -> Process GUID (Global Unique ID)
+  
 # detectionフィールド
 ## selectionの基礎知識
 まず、selectionの作り方の基本を説明します。
