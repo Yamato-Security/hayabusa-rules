@@ -1,0 +1,45 @@
+
+title: GlobalFlags Registry Persistence Mechanisms
+ruletype: Sigma
+author: Karneades, Jonhnathan Ribeiro
+date: 2018/04/11
+description: Detects persistence registry keys
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetObject:
+    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion*'
+  SELECTION_4:
+    TargetObject: '*\Image File Execution Options\\*'
+  SELECTION_5:
+    TargetObject: '*\GlobalFlag*'
+  SELECTION_6:
+    TargetObject: '*SilentProcessExit\\*'
+  SELECTION_7:
+    TargetObject: '*\ReportingMode*'
+  SELECTION_8:
+    TargetObject: '*SilentProcessExit\\*'
+  SELECTION_9:
+    TargetObject: '*\MonitorProcess*'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and ((SELECTION_4 and
+    SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)))
+falsepositives:
+- Unknown
+id: 36803969-5421-41ec-b92f-8500f79c23b0
+level: critical
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
+status: test
+tags:
+- attack.privilege_escalation
+- attack.persistence
+- attack.defense_evasion
+- attack.t1546.012
+- car.2013-01-002

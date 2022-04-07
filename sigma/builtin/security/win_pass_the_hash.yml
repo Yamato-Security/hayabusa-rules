@@ -7,24 +7,25 @@ description: Detects the attack technique pass the hash which is used to move la
   inside the network
 detection:
   SELECTION_1:
-    EventID: 4624
+    Channel: Security
   SELECTION_2:
-    EventID: 4625
+    EventID: 4624
   SELECTION_3:
-    LogonType: '3'
+    EventID: 4625
   SELECTION_4:
-    LogonProcessName: NtLmSsp
+    LogonType: '3'
   SELECTION_5:
-    WorkstationName: '%Workstations%'
+    LogonProcessName: NtLmSsp
   SELECTION_6:
-    ComputerName: '%Workstations%'
+    WorkstationName: '%Workstations%'
   SELECTION_7:
+    ComputerName: '%Workstations%'
+  SELECTION_8:
     TargetUserName: ANONYMOUS LOGON
-  condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) and  not (SELECTION_7))
+  condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7) and  not (SELECTION_8))
 falsepositives:
 - Administrator activity
-- Penetration tests
 id: f8d98d6c-7a07-4d74-b064-dd4a3c244528
 level: medium
 logsource:

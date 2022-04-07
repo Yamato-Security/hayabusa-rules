@@ -7,10 +7,14 @@ description: Detects usage of a PowerShell command to dump the live memory of a 
   machine
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Get-StorageDiagnosticInfo*'
+    EventID: 4104
   SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*Get-StorageDiagnosticInfo*'
+  SELECTION_4:
     ScriptBlockText: '*-IncludeLiveDump*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Diagnostics
 id: cd185561-4760-45d6-a63e-a51325112cae

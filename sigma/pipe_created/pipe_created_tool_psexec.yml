@@ -11,10 +11,12 @@ detection:
   SELECTION_2:
     EventID: 18
   SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
     PipeName: \PSEXESVC
-  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
 falsepositives:
-- unknown
+- Unknown
 fields:
 - EventID
 - CommandLine

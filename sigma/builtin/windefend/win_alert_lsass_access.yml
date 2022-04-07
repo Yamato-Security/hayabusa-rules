@@ -6,16 +6,18 @@ date: 2018/08/26
 description: Detects Access to LSASS Process
 detection:
   SELECTION_1:
-    EventID: 1121
+    Channel: Microsoft-Windows-Windows Defender/Operational
   SELECTION_2:
-    Path: '*\lsass.exe'
+    EventID: 1121
   SELECTION_3:
-    ProcessName: C:\Windows\Temp\asgard2-agent\\*
+    Path: '*\lsass.exe'
   SELECTION_4:
+    ProcessName: C:\Windows\Temp\asgard2-agent\\*
+  SELECTION_5:
     ProcessName:
     - '*\thor64.exe'
     - '*\thor.exe'
-  SELECTION_5:
+  SELECTION_6:
     ProcessName:
     - C:\Windows\System32\atiesrxx.exe
     - C:\Windows\System32\CompatTelRunner.exe
@@ -25,14 +27,14 @@ detection:
     - C:\Windows\System32\Taskmgr.exe
     - C:\Windows\System32\wbem\WmiPrvSE.exe
     - C:\Windows\SysWOW64\msiexec.exe
-  SELECTION_6:
+  SELECTION_7:
     ProcessName:
     - C:\Windows\System32\\DriverStore\\*
     - C:\WINDOWS\Installer\\*
     - C:\Program Files\\*
     - C:\Program Files (x86)\\*
-  condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3 and SELECTION_4)
-    or (SELECTION_5) or (SELECTION_6)))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4
+    and SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Google Chrome GoogleUpdate.exe
 - Some Taskmgr.exe related activity

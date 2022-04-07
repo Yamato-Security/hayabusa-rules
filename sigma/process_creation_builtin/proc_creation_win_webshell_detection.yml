@@ -1,0 +1,99 @@
+
+title: Webshell Detection With Command Line Keywords
+ruletype: Sigma
+author: Florian Roth, Jonhnathan Ribeiro, Anton Kutepov, oscd.community
+date: 2017/01/01
+description: Detects certain command line parameters often used during reconnaissance
+  activity via web shells
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_10:
+    NewProcessName: '*\ping.exe'
+  SELECTION_11:
+    CommandLine: '* -n *'
+  SELECTION_12:
+    CommandLine:
+    - '*&cd&echo*'
+    - '*cd /d *'
+  SELECTION_13:
+    NewProcessName: '*\wmic.exe'
+  SELECTION_14:
+    CommandLine: '* /node:*'
+  SELECTION_15:
+    NewProcessName:
+    - '*\whoami.exe'
+    - '*\systeminfo.exe'
+    - '*\quser.exe'
+    - '*\ipconfig.exe'
+    - '*\pathping.exe'
+    - '*\tracert.exe'
+    - '*\netstat.exe'
+    - '*\schtasks.exe'
+    - '*\vssadmin.exe'
+    - '*\wevtutil.exe'
+    - '*\tasklist.exe'
+  SELECTION_16:
+    CommandLine:
+    - '* Test-NetConnection *'
+    - '*dir \\*'
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    ParentProcessName:
+    - '*\w3wp.exe'
+    - '*\php-cgi.exe'
+    - '*\nginx.exe'
+    - '*\httpd.exe'
+    - '*\caddy.exe'
+    - '*\ws_tomcatservice.exe'
+  SELECTION_4:
+    ParentProcessName:
+    - '*\java.exe'
+    - '*\javaw.exe'
+  SELECTION_5:
+    ParentProcessName:
+    - '*-tomcat-*'
+    - '*\tomcat*'
+  SELECTION_6:
+    ParentProcessName:
+    - '*\java.exe'
+    - '*\javaw.exe'
+  SELECTION_7:
+    CommandLine:
+    - '*catalina.jar*'
+    - '*CATALINA_HOME*'
+  SELECTION_8:
+    NewProcessName:
+    - '*\net.exe'
+    - '*\net1.exe'
+  SELECTION_9:
+    CommandLine:
+    - '* user *'
+    - '* use *'
+    - '* group *'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7)) and ((SELECTION_8 and SELECTION_9) or (SELECTION_10
+    and SELECTION_11) or SELECTION_12 or (SELECTION_13 and SELECTION_14) or SELECTION_15
+    or SELECTION_16))
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+- ParentCommandLine
+id: bed2a484-9348-4143-8a8a-b801c979301c
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2021/03/17
+references:
+- https://www.fireeye.com/blog/threat-research/2013/08/breaking-down-the-china-chopper-web-shell-part-ii.html
+- https://unit42.paloaltonetworks.com/bumblebee-webshell-xhunt-campaign/
+status: experimental
+tags:
+- attack.persistence
+- attack.t1505.003
+- attack.t1018
+- attack.t1033
+- attack.t1087

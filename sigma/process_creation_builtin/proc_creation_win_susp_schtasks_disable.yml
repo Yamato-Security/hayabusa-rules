@@ -1,0 +1,38 @@
+
+title: Disable Important Scheduled Task
+ruletype: Sigma
+author: frack113
+date: 2021/12/26
+description: Adversaries may stop services or processes in order to conduct Data Destruction
+  or Data Encrypted for Impact on the data stores of services like Exchange and SQL
+  Server.
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    NewProcessName: '*\schtasks.exe'
+  SELECTION_4:
+    CommandLine: '*/Change*'
+  SELECTION_5:
+    CommandLine: '*/TN*'
+  SELECTION_6:
+    CommandLine: '*/disable*'
+  SELECTION_7:
+    CommandLine: '*\Microsoft\Windows\SystemRestore\SR*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Unknown
+id: 9ac94dc8-9042-493c-ba45-3b5e7c86b980
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1490/T1490.md#atomic-test-8---windows---disable-the-sr-scheduled-task
+status: experimental
+tags:
+- attack.impact
+- attack.t1489

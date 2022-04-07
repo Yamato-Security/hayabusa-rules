@@ -1,0 +1,27 @@
+
+title: Suspicious Windows Update Agent Empty Cmdline
+ruletype: Sigma
+author: Florian Roth
+date: 2022/02/26
+description: Detects suspicious Windows Update Agent activity in which a wuauclt.exe
+  process command line doesn't contain any command line flags
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\Wuauclt.exe'
+  SELECTION_4:
+    CommandLine: '*\Wuauclt.exe'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 52d097e2-063e-4c9c-8fbb-855c8948d135
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://redcanary.com/blog/blackbyte-ransomware/
+status: experimental

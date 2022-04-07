@@ -8,15 +8,17 @@ description: backdooring domain object to grant the rights associated with DCSyn
   Extended Right cmdlet, will allow to re-obtain the pwd hashes of any user/computer
 detection:
   SELECTION_1:
-    EventID: 5136
+    Channel: Security
   SELECTION_2:
-    AttributeLDAPDisplayName: ntSecurityDescriptor
+    EventID: 5136
   SELECTION_3:
+    AttributeLDAPDisplayName: ntSecurityDescriptor
+  SELECTION_4:
     AttributeValue:
     - '*1131f6ad-9c07-11d1-f79f-00c04fc2dcd2*'
     - '*1131f6aa-9c07-11d1-f79f-00c04fc2dcd2*'
     - '*89e95b76-444d-4c62-991a-0facbeda640c*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - New Domain Controller computer account, check user SIDs within the value attribute
   of event 5136 and verify if it's a regular user or DC computer account.

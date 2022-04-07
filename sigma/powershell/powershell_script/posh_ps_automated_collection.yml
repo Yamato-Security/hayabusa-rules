@@ -7,6 +7,10 @@ description: Once established within a system or network, an adversary may use a
   techniques for collecting internal data.
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*.doc*'
     - '*.docx*'
@@ -17,13 +21,14 @@ detection:
     - '*.rtf*'
     - '*.pdf*'
     - '*.txt*'
-  SELECTION_2:
-    ScriptBlockText: '*Get-ChildItem*'
-  SELECTION_3:
-    ScriptBlockText: '* -Recurse *'
   SELECTION_4:
+    ScriptBlockText: '*Get-ChildItem*'
+  SELECTION_5:
+    ScriptBlockText: '* -Recurse *'
+  SELECTION_6:
     ScriptBlockText: '* -Include *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: c1dda054-d638-4c16-afc8-53e007f3fbc5

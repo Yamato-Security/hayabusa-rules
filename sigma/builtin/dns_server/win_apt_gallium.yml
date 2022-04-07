@@ -7,8 +7,10 @@ description: Detects artefacts associated with activity group GALLIUM - Microsof
   Threat Intelligence Center indicators released in December 2019.
 detection:
   SELECTION_1:
-    EventID: 257
+    Channel: DNS Server
   SELECTION_2:
+    EventID: 257
+  SELECTION_3:
     QNAME:
     - asyspy256.ddns.net
     - hotkillmail9sddcc.ddns.net
@@ -17,9 +19,9 @@ detection:
     - sz2016rose.ddns.net
     - dffwescwer4325.myftp.biz
     - cvdfhjh1231.ddns.net
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- unknown
+- Unknown
 id: 3db10f25-2527-4b79-8d4b-471eb900ee29
 level: high
 logsource:

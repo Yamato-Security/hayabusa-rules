@@ -1,0 +1,37 @@
+
+title: Shells Spawn by Java
+ruletype: Sigma
+author: Andreas Hunkeler (@Karneades)
+date: 2021/12/17
+description: Detects shell spawn from Java host process, which could a maintenance
+  task or some kind of exploitation (e.g. log4j exploitation)
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    ParentImage: '*\java.exe'
+  SELECTION_4:
+    Image:
+    - '*\cmd.exe'
+  SELECTION_5:
+    ParentImage: '*build*'
+  SELECTION_6:
+    CommandLine: '*build*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5 and SELECTION_6))
+falsepositives:
+- Legitimate calls to system binaries
+- Company specific internal usage
+id: dff1e1cc-d3fd-47c8-bfc2-aeb878a754c0
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/01/12
+status: experimental
+tags:
+- attack.initial_access
+- attack.persistence
+- attack.privilege_escalation

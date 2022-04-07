@@ -10,12 +10,14 @@ detection:
   SELECTION_2:
     EventID: 16
   SELECTION_3:
-    State: Stopped
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_4:
+    State: Stopped
+  SELECTION_5:
   - Sysmon config state changed
-  condition: ((SELECTION_1 or SELECTION_2) and (SELECTION_3 or SELECTION_4))
+  condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and (SELECTION_4 or SELECTION_5))
 falsepositives:
-- legitimate administrative action
+- Legitimate administrative action
 id: 1f2b5353-573f-4880-8e33-7d04dcf97744
 level: high
 logsource:

@@ -7,16 +7,21 @@ description: Adversaries may gain persistence and elevate privileges by executin
   malicious content triggered by PowerShell profiles.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Add-Content*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*$profile*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*-Value*'
+    ScriptBlockText: '*Add-Content*'
   SELECTION_4:
+    ScriptBlockText: '*$profile*'
+  SELECTION_5:
+    ScriptBlockText: '*-Value*'
+  SELECTION_6:
     ScriptBlockText:
     - '*Start-Process*'
     - '*""*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: 05b3e303-faf0-4f4a-9b30-46cc13e69152

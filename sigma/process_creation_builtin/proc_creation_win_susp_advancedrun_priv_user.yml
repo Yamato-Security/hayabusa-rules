@@ -1,0 +1,38 @@
+
+title: Suspicious AdvancedRun Runas Priv User
+ruletype: Sigma
+author: Florian Roth
+date: 2022/01/20
+description: Detects the execution of AdvancedRun utitlity in the context of the TrustedInstaller
+  or SYSTEM account
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    CommandLine:
+    - '*/EXEFilename*'
+    - '*/CommandLine*'
+  SELECTION_4:
+    CommandLine:
+    - '* /RunAs 8 *'
+    - '* /RunAs 4 *'
+  SELECTION_5:
+    CommandLine:
+    - '*/RunAs 8'
+    - '*/RunAs 4'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5))
+falsepositives:
+- Unknown
+id: fa00b701-44c6-4679-994d-5a18afa8a707
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://twitter.com/splinter_code/status/1483815103279603714
+- https://medium.com/s2wblog/analysis-of-destructive-malware-whispergate-targeting-ukraine-9d5d158f19f3
+- https://elastic.github.io/security-research/malware/2022/01/01.operation-bleeding-bear/article/
+- https://www.winhelponline.com/blog/run-program-as-system-localsystem-account-windows/
+status: experimental

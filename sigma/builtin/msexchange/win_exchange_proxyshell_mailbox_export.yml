@@ -8,23 +8,25 @@ description: Detects a successful export of an Exchange mailbox to untypical dir
   assignment for it
 detection:
   SELECTION_1:
-  - New-MailboxExportRequest
+    Channel: MSExchange Management
   SELECTION_2:
-  - ' -Mailbox '
+  - New-MailboxExportRequest
   SELECTION_3:
+  - ' -Mailbox '
+  SELECTION_4:
   - -FilePath "\\\\localhost\\C$
   - -FilePath "\\\\127.0.0.1\\C$
   - .aspx
-  SELECTION_4:
-  - New-ManagementRoleAssignment
   SELECTION_5:
-  - ' -Role "Mailbox Import Export"'
+  - New-ManagementRoleAssignment
   SELECTION_6:
+  - ' -Role "Mailbox Import Export"'
+  SELECTION_7:
   - ' -User '
-  condition: (((SELECTION_1 and SELECTION_2) and (SELECTION_3)) or (SELECTION_4 and
-    SELECTION_5 and SELECTION_6))
+  condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3) and (SELECTION_4)) or
+    (SELECTION_5 and SELECTION_6 and SELECTION_7)))
 falsepositives:
-- unlikely
+- Unlikely
 id: 516376b4-05cd-4122-bae0-ad7641c38d48
 level: critical
 logsource:

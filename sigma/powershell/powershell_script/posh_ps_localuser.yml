@@ -8,6 +8,10 @@ description: |
   Account manipulation may consist of any action that preserves adversary access to a compromised account, such as modifying credentials or permission groups
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*Disable-LocalUser*'
     - '*Enable-LocalUser*'
@@ -16,9 +20,9 @@ detection:
     - '*New-LocalUser*'
     - '*Rename-LocalUser*'
     - '*Remove-LocalUser*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- legitimate administrative script
+- Legitimate administrative script
 id: 4fdc44df-bfe9-4fcc-b041-68f5a2d3031c
 level: medium
 logsource:

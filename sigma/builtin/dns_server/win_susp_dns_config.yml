@@ -7,10 +7,12 @@ description: This rule detects a DNS server error in which a specified plugin DL
   (in registry) could not be loaded
 detection:
   SELECTION_1:
-    EventID: 150
+    Channel: DNS Server
   SELECTION_2:
+    EventID: 150
+  SELECTION_3:
     EventID: 770
-  condition: (SELECTION_1 or SELECTION_2)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - Unknown
 id: cbe51394-cd93-4473-b555-edf0144952d9

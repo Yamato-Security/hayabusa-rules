@@ -6,16 +6,18 @@ date: 2020/06/07
 description: Potential adversaries accessing the microphone and webcam in an endpoint.
 detection:
   SELECTION_1:
-    EventID: 4657
+    Channel: Security
   SELECTION_2:
-    EventID: 4656
+    EventID: 4657
   SELECTION_3:
-    EventID: 4663
+    EventID: 4656
   SELECTION_4:
+    EventID: 4663
+  SELECTION_5:
     ObjectName:
     - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\microphone\NonPackaged*'
     - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\webcam\NonPackaged*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
 id: 8cd538a4-62d5-4e83-810b-12d41e428d6e

@@ -1,0 +1,31 @@
+
+title: Explorer NOUACCHECK Flag
+ruletype: Sigma
+author: Florian Roth
+date: 2022/02/23
+description: Detects suspicious starts of explorer.exe that use the /NOUACCHECK flag
+  that allows to run all sub processes of that newly started explorer.exe without
+  any UAC checks
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    NewProcessName: '*\explorer.exe'
+  SELECTION_4:
+    CommandLine: '*/NOUACCHECK*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown how many legitimate software products use that method
+id: 534f2ef7-e8a2-4433-816d-c91bccde289b
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://twitter.com/ORCA6665/status/1496478087244095491
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1548.002

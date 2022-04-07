@@ -7,13 +7,15 @@ description: Detects a source system failing to authenticate against a remote ho
   with multiple users.
 detection:
   SELECTION_1:
-    EventID: 4625
+    Channel: Security
   SELECTION_2:
-    LogonType: 3
+    EventID: 4625
   SELECTION_3:
+    LogonType: 3
+  SELECTION_4:
     IpAddress: '-'
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3)) | count(TargetUserName)
-    by IpAddress > 10
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+    | count(TargetUserName) by IpAddress > 10
   timeframe: 24h
 falsepositives:
 - Terminal servers
