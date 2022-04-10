@@ -26,13 +26,22 @@ def main():
         out_dir = "hayabusa_rules/" + loaded_yml["yml_path"]
         out_path = out_dir + "/" + loaded_yml["yml_filename"]
 
+        channel_dir_dict = {
+            "Microsoft-Windows-Sysmon/Operational": "_sysmon",
+            "Security": "_builtin",
+        }
+        if os.path(out_path):
+            out_dir += channel_dir_dict.get(loaded_yml["Channel"])
+        out_path = out_dir + "/" + loaded_yml["yml_filename"]
+
         if not os.path.exists(out_dir):
             os.makedirs(out_dir)
 
         loaded_yml.pop("yml_path")
         loaded_yml.pop("yml_filename")
 
-        dump_yml(out_path,loaded_yml)
+        dump_yml(out_path, loaded_yml)
+
 
 if __name__ == "__main__":
     main()
