@@ -8,12 +8,14 @@ description: Detects a threat actor creating a file named `iertutil.dll` in the 
   DLL Hijack scenario.
 detection:
   SELECTION_1:
-    EventID: 5145
+    Channel: Security
   SELECTION_2:
-    RelativeTargetName: '*\Internet Explorer\iertutil.dll'
+    EventID: 5145
   SELECTION_3:
+    RelativeTargetName: '*\Internet Explorer\iertutil.dll'
+  SELECTION_4:
     SubjectUserName: '*$'
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - Unknown
 id: c39f0c81-7348-4965-ab27-2fde35a1b641

@@ -1,0 +1,61 @@
+
+title: Windows Webshell Creation
+ruletype: Sigma
+author: Beyu Denis, oscd.community
+date: 2019/10/22
+description: Possible webshell file creation on a static web site
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_10:
+    TargetFilename: '*\cgi-bin\\*'
+  SELECTION_11:
+    TargetFilename: '*.pl*'
+  SELECTION_12:
+    TargetFilename:
+    - '*\AppData\Local\Temp\\*'
+    - '*\Windows\Temp\\*'
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFilename: '*\inetpub\wwwroot\\*'
+  SELECTION_4:
+    TargetFilename:
+    - '*.asp*'
+    - '*.ashx*'
+    - '*.ph*'
+  SELECTION_5:
+    TargetFilename:
+    - '*\AppData\Local\Temp\\*'
+    - '*\Windows\Temp\\*'
+  SELECTION_6:
+    TargetFilename:
+    - '*\www\\*'
+    - '*\htdocs\\*'
+    - '*\html\\*'
+  SELECTION_7:
+    TargetFilename: '*.ph*'
+  SELECTION_8:
+    TargetFilename:
+    - '*\AppData\Local\Temp\\*'
+    - '*\Windows\Temp\\*'
+  SELECTION_9:
+    TargetFilename: '*.jsp'
+  condition: ((SELECTION_1 and SELECTION_2) and ((((SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5)) or ((SELECTION_6 and SELECTION_7) and  not (SELECTION_8))) or ((SELECTION_9
+    or (SELECTION_10 and SELECTION_11)) and  not (SELECTION_12))))
+falsepositives:
+- Legitimate administrator or developer creating legitimate executable files in a
+  web application folder
+id: 39f1f9f2-9636-45de-98f6-a4046aa8e4b9
+level: critical
+logsource:
+  category: file_event
+  product: windows
+modified: 2021/11/27
+references:
+- PT ESC rule and personal experience
+status: test
+tags:
+- attack.persistence
+- attack.t1505.003

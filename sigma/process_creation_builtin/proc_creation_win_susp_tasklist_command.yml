@@ -1,0 +1,31 @@
+
+title: Suspicious Tasklist Discovery Command
+ruletype: Sigma
+author: frack113
+date: 2021/12/11
+description: Adversaries may attempt to get information about running processes on
+  a system. Information obtained could be used to gain an understanding of common
+  software/applications running on systems within the network
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    CommandLine: '*tasklist*'
+  SELECTION_4:
+    NewProcessName: C:\Windows\System32\tasklist.exe
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+falsepositives:
+- Administrator, hotline ask to user
+id: 63332011-f057-496c-ad8d-d2b6afb27f96
+level: low
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1057/T1057.md#atomic-test-2---process-discovery---tasklist
+status: experimental
+tags:
+- attack.discovery
+- attack.t1057

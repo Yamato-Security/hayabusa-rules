@@ -9,6 +9,10 @@ description: Focuses on trivial artifacts observed in variants of prevalent offe
   due to bad opsec.
 detection:
   SELECTION_1:
+    EventID: 4103
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     Payload:
     - '*$DoIt*'
     - '*harmj0y*'
@@ -16,7 +20,7 @@ detection:
     - '*_RastaMouse*'
     - '*tifkin_*'
     - '*0xdeadbeef*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Moderate-to-low; Despite the shorter length/lower entropy for some of these, because
   of high specificity, fp appears to be fairly limited in many environments.

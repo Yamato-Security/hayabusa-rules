@@ -6,23 +6,25 @@ date: 2020/05/06
 description: Alerts on Metasploit host's authentications on the domain.
 detection:
   SELECTION_1:
-    EventID: 4625
+    Channel: Security
   SELECTION_2:
-    EventID: 4624
+    EventID: 4625
   SELECTION_3:
-    LogonType: 3
+    EventID: 4624
   SELECTION_4:
-    AuthenticationPackageName: NTLM
+    LogonType: 3
   SELECTION_5:
-    WorkstationName|re: ^[A-Za-z0-9]{16}$
+    AuthenticationPackageName: NTLM
   SELECTION_6:
-    ProcessName|re: ^$
+    WorkstationName|re: ^[A-Za-z0-9]{16}$
   SELECTION_7:
-    EventID: 4776
+    ProcessName|re: ^$
   SELECTION_8:
+    EventID: 4776
+  SELECTION_9:
     Workstation|re: ^[A-Za-z0-9]{16}$
-  condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7 and SELECTION_8))
+  condition: (SELECTION_1 and (((SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Linux hostnames composed of 16 characters.
 id: 72124974-a68b-4366-b990-d30e0b2a190d

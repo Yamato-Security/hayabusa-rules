@@ -1,0 +1,30 @@
+
+title: Download a File with IMEWDBLD.exe
+ruletype: Sigma
+author: frack113
+date: 2022/01/22
+description: Use IMEWDBLD.exe (built-in to windows) to download a file
+detection:
+  SELECTION_1:
+    EventID: 3
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Initiated: 'true'
+  SELECTION_4:
+    Image: '*\IMEWDBLD.exe'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate script
+id: 8d7e392e-9b28-49e1-831d-5949c6281228
+level: high
+logsource:
+  category: network_connection
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1105/T1105.md#atomic-test-10---windows---powershell-download
+- https://lolbas-project.github.io/lolbas/Binaries/IMEWDBLD/
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1105

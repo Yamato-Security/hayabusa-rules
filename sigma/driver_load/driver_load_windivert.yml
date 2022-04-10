@@ -9,12 +9,14 @@ detection:
   SELECTION_1:
     EventID: 6
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded:
     - '*\WinDivert.sys*'
     - '*\WinDivert64.sys*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- legitimate WinDivert driver usage
+- Legitimate WinDivert driver usage
 id: 679085d5-f427-4484-9f58-1dc30a7c426d
 level: high
 logsource:

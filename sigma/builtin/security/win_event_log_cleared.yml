@@ -6,10 +6,12 @@ date: 2021/08/15
 description: Checks for event id 1102 which indicates the security event log was cleared.
 detection:
   SELECTION_1:
-    EventID: 1102
+    Channel: Security
   SELECTION_2:
+    EventID: 1102
+  SELECTION_3:
     Provider_Name: Microsoft-Windows-Eventlog
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate administrative activity
 fields:

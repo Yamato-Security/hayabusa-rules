@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2022/02/06
-modified: 2022/02/06
+modified: 2022/03/22
 
 title: Event Log Service Stopped
 title_jp: イベントログサービスが停止された
@@ -12,6 +12,9 @@ description_jp:
 id: b6d53116-36b2-4413-a99b-e6708f9c3027
 level: informational
 status: stable
+logsource:
+    product: windows
+    service: system
 detection:
     selection:
         Channel: System
@@ -20,5 +23,4 @@ detection:
 falsepositives:
 tags:
 references:
-logsource: default
 ruletype: Hayabusa

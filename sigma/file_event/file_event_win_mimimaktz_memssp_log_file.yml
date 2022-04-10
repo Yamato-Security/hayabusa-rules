@@ -1,0 +1,28 @@
+
+title: Mimikatz MemSSP Default Log File Creation
+ruletype: Sigma
+author: David ANDRE
+date: 2021/12/20
+description: Detects Mimikatz MemSSP default log file creation
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFilename:
+    - '*mimilsa.log'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unlikely
+id: 034affe8-6170-11ec-844f-0f78aa0c4d66
+level: critical
+logsource:
+  category: file_event
+  product: windows
+references:
+- https://pentestlab.blog/2019/10/21/persistence-security-support-provider/
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003

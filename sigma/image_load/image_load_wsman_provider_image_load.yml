@@ -9,47 +9,49 @@ detection:
   SELECTION_1:
     EventID: 7
   SELECTION_10:
+    Image: '*\mscorsvw.exe'
+  SELECTION_11:
     Image:
     - C:\Windows\System32\Configure-SMRemoting.exe
     - C:\Windows\System32\ServerManager.exe
-  SELECTION_11:
-    Image: C:\Windows\Temp\asgard2-agent\\*
   SELECTION_12:
+    Image: C:\Windows\Temp\asgard2-agent\\*
+  SELECTION_13:
     Image: C:\Program Files\Citrix\\*
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded:
     - '*\WsmSvc.dll'
     - '*\WsmAuto.dll'
     - '*\Microsoft.WSMan.Management.ni.dll'
-  SELECTION_3:
+  SELECTION_4:
     OriginalFileName:
     - WsmSvc.dll
     - WSMANAUTOMATION.DLL
     - Microsoft.WSMan.Management.dll
-  SELECTION_4:
-    Image: '*\svchost.exe'
   SELECTION_5:
-    OriginalFileName: WsmWmiPl.dll
+    Image: '*\svchost.exe'
   SELECTION_6:
+    OriginalFileName: WsmWmiPl.dll
+  SELECTION_7:
     Image:
     - '*\powershell.exe'
     - '*C:\Windows\System32\sdiagnhost.exe'
     - '*C:\Windows\System32\services.exe'
-  SELECTION_7:
+  SELECTION_8:
     CommandLine:
     - '*svchost.exe -k netsvcs -p -s BITS*'
     - '*svchost.exe -k GraphicsPerfSvcGroup -s GraphicsPerfSvc*'
     - '*svchost.exe -k NetworkService -p -s Wecsvc*'
     - '*svchost.exe -k netsvcs*'
-  SELECTION_8:
+  SELECTION_9:
     Image:
     - C:\Windows\Microsoft.NET\Framework64\v*
     - C:\Windows\Microsoft.NET\Framework\v*
-  SELECTION_9:
-    Image: '*\mscorsvw.exe'
-  condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) or (SELECTION_4 and SELECTION_5))
-    and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9) or (SELECTION_10)
-    or (SELECTION_11) or (SELECTION_12)))
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) or (SELECTION_5
+    and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9 and
+    SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13)))
 falsepositives:
 - Unknown
 id: ad1f4bb9-8dfb-4765-adb6-2a7cfb6c0f94

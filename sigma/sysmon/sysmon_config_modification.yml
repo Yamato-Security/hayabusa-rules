@@ -7,10 +7,12 @@ description: Detects a Sysmon configuration change, which could be the result of
   legitimate reconfiguration or someone trying manipulate the configuration
 detection:
   SELECTION_1:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_2:
     EventID: 16
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
-- legitimate administrative action
+- Legitimate administrative action
 id: 8ac03a65-6c84-4116-acad-dc1558ff7a77
 level: medium
 logsource:

@@ -12,6 +12,8 @@ detection:
   SELECTION_1:
     EventID: 8
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     SourceImage:
     - '*\bash.exe'
     - '*\cvtres.exe'
@@ -60,9 +62,9 @@ detection:
     - '*\wmic.exe'
     - '*\word.exe'
     - '*\wscript.exe'
-  SELECTION_3:
+  SELECTION_4:
     SourceImage: '*Visual Studio*'
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
 fields:

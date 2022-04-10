@@ -6,20 +6,23 @@ date: 2020/10/15
 description: Detects Obfuscated use of stdin to execute PowerShell
 detection:
   SELECTION_1:
-    EventID: 4697
+    Channel: Security
   SELECTION_2:
-    ServiceFileName: '*cmd*'
+    EventID: 4697
   SELECTION_3:
-    ServiceFileName: '*powershell*'
+    ServiceFileName: '*cmd*'
   SELECTION_4:
+    ServiceFileName: '*powershell*'
+  SELECTION_5:
     ServiceFileName:
     - '*${input}*'
     - '*noexit*'
-  SELECTION_5:
+  SELECTION_6:
     ServiceFileName:
     - '* /c *'
     - '* /r *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: 0c718a5e-4284-4fb9-b4d9-b9a50b3a1974

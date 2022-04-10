@@ -6,12 +6,14 @@ date: 2020/10/12
 description: Detects Obfuscated Powershell via Stdin in Scripts
 detection:
   SELECTION_1:
-    Provider_Name: Service Control Manager
+    Channel: System
   SELECTION_2:
-    EventID: 7045
+    Provider_Name: Service Control Manager
   SELECTION_3:
+    EventID: 7045
+  SELECTION_4:
     ImagePath|re: (?i).*(set).*&&\s?set.*(environment|invoke|\$\{?input).*&&.*"
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 487c7524-f892-4054-b263-8a0ace63fc25

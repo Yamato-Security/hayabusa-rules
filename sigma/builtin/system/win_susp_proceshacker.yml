@@ -7,14 +7,16 @@ description: Detects a ProcessHacker tool that elevated privileges to a very hig
   level
 detection:
   SELECTION_1:
-    Provider_Name: Service Control Manager
+    Channel: System
   SELECTION_2:
-    EventID: 7045
+    Provider_Name: Service Control Manager
   SELECTION_3:
-    ServiceName: ProcessHacker*
+    EventID: 7045
   SELECTION_4:
+    ServiceName: ProcessHacker*
+  SELECTION_5:
     AccountName: LocalSystem
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unlikely
 id: c4ff1eac-84ad-44dd-a6fb-d56a92fc43a9

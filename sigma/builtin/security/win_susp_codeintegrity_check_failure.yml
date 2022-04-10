@@ -6,10 +6,12 @@ date: 2019/12/03
 description: Code integrity failures may indicate tampered executables.
 detection:
   SELECTION_1:
-    EventID: 5038
+    Channel: Security
   SELECTION_2:
+    EventID: 5038
+  SELECTION_3:
     EventID: 6281
-  condition: (SELECTION_1 or SELECTION_2)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - Disk device errors
 id: 470ec5fa-7b4e-4071-b200-4c753100f49b

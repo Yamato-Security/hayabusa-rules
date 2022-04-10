@@ -7,12 +7,14 @@ description: Detects the creation of a local hidden user account which should no
   happen for event ID 4720.
 detection:
   SELECTION_1:
-    EventID: 4720
+    Channel: Security
   SELECTION_2:
+    EventID: 4720
+  SELECTION_3:
     TargetUserName: '*$'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- unknown
+- Unknown
 fields:
 - EventCode
 - AccountName

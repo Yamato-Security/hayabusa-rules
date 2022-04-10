@@ -12,6 +12,8 @@ detection:
   SELECTION_3:
     EventID: 21
   SELECTION_4:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_5:
     Destination:
     - '*V3JpdGVQcm9jZXNzTWVtb3J5*'
     - '*dyaXRlUHJvY2Vzc01lbW9ye*'
@@ -22,7 +24,7 @@ detection:
     - '*VGhpcyBwcm9ncmFtIG11c3QgYmUgcnVuIHVuZGVyIFdpbjMy*'
     - '*RoaXMgcHJvZ3JhbSBtdXN0IGJlIHJ1biB1bmRlciBXaW4zM*'
     - '*UaGlzIHByb2dyYW0gbXVzdCBiZSBydW4gdW5kZXIgV2luMz*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4)
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 fields:

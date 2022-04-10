@@ -8,10 +8,12 @@ detection:
   SELECTION_1:
     EventID: 6
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     ImageLoaded:
     - '*powershell*'
     - '*pwsh*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 46deb5e1-28c9-4905-b2df-51cdcc9e6073

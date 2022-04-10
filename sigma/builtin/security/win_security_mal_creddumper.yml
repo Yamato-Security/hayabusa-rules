@@ -7,8 +7,10 @@ description: Detects well-known credential dumping tools execution via service e
   events
 detection:
   SELECTION_1:
-    EventID: 4697
+    Channel: Security
   SELECTION_2:
+    EventID: 4697
+  SELECTION_3:
     ServiceFileName:
     - '*fgexec*'
     - '*dumpsvc*'
@@ -17,7 +19,7 @@ detection:
     - '*gsecdump*'
     - '*servpw*'
     - '*pwdump*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate Administrator using credential dumping tool for password recovery
 id: f0d1feba-4344-4ca9-8121-a6c97bd6df52

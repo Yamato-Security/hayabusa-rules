@@ -7,10 +7,14 @@ description: Detects execution of ADRecon.ps1 for AD reconnaissance which has be
   reported to be actively used by FIN7
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*Function Get-ADRExcelComOb*'
     - '*ADRecon-Report.xlsx*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: bf72941a-cba0-41ea-b18c-9aca3925690d

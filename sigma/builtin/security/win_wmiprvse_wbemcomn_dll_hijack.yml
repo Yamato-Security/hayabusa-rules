@@ -7,14 +7,17 @@ description: Detects a threat actor creating a file named `wbemcomn.dll` in the 
   directory over the network for a WMI DLL Hijack scenario.
 detection:
   SELECTION_1:
-    Provider_Name: Microsoft-Windows-Security-Auditing
+    Channel: Security
   SELECTION_2:
-    EventID: 5145
+    Provider_Name: Microsoft-Windows-Security-Auditing
   SELECTION_3:
-    RelativeTargetName: '*\wbem\wbemcomn.dll'
+    EventID: 5145
   SELECTION_4:
+    RelativeTargetName: '*\wbem\wbemcomn.dll'
+  SELECTION_5:
     SubjectUserName: '*$'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
 - Unknown
 id: f6c68d5f-e101-4b86-8c84-7d96851fd65c

@@ -7,15 +7,17 @@ description: This method detects a service install of malicious services mention
   in Carbon Paper - Turla report by ESET
 detection:
   SELECTION_1:
-    Provider_Name: Service Control Manager
+    Channel: System
   SELECTION_2:
-    EventID: 7045
+    Provider_Name: Service Control Manager
   SELECTION_3:
+    EventID: 7045
+  SELECTION_4:
     ServiceName:
     - srservice
     - ipvpn
     - hkmsvc
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 1df8b3da-b0ac-4d8a-b7c7-6cb7c24160e4

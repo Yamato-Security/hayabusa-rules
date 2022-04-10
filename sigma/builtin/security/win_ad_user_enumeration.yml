@@ -6,14 +6,17 @@ date: 2020/03/30
 description: Detects access to a domain user from a non-machine account
 detection:
   SELECTION_1:
-    EventID: 4662
+    Channel: Security
   SELECTION_2:
-    ObjectType: '*bf967aba-0de6-11d0-a285-00aa003049e2*'
+    EventID: 4662
   SELECTION_3:
-    SubjectUserName: '*$'
+    ObjectType: '*bf967aba-0de6-11d0-a285-00aa003049e2*'
   SELECTION_4:
+    SubjectUserName: '*$'
+  SELECTION_5:
     SubjectUserName: MSOL_*
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4
+    or SELECTION_5))
 falsepositives:
 - Administrators configuring new users.
 id: ab6bffca-beff-4baa-af11-6733f296d57a

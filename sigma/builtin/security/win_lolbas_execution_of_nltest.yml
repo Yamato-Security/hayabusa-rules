@@ -7,15 +7,17 @@ description: The attacker might use LOLBAS nltest.exe for discovery of domain co
   domain trusts, parent domain and the current user permissions.
 detection:
   SELECTION_1:
-    EventID: 4689
+    Channel: Security
   SELECTION_2:
-    ProcessName: '*nltest.exe'
+    EventID: 4689
   SELECTION_3:
+    ProcessName: '*nltest.exe'
+  SELECTION_4:
     Status: '0x0'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Red team activity
-- rare legitimate use by an administrator
+- Rare legitimate use by an administrator
 fields:
 - SubjectUserName
 - SubjectDomainName

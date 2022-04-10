@@ -11,14 +11,18 @@ description: |
   Common uses of batch files include long or repetitive tasks, or the need to run the same set of commands on multiple system
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Start-Process*'
+    EventID: 4104
   SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*Start-Process*'
+  SELECTION_4:
     ScriptBlockText:
     - '*.cmd*'
     - '*.bat*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- legitim administration script
+- Legitimate administration script
 id: b5522a23-82da-44e5-9c8b-e10ed8955f88
 level: medium
 logsource:

@@ -7,14 +7,18 @@ description: Detects writing data into NTFS alternate data streams from powershe
   Needs Script Block Logging.
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*set-content*'
     - '*add-content*'
-  SELECTION_2:
+  SELECTION_4:
     ScriptBlockText: '*-stream*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- unknown
+- Unknown
 id: 8c521530-5169-495d-a199-0a3a881ad24e
 level: high
 logsource:

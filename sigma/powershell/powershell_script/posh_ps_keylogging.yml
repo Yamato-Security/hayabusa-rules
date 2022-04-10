@@ -7,12 +7,16 @@ description: Adversaries may log user keystrokes to intercept credentials as the
   types them.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Get-Keystrokes*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*Get-ProcAddress user32.dll GetAsyncKeyState*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
+    ScriptBlockText: '*Get-Keystrokes*'
+  SELECTION_4:
+    ScriptBlockText: '*Get-ProcAddress user32.dll GetAsyncKeyState*'
+  SELECTION_5:
     ScriptBlockText: '*Get-ProcAddress user32.dll GetForegroundWindow*'
-  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - Unknown
 id: 34f90d3c-c297-49e9-b26d-911b05a4866c
