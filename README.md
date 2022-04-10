@@ -384,6 +384,7 @@ String matches are normally case insensitive. However, they become case sensitiv
 * contains: Checks if a word is contained in the data
 * re: Use regular expressions. (We are using the regex crate so please out the documentation at https://docs.rs/regex/1.5.4/regex/ to know how to write correct regular expressions.) 
   > Caution: Some sigma rules that use regular expressions may fail to detect due to differences in Rust's implementation of regex.
+* equalsfield: Checks if specified eventkey value matches.
 
 ## Wildcards
 Wildcards can be used in eventkeys. In the example below, if `ProcessCommandLine` starts with the string "malware", the rule will match. 
