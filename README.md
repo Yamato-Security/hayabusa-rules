@@ -403,7 +403,7 @@ String matches are normally case insensitive. However, they become case sensitiv
 - contains: Checks if a word is contained in the data
 - re: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/1.5.4/regex/> to know how to write correct regular expressions.)
   > Caution: Some sigma rules that use regular expressions may fail to detect due to differences in Rust's implementation of regex.
-- equalsfield: Checks if specified eventkey value matches.
+- equalsfield: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
 
 ## Wildcards
 
