@@ -47,6 +47,7 @@
     - [OKな例](#okな例)
     - [良い例](#良い例-1)
 - [SigmaルールからHayabusaルール形式への自動変換](#sigmaルールからhayabusaルール形式への自動変換)
+- [Twitter](#twitter)
 
 # ルールファイル作成について
 
@@ -737,3 +738,7 @@ detection:
 SigmaルールからHayabusaルール形式に自動で変換する[ツール](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac)を作成しました。
 
 使用方法は[こちら](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac/README-Japanese.md)を参照してください。
+
+# Twitter
+
+[https://twitter.com/SecurityYamato](@SecurityYamato)でHayabusa、ルール更新、その他の大和セキュリティツール等々について情報を提供しています。

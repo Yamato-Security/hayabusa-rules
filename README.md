@@ -47,6 +47,7 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
     - [Please do this](#please-do-this-1)
     - [Or ideally something like this](#or-ideally-something-like-this)
 - [Converting sigma rules to hayabusa format](#converting-sigma-rules-to-hayabusa-format)
+- [Twitter](#twitter)
 
 # About creating rule files
 
@@ -403,7 +404,7 @@ String matches are normally case insensitive. However, they become case sensitiv
 - contains: Checks if a word is contained in the data
 - re: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/1.5.4/regex/> to know how to write correct regular expressions.)
   > Caution: Some sigma rules that use regular expressions may fail to detect due to differences in Rust's implementation of regex.
-- equalsfield: Checks if specified eventkey value matches.
+- equalsfield: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
 
 ## Wildcards
 
@@ -732,3 +733,7 @@ detection:
 We have created a backend for sigmac to convert rules from sigma to hayabusa format [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac).
 
 The documentation for how to use it is [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac/README.md).
+
+# Twitter
+
+You can recieve the latest news about Hayaabusa, rule updates, other Yamato Security tools, etc... by following us on Twitter at [https://twitter.com/SecurityYamato](@SecurityYamato).
