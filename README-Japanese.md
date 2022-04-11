@@ -130,14 +130,15 @@ sample-evtx: |
 
 > ## 作者セクション
 
-* **author [必須]**: 著者名（複数可）。
+- **author [必須]**: 著者名（複数可）。
 - **contributor** [オプション]: 寄稿者の名前（細かい修正をした人）。
 - **date [必須]**: ルールが作成された日付。
 - **modified** [オプション]: ルールが更新された日付。
 
 > ## アラートセクション
 
-* **title [必須]**: ルールファイルのタイトル。これは表示されるアラートの名前にもなるので、簡潔であるほどよいです。(85文字以下でなければなりません。)
+- **title [必須]**: ルールファイルのタイトル。これは表示されるアラートの名前にもなるので、簡潔であるほどよいです。(85文字以下でなければなりません。)
+
 - **title_jp** [オプション]: 日本語のタイトルです。
 - **details** [オプション]: 表示されるアラートの詳細です。Windowsイベントログの中で解析に有効なフィールドがあれば出力してください。フィールドは `" | "` で区切られます。フィールドのプレースホルダは `%` で囲まれ (例: `%MemberName%`) 、`rules/config_eventkey_alias.txt` で定義する必要があります。(以下で説明します)
 - **details_jp** [オプション]: 日本語の出力メッセージ。
@@ -146,7 +147,8 @@ sample-evtx: |
 
 > ## ルールセクション
 
-* **id [必須]**: ルールを一意に識別するために使用される、ランダムに生成されたバージョン4のUUIDです。 [ここ](https://www.uuidgenerator.net/version4) で生成することができます。
+- **id [必須]**: ルールを一意に識別するために使用される、ランダムに生成されたバージョン4のUUIDです。 [ここ](https://www.uuidgenerator.net/version4) で生成することができます。
+
 - **level [必須]**: [sigmaルールの定義](https://github.com/SigmaHQ/sigma/wiki/Specification)に基づく重要度レベル。 以下のいずれかを記述してください。 `informational`,`low`,`medium`,`high`,`critical`
 - **status[必須]**: テスト済みのルールには `stable` を、テストが必要なルールには `testing` を指定します。
 - **logsource [required]**: Sigmaルールと互換性があるようにSigmaのlogsource定義と同様。
@@ -172,7 +174,7 @@ sample-evtx: |
 
 > ## Sample XML Event
 
-* **sample-evtx [required]**: Starting forward, we ask rule authors to include sample XML events for their rules.
+- **sample-evtx [required]**: Starting forward, we ask rule authors to include sample XML events for their rules.
 
 # Details出力の省略
 
@@ -422,10 +424,12 @@ detection:
 ```
 
 以下の2つのワイルドカードを使用することができます。
+
 - `*`: 0文字以上の任意の文字列にマッチします。(内部的には`.*`という正規表現に変換されます)。
 - `?`: 任意の1文字にマッチします。(内部的には`.`という正規表現に変換されます)。
 
 ワイルドカードのエスケープについて
+
 - ワイルドカード(`*`と`?`)はバックスラッシュでエスケープできます: `\*` と `\?`.
 - ワイルドカードの直前にバックスラッシュを使用する場合、 `\\*` または `\\?` と記述してください。
 - バックスラッシュを単独で使用する場合、エスケープは不要です。
@@ -449,6 +453,7 @@ detection:
 ```
 
 現在、指定できるキーワードは以下の通りです。
+
 - `value`: 文字列によるマッチング (ワイルドカードやパイプも指定可能)。
 - `min_length`: 指定された文字数以上の場合にマッチします。
 - `regexes`: 指定されたファイルに定義された正規表現に1つ以上に一致する場合、**条件にマッチした**ものとして扱われます。
@@ -457,6 +462,7 @@ detection:
 ### regexesとallowlistキーワード
 
 Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemProcess-WindowsService_MaliciousServiceInstalled.yml`のルールのために使う2つの正規表現ファイルが用意されています。
+
 - `./rules/config/regex/detectlist_suspicous_services.txt`: 怪しいサービス名を検知するためのものです。
 - `./rules/config/regex/allowlist_legitimate_services.txt`: 正規のサービスを許可するためのものです。
   
@@ -493,6 +499,7 @@ detection:
 ```
 
  `condition`には、以下の式を用いることができます。
+
 - `{expression1} and {expression2}`: {expression1} と {expression2} の両方が真である場合にマッチします。
 - `{expression1} or {expression2}`: {expression1} または {expression2} のどちらかが真である場合にマッチします。
 - `not {expression}`: {expression} の真偽を反転させます。
@@ -541,9 +548,11 @@ detection:
 ```
 
 `aggregation condition`は以下の形式で定義します。
+
 - `count() {operator} {number}`: パイプの前の最初の条件にマッチするログイベントに対して、マッチしたログの数が `{operator}` と `{number}` で指定した条件式を満たす場合に条件がマッチします。
 
 `{operator}` は以下のいずれかになります。
+
 - `==`: 指定された値と等しい場合、条件にマッチしたものとして扱われる。
 - `>=`: 指定された値以上であれば、条件にマッチしたものとして扱われる。
 - `>`: 指定された値以上であれば、条件にマッチしたものとして扱われる。
@@ -553,6 +562,7 @@ detection:
 `{number}` は数値である必要があります。
 
 `timeframe` は以下のように定義することができます。
+
 - `15s`: 15秒
 - `30m`: 30分
 - `12h`: 12時間
