@@ -6,7 +6,7 @@ title: Win RM Session Created
 details: '%connection%'
 description: 
 
-id: 
+id: 4f321a68-176a-4f1d-873a-8793bc49e3b0
 level: informational
 status: stable
 logsource:
@@ -30,20 +30,20 @@ sample-message: 'Creating WSMan Session. The connection string is: localhost:470
 sample-evtx: |
     <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
         <System>
-            <Provider Name="Microsoft-Windows-WinRM" Guid="{A7975C8F-AC13-49F1-87DA-5A984A4AB417}" /> 
+            <Provider Name="Microsoft-Windows-WinRM" Guid="{A7975D8F-AC13-49F1-87DA-5A984A4AB417}" /> 
             <EventID>6</EventID> 
             <Version>0</Version> 
             <Level>4</Level> 
             <Task>3</Task> 
             <Opcode>1</Opcode> 
             <Keywords>0x4000000000000002</Keywords> 
-            <TimeCreated SystemTime="2018-05-22T05:15:08.577792500Z" /> 
+            <TimeCreated SystemTime="2022-02-22T05:15:08.577792500Z" /> 
             <EventRecordID>137</EventRecordID> 
-            <Correlation ActivityID="{D1E58239-588F-40EC-A6DF-0A7F1F127247}" /> 
-            <Execution ProcessID="2224" ThreadID="1276" /> 
+            <Correlation ActivityID="{D1D58239-588F-40EC-A6DF-0A7F1F127247}" /> 
+            <Execution ProcessID="2324" ThreadID="1276" /> 
             <Channel>Microsoft-Windows-WinRM/Operational</Channel> 
             <Computer>web-server</Computer> 
-            <Security UserID="S-1-5-21-572887454-1858499753-1978773125-500" /> 
+            <Security UserID="S-1-5-21-572887454-1858498753-1978773125-500" /> 
         </System>
         <EventData>
             <Data Name="connection">localhost:47001/WSMan?MSP=6a83d074-bb86-4e52-aa3e-6cc73cc066c8;PSVersion=5.1.14409.1005</Data> 

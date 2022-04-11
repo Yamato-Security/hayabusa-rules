@@ -2,19 +2,17 @@ author: Zach Mathis
 date: 2022/04/08
 modified: 2022/04/08
 
-title: Scheduled Task Created
-title_jp: 
+title: Task Created
+title_jp: タスクの作成
 details: 'Name: %TaskName% | Content: %TaskContent% | User: %SubjectUserName% | LID: %SubjectLogonId%'
-details_jp:
-description: Other Object Access Events
-description_jp: 
 
-id: 
+id: 60d768ca-33e8-4f34-b967-14fd7aa18a22
 level: informational
 status: stable
 logsource:
     product: windows
     service: security
+    description: Other Object Access Events needs to be turned on.
 detection:
     selection_basic:
         Channel: Security

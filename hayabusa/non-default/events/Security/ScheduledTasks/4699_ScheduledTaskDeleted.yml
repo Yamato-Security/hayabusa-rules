@@ -2,19 +2,20 @@ author: Zach Mathis
 date: 2022/04/08
 modified: 2022/04/08
 
-title: Scheduled Task Deleted
-title_jp: 
+title: Task Deleted
+title_jp: タスクの削除
 details: 'Name: %TaskName% | User: %SubjectUserName% | LID: %SubjectLogonId%'
 details_jp:
-description: Other Object Access Events
+description: 
 description_jp: 
 
-id: 
+id: de5ed02e-e7b5-47a0-a35c-06a907c988e4
 level: informational
 status: stable
 logsource:
     product: windows
     service: security
+    description: Other Object Access Events needs to be turned on.
 detection:
     selection_basic:
         Channel: Security
