@@ -47,6 +47,7 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
     - [Please do this](#please-do-this-1)
     - [Or ideally something like this](#or-ideally-something-like-this)
 - [Converting sigma rules to hayabusa format](#converting-sigma-rules-to-hayabusa-format)
+- [Twitter](#twitter)
 
 # About creating rule files
 
@@ -732,3 +733,7 @@ detection:
 We have created a backend for sigmac to convert rules from sigma to hayabusa format [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac).
 
 The documentation for how to use it is [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac/README.md).
+
+# Twitter
+
+You can recieve the latest news about Hayaabusa, rule updates, other Yamato Security tools, etc... by following us on Twitter at [https://twitter.com/SecurityYamato](@SecurityYamato).
