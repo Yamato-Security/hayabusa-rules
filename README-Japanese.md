@@ -741,4 +741,4 @@ SigmaルールからHayabusaルール形式に自動で変換する[ツール](h
 
 # Twitter
 
-[https://twitter.com/SecurityYamato](@SecurityYamato)でHayabusa、ルール更新、その他の大和セキュリティツール等々について情報を提供しています。
+[@SecurityYamato](https://twitter.com/SecurityYamato)でHayabusa、ルール更新、その他の大和セキュリティツール等々について情報を提供しています。
