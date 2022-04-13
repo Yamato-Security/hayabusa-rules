@@ -736,4 +736,4 @@ The documentation for how to use it is [here](https://github.com/Yamato-Security
 
 # Twitter
 
-You can recieve the latest news about Hayaabusa, rule updates, other Yamato Security tools, etc... by following us on Twitter at [https://twitter.com/SecurityYamato](@SecurityYamato).
+You can recieve the latest news about Hayabusa, rule updates, other Yamato Security tools, etc... by following us on Twitter at [@SecurityYamato](https://twitter.com/SecurityYamato).
