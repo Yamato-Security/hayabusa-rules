@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2022/03/05
-modified:  2022/03/22
+modified:  2022/04/15
 
 title: Driver Loaded_Unknown Signature
 title_jp:
@@ -22,16 +22,17 @@ detection:
         EventID:  6
         Signed: true
     filter:
-        - Signature: Microsoft Windows
-        - Signature: VMware
-        - Signature: VMware, Inc.
-        - Signature: OpenVPN Technologies, Inc.
-        - Signature: Insecure.Com LLC           # NMap
-        - Signature: Wireshark Foundation, Inc.
-        - Signature: Trend Micro
-        - Signature: McAfee, Inc.
-        - Signature: Riverbed Technology, Inc.
-        - Signature: 
+        - Signature: 'Microsoft Windows'
+        - Signature: 'VMware'
+        - Signature: 'VMware, Inc.'
+        - Signature: 'OpenVPN Technologies, Inc.'
+        - Signature: 'Insecure.Com LLC'             # NMap
+        - Signature: 'Wireshark Foundation, Inc.'
+        - Signature: 'Trend Micro'
+        - Signature: 'McAfee, Inc.'
+        - Signature: 'Riverbed Technology, Inc.'
+        - Signature: 'Oracle Corporation'
+        - Signature: 'innotek GmbH'                 #Virtual Box
     condition: selection and not filter
 falsepositives:
 tags:
