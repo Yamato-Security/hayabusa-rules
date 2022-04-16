@@ -13,13 +13,17 @@ detection:
   SELECTION_3:
     FileVersion: \?
   SELECTION_4:
-    Product: \?
+    Description: \?
   SELECTION_5:
-    Company: \?
+    Product: \?
   SELECTION_6:
+    Description: \?
+  SELECTION_7:
+    Company: \?
+  SELECTION_8:
     Image: '*\Downloads\\*'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4 or SELECTION_5)
-    and SELECTION_6)
+  condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3) or (SELECTION_4 and
+    SELECTION_5)) or (SELECTION_6 and SELECTION_7)) and SELECTION_8)
 falsepositives:
 - Unknown
 fields:

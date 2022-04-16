@@ -7,11 +7,11 @@ description: Potential threat actor tampering with Sysmon manifest and eventuall
   disabling it
 detection:
   SELECTION_1:
+    EventID: 4657
+  SELECTION_2:
     ObjectName:
     - '*WINEVT\Publishers\{5770385f-c22a-43e0-bf4c-06f5698ffbd9}*'
     - '*WINEVT\Channels\Microsoft-Windows-Sysmon/Operational*'
-  SELECTION_2:
-    EventID: 4657
   SELECTION_3:
     ObjectValueName: Enabled
   SELECTION_4:
@@ -19,11 +19,15 @@ detection:
   SELECTION_5:
     EventID: 4663
   SELECTION_6:
+    ObjectName:
+    - '*WINEVT\Publishers\{5770385f-c22a-43e0-bf4c-06f5698ffbd9}*'
+    - '*WINEVT\Channels\Microsoft-Windows-Sysmon/Operational*'
+  SELECTION_7:
     AccessMask: 65536
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6)))
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7))
 falsepositives:
-- unknown
+- Unknown
 id: 18beca67-ab3e-4ee3-ba7a-a46ca8d7d0cc
 level: critical
 logsource:

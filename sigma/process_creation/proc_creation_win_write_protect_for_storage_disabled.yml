@@ -10,17 +10,27 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine|re: (?i).*reg add.*hklm\\\\system\\\\currentcontrolset\\\\control.*(storage|storagedevicepolicies).*write
-      protection.*0.*
-  condition: (SELECTION_1 and SELECTION_2)
+    CommandLine: '*reg add*'
+  SELECTION_3:
+    CommandLine: '*hklm\system\currentcontrolset\control*'
+  SELECTION_4:
+    CommandLine: '*write protection*'
+  SELECTION_5:
+    CommandLine: '*0*'
+  SELECTION_6:
+    CommandLine:
+    - '*storage*'
+    - '*storagedevicepolicies*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
-- none observed
+- Unknown
 id: 75f7a0e2-7154-4c4d-9eae-5cdb4e0a5c13
 level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/06/11
+modified: 2022/03/07
 status: experimental
 tags:
 - attack.defense_evasion

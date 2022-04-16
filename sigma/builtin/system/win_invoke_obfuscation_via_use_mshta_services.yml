@@ -10,8 +10,19 @@ detection:
   SELECTION_2:
     EventID: 7045
   SELECTION_3:
-    ImagePath|re: (?i).*(set).*(&&).*(mshta).*(vbscript:createobject).*(\.run).*\(window\.close\).*"
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    ImagePath: '*set*'
+  SELECTION_4:
+    ImagePath: '*&&*'
+  SELECTION_5:
+    ImagePath: '*mshta*'
+  SELECTION_6:
+    ImagePath: '*vbscript:createobject*'
+  SELECTION_7:
+    ImagePath: '*.run*'
+  SELECTION_8:
+    ImagePath: '*(window.close)*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Unknown
 id: 7e9c7999-0f9b-4d4a-a6ed-af6d553d4af4
@@ -19,7 +30,7 @@ level: high
 logsource:
   product: windows
   service: system
-modified: 2021/11/30
+modified: 2022/03/06
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: experimental

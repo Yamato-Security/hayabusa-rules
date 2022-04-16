@@ -9,10 +9,14 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_10:
-    CommandLine: '*DelegateExecute*'
+    CommandLine: '*/v*'
   SELECTION_11:
-    CommandLine: '*delete*'
+    CommandLine: '*DelegateExecute*'
   SELECTION_12:
+    CommandLine: '*reg*'
+  SELECTION_13:
+    CommandLine: '*delete*'
+  SELECTION_14:
     CommandLine: '*hkcu\software\classes\ms-settings*'
   SELECTION_2:
     CommandLine: '*reg*'
@@ -25,16 +29,16 @@ detection:
   SELECTION_6:
     CommandLine: '*/d*'
   SELECTION_7:
-    CommandLine: '*add*'
+    CommandLine: '*reg*'
   SELECTION_8:
-    CommandLine: '*hkcu\software\classes\ms-settings\shell\open\command*'
+    CommandLine: '*add*'
   SELECTION_9:
-    CommandLine: '*/v*'
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10)
-    or (SELECTION_11 and SELECTION_12)))
+    CommandLine: '*hkcu\software\classes\ms-settings\shell\open\command*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10
+    and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14)))
 falsepositives:
-- unknown
+- Unknown
 id: dd3ee8cc-f751-41c9-ba53-5a32ed47e563
 level: medium
 logsource:

@@ -1,0 +1,32 @@
+
+title: Office Security Settings Changed
+ruletype: Sigma
+author: Trent Liffick (@tliffick)
+date: 2020/05/22
+description: Detects registry changes to Office macro settings. The TrustRecords contain
+  information on executed macro-enabled documents. (see references)
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    TargetObject:
+    - '*\Security\Trusted Documents\TrustRecords'
+    - '*\Security\AccessVBOM'
+    - '*\Security\VBAWarnings'
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- Valid Macros and/or internal documents
+id: a166f74e-bf44-409d-b9ba-ea4b2dd8b3cd
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://twitter.com/inversecos/status/1494174785621819397
+- https://www.mcafee.com/blogs/other-blogs/mcafee-labs/zloader-with-a-new-infection-technique/
+- https://securelist.com/scarcruft-surveilling-north-korean-defectors-and-human-rights-activists/105074/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1112

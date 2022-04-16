@@ -23,7 +23,7 @@ detection:
     - '* hash /password:*'
   condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
-- unlikely
+- Unlikely
 id: 7ec2c172-dceb-4c10-92c9-87c1881b7e18
 level: critical
 logsource:
@@ -32,7 +32,7 @@ logsource:
 modified: 2021/11/27
 references:
 - https://www.harmj0y.net/blog/redteaming/from-kekeo-to-rubeus/
-status: test
+status: stable
 tags:
 - attack.credential_access
 - attack.t1003

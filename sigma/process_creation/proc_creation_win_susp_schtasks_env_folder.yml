@@ -1,0 +1,55 @@
+
+title: Suspicius Schtasks From Env Var Folder
+ruletype: Sigma
+author: Florian Roth
+date: 2022/02/21
+description: Detects Schtask creations that point to a folder references in environment
+  variables or often used by malware
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image: '*\schtasks.exe'
+  SELECTION_3:
+    CommandLine: '* /create *'
+  SELECTION_4:
+    CommandLine:
+    - '*%AppData%*'
+    - '*\AppData\Local\\*'
+    - '*\AppData\Roaming\\*'
+    - '*%Public%*'
+    - '*\Users\Public*'
+    - '*C:\Windows\Temp*'
+    - '*C:\Perflogs*'
+  SELECTION_5:
+    ParentCommandLine: '*\svchost.exe -k netsvcs -p -s Schedule'
+  SELECTION_6:
+    CommandLine:
+    - '*%Public%*'
+    - '*\Users\Public*'
+    - '*C:\Windows\Temp*'
+    - '*C:\Perflogs*'
+  SELECTION_7:
+    CommandLine: '*update_task.xml*'
+  SELECTION_8:
+    ParentCommandLine: '*unattended.ini*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6)) and  not ((SELECTION_7 or SELECTION_8)))
+falsepositives:
+- Benign scheduled tasks creations or executions that happen often during software
+  installations
+- Software that uses the AppData folder and scheduled tasks to update the software
+  in the AppData folders
+id: 81325ce1-be01-4250-944f-b4789644556f
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/11
+references:
+- https://www.welivesecurity.com/2022/01/18/donot-go-do-not-respawn/
+- https://www.joesandbox.com/analysis/514608/0/html#324415FF7D8324231381BAD48A052F85DF04
+status: experimental
+tags:
+- attack.execution
+- attack.t1053.005

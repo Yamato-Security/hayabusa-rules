@@ -8,8 +8,21 @@ detection:
   SELECTION_1:
     EventID: 4697
   SELECTION_2:
-    ServiceFileName|re: (?i).*&&.*rundll32.*shell32\.dll.*shellexec_rundll.*(value|invoke|comspec|iex).*"
-  condition: (SELECTION_1 and SELECTION_2)
+    ServiceFileName: '*&&*'
+  SELECTION_3:
+    ServiceFileName: '*rundll32*'
+  SELECTION_4:
+    ServiceFileName: '*shell32.dll*'
+  SELECTION_5:
+    ServiceFileName: '*shellexec_rundll*'
+  SELECTION_6:
+    ServiceFileName:
+    - '*value*'
+    - '*invoke*'
+    - '*comspec*'
+    - '*iex*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: cd0f7229-d16f-42de-8fe3-fba365fbcb3a
@@ -17,7 +30,7 @@ level: high
 logsource:
   product: windows
   service: security
-modified: 2021/09/18
+modified: 2022/03/06
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 related:

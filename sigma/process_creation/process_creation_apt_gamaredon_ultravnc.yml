@@ -1,0 +1,34 @@
+
+title: Suspicious UltraVNC Execution
+ruletype: Sigma
+author: Bhabesh Raj
+date: 2022/03/04
+description: Detects suspicious UltraVNC command line flag combination that indicate
+  a auto reconnect upon execution, e.g. startup (as seen being used by Gamaredon threat
+  group)
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine: '*-autoreconnect *'
+  SELECTION_3:
+    CommandLine: '*-connect *'
+  SELECTION_4:
+    CommandLine: '*-id:*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 871b9555-69ca-4993-99d3-35a59f9f3599
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/09
+references:
+- https://www.ria.ee/sites/default/files/content-editors/kuberturve/tale_of_gamaredon_infection.pdf
+- https://unit42.paloaltonetworks.com/unit-42-title-gamaredon-group-toolset-evolution
+status: experimental
+tags:
+- attack.lateral_movement
+- attack.g0047
+- attack.t1021.005

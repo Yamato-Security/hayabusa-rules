@@ -1,0 +1,44 @@
+
+title: Add Port Monitor Persistence in Registry
+ruletype: Sigma
+author: frack113
+date: 2021/12/30
+description: |
+  Adversaries may use port monitors to run an attacker supplied DLL during system boot for persistence or privilege escalation.
+  A port monitor can be set through the AddMonitor API call to set a DLL to be loaded at startup.
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    TargetObject: HKLM\System\CurrentControlSet\Control\Print\Monitors\\*
+  SELECTION_3:
+    Details: '*.dll'
+  SELECTION_4:
+    EventType: SetValue
+  SELECTION_5:
+    Image: C:\Windows\System32\spoolsv.exe
+  SELECTION_6:
+    TargetObject: '*\System\CurrentControlSet\Control\Print\Monitors\CutePDF Writer
+      Monitor v4.0\Driver*'
+  SELECTION_7:
+    Details: cpwmon64_v40.dll
+  SELECTION_8:
+    User:
+    - '*AUTHORI*'
+    - '*AUTORI*'
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8)))
+falsepositives:
+- Unknown
+id: 944e8941-f6f6-4ee8-ac05-1c224e923c0e
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.010/T1547.010.md
+status: experimental
+tags:
+- attack.persistence
+- attack.t1547.010

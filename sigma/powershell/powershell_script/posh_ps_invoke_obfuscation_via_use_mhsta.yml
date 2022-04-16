@@ -6,8 +6,19 @@ date: 2020/10/08
 description: Detects Obfuscated Powershell via use MSHTA in Scripts
 detection:
   SELECTION_1:
-    ScriptBlockText|re: (?i).*(set).*(&&).*(mshta).*(vbscript:createobject).*(\.run).*\(window\.close\).*"
-  condition: SELECTION_1
+    ScriptBlockText: '*set*'
+  SELECTION_2:
+    ScriptBlockText: '*&&*'
+  SELECTION_3:
+    ScriptBlockText: '*mshta*'
+  SELECTION_4:
+    ScriptBlockText: '*vbscript:createobject*'
+  SELECTION_5:
+    ScriptBlockText: '*.run*'
+  SELECTION_6:
+    ScriptBlockText: '*(window.close)*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: e55a5195-4724-480e-a77e-3ebe64bd3759
@@ -16,7 +27,7 @@ logsource:
   category: ps_script
   definition: Script block logging must be enabled
   product: windows
-modified: 2021/10/16
+modified: 2022/03/07
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: experimental

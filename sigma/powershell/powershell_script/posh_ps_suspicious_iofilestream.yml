@@ -11,7 +11,7 @@ detection:
   SELECTION_2:
     ScriptBlockText: '*IO.FileStream*'
   SELECTION_3:
-    ScriptBlockText: '*\\.\\*'
+    ScriptBlockText: '*\\\\.\\\*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate PowerShell scripts
@@ -21,7 +21,7 @@ logsource:
   category: ps_script
   definition: Script block logging must be enabled
   product: windows
-modified: 2022/01/10
+modified: 2022/03/05
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1006/T1006.md
 status: experimental

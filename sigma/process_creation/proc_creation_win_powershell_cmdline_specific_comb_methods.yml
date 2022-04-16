@@ -9,8 +9,16 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_10:
-    CommandLine: '*Xor*'
+    CommandLine: '*join*'
   SELECTION_11:
+    Image: '*\powershell.exe'
+  SELECTION_12:
+    CommandLine: '*ForEach*'
+  SELECTION_13:
+    CommandLine: '*Xor*'
+  SELECTION_14:
+    Image: '*\powershell.exe'
+  SELECTION_15:
     CommandLine:
     - '*cOnvErTTO-SECUreStRIng*'
   SELECTION_2:
@@ -29,18 +37,19 @@ detection:
     - '*ToString*'
     - '*String*'
   SELECTION_5:
-    CommandLine: '*char*'
+    Image: '*\powershell.exe'
   SELECTION_6:
-    CommandLine: '*join*'
+    CommandLine: '*char*'
   SELECTION_7:
-    CommandLine: '*split*'
-  SELECTION_8:
     CommandLine: '*join*'
+  SELECTION_8:
+    Image: '*\powershell.exe'
   SELECTION_9:
-    CommandLine: '*ForEach*'
-  condition: (SELECTION_1 and SELECTION_2 and ((((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6)) or (SELECTION_7 and SELECTION_8)) or (SELECTION_9
-    and SELECTION_10) or SELECTION_11))
+    CommandLine: '*split*'
+  condition: (SELECTION_1 and (((((SELECTION_2 and SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6 and SELECTION_7)) or (SELECTION_8 and SELECTION_9
+    and SELECTION_10)) or (SELECTION_11 and SELECTION_12 and SELECTION_13)) or (SELECTION_14
+    and SELECTION_15)))
 falsepositives:
 - Unlikely
 id: cdf05894-89e7-4ead-b2b0-0a5f97a90f2f

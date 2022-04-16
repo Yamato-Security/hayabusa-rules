@@ -1,0 +1,28 @@
+
+title: Shellcode Injection
+ruletype: Sigma
+author: Bhabesh Raj
+date: 2022/03/11
+description: Detects shellcode injection by Metasploit's migrate and Empire's psinject
+detection:
+  SELECTION_1:
+    EventID: 10
+  SELECTION_2:
+    GrantedAccess:
+    - '0x147a'
+    - '0x1f3fff'
+  SELECTION_3:
+    CallTrace: '*UNKNOWN*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Empire's csharp_exe payload uses 0x1f3fff for process enumeration as well
+id: 250ae82f-736e-4844-a68b-0b5e8cc887da
+level: high
+logsource:
+  category: process_access
+  product: windows
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.privilege_escalation
+- attack.t1055

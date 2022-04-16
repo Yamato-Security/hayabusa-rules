@@ -12,8 +12,10 @@ detection:
   SELECTION_3:
     Image: '*\cutil.exe'
   SELECTION_4:
+    CommandLine: '*/i:%APPDATA%\logs.txt scrobj.dll'
+  SELECTION_5:
     Description: Microsoft(C) Registerserver
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - Very Unlikely
 id: 10152a7b-b566-438f-a33c-390b607d1c8d

@@ -8,27 +8,31 @@ description: Detects the pattern of UAC Bypass using NTFS reparse point and wusa
 detection:
   SELECTION_1:
     EventID: 1
+  SELECTION_10:
+    Image: '*\DismHost.exe'
   SELECTION_2:
+    CommandLine: '"C:\Windows\system32\wusa.exe"  /quiet C:\Users\\*'
+  SELECTION_3:
+    CommandLine: '*\AppData\Local\Temp\update.msu'
+  SELECTION_4:
     IntegrityLevel:
     - High
     - System
-  SELECTION_3:
-    CommandLine: '"C:\Windows\system32\wusa.exe"  /quiet C:\Users\\*'
-  SELECTION_4:
-    CommandLine: '*\AppData\Local\Temp\update.msu'
   SELECTION_5:
     ParentCommandLine: '"C:\Windows\system32\dism.exe" /online /quiet /norestart /add-package
       /packagepath:"C:\Windows\system32\pe386" /ignorecheck'
   SELECTION_6:
-    CommandLine: '*C:\Users\\*'
+    IntegrityLevel:
+    - High
+    - System
   SELECTION_7:
-    CommandLine: '*\AppData\Local\Temp\\*'
+    CommandLine: '*C:\Users\\*'
   SELECTION_8:
-    CommandLine: '*\dismhost.exe {*'
+    CommandLine: '*\AppData\Local\Temp\\*'
   SELECTION_9:
-    Image: '*\DismHost.exe'
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)))
+    CommandLine: '*\dismhost.exe {*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10)))
 falsepositives:
 - Unknown
 id: 39ed3c80-e6a1-431b-9df3-911ac53d08a7

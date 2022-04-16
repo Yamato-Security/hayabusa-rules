@@ -17,16 +17,17 @@ detection:
   SELECTION_5:
     KeyLength: '0'
   SELECTION_6:
-    LogonType: '9'
+    EventID: 4624
   SELECTION_7:
-    LogonProcessName: seclogo
+    LogonType: '9'
   SELECTION_8:
+    LogonProcessName: seclogo
+  SELECTION_9:
     TargetUserName: ANONYMOUS LOGON
-  condition: ((SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7))) and  not (SELECTION_8))
+  condition: (((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7 and SELECTION_8)) and  not (SELECTION_9))
 falsepositives:
 - Administrator activity
-- Penetration tests
 id: 8eef149c-bd26-49f2-9e5a-9b00e3af499b
 level: medium
 logsource:

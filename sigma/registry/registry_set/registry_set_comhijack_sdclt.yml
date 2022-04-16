@@ -1,0 +1,28 @@
+
+title: COM Hijack via Sdclt
+ruletype: Sigma
+author: Omkar Gudhate
+date: 2020/09/27
+description: Detects changes to 'HKCU\Software\Classes\Folder\shell\open\command\DelegateExecute'
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    TargetObject: HKCU\Software\Classes\Folder\shell\open\command\DelegateExecute
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- Unknown
+id: 07743f65-7ec9-404a-a519-913db7118a8d
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- http://blog.sevagas.com/?Yet-another-sdclt-UAC-bypass
+- https://www.exploit-db.com/exploits/47696
+status: test
+tags:
+- attack.privilege_escalation
+- attack.t1546
+- attack.t1548

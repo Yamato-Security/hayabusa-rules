@@ -42,15 +42,17 @@ detection:
   SELECTION_3:
     ParentImage: '*tomcat*'
   SELECTION_4:
+    Image: '*\powershell.exe'
+  SELECTION_5:
     CommandLine:
     - '*powershell*'
     - '*pwsh*'
-  SELECTION_5:
-    Description: Windows PowerShell
   SELECTION_6:
+    Description: Windows PowerShell
+  SELECTION_7:
     Product: PowerShell Core 6
   condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and (SELECTION_4 or SELECTION_5
-    or SELECTION_6))
+    or SELECTION_6 or SELECTION_7))
 falsepositives:
 - Other scripts
 id: 754ed792-634f-40ae-b3bc-e0448d33f695
@@ -58,7 +60,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/12/02
+modified: 2022/03/21
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=26
 status: test

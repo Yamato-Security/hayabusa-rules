@@ -7,6 +7,8 @@ description: Detects netsh commands that configure a port forwarding (PortProxy)
 detection:
   SELECTION_1:
     EventID: 1
+  SELECTION_10:
+    CommandLine: '*c=*'
   SELECTION_2:
     Image: '*\netsh.exe'
   SELECTION_3:
@@ -18,13 +20,13 @@ detection:
   SELECTION_6:
     CommandLine: '*v4tov4*'
   SELECTION_7:
-    CommandLine: '*connectp*'
+    Image: '*\netsh.exe'
   SELECTION_8:
-    CommandLine: '*listena*'
+    CommandLine: '*connectp*'
   SELECTION_9:
-    CommandLine: '*c=*'
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
+    CommandLine: '*listena*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10)))
 falsepositives:
 - Legitimate administration
 - WSL2 network bridge PowerShell script used for WSL/Kubernetes/Docker (e.g. https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723)

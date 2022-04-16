@@ -22,7 +22,8 @@ detection:
     - ::1
   condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)))
 falsepositives:
-- unknown
+- Programs that connect locally to the RDP port
+- THOR APT scanner (checking BlueKeep vulnerability)
 id: 5bed80b6-b3e8-428e-a3ae-d3c757589e41
 level: high
 logsource:

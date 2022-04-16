@@ -15,16 +15,18 @@ detection:
   SELECTION_2:
     Image: hxtsr.exe
   SELECTION_3:
-    CurrentDirectory|re: (?i)c:\\\\program files\\\\windowsapps\\\\microsoft\.windowscommunicationsapps_.*\\\\hxtsr\.exe
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
+    CurrentDirectory: C:\program files\windowsapps\microsoft.windowscommunicationsapps_*
+  SELECTION_4:
+    CurrentDirectory: '*\hxtsr.exe'
+  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3 and SELECTION_4))
 falsepositives:
-- unknown
+- Unknown
 id: 4e762605-34a8-406d-b72e-c1a089313320
 level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/07/07
+modified: 2022/03/06
 status: experimental
 tags:
 - attack.defense_evasion

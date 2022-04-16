@@ -1,0 +1,28 @@
+
+title: Suspicious PowerShell Get Current User
+ruletype: Sigma
+author: frack113
+date: 2022/04/04
+description: Detects the use of PowerShell to identify the current logged user.
+detection:
+  SELECTION_1:
+    ScriptBlockText:
+    - '*[System.Environment]::UserName*'
+    - '*$env:UserName*'
+    - '*[System.Security.Principal.WindowsIdentity]::GetCurrent()*'
+  condition: SELECTION_1
+falsepositives:
+- Legitimate PowerShell scripts
+id: 4096a49c-7de4-4da0-a230-c66ccd56ea5a
+level: low
+logsource:
+  category: ps_script
+  definition: Script block logging must be enabled
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1033/T1033.md#atomic-test-4---user-discovery-with-env-vars-powershell-script
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1033/T1033.md#atomic-test-5---getcurrent-user-with-powershell-script
+status: experimental
+tags:
+- attack.discovery
+- attack.t1033

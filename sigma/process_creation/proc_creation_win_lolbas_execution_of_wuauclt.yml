@@ -9,12 +9,17 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine|re: (?i)wuauclt\.exe.*/UpdateDeploymentProvider.*/Runhandlercomserver
+    CommandLine: '*wuauclt.exe*'
   SELECTION_3:
+    CommandLine: '*/UpdateDeploymentProvider*'
+  SELECTION_4:
+    CommandLine: '*/Runhandlercomserver*'
+  SELECTION_5:
     CommandLine:
     - '*wuaueng.dll*'
     - '*UpdateDeploymentProvider.dll /ClassId*'
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
 - Wuaueng.dll which is a module belonging to Microsoft Windows Update.
 fields:
@@ -24,11 +29,11 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/06/11
+modified: 2022/03/07
 references:
 - https://dtm.uk/wuauclt/
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.execution
-- attack.t1218.011
+- attack.t1218

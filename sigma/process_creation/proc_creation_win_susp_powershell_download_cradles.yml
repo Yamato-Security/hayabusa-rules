@@ -1,0 +1,24 @@
+
+title: PowerShell Web Download
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/24
+description: Detects suspicious ways to download files or content using PowerShell
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine:
+    - '*.DownloadString(*'
+    - '*.DownloadFile(*'
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- Scripts or tools that download files
+id: 6e897651-f157-4d8f-aaeb-df8151488385
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/VirtualAlllocEx/Payload-Download-Cradles/blob/main/Download-Cradles.cmd
+status: experimental

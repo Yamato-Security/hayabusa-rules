@@ -1,0 +1,34 @@
+
+title: Base64 Encoded Reflective Assembly Load
+ruletype: Sigma
+author: Christian Burkard
+date: 2022/03/01
+description: Detects base64 encoded .NET reflective loading of Assembly
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine:
+    - '*WwBSAGUAZgBsAGUAYwB0AGkAbwBuAC4AQQBzAHMAZQBtAGIAbAB5AF0AOgA6AEwAbwBhAGQAKA*'
+    - '*sAUgBlAGYAbABlAGMAdABpAG8AbgAuAEEAcwBzAGUAbQBiAGwAeQBdADoAOgBMAG8AYQBkACgA*'
+    - '*bAFIAZQBmAGwAZQBjAHQAaQBvAG4ALgBBAHMAcwBlAG0AYgBsAHkAXQA6ADoATABvAGEAZAAoA*'
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- Unlikely
+fields:
+- CommandLine
+- ParentCommandLine
+id: 62b7ccc9-23b4-471e-aa15-6da3663c4d59
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/07
+references:
+- https://github.com/Neo23x0/Raccine/blob/main/yara/mal_revil.yar
+status: test
+tags:
+- attack.execution
+- attack.t1059.001
+- attack.defense_evasion
+- attack.t1027

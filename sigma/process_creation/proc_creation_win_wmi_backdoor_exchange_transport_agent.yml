@@ -9,7 +9,9 @@ detection:
     EventID: 1
   SELECTION_2:
     ParentImage: '*\EdgeTransport.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  SELECTION_3:
+    Image: C:\Windows\System32\conhost.exe
+  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
 falsepositives:
 - Unknown
 id: 797011dc-44f4-4e6f-9f10-a8ceefbe566b
@@ -17,7 +19,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/03/18
 references:
 - https://twitter.com/cglyer/status/1182389676876980224
 - https://twitter.com/cglyer/status/1182391019633029120

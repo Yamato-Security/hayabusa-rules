@@ -23,8 +23,7 @@ detection:
   condition: (SELECTION_1 and ((SELECTION_2 and  not ((SELECTION_3) or (SELECTION_4)))
     or SELECTION_5))
 falsepositives:
-- exclude legitimate logon scripts
-- penetration tests, red teaming
+- Exclude legitimate logon scripts
 id: 0a98a10c-685d-4ab0-bddc-b6bdd1d48458
 level: high
 logsource:

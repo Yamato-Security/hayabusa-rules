@@ -8,8 +8,19 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine|re: (?i).*(set).*(&&).*(mshta).*(vbscript:createobject).*(\.run).*\(window\.close\).*"
-  condition: (SELECTION_1 and SELECTION_2)
+    CommandLine: '*set*'
+  SELECTION_3:
+    CommandLine: '*&&*'
+  SELECTION_4:
+    CommandLine: '*mshta*'
+  SELECTION_5:
+    CommandLine: '*vbscript:createobject*'
+  SELECTION_6:
+    CommandLine: '*.run*'
+  SELECTION_7:
+    CommandLine: '*(window.close)*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: ac20ae82-8758-4f38-958e-b44a3140ca88
@@ -17,7 +28,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/03/08
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: test

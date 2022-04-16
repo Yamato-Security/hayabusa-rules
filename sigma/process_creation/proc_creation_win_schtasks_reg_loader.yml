@@ -1,0 +1,44 @@
+
+title: Scheduled Task Executing Powershell Encoded Payload from Registry
+ruletype: Sigma
+author: '@Kostastsale, @TheDFIRReport, slightly modified by pH-T'
+date: 2022/02/12
+description: Detects the creation of a schtask that executes a base64 encoded payload
+  stored in the Windows Registry using PowerShell.
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image: '*\schtasks.exe'
+  SELECTION_3:
+    CommandLine: '*/Create*'
+  SELECTION_4:
+    CommandLine: '*/SC*'
+  SELECTION_5:
+    CommandLine: '*FromBase64String*'
+  SELECTION_6:
+    CommandLine: '*Get-ItemProperty*'
+  SELECTION_7:
+    CommandLine:
+    - '*HKCU:*'
+    - '*HKLM:*'
+    - '*registry::*'
+    - '*HKEY_*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Unknown
+id: c4eeeeae-89f4-43a7-8b48-8d1bdfa66c78
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/15
+references:
+- https://thedfirreport.com/2022/02/21/qbot-and-zerologon-lead-to-full-domain-compromise/
+status: experimental
+tags:
+- attack.execution
+- attack.persistence
+- attack.t1053.005
+- attack.t1059.001

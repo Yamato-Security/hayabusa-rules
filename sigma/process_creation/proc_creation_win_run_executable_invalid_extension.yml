@@ -8,6 +8,10 @@ description: Detects the execution of rundll32 with a command line that doesn't 
 detection:
   SELECTION_1:
     EventID: 1
+  SELECTION_10:
+    ParentImage: '*:\Windows\System32\msiexec.exe'
+  SELECTION_11:
+    CommandLine: C:\Windows\system32\MsiExec.exe -Embedding*
   SELECTION_2:
     Image: '*\rundll32.exe'
   SELECTION_3:
@@ -25,7 +29,8 @@ detection:
   SELECTION_9:
     CommandLine: C:\Windows\syswow64\MsiExec.exe -Embedding*
   condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3) or (SELECTION_4
-    or SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)))
+    or SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
+    or (SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Unknown
 fields:
@@ -36,7 +41,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/02/25
+modified: 2022/03/20
 references:
 - https://twitter.com/mrd0x/status/1481630810495139841?s=12
 status: experimental

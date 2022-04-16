@@ -1,0 +1,41 @@
+
+title: Registry Explorer Policy Modification
+ruletype: Sigma
+author: frack113
+date: 2022/03/18
+description: Detects registry modifications that disable internal tools or functions
+  in explorer (malware like Agent Tesla uses this technique)
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    EventType: SetValue
+  SELECTION_3:
+    TargetObject:
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoLogOff'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoDesktop'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoRun'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoFind'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoControlPanel'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoFileMenu'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoClose'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoSetTaskbar'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoPropertiesMyDocuments'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoTrayContextMenu'
+  SELECTION_4:
+    Details: DWORD (0x00000001)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitim admin script
+id: 1c3121ed-041b-4d97-a075-07f54f20fb4a
+level: medium
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1112/T1112.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1112

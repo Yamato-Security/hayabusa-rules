@@ -8,14 +8,17 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine: '*/fullmemdmp*'
-  SELECTION_3:
     Image: '*\rdrleakdiag.exe'
+  SELECTION_3:
+    CommandLine: '*/fullmemdmp*'
   SELECTION_4:
-    CommandLine: '* /o *'
+    CommandLine: '*/fullmemdmp*'
   SELECTION_5:
+    CommandLine: '* /o *'
+  SELECTION_6:
     CommandLine: '* /p *'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5
+    and SELECTION_6)))
 falsepositives:
 - Unknown
 id: 6355a919-2e97-4285-a673-74645566340d

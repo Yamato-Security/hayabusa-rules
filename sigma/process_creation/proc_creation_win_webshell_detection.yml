@@ -9,8 +9,16 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_10:
-    CommandLine: '* /node:*'
+    CommandLine: '* -n *'
   SELECTION_11:
+    CommandLine:
+    - '*&cd&echo*'
+    - '*cd /d *'
+  SELECTION_12:
+    Image: '*\wmic.exe'
+  SELECTION_13:
+    CommandLine: '* /node:*'
+  SELECTION_14:
     Image:
     - '*\whoami.exe'
     - '*\systeminfo.exe'
@@ -23,7 +31,7 @@ detection:
     - '*\vssadmin.exe'
     - '*\wevtutil.exe'
     - '*\tasklist.exe'
-  SELECTION_12:
+  SELECTION_15:
     CommandLine:
     - '* Test-NetConnection *'
     - '*dir \\*'
@@ -33,34 +41,40 @@ detection:
     - '*\php-cgi.exe'
     - '*\nginx.exe'
     - '*\httpd.exe'
+    - '*\caddy.exe'
+    - '*\ws_tomcatservice.exe'
   SELECTION_3:
     ParentImage:
-    - '*\apache*'
-    - '*\tomcat*'
+    - '*\java.exe'
+    - '*\javaw.exe'
   SELECTION_4:
+    ParentImage:
+    - '*-tomcat-*'
+    - '*\tomcat*'
+  SELECTION_5:
+    ParentImage:
+    - '*\java.exe'
+    - '*\javaw.exe'
+  SELECTION_6:
+    CommandLine:
+    - '*catalina.jar*'
+    - '*CATALINA_HOME*'
+  SELECTION_7:
     Image:
     - '*\net.exe'
     - '*\net1.exe'
-  SELECTION_5:
+  SELECTION_8:
     CommandLine:
     - '* user *'
     - '* use *'
     - '* group *'
-  SELECTION_6:
-    Image: '*\ping.exe'
-  SELECTION_7:
-    CommandLine: '* -n *'
-  SELECTION_8:
-    CommandLine:
-    - '*&cd&echo*'
-    - '*cd /d *'
   SELECTION_9:
-    Image: '*\wmic.exe'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and (((SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7) or SELECTION_8) or (SELECTION_9
-    and SELECTION_10) or SELECTION_11 or SELECTION_12))
+    Image: '*\ping.exe'
+  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6)) and ((SELECTION_7 and SELECTION_8) or (SELECTION_9 and SELECTION_10)
+    or SELECTION_11 or (SELECTION_12 and SELECTION_13) or SELECTION_14 or SELECTION_15))
 falsepositives:
-- unknown
+- Unknown
 fields:
 - CommandLine
 - ParentCommandLine
@@ -69,7 +83,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/03/02
+modified: 2021/03/17
 references:
 - https://www.fireeye.com/blog/threat-research/2013/08/breaking-down-the-china-chopper-web-shell-part-ii.html
 - https://unit42.paloaltonetworks.com/bumblebee-webshell-xhunt-campaign/

@@ -1,0 +1,27 @@
+
+title: Suspicious Replace.exe Execution
+ruletype: Sigma
+author: frack113
+date: 2022/03/06
+description: Replace.exe is used to replace file with another file
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine: '*replace *'
+  SELECTION_3:
+    CommandLine: '*/A*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unknown
+id: 9292293b-8496-4715-9db6-37028dcda4b3
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://lolbas-project.github.io/lolbas/Binaries/Replace/
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1105

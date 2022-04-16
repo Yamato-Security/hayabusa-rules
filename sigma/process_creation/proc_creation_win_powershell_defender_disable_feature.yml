@@ -1,0 +1,95 @@
+
+title: Powershell Defender Disable Scan Feature
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/03
+description: Detects requests to disable Microsoft Defender features using PowerShell
+  commands
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine:
+    - '*Add-MpPreference *'
+    - '*Set-MpPreference *'
+  SELECTION_3:
+    CommandLine:
+    - '*DisableRealtimeMonitoring *'
+    - '*DisableIOAVProtection *'
+    - '*DisableBehaviorMonitoring *'
+    - '*DisableBlockAtFirstSeen *'
+  SELECTION_4:
+    CommandLine:
+    - '*$true*'
+    - '* 1 *'
+  SELECTION_5:
+    CommandLine:
+    - '*RGlzYWJsZVJlYWx0aW1lTW9uaXRvcmluZy*'
+    - '*Rpc2FibGVSZWFsdGltZU1vbml0b3Jpbmcg*'
+    - '*EaXNhYmxlUmVhbHRpbWVNb25pdG9yaW5nI*'
+    - '*RGlzYWJsZUlPQVZQcm90ZWN0aW9uI*'
+    - '*Rpc2FibGVJT0FWUHJvdGVjdGlvbi*'
+    - '*EaXNhYmxlSU9BVlByb3RlY3Rpb24g*'
+    - '*RGlzYWJsZUJlaGF2aW9yTW9uaXRvcmluZy*'
+    - '*Rpc2FibGVCZWhhdmlvck1vbml0b3Jpbmcg*'
+    - '*EaXNhYmxlQmVoYXZpb3JNb25pdG9yaW5nI*'
+    - '*RGlzYWJsZUJsb2NrQXRGaXJzdFNlZW4g*'
+    - '*Rpc2FibGVCbG9ja0F0Rmlyc3RTZWVuI*'
+    - '*EaXNhYmxlQmxvY2tBdEZpcnN0U2Vlbi*'
+    - '*ZGlzYWJsZXJlYWx0aW1lbW9uaXRvcmluZy*'
+    - '*Rpc2FibGVyZWFsdGltZW1vbml0b3Jpbmcg*'
+    - '*kaXNhYmxlcmVhbHRpbWVtb25pdG9yaW5nI*'
+    - '*ZGlzYWJsZWlvYXZwcm90ZWN0aW9uI*'
+    - '*Rpc2FibGVpb2F2cHJvdGVjdGlvbi*'
+    - '*kaXNhYmxlaW9hdnByb3RlY3Rpb24g*'
+    - '*ZGlzYWJsZWJlaGF2aW9ybW9uaXRvcmluZy*'
+    - '*Rpc2FibGViZWhhdmlvcm1vbml0b3Jpbmcg*'
+    - '*kaXNhYmxlYmVoYXZpb3Jtb25pdG9yaW5nI*'
+    - '*ZGlzYWJsZWJsb2NrYXRmaXJzdHNlZW4g*'
+    - '*Rpc2FibGVibG9ja2F0Zmlyc3RzZWVuI*'
+    - '*kaXNhYmxlYmxvY2thdGZpcnN0c2Vlbi*'
+  SELECTION_6:
+    CommandLine:
+    - '*RABpAHMAYQBiAGwAZQBSAGUAYQBsAHQAaQBtAGUATQBvAG4AaQB0AG8AcgBpAG4AZwAgA*'
+    - '*QAaQBzAGEAYgBsAGUAUgBlAGEAbAB0AGkAbQBlAE0AbwBuAGkAdABvAHIAaQBuAGcAIA*'
+    - '*EAGkAcwBhAGIAbABlAFIAZQBhAGwAdABpAG0AZQBNAG8AbgBpAHQAbwByAGkAbgBnACAA*'
+    - '*RABpAHMAYQBiAGwAZQBJAE8AQQBWAFAAcgBvAHQAZQBjAHQAaQBvAG4AIA*'
+    - '*QAaQBzAGEAYgBsAGUASQBPAEEAVgBQAHIAbwB0AGUAYwB0AGkAbwBuACAA*'
+    - '*EAGkAcwBhAGIAbABlAEkATwBBAFYAUAByAG8AdABlAGMAdABpAG8AbgAgA*'
+    - '*RABpAHMAYQBiAGwAZQBCAGUAaABhAHYAaQBvAHIATQBvAG4AaQB0AG8AcgBpAG4AZwAgA*'
+    - '*QAaQBzAGEAYgBsAGUAQgBlAGgAYQB2AGkAbwByAE0AbwBuAGkAdABvAHIAaQBuAGcAIA*'
+    - '*EAGkAcwBhAGIAbABlAEIAZQBoAGEAdgBpAG8AcgBNAG8AbgBpAHQAbwByAGkAbgBnACAA*'
+    - '*RABpAHMAYQBiAGwAZQBCAGwAbwBjAGsAQQB0AEYAaQByAHMAdABTAGUAZQBuACAA*'
+    - '*QAaQBzAGEAYgBsAGUAQgBsAG8AYwBrAEEAdABGAGkAcgBzAHQAUwBlAGUAbgAgA*'
+    - '*EAGkAcwBhAGIAbABlAEIAbABvAGMAawBBAHQARgBpAHIAcwB0AFMAZQBlAG4AIA*'
+    - '*ZABpAHMAYQBiAGwAZQByAGUAYQBsAHQAaQBtAGUAbQBvAG4AaQB0AG8AcgBpAG4AZwAgA*'
+    - '*QAaQBzAGEAYgBsAGUAcgBlAGEAbAB0AGkAbQBlAG0AbwBuAGkAdABvAHIAaQBuAGcAIA*'
+    - '*kAGkAcwBhAGIAbABlAHIAZQBhAGwAdABpAG0AZQBtAG8AbgBpAHQAbwByAGkAbgBnACAA*'
+    - '*ZABpAHMAYQBiAGwAZQBpAG8AYQB2AHAAcgBvAHQAZQBjAHQAaQBvAG4AIA*'
+    - '*QAaQBzAGEAYgBsAGUAaQBvAGEAdgBwAHIAbwB0AGUAYwB0AGkAbwBuACAA*'
+    - '*kAGkAcwBhAGIAbABlAGkAbwBhAHYAcAByAG8AdABlAGMAdABpAG8AbgAgA*'
+    - '*ZABpAHMAYQBiAGwAZQBiAGUAaABhAHYAaQBvAHIAbQBvAG4AaQB0AG8AcgBpAG4AZwAgA*'
+    - '*QAaQBzAGEAYgBsAGUAYgBlAGgAYQB2AGkAbwByAG0AbwBuAGkAdABvAHIAaQBuAGcAIA*'
+    - '*kAGkAcwBhAGIAbABlAGIAZQBoAGEAdgBpAG8AcgBtAG8AbgBpAHQAbwByAGkAbgBnACAA*'
+    - '*ZABpAHMAYQBiAGwAZQBiAGwAbwBjAGsAYQB0AGYAaQByAHMAdABzAGUAZQBuACAA*'
+    - '*QAaQBzAGEAYgBsAGUAYgBsAG8AYwBrAGEAdABmAGkAcgBzAHQAcwBlAGUAbgAgA*'
+    - '*kAGkAcwBhAGIAbABlAGIAbABvAGMAawBhAHQAZgBpAHIAcwB0AHMAZQBlAG4AIA*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6)))
+falsepositives:
+- Possible Admin Activity
+- Other Cmdlets that may use the same parameters
+id: 1ec65a5f-9473-4f12-97da-622044d6df21
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/07
+references:
+- https://docs.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2022-ps
+- https://www.virustotal.com/gui/file/d609799091731d83d75ec5d1f030571af20c45efeeb94840b67ea09a3283ab65/behavior/C2AE
+- https://www.virustotal.com/gui/search/content%253A%2522Set-MpPreference%2520-Disable%2522/files
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001

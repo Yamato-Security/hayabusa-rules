@@ -1,7 +1,7 @@
 
 title: Powershell Detect Virtualization Environment
 ruletype: Sigma
-author: frack113
+author: frack113, Duc.Le-GTSC
 date: 2021/08/03
 description: Adversaries may employ various system checks to detect and avoid virtualization
   and analysis environments. This may include changing behaviors based on the results
@@ -9,7 +9,9 @@ description: Adversaries may employ various system checks to detect and avoid vi
   (VME) or sandbox
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Get-WmiObject*'
+    ScriptBlockText:
+    - '*Get-WmiObject*'
+    - '*gwmi*'
   SELECTION_2:
     ScriptBlockText:
     - '*MSAcpi_ThermalZoneTemperature*'
@@ -23,7 +25,7 @@ logsource:
   category: ps_script
   definition: EnableScriptBlockLogging must be set to enable
   product: windows
-modified: 2021/12/02
+modified: 2022/03/03
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1497.001/T1497.001.md
 - https://techgenix.com/malicious-powershell-scripts-evade-detection/

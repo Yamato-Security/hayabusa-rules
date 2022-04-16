@@ -6,17 +6,25 @@ date: 2020/10/18
 description: Detects Obfuscated Powershell via COMPRESS OBFUSCATION
 detection:
   SELECTION_1:
-    ScriptBlockText|re: (?i).*new-object.*(?:system\.io\.compression\.deflatestream|system\.io\.streamreader).*text\.encoding\]::ascii.*readtoend
-  condition: SELECTION_1
+    ScriptBlockText: '*new-object*'
+  SELECTION_2:
+    ScriptBlockText: '*text.encoding]::ascii*'
+  SELECTION_3:
+    ScriptBlockText:
+    - '*system.io.compression.deflatestream*'
+    - '*system.io.streamreader*'
+  SELECTION_4:
+    ScriptBlockText: '*readtoend'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- unknown
+- Unknown
 id: 20e5497e-331c-4cd5-8d36-935f6e2a9a07
 level: medium
 logsource:
   category: ps_script
   definition: Script block logging must be enabled
   product: windows
-modified: 2021/10/16
+modified: 2022/03/08
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: experimental

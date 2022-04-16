@@ -18,8 +18,12 @@ detection:
   SELECTION_13:
     Image: '*\Microsoft\\*'
   SELECTION_14:
-    Image: C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost*
+    Image: C:\Windows\Temp\asgard2-agent\\*
   SELECTION_15:
+    Image: '*\thor.exe'
+  SELECTION_16:
+    Image: C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost*
+  SELECTION_17:
     Image: '*\StartMenuExperienceHost.exe'
   SELECTION_2:
     Device: '*floppy*'
@@ -51,7 +55,7 @@ detection:
   condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3) or (SELECTION_4)
     or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)
     or (SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14
-    and SELECTION_15)))
+    and SELECTION_15) or (SELECTION_16 and SELECTION_17)))
 falsepositives:
 - Legitimate Administrator using tool for raw access or ongoing forensic investigation
 fields:
@@ -64,7 +68,7 @@ level: low
 logsource:
   category: raw_access_thread
   product: windows
-modified: 2022/02/21
+modified: 2022/03/15
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 status: test

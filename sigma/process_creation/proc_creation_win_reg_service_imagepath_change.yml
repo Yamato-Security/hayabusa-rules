@@ -15,22 +15,23 @@ detection:
   SELECTION_3:
     CommandLine: '*add *'
   SELECTION_4:
-    CommandLine: '*HKLM\SYSTEM\CurrentControlSet\Services\\*'
+    CommandLine: '*SYSTEM\CurrentControlSet\Services\\*'
   SELECTION_5:
-    CommandLine: '*/v *'
+    CommandLine: '* ImagePath *'
   SELECTION_6:
-    CommandLine: '*ImagePath *'
-  SELECTION_7:
-    CommandLine: '*/d *'
+    CommandLine:
+    - '* /d *'
+    - '* -d *'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+    and SELECTION_6)
 falsepositives:
-- unknown
+- Unknown
 id: 9b0b7ac3-6223-47aa-a3fd-e8f211e637db
 level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/03/29
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.011/T1574.011.md#atomic-test-2---service-imagepath-change-with-regexe
 status: experimental

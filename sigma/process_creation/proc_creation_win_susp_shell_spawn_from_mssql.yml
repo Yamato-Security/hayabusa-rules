@@ -17,13 +17,22 @@ detection:
     - '*\bash.exe'
     - '*\powershell.exe'
     - '*\bitsadmin.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  SELECTION_4:
+    ParentImage: C:\Program Files\Microsoft SQL Server\\*
+  SELECTION_5:
+    ParentImage: '*DATEV_DBENGINE\MSSQL\Binn\sqlservr.exe'
+  SELECTION_6:
+    Image: C:\Windows\System32\cmd.exe
+  SELECTION_7:
+    CommandLine: '"C:\Windows\system32\cmd.exe" *'
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4
+    and SELECTION_5 and SELECTION_6 and SELECTION_7)))
 id: 869b9ca7-9ea2-4a5a-8325-e80e62f75445
 level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/06/27
+modified: 2022/03/08
 status: experimental
 tags:
 - attack.t1505.003

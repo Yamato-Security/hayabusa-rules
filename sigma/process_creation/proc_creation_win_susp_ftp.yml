@@ -9,19 +9,21 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine: '*-s:*'
-  SELECTION_3:
     Image: '*ftp.exe'
+  SELECTION_3:
+    CommandLine: '*-s:*'
   SELECTION_4:
     OriginalFileName: '*ftp.exe*'
   SELECTION_5:
-    OriginalFileName: '*ftp.exe*'
+    CommandLine: '*-s:*'
   SELECTION_6:
-    Image: '*ftp.exe'
+    OriginalFileName: '*ftp.exe*'
   SELECTION_7:
+    Image: '*ftp.exe'
+  SELECTION_8:
     ParentImage: '*ftp.exe'
-  condition: (SELECTION_1 and ((SELECTION_2 and (SELECTION_3 or SELECTION_4)) or (SELECTION_5
-    and  not (SELECTION_6)) or SELECTION_7))
+  condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3) or (SELECTION_4 and
+    SELECTION_5)) or (SELECTION_6 and  not (SELECTION_7)) or SELECTION_8))
 falsepositives:
 - Unknown
 fields:

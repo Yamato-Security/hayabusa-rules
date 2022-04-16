@@ -1,7 +1,7 @@
 
 title: Cmd.exe CommandLine Path Traversal
 ruletype: Sigma
-author: xknow @xknow_infosec
+author: xknow @xknow_infosec, Tim Shelton
 date: 2020/06/11
 description: detects the usage of path traversal in cmd.exe indicating possible command/argument
   confusion/hijacking
@@ -14,7 +14,10 @@ detection:
     ParentCommandLine: '*/c*'
   SELECTION_4:
     CommandLine: '*/../../*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  SELECTION_5:
+    CommandLine: '*\Tasktop\keycloak\bin\/../../jre\bin\java*'
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5)))
 falsepositives:
 - (not much) some benign Java tools may product false-positive commandlines for loading
   libraries
@@ -23,7 +26,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/03/17
 references:
 - https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-path-traversal-in-cmd-exe/
 - https://twitter.com/Oddvarmoe/status/1270633613449723905

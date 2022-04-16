@@ -1,7 +1,7 @@
 
 title: Windows Shell Spawning Suspicious Program
 ruletype: Sigma
-author: Florian Roth
+author: Florian Roth, Tim Shelton
 date: 2018/04/06
 description: Detects a suspicious child process of a Windows shell
 detection:
@@ -24,19 +24,31 @@ detection:
     - '*\mshta.exe'
   SELECTION_4:
     CurrentDirectory: '*\ccmcache\\*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+  SELECTION_5:
+    ParentCommandLine:
+    - '*\Program Files\Amazon\WorkSpacesConfig\Scripts\setup-scheduledtask.ps1*'
+    - '*\Program Files\Amazon\WorkSpacesConfig\Scripts\set-selfhealing.ps1*'
+    - '*\Program Files\Amazon\WorkSpacesConfig\Scripts\check-workspacehealth.ps1*'
+    - '*\nessus_*'
+  SELECTION_6:
+    CommandLine: '*\nessus_*'
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)
+    or (SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - Administrative scripts
 - Microsoft SCCM
 fields:
 - CommandLine
 - ParentCommandLine
+- CurrentDirectory
+- Image
+- ParentImage
 id: 3a6586ad-127a-4d3b-a677-1e6eacdf8fde
 level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/03/08
 references:
 - https://mgreen27.github.io/posts/2018/04/02/DownloadCradle.html
 status: test

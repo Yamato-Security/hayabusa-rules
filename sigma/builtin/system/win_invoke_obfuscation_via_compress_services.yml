@@ -10,16 +10,25 @@ detection:
   SELECTION_2:
     EventID: 7045
   SELECTION_3:
-    ImagePath|re: (?i).*new-object.*(?:system\.io\.compression\.deflatestream|system\.io\.streamreader).*text\.encoding\]::ascii.*readtoend
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    ImagePath: '*new-object*'
+  SELECTION_4:
+    ImagePath: '*text.encoding]::ascii*'
+  SELECTION_5:
+    ImagePath: '*readtoend*'
+  SELECTION_6:
+    ImagePath:
+    - '*:system.io.compression.deflatestream*'
+    - '*system.io.streamreader*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
-- unknown
+- Unknown
 id: 175997c5-803c-4b08-8bb0-70b099f47595
 level: medium
 logsource:
   product: windows
   service: system
-modified: 2021/11/30
+modified: 2022/03/06
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: experimental

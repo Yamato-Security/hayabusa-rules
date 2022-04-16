@@ -11,14 +11,13 @@ detection:
     EventID: 2003
   SELECTION_3:
     EventID: 2008
-  SELECTION_4:
-    EventID: 2010
-  condition: (SELECTION_1 or SELECTION_2 or SELECTION_3 or SELECTION_4)
+  condition: (SELECTION_1 or SELECTION_2 or SELECTION_3)
 id: 00bb5bd5-1379-4fcf-a965-a5b6f7478064
 level: low
 logsource:
   product: windows
   service: firewall-as
+modified: 2022/03/28
 references:
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 status: experimental

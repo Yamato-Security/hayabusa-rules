@@ -1,0 +1,28 @@
+
+title: Remote Thread Creation in Suspicious Targets
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/16
+description: Detects a remote thread creation in suspicious taregt images
+detection:
+  SELECTION_1:
+    EventID: 8
+  SELECTION_2:
+    TargetImage:
+    - '*\mspaint.exe'
+    - '*\calc.exe'
+    - '*\notepad.exe'
+    - '*\sethc.exe'
+    - '*\write.exe'
+    - '*\wordpad.exe'
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- Unknown
+id: a1a144b7-5c9b-4853-a559-2172be8d4a03
+level: high
+logsource:
+  category: create_remote_thread
+  product: windows
+references:
+- https://blog.redbluepurple.io/offensive-research/bypassing-injection-detection
+status: experimental

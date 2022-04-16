@@ -13,9 +13,14 @@ detection:
     - '*OjpGcm9tQmFzZTY0U3RyaW5n*'
     - '*o6RnJvbUJhc2U2NFN0cmluZ*'
     - '*6OkZyb21CYXNlNjRTdHJpbm*'
-  condition: (SELECTION_1 and SELECTION_2)
+  SELECTION_3:
+    CommandLine:
+    - '*OgA6AEYAcgBvAG0AQgBhAHMAZQA2ADQAUwB0AHIAaQBuAGcA*'
+    - '*oAOgBGAHIAbwBtAEIAYQBzAGUANgA0AFMAdAByAGkAbgBnA*'
+    - '*6ADoARgByAG8AbQBCAGEAcwBlADYANABTAHQAcgBpAG4AZw*'
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
-- unknown
+- Unknown
 fields:
 - CommandLine
 - ParentCommandLine
@@ -24,7 +29,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/03/07
 status: test
 tags:
 - attack.defense_evasion

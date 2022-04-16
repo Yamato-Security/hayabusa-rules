@@ -10,8 +10,15 @@ detection:
   SELECTION_2:
     EventID: 7045
   SELECTION_3:
-    ImagePath|re: (?i).*rundll32(?:\.exe)?(?:\s+)?shell32\.dll.*shellexec_rundll.*powershell.*"
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    ImagePath: '*rundll32.exe*'
+  SELECTION_4:
+    ImagePath: '*shell32.dll*'
+  SELECTION_5:
+    ImagePath: '*shellexec_rundll*'
+  SELECTION_6:
+    ImagePath: '*powershell*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: 11b52f18-aaec-4d60-9143-5dd8cc4706b9
@@ -19,7 +26,7 @@ level: medium
 logsource:
   product: windows
   service: system
-modified: 2021/11/30
+modified: 2022/03/07
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: experimental

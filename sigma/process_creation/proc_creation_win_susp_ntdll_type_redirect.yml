@@ -1,0 +1,29 @@
+
+title: Suspicious Ntdll Pipe Redirection
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/05
+description: Detects command that type the content of ntdll.dll to a different file
+  or a pipe in order to evade AV / EDR detection
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine:
+    - '*type %windir%\system32\ntdll.dll*'
+    - '*type %systemroot%\system32\ntdll.dll*'
+    - '*type c:\windows\system32\ntdll.dll*'
+    - '*\\ntdll.dll > \\\\.\\pipe\\\*'
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- Unknown
+id: bbc865e4-7fcd-45a6-8ff1-95ced28ec5b2
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://www.x86matthew.com/view_post?id=ntdll_pipe
+status: experimental
+tags:
+- attack.defense_evasion

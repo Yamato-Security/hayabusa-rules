@@ -15,7 +15,7 @@ detection:
   - Sysmon config state changed
   condition: ((SELECTION_1 or SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
-- legitimate administrative action
+- Legitimate administrative action
 id: 1f2b5353-573f-4880-8e33-7d04dcf97744
 level: high
 logsource:

@@ -9,9 +9,9 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine: '*.zip*'
-  SELECTION_3:
     CommandLine: '*/generic:Microsoft_Windows_Shell_ZipFolder:filename=*'
+  SELECTION_3:
+    CommandLine: '*.zip*'
   SELECTION_4:
     CommandLine: '*/pass:*'
   SELECTION_5:
@@ -20,10 +20,12 @@ detection:
     CommandLine: '*/delete*'
   SELECTION_7:
     CommandLine: '*Microsoft_Windows_Shell_ZipFolder:filename=*'
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7)))
+  SELECTION_8:
+    CommandLine: '*.zip*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
-- unknown
+- Unknown
 id: 90dcf730-1b71-4ae7-9ffc-6fcf62bd0132
 level: medium
 logsource:

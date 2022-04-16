@@ -7,24 +7,29 @@ description: Detects netsh commands that turns off the Windows firewall
 detection:
   SELECTION_1:
     EventID: 1
+  SELECTION_10:
+    CommandLine: '*state*'
+  SELECTION_11:
+    CommandLine: '*off*'
   SELECTION_2:
     CommandLine: '*netsh*'
   SELECTION_3:
-    CommandLine: '*set*'
-  SELECTION_4:
     CommandLine: '*firewall*'
+  SELECTION_4:
+    CommandLine: '*set*'
   SELECTION_5:
     CommandLine: '*opmode*'
   SELECTION_6:
     CommandLine: '*mode=disable*'
   SELECTION_7:
-    CommandLine: '*advfirewall*'
+    CommandLine: '*netsh*'
   SELECTION_8:
-    CommandLine: '*state*'
+    CommandLine: '*advfirewall*'
   SELECTION_9:
-    CommandLine: '*off*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and ((SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
+    CommandLine: '*set*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10
+    and SELECTION_11)))
 falsepositives:
 - Legitimate administration
 id: 57c4bf16-227f-4394-8ec7-1b745ee061c3

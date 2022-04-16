@@ -1,0 +1,37 @@
+
+title: Persistent Outlook Landing Pages
+ruletype: Sigma
+author: Tobias Michalski
+date: 2021/06/09
+description: Detects the manipulation of persistent URLs which can be malicious
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    TargetObject:
+    - '*\Software\Microsoft\Office\\*'
+    - '*\Outlook\WebView\\*'
+  SELECTION_3:
+    TargetObject: '*\URL'
+  SELECTION_4:
+    TargetObject:
+    - '*\Calendar\\*'
+    - '*\Inbox\\*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+fields:
+- Details
+id: ddd171b5-2cc6-4975-9e78-f0eccd08cc76
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=70
+- https://support.microsoft.com/en-us/topic/outlook-home-page-feature-is-missing-in-folder-properties-d207edb7-aa02-46c5-b608-5d9dbed9bd04?ui=en-us&rs=en-us&ad=us
+status: experimental
+tags:
+- attack.persistence
+- attack.t1112

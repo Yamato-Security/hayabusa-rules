@@ -1,5 +1,5 @@
 
-title: Rar with Password or Compression Level
+title: Rar Usage with Password and Compression Level
 ruletype: Sigma
 author: '@ROxPinTeddy'
 date: 2020/05/12
@@ -21,11 +21,11 @@ falsepositives:
 - Legitimate use of Winrar command line version
 - Other command line tools, that use these flags
 id: faa48cae-6b25-4f00-a094-08947fef582f
-level: medium
+level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/07/27
+modified: 2022/03/16
 references:
 - https://labs.sentinelone.com/the-anatomy-of-an-apt-attack-and-cobaltstrike-beacons-encoded-configuration/
 - https://ss64.com/bash/rar.html

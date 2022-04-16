@@ -8,8 +8,21 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine|re: (?i).*&&.*rundll32.*shell32\.dll.*shellexec_rundll.*(value|invoke|comspec|iex).*"
-  condition: (SELECTION_1 and SELECTION_2)
+    CommandLine: '*&&*'
+  SELECTION_3:
+    CommandLine: '*rundll32*'
+  SELECTION_4:
+    CommandLine: '*shell32.dll*'
+  SELECTION_5:
+    CommandLine: '*shellexec_rundll*'
+  SELECTION_6:
+    CommandLine:
+    - '*value*'
+    - '*invoke*'
+    - '*comspec*'
+    - '*iex*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: 36c5146c-d127-4f85-8e21-01bf62355d5a
@@ -17,7 +30,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/03/08
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: test

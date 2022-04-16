@@ -13,10 +13,12 @@ detection:
   SELECTION_3:
     Imphash: d8b52ef6aaa3a81501bdfff9dbb96217
   SELECTION_4:
+    Hashes: '*IMPHASH=d8b52ef6aaa3a81501bdfff9dbb96217*'
+  SELECTION_5:
     CommandLine:
     - '* /n 1 *'
     - '* -n 1 *'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
 id: 729ce0ea-5d8f-4769-9762-e35de441586d
@@ -24,6 +26,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/03/04
 references:
 - https://twitter.com/mrd0x/status/1465058133303246867
 - https://docs.microsoft.com/en-us/powershell/high-performance-computing/mpiexec?view=hpc19-ps

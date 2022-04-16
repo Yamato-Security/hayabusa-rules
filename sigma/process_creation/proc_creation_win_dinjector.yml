@@ -12,7 +12,13 @@ detection:
     CommandLine:
     - '* /am51*'
     - '* /password*'
-  condition: (SELECTION_1 and SELECTION_2)
+  SELECTION_3:
+    CommandLine: '* /PASSWORDCHG*'
+  SELECTION_4:
+    ParentImage:
+    - C:\Program Files\CEETIS\CEETIS_IDE.exe
+    - C:\Program Files (x86)\CEETIS\CEETIS_IDE.exe
+  condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3 or SELECTION_4)))
 falsepositives:
 - Unlikely
 id: d78b5d61-187d-44b6-bf02-93486a80de5a
@@ -20,9 +26,10 @@ level: critical
 logsource:
   category: process_creation
   product: windows
+modified: 2022/03/07
 references:
 - https://github.com/snovvcrash/DInjector
-status: experimental
+status: test
 tags:
 - attack.defense_evasion
 - attack.t1055

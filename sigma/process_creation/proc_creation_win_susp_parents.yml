@@ -1,0 +1,46 @@
+
+title: Suspicious Process Parents
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/21
+description: Detects suspicious parent processes that should not have any children
+  or should only have a single possible child program
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    ParentImage:
+    - '*\notepad.exe'
+    - '*\minesweeper.exe'
+    - '*\winver.exe'
+    - '*\bitsadmin.exe'
+  SELECTION_3:
+    ParentImage:
+    - '*\csrss.exe'
+    - '*\certutil.exe'
+    - '*\schtasks.exe'
+    - '*\eventvwr.exe'
+    - '*\calc.exe'
+  SELECTION_4:
+    Image:
+    - '*\WerFault.exe'
+    - '*\wermgr.exe'
+    - '*\conhost.exe'
+    - '*\mmc.exe'
+    - '*\win32calc.exe'
+  SELECTION_5:
+    Image|re: ^$
+  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and  not ((SELECTION_4)
+    or (SELECTION_5)))))
+falsepositives:
+- Unknown
+id: cbec226f-63d9-4eca-9f52-dfb6652f24df
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/28
+references:
+- https://twitter.com/x86matthew/status/1505476263464607744?s=12
+- https://svch0st.medium.com/stats-from-hunting-cobalt-strike-beacons-c17e56255f9b
+status: experimental

@@ -1,0 +1,31 @@
+
+title: Change Outlook Security Setting in Registry
+ruletype: Sigma
+author: frack113
+date: 2021/12/28
+description: Change outlook email security settings
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    TargetObject: '*\SOFTWARE\Microsoft\Office\\*'
+  SELECTION_3:
+    TargetObject: '*\Outlook\Security\\*'
+  SELECTION_4:
+    EventType: SetValue
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Administrative scripts
+id: c3cefdf4-6703-4e1c-bad8-bf422fc5015a
+level: medium
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1137/T1137.md
+- https://docs.microsoft.com/en-us/outlook/troubleshoot/security/information-about-email-security-settings
+status: experimental
+tags:
+- attack.persistence
+- attack.t1137

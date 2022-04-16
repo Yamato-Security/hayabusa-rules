@@ -1,0 +1,30 @@
+
+title: Suspicious OfflineScannerShell.exe Execution From Another Folder
+ruletype: Sigma
+author: frack113
+date: 2022/03/06
+description: Use OfflineScannerShell.exe to execute mpclient.dll library in the current
+  working directory
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image: '*\OfflineScannerShell.exe'
+  SELECTION_3:
+    CurrentDirectory: C:\Program Files\Windows Defender\Offline\
+  SELECTION_4:
+    CurrentDirectory|re: ^$
+  condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3) or (SELECTION_4)))
+falsepositives:
+- Unknown
+id: 02b18447-ea83-4b1b-8805-714a8a34546a
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://lolbas-project.github.io/lolbas/Binaries/OfflineScannerShell/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218

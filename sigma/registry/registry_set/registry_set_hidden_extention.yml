@@ -1,0 +1,39 @@
+
+title: Registry Modification to Hidden File Extension
+ruletype: Sigma
+author: frack113
+date: 2022/01/22
+description: Hides the file extension through modification of the registry
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    EventType: SetValue
+  SELECTION_3:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\HideFileExt'
+  SELECTION_4:
+    Details: DWORD (0x00000001)
+  SELECTION_5:
+    EventType: SetValue
+  SELECTION_6:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Hidden'
+  SELECTION_7:
+    Details: DWORD (0x00000002)
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Administrative scripts
+id: 5df86130-4e95-4a54-90f7-26541b40aec2
+level: medium
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1112/T1112.md#atomic-test-1---modify-registry-of-current-user-profile---cmd
+- https://unit42.paloaltonetworks.com/ransomware-families/
+- https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=TrojanSpy%3aMSIL%2fHakey.A
+status: experimental
+tags:
+- attack.persistence
+- attack.t1137

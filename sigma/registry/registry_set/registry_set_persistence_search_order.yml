@@ -1,0 +1,90 @@
+
+title: Windows Registry Persistence COM Search Order Hijacking
+ruletype: Sigma
+author: Maxime Thiebaut (@0xThiebaut), oscd.community, Cédric Hien
+date: 2020/04/14
+description: Detects potential COM object hijacking leveraging the COM Search Order
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_10:
+    Details: '*\DropboxExt64.*.dll*'
+  SELECTION_11:
+    Details: '*TmopIEPlg.dll'
+  SELECTION_12:
+    Image:
+    - C:\WINDOWS\system32\wuauclt.exe
+    - C:\WINDOWS\system32\svchost.exe
+  SELECTION_13:
+    Image:
+    - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+    - C:\Program Files\Windows Defender\\*
+  SELECTION_14:
+    Image: '*\MsMpEng.exe'
+  SELECTION_15:
+    Details:
+    - '*\FileRepository\nvmdi.inf*'
+  SELECTION_16:
+    Image: '*\MicrosoftEdgeUpdateComRegisterShell64.exe'
+  SELECTION_17:
+    Image: C:\WINDOWS\SYSTEM32\dxdiag.exe
+  SELECTION_18:
+    Details:
+    - C:\Windows\pyshellext.amd64.dll
+    - C:\Windows\pyshellext.dll
+  SELECTION_19:
+    Details:
+    - C:\Windows\system32\dnssdX.dll
+    - C:\Windows\SysWOW64\dnssdX.dll
+  SELECTION_2:
+    EventType: SetValue
+  SELECTION_20:
+    Details: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
+  SELECTION_21:
+    Details:
+    - C:\Program Files\\*
+    - C:\Program Files (x86)\\*
+  SELECTION_22:
+    Details: '*C:\WINDOWS\system32\GamingServicesProxy.dll*'
+  SELECTION_3:
+    TargetObject:
+    - HKCR\CLSID\\*
+    - HKCU\Software\Classes\CLSID\\*
+  SELECTION_4:
+    TargetObject: '*\InprocServer32\(Default)'
+  SELECTION_5:
+    Details:
+    - '*%%systemroot%%\system32\\*'
+    - '*%%systemroot%%\SysWow64\\*'
+  SELECTION_6:
+    Details:
+    - '*\AppData\Local\Microsoft\OneDrive\\*'
+    - '*\FileCoAuthLib64.dll*'
+    - '*\FileSyncShell64.dll*'
+    - '*\FileSyncApi64.dll*'
+  SELECTION_7:
+    Details: '*\AppData\Local\Microsoft\TeamsMeetingAddin\\*'
+  SELECTION_8:
+    Details: '*\Microsoft.Teams.AddinLoader.dll*'
+  SELECTION_9:
+    Details: '*\AppData\Roaming\Dropbox\\*'
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+    and SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13 and SELECTION_14)
+    or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18) or (SELECTION_19)
+    or (SELECTION_20) or (SELECTION_21) or (SELECTION_22)))
+falsepositives:
+- Some installed utilities (i.e. OneDrive) may serve new COM objects at user-level
+id: a0ff33d8-79e4-4cef-b4f3-9dc4133ccd12
+level: medium
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/04/04
+references:
+- https://www.cyberbit.com/blog/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
+- https://attack.mitre.org/techniques/T1546/015/
+status: experimental
+tags:
+- attack.persistence
+- attack.t1546.015

@@ -19,6 +19,8 @@ detection:
     - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Bonjour\mdnsNSP.dll*'
     - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Apple Software Update\ScriptingObjectModel.dll*'
     - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Apple Software Update\SoftwareUpdateAdmin.dll*'
+    - '*\MsiExec.exe" /Y "C:\Windows\CCM\\*'
+    - '*\MsiExec.exe" /Y C:\Windows\CCM\\*'
   condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)))
 falsepositives:
 - Legitimate script
@@ -27,7 +29,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/02/15
+modified: 2022/03/28
 references:
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.007/T1218.007.md

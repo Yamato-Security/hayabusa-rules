@@ -10,8 +10,10 @@ detection:
   SELECTION_2:
     HostApplication: '*.DownloadFile(*'
   SELECTION_3:
+    HostApplication: '*System.Net.WebClient*'
+  SELECTION_4:
     HostApplication: '*.DownloadString(*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4))
 falsepositives:
 - PowerShell scripts that download content from the Internet
 id: 3236fcd0-b7e3-4433-b4f8-86ad61a9af2d

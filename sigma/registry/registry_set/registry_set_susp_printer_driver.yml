@@ -1,0 +1,38 @@
+
+title: Suspicious Printer Driver Empty Manufacturer
+ruletype: Sigma
+author: Florian Roth
+date: 2020/07/01
+description: Detects a suspicious printer driver installation with an empty Manufacturer
+  value
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    EventType: SetValue
+  SELECTION_3:
+    TargetObject: '*\Control\Print\Environments\Windows x64\Drivers*'
+  SELECTION_4:
+    TargetObject: '*\Manufacturer*'
+  SELECTION_5:
+    Details: (Empty)
+  SELECTION_6:
+    TargetObject: '*\CutePDF Writer v4.0\\*'
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    and  not ((SELECTION_6)))
+falsepositives:
+- Alerts on legitimate printer drivers that do not set any more details in the Manufacturer
+  value
+id: e0813366-0407-449a-9869-a2db1119dc41
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://twitter.com/SBousseaden/status/1410545674773467140
+status: test
+tags:
+- attack.privilege_escalation
+- attack.t1574
+- cve.2021.1675

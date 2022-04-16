@@ -1,0 +1,46 @@
+
+title: Persistent Outlook Landing Pages
+ruletype: Sigma
+author: Tobias Michalski
+date: 2021/06/10
+description: Detects the manipulation of persistent URLs which could execute malicious
+  code
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    TargetObject:
+    - '*Software\Microsoft\Office\\*'
+    - '*\Outlook\Today\\*'
+  SELECTION_3:
+    EventType: SetValue
+  SELECTION_4:
+    TargetObject: '*Stamp'
+  SELECTION_5:
+    Details: DWORD (0x00000001)
+  SELECTION_6:
+    TargetObject: '*UserDefinedUrl'
+  SELECTION_7:
+    Image:
+    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
+    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
+  SELECTION_8:
+    Image: '*\OfficeClickToRun.exe'
+  condition: (SELECTION_1 and (SELECTION_2 and ((SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8)))
+falsepositives:
+- Unknown
+fields:
+- Details
+id: 487bb375-12ef-41f6-baae-c6a1572b4dd1
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=70
+status: experimental
+tags:
+- attack.persistence
+- attack.t1112

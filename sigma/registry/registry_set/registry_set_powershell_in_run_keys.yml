@@ -1,0 +1,39 @@
+
+title: Powershell in Windows Run Keys
+ruletype: Sigma
+author: frack113, Florian Roth
+date: 2022/03/17
+description: Adds a RUN key that contains a powershell keyword
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    EventType: SetValue
+  SELECTION_3:
+    TargetObject:
+    - '*\Software\Microsoft\Windows\CurrentVersion\Run*'
+    - '*\Software\Microsoft\Windows\CurrentVersion\RunOnce*'
+  SELECTION_4:
+    Details:
+    - '*powershell*'
+    - '*FromBase64String*'
+    - '*.DownloadFile(*'
+    - '*.DownloadString(*'
+    - '* -w hidden *'
+    - '* -nop *'
+    - '* -encodedcommand *'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitim admin script
+id: 8d85cf08-bf97-4260-ba49-986a2a65129c
+level: medium
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://github.com/frack113/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md#atomic-test-9---systembc-malware-as-a-service-registry
+status: experimental
+tags:
+- attack.persistence
+- attack.t1547.001

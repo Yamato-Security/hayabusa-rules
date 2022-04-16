@@ -16,13 +16,15 @@ detection:
     - '*ShimFlushCache*'
     - '*#250*'
   SELECTION_5:
-    CommandLine: '*kernel32.dll*'
+    CommandLine: '*rundll32*'
   SELECTION_6:
+    CommandLine: '*kernel32.dll*'
+  SELECTION_7:
     CommandLine:
     - '*BaseFlushAppcompatCache*'
     - '*#46*'
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6)))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Unknown
 fields:
@@ -36,7 +38,7 @@ logsource:
   product: windows
 references:
 - https://medium.com/@blueteamops/shimcache-flush-89daff28d15e
-status: experimental
+status: stable
 tags:
 - attack.defense_evasion
 - attack.t1112

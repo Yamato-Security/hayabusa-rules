@@ -1,7 +1,7 @@
 
 title: Webshell Recon Detection Via CommandLine & Processes
 ruletype: Sigma
-author: Cian Heasley
+author: Cian Heasley, Florian Roth
 date: 2020/07/22
 description: Looking for processes spawned by web server components that indicate
   reconnaissance by popular public domain webshells for whether perl, python or wget
@@ -11,26 +11,38 @@ detection:
     EventID: 1
   SELECTION_2:
     ParentImage:
-    - '*\apache*'
-    - '*\tomcat*'
-  SELECTION_3:
-    ParentImage:
     - '*\w3wp.exe'
     - '*\php-cgi.exe'
     - '*\nginx.exe'
     - '*\httpd.exe'
+    - '*\caddy.exe'
+    - '*\ws_tomcatservice.exe'
+  SELECTION_3:
+    ParentImage:
+    - '*\java.exe'
+    - '*\javaw.exe'
   SELECTION_4:
-    Image:
-    - '*\cmd.exe'
+    ParentImage:
+    - '*-tomcat-*'
+    - '*\tomcat*'
   SELECTION_5:
+    ParentImage:
+    - '*\java.exe'
+    - '*\javaw.exe'
+  SELECTION_6:
+    CommandLine:
+    - '*catalina.jar*'
+    - '*CATALINA_HOME*'
+  SELECTION_7:
     CommandLine:
     - '*perl --help*'
     - '*python --help*'
     - '*wget --help*'
     - '*perl -h*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5))
+  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6)) and SELECTION_7)
 falsepositives:
-- unknown
+- Unknown
 fields:
 - Image
 - CommandLine
@@ -40,7 +52,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/03/17
 references:
 - https://ragged-lab.blogspot.com/2020/07/webshells-automating-reconnaissance.html
 status: test

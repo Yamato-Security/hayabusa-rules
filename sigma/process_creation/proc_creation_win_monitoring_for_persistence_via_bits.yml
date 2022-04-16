@@ -13,12 +13,28 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine|re: (?i).*bitsadmin.*/SetNotifyCmdLine.*(%COMSPEC%|cmd.exe|regsvr32.exe).*
+    CommandLine: '*bitsadmin*'
   SELECTION_3:
-    CommandLine|re: (?i).*bitsadmin.*/Addfile.*(http|https|ftp|ftps):.*
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+    CommandLine: '*/SetNotifyCmdLine*'
+  SELECTION_4:
+    CommandLine:
+    - '*%COMSPEC%*'
+    - '*cmd.exe*'
+    - '*regsvr32.exe*'
+  SELECTION_5:
+    CommandLine: '*bitsadmin*'
+  SELECTION_6:
+    CommandLine: '*/Addfile*'
+  SELECTION_7:
+    CommandLine:
+    - '*http:*'
+    - '*https:*'
+    - '*ftp:*'
+    - '*ftps:*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7)))
 falsepositives:
-- None observed yet.
+- Unknown
 fields:
 - CommandLine
 id: b9cbbc17-d00d-4e3d-a827-b06d03d2380d
@@ -26,7 +42,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/07/15
+modified: 2022/03/07
 references:
 - https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html
 - http://0xthem.blogspot.com/2014/03/t-emporal-persistence-with-and-schtasks.html

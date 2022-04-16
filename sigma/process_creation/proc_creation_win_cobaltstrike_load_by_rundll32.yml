@@ -13,7 +13,9 @@ detection:
   SELECTION_3:
     CommandLine: '*.dll*'
   SELECTION_4:
-    CommandLine: '*StartW*'
+    CommandLine:
+    - '* StartW'
+    - '*,StartW'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
@@ -22,11 +24,12 @@ level: critical
 logsource:
   category: process_creation
   product: windows
+modified: 2022/03/04
 references:
 - https://www.cobaltstrike.com/help-windows-executable
 - https://redcanary.com/threat-detection-report/
 - https://thedfirreport.com/2020/10/18/ryuk-in-5-hours/
-status: experimental
+status: test
 tags:
 - attack.defense_evasion
 - attack.t1218.011

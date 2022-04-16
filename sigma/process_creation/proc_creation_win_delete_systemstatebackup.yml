@@ -11,7 +11,7 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    image: '*\wbadmin.exe'
+    Image: '*\wbadmin.exe'
   SELECTION_3:
     CommandLine: '*wbadmin*'
   SELECTION_4:
@@ -23,15 +23,16 @@ detection:
   condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and (SELECTION_4 and SELECTION_5
     and SELECTION_6))
 falsepositives:
-- unknown
+- Unknown
 id: 89f75308-5b1b-4390-b2d8-d6b2340efaf8
 level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/02/28
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1490/T1490.md#atomic-test-5---windows---delete-volume-shadow-copies-via-wmi-with-powershell
-status: experimental
+status: test
 tags:
 - attack.impact
 - attack.t1490

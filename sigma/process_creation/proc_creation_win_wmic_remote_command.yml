@@ -1,0 +1,35 @@
+
+title: WMI Remote Command Execution
+ruletype: Sigma
+author: frack113
+date: 2022/03/13
+description: An adversary might use WMI to execute commands on a remote system
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image: '*\WMIC.exe'
+  SELECTION_3:
+    CommandLine: '*/node:*'
+  SELECTION_4:
+    CommandLine: '*process*'
+  SELECTION_5:
+    CommandLine: '*call*'
+  SELECTION_6:
+    CommandLine: '*create*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
+falsepositives:
+- Unknown
+id: e42af9df-d90b-4306-b7fb-05c863847ebd
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://securelist.com/moonbounce-the-dark-side-of-uefi-firmware/105468/
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/wmic
+status: experimental
+tags:
+- attack.execution
+- attack.t1047

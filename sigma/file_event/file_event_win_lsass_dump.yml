@@ -1,0 +1,52 @@
+
+title: LSASS Process Memory Dump Files
+ruletype: Sigma
+author: Florian Roth
+date: 2021/11/15
+description: Detects file names used by different memory dumping tools to create a
+  memory dump of the LSASS process memory, which contains user credentials
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    TargetFilename:
+    - '*\lsass.dmp'
+    - '*\lsass.zip'
+    - '*\lsass.rar'
+    - '*\Temp\dumpert.dmp'
+    - '*\Andrew.dmp'
+    - '*\Coredump.dmp'
+  SELECTION_3:
+    TargetFilename:
+    - '*\lsass_2*'
+    - '*\lsassdump*'
+    - '*\lsassdmp*'
+  SELECTION_4:
+    TargetFilename: '*\lsass*'
+  SELECTION_5:
+    TargetFilename: '*.dmp*'
+  SELECTION_6:
+    TargetFilename: '*SQLDmpr*'
+  SELECTION_7:
+    TargetFilename: '*.mdmp'
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or (SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Unknown
+id: a5a2d357-1ab8-4675-a967-ef9990a59391
+level: high
+logsource:
+  category: file_event
+  product: windows
+modified: 2022/02/10
+references:
+- https://www.google.com/search?q=procdump+lsass
+- https://medium.com/@markmotig/some-ways-to-dump-lsass-exe-c4a75fdc49bf
+- https://github.com/elastic/detection-rules/blob/main/rules/windows/credential_access_lsass_memdump_file_created.toml
+related:
+- id: db2110f3-479d-42a6-94fb-d35bc1e46492
+  type: obsoletes
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.001

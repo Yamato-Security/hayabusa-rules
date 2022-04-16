@@ -1,0 +1,37 @@
+
+title: Suspicious Scan Loop Network
+ruletype: Sigma
+author: frack113
+date: 2022/03/12
+description: Adversaries may attempt to get a listing of other systems by IP address,
+  hostname, or other logical identifier on a network that may be used for Lateral
+  Movement from the current system
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine:
+    - '*for *'
+    - '*foreach *'
+  SELECTION_3:
+    CommandLine:
+    - '*nslookup*'
+    - '*ping*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Legitimate script
+id: f8ad2e2c-40b6-4117-84d7-20b89896ab23
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1018/T1018.md
+- https://ss64.com/nt/for.html
+- https://ss64.com/ps/foreach-object.htmll
+status: experimental
+tags:
+- attack.execution
+- attack.t1059
+- attack.discovery
+- attack.t1018

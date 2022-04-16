@@ -10,8 +10,21 @@ detection:
   SELECTION_2:
     EventID: 7045
   SELECTION_3:
-    ImagePath|re: (?i).*&&.*rundll32.*shell32\.dll.*shellexec_rundll.*(value|invoke|comspec|iex).*"
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    ImagePath: '*&&*'
+  SELECTION_4:
+    ImagePath: '*rundll32*'
+  SELECTION_5:
+    ImagePath: '*shell32.dll*'
+  SELECTION_6:
+    ImagePath: '*shellexec_rundll*'
+  SELECTION_7:
+    ImagePath:
+    - '*value*'
+    - '*invoke*'
+    - '*comspec*'
+    - '*iex*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: 641a4bfb-c017-44f7-800c-2aee0184ce9b
@@ -19,7 +32,7 @@ level: high
 logsource:
   product: windows
   service: system
-modified: 2021/11/30
+modified: 2022/03/07
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: experimental

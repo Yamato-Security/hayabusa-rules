@@ -19,19 +19,24 @@ detection:
     - '*C:\Windows\Temp*'
     - '*C:\Users\Public*'
   SELECTION_5:
+    Image: '*\mshta.exe'
+  SELECTION_6:
     Image:
     - '*C:\Windows\System32*'
     - '*C:\Windows\SysWOW64*'
-  SELECTION_6:
+  SELECTION_7:
+    Image: '*\mshta.exe'
+  SELECTION_8:
     CommandLine:
     - '*.htm*'
     - '*.hta*'
-  SELECTION_7:
+  SELECTION_9:
     CommandLine:
     - '*mshta.exe'
     - '*mshta'
-  condition: (SELECTION_1 and SELECTION_2 and (((SELECTION_3 or SELECTION_4) or  not
-    (SELECTION_5)) or  not (SELECTION_6 and SELECTION_7)))
+  condition: (SELECTION_1 and (((SELECTION_2 and (SELECTION_3 or SELECTION_4)) or
+    (SELECTION_5 and  not (SELECTION_6))) or (SELECTION_7 and  not (SELECTION_8 and
+    SELECTION_9))))
 falsepositives:
 - Unknown
 id: e32f92d1-523e-49c3-9374-bdb13b46a3ba

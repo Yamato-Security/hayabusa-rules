@@ -1,0 +1,70 @@
+
+title: Suspicious Process Patterns NTDS.DIT Exfil
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/11
+description: Detects suspicious process patterns used in NTDS.DIT exfiltration
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_10:
+    CommandLine: '*powershell*'
+  SELECTION_11:
+    CommandLine: '*ntds.dit*'
+  SELECTION_12:
+    CommandLine: '*ntds.dit*'
+  SELECTION_13:
+    ParentImage:
+    - '*\apache*'
+    - '*\tomcat*'
+    - '*\AppData\\*'
+    - '*\Temp\\*'
+    - '*\Public\\*'
+    - '*\PerfLogs\\*'
+  SELECTION_14:
+    Image:
+    - '*\apache*'
+    - '*\tomcat*'
+    - '*\AppData\\*'
+    - '*\Temp\\*'
+    - '*\Public\\*'
+    - '*\PerfLogs\\*'
+  SELECTION_2:
+    Image:
+    - '*\NTDSDump.exe'
+    - '*\NTDSDumpEx.exe'
+  SELECTION_3:
+    CommandLine: '*ntds.dit*'
+  SELECTION_4:
+    CommandLine: '*system.hiv*'
+  SELECTION_5:
+    CommandLine: '*NTDSgrab.ps1*'
+  SELECTION_6:
+    CommandLine: '*ac i ntds*'
+  SELECTION_7:
+    CommandLine: '*create full*'
+  SELECTION_8:
+    CommandLine: '*/c copy *'
+  SELECTION_9:
+    CommandLine: '*\windows\ntds\ntds.dit*'
+  condition: (SELECTION_1 and (((SELECTION_2 or (SELECTION_3 and SELECTION_4) or SELECTION_5)
+    or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9) or (SELECTION_10
+    and SELECTION_11)) or (SELECTION_12 and (SELECTION_13 or SELECTION_14))))
+falsepositives:
+- Unknown
+id: 8bc64091-6875-4881-aaf9-7bd25b5dda08
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://www.ired.team/offensive-security/credential-access-and-credential-dumping/ntds.dit-enumeration
+- https://www.n00py.io/2022/03/manipulating-user-passwords-without-mimikatz/
+- https://pentestlab.blog/tag/ntds-dit/
+- https://github.com/samratashok/nishang/blob/master/Gather/Copy-VSS.ps1
+- https://github.com/zcgonvh/NTDSDumpEx
+- https://github.com/rapid7/metasploit-framework/blob/master/data/post/powershell/NTDSgrab.ps1
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.003

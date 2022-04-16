@@ -21,9 +21,23 @@ detection:
     - '*SUVYIChOZX*'
     - '*lFWCAoTmV3*'
     - '*JRVggKE5ld*'
-  condition: (SELECTION_1 and SELECTION_2)
+  SELECTION_3:
+    CommandLine:
+    - '*SQBFAFgAIAAoAFsA*'
+    - '*kARQBYACAAKABbA*'
+    - '*JAEUAWAAgACgAWw*'
+    - '*aQBlAHgAIAAoAFsA*'
+    - '*kAZQB4ACAAKABbA*'
+    - '*pAGUAeAAgACgAWw*'
+    - '*aQBlAHgAIAAoAE4AZQB3A*'
+    - '*kAZQB4ACAAKABOAGUAdw*'
+    - '*pAGUAeAAgACgATgBlAHcA*'
+    - '*SQBFAFgAIAAoAE4AZQB3A*'
+    - '*kARQBYACAAKABOAGUAdw*'
+    - '*JAEUAWAAgACgATgBlAHcA*'
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
-- unknown
+- Unknown
 fields:
 - CommandLine
 - ParentCommandLine
@@ -32,7 +46,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/03/07
 status: test
 tags:
 - attack.execution

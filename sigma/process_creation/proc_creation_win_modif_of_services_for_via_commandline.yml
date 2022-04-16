@@ -9,21 +9,73 @@ description: Detects modification of an existing service on a compromised host i
 detection:
   SELECTION_1:
     EventID: 1
+  SELECTION_10:
+    CommandLine: '*FailureCommand*'
+  SELECTION_11:
+    CommandLine:
+    - '*.sh*'
+    - '*.exe*'
+    - '*.dll*'
+    - '*.bin$*'
+    - '*.bat*'
+    - '*.cmd*'
+    - '*.js*'
+    - '*.msh$*'
+    - '*.reg$*'
+    - '*.scr*'
+    - '*.ps*'
+    - '*.vb*'
+    - '*.jar*'
+    - '*.pl*'
+  SELECTION_12:
+    CommandLine: '*reg *'
+  SELECTION_13:
+    CommandLine: '*add *'
+  SELECTION_14:
+    CommandLine: '*ImagePath*'
+  SELECTION_15:
+    CommandLine:
+    - '*.sh*'
+    - '*.exe*'
+    - '*.dll*'
+    - '*.bin$*'
+    - '*.bat*'
+    - '*.cmd*'
+    - '*.js*'
+    - '*.msh$*'
+    - '*.reg$*'
+    - '*.scr*'
+    - '*.ps*'
+    - '*.vb*'
+    - '*.jar*'
+    - '*.pl*'
   SELECTION_2:
-    CommandLine|re: (?i)sc config.*binpath=.*
+    CommandLine: '*sc *'
   SELECTION_3:
-    CommandLine|re: (?i)sc failure.*command=.*
+    CommandLine: '*config *'
   SELECTION_4:
-    CommandLine|re: (?i).*reg add.*(FailureCommand|ImagePath).*(\.sh|\.exe|\.dll|\.bin$|\.bat|\.cmd|\.js|\.msh$|\.reg$|\.scr|\.ps|\.vb|\.jar|\.pl).*
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4))
+    CommandLine: '*binpath=*'
+  SELECTION_5:
+    CommandLine: '*sc *'
+  SELECTION_6:
+    CommandLine: '*failure*'
+  SELECTION_7:
+    CommandLine: '*command=*'
+  SELECTION_8:
+    CommandLine: '*reg *'
+  SELECTION_9:
+    CommandLine: '*add *'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9 and SELECTION_10
+    and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14 and SELECTION_15)))
 falsepositives:
-- unknown
+- Unknown
 id: 38879043-7e1e-47a9-8d46-6bec88e201df
 level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/08/10
+modified: 2022/03/06
 references:
 - https://pentestlab.blog/2020/01/22/persistence-modify-existing-service/
 status: experimental

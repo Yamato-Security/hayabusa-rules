@@ -9,31 +9,34 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_10:
+    CommandLine: '*\system32\msiexec.exe /V'
+  SELECTION_11:
     ParentCommandLine: '*\system32\msiexec.exe /V'
   SELECTION_2:
+    Image: '*\Windows\Installer\\*'
+  SELECTION_3:
+    Image: '*msi*'
+  SELECTION_4:
+    Image: '*tmp'
+  SELECTION_5:
     User:
     - '*AUTHORI*'
     - '*AUTORI*'
-  SELECTION_3:
-    Image: '*\Windows\Installer\\*'
-  SELECTION_4:
-    Image: '*msi*'
-  SELECTION_5:
-    Image: '*tmp'
   SELECTION_6:
     Image: '*\msiexec.exe'
   SELECTION_7:
-    IntegrityLevel: System
+    User:
+    - '*AUTHORI*'
+    - '*AUTORI*'
   SELECTION_8:
-    ParentImage: C:\Windows\System32\services.exe
+    IntegrityLevel: System
   SELECTION_9:
-    CommandLine: '*\system32\msiexec.exe /V'
-  condition: (SELECTION_1 and (SELECTION_2 and ((SELECTION_3 and SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7))) and  not ((SELECTION_8) or (SELECTION_9 or
-    SELECTION_10)))
+    ParentImage: C:\Windows\System32\services.exe
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7 and SELECTION_8)) and  not ((SELECTION_9) or (SELECTION_10
+    or SELECTION_11)))
 falsepositives:
 - System administrator Usage
-- Penetration test
 fields:
 - IntegrityLevel
 - User

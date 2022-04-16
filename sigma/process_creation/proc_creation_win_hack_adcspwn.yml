@@ -15,7 +15,7 @@ detection:
     CommandLine: '* --port *'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- unlikely
+- Unlikely
 id: cd8c163e-a19b-402e-bdd5-419ff5859f12
 level: critical
 logsource:
@@ -23,7 +23,7 @@ logsource:
   product: windows
 references:
 - https://github.com/bats3c/ADCSPwn
-status: experimental
+status: test
 tags:
 - attack.credential_access
 - attack.t1557.001

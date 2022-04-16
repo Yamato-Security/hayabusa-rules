@@ -13,7 +13,7 @@ detection:
     - '* -NoP -NonI -c $x=$((gp HKCU:Software\\Microsoft\\Windows Update).Update);*'
   condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
-- unknown
+- Unknown
 fields:
 - CommandLine
 - ParentCommandLine
@@ -26,7 +26,7 @@ modified: 2021/11/27
 references:
 - https://github.com/EmpireProject/Empire/blob/e37fb2eef8ff8f5a0a689f1589f424906fe13055/data/module_source/privesc/Invoke-EventVwrBypass.ps1#L64
 - https://github.com/EmpireProject/Empire/blob/e37fb2eef8ff8f5a0a689f1589f424906fe13055/data/module_source/privesc/Invoke-FodHelperBypass.ps1#L64
-status: test
+status: stable
 tags:
 - attack.defense_evasion
 - attack.privilege_escalation

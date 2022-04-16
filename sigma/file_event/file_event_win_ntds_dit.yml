@@ -1,0 +1,52 @@
+
+title: Suspicious NTDS.DIT Creation
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/11
+description: Detects suspicious creations of a file named ntds.dit, e.g. by a PowerShell
+  parent or in a suspicious directory or a suspicious one liner
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    TargetFilename: '*\ntds.dit'
+  SELECTION_3:
+    ParentImage:
+    - '*\powershell.exe'
+    - '*\wscript.exe'
+    - '*\cscript.exe'
+    - '*\w3wp.exe'
+    - '*\php-cgi.exe'
+    - '*\nginx.exe'
+    - '*\httpd.exe'
+  SELECTION_4:
+    ParentImage:
+    - '*\apache*'
+    - '*\tomcat*'
+    - '*\AppData\\*'
+    - '*\Temp\\*'
+    - '*\Public\\*'
+    - '*\PerfLogs\\*'
+  SELECTION_5:
+    Image:
+    - '*\AppData\\*'
+    - '*\Temp\\*'
+    - '*\Public\\*'
+    - '*\PerfLogs\\*'
+  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+falsepositives:
+- Unknown
+id: 4e7050dd-e548-483f-b7d6-527ab4fa784d
+level: high
+logsource:
+  category: file_event
+  product: windows
+references:
+- https://www.ired.team/offensive-security/credential-access-and-credential-dumping/ntds.dit-enumeration
+- https://www.n00py.io/2022/03/manipulating-user-passwords-without-mimikatz/
+- https://pentestlab.blog/tag/ntds-dit/
+- https://github.com/samratashok/nishang/blob/master/Gather/Copy-VSS.ps1
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.003

@@ -9,17 +9,19 @@ detection:
   SELECTION_1:
     EventID: 1
   SELECTION_2:
-    CommandLine: '*root*'
-  SELECTION_3:
     Image: '*\certutil.exe'
-  SELECTION_4:
+  SELECTION_3:
     CommandLine: '*-addstore*'
+  SELECTION_4:
+    CommandLine: '*root*'
   SELECTION_5:
     Image: '*\CertMgr.exe'
   SELECTION_6:
     CommandLine: '*/add*'
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6)))
+  SELECTION_7:
+    CommandLine: '*root*'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Help Desk or IT may need to manually add a corporate Root CA on occasion. Need to
   test if GPO push doesn't trigger FP

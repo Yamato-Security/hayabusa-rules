@@ -1,0 +1,47 @@
+
+title: New RUN Key Pointing to Suspicious Folder
+ruletype: Sigma
+author: Florian Roth, Markus Neis, Sander Wiebing
+date: 2018/08/25
+description: Detects suspicious new RUN key element pointing to an executable in a
+  suspicious folder
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    EventType: SetValue
+  SELECTION_3:
+    TargetObject:
+    - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\\*'
+    - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\\*'
+  SELECTION_4:
+    Details:
+    - '*C:\Windows\Temp\\*'
+    - '*C:\$Recycle.bin\\*'
+    - '*C:\Temp\\*'
+    - '*C:\Users\Public\\*'
+    - '*C:\Users\Default\\*'
+    - '*C:\Users\Desktop\\*'
+    - '*\AppData\Local\Temp\\*'
+  SELECTION_5:
+    Details:
+    - '%Public%\\*'
+    - wscript*
+    - cscript*
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and (SELECTION_4 or SELECTION_5))
+falsepositives:
+- Software using weird folders for updates
+fields:
+- Image
+id: 02ee49e2-e294-4d0f-9278-f5b3212fc588
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html
+status: experimental
+tags:
+- attack.persistence
+- attack.t1547.001

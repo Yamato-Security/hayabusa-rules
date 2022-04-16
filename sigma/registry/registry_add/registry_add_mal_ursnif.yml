@@ -1,0 +1,33 @@
+
+title: Ursnif
+ruletype: Sigma
+author: megan201296
+date: 2019/02/13
+description: Detects new registry key created by Ursnif malware.
+detection:
+  SELECTION_1:
+    EventID: 12
+  SELECTION_2:
+    TargetObject: '*\Software\AppDataLow\Software\Microsoft\\*'
+  SELECTION_3:
+    TargetObject:
+    - '*\SOFTWARE\AppDataLow\Software\Microsoft\Internet Explorer\\*'
+    - '*\SOFTWARE\AppDataLow\Software\Microsoft\RepService\\*'
+    - '*\SOFTWARE\AppDataLow\Software\Microsoft\IME\\*'
+    - '*\SOFTWARE\AppDataLow\Software\Microsoft\Edge\\*'
+  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
+falsepositives:
+- Unknown
+id: 21f17060-b282-4249-ade0-589ea3591558
+level: critical
+logsource:
+  category: registry_add
+  product: windows
+modified: 2021/03/26
+references:
+- https://blog.yoroi.company/research/ursnif-long-live-the-steganography/
+- https://blog.trendmicro.com/trendlabs-security-intelligence/phishing-campaign-uses-hijacked-emails-to-deliver-ursnif-by-replying-to-ongoing-threads/
+status: experimental
+tags:
+- attack.execution
+- attack.t1112

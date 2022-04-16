@@ -1,0 +1,103 @@
+
+title: Webshell Hacking Activity Patterns
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/17
+description: Detects certain parent child patterns found in cases in which a webshell
+  is used to perform certain credential dumping or exfiltration activities on a compromised
+  system
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_10:
+    CommandLine: '* a *'
+  SELECTION_11:
+    CommandLine: '* -m*'
+  SELECTION_12:
+    CommandLine: '*net*'
+  SELECTION_13:
+    CommandLine: '* user *'
+  SELECTION_14:
+    CommandLine: '* /add*'
+  SELECTION_15:
+    CommandLine: '*net*'
+  SELECTION_16:
+    CommandLine: '* localgroup *'
+  SELECTION_17:
+    CommandLine: '* administrators *'
+  SELECTION_18:
+    CommandLine: '*/add*'
+  SELECTION_19:
+    Image:
+    - '*\ntdsutil.exe'
+    - '*\ldifde.exe'
+    - '*\adfind.exe'
+    - '*\procdump.exe'
+    - '*\Nanodump.exe'
+    - '*\vssadmin.exe'
+    - '*\fsutil.exe'
+  SELECTION_2:
+    ParentImage:
+    - '*\w3wp.exe'
+    - '*\php-cgi.exe'
+    - '*\nginx.exe'
+    - '*\httpd.exe'
+    - '*\caddy.exe'
+    - '*\ws_tomcatservice.exe'
+  SELECTION_20:
+    CommandLine:
+    - '* -NoP *'
+    - '* -W Hidden *'
+    - '* -decode *'
+    - '* /decode *'
+    - '*reg save *'
+    - '*.downloadstring(*'
+    - '*.downloadfile(*'
+    - '*FromBase64String*'
+    - '* /ticket:*'
+    - '* sekurlsa*'
+    - '*.dmp full*'
+    - '*process call create*'
+    - '*whoami /priv*'
+  SELECTION_3:
+    ParentImage:
+    - '*\java.exe'
+    - '*\javaw.exe'
+  SELECTION_4:
+    ParentImage:
+    - '*-tomcat-*'
+    - '*\tomcat*'
+  SELECTION_5:
+    ParentImage:
+    - '*\java.exe'
+    - '*\javaw.exe'
+  SELECTION_6:
+    CommandLine:
+    - '*catalina.jar*'
+    - '*CATALINA_HOME*'
+  SELECTION_7:
+    CommandLine: '*rundll32*'
+  SELECTION_8:
+    CommandLine: '*comsvcs.dll*'
+  SELECTION_9:
+    CommandLine: '* -hp*'
+  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6)) and ((SELECTION_7 and SELECTION_8) or (SELECTION_9 and SELECTION_10
+    and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14) or (SELECTION_15
+    and SELECTION_16 and SELECTION_17 and SELECTION_18) or SELECTION_19 or SELECTION_20))
+falsepositives:
+- Unlikely
+id: 4ebc877f-4612-45cb-b3a5-8e3834db36c9
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://youtu.be/7aemGhaE9ds?t=641
+status: experimental
+tags:
+- attack.persistence
+- attack.t1505.003
+- attack.t1018
+- attack.t1033
+- attack.t1087

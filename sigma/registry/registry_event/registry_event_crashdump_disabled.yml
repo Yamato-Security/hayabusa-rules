@@ -1,0 +1,28 @@
+
+title: CrashControl CrashDump Disabled
+ruletype: Sigma
+author: Tobias Michalski
+date: 2022/02/24
+description: Detects disabling the CrashDump per registry (as used by HermeticWiper)
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    TargetObject: '*SYSTEM\CurrentControlSet\Control\CrashControl*'
+  SELECTION_3:
+    Details: DWORD (0x00000000)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Legitimate disabling of crashdumps
+id: 2ff692c2-4594-41ec-8fcb-46587de769e0
+level: medium
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://www.sentinelone.com/labs/hermetic-wiper-ukraine-under-attack/
+status: experimental
+tags:
+- attack.t1564
+- attack.t1112

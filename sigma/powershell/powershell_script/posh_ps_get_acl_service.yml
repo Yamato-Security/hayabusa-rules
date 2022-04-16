@@ -14,7 +14,7 @@ detection:
     ScriptBlockText: '*REGISTRY::HKLM\SYSTEM\CurrentControlSet\Services\\*'
   condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
-- legitimate administrative script
+- Legitimate administrative script
 id: 95afc12e-3cbb-40c3-9340-84a032e596a3
 level: medium
 logsource:

@@ -1,0 +1,46 @@
+
+title: Disable Internal Tools or Feature in Registry
+ruletype: Sigma
+author: frack113
+date: 2022/03/18
+description: Detects registry modifications that change features of internal Windows
+  tools (malware like Agent Tesla uses this technique)
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    EventType: SetValue
+  SELECTION_3:
+    TargetObject:
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system\DisableRegistryTools'
+    - '*SOFTWARE\Policies\Microsoft\Windows\System\DisableCMD'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\system\DisableTaskmgr'
+    - '*SOFTWARE\Policies\Microsoft\Windows\Explorer\DisableNotificationCenter'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\DisableChangePassword'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\DisableLockWorkstation'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\StartMenuLogOff'
+  SELECTION_4:
+    Details: DWORD (0x00000001)
+  SELECTION_5:
+    EventType: SetValue
+  SELECTION_6:
+    TargetObject:
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\shutdownwithoutlogon'
+  SELECTION_7:
+    Details: DWORD (0x00000000)
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Legitim admin script
+id: e2482f8d-3443-4237-b906-cc145d87a076
+level: medium
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1112/T1112.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1112

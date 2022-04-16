@@ -15,8 +15,10 @@ detection:
   SELECTION_3:
     CommandLine: '* lsass*'
   SELECTION_4:
+    CommandLine: '* -ma *'
+  SELECTION_5:
     CommandLine: '* ls*'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - Unlikely, because no one should dump an lsass process memory
 - Another tool that uses the command line switches of Procdump
@@ -28,7 +30,7 @@ logsource:
 modified: 2021/02/02
 references:
 - Internal Research
-status: experimental
+status: stable
 tags:
 - attack.defense_evasion
 - attack.t1036

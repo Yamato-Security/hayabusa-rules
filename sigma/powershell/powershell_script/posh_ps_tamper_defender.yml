@@ -16,11 +16,12 @@ detection:
     - '*DisableBehaviorMonitoring*'
     - '*DisableScriptScanning*'
     - '*DisableBlockAtFirstSeen*'
+    - '*DisableIOAVProtection*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate PowerShell scripts
 id: 14c71865-6cd3-44ae-adaa-1db923fae5f2
-level: medium
+level: high
 logsource:
   category: ps_script
   definition: Script block logging must be enabled

@@ -1,0 +1,55 @@
+
+title: Powershell Defender Base64 MpPreference
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/04
+description: Detects base64 encoded PowerShell code that modifies Windows Defender
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine:
+    - '*QWRkLU1wUHJlZmVyZW5jZS*'
+    - '*FkZC1NcFByZWZlcmVuY2Ug*'
+    - '*BZGQtTXBQcmVmZXJlbmNlI*'
+    - '*U2V0LU1wUHJlZmVyZW5jZS*'
+    - '*NldC1NcFByZWZlcmVuY2Ug*'
+    - '*TZXQtTXBQcmVmZXJlbmNlI*'
+    - '*YWRkLW1wcHJlZmVyZW5jZS*'
+    - '*FkZC1tcHByZWZlcmVuY2Ug*'
+    - '*hZGQtbXBwcmVmZXJlbmNlI*'
+    - '*c2V0LW1wcHJlZmVyZW5jZS*'
+    - '*NldC1tcHByZWZlcmVuY2Ug*'
+    - '*zZXQtbXBwcmVmZXJlbmNlI*'
+  SELECTION_3:
+    CommandLine:
+    - '*QQBkAGQALQBNAHAAUAByAGUAZgBlAHIAZQBuAGMAZQAgA*'
+    - '*EAZABkAC0ATQBwAFAAcgBlAGYAZQByAGUAbgBjAGUAIA*'
+    - '*BAGQAZAAtAE0AcABQAHIAZQBmAGUAcgBlAG4AYwBlACAA*'
+    - '*UwBlAHQALQBNAHAAUAByAGUAZgBlAHIAZQBuAGMAZQAgA*'
+    - '*MAZQB0AC0ATQBwAFAAcgBlAGYAZQByAGUAbgBjAGUAIA*'
+    - '*TAGUAdAAtAE0AcABQAHIAZQBmAGUAcgBlAG4AYwBlACAA*'
+    - '*YQBkAGQALQBtAHAAcAByAGUAZgBlAHIAZQBuAGMAZQAgA*'
+    - '*EAZABkAC0AbQBwAHAAcgBlAGYAZQByAGUAbgBjAGUAIA*'
+    - '*hAGQAZAAtAG0AcABwAHIAZQBmAGUAcgBlAG4AYwBlACAA*'
+    - '*cwBlAHQALQBtAHAAcAByAGUAZgBlAHIAZQBuAGMAZQAgA*'
+    - '*MAZQB0AC0AbQBwAHAAcgBlAGYAZQByAGUAbgBjAGUAIA*'
+    - '*zAGUAdAAtAG0AcABwAHIAZQBmAGUAcgBlAG4AYwBlACAA*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Possible Admin Activity
+- Other Cmdlets that may use the same parameters
+id: c6fb44c6-71f5-49e6-9462-1425d328aee3
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/07
+references:
+- https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/configure-process-opened-file-exclusions-microsoft-defender-antivirus
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md
+- https://twitter.com/AdamTheAnalyst/status/1483497517119590403
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001

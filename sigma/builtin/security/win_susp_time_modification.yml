@@ -12,6 +12,7 @@ detection:
     ProcessName:
     - C:\Program Files\VMware\VMware Tools\vmtoolsd.exe
     - C:\Windows\System32\VBoxService.exe
+    - C:\Windows\System32\oobe\msoobe.exe
   SELECTION_3:
     ProcessName: C:\Windows\System32\svchost.exe
   SELECTION_4:
@@ -28,7 +29,7 @@ logsource:
     Audit Policy Configuration\Audit Policies\System\Audit Security State Change'
   product: windows
   service: security
-modified: 2021/11/27
+modified: 2022/04/06
 references:
 - Private Cuckoo Sandbox (from many years ago, no longer have hash, NDA as well)
 - Live environment caused by malware

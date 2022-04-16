@@ -15,15 +15,17 @@ detection:
   SELECTION_4:
     CommandLine: '*tcp 3389*'
   SELECTION_5:
-    CommandLine: '*advfirewall firewall add rule*'
+    CommandLine: '*netsh*'
   SELECTION_6:
-    CommandLine: '*action=allow*'
+    CommandLine: '*advfirewall firewall add rule*'
   SELECTION_7:
-    CommandLine: '*protocol=TCP*'
+    CommandLine: '*action=allow*'
   SELECTION_8:
+    CommandLine: '*protocol=TCP*'
+  SELECTION_9:
     CommandLine: '*localport=3389*'
-  condition: (SELECTION_1 and SELECTION_2 and ((SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6 and SELECTION_7 and SELECTION_8)))
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Legitimate administration
 id: 01aeb693-138d-49d2-9403-c4f52d7d3d62

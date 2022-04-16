@@ -18,7 +18,7 @@ detection:
     - '* \\\*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- unknown
+- Unknown
 id: aa8e035d-7be4-48d3-a944-102aec04400d
 level: medium
 logsource:
@@ -28,5 +28,5 @@ references:
 - https://lolbas-project.github.io/lolbas/Binaries/Extrac32/
 status: experimental
 tags:
-- attack.defense_evasion
-- attack.t1564.004
+- attack.command_and_control
+- attack.t1105

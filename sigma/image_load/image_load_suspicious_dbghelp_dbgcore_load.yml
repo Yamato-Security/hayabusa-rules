@@ -1,0 +1,77 @@
+
+title: Load of dbghelp/dbgcore DLL from Suspicious Process
+ruletype: Sigma
+author: Perez Diego (@darkquassar), oscd.community, Ecco
+date: 2019/10/27
+description: Detects the load of dbghelp/dbgcore DLL (used to make memory dumps) by
+  suspicious processes. Tools like ProcessHacker and some attacker tradecract use
+  MiniDumpWriteDump API found in dbghelp.dll or dbgcore.dll. As an example, SilentTrynity
+  C2 Framework has a module that leverages this API to dump the contents of Lsass.exe
+  and transfer it over the network back to the attacker's machine.
+detection:
+  SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    ImageLoaded:
+    - '*\dbghelp.dll'
+    - '*\dbgcore.dll'
+  SELECTION_3:
+    Image:
+    - '*\msbuild.exe'
+    - '*\cmd.exe'
+    - '*\rundll32.exe'
+    - '*\word.exe'
+    - '*\excel.exe'
+    - '*\powerpnt.exe'
+    - '*\outlook.exe'
+    - '*\monitoringhost.exe'
+    - '*\wmic.exe'
+    - '*\bash.exe'
+    - '*\wscript.exe'
+    - '*\cscript.exe'
+    - '*\mshta.exe'
+    - '*\schtasks.exe'
+    - '*\dnx.exe'
+    - '*\regsvcs.exe'
+    - '*\sc.exe'
+    - '*\scriptrunner.exe'
+  SELECTION_4:
+    ImageLoaded:
+    - '*\dbghelp.dll'
+    - '*\dbgcore.dll'
+  SELECTION_5:
+    Signed: 'FALSE'
+  SELECTION_6:
+    Image: '*Visual Studio*'
+  SELECTION_7:
+    CommandLine:
+    - '*-k LocalSystemNetworkRestricted*'
+    - '*-k UnistackSvcGroup -s WpnUserService*'
+  SELECTION_8:
+    CommandLine:
+    - C:\WINDOWS\winsxs\*\TiWorker.exe -Embedding
+    - C:\Windows\system32\svchost.exe -k netsvcs -p -s wuauserv
+    - C:\Windows\System32\svchost.exe -k WerSvcGroup
+  condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3) or (SELECTION_4 and
+    SELECTION_5)) and  not (SELECTION_6 or SELECTION_7)) and  not (SELECTION_8))
+falsepositives:
+- Unknown
+fields:
+- ComputerName
+- User
+- Image
+- ImageLoaded
+id: 0e277796-5f23-4e49-a490-483131d4f6e1
+level: high
+logsource:
+  category: image_load
+  product: windows
+modified: 2022/02/21
+references:
+- https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump
+- https://www.pinvoke.net/default.aspx/dbghelp/MiniDumpWriteDump.html
+- https://medium.com/@fsx30/bypass-edrs-memory-protection-introduction-to-hooking-2efb21acffd6
+status: test
+tags:
+- attack.credential_access
+- attack.t1003.001

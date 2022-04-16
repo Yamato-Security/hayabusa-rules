@@ -12,12 +12,19 @@ detection:
   SELECTION_2:
     ScriptBlockText: '*-Namespace root/subscription *'
   SELECTION_3:
-    ScriptBlockText: '*-Property *'
-  SELECTION_4:
     ScriptBlockText: '*-ClassName __EventFilter *'
+  SELECTION_4:
+    ScriptBlockText: '*-Property *'
   SELECTION_5:
+    ScriptBlockText: '*New-CimInstance *'
+  SELECTION_6:
+    ScriptBlockText: '*-Namespace root/subscription *'
+  SELECTION_7:
     ScriptBlockText: '*-ClassName CommandLineEventConsumer *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and (SELECTION_4 or SELECTION_5))
+  SELECTION_8:
+    ScriptBlockText: '*-Property *'
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8))
 falsepositives:
 - Unknown
 id: 9e07f6e7-83aa-45c6-998e-0af26efd0a85

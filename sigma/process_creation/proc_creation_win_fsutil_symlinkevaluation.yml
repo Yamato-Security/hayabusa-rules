@@ -1,0 +1,34 @@
+
+title: Fsutil Behavior Set SymlinkEvaluation
+ruletype: Sigma
+author: frack113
+date: 2022/03/02
+description: |
+  A symbolic link is a type of file that contains a reference to another file.
+  This is probably done to make sure that the ransomware is able to follow shortcuts on the machine in order to find the original file to encrypt
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image: '*fsutil.exe'
+  SELECTION_3:
+    CommandLine: '*behavior *'
+  SELECTION_4:
+    CommandLine: '*set *'
+  SELECTION_5:
+    CommandLine: '*SymlinkEvaluation*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Legitimate use
+id: c0b2768a-dd06-4671-8339-b16ca8d1f27f
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://www.cybereason.com/blog/cybereason-vs.-blackcat-ransomware
+- https://docs.microsoft.com/fr-fr/windows-server/administration/windows-commands/fsutil-behavior
+status: experimental
+tags:
+- attack.execution
+- attack.t1059

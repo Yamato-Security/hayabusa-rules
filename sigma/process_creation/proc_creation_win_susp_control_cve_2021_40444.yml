@@ -15,7 +15,9 @@ detection:
     - '*\powerpnt.exe'
     - '*\excel.exe'
   SELECTION_4:
-    CommandLine: '*\control.exe input.dll'
+    CommandLine:
+    - '*\control.exe input.dll'
+    - '*\control.exe" input.dll'
   condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - Unknown
@@ -24,12 +26,12 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/09/09
+modified: 2022/03/03
 references:
 - https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-40444
 - https://twitter.com/neonprimetime/status/1435584010202255375
 - https://www.joesandbox.com/analysis/476188/1/iochtml
-status: experimental
+status: test
 tags:
 - attack.execution
 - attack.t1059

@@ -8,8 +8,6 @@ description: Detects a Windows command and scripting interpreter executable star
 detection:
   SELECTION_1:
     EventID: 1
-  SELECTION_10:
-    CommandLine: '*\SYSTEM32\SPOOL\DRIVERS\\*'
   SELECTION_2:
     ParentImage:
     - '*\WINWORD.EXE'
@@ -17,7 +15,6 @@ detection:
     - '*\POWERPNT.exe'
     - '*\MSPUB.exe'
     - '*\VISIO.exe'
-    - '*\OUTLOOK.EXE'
     - '*\MSACCESS.EXE'
     - '*\EQNEDT32.EXE'
   SELECTION_3:
@@ -42,23 +39,9 @@ detection:
     - '*\AppVLP.exe'
     - '*\svchost.exe'
     - '*\msbuild.exe'
-  SELECTION_4:
-    ParentImage: '*\OUTLOOK.EXE'
-  SELECTION_5:
-    Image: '*\rundll32.exe'
-  SELECTION_6:
-    CommandLine: '*\PhotoViewer.dll*'
-  SELECTION_7:
-    ParentImage: '*\OUTLOOK.EXE'
-  SELECTION_8:
-    Image: '*\rundll32.exe'
-  SELECTION_9:
-    CommandLine: '*shell32.dll,Control_RunDLL*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4
-    and SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9
-    and SELECTION_10)))
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- unknown
+- Unknown
 fields:
 - CommandLine
 - ParentCommandLine

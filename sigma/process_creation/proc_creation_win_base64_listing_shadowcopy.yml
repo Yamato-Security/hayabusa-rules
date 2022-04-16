@@ -1,0 +1,34 @@
+
+title: Base64 Encoded Listing of Shadowcopy
+ruletype: Sigma
+author: Christian Burkard
+date: 2022/03/01
+description: Detects base64 encoded listing Win32_Shadowcopy
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    CommandLine:
+    - '*VwBpAG4AMwAyAF8AUwBoAGEAZABvAHcAYwBvAHAAeQAgAHwAIABGAG8AcgBFAGEAYwBoAC0ATwBiAGoAZQBjAHQA*'
+    - '*cAaQBuADMAMgBfAFMAaABhAGQAbwB3AGMAbwBwAHkAIAB8ACAARgBvAHIARQBhAGMAaAAtAE8AYgBqAGUAYwB0A*'
+    - '*XAGkAbgAzADIAXwBTAGgAYQBkAG8AdwBjAG8AcAB5ACAAfAAgAEYAbwByAEUAYQBjAGgALQBPAGIAagBlAGMAdA*'
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- Unlikely
+fields:
+- CommandLine
+- ParentCommandLine
+id: 47688f1b-9f51-4656-b013-3cc49a166a36
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/07
+references:
+- https://github.com/Neo23x0/Raccine/blob/main/yara/mal_revil.yar
+status: test
+tags:
+- attack.execution
+- attack.t1059.001
+- attack.defense_evasion
+- attack.t1027

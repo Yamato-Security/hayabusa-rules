@@ -10,7 +10,11 @@ detection:
     ScriptBlockText: '*Remove-Item*'
   SELECTION_2:
     ScriptBlockText: '*-Path *'
-  condition: (SELECTION_1 and SELECTION_2)
+  SELECTION_3:
+    ScriptBlockText:
+    - '*HKCU:\\*'
+    - '*HKLM:\\*'
+  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
 falsepositives:
 - Legitimate PowerShell scripts
 id: b8af5f36-1361-4ebe-9e76-e36128d947bf
@@ -19,6 +23,7 @@ logsource:
   category: ps_script
   definition: Script block logging must be enabled
   product: windows
+modified: 2022/03/17
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1070.004/T1070.004.md
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/Remove-Item?view=powershell-5.1&viewFallbackFrom=powershell-7

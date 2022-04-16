@@ -1,7 +1,7 @@
 
 title: Shells Spawned by Web Servers
 ruletype: Sigma
-author: Thomas Patzke
+author: Thomas Patzke, Florian Roth
 date: 2019/01/16
 description: Web servers that spawn shell processes could be the result of a successfully
   placed web shell or an other attack
@@ -11,20 +11,38 @@ detection:
   SELECTION_2:
     ParentImage:
     - '*\w3wp.exe'
-    - '*\httpd.exe'
-    - '*\nginx.exe'
     - '*\php-cgi.exe'
+    - '*\nginx.exe'
+    - '*\httpd.exe'
+    - '*\caddy.exe'
+    - '*\ws_TomcatService.exe'
     - '*\tomcat.exe'
     - '*\UMWorkerProcess.exe'
-    - '*\ws_TomcatService.exe'
   SELECTION_3:
+    ParentImage:
+    - '*\java.exe'
+    - '*\javaw.exe'
+  SELECTION_4:
+    ParentImage:
+    - '*-tomcat-*'
+    - '*\tomcat*'
+  SELECTION_5:
+    ParentImage:
+    - '*\java.exe'
+    - '*\javaw.exe'
+  SELECTION_6:
+    CommandLine:
+    - '*catalina.jar*'
+    - '*CATALINA_HOME*'
+  SELECTION_7:
     Image:
     - '*\cmd.exe'
     - '*\sh.exe'
     - '*\bash.exe'
     - '*\powershell.exe'
     - '*\bitsadmin.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and (SELECTION_2 or (SELECTION_3 and SELECTION_4) or (SELECTION_5
+    and SELECTION_6)) and SELECTION_7)
 falsepositives:
 - Particular web applications may spawn a shell process legitimately
 fields:
@@ -35,7 +53,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/01/06
+modified: 2022/03/17
 status: test
 tags:
 - attack.persistence

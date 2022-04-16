@@ -4,7 +4,8 @@ ruletype: Sigma
 author: Florian Roth
 date: 2021/07/27
 description: Detects process patterns found in Cobalt Strike beacon activity (see
-  reference for more details)
+  reference for more details) and also cases in which a China Chopper like webshell
+  is used to run whoami
 detection:
   SELECTION_1:
     EventID: 1
@@ -20,11 +21,11 @@ detection:
     ParentCommandLine:
     - '*/C whoami*'
     - '*cmd.exe /C echo*'
-    - '* > \\.\pipe*'
+    - '* > \\\\.\\pipe*'
   SELECTION_6:
     CommandLine:
     - '*cmd.exe /c echo*'
-    - '*> \\.\pipe*'
+    - '*> \\\\.\\pipe*'
     - '*\whoami.exe*'
   SELECTION_7:
     ParentImage: '*\dllhost.exe'
@@ -41,7 +42,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/08/30
+modified: 2022/03/05
 references:
 - https://hausec.com/2021/07/26/cobalt-strike-and-tradecraft/
 - https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/
