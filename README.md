@@ -15,7 +15,7 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
 - [Table of Contents](#table-of-contents)
 - [About creating rule files](#about-creating-rule-files)
   - [Rule file format](#rule-file-format)
-- [Details Abbreviations](#details-abbreviations)
+- [Abbreviations](#abbreviations)
 - [Detection field](#detection-field)
   - [Selection fundamentals](#selection-fundamentals)
     - [How to write AND and OR logic](#how-to-write-and-and-or-logic)
@@ -45,7 +45,6 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
     - [Please do this](#please-do-this)
     - [Instead of](#instead-of-1)
     - [Please do this](#please-do-this-1)
-    - [Or ideally something like this](#or-ideally-something-like-this)
 - [Converting sigma rules to hayabusa format](#converting-sigma-rules-to-hayabusa-format)
 - [Twitter](#twitter)
 
@@ -64,11 +63,11 @@ Example:
 #Author section
 author: Zach Mathis
 date: 2022/03/22
-modified: 2022/03/22
+modified: 2022/04/17
 
 #Alert section
 title: Possible Timestomping
-details: 'Path: %TargetFilename% | Process: %Image% | CreationUtcTime: %CreationUtcTime% | PreviousCreationUtcTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
+details: 'Path: %TargetFilename% | Process: %Image% | User: %User% | CreationUtcTime: %CreationUtcTime% | PreviousCreationUtcTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
 description: |
     The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
     This event helps tracking the real creation time of a file. 
@@ -99,34 +98,46 @@ references:
 ruletype: Hayabusa
 
 #Sample XML Event
+sample-message: |
+    File creation time changed:
+    RuleName: technique_id=T1099,technique_name=Timestomp
+    UtcTime: 2022-04-12 22:52:00.688
+    ProcessGuid: {43199d79-0290-6256-3704-000000001400}
+    ProcessId: 9752
+    Image: C:\TMP\mim.exe
+    TargetFilename: C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1
+    CreationUtcTime: 2016-05-16 09:13:50.950
+    PreviousCreationUtcTime: 2022-04-12 22:52:00.563
+    User: ZACH-LOG-TEST\IEUser
 sample-evtx: |
     <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
-    <System>
-        <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"/>
-        <EventID>2</EventID>
-        <Version>4</Version>
-        <Level>4</Level>
-        <Task>2</Task>
-        <Opcode>0</Opcode>
-        <Keywords>0x8000000000000000</Keywords>
-        <TimeCreated SystemTime="2019-04-30T10:13:42.052113000Z"/>
-        <EventRecordID>8931</EventRecordID>
-        <Correlation/>
-        <Execution ProcessID="1956" ThreadID="1636"/>
-        <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
-        <Computer>IEWIN7</Computer>
-        <Security UserID="S-1-5-18"/>
-    </System>
-    <EventData>
-        <Data Name="RuleName"/>
-        <Data Name="UtcTime">2019-04-30 10:13:42.052</Data>
-        <Data Name="ProcessGuid">{365ABB72-16CD-5CC8-0000-0010483A0600}</Data>
-        <Data Name="ProcessId">2836</Data>
-        <Data Name="Image">C:\Windows\Explorer.EXE</Data>
-        <Data Name="TargetFilename">C:\Users\IEUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\bs.ps1</Data>
-        <Data Name="CreationUtcTime">2016-02-02 15:30:02.000</Data>
-        <Data Name="PreviousCreationUtcTime">2019-04-30 10:12:45.583</Data>
-    </EventData>
+        <System>
+            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" /> 
+            <EventID>2</EventID> 
+            <Version>5</Version> 
+            <Level>4</Level> 
+            <Task>2</Task> 
+            <Opcode>0</Opcode> 
+            <Keywords>0x8000000000000000</Keywords> 
+            <TimeCreated SystemTime="2022-04-12T22:52:00.689654600Z" /> 
+            <EventRecordID>8946</EventRecordID> 
+            <Correlation /> 
+            <Execution ProcessID="3408" ThreadID="4276" /> 
+            <Channel>Microsoft-Windows-Sysmon/Operational</Channel> 
+            <Computer>Zach-log-test</Computer> 
+            <Security UserID="S-1-5-18" /> 
+        </System>
+        <EventData>
+            <Data Name="RuleName">technique_id=T1099,technique_name=Timestomp</Data> 
+            <Data Name="UtcTime">2022-04-12 22:52:00.688</Data> 
+            <Data Name="ProcessGuid">{43199d79-0290-6256-3704-000000001400}</Data> 
+            <Data Name="ProcessId">9752</Data> 
+            <Data Name="Image">C:\TMP\mim.exe</Data> 
+            <Data Name="TargetFilename">C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1</Data> 
+            <Data Name="CreationUtcTime">2016-05-16 09:13:50.950</Data> 
+            <Data Name="PreviousCreationUtcTime">2022-04-12 22:52:00.563</Data> 
+            <Data Name="User">ZACH-LOG-TEST\IEUser</Data> 
+        </EventData>
     </Event>
 ```
 
@@ -141,7 +152,7 @@ sample-evtx: |
 
 * **title [required]**: Rule file title. This will also be the name of the alert that gets displayed so the briefer the better. (Should not be longer than 85 characters.)
 - **title_jp** [optional]: The title in Japanese.
-- details [optional]: The details of the alert that gets displayed. Please output any fields in the Windows event log that are useful for analysis. Fields are seperated by `" | "`. Field placeholders are enclosed with a `%` (Example: `%MemberName%`) and need to be defined in `rules/config/eventkey_alias.txt`. (Explained below.)
+- **details** [optional]: The details of the alert that gets displayed. Please output any fields in the Windows event log that are useful for analysis. Fields are seperated by `" | "`. Field placeholders are enclosed with a `%` (Example: `%MemberName%`) and need to be defined in `rules/config/eventkey_alias.txt`. (Explained below.)
 - **details_jp** [optional]: The details message in Japanese.
 - **description** [optional]: A description of the rule. This does not get displayed so you can make this long and detailed.
 - **description_jp** [optional]: The description in Japanese.
@@ -151,43 +162,46 @@ sample-evtx: |
 * **id [required]**: A randomly generated version 4 UUID used to uniquely identify the rule. You can generate one [here](https://www.uuidgenerator.net/version4).
 - **level [required]**: Severity level based on [sigma's definition](https://github.com/SigmaHQ/sigma/wiki/Specification). Please write one of the following: `informational`,`low`,`medium`,`high`,`critical`
 - **status[required]**: `stable` for tested rules and `testing` for rules that need to be tested.
-- **logsource [required]**: Same as the sigma logsource in order to be compatible with sigma rules.
+- **logsource [required]**: While this is actually used by Hayabusa, we define logsource in the same way as sigma in order to be compatible with sigma rules.
 - **detection  [required]**: The detection logic goes here. (Explained below.)
 - **falsepositives [required]**: The possibilities for false positives. For example: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`. If it is unknown, please write `unknown`.
 - **tags** [optional]: If the technique is a [LOLBINS/LOLBAS](https://lolbas-project.github.io/) technique, please add the `lolbas` tag. If the alert can be mapped to a technique in the [MITRE ATT&CK](https://attack.mitre.org/) framework, please add the tactic ID (Example: `attack.t1098`) and any applicable tactics below:
-  - `attack.impact` -> Impact
-  - `attack.initial_access` -> Initial Access
-  - `attack.execution` -> Execution
-  - `attack.lateral_movement` -> Lateral Movement
-  - `attack.persistence` -> Persistence
-  - `attack.privilege_escalation` -> Privilege Escalation
-  - `attack.reconnaissance` -> Reconnaissance
-  - `attack.collection` -> Collection
-  - `attack.command_and_control` -> Command and Control
-  - `attack.credential_access` -> Credential Access
-  - `attack.defense_evasion` -> Defense Evasion
-  - `attack.discovery` -> Discovery
-  - `attack.exfiltration` -> Exfiltration
-  - `attack.resource_development` -> Resource Development  
+  - `attack.reconnaissance` -> Reconnaissance (Recon)
+  - `attack.resource_development` -> Resource Development  (ResDev)
+  - `attack.initial_access` -> Initial Access (InitAccess)
+  - `attack.execution` -> Execution (Exec)
+  - `attack.persistence` -> Persistence (Persis)
+  - `attack.privilege_escalation` -> Privilege Escalation (PrivEsc)
+  - `attack.defense_evasion` -> Defense Evasion (Evas)
+  - `attack.credential_access` -> Credential Access (CredAccess)
+  - `attack.discovery` -> Discovery (Disc)
+  - `attack.lateral_movement` -> Lateral Movement (LatMov)
+  - `attack.collection` -> Collection (Collect)
+  - `attack.command_and_control` -> Command and Control (C2)
+  - `attack.exfiltration` -> Exfiltration (Exfil)
+  - `attack.impact` -> Impact (Impact)
 - **references** [optional]: Any links to references.
 - **ruletype [required]**: `Hayabusa` for hayabusa rules. Rules automatically converted from sigma Windows rules will be `Sigma`.
 
 > ## Sample XML Event
 
+* **sample-message [required]**: Starting forward, we ask rule authors to include sample messages for their rules. This is the rendered message that Windows' Event Viewer displays.
 * **sample-evtx [required]**: Starting forward, we ask rule authors to include sample XML events for their rules.
 
-# Details Abbreviations
+# Abbreviations
 
-The following abbreviations are used in the details output in order to make the output as concise as possible:
+The following abbreviations are used in rules in order to make the output as concise as possible:
 
 - `Addr` -> Address
 - `Auth` -> Authentication
+- `Cli` -> Client
 - `Cmd` -> Command
+- `Comp` -> Computer
 - `Dst` -> Destination
 - `LID` -> Logon ID
 - `Src` -> Source
-- `Svr` -> Server
 - `Svc` -> Service
+- `Svr` -> Server
 - `Tgt` -> Target
 - `PID` -> Process ID
 - `PGUID` -> Process GUID (Global Unique ID)
@@ -399,12 +413,12 @@ detection:
 This is a list of what you can specify after the pipe. At the moment, hayabusa does not support chaining multiple pipes together.
 String matches are normally case insensitive. However, they become case sensitive whenever the following are used:
 
-- startswith: Checks the string from the beginning
-- endswith: Checks the end of the string
-- contains: Checks if a word is contained in the data
-- re: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/1.5.4/regex/> to know how to write correct regular expressions.)
+- `|startswith`: Checks the string from the beginning
+- `|endswith`: Checks the end of the string
+- `|contains`: Checks if a word is contained in the data
+- `|re`: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/1.5.4/regex/> to know how to write correct regular expressions.)
   > Caution: Some sigma rules that use regular expressions may fail to detect due to differences in Rust's implementation of regex.
-- equalsfield: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
+- `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
 
 ## Wildcards
 
@@ -615,7 +629,7 @@ The timestamp of the alert will be the time from the first event detected.
 
 # Rule creation advice
 
-1. **When possible, always specify `Channel` and `EventID` name.** In the future, we may filter on channel names and event IDs so your rule may be ignored if this is not set.
+1. **When possible, always specify the `Channel` and `EventID` name.** In the future, we may filter on channel names and event IDs so your rule may be ignored if this is not set.
 
 2. **Please do not use multiple `selection` or `filter` fields and excessive grouping when it is not needed.** For example:
 
@@ -650,7 +664,7 @@ detection:
     condition: selection and not filter
 ```
 
-3. **When you need multiple sections, please name the first section with channel and event ID information in the `section_basic_info` section and other selections with meaningful names after `section_` and `filter_`, or use the notation `section_1`, `filter_1`, etc... Also, please write comments to explain anything difficult to understand.**
+1. **When you need multiple sections, please name the first section with channel and event ID information in the `section_basic` section and other selections with meaningful names after `section_` and `filter_`. Also, please write comments to explain anything difficult to understand.** For example:
 
 ### Instead of
 
@@ -681,32 +695,7 @@ detection:
 
 ```yaml
 detection:
-    selection_1:
-        Channel: Security
-        EventID: 4648
-    selection_2:
-        TargetUserName|endswith: "$"  
-        IpAddress: "-"
-    filter_1:     #Filter system noise
-        SubjectUserName|endswith: "$"
-        TargetUserName|endswith: "$"
-        TargetInfo|endswith: "$"
-    filter_2:
-        SubjectUserName|endswith: "$" 
-    filter_3:
-        TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" #Filter out default Desktop Windows Manager and User Mode Driver Framework accounts
-        IpAddress: "-"                                  #Don't filter if the IP address is remote to catch attackers who created backdoor accounts that look like DWM-12, etc..
-    selection_4:
-        - ProcessName|endswith: "powershell.exe"
-        - ProcessName|endswith: "WMIC.exe"
-    condition: selection_1 and selection_4 and not (selection_2 and not filter_2) and not filter_3 and not filter_1
-```
-
-### Or ideally something like this
-
-```yaml
-detection:
-    selection_BasicInfo:
+    selection_basic:
         Channel: Security
         EventID: 4648
     selection_TargetUserIsComputerAccount:

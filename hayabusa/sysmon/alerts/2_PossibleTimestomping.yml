@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/03/22
-modified: 2022/03/22
+modified: 2022/04/17
 
 title: Possible Timestomping
-details: 'Path: %TargetFilename% | Process: %Image% | CreationUtcTime: %CreationUtcTime% | PreviousCreationUtcTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
+details: 'Path: %TargetFilename% | Process: %Image% | User: %User% | CreationTime: %CreationUtcTime% | PreviousTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
 description: |
     The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
     This event helps tracking the real creation time of a file. 
@@ -32,32 +32,44 @@ references:
     - https://attack.mitre.org/techniques/T1070/006/
 ruletype: Hayabusa
 
+sample-message: |
+    File creation time changed:
+    RuleName: technique_id=T1099,technique_name=Timestomp
+    UtcTime: 2022-04-12 22:52:00.688
+    ProcessGuid: {43199d79-0290-6256-3704-000000001400}
+    ProcessId: 9752
+    Image: C:\TMP\mim.exe
+    TargetFilename: C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1
+    CreationUtcTime: 2016-05-16 09:13:50.950
+    PreviousCreationUtcTime: 2022-04-12 22:52:00.563
+    User: ZACH-LOG-TEST\IEUser
 sample-evtx: |
     <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
         <System>
-            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"/>
-            <EventID>2</EventID>
-            <Version>4</Version>
-            <Level>4</Level>
-            <Task>2</Task>
-            <Opcode>0</Opcode>
-            <Keywords>0x8000000000000000</Keywords>
-            <TimeCreated SystemTime="2019-04-30T10:13:42.052113000Z"/>
-            <EventRecordID>8931</EventRecordID>
-            <Correlation/>
-            <Execution ProcessID="1956" ThreadID="1636"/>
-            <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
-            <Computer>IEWIN7</Computer>
-            <Security UserID="S-1-5-18"/>
+            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" /> 
+            <EventID>2</EventID> 
+            <Version>5</Version> 
+            <Level>4</Level> 
+            <Task>2</Task> 
+            <Opcode>0</Opcode> 
+            <Keywords>0x8000000000000000</Keywords> 
+            <TimeCreated SystemTime="2022-04-12T22:52:00.689654600Z" /> 
+            <EventRecordID>8946</EventRecordID> 
+            <Correlation /> 
+            <Execution ProcessID="3408" ThreadID="4276" /> 
+            <Channel>Microsoft-Windows-Sysmon/Operational</Channel> 
+            <Computer>Zach-log-test</Computer> 
+            <Security UserID="S-1-5-18" /> 
         </System>
         <EventData>
-            <Data Name="RuleName"/>
-            <Data Name="UtcTime">2019-04-30 10:13:42.052</Data>
-            <Data Name="ProcessGuid">{365ABB72-16CD-5CC8-0000-0010483A0600}</Data>
-            <Data Name="ProcessId">2836</Data>
-            <Data Name="Image">C:\Windows\Explorer.EXE</Data>
-            <Data Name="TargetFilename">C:\Users\IEUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\bs.ps1</Data>
-            <Data Name="CreationUtcTime">2016-02-02 15:30:02.000</Data>
-            <Data Name="PreviousCreationUtcTime">2019-04-30 10:12:45.583</Data>
+            <Data Name="RuleName">technique_id=T1099,technique_name=Timestomp</Data> 
+            <Data Name="UtcTime">2022-04-12 22:52:00.688</Data> 
+            <Data Name="ProcessGuid">{43199d79-0290-6256-3704-000000001400}</Data> 
+            <Data Name="ProcessId">9752</Data> 
+            <Data Name="Image">C:\TMP\mim.exe</Data> 
+            <Data Name="TargetFilename">C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1</Data> 
+            <Data Name="CreationUtcTime">2016-05-16 09:13:50.950</Data> 
+            <Data Name="PreviousCreationUtcTime">2022-04-12 22:52:00.563</Data> 
+            <Data Name="User">ZACH-LOG-TEST\IEUser</Data> 
         </EventData>
     </Event>
