@@ -15,6 +15,7 @@
 - [目次](#目次)
 - [ルールファイル作成について](#ルールファイル作成について)
   - [ルールファイル形式](#ルールファイル形式)
+- [Details出力の省略](#details出力の省略)
 - [detectionフィールド](#detectionフィールド)
   - [selectionの基礎知識](#selectionの基礎知識)
     - [論理積(AND)と論理和(OR)の書き方](#論理積andと論理和orの書き方)
@@ -34,141 +35,190 @@
   - [aggregation condition](#aggregation-condition)
     - [基本事項](#基本事項)
     - [countの4パターン](#countの4パターン)
-    - [パターン1の例：](#パターン1の例)
-    - [パターン2の例：](#パターン2の例)
-    - [パターン3の例：](#パターン3の例)
-    - [パターン4の例：](#パターン4の例)
-    - [Countルールの出力:](#countルールの出力)
+    - [パターン1の例](#パターン1の例)
+    - [パターン2の例](#パターン2の例)
+    - [パターン3の例](#パターン3の例)
+    - [パターン4の例](#パターン4の例)
+    - [Countルールの出力](#countルールの出力)
 - [ルール作成のアドバイス](#ルール作成のアドバイス)
-    - [悪い例：](#悪い例)
-    - [良い例：](#良い例)
-    - [悪い例：](#悪い例-1)
-    - [OKな例：](#okな例)
-    - [良い例：](#良い例-1)
+    - [悪い例](#悪い例)
+    - [良い例](#良い例)
+    - [悪い例](#悪い例-1)
+    - [良い例](#良い例-1)
 - [SigmaルールからHayabusaルール形式への自動変換](#sigmaルールからhayabusaルール形式への自動変換)
+- [Twitter](#twitter)
 
 # ルールファイル作成について
+
 Hayabusaの検知ルールは[YAML](https://en.wikipedia.org/wiki/YAML)形式で記述され、ファイル拡張子は必ず`.yml`にしてください。(`.yaml`ファイルは無視されます。)
 単純な文字列のマッチングだけでなく、正規表現や`AND`、`OR`などの条件を組み合わせて複雑な検知ルールを表現することができます。
 本節ではHayabusaの検知ルールの書き方について説明します。
 
 ## ルールファイル形式
+
 記述例:
 
 ```yaml
 #作者セクション
 author: Zach Mathis
-date: 2020/11/08
-modified: 2021/12/22
+date: 2022/03/22
+modified: 2022/04/17
 
 #アラートセクション
-title: Process Ran With High Privilege
-title_jp: プロセスが高い権限を使った
-details: 'Process: %ProcessName%  :  User: %SubjectUserName%  :  LogonID: %SubjectLogonId%'
-details_jp: 'プロセス名: %ProcessName%  :  ユーザ名: %SubjectUserName%  :  ログオンID: %SubjectLogonId%'
+title: Possible Timestomping
+details: 'Path: %TargetFilename% | Process: %Image% | CreationTime: %CreationUtcTime% | PreviousTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
 description: |
-    Malware may generate a 4673 event (A privileged service was called) when dumping hashes or wiping disk. 
-    For example, mimikatz will generate 4 logs using SeTcbPrivilege (Act as part of the OS.) 
-    Disk wipers like bcwipe will also generate this.
-    More legitimate filepaths may have to be added to the filter.
-    This is marked as a medium alert as there is a high possibility for false positives.
-description_jp: 
+    The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
+    This event helps tracking the real creation time of a file. 
+    Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system. 
+    Note that many processes legitimately change the creation time of a file; it does not necessarily indicate malicious activity.
 
 #ルールセクション
-id: 5b6e58ee-c231-4a54-9eee-af2577802e08
-level: medium
+id: f03e34c4-6432-4a30-9ae2-76ae6329399a
+level: low
 status: stable
+logsource:
+    product: windows
+    service: sysmon
+    definition: Sysmon needs to be installed and configured.
 detection:
-    selection:
-        Channel: Security
-        EventID: 4673
-    filter: 
-        - ProcessName: C:\Windows\System32\net.exe
-        - ProcessName: C:\Windows\System32\lsass.exe
-        - ProcessName: C:\Windows\System32\audiodg.exe
-        - ProcessName: C:\Windows\System32\svchost.exe
-        - ProcessName: C:\Windows\System32\mmc.exe
-        - ProcessName: C:\Windows\System32\net.exe
-        - ProcessName: C:\Windows\explorer.exe
-        - ProcessName: C:\Windows\System32\SettingSyncHost.exe
-        - ProcessName: C:\Windows\System32\sdiagnhost.exe
-        - ProcessName: C:\Windows\System32\dwm.exe
-        - ProcessName: C:\Windows\System32\WinSAT.exe
-        - ProcessName|endswith: ngentask.exe
-        - ProcessName: C:\Windows\System32\taskhostw.exe
-        - ProcessName|startswith: C:\Program Files
-        - SubjectUserName: LOCAL SERVICE
-    condition: selection and not filter
+    selection_basic:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 2
+    condition: selection_basic
 falsepositives:
-    - normal system usage
+    - unknown
 tags:
-    - attack.credential_access
-    - attack.t1003.001
-    - attack.t1561
-    - attack.impact
+    - t1070.006
+    - attack.defense_evasion
 references:
-    - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4673
-    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4673
-sample-evtx: ./sample-evtx/DeepBlueCLI/mimikatz-privesc-hashdump.evtx
-logsource: default
+    - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+    - https://attack.mitre.org/techniques/T1070/006/
 ruletype: Hayabusa
+
+#XMLイベントのサンプル
+sample-message: |
+    File creation time changed:
+    RuleName: technique_id=T1099,technique_name=Timestomp
+    UtcTime: 2022-04-12 22:52:00.688
+    ProcessGuid: {43199d79-0290-6256-3704-000000001400}
+    ProcessId: 9752
+    Image: C:\TMP\mim.exe
+    TargetFilename: C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1
+    CreationUtcTime: 2016-05-16 09:13:50.950
+    PreviousCreationUtcTime: 2022-04-12 22:52:00.563
+    User: ZACH-LOG-TEST\IEUser
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" /> 
+            <EventID>2</EventID> 
+            <Version>5</Version> 
+            <Level>4</Level> 
+            <Task>2</Task> 
+            <Opcode>0</Opcode> 
+            <Keywords>0x8000000000000000</Keywords> 
+            <TimeCreated SystemTime="2022-04-12T22:52:00.689654600Z" /> 
+            <EventRecordID>8946</EventRecordID> 
+            <Correlation /> 
+            <Execution ProcessID="3408" ThreadID="4276" /> 
+            <Channel>Microsoft-Windows-Sysmon/Operational</Channel> 
+            <Computer>Zach-log-test</Computer> 
+            <Security UserID="S-1-5-18" /> 
+        </System>
+        <EventData>
+            <Data Name="RuleName">technique_id=T1099,technique_name=Timestomp</Data> 
+            <Data Name="UtcTime">2022-04-12 22:52:00.688</Data> 
+            <Data Name="ProcessGuid">{43199d79-0290-6256-3704-000000001400}</Data> 
+            <Data Name="ProcessId">9752</Data> 
+            <Data Name="Image">C:\TMP\mim.exe</Data> 
+            <Data Name="TargetFilename">C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1</Data> 
+            <Data Name="CreationUtcTime">2016-05-16 09:13:50.950</Data> 
+            <Data Name="PreviousCreationUtcTime">2022-04-12 22:52:00.563</Data> 
+            <Data Name="User">ZACH-LOG-TEST\IEUser</Data> 
+        </EventData>
+    </Event>
 ```
 
 > ## 作者セクション
-* **author [必須]**: 著者名（複数可）。
-* **contributor** [オプション]: 寄稿者の名前（細かい修正をした人）。
-* **date [必須]**: ルールが作成された日付。
-* **modified** [オプション]: ルールが更新された日付。
+
+- **author [必須]**: 著者名（複数可）。
+- **contributor** [オプション]: 寄稿者の名前（細かい修正をした人）。
+- **date [必須]**: ルールが作成された日付。
+- **modified** [オプション]: ルールが更新された日付。
 
 > ## アラートセクション
-* **title [必須]**: ルールファイルのタイトル。これは表示されるアラートの名前にもなるので、簡潔であるほどよいです。(85文字以下でなければなりません。)
-* **title_jp** [オプション]: 日本語のタイトルです。
-* **details** [オプション]: 表示されるアラートの詳細です。Windowsイベントログの中で解析に有効なフィールドがあれば出力してください。フィールドは `" : "` で区切られます（両側ともスペース2つ）。フィールドのプレースホルダは `%` で囲まれ (例: `%MemberName%`) 、`rules/config_eventkey_alias.txt` で定義する必要があります。(以下で説明します)
-* **details_jp** [オプション]: 日本語の出力メッセージ。
-* **description** [オプション]: ルールの説明。これは表示されないので、長く詳細に記述することができます。
-* **description_jp** [オプション]: 日本語の説明文です。
+
+- **title [必須]**: ルールファイルのタイトル。これは表示されるアラートの名前にもなるので、簡潔であるほどよいです。(85文字以下でなければなりません。)
+
+- **title_jp** [オプション]: 日本語のタイトルです。
+- **details** [オプション]: 表示されるアラートの詳細です。Windowsイベントログの中で解析に有効なフィールドがあれば出力してください。フィールドは `" | "` で区切られます。フィールドのプレースホルダは `%` で囲まれ (例: `%MemberName%`) 、`rules/config_eventkey_alias.txt` で定義する必要があります。(以下で説明します)
+- **details_jp** [オプション]: 日本語の出力メッセージ。
+- **description** [オプション]: ルールの説明。これは表示されないので、長く詳細に記述することができます。
+- **description_jp** [オプション]: 日本語の説明文です。
 
 > ## ルールセクション
-* **id [必須]**: ルールを一意に識別するために使用される、ランダムに生成されたバージョン4のUUIDです。 [ここ](https://www.uuidgenerator.net/version4) で生成することができます。
-* **level [必須]**: [sigmaルールの定義](https://github.com/SigmaHQ/sigma/wiki/Specification)に基づく重要度レベル。 以下のいずれかを記述してください。 `informational`,`low`,`medium`,`high`,`critical`
-* **status[必須]**: テスト済みのルールには `stable` を、テストが必要なルールには `testing` を指定します。
-* **detection  [必須]**: 検知ロジックはここに入ります。(以下で説明します。)
-* **falsepositives [必須]**: 誤検知の可能性について記載を行います。例: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`。 不明な場合は `unknown` と記述してください。
-* **tags** [オプション]: [LOLBINS/LOLBAS](https://lolbas-project.github.io/)という手法を利用している場合、`lolbas` タグを追加してください。アラートを[MITRE ATT&CK](https://attack.mitre.org/) フレームワークにマッピングできる場合は、以下のリストから該当するものを追加してください。戦術ID（例：`attack.t1098`）を指定することも可能です。
-    * `attack.impact` -> Impact
-    * `attack.initial_access` -> Initial Access
-    * `attack.execution` -> Execution
-    * `attack.lateral_movement` -> Lateral Movement
-    * `attack.persistence` -> Persistence
-    * `attack.privilege_escalation` -> Privilege Escalation
-    * `attack.reconnaissance` -> Reconnaissance
-    * `attack.collection` -> Collection
-    * `attack.command_and_control` -> Command and Control
-    * `attack.credential_access` -> Credential Access
-    * `attack.defense_evasion` -> Defense Evasion
-    * `attack.discovery` -> Discovery
-    * `attack.exfiltration` -> Exfiltration
-    * `attack.resource_development` -> Resource Development 
-* **references** [オプション]: 参考文献への任意のリンク。
-* **sample-evtx [必須]**: このルールが検知するイベントログファイルへのファイルパスまたはURL。
-* **logsource [必須]**: ログの出所。以下のいずれかを指定してください。
-  * `default`: Windowsでデフォルトで有効になっているログの場合等
-  * `non-default`: グループポリシーやセキュリティベースラインなどで有効にする必要があるログ用。
-  * `sysmon`: sysmonのインストールが必要なログ。
-* **non-default-setting** [オプション]: `non-default` のログソースのログ設定をオンにする方法の説明です。
-* **ruletype [必須]**: Hayabusaルールには `Hayabusa` を指定します。SigmaのWindowsルールから自動変換されたルールは `Sigma` になります。
 
+- **id [必須]**: ルールを一意に識別するために使用される、ランダムに生成されたバージョン4のUUIDです。 [ここ](https://www.uuidgenerator.net/version4) で生成することができます。
+
+- **level [必須]**: [sigmaルールの定義](https://github.com/SigmaHQ/sigma/wiki/Specification)に基づく重要度レベル。 以下のいずれかを記述してください。 `informational`,`low`,`medium`,`high`,`critical`
+- **status[必須]**: テスト済みのルールには `stable` を、テストが必要なルールには `testing` を指定します。
+- **logsource [required]**: Sigmaルールと互換性があるようにSigmaのlogsource定義と同様。
+- **detection  [必須]**: 検知ロジックはここに入ります。(以下で説明します。)
+- **falsepositives [必須]**: 誤検知の可能性について記載を行います。例: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`。 不明な場合は `unknown` と記述してください。
+- **tags** [オプション]: [LOLBINS/LOLBAS](https://lolbas-project.github.io/)という手法を利用している場合、`lolbas` タグを追加してください。アラートを[MITRE ATT&CK](https://attack.mitre.org/) フレームワークにマッピングできる場合は、以下のリストから該当するものを追加してください。戦術ID（例：`attack.t1098`）を指定することも可能です。
+  - `attack.reconnaissance` -> Reconnaissance (Recon)
+  - `attack.resource_development` -> Resource Development  (ResDev)
+  - `attack.initial_access` -> Initial Access (InitAccess)
+  - `attack.execution` -> Execution (Exec)
+  - `attack.persistence` -> Persistence (Persis)
+  - `attack.privilege_escalation` -> Privilege Escalation (PrivEsc)
+  - `attack.defense_evasion` -> Defense Evasion (Evas)
+  - `attack.credential_access` -> Credential Access (CredAccess)
+  - `attack.discovery` -> Discovery (Disc)
+  - `attack.lateral_movement` -> Lateral Movement (LatMov)
+  - `attack.collection` -> Collection (Collect)
+  - `attack.command_and_control` -> Command and Control (C2)
+  - `attack.exfiltration` -> Exfiltration (Exfil)
+  - `attack.impact` -> Impact (Impact)
+- **references** [オプション]: 参考文献への任意のリンク。
+- **ruletype [必須]**: Hayabusaルールには `Hayabusa` を指定します。SigmaのWindowsルールから自動変換されたルールは `Sigma` になります。
+
+> ## Sample XML Event
+
+- **sample-evtx [required]**: Starting forward, we ask rule authors to include sample XML events for their rules.
+
+# Details出力の省略
+
+できるだけ簡潔にするために、以下の略語を使用しています:
+
+- `Addr` -> Address
+- `Auth` -> Authentication
+- `Cli` -> Client
+- `Cmd` -> Command
+- `Comp` -> Computer
+- `Dst` -> Destination
+- `LID` -> Logon ID
+- `Src` -> Source
+- `Svc` -> Service
+- `Svr` -> Server
+- `Tgt` -> Target
+- `PID` -> Process ID
+- `PGUID` -> Process GUID (Global Unique ID)
+  
 # detectionフィールド
+
 ## selectionの基礎知識
+
 まず、selectionの作り方の基本を説明します。
 
-
 ### 論理積(AND)と論理和(OR)の書き方
+
 ANDを表現するには辞書（YAMLでは辞書を`:`で表します）を使用します。
 このルールでログが検知されるには、**両方の条件**が真である必要があります。
 
-* イベントIDが `7040` であること。
-* チャンネルが `System` であること。
+- イベントIDが `7040` であること。
+- チャンネルが `System` であること。
 
 ```yaml
 detection:
@@ -178,11 +228,11 @@ detection:
     condition: selection
 ```
 
-ORを表現するには、配列（YAMLでは配列を`- `で表します）を使用します。
+ORを表現するには、配列（YAMLでは配列を`-`で表します）を使用します。
 このルールでログが検知されるには、**片方の条件**が真である必要があります。
 
-* イベントIDが `7040` であること。
-* チャンネルが `System` であること。
+- イベントIDが `7040` であること。
+- チャンネルが `System` であること。
 
 ```yaml
 detection:
@@ -195,8 +245,8 @@ detection:
 また、以下のように「AND」と「OR」を組み合わせることも可能です。
 この場合、以下の2つの条件が両方成立したときに、このルールでログが検知されます。
 
-* イベントIDが `7040` **または** `7041` のどちらかであること。
-* チャンネルが `System` であること。
+- イベントIDが `7040` **または** `7041` のどちらかであること。
+- チャンネルが `System` であること。
 
 ```yaml
 detection:
@@ -209,6 +259,7 @@ detection:
 ```
 
 ### イベントキー
+
 WindowsイベントログをXML形式で出力すると下記のようになります。
 
 ```xml
@@ -229,6 +280,7 @@ WindowsイベントログをXML形式で出力すると下記のようになり�
 `<Event><System><Channel>System<Channel><System></Event>`
 
 #### イベントキーエイリアス
+
 `.`の区切りが多くて長いイベントキーが一般的であるため、Hayabusaはエイリアスを使って簡単に扱えるようにします。エイリアスは `rules/config/eventkey_alias.txt`ファイルで定義されています。このファイルは `alias` と `event_key` のマッピングで構成されるCSVファイルです。以下に示すように、エイリアスを使用して上記のルールを書き直し、ルールを読みやすくすることができます。
 
 ```yaml
@@ -240,9 +292,11 @@ detection:
 ```
 
 #### 注意: 未定義のイベントキーエイリアスについて
+
 すべてのイベントキーエイリアスが `rules/config/eventkey_alias.txt`に定義されているわけではありません。検知するはずのルールが検知しない場合や、`details`（アラートの詳細）メッセージに`%EventID%`のようなプレースホルダーが表示されている場合、`rules/config/eventkey_alias.txt`の設定を確認してください。
 
 ### XML属性を条件に使用する方法
+
 XMLのタグにはタグ名とは別に属性を設定できます。例えば、以下の `Provider Name` の `Name` は `Provider` タグの属性です。
 
 ```xml
@@ -269,6 +323,7 @@ detection:
 ```
 
 ### grep検索
+
 Hayabusaではeventkeyを指定せず、WindowsEventログに含まれる文字列にマッチするかどうかを判定する機能も用意されています。この機能をHayabusaではgrep検索と呼んでいます。
 
 grep検索をするには下記のようにdetectionを指定します。この場合、`mimikatz`または`metasploit`という文字列がWindowsEventログに含まれる場合に、ルールが検知されます。また、grep検索にはワイルドカードを指定することも可能です。
@@ -283,6 +338,7 @@ detection:
 > ※ Hayabusaでは内部的にWindowsEventログをJSON形式に変換しています。そのため、grep検索ではXMLのタグをマッチさせることはできません。
 
 ### EventData
+
 Windowsのイベントログは、基本データ（イベントID、タイムスタンプ、レコードID、ログ名（チャンネル））が書き込まれる`System`タグと、イベントIDに応じて任意のデータが書き込まれる`EventData`タグの2つに分けられます。その内、`EventData`タグ はネストされたタグの名前がすべて `Data` であり、これまで説明したイベントキーでは `SubjectUserSid` と `SubjectUserName` を区別できません。
 
 ```xml
@@ -316,6 +372,7 @@ detection:
 ```
 
 ### EventDataの例外的なパターン
+
 `EventData` タグにネストされたいくつかのタグは `Name` 属性を持ちません。
 
 ```xml
@@ -345,6 +402,7 @@ detection:
 ```
 
 ## パイプ
+
 イベントキーにはパイプを指定することができます。ここまで説明した書き方では完全一致しか表現できませんでしたが、パイプを使うことでより柔軟な検知ルールを記載できるようになります。以下の例では、`EventData`の値が正規表現 `[\s\S]*EngineVersion=2.0[\s\S]*` に当てはまる場合、条件にマッチすることになります。
 
 ```yaml
@@ -359,11 +417,12 @@ detection:
 パイプには以下のキーワードを指定できます。v1の時点で複数のパイプを連結することはできません。
 通常は大文字小文字を区別しません。以下のキーワードを指定した場合は大文字小文字を区別します。
 
-* startswith: 指定された文字列で始まることをチェックします。
-* endswith: 指定された文字列で終わることをチェックします。
-* contains: 指定された文字列が含まれることをチェックします。
-* re: 正規表現を使用します。(正規表現の書き方については https://docs.rs/regex/1.5.4/regex/ を参照してください)。
+- `|startswith`: 指定された文字列で始まることをチェックします。
+- `|endswith`: 指定された文字列で終わることをチェックします。
+- `|contains`: 指定された文字列が含まれることをチェックします。
+- `|re`: 正規表現を使用します。(正規表現の書き方については <https://docs.rs/regex/1.5.4/regex/> を参照してください)。
   > 注意: SigmaルールとHayabusaルールは正規表現の記法に一部差異があります。そのため、HayabusaではSigmaルールを正しく検知できない場合があります。
+- `|equalsfield`: 指定されたイベントキーと合致することをチェックします。2つのフィールドの値が一致しないことをチェックしたい場合は`condition`で`not`を使ってください。
 
 ## ワイルドカード
 
@@ -379,15 +438,18 @@ detection:
 ```
 
 以下の2つのワイルドカードを使用することができます。
-* `*`: 0文字以上の任意の文字列にマッチします。(内部的には`.*`という正規表現に変換されます)。
-* `?`: 任意の1文字にマッチします。(内部的には`.`という正規表現に変換されます)。
+
+- `*`: 0文字以上の任意の文字列にマッチします。(内部的には`.*`という正規表現に変換されます)。
+- `?`: 任意の1文字にマッチします。(内部的には`.`という正規表現に変換されます)。
 
 ワイルドカードのエスケープについて
-* ワイルドカード(`*`と`?`)はバックスラッシュでエスケープできます: `\*` と `\?`.
-* ワイルドカードの直前にバックスラッシュを使用する場合、 `\\*` または `\\?` と記述してください。
-* バックスラッシュを単独で使用する場合、エスケープは不要です。
+
+- ワイルドカード(`*`と`?`)はバックスラッシュでエスケープできます: `\*` と `\?`.
+- ワイルドカードの直前にバックスラッシュを使用する場合、 `\\*` または `\\?` と記述してください。
+- バックスラッシュを単独で使用する場合、エスケープは不要です。
 
 ## イベントキー内のキーワードのネスト
+
 イベントキーには特定のキーワードをネストすることができます。
 
 ```yaml
@@ -405,15 +467,18 @@ detection:
 ```
 
 現在、指定できるキーワードは以下の通りです。
-* `value`: 文字列によるマッチング (ワイルドカードやパイプも指定可能)。
-* `min_length`: 指定された文字数以上の場合にマッチします。
-* `regexes`: 指定されたファイルに定義された正規表現に1つ以上に一致する場合、**条件にマッチした**ものとして扱われます。
-* `allowlist`: 指定されたファイルに定義された正規表現に1つ以上に一致する場合、**条件にマッチしてない**ものとして扱われます。
+
+- `value`: 文字列によるマッチング (ワイルドカードやパイプも指定可能)。
+- `min_length`: 指定された文字数以上の場合にマッチします。
+- `regexes`: 指定されたファイルに定義された正規表現に1つ以上に一致する場合、**条件にマッチした**ものとして扱われます。
+- `allowlist`: 指定されたファイルに定義された正規表現に1つ以上に一致する場合、**条件にマッチしてない**ものとして扱われます。
 
 ### regexesとallowlistキーワード
+
 Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemProcess-WindowsService_MaliciousServiceInstalled.yml`のルールのために使う2つの正規表現ファイルが用意されています。
-* `./rules/config/regex/detectlist_suspicous_services.txt`: 怪しいサービス名を検知するためのものです。
-* `./rules/config/regex/allowlist_legitimate_services.txt`: 正規のサービスを許可するためのものです。
+
+- `./rules/config/regex/detectlist_suspicous_services.txt`: 怪しいサービス名を検知するためのものです。
+- `./rules/config/regex/allowlist_legitimate_services.txt`: 正規のサービスを許可するためのものです。
   
 `regexes` と `allowlist` で定義されたファイルの正規表現を変更すると、それらを参照するすべてのルールの動作を一度に変更できます。
 
@@ -421,6 +486,7 @@ Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemPro
 デフォルトの `./rules/config/detectlist_suspicous_services.txt` と `./rules/config/allowlist_legitimate_services.txt` を参考にして、独自のファイルを作成してください。
 
 ## condition (条件)
+
 これまで説明した記法では簡単な`AND`や`OR`であれば表現可能ですが、複雑な条件は定義できません。そのような場合、`condition` キーワードを使用します。
 
 ```yaml
@@ -447,14 +513,16 @@ detection:
 ```
 
  `condition`には、以下の式を用いることができます。
-* `{expression1} and {expression2}`: {expression1} と {expression2} の両方が真である場合にマッチします。
-* `{expression1} or {expression2}`: {expression1} または {expression2} のどちらかが真である場合にマッチします。
-* `not {expression}`: {expression} の真偽を反転させます。
-* `( {expression} )`: `()`で囲まれた {expression} を先に評価します。数学と同じ優先順位に従います。
 
-上記の例では、 `SELECTION_1`、` SELECTION_2`などの名前が使用されていますが、名前には `a-z A-Z 0-9 _`の文字を使用可能です。ただし、`selection_1`、` selection_2`、 `filter_1`、` filter_2`などの標準的な規則の利用を推奨します。
+- `{expression1} and {expression2}`: {expression1} と {expression2} の両方が真である場合にマッチします。
+- `{expression1} or {expression2}`: {expression1} または {expression2} のどちらかが真である場合にマッチします。
+- `not {expression}`: {expression} の真偽を反転させます。
+- `( {expression} )`: `()`で囲まれた {expression} を先に評価します。数学と同じ優先順位に従います。
+
+上記の例では、 `SELECTION_1`、`SELECTION_2`などの名前が使用されていますが、名前には `a-z A-Z 0-9 _`の文字を使用可能です。ただし、`selection_1`、`selection_2`、 `filter_1`、`filter_2`などの標準的な規則の利用を推奨します。
 
 ## notロジック
+
 ルールを作成する場合、誤検知を減らすためにフィルターを作成することはよくあります。以下に利用例を示します。
 
 ```yaml
@@ -478,7 +546,9 @@ detection:
 ```
 
 ## aggregation condition
+
 ### 基本事項
+
 上記の `condition` キーワードは `AND` や `OR` だけでなく、マッチしたイベントの集計も可能です。この機能を利用するには`aggregation condition`を利用します。指定するには条件をパイプでつなぎます。
 以下のパスワードスプレー攻撃の例では、5分以内に同じ送信元の`IpAddress`で5個以上の `TargetUserName`があるかどうかを判断します。
 
@@ -492,26 +562,29 @@ detection:
 ```
 
 `aggregation condition`は以下の形式で定義します。
-* `count() {operator} {number}`: パイプの前の最初の条件にマッチするログイベントに対して、マッチしたログの数が `{operator}` と `{number}` で指定した条件式を満たす場合に条件がマッチします。 
+
+- `count() {operator} {number}`: パイプの前の最初の条件にマッチするログイベントに対して、マッチしたログの数が `{operator}` と `{number}` で指定した条件式を満たす場合に条件がマッチします。
 
 `{operator}` は以下のいずれかになります。
-* `==`: 指定された値と等しい場合、条件にマッチしたものとして扱われる。
-* `>=`: 指定された値以上であれば、条件にマッチしたものとして扱われる。
-* `>`: 指定された値以上であれば、条件にマッチしたものとして扱われる。
-* `<=`: 指定された値以下の場合、条件にマッチしたものとして扱われる。
-* `<`: 指定された値より小さい場合、条件にマッチしたものとして扱われる。
+
+- `==`: 指定された値と等しい場合、条件にマッチしたものとして扱われる。
+- `>=`: 指定された値以上であれば、条件にマッチしたものとして扱われる。
+- `>`: 指定された値以上であれば、条件にマッチしたものとして扱われる。
+- `<=`: 指定された値以下の場合、条件にマッチしたものとして扱われる。
+- `<`: 指定された値より小さい場合、条件にマッチしたものとして扱われる。
 
 `{number}` は数値である必要があります。
 
 `timeframe` は以下のように定義することができます。
-* `15s`: 15秒
-* `30m`: 30分
-* `12h`: 12時間
-* `7d`: 7日間
-* `3M`: 3ヶ月
 
+- `15s`: 15秒
+- `30m`: 30分
+- `12h`: 12時間
+- `7d`: 7日間
+- `3M`: 3ヶ月
 
 ### countの4パターン
+
 1. countの引数と`by` キーワード共に指定しないパターン。例: `selection | count() > 10`
    > `selection`にマッチしたログが10件以上ある場合、このルールは検知します。
 2. countの引数はないが、`by` キーワードはある。例: `selection | count() by date > 10`
@@ -521,42 +594,50 @@ detection:
 4. count 引数と `by` キーワードの両方が存在する。例: `selection | count(TargetUserName) by date > 10`
    > `selection`に一致する`TargetUserName`が10人以上存在するかどうか、日付毎にチェックします。
 
+### パターン1の例
 
-### パターン1の例：
 これは最も基本的なパターンです：`count() {operator} {number}`. 以下のルールは、`selection`にマッチしたログが3つ以上である場合、このルールが検知されます。
 
 ![](doc/CountRulePattern-1-JP.png)
 
-### パターン2の例：
+### パターン2の例
+
 `count() by {eventkey} {operator} {number}`： `selection`にマッチしたログは、`{eventkey}`の値が**同じログ毎にグルーピング**されます。各グループにおいて、マッチしたイベントの数が`{operator}`と`{number}`で指定した条件を満たした場合、このルールが検知されます。
 
 ![](doc/CountRulePattern-2-JP.png)
 
-### パターン3の例：
+### パターン3の例
+
 `count({eventkey}) {operator} {number}`：`selection`にマッチしたログの内、 `{eventkey}` が**異なる**値の数をカウントします。そのカウントされた値が`{operator}`と`{number}`で指定された条件式を満たす場合、このルールが検知されます。
 
 ![](doc/CountRulePattern-3-JP.png)
 
-### パターン4の例：
+### パターン4の例
+
 `count({eventkey_1}) by {eventkey_2} {operator} {number}`： `selection`にマッチしたログは、`{eventkey}`の値が**同じログ毎にグルーピングし**、各グループに含まれる`{eventkey_1}`が**異なる**値の数をカウントします。各グループでカウントされた値が`{operator}`と`{number}`で指定された条件式を満たした場合、このルールが検知されます。
 
 ![](doc/CountRulePattern-4-JP.png)
 
-### Countルールの出力:
+### Countルールの出力
+
 CountルールのDetails出力は固定で、`[condition]`にcount条件と`[result]`に記録されたイベントキーが出力されます。
 
 以下の例では、ブルートフォースされた`TargetUserName`のユーザ名のリストと送信元の`IpAddress`が出力されます：
+
 ```
 [condition] count(TargetUserName) by IpAddress >= 5 in timeframe [result] count:41 TargetUserName:jorchilles/jlake/cspizor/lpesce/bgalbraith/jkulikowski/baker/eskoudis/dpendolino/sarmstrong/lschifano/drook/rbowes/ebooth/melliott/econrad/sanson/dmashburn/bking/mdouglas/cragoso/psmith/bhostetler/zmathis/thessman/kperryman/cmoody/cdavis/cfleener/gsalinas/wstrzelec/jwright/edygert/ssims/jleytevidal/celgee/Administrator/mtoussain/smisenar/tbennett/bgreenwood IpAddress:10.10.2.22 timeframe:5m
 ```
+
 アラートのタイムスタンプには、timeframe内で最初に検知されたイベントの時間が表示されます。
 
 # ルール作成のアドバイス
-1. **可能な場合は、常に `Channel`と`EventID`を指定してください。** 将来的には、チャネル名とイベンドIDでフィルタリングする可能性があるため、適切な` Channel`と`EventID`が設定されていない場合はルールが無視される可能性があります。
-   
+
+1. **可能な場合は、常に `Channel`と`EventID`を指定してください。** 将来的には、チャネル名とイベンドIDでフィルタリングする可能性があるため、適切な`Channel`と`EventID`が設定されていない場合はルールが無視される可能性があります。
+
 2. **不要な場合は複数の `selection`と`filter`セクションを使用しないでください。**
 
-### 悪い例： 
+### 悪い例
+
 ```yaml
 detection:
 detection:
@@ -573,7 +654,8 @@ detection:
     condition: SELECTION_1 and SELECTION_2 and SELECTION_3 and not (FILTER_1 or FILTER_2)
 ```
 
-### 良い例：
+### 良い例
+
 ```yaml
 detection:
     selection:
@@ -586,9 +668,10 @@ detection:
     condition: selection and not filter
 ```
 
-3. **複数のセクションが必要な場合は、チャンネル名とイベントIDの情報を記入する最初のセクションを `section_basic_info` セクションに、その他のセクションを `section_` と `filter_` の後に意味のある名前を付けるか、または `section_1`, `filter_1` などの記法を用いてください。また、分かりにくいところはコメントを書いて説明してください。**
+1. **複数のセクションが必要な場合は、チャンネル名とイベントIDの情報を記入する最初のセクションを `section_basic` セクションに、その他のセクションを `section_` と `filter_` の後に意味のある名前を付ける記法を用いてください。また、分かりにくいところはコメントを書いて説明してください。**
 
-### 悪い例： 
+### 悪い例
+
 ```yaml
 detection:
     Takoyaki:
@@ -612,34 +695,11 @@ detection:
     condition: Takoyaki and Daisuki and not (Naruto and not Godzilla) and not Ninja and not Sushi
 ```
 
-### OKな例：
-```yaml
-detection:
-    selection_1:
-        Channel: Security
-        EventID: 4648
-    selection_2:
-        TargetUserName|endswith: "$"  
-        IpAddress: "-"
-    filter_1:     #Filter system noise
-        SubjectUserName|endswith: "$"
-        TargetUserName|endswith: "$"
-        TargetInfo|endswith: "$"
-    filter_2:
-        SubjectUserName|endswith: "$" 
-    filter_3:
-        TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" #Filter out default Desktop Windows Manager and User Mode Driver Framework accounts
-        IpAddress: "-"                                  #Don't filter if the IP address is remote to catch attackers who created backdoor accounts that look like DWM-12, etc..
-    selection_4:
-        - ProcessName|endswith: "powershell.exe"
-        - ProcessName|endswith: "WMIC.exe"
-    condition: selection_1 and selection_4 and not (selection_2 and not filter_2) and not filter_3 and not filter_1
-```
+### 良い例
 
-### 良い例：
 ```yaml
 detection:
-    selection_BasicInfo:
+    selection_basic:
         Channel: Security
         EventID: 4648
     selection_TargetUserIsComputerAccount:
@@ -662,6 +722,11 @@ detection:
 ```
 
 # SigmaルールからHayabusaルール形式への自動変換
+
 SigmaルールからHayabusaルール形式に自動で変換する[ツール](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac)を作成しました。
 
 使用方法は[こちら](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac/README-Japanese.md)を参照してください。
+
+# Twitter
+
+[@SecurityYamato](https://twitter.com/SecurityYamato)でHayabusa、ルール更新、その他の大和セキュリティツール等々について情報を提供しています。

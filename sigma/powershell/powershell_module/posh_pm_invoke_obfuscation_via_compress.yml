@@ -6,10 +6,23 @@ date: 2020/10/18
 description: Detects Obfuscated Powershell via COMPRESS OBFUSCATION
 detection:
   SELECTION_1:
-    Payload|re: (?i).*new-object.*(?:system\.io\.compression\.deflatestream|system\.io\.streamreader).*text\.encoding\]::ascii.*readtoend
-  condition: SELECTION_1
+    EventID: 4103
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    Payload: '*new-object*'
+  SELECTION_4:
+    Payload: '*text.encoding]::ascii*'
+  SELECTION_5:
+    Payload:
+    - '*system.io.compression.deflatestream*'
+    - '*system.io.streamreader*'
+  SELECTION_6:
+    Payload: '*readtoend'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
-- unknown
+- Unknown
 id: 7034cbbb-cc55-4dc2-8dad-36c0b942e8f1
 level: medium
 logsource:

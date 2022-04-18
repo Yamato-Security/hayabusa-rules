@@ -6,14 +6,16 @@ date: 2020/07/28
 description: Detects disabling Windows Defender threat protection
 detection:
   SELECTION_1:
-    EventID: 5001
+    Channel: Microsoft-Windows-Windows Defender/Operational
   SELECTION_2:
-    EventID: 5010
+    EventID: 5001
   SELECTION_3:
-    EventID: 5012
+    EventID: 5010
   SELECTION_4:
+    EventID: 5012
+  SELECTION_5:
     EventID: 5101
-  condition: (SELECTION_1 or SELECTION_2 or SELECTION_3 or SELECTION_4)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Administrator actions
 id: fe34868f-6e0e-4882-81f6-c43aa8f15b62

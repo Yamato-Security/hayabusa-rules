@@ -7,10 +7,12 @@ description: A login from a public IP can indicate a misconfigured firewall or n
   boundary.
 detection:
   SELECTION_1:
-    EventID: 4625
+    Channel: Security
   SELECTION_2:
-    IpAddress: '*-*'
+    EventID: 4625
   SELECTION_3:
+    IpAddress: '*-*'
+  SELECTION_4:
     IpAddress:
     - 10.*
     - 192.168.*
@@ -32,14 +34,14 @@ detection:
     - 172.31.*
     - 127.*
     - 169.254.*
-  SELECTION_4:
-    IpAddress: ::1
   SELECTION_5:
+    IpAddress: ::1
+  SELECTION_6:
     IpAddress:
     - fe80::*
     - fc00::*
-  condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3) or (SELECTION_4
-    or SELECTION_5)))
+  condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3) or (SELECTION_4)
+    or (SELECTION_5 or SELECTION_6)))
 falsepositives:
 - Legitimate logon attempts over the internet
 - IPv4-to-IPv6 mapped IPs

@@ -7,10 +7,14 @@ description: Remove the Zone.Identifier alternate data stream which identifies t
   file as downloaded from the internet.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Unblock-File *'
+    EventID: 4104
   SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*Unblock-File *'
+  SELECTION_4:
     ScriptBlockText: '*-Path *'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate PowerShell scripts
 id: 5947497f-1aa4-41dd-9693-c9848d58727d

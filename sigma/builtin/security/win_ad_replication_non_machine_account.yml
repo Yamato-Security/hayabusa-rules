@@ -7,20 +7,22 @@ description: Detects potential abuse of Active Directory Replication Service (AD
   from a non machine account to request credentials.
 detection:
   SELECTION_1:
-    EventID: 4662
+    Channel: Security
   SELECTION_2:
-    AccessMask: '0x100'
+    EventID: 4662
   SELECTION_3:
+    AccessMask: '0x100'
+  SELECTION_4:
     Properties:
     - '*1131f6aa-9c07-11d1-f79f-00c04fc2dcd2*'
     - '*1131f6ad-9c07-11d1-f79f-00c04fc2dcd2*'
     - '*89e95b76-444d-4c62-991a-0facbeda640c*'
-  SELECTION_4:
-    SubjectUserName: '*$'
   SELECTION_5:
+    SubjectUserName: '*$'
+  SELECTION_6:
     SubjectUserName: MSOL_*
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and  not (SELECTION_4
-    or SELECTION_5))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5 or SELECTION_6))
 falsepositives:
 - Unknown
 fields:

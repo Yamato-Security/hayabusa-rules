@@ -7,6 +7,10 @@ description: Detects the use of various web request methods (including aliases) 
   Windows PowerShell command
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*Invoke-WebRequest*'
     - '*iwr *'
@@ -14,7 +18,7 @@ detection:
     - '*curl *'
     - '*Net.WebClient*'
     - '*Start-BitsTransfer*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Use of Get-Command and Get-Help modules to reference Invoke-WebRequest and Start-BitsTransfer.
 id: 1139d2e2-84b1-4226-b445-354492eba8ba

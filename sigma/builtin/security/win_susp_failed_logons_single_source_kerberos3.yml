@@ -7,13 +7,15 @@ description: Detects failed logins with multiple invalid domain accounts from a 
   source system using the Kerberos protocol.
 detection:
   SELECTION_1:
-    EventID: 4768
+    Channel: Security
   SELECTION_2:
-    Status: '0x6'
+    EventID: 4768
   SELECTION_3:
+    Status: '0x6'
+  SELECTION_4:
     TargetUserName: '*$'
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3)) | count(TargetUserName)
-    by IpAddress > 10
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+    | count(TargetUserName) by IpAddress > 10
   timeframe: 24h
 falsepositives:
 - Vulnerability scanners

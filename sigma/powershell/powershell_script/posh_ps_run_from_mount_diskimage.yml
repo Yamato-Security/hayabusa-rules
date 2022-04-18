@@ -7,19 +7,23 @@ description: Adversaries may abuse container files such as disk image (.iso, .vh
   file formats to deliver malicious payloads that may not be tagged with MOTW.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Mount-DiskImage *'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*-ImagePath *'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*Get-Volume*'
+    ScriptBlockText: '*Mount-DiskImage *'
   SELECTION_4:
-    ScriptBlockText: '*.DriveLetter*'
+    ScriptBlockText: '*-ImagePath *'
   SELECTION_5:
-    ScriptBlockText: '*invoke-item *'
+    ScriptBlockText: '*Get-Volume*'
   SELECTION_6:
+    ScriptBlockText: '*.DriveLetter*'
+  SELECTION_7:
+    ScriptBlockText: '*invoke-item *'
+  SELECTION_8:
     ScriptBlockText: '*):\\*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Legitimate PowerShell scripts
 id: 902cedee-0398-4e3a-8183-6f3a89773a96

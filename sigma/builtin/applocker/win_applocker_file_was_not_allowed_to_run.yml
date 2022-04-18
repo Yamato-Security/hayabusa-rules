@@ -8,10 +8,16 @@ description: Detect run not allowed files. Applocker is a very useful tool, espe
   need configure applocker and log collect to receive these events.
 detection:
   SELECTION_1:
-    EventID: 8004
+    Channel:
+    - Microsoft-Windows-AppLocker/MSI and Script
+    - Microsoft-Windows-AppLocker/EXE and DLL
+    - Microsoft-Windows-AppLocker/Packaged app-Deployment
+    - Microsoft-Windows-AppLocker/Packaged app-Execution
   SELECTION_2:
+    EventID: 8004
+  SELECTION_3:
     EventID: 8007
-  condition: (SELECTION_1 or SELECTION_2)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - need tuning applocker or add exceptions in SIEM
 fields:

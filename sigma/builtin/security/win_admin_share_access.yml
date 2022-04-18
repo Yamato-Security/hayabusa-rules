@@ -6,12 +6,14 @@ date: 2017/03/04
 description: Detects access to $ADMIN share
 detection:
   SELECTION_1:
-    EventID: 5140
+    Channel: Security
   SELECTION_2:
-    ShareName: Admin$
+    EventID: 5140
   SELECTION_3:
+    ShareName: Admin$
+  SELECTION_4:
     SubjectUserName: '*$'
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - Legitimate administrative activity
 id: 098d7118-55bc-4912-a836-dc6483a8d150

@@ -7,14 +7,19 @@ description: Detects when a user disables the Windows Firewall via a Profile to 
   evade defense.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*Set-NetFirewallProfile*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*-Profile*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*-Enabled*'
+    ScriptBlockText: '*Set-NetFirewallProfile*'
   SELECTION_4:
+    ScriptBlockText: '*-Profile*'
+  SELECTION_5:
+    ScriptBlockText: '*-Enabled*'
+  SELECTION_6:
     ScriptBlockText: '*False*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: 488b44e7-3781-4a71-888d-c95abfacf44d

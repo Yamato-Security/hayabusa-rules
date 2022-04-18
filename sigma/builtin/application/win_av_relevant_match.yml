@@ -6,6 +6,8 @@ date: 2017/02/19
 description: This detection method points out highly relevant Antivirus events
 detection:
   SELECTION_1:
+    Channel: Application
+  SELECTION_2:
   - HTool-
   - Hacktool
   - ASP/Backdoor
@@ -29,12 +31,14 @@ detection:
   - Ransom
   - Filecoder
   - CobaltStrike
-  SELECTION_2:
+  SELECTION_3:
   - Keygen
   - Crack
-  SELECTION_3:
-    Provider_Name: Aurora Agent
-  condition: ((SELECTION_1) and  not ((SELECTION_2) or (SELECTION_3)))
+  - anti_ransomware_service.exe
+  - cyber-protect-service.exe
+  SELECTION_4:
+    Level: 4
+  condition: (SELECTION_1 and (SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4)))
 falsepositives:
 - Some software piracy tools (key generators, cracks) are classified as hack tools
 id: 78bc5783-81d9-4d73-ac97-59f6db4f72a8
@@ -42,7 +46,7 @@ level: high
 logsource:
   product: windows
   service: application
-modified: 2022/02/05
+modified: 2022/03/08
 references:
 - https://www.virustotal.com/gui/file/13828b390d5f58b002e808c2c4f02fdd920e236cc8015480fa33b6c1a9300e31
 - https://www.virustotal.com/gui/file/15b57c1b68cd6ce3c161042e0f3be9f32d78151fe95461eedc59a79fc222c7ed

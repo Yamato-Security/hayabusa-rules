@@ -8,10 +8,12 @@ description: Windows Defender logs when the history of detected infections is de
   of malware and other potentially unwanted software".
 detection:
   SELECTION_1:
-    EventID: 1013
+    Channel: Microsoft-Windows-Windows Defender/Operational
   SELECTION_2:
+    EventID: 1013
+  SELECTION_3:
     EventType: 4
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Deletion of Defender malware detections history for legitimate reasons
 fields:

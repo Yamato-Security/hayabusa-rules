@@ -6,6 +6,10 @@ date: 2021/05/18
 description: Detects Commandlet names from PowerView of PowerSploit exploitation framework.
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*Export-PowerViewCSV*'
     - '*Get-IPAddress*'
@@ -129,7 +133,7 @@ detection:
     - '*Get-DomainForeignGroupMember*'
     - '*Invoke-MapDomainTrust*'
     - '*Get-DomainTrustMapping*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Should not be any as administrators do not use this tool
 id: dcd74b95-3f36-4ed9-9598-0490951643aa

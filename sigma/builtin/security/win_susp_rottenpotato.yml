@@ -7,16 +7,19 @@ description: Detects logon events that have characteristics of events generated 
   an attack with RottenPotato and the like
 detection:
   SELECTION_1:
-    EventID: 4624
+    Channel: Security
   SELECTION_2:
-    LogonType: 3
+    EventID: 4624
   SELECTION_3:
-    TargetUserName: ANONYMOUS_LOGON
+    LogonType: 3
   SELECTION_4:
-    WorkstationName: '-'
+    TargetUserName: ANONYMOUS_LOGON
   SELECTION_5:
+    WorkstationName: '-'
+  SELECTION_6:
     IpAddress: 127.0.0.1
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: 16f5d8ca-44bd-47c8-acbe-6fc95a16c12f

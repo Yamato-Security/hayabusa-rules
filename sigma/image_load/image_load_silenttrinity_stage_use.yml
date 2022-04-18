@@ -8,10 +8,12 @@ detection:
   SELECTION_1:
     EventID: 7
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     Description: '*st2stager*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- unknown
+- Unknown
 id: 75c505b1-711d-4f68-a357-8c3fe37dbf2d
 level: high
 logsource:

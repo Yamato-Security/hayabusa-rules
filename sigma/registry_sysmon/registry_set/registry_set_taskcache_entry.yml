@@ -1,0 +1,71 @@
+
+title: New TaskCache Entry
+ruletype: Sigma
+author: Syed Hasan (@syedhasan009)
+date: 2021/06/18
+description: Monitor the creation of a new key under 'TaskCache' when a new scheduled
+  task is registered
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    EventType: SetValue
+  SELECTION_4:
+    TargetObject: '*SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\\*'
+  SELECTION_5:
+    TargetObject:
+    - '*Microsoft\Windows\UpdateOrchestrator*'
+    - '*Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTask\Index*'
+    - '*Microsoft\Windows\Flighting\OneSettings\RefreshCache\Index*'
+  SELECTION_6:
+    Image: C:\WINDOWS\system32\svchost.exe
+  SELECTION_7:
+    TargetObject:
+    - '*Microsoft\Windows\WindowsUpdate\Scheduled Start\Index*'
+    - '*Microsoft\Windows\PushToInstall\Registration\Index*'
+    - '*Microsoft\Windows\GroupPolicy\{*}\Index*'
+    - '*\TaskCache\Tree\Opera scheduled Autoupdate*'
+    - '*\TaskCache\Tree\Opera scheduled assistant Autoupdate*'
+    - '*\TaskCache\Tree\OneDrive Reporting*'
+    - '*\TaskCache\Tree\OneDrive Standalone Update Task*'
+    - '*\TaskCache\Tree\Mozilla\SD*'
+    - '*\TaskCache\Tree\Microsoft\Windows\.NET Framework\.NET Framework *'
+    - '*\TaskCache\Tree\Microsoft\Office\OfficeOsfInstaller\\*'
+    - '*\TaskCache\Tree\Microsoft\Office\OfficeBackgroundTaskHandler*'
+    - '*\TaskCache\Tree\GoogleUpdateTaskMachine*'
+    - '*\TaskCache\Tree\DropboxUpdateTaskMachine*'
+    - '*\TaskCache\Tree\Mozilla\Firefox Default Browser Agent *'
+    - '*\TaskCache\Tree\Mozilla\Firefox Background Update *'
+    - '*\TaskCache\Tree\Microsoft\Windows\WOF\WIM-Hash-Validation\Index*'
+    - '*\TaskCache\Tree\Microsoft\Office\SD*'
+    - '*\TaskCache\Tree\Microsoft\Office\OfficeTelemetry*'
+    - '*\TaskCache\Tree\Microsoft\Office\Office ClickToRun Service Monitor\\*'
+    - '*\TaskCache\Tree\Microsoft\Office\Office Automatic Updates 2.0\\*'
+    - '*\TaskCache\Tree\klcp_update\\*'
+    - '*\TaskCache\Tree\Apple\SD*'
+    - '*\TaskCache\Tree\Apple\AppleSoftwareUpdate\\*'
+    - '*\TaskCache\Tree\Microsoft\Windows\Windows Defender\Windows Defender Verification\\*'
+    - '*\TaskCache\Tree\Microsoft\Windows\Windows Defender\Windows Defender Cache
+      Maintenance\\*'
+    - '*\TaskCache\Tree\Microsoft\Windows\Windows Defender\Windows Defender Cleanup\\*'
+    - '*\TaskCache\Tree\Microsoft\Windows\Windows Defender\Windows Defender Scheduled
+      Scan\\*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Unknown
+id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
+level: medium
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/03/26
+references:
+- https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
+status: experimental
+tags:
+- attack.persistence
+- attack.t1053
+- attack.t1053.005

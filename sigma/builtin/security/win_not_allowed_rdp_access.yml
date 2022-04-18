@@ -9,8 +9,10 @@ description: This event is generated when an authenticated user who is not allow
   servers in the network.
 detection:
   SELECTION_1:
+    Channel: Security
+  SELECTION_2:
     EventID: 4825
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Valid user was not added to RDP group
 fields:

@@ -7,10 +7,14 @@ description: Adversaries may use a non-application layer protocol for communicat
   between host and C2 server or among infected hosts within a network
 detection:
   SELECTION_1:
+    EventID: 400
+  SELECTION_2:
+    Channel: Windows PowerShell
+  SELECTION_3:
     HostApplication:
     - '*powercat *'
     - '*powercat.ps1*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: c5b20776-639a-49bf-94c7-84f912b91c15

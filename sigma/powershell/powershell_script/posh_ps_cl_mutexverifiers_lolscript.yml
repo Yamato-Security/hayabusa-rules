@@ -7,10 +7,14 @@ description: Detects Execution via runAfterCancelProcess in CL_Mutexverifiers.ps
   module
 detection:
   SELECTION_1:
-    ScriptBlockText: '*CL_Mutexverifiers.ps1*'
+    EventID: 4104
   SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*CL_Mutexverifiers.ps1*'
+  SELECTION_4:
     ScriptBlockText: '*runAfterCancelProcess*'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 39776c99-1c7b-4ba0-b5aa-641525eee1a4

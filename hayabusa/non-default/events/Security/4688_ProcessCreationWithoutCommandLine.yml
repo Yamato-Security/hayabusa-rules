@@ -1,17 +1,21 @@
 author: Zach Mathis
 date: 2022/02/05
-modified: 2022/02/05
+modified: 2022/03/22
 
 title: Process Creation
 title_jp: プロセス起動
-details: 'Path: %NewProcessName%  :  Process ID: %NewProcessId%  :  User: %SubjectUserName%  :  LogonID: %SubjectLogonId%'
-details_jp: 'パス: %NewProcessName%  :  プロセスID: %NewProcessId%  :  ユーザ: %SubjectUserName%  :  ログオンID: %SubjectLogonId%'
+details: 'Path: %NewProcessName% | PID: %NewProcessId% | User: %SubjectUserName% | LID: %SubjectLogonId%'
+details_jp: 'パス: %NewProcessName% | プロセスID: %NewProcessId% | ユーザ: %SubjectUserName% | ログオンID: %SubjectLogonId%'
 description: 
 description_jp: 
 
 id: a3d42feb-ca30-4fce-ac98-fbc92107d3aa
 level: informational
 status: stable
+logsource:
+    product: windows
+    service: security
+    description: Process Creation needs to be turned on.
 detection:
     selection:
         Channel: Security
@@ -22,6 +26,4 @@ falsepositives:
     - normal system usage
 tags:
 references:
-sample-evtx: 
-logsource: non-default
 ruletype: Hayabusa

@@ -8,16 +8,19 @@ detection:
   SELECTION_1:
     EventID: 255
   SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
     Description:
     - '*Failed to open service configuration with error*'
     - '*Failed to connect to the driver to update configuration*'
-  SELECTION_3:
-    Description: '*Failed to open service configuration with error*'
   SELECTION_4:
+    Description: '*Failed to open service configuration with error*'
+  SELECTION_5:
     Description: '*Last error: The media is write protected.*'
-  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3 and SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
+    and SELECTION_5))
 falsepositives:
-- legitimate administrative action
+- Legitimate administrative action
 id: 815cd91b-7dbc-4247-841a-d7dd1392b0a8
 level: high
 logsource:

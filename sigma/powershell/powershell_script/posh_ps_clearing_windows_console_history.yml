@@ -8,17 +8,21 @@ description: Identifies when a user attempts to clear console history. An advers
   during an intrusion.
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*Clear-History*'
-  SELECTION_2:
+  SELECTION_4:
     ScriptBlockText:
     - '*Remove-Item*'
     - '*rm*'
-  SELECTION_3:
+  SELECTION_5:
     ScriptBlockText:
     - '*ConsoleHost_history.txt*'
     - '*(Get-PSReadlineOption).HistorySavePath*'
-  condition: (SELECTION_1 or (SELECTION_2 and SELECTION_3))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - Unknown
 id: bde47d4b-9987-405c-94c7-b080410e8ea7

@@ -7,12 +7,14 @@ description: Detects successful installation of Atera Remote Monitoring & Manage
   (RMM) agent as recently found to be used by Conti operators
 detection:
   SELECTION_1:
-    EventID: 1033
+    Channel: Application
   SELECTION_2:
-    Provider_Name: MsiInstaller
+    EventID: 1033
   SELECTION_3:
+    Provider_Name: MsiInstaller
+  SELECTION_4:
     Message: '*AteraAgent*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate Atera agent installation
 id: 87261fb2-69d0-42fe-b9de-88c6b5f65a43

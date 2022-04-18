@@ -9,14 +9,19 @@ description: |
   configuration files containing passwords for a system or service, or source code/binary files containing embedded passwords.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*ls*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '* -R*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
-    ScriptBlockText: '*select-string *'
+    ScriptBlockText: '*ls*'
   SELECTION_4:
+    ScriptBlockText: '* -R*'
+  SELECTION_5:
+    ScriptBlockText: '*select-string *'
+  SELECTION_6:
     ScriptBlockText: '*-Pattern *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Unknown
 id: bd5971a7-626d-46ab-8176-ed643f694f68

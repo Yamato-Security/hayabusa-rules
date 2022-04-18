@@ -3,16 +3,39 @@ title: Using AppVLP To Circumvent ASR File Path Rule
 ruletype: Sigma
 author: Sreeman
 date: 2020/03/13
-description: Application Virtualization Utility is included with Microsoft Office.We
-  are able to abuse "AppVLP" to execute shell commands. Normally, this binary is used
-  for Application Virtualization, but we can use it as an abuse binary to circumvent
-  the ASR file path rule folder or to mark a file as a system file
+description: |
+  Application Virtualization Utility is included with Microsoft Office. We are able to abuse "AppVLP" to execute shell commands.
+  Normally, this binary is used for Application Virtualization, but we can use it as an abuse binary to circumvent the ASR file path rule folder
+  or to mark a file as a system file.
 detection:
   SELECTION_1:
-    CommandLine|re: (?i).*appvlp.exe.*(cmd.exe|powershell.exe).*(.sh|.exe|.dll|.bin|.bat|.cmd|.js|.msh|.reg|.scr|.ps|.vb|.jar|.pl|.inf)
-  condition: SELECTION_1
+    Channel: Security
+  SELECTION_2:
+    CommandLine: '*appvlp.exe*'
+  SELECTION_3:
+    CommandLine:
+    - '*cmd.exe*'
+    - '*powershell.exe*'
+  SELECTION_4:
+    CommandLine:
+    - '*.sh*'
+    - '*.exe*'
+    - '*.dll*'
+    - '*.bin*'
+    - '*.bat*'
+    - '*.cmd*'
+    - '*.js*'
+    - '*.msh*'
+    - '*.reg*'
+    - '*.scr*'
+    - '*.ps*'
+    - '*.vb*'
+    - '*.jar*'
+    - '*.pl*'
+    - '*.inf*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- unknown
+- Unknown
 fields:
 - ParentProcess
 - CommandLine
@@ -22,7 +45,7 @@ level: medium
 logsource:
   product: windows
   service: security
-modified: 2021/06/11
+modified: 2022/03/08
 status: experimental
 tags:
 - attack.t1218

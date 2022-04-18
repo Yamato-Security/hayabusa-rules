@@ -6,21 +6,24 @@ date: 2017/03/12
 description: Detects suspicious PowerShell invocation command parameters
 detection:
   SELECTION_1:
+    EventID: 4103
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ContextInfo:
     - '* -enc *'
     - '* -EncodedCommand *'
-  SELECTION_2:
+  SELECTION_4:
     ContextInfo:
     - '* -w hidden *'
     - '* -window hidden *'
     - '* -windowstyle hidden *'
-  SELECTION_3:
+  SELECTION_5:
     ContextInfo:
     - '* -noni *'
     - '* -noninteractive *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
-- Penetration tests
 - Very special / sneaky PowerShell scripts
 id: bbb80e91-5746-4fbe-8898-122e2cafdbf4
 level: high

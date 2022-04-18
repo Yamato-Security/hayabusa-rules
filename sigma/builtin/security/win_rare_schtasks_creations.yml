@@ -8,8 +8,10 @@ description: Detects rare scheduled tasks creations that only appear a few times
   malicious code
 detection:
   SELECTION_1:
+    Channel: Security
+  SELECTION_2:
     EventID: 4698
-  condition: SELECTION_1 | count() by TaskName < 5
+  condition: (SELECTION_1 and SELECTION_2) | count() by TaskName < 5
   timeframe: 7d
 falsepositives:
 - Software installation

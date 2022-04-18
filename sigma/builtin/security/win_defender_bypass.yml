@@ -7,16 +7,19 @@ description: Detects scenarios where an windows defender exclusion was added in 
   where an entity would want to bypass antivirus scanning from windows defender
 detection:
   SELECTION_1:
-    EventID: 4657
+    Channel: Security
   SELECTION_2:
-    EventID: 4656
+    EventID: 4657
   SELECTION_3:
-    EventID: 4660
+    EventID: 4656
   SELECTION_4:
-    EventID: 4663
+    EventID: 4660
   SELECTION_5:
+    EventID: 4663
+  SELECTION_6:
     ObjectName: '*\Microsoft\Windows Defender\Exclusions\\*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3 or SELECTION_4) and SELECTION_5)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5)
+    and SELECTION_6)
 falsepositives:
 - Intended inclusions by administrator
 id: e9c8808f-4cfb-4ba9-97d4-e5f3beaa244d

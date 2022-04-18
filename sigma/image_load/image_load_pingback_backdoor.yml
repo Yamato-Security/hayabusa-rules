@@ -9,10 +9,12 @@ detection:
   SELECTION_1:
     EventID: 7
   SELECTION_2:
-    Image: '*msdtc.exe'
+    Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
+    Image: '*msdtc.exe'
+  SELECTION_4:
     ImageLoaded: C:\Windows\oci.dll
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Very unlikely
 id: 35a7dc42-bc6f-46e0-9f83-81f8e56c8d4b

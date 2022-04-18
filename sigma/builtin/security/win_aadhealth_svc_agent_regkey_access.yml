@@ -10,22 +10,24 @@ description: |
   Make sure you set the SACL to propagate to its sub-keys.
 detection:
   SELECTION_1:
-    EventID: 4656
+    Channel: Security
   SELECTION_2:
-    EventID: 4663
+    EventID: 4656
   SELECTION_3:
-    ObjectType: Key
+    EventID: 4663
   SELECTION_4:
-    ObjectName: \REGISTRY\MACHINE\SOFTWARE\Microsoft\ADHealthAgent
+    ObjectType: Key
   SELECTION_5:
+    ObjectName: \REGISTRY\MACHINE\SOFTWARE\Microsoft\ADHealthAgent
+  SELECTION_6:
     ProcessName:
     - '*Microsoft.Identity.Health.Adfs.DiagnosticsAgent.exe*'
     - '*Microsoft.Identity.Health.Adfs.InsightsService.exe*'
     - '*Microsoft.Identity.Health.Adfs.MonitoringAgent.Startup.exe*'
     - '*Microsoft.Identity.Health.Adfs.PshSurrogate.exe*'
     - '*Microsoft.Identity.Health.Common.Clients.ResourceMonitor.exe*'
-  condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+  condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+    and  not (SELECTION_6))
 falsepositives:
 - Unknown
 id: 1d2ab8ac-1a01-423b-9c39-001510eae8e8

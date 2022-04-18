@@ -8,23 +8,25 @@ description: Detects activity as "net user administrator /domain" and "net group
   admins /domain"
 detection:
   SELECTION_1:
-    EventID: 4661
+    Channel: Security
   SELECTION_2:
+    EventID: 4661
+  SELECTION_3:
     ObjectType:
     - SAM_USER
     - SAM_GROUP
-  SELECTION_3:
-    ObjectName: S-1-5-21-*
   SELECTION_4:
-    AccessMask: '0x2d'
+    ObjectName: S-1-5-21-*
   SELECTION_5:
+    AccessMask: '0x2d'
+  SELECTION_6:
     ObjectName:
     - '*-500'
     - '*-512'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Administrator activity
-- Penetration tests
 id: 968eef52-9cff-4454-8992-1e74b9cbad6c
 level: high
 logsource:

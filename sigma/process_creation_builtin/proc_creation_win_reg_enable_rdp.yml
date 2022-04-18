@@ -1,0 +1,57 @@
+
+title: Enabling RDP Service via Reg.exe
+ruletype: Sigma
+author: '@Kostastsale, @TheDFIRReport, slightly modified by pH-T'
+date: 2022/02/12
+description: Detects the execution of reg.exe and subsequent command line arguments
+  for enabling RDP service on the host
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_10:
+    CommandLine:
+    - '*WinStations\RDP-Tcp*'
+    - '*MaxInstanceCount*'
+    - '*fEnableWinStation*'
+    - '*TSUserEnabled*'
+    - '*TSEnabled*'
+    - '*TSAppCompat*'
+    - '*IdleWinStationPoolCount*'
+    - '*TSAdvertise*'
+    - '*AllowTSConnections*'
+    - '*fSingleSessionPerUser*'
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    NewProcessName:
+    - '*\reg.exe'
+  SELECTION_4:
+    CommandLine: '* add *'
+  SELECTION_5:
+    CommandLine: '*\SYSTEM\CurrentControlSet\Control\Terminal Server*'
+  SELECTION_6:
+    CommandLine: '*REG_DWORD*'
+  SELECTION_7:
+    CommandLine: '* /f*'
+  SELECTION_8:
+    CommandLine: '*Licensing Core*'
+  SELECTION_9:
+    CommandLine: '*EnableConcurrentSessions*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7) and ((SELECTION_8 and SELECTION_9) or SELECTION_10))
+falsepositives:
+- Unknown
+id: 0d5675be-bc88-4172-86d3-1e96a4476536
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/03/15
+references:
+- https://thedfirreport.com/2022/02/21/qbot-and-zerologon-lead-to-full-domain-compromise/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.lateral_movement
+- attack.t1021.001
+- attack.t1112

@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2021/11/26
+modified: 2022/03/22
 
 title: Logon Type 0 - System
 title_jp: ログオンタイプ 0 - System
@@ -12,6 +12,9 @@ description_jp: Prints logon information
 id: 9fa273cc-bcb2-4789-85e3-14ca253ac7f4
 level: informational
 status: stable
+logsource:
+    product: windows
+    service: security
 detection:
     selection:
         Channel: Security
@@ -23,5 +26,4 @@ falsepositives:
 tags:
 references:
 sample-evtx: 
-logsource: default
 ruletype: Hayabusa

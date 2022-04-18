@@ -1,0 +1,37 @@
+author: Zach Mathis
+date: 2022/03/05
+modified:  2022/03/22
+
+title: Code Integrity Proble_Possible Modification
+title_jp: コードの整合性による問題_改ざんされた可能性がある
+details: 'Path: %param1%'
+details_jp: 'パス: %param1%'
+description: Detects when hashes are not correct or a file does not meet Windows' security requirements.
+description_jp: 
+
+id: 0c871345-668e-4b71-bdad-61e42ecc31e3
+level: low  # This should be high but is set as low due to almost all false positives & negatives.
+status: test
+logsource:
+    product: windows
+    service: security
+    description: Logging needs to be turned on.
+detection:
+    selection:
+        Channel: Security
+        EventID: 
+            - 5038  # Image hash of a file is not valid. 
+            - 6281  # Page hashes of an image file are not valid
+            - 6410  # File does not meet the security requirements to load into a process.
+    condition: selection
+falsepositives:
+    - most likely not malicious
+    - disk device error
+tags:
+    - attack.defense_evasion
+references:
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-5038
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-6281
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-6410
+sample-evtx: 
+ruletype: Hayabusa
