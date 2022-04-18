@@ -1,31 +1,35 @@
 author: Zach Mathis
-date: 2020/11/08
+date: 2021/12/20
 modified: 2022/03/22
 
-title: Logon Failure - Wrong Password
-title_jp: ログオンに失敗 - パスワードが間違っている
-details: 'User: %TargetUserName% | Type: %LogonType% | Computer: %WorkstationName% | IP Addr: %IpAddress% | AuthPackage: %AuthenticationPackageName%'
-details_jp: 'ユーザ: %TargetUserName% | タイプ: %LogonType% | 端末: %WorkstationName% | IPアドレス: %IpAddress% | 認証パッケージ: %AuthenticationPackageName%'
-description: Prints logon information. 
-description_jp: Prints logon information.
+title: Password Guessing
+title_jp: パスワード推測攻撃
+details: ''  #Cannot be used because this is a count rule
+details_jp: '' 
+description: Search for many 4625 wrong password failed logon attempts in a short period of time.
+description_jp:
 
-id: e87bd730-df45-4ae9-85de-6c75369c5d29
-level: low
+id: 35e8a0fc-60c2-46d7-ba39-aafb15b9854e
+level: medium
 status: stable
 logsource:
     product: windows
     service: security
 detection:
-    selection_basic:
+    selection:
         Channel: Security
         EventID: 4625
-    selection_wrong_password:
         SubStatus: "0xc000006a" #Wrong password
-    condition: selection_basic and selection_wrong_password
+    filter:
+       IpAddress: "-" #this filter is disabled as there is a bug at the moment so it will not work.
+    condition: selection and not filter | count() by IpAddress >= 5 #It would be nice to be able to print what TargetUserName was being brute forced but not possible at the moment.
+    timeframe: 5m
 falsepositives:
-    - user mistypes password
+    - User mistyping password
 tags:
-references:
+    - attack.t1110.003
+    - attack.credential_access
+references: https://attack.mitre.org/techniques/T1110/003/
 ruletype: Hayabusa
 
 sample-evtx: |
@@ -38,8 +42,8 @@ sample-evtx: |
         <Task>12544</Task>
         <Opcode>0</Opcode>
         <Keywords>0x8010000000000000</Keywords>
-        <TimeCreated SystemTime="2016-09-19T16:52:49.399674600Z"/>
-        <EventRecordID>6016</EventRecordID>
+        <TimeCreated SystemTime="2016-09-19T16:52:49.161271000Z"/>
+        <EventRecordID>6011</EventRecordID>
         <Correlation ActivityID="{B864D168-0B7B-0000-89D1-64B87B0BD201}"/>
         <Execution ProcessID="752" ThreadID="496"/>
         <Channel>Security</Channel>
@@ -60,13 +64,13 @@ sample-evtx: |
         <Data Name="LogonType">3</Data>
         <Data Name="LogonProcessName">NtLmSsp</Data>
         <Data Name="AuthenticationPackageName">NTLM</Data>
-        <Data Name="WorkstationName">fpEbpiox2Q3Qf8av</Data>
+        <Data Name="WorkstationName">z4lSo9BMWdcPLfLb</Data>
         <Data Name="TransmittedServices">-</Data>
         <Data Name="LmPackageName">-</Data>
         <Data Name="KeyLength">0</Data>
         <Data Name="ProcessId">0x0</Data>
         <Data Name="ProcessName">-</Data>
         <Data Name="IpAddress">192.168.198.149</Data>
-        <Data Name="IpPort">33083</Data>
+        <Data Name="IpPort">50311</Data>
     </EventData>
     </Event>

@@ -2,15 +2,15 @@ author: Zach Mathis
 date: 2022/02/05
 modified: 2022/03/22
 
-title: Process Creation
-title_jp: プロセス起動
+title: 'Suspicious CmdLine_Possible LOLBIN Abuse'
+title_jp: '不審なコマンドライン: LOLBINが悪用された可能性がある'
 details: 'CmdLine: %CommandLine% | Path: %NewProcessName% | PID: %NewProcessId% | User: %SubjectUserName% | LID: %SubjectLogonId%'
 details_jp: 'コマンドライン: %CommandLine% | パス: %NewProcessName% | プロセスID: %NewProcessId% | ユーザ: %SubjectUserName% | ログオンID: %SubjectLogonId%'
 description: 
 description_jp: 
 
-id: ac933178-c222-430d-8dcf-17b4f3a2fed8
-level: informational
+id: 6c34b782-a5b5-4298-80f3-1918caf1f558
+level: low
 status: stable
 logsource:
     product: windows
@@ -20,10 +20,17 @@ detection:
     selection:
         Channel: Security
         EventID: 4688
-        Version: 1      #Command line information is only in version 1.
+        CommandLine|contains: " " #We are not looking at GUI programs, etc... that do not have any arguments to lower false positives.
+        NewProcessName:
+            regexes: ./rules/config/regex/LOLBAS_paths.txt
     condition: selection
 falsepositives:
     - normal system usage
 tags:
+    - lolbas
 references:
+    - https://lolbas-project.github.io/
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-block-rules
 ruletype: Hayabusa
+
+sample-evtx: 
