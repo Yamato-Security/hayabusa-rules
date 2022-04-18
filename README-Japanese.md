@@ -44,7 +44,6 @@
     - [悪い例](#悪い例)
     - [良い例](#良い例)
     - [悪い例](#悪い例-1)
-    - [OKな例](#okな例)
     - [良い例](#良い例-1)
 - [SigmaルールからHayabusaルール形式への自動変換](#sigmaルールからhayabusaルール形式への自動変換)
 - [Twitter](#twitter)
@@ -63,11 +62,11 @@ Hayabusaの検知ルールは[YAML](https://en.wikipedia.org/wiki/YAML)形式で
 #作者セクション
 author: Zach Mathis
 date: 2022/03/22
-modified: 2022/03/22
+modified: 2022/04/17
 
 #アラートセクション
 title: Possible Timestomping
-details: 'Path: %TargetFilename% | Process: %Image% | CreationUtcTime: %CreationUtcTime% | PreviousCreationUtcTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
+details: 'Path: %TargetFilename% | Process: %Image% | CreationTime: %CreationUtcTime% | PreviousTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
 description: |
     The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
     This event helps tracking the real creation time of a file. 
@@ -98,34 +97,46 @@ references:
 ruletype: Hayabusa
 
 #XMLイベントのサンプル
+sample-message: |
+    File creation time changed:
+    RuleName: technique_id=T1099,technique_name=Timestomp
+    UtcTime: 2022-04-12 22:52:00.688
+    ProcessGuid: {43199d79-0290-6256-3704-000000001400}
+    ProcessId: 9752
+    Image: C:\TMP\mim.exe
+    TargetFilename: C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1
+    CreationUtcTime: 2016-05-16 09:13:50.950
+    PreviousCreationUtcTime: 2022-04-12 22:52:00.563
+    User: ZACH-LOG-TEST\IEUser
 sample-evtx: |
     <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
-    <System>
-        <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"/>
-        <EventID>2</EventID>
-        <Version>4</Version>
-        <Level>4</Level>
-        <Task>2</Task>
-        <Opcode>0</Opcode>
-        <Keywords>0x8000000000000000</Keywords>
-        <TimeCreated SystemTime="2019-04-30T10:13:42.052113000Z"/>
-        <EventRecordID>8931</EventRecordID>
-        <Correlation/>
-        <Execution ProcessID="1956" ThreadID="1636"/>
-        <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
-        <Computer>IEWIN7</Computer>
-        <Security UserID="S-1-5-18"/>
-    </System>
-    <EventData>
-        <Data Name="RuleName"/>
-        <Data Name="UtcTime">2019-04-30 10:13:42.052</Data>
-        <Data Name="ProcessGuid">{365ABB72-16CD-5CC8-0000-0010483A0600}</Data>
-        <Data Name="ProcessId">2836</Data>
-        <Data Name="Image">C:\Windows\Explorer.EXE</Data>
-        <Data Name="TargetFilename">C:\Users\IEUser\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\bs.ps1</Data>
-        <Data Name="CreationUtcTime">2016-02-02 15:30:02.000</Data>
-        <Data Name="PreviousCreationUtcTime">2019-04-30 10:12:45.583</Data>
-    </EventData>
+        <System>
+            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" /> 
+            <EventID>2</EventID> 
+            <Version>5</Version> 
+            <Level>4</Level> 
+            <Task>2</Task> 
+            <Opcode>0</Opcode> 
+            <Keywords>0x8000000000000000</Keywords> 
+            <TimeCreated SystemTime="2022-04-12T22:52:00.689654600Z" /> 
+            <EventRecordID>8946</EventRecordID> 
+            <Correlation /> 
+            <Execution ProcessID="3408" ThreadID="4276" /> 
+            <Channel>Microsoft-Windows-Sysmon/Operational</Channel> 
+            <Computer>Zach-log-test</Computer> 
+            <Security UserID="S-1-5-18" /> 
+        </System>
+        <EventData>
+            <Data Name="RuleName">technique_id=T1099,technique_name=Timestomp</Data> 
+            <Data Name="UtcTime">2022-04-12 22:52:00.688</Data> 
+            <Data Name="ProcessGuid">{43199d79-0290-6256-3704-000000001400}</Data> 
+            <Data Name="ProcessId">9752</Data> 
+            <Data Name="Image">C:\TMP\mim.exe</Data> 
+            <Data Name="TargetFilename">C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1</Data> 
+            <Data Name="CreationUtcTime">2016-05-16 09:13:50.950</Data> 
+            <Data Name="PreviousCreationUtcTime">2022-04-12 22:52:00.563</Data> 
+            <Data Name="User">ZACH-LOG-TEST\IEUser</Data> 
+        </EventData>
     </Event>
 ```
 
@@ -156,20 +167,20 @@ sample-evtx: |
 - **detection  [必須]**: 検知ロジックはここに入ります。(以下で説明します。)
 - **falsepositives [必須]**: 誤検知の可能性について記載を行います。例: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`。 不明な場合は `unknown` と記述してください。
 - **tags** [オプション]: [LOLBINS/LOLBAS](https://lolbas-project.github.io/)という手法を利用している場合、`lolbas` タグを追加してください。アラートを[MITRE ATT&CK](https://attack.mitre.org/) フレームワークにマッピングできる場合は、以下のリストから該当するものを追加してください。戦術ID（例：`attack.t1098`）を指定することも可能です。
-  - `attack.impact` -> Impact
-  - `attack.initial_access` -> Initial Access
-  - `attack.execution` -> Execution
-  - `attack.lateral_movement` -> Lateral Movement
-  - `attack.persistence` -> Persistence
-  - `attack.privilege_escalation` -> Privilege Escalation
-  - `attack.reconnaissance` -> Reconnaissance
-  - `attack.collection` -> Collection
-  - `attack.command_and_control` -> Command and Control
-  - `attack.credential_access` -> Credential Access
-  - `attack.defense_evasion` -> Defense Evasion
-  - `attack.discovery` -> Discovery
-  - `attack.exfiltration` -> Exfiltration
-  - `attack.resource_development` -> Resource Development
+  - `attack.reconnaissance` -> Reconnaissance (Recon)
+  - `attack.resource_development` -> Resource Development  (ResDev)
+  - `attack.initial_access` -> Initial Access (InitAccess)
+  - `attack.execution` -> Execution (Exec)
+  - `attack.persistence` -> Persistence (Persis)
+  - `attack.privilege_escalation` -> Privilege Escalation (PrivEsc)
+  - `attack.defense_evasion` -> Defense Evasion (Evas)
+  - `attack.credential_access` -> Credential Access (CredAccess)
+  - `attack.discovery` -> Discovery (Disc)
+  - `attack.lateral_movement` -> Lateral Movement (LatMov)
+  - `attack.collection` -> Collection (Collect)
+  - `attack.command_and_control` -> Command and Control (C2)
+  - `attack.exfiltration` -> Exfiltration (Exfil)
+  - `attack.impact` -> Impact (Impact)
 - **references** [オプション]: 参考文献への任意のリンク。
 - **ruletype [必須]**: Hayabusaルールには `Hayabusa` を指定します。SigmaのWindowsルールから自動変換されたルールは `Sigma` になります。
 
@@ -183,12 +194,14 @@ sample-evtx: |
 
 - `Addr` -> Address
 - `Auth` -> Authentication
+- `Cli` -> Client
 - `Cmd` -> Command
+- `Comp` -> Computer
 - `Dst` -> Destination
 - `LID` -> Logon ID
 - `Src` -> Source
-- `Svr` -> Server
 - `Svc` -> Service
+- `Svr` -> Server
 - `Tgt` -> Target
 - `PID` -> Process ID
 - `PGUID` -> Process GUID (Global Unique ID)
@@ -404,12 +417,12 @@ detection:
 パイプには以下のキーワードを指定できます。v1の時点で複数のパイプを連結することはできません。
 通常は大文字小文字を区別しません。以下のキーワードを指定した場合は大文字小文字を区別します。
 
-- startswith: 指定された文字列で始まることをチェックします。
-- endswith: 指定された文字列で終わることをチェックします。
-- contains: 指定された文字列が含まれることをチェックします。
-- re: 正規表現を使用します。(正規表現の書き方については <https://docs.rs/regex/1.5.4/regex/> を参照してください)。
+- `|startswith`: 指定された文字列で始まることをチェックします。
+- `|endswith`: 指定された文字列で終わることをチェックします。
+- `|contains`: 指定された文字列が含まれることをチェックします。
+- `|re`: 正規表現を使用します。(正規表現の書き方については <https://docs.rs/regex/1.5.4/regex/> を参照してください)。
   > 注意: SigmaルールとHayabusaルールは正規表現の記法に一部差異があります。そのため、HayabusaではSigmaルールを正しく検知できない場合があります。
-- equalsfield: 指定されたイベントキーと合致することをチェックします。2つのフィールドの値が一致しないことをチェックしたい場合は`condition`で`not`を使ってください。
+- `|equalsfield`: 指定されたイベントキーと合致することをチェックします。2つのフィールドの値が一致しないことをチェックしたい場合は`condition`で`not`を使ってください。
 
 ## ワイルドカード
 
@@ -655,7 +668,7 @@ detection:
     condition: selection and not filter
 ```
 
-3. **複数のセクションが必要な場合は、チャンネル名とイベントIDの情報を記入する最初のセクションを `section_basic_info` セクションに、その他のセクションを `section_` と `filter_` の後に意味のある名前を付けるか、または `section_1`, `filter_1` などの記法を用いてください。また、分かりにくいところはコメントを書いて説明してください。**
+1. **複数のセクションが必要な場合は、チャンネル名とイベントIDの情報を記入する最初のセクションを `section_basic` セクションに、その他のセクションを `section_` と `filter_` の後に意味のある名前を付ける記法を用いてください。また、分かりにくいところはコメントを書いて説明してください。**
 
 ### 悪い例
 
@@ -682,36 +695,11 @@ detection:
     condition: Takoyaki and Daisuki and not (Naruto and not Godzilla) and not Ninja and not Sushi
 ```
 
-### OKな例
-
-```yaml
-detection:
-    selection_1:
-        Channel: Security
-        EventID: 4648
-    selection_2:
-        TargetUserName|endswith: "$"  
-        IpAddress: "-"
-    filter_1:     #Filter system noise
-        SubjectUserName|endswith: "$"
-        TargetUserName|endswith: "$"
-        TargetInfo|endswith: "$"
-    filter_2:
-        SubjectUserName|endswith: "$" 
-    filter_3:
-        TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" #Filter out default Desktop Windows Manager and User Mode Driver Framework accounts
-        IpAddress: "-"                                  #Don't filter if the IP address is remote to catch attackers who created backdoor accounts that look like DWM-12, etc..
-    selection_4:
-        - ProcessName|endswith: "powershell.exe"
-        - ProcessName|endswith: "WMIC.exe"
-    condition: selection_1 and selection_4 and not (selection_2 and not filter_2) and not filter_3 and not filter_1
-```
-
 ### 良い例
 
 ```yaml
 detection:
-    selection_BasicInfo:
+    selection_basic:
         Channel: Security
         EventID: 4648
     selection_TargetUserIsComputerAccount:
