@@ -161,7 +161,7 @@ sample-evtx: |
 
 * **id [required]**: A randomly generated version 4 UUID used to uniquely identify the rule. You can generate one [here](https://www.uuidgenerator.net/version4).
 - **level [required]**: Severity level based on [sigma's definition](https://github.com/SigmaHQ/sigma/wiki/Specification). Please write one of the following: `informational`,`low`,`medium`,`high`,`critical`
-- **status[required]**: `stable` for tested rules and `testing` for rules that need to be tested.
+- **status[required]**: Status based on [sigma's definition](https://github.com/SigmaHQ/sigma/wiki/Specification). Please write one of the following: `deprecated`, `experimental`, `test`, `stable`.
 - **logsource [required]**: While this is actually used by Hayabusa, we define logsource in the same way as sigma in order to be compatible with sigma rules.
 - **detection  [required]**: The detection logic goes here. (Explained below.)
 - **falsepositives [required]**: The possibilities for false positives. For example: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`. If it is unknown, please write `unknown`.
