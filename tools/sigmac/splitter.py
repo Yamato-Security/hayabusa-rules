@@ -20,7 +20,7 @@ def main():
         if not file.startswith("sigma_to_hayabusa"):
             continue
         dir_prefix = file[17:-4]
-        loaded_ymls = load_ymls("sigma_to_hayabusa.yml")
+        loaded_ymls = load_ymls(file)
         for loaded_yml in loaded_ymls:
             if loaded_yml == None:
                 continue
