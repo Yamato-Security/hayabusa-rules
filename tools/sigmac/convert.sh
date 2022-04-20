@@ -1,35 +1,54 @@
+#!/bin/bash
+
 # Clear current converted rules.
 rm -rf hayabusa_rules
 
 # Convert Windows built-in rules with the basic windows-services.yml config file.
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/builtin > sigma_to_hayabusa.yml
+if [ -e "rules/windows/builtin" ]; then
+  python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/builtin > sigma_to_hayabusa.yml
+fi
 
 # Convert non-default Windows built-in rules.
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/windows-audit.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/powershell >> sigma_to_hayabusa.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/windows-audit.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/registry_add >> sigma_to_hayabusa.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/windows-audit.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/registry_event >> sigma_to_hayabusa.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/windows-audit.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/registry_set >> sigma_to_hayabusa.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/windows-audit.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/process_creation >> sigma_to_hayabusa.yml
+non_build_rules=(
+  rules/windows/powershell
+  rules/windows/registry_add
+  rules/windows/registry_event
+  rules/windows/registry_set
+  rules/windows/process_creation
+)
+for rule in ${non_build_rules[@]}; do
+  if [ -e $rule ]; then
+    python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/windows-audit.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r $rule >> sigma_to_hayabusa.yml
+  fi
+done
 
 # Convert sysmon rules with sysmon.yml and windows-services.yml.
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/create_remote_thread > sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/create_stream_hash >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/dns_query >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/driver_load >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/file_delete >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/file_event >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/image_load >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/network_connection >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/pipe_created >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/process_access >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/process_creation >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/raw_access_thread >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/registry_add >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/registry_delete >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/registry_event >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/registry_set >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/sysmon >> sigma_to_hayabusa_sysmon.yml
-python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r rules/windows/wmi_event >> sigma_to_hayabusa_sysmon.yml
+sysmon_rules=(
+  rules/windows/create_remote_thread
+  rules/windows/create_stream_hash
+  rules/windows/dns_query
+  rules/windows/driver_load
+  rules/windows/file_delete
+  rules/windows/file_event
+  rules/windows/image_load
+  rules/windows/network_connection
+  rules/windows/pipe_created
+  rules/windows/process_access
+  rules/windows/process_creation
+  rules/windows/raw_access_thread
+  rules/windows/registry_add
+  rules/windows/registry_delete
+  rules/windows/registry_event
+  rules/windows/registry_set
+  rules/windows/sysmon
+  rules/windows/wmi_event
+)
+
+for rule in ${sysmon_rules[@]}; do
+  if [ -e $rule ]; then
+    python3 ./tools/sigmac -t hayabusa -c ./tools/config/generic/sysmon.yml -c ./tools/config/generic/windows-services.yml --defer-abort -r $rule > sigma_to_hayabusa_sysmon.yml
+  fi
+done
 
 python3 splitter.py
 
