@@ -161,8 +161,8 @@ sample-evtx: |
 
 - **id [必須]**: ルールを一意に識別するために使用される、ランダムに生成されたバージョン4のUUIDです。 [ここ](https://www.uuidgenerator.net/version4) で生成することができます。
 
-- **level [必須]**: [sigmaルールの定義](https://github.com/SigmaHQ/sigma/wiki/Specification)に基づく重要度レベル。 以下のいずれかを記述してください。 `informational`,`low`,`medium`,`high`,`critical`
-- **status[必須]**: テスト済みのルールには `stable` を、テストが必要なルールには `testing` を指定します。
+- **level [必須]**: [sigmaルールの定義](https://github.com/SigmaHQ/sigma/wiki/Specification)に基づく重要度レベル。いずれかを記述してください: `informational`,`low`,`medium`,`high`,`critical`
+- **status[必須]**: [sigmaルールの定義](https://github.com/SigmaHQ/sigma/wiki/Specification)に基づくステータス。いずれかを記述してください: `deprecated`, `experimental`, `test`, `stable`
 - **logsource [required]**: Sigmaルールと互換性があるようにSigmaのlogsource定義と同様。
 - **detection  [必須]**: 検知ロジックはここに入ります。(以下で説明します。)
 - **falsepositives [必須]**: 誤検知の可能性について記載を行います。例: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`。 不明な場合は `unknown` と記述してください。
