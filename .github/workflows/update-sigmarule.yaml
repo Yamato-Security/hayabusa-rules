@@ -64,7 +64,7 @@ jobs:
       - name: Create Pull Request
         if: env.change_exist == 'true'
         id: cpr
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Sigma Rule Update (${{ env.action_date }})
