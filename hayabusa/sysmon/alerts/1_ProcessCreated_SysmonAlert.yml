@@ -1,13 +1,10 @@
 author: Zach Mathis
 date: 2021/12/11
-modified: 2022/03/22
+modified: 2022/05/21
 
 title: Process Created_Sysmon Alert
-title_jp: プロセス起動-Sysmonアラート
-details: '%RuleName% | Cmd: %CommandLine% | Process: %Image% | User: %User% | Parent Cmd: %ParentCommandLine% | LID: %LogonId% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hashes%'
-details_jp: 'ルール: %RuleName% | コマンド: %CommandLine% | プロセス: %Image% | ユーザ: %User% | 親コマンド: %ParentCommandLine% | ログオンID: %LogonId% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hashes%'
+details: 'Rule: %RuleName% | Cmd: %CommandLine% | Process: %Image% | User: %User% | Parent Cmd: %ParentCommandLine% | LID: %LogonId% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hashes%'
 description: Sysmon process creation
-description_jp: Sysmonログによるプロセス起動のログ
 
 id: d5e4fb89-b027-43bf-bd3a-2e7f74f105ac
 level: high
@@ -27,6 +24,7 @@ detection:
 falsepositives:
     - bad sysmon rule
 tags:
+    - SysmonAlert
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 ruletype: Hayabusa

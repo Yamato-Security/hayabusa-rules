@@ -4,7 +4,7 @@ ruletype: Sigma
 author: Florian Roth
 date: 2018/08/13
 description: Detects the execution of whoami, which is often used by attackers after
-  exloitation / privilege escalation but rarely used by administrators
+  exploitation / privilege escalation but rarely used by administrators
 detection:
   SELECTION_1:
     EventID: 4688
@@ -12,7 +12,9 @@ detection:
     Channel: Security
   SELECTION_3:
     NewProcessName: '*\whoami.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  SELECTION_4:
+    OriginalFileName: whoami.exe
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Admin activity
 - Scripts and administrative tools used in the monitored environment
@@ -22,7 +24,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/05/13
 references:
 - https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/
 - https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/

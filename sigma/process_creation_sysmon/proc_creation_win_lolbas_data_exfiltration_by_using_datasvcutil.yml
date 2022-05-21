@@ -10,13 +10,15 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    CommandLine: '*/in:*'
+    CommandLine:
+    - '*/in:*'
+    - '*/out:*'
+    - '*/uri:*'
   SELECTION_4:
-    CommandLine: '*/out:*'
+    Image: '*\DataSvcUtil.exe'
   SELECTION_5:
-    Image:
-    - '*\DataSvcUtil.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    OriginalFileName: DataSvcUtil.exe
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5))
 falsepositives:
 - DataSvcUtil.exe being used may be performed by a system administrator.
 - Verify whether the user identity, user agent, and/or hostname should be making changes
@@ -33,11 +35,13 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/16
 references:
 - https://gist.github.com/teixeira0xfffff/837e5bfed0d1b0a29a7cb1e5dbdd9ca6
 - https://docs.microsoft.com/en-us/dotnet/framework/data/wcf/wcf-data-service-client-utility-datasvcutil-exe
 - https://docs.microsoft.com/en-us/dotnet/framework/data/wcf/generating-the-data-service-client-library-wcf-data-services
 - https://docs.microsoft.com/en-us/dotnet/framework/data/wcf/how-to-add-a-data-service-reference-wcf-data-services
+- https://lolbas-project.github.io/lolbas/Binaries/DataSvcUtil/
 status: experimental
 tags:
 - attack.exfiltration

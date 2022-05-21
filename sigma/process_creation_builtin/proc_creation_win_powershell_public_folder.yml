@@ -1,0 +1,32 @@
+
+title: Execution of Powershell Script in Public Folder
+ruletype: Sigma
+author: Max Altgelt
+date: 2022/04/06
+description: This rule detects execution of PowerShell scripts located in the C:\Users\Public
+  folder
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    NewProcessName: '*\powershell.exe'
+  SELECTION_4:
+    CommandLine:
+    - '*-f C:\Users\Public*'
+    - '*-f "C:\Users\Public*'
+    - '*-f %Public%*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+id: fb9d3ff7-7348-46ab-af8c-b55f5fbf39b4
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://www.mandiant.com/resources/evolution-of-fin7
+status: experimental

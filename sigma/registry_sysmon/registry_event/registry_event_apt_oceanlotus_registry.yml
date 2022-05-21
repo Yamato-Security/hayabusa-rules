@@ -35,8 +35,7 @@ detection:
     - '*Application'
     - '*DefaultIcon'
   SELECTION_9:
-    TargetObject:
-    - HKCU\\*
+    TargetObject: HKCU\\*
   condition: (((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4) and ((SELECTION_5
     or (SELECTION_6 and SELECTION_7 and SELECTION_8)) or (SELECTION_9 and SELECTION_10)))
 falsepositives:

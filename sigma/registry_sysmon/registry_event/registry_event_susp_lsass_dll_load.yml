@@ -18,7 +18,14 @@ detection:
     TargetObject:
     - '*\CurrentControlSet\Services\NTDS\DirectoryServiceExtPt*'
     - '*\CurrentControlSet\Services\NTDS\LsaDbExtPt*'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+  SELECTION_6:
+    Image: C:\Windows\system32\lsass.exe
+  SELECTION_7:
+    Details:
+    - '%%systemroot%%\system32\ntdsa.dll'
+    - '%%systemroot%%\system32\lsadb.dll'
+  condition: (((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4) and SELECTION_5
+    and  not ((SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Unknown
 id: b3503044-60ce-4bf4-bbcb-e3db98788823
@@ -26,7 +33,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/11/27
+modified: 2022/04/21
 references:
 - https://blog.xpnsec.com/exploring-mimikatz-part-1/
 - https://twitter.com/SBousseaden/status/1183745981189427200

@@ -1,0 +1,27 @@
+
+title: Sysmon Crash
+ruletype: Sigma
+author: Tim Shelton
+date: 2022/04/26
+description: Detectes application popup reporting a failure of the Sysmon service
+detection:
+  SELECTION_1:
+    Channel: System
+  SELECTION_2:
+    Provider_Name: Application Popup
+  SELECTION_3:
+    EventID: 26
+  SELECTION_4:
+    Caption: sysmon64.exe - Application Error
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 4d7f1827-1637-4def-8d8a-fd254f9454df
+level: high
+logsource:
+  product: windows
+  service: system
+status: experimental
+tags:
+- attack.t1562
+- attack.impair_defenses

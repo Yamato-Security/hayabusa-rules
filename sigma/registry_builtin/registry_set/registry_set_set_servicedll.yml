@@ -7,6 +7,8 @@ description: Detects the modification of a ServiceDLL value in the service setti
 detection:
   SELECTION_1:
     EventID: 4657
+  SELECTION_10:
+    NewValue: '%%systemroot%%\system32\ntdsa.dll'
   SELECTION_2:
     OperationType:
     - Existing registry value modified
@@ -18,8 +20,14 @@ detection:
     TargetObject: HKLM\System\CurrentControlSet\Services\\*
   SELECTION_6:
     TargetObject: '*\Parameters\ServiceDll'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+  SELECTION_7:
+    NewValue: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
+  SELECTION_8:
+    NewProcessName: C:\Windows\system32\lsass.exe
+  SELECTION_9:
+    TargetObject: '*\CurrentControlSet\Services\NTDS\Parameters\ServiceDll'
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5
+    and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9 and SELECTION_10)))
 falsepositives:
 - Administrative scripts
 - Installation of a service
@@ -28,7 +36,7 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/03/26
+modified: 2022/04/21
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1543.003/T1543.003.md#atomic-test-4---tinyturla-backdoor-service-w64time
 status: experimental

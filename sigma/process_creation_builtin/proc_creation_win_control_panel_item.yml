@@ -8,8 +8,7 @@ detection:
   SELECTION_1:
     EventID: 4688
   SELECTION_10:
-    CommandLine:
-    - '*CurrentVersion\\Control Panel\\CPLs*'
+    CommandLine: '*CurrentVersion\Control Panel\CPLs*'
   SELECTION_2:
     Channel: Security
   SELECTION_3:
@@ -38,7 +37,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2022/03/31
+modified: 2022/05/10
 references:
 - https://attack.mitre.org/techniques/T1196/
 - https://ired.team/offensive-security/code-execution/code-execution-through-control-panel-add-ins

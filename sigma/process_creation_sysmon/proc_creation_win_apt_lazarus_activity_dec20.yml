@@ -25,8 +25,7 @@ detection:
   SELECTION_7:
     CommandLine: '* > %temp%\~*'
   SELECTION_8:
-    CommandLine:
-    - '*.255 10 C:\ProgramData\\*'
+    CommandLine: '*.255 10 C:\ProgramData\\*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)
     or (SELECTION_6 and SELECTION_7) or SELECTION_8))
 falsepositives:

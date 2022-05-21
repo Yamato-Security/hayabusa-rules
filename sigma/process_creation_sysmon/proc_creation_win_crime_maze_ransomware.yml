@@ -11,11 +11,9 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    ParentImage:
-    - '*\WINWORD.exe'
+    ParentImage: '*\WINWORD.exe'
   SELECTION_4:
-    Image:
-    - '*.tmp'
+    Image: '*.tmp'
   SELECTION_5:
     Image: '*\wmic.exe'
   SELECTION_6:

@@ -14,7 +14,10 @@ detection:
     ParentProcessName: '*\wsreset.exe'
   SELECTION_4:
     NewProcessName: '*\conhost.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+  SELECTION_5:
+    OriginalFileName: CONHOST.EXE
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
+    or SELECTION_5))
 falsepositives:
 - Unknown
 id: d797268e-28a9-49a7-b9a8-2f5039011c5c
@@ -22,7 +25,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/05/13
 references:
 - https://eqllib.readthedocs.io/en/latest/analytics/532b5ed4-7930-11e9-8f5c-d46d6d62a49e.html
 status: test

@@ -9,10 +9,16 @@ detection:
   SELECTION_1:
     EventID: 13
   SELECTION_10:
+    TargetObject: '*\Software\Microsoft\Active Setup\Installed Components\{89820200-ECBD-11cf-8B85-00AA005B4383}\\*'
+  SELECTION_11:
+    Image:
+    - C:\Windows\System32\poqexec.exe
+    - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+  SELECTION_12:
     Image:
     - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
     - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
-  SELECTION_11:
+  SELECTION_13:
     Image: '*\OfficeClickToRun.exe'
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
@@ -54,12 +60,10 @@ detection:
   SELECTION_8:
     TargetObject: '*\SOFTWARE\Microsoft\Active Setup\Installed Components\{8A69D345-D564-463c-AFF1-A69D9E530F96}\\*'
   SELECTION_9:
-    Image:
-    - C:\Windows\System32\poqexec.exe
-    - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+    TargetObject: '*\SOFTWARE\Microsoft\Active Setup\Installed Components\{9459C573-B17A-45AE-9F64-1857B5D58CEE}\\*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
     ((SELECTION_5) or (SELECTION_6 or SELECTION_7) or (SELECTION_8) or (SELECTION_9)
-    or (SELECTION_10 and SELECTION_11)))
+    or (SELECTION_10) or (SELECTION_11) or (SELECTION_12 and SELECTION_13)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
   keys for legitimate reason
@@ -74,7 +78,7 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/03/26
+modified: 2022/04/04
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

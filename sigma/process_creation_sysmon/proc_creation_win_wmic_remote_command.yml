@@ -12,15 +12,17 @@ detection:
   SELECTION_3:
     Image: '*\WMIC.exe'
   SELECTION_4:
-    CommandLine: '*/node:*'
+    OriginalFileName: wmic.exe
   SELECTION_5:
-    CommandLine: '*process*'
+    CommandLine: '*/node:*'
   SELECTION_6:
-    CommandLine: '*call*'
+    CommandLine: '*process*'
   SELECTION_7:
+    CommandLine: '*call*'
+  SELECTION_8:
     CommandLine: '*create*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and (SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8))
 falsepositives:
 - Unknown
 id: e42af9df-d90b-4306-b7fb-05c863847ebd
@@ -28,6 +30,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/13
 references:
 - https://securelist.com/moonbounce-the-dark-side-of-uefi-firmware/105468/
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/wmic

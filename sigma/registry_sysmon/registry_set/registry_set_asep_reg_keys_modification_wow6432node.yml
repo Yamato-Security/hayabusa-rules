@@ -48,6 +48,8 @@ detection:
     - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
   SELECTION_24:
     Image: '*\OfficeClickToRun.exe'
+  SELECTION_25:
+    Details: '"C:\ProgramData\Package Cache\{d21a4f20-968a-4b0c-bf04-a38da5f06e41}\windowsdesktop-runtime-*'
   SELECTION_3:
     EventType: SetValue
   SELECTION_4:
@@ -74,7 +76,7 @@ detection:
     and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9 and SELECTION_10)
     or (SELECTION_11 and SELECTION_12) or (SELECTION_13 or SELECTION_14 or SELECTION_15
     and SELECTION_16 and SELECTION_17) or (SELECTION_18) or (SELECTION_19 and SELECTION_20
-    and SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24)))
+    and SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24) or (SELECTION_25)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
   keys for legitimate reason
@@ -89,7 +91,7 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/03/26
+modified: 2022/04/04
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

@@ -13,8 +13,10 @@ detection:
   SELECTION_3:
     NewProcessName: '*\Wuauclt.exe'
   SELECTION_4:
+    OriginalFileName: Wuauclt.exe
+  SELECTION_5:
     CommandLine: '*\Wuauclt.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
 id: 52d097e2-063e-4c9c-8fbb-855c8948d135
@@ -22,6 +24,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/13
 references:
 - https://redcanary.com/blog/blackbyte-ransomware/
 status: experimental

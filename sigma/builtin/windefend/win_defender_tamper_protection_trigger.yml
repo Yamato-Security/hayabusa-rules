@@ -14,7 +14,7 @@ detection:
     Value:
     - '*\Windows Defender\DisableAntiSpyware = 0x1()'
     - '*\Real-Time Protection\DisableRealtimeMonitoring = (Current)'
-  condition: (SELECTION_1 and (SELECTION_2) and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Administrator actions
 id: 49e5bc24-8b86-49f1-b743-535f332c2856

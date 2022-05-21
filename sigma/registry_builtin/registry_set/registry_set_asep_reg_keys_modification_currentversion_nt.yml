@@ -30,9 +30,23 @@ detection:
     - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
   SELECTION_16:
     NewProcessName: '*\OfficeClickToRun.exe'
+  SELECTION_17:
+    NewProcessName: C:\Windows\system32\svchost.exe
+  SELECTION_18:
+    TargetObject:
+    - '*\Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\PreviousPolicyAreas*'
+    - '*\Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\MaxNoGPOListChangesInterval*'
+  SELECTION_19:
+    NewValue:
+    - DWORD (0x00000009)
+    - DWORD (0x000003c0)
   SELECTION_2:
     OperationType:
     - Existing registry value modified
+  SELECTION_20:
+    NewProcessName: C:\Windows\Microsoft.NET\Framework*
+  SELECTION_21:
+    NewProcessName: '*\ngen.exe'
   SELECTION_3:
     Channel: Security
   SELECTION_4:
@@ -64,7 +78,8 @@ detection:
   condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5
     and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9) or (SELECTION_10
     or SELECTION_11 or SELECTION_12) or (SELECTION_13 and SELECTION_14) or (SELECTION_15
-    and SELECTION_16)))
+    and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19) or (SELECTION_20
+    and SELECTION_21)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
   keys for legitimate reason
@@ -79,7 +94,7 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/03/26
+modified: 2022/04/27
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

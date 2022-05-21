@@ -27,8 +27,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    CommandLine:
-    - '*7z.exe a -v500m -mx9 -r0 -p*'
+    CommandLine: '*7z.exe a -v500m -mx9 -r0 -p*'
   SELECTION_4:
     ParentCommandLine: '*wscript.exe*'
   SELECTION_5:

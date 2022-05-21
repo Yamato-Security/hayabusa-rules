@@ -1,7 +1,7 @@
 
 title: Shells Spawned by Web Servers
 ruletype: Sigma
-author: Thomas Patzke, Florian Roth
+author: Thomas Patzke, Florian Roth, Zach Stanford @svch0st
 date: 2019/01/16
 description: Web servers that spawn shell processes could be the result of a successfully
   placed web shell or an other attack
@@ -33,9 +33,10 @@ detection:
     - '*\java.exe'
     - '*\javaw.exe'
   SELECTION_7:
-    CommandLine:
+    ParentCommandLine:
     - '*catalina.jar*'
     - '*CATALINA_HOME*'
+    - '*catalina.home*'
   SELECTION_8:
     NewProcessName:
     - '*\cmd.exe'

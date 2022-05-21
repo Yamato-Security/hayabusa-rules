@@ -10,7 +10,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*\AdvancedRun.exe'
+    OriginalFileName: AdvancedRun.exe
   SELECTION_4:
     CommandLine: '* /EXEFilename *'
   SELECTION_5:
@@ -30,6 +30,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/13
 references:
 - https://twitter.com/splinter_code/status/1483815103279603714
 - https://medium.com/s2wblog/analysis-of-destructive-malware-whispergate-targeting-ukraine-9d5d158f19f3

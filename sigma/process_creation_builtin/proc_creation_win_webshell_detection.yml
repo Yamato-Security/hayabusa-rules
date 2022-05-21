@@ -9,7 +9,7 @@ detection:
   SELECTION_1:
     EventID: 4688
   SELECTION_10:
-    NewProcessName: '*\ping.exe'
+    OriginalFileName: ping.exe
   SELECTION_11:
     CommandLine: '* -n *'
   SELECTION_12:
@@ -17,7 +17,7 @@ detection:
     - '*&cd&echo*'
     - '*cd /d *'
   SELECTION_13:
-    NewProcessName: '*\wmic.exe'
+    OriginalFileName: wmic.exe
   SELECTION_14:
     CommandLine: '* /node:*'
   SELECTION_15:
@@ -34,6 +34,19 @@ detection:
     - '*\wevtutil.exe'
     - '*\tasklist.exe'
   SELECTION_16:
+    OriginalFileName:
+    - whoami.exe
+    - sysinfo.exe
+    - quser.exe
+    - ipconfig.exe
+    - pathping.exe
+    - tracert.exe
+    - netstat.exe
+    - schtasks.exe
+    - VSSADMIN.EXE
+    - wevtutil.exe
+    - tasklist.exe
+  SELECTION_17:
     CommandLine:
     - '* Test-NetConnection *'
     - '*dir \\*'
@@ -64,9 +77,9 @@ detection:
     - '*catalina.jar*'
     - '*CATALINA_HOME*'
   SELECTION_8:
-    NewProcessName:
-    - '*\net.exe'
-    - '*\net1.exe'
+    OriginalFileName:
+    - net.exe
+    - net1.exe
   SELECTION_9:
     CommandLine:
     - '* user *'
@@ -74,8 +87,8 @@ detection:
     - '* group *'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)
     or (SELECTION_6 and SELECTION_7)) and ((SELECTION_8 and SELECTION_9) or (SELECTION_10
-    and SELECTION_11) or SELECTION_12 or (SELECTION_13 and SELECTION_14) or SELECTION_15
-    or SELECTION_16))
+    and SELECTION_11) or SELECTION_12 or (SELECTION_13 and SELECTION_14) or (SELECTION_15
+    or SELECTION_16) or SELECTION_17))
 falsepositives:
 - Unknown
 fields:
@@ -86,7 +99,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/03/17
+modified: 2022/05/13
 references:
 - https://www.fireeye.com/blog/threat-research/2013/08/breaking-down-the-china-chopper-web-shell-part-ii.html
 - https://unit42.paloaltonetworks.com/bumblebee-webshell-xhunt-campaign/

@@ -16,10 +16,13 @@ detection:
   SELECTION_3:
     NewProcessName: '*\WMIC.exe'
   SELECTION_4:
-    CommandLine: '*/node:*'
+    OriginalFileName: wmic.exe
   SELECTION_5:
+    CommandLine: '*/node:*'
+  SELECTION_6:
     CommandLine: '*service*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and (SELECTION_5
+    and SELECTION_6))
 falsepositives:
 - Unknown
 id: 09af397b-c5eb-4811-b2bb-08b3de464ebf
@@ -27,6 +30,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/13
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1047/T1047.md
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/wmic

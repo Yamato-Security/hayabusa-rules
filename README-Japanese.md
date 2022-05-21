@@ -150,12 +150,8 @@ sample-evtx: |
 > ## アラートセクション
 
 - **title [必須]**: ルールファイルのタイトル。これは表示されるアラートの名前にもなるので、簡潔であるほどよいです。(85文字以下でなければなりません。)
-
-- **title_jp** [オプション]: 日本語のタイトルです。
 - **details** [オプション]: 表示されるアラートの詳細です。Windowsイベントログの中で解析に有効なフィールドがあれば出力してください。フィールドは `" | "` で区切られます。フィールドのプレースホルダは `%` で囲まれ (例: `%MemberName%`) 、`rules/config_eventkey_alias.txt` で定義する必要があります。(以下で説明します)
-- **details_jp** [オプション]: 日本語の出力メッセージ。
 - **description** [オプション]: ルールの説明。これは表示されないので、長く詳細に記述することができます。
-- **description_jp** [オプション]: 日本語の説明文です。
 
 > ## ルールセクション
 
@@ -198,11 +194,13 @@ sample-evtx: |
 - `Cmd` -> Command
 - `Comp` -> Computer
 - `Dst` -> Destination
+- `Exec` -> Execution
 - `LID` -> Logon ID
 - `Src` -> Source
 - `Svc` -> Service
 - `Svr` -> Server
 - `Tgt` -> Target
+- `Pkg` -> Package
 - `PID` -> Process ID
 - `PGUID` -> Process GUID (Global Unique ID)
   

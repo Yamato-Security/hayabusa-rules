@@ -1,7 +1,7 @@
 
 title: Powershell MsXml COM Object
 ruletype: Sigma
-author: frack113
+author: frack113, MatilJ
 date: 2022/01/19
 description: |
   Adversaries may abuse PowerShell commands and scripts for execution.
@@ -17,8 +17,11 @@ detection:
   SELECTION_4:
     ScriptBlockText: '*-ComObject*'
   SELECTION_5:
-    ScriptBlockText: '*MsXml2.ServerXmlHttp*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    ScriptBlockText: '*MsXml2.*'
+  SELECTION_6:
+    ScriptBlockText: '*XmlHttp*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6)
 falsepositives:
 - Legitimate administrative script
 id: 78aa1347-1517-4454-9982-b338d6df8343
@@ -26,9 +29,11 @@ level: medium
 logsource:
   category: ps_script
   product: windows
+modified: 2022/05/19
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.001/T1059.001.md#atomic-test-7---powershell-msxml-com-object---with-prompt
 - https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms766431(v=vs.85)
+- https://www.trendmicro.com/en_id/research/22/e/uncovering-a-kingminer-botnet-attack-using-trend-micro-managed-x.html
 status: experimental
 tags:
 - attack.execution

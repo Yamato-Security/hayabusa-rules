@@ -12,15 +12,17 @@ detection:
   SELECTION_3:
     NewProcessName: '*\schtasks.exe'
   SELECTION_4:
-    CommandLine: '*/change*'
+    OriginalFileName: schtasks.exe
   SELECTION_5:
-    CommandLine: '*/TN*'
+    CommandLine: '*/change*'
   SELECTION_6:
-    CommandLine: '*/RU*'
+    CommandLine: '*/TN*'
   SELECTION_7:
+    CommandLine: '*/RU*'
+  SELECTION_8:
     CommandLine: '*/RP*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Unknown
 id: 931b6802-d6a6-4267-9ffa-526f57f22aaf
@@ -28,7 +30,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/05/13
 references:
 - https://github.com/SandboxEscaper/polarbearrepo/tree/master/bearlpe
 status: test

@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/03/23
-modified:  2022/03/23
+modified: 2022/05/21
 
-title: WMI Event Consumer Activity
-details: '%RuleName% | %Operation% | Type: %Type% | Name: %Name% | Dst: %Destination% | User: %User%'
+title: WMI Event Consumer Activity_Sysmon Alert
+details: 'Rule: %RuleName% | %Operation% | Type: %Type% | Name: %Name% | Dst: %Destination% | User: %User%'
 description: When a WMI event filter is registered, which is a method used by malware to execute, this event logs the WMI namespace, filter name and filter expression.
 
 id: f7606dcf-1408-4573-b243-dc9d232cebfe
@@ -23,6 +23,7 @@ detection:
     condition: selection_basic and not filter_no_alerts
 falsepositives:
 tags:
+    - SysmonAlert
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 ruletype: Hayabusa

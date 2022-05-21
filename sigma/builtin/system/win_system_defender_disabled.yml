@@ -1,5 +1,5 @@
 
-title: Windows Defender Threat Detection Disabled
+title: Windows Defender Threat Detection Disabled - Service
 ruletype: Sigma
 author: Ján Trenčanský, frack113
 date: 2020/07/28
@@ -20,12 +20,13 @@ detection:
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Administrator actions
+- Auto updates of Windows Defender causes restarts
 id: 6c0a7755-6d31-44fa-80e1-133e57752680
-level: high
+level: low
 logsource:
   product: windows
   service: system
-modified: 2021/11/22
+modified: 2022/05/04
 references:
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-antivirus/troubleshoot-windows-defender-antivirus
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md

@@ -12,23 +12,25 @@ detection:
   SELECTION_3:
     Image: '*\whoami.exe'
   SELECTION_4:
+    OriginalFileName: whoami.exe
+  SELECTION_5:
     ParentImage:
     - '*\cmd.exe'
     - '*\powershell.exe'
-  SELECTION_5:
+  SELECTION_6:
     ParentImage:
     - C:\Program Files\Microsoft Monitoring Agent\Agent\MonitoringHost.exe
     - ''
-  SELECTION_6:
-    ParentImage|re: ^$
   SELECTION_7:
+    ParentImage|re: ^$
+  SELECTION_8:
     CommandLine:
     - '*whoami -all*'
     - '*whoami /all*'
     - '*whoami.exe -all*'
     - '*whoami.exe /all*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((((SELECTION_3 and  not (SELECTION_4))
-    and  not (SELECTION_5)) and  not (SELECTION_6)) or SELECTION_7))
+  condition: ((SELECTION_1 and SELECTION_2) and (((((SELECTION_3 or SELECTION_4) and  not
+    (SELECTION_5)) and  not (SELECTION_6)) and  not (SELECTION_7)) or SELECTION_8))
 falsepositives:
 - Admin activity
 - Scripts and administrative tools used in the monitored environment
@@ -38,7 +40,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/08/26
+modified: 2022/05/13
 references:
 - https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/
 - https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/

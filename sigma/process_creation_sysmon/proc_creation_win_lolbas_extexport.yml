@@ -12,7 +12,11 @@ detection:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
     CommandLine: '*Extexport.exe*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  SELECTION_4:
+    Image: '*\Extexport.exe'
+  SELECTION_5:
+    OriginalFileName: extexport.exe
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unknown
 id: fb0b815b-f5f6-4f50-970f-ffe21f253f7a
@@ -20,6 +24,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/16
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Extexport/
 status: experimental

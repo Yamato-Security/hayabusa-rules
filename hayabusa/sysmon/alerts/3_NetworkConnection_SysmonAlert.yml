@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/03/22
-modified: 2022/03/22
+modified: 2022/05/21
 
 title: Network Connection_Sysmon Alert
-details: '%RuleName% | %Protocol% | Src: %SourceIp%:%SourcePort% (%SourceHostname%) | Dst: %DestinationIp%:%DestinationPort% (%DestinationHostname%) | User: %User% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%'
+details: 'Rule: %RuleName% | %Protocol% | Src: %SourceIp%:%SourcePort% (%SourceHostname%) | Dst: %DestinationIp%:%DestinationPort% (%DestinationHostname%) | User: %User% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%'
 description: Display network connection with sysmon rule alerts. Disabled by default.
 
 id: e13c5fe0-73f1-4c0f-aef5-1bab99b4237b
@@ -24,6 +24,7 @@ detection:
 falsepositives:
     - unknown
 tags:
+    - SysmonAlert
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 ruletype: Hayabusa

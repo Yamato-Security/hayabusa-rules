@@ -15,14 +15,21 @@ detection:
     Image: '*\explorer.exe'
   SELECTION_4:
     CommandLine: '*/NOUACCHECK*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  SELECTION_5:
+    ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
+  SELECTION_6:
+    ParentImage: C:\Windows\System32\svchost.exe
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5 or SELECTION_6)))
 falsepositives:
+- Domain Controller User Logon
 - Unknown how many legitimate software products use that method
 id: 534f2ef7-e8a2-4433-816d-c91bccde289b
 level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/04/21
 references:
 - https://twitter.com/ORCA6665/status/1496478087244095491
 status: test

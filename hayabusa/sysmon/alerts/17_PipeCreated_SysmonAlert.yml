@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/03/23
-modified:  2022/03/23
+modified: 2022/05/21
 
 title: Pipe Created_Sysmon Alert
-details: '%RuleName% | Pipe: %PipeName% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%'
+details: 'Rule: %RuleName% | Pipe: %PipeName% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%'
 description: This event generates when a named pipe is created. Malware often uses named pipes for interprocess communication.
 
 id: 204e9d06-d055-43fe-8a67-7584e77e8361
@@ -23,6 +23,7 @@ detection:
     condition: selection_basic and not filter_no_alerts
 falsepositives:
 tags:
+    - SysmonAlert
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 ruletype: Hayabusa

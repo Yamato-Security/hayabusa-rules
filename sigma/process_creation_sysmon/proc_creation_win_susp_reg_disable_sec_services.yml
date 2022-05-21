@@ -1,13 +1,30 @@
 
 title: Reg Disable Security Service
 ruletype: Sigma
-author: Florian Roth, John Lambert (idea)
+author: Florian Roth, John Lambert (idea), elhoim
 date: 2021/07/14
 description: Detects a suspicious reg.exe invocation that looks as if it would disable
   an important security service
 detection:
   SELECTION_1:
     EventID: 1
+  SELECTION_10:
+    CommandLine:
+    - '*DisableIOAVProtection*'
+    - '*DisableOnAccessProtection*'
+    - '*DisableRoutinelyTakingAction*'
+    - '*DisableScanOnRealtimeEnable*'
+    - '*DisableBlockAtFirstSeen*'
+    - '*DisableBehaviorMonitoring*'
+    - '*DisableEnhancedNotifications*'
+    - '*DisableAntiSpyware*'
+    - '*DisableAntiSpywareRealtimeProtection*'
+    - '*DisableConfig*'
+    - '*DisablePrivacyMode*'
+    - '*SignatureDisableUpdateOnStartupWithoutEngine*'
+    - '*DisableArchiveScanning*'
+    - '*DisableIntrusionPreventionSystem*'
+    - '*DisableScriptScanning*'
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
@@ -20,19 +37,26 @@ detection:
     CommandLine: '* /v Start*'
   SELECTION_7:
     CommandLine:
-    - '*\Sense *'
+    - '*\Sense*'
     - '*\WinDefend*'
     - '*\MsMpSvc*'
     - '*\NisSrv*'
-    - '*\WdBoot *'
+    - '*\WdBoot*'
     - '*\WdNisDrv*'
     - '*\WdNisSvc*'
-    - '*\wscsvc *'
+    - '*\wscsvc*'
     - '*\SecurityHealthService*'
     - '*\wuauserv*'
-    - '*\UsoSvc *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+    - '*\UsoSvc*'
+    - '*\WdFilter*'
+    - '*\AppIDSvc*'
+  SELECTION_8:
+    CommandLine: '* /d 1*'
+  SELECTION_9:
+    CommandLine: '*Windows Defender*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
+    ((SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+    and SELECTION_10)))
 falsepositives:
 - Unknown
 - Other security solution installers
@@ -41,8 +65,12 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/05
 references:
 - https://twitter.com/JohnLaTwC/status/1415295021041979392
+- https://github.com/gordonbay/Windows-On-Reins/blob/master/wor.ps1
+- https://vms.drweb.fr/virus/?i=24144899
+- https://bidouillesecurity.com/disable-windows-defender-in-powershell/
 status: experimental
 tags:
 - attack.defense_evasion

@@ -11,11 +11,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName:
-    - '*\sysprep.exe'
+    NewProcessName: '*\sysprep.exe'
   SELECTION_4:
-    CommandLine:
-    - '*\AppData\\*'
+    CommandLine: '*\AppData\\*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored

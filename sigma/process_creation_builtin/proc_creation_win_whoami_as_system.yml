@@ -15,8 +15,10 @@ detection:
     - '*AUTHORI*'
     - '*AUTORI*'
   SELECTION_4:
+    OriginalFileName: whoami.exe
+  SELECTION_5:
     NewProcessName: '*\whoami.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5))
 falsepositives:
 - Possible name overlap with NT AUHTORITY substring to cover all languages
 id: 80167ada-7a12-41ed-b8e9-aa47195c66a1
@@ -24,7 +26,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/01/28
+modified: 2022/05/13
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
 status: experimental

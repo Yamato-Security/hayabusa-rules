@@ -10,11 +10,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    CommandLine:
-    - '*System.Management.Automation.AmsiUtils*'
+    CommandLine: '*System.Management.Automation.AmsiUtils*'
   SELECTION_4:
-    CommandLine:
-    - '*amsiInitFailed*'
+    CommandLine: '*amsiInitFailed*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Potential Admin Activity

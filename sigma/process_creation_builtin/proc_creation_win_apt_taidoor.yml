@@ -15,11 +15,9 @@ detection:
     - '*dll,MyStart*'
     - '*dll MyStart*'
   SELECTION_4:
-    CommandLine:
-    - '* MyStart'
+    CommandLine: '* MyStart'
   SELECTION_5:
-    CommandLine:
-    - '*rundll32.exe*'
+    CommandLine: '*rundll32.exe*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
 falsepositives:
 - Unknown

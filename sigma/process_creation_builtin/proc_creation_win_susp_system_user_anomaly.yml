@@ -27,7 +27,6 @@ detection:
     - '*\ping.exe'
   SELECTION_6:
     CommandLine:
-    - '*sc stop *'
     - '* -NoP *'
     - '* -W Hidden *'
     - '* -decode *'
@@ -77,7 +76,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/02/09
+modified: 2022/04/27
 references:
 - Internal Research
 - https://tools.thehacker.recipes/mimikatz/modules

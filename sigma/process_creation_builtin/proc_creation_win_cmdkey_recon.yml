@@ -1,7 +1,7 @@
 
 title: Cmdkey Cached Credentials Recon
 ruletype: Sigma
-author: jmallette
+author: jmallette, Florian Roth
 date: 2019/01/16
 description: Detects usage of cmdkey to look for cached credentials
 detection:
@@ -12,8 +12,12 @@ detection:
   SELECTION_3:
     NewProcessName: '*\cmdkey.exe'
   SELECTION_4:
-    CommandLine: '* /list*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    OriginalFileName: cmdkey.exe
+  SELECTION_5:
+    CommandLine:
+    - '* /list*'
+    - '* -list*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Legitimate administrative tasks
 fields:
@@ -21,11 +25,11 @@ fields:
 - ParentCommandLine
 - User
 id: 07f8bdc2-c9b3-472a-9817-5a670b872f53
-level: medium
+level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/07/07
+modified: 2022/05/16
 references:
 - https://www.peew.pw/blog/2017/11/26/exploring-cmdkey-an-edge-case-for-privilege-escalation
 - https://technet.microsoft.com/en-us/library/cc754243(v=ws.11).aspx

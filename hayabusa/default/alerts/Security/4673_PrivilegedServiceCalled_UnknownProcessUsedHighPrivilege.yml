@@ -1,18 +1,15 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2022/03/22
+modified: 2022/05/21
 
 title: Process Ran With High Privilege
-title_jp: プロセスが高い権限を使った
 details: 'Process: %ProcessName% | User: %SubjectUserName% | LID: %SubjectLogonId%'
-details_jp: 'プロセス名: %ProcessName% | ユーザ名: %SubjectUserName% | ログオンID: %SubjectLogonId%'
 description: |
     Malware may generate a 4673 event (A privileged service was called) when dumping hashes or wiping disk. 
     For example, mimikatz will generate 4 logs using SeTcbPrivilege (Act as part of the OS.) 
     Disk wipers like bcwipe will also generate this.
     More legitimate filepaths may have to be added to the filter.
     This is marked as a medium alert as there is a high possibility for false positives.
-description_jp: 
 
 id: 5b6e58ee-c231-4a54-9eee-af2577802e08
 level: medium

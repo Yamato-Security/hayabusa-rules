@@ -11,18 +11,23 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image:
-    - '*\nircmd.exe'
-    - '*\nircmdc.exe'
+    OriginalFileName: NirCmd.exe
   SELECTION_4:
     CommandLine:
     - '* execmd *'
-    - '* exec2 *'
+    - '*.exe script *'
+    - '*.exe shexec *'
+    - '* runinteractive *'
   SELECTION_5:
     CommandLine:
-    - '* copy *'
-    - '* del *'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
+    - '* exec *'
+    - '* exec2 *'
+  SELECTION_6:
+    CommandLine:
+    - '* show *'
+    - '* hide *'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) or (SELECTION_5
+    and SELECTION_6)))
 falsepositives:
 - Legitimate use by administrators
 fields:
@@ -33,6 +38,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/13
 references:
 - https://www.nirsoft.net/utils/nircmd.html
 - https://www.winhelponline.com/blog/run-program-as-system-localsystem-account-windows/

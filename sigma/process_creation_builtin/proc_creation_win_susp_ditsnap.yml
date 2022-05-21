@@ -10,11 +10,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName:
-    - '*\ditsnap.exe'
+    NewProcessName: '*\ditsnap.exe'
   SELECTION_4:
-    CommandLine:
-    - '*ditsnap.exe*'
+    CommandLine: '*ditsnap.exe*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Legitimate admin usage

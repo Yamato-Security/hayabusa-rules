@@ -24,9 +24,9 @@ detection:
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
     ((SELECTION_5 or (SELECTION_6 and SELECTION_7 and SELECTION_8))))
 falsepositives:
-- igfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of cmd.exe
+- IgfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of cmd.exe
   and igfxCUIService.exe is the parent of the cmd.exe)
-- msiexec.exe hiding desktop.ini
+- Msiexec.exe hiding desktop.ini
 fields:
 - CommandLine
 - ParentCommandLine

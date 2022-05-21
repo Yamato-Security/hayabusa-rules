@@ -10,20 +10,15 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image:
-    - '*\print.exe'
+    Image: '*\print.exe'
   SELECTION_4:
-    CommandLine:
-    - print*
+    CommandLine: print*
   SELECTION_5:
-    CommandLine:
-    - '*/D*'
+    CommandLine: '*/D*'
   SELECTION_6:
-    CommandLine:
-    - '*.exe*'
+    CommandLine: '*.exe*'
   SELECTION_7:
-    CommandLine:
-    - '*print.exe*'
+    CommandLine: '*print.exe*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5
     and SELECTION_6) and  not (SELECTION_7))
 falsepositives:

@@ -1,0 +1,50 @@
+
+title: Image Load of VSS_PS.dll by Uncommon Executable
+ruletype: Sigma
+author: Markus Neis, @markus_neis
+date: 2021/07/07
+description: Detects the image load of vss_ps.dll by uncommon executables using OriginalFileName
+  datapoint
+detection:
+  SELECTION_1:
+    EventID: 7
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    ImageLoaded: '*\vss_ps.dll'
+  SELECTION_4:
+    Image:
+    - '*\svchost.exe'
+    - '*\msiexec.exe'
+    - '*\vssvc.exe'
+    - '*\srtasks.exe'
+    - '*\tiworker.exe'
+    - '*\dllhost.exe'
+    - '*\searchindexer.exe'
+    - '*dismhost.exe'
+    - '*taskhostw.exe'
+    - '*\clussvc.exe'
+    - '*\thor64.exe'
+    - '*\thor.exe'
+    - '*\rundll32.exe'
+    - '*\inetsrv\iissetup.exe'
+  SELECTION_5:
+    Image: '*c:\windows\\*'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
+    and SELECTION_5))
+falsepositives:
+- Unknown
+id: 333cdbe8-27bb-4246-bf82-b41a0dca4b70
+level: high
+logsource:
+  category: image_load
+  product: windows
+modified: 2022/05/06
+references:
+- 1bd85e1caa1415ebdc8852c91e37bbb7
+- https://twitter.com/am0nsec/status/1412232114980982787
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.impact
+- attack.t1490

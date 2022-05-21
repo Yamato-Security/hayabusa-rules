@@ -12,8 +12,7 @@ detection:
   SELECTION_3:
     NewProcessName: '*\powershell.exe'
   SELECTION_4:
-    CommandLine:
-    - '*new-object system.net.sockets.tcpclient*'
+    CommandLine: '*new-object system.net.sockets.tcpclient*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Administrative might use this function for checking network connectivity

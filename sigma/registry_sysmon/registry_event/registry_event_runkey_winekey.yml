@@ -15,8 +15,7 @@ detection:
   SELECTION_4:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_5:
-    TargetObject:
-    - '*Software\Microsoft\Windows\CurrentVersion\Run\Backup Mgr'
+    TargetObject: '*Software\Microsoft\Windows\CurrentVersion\Run\Backup Mgr'
   condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown

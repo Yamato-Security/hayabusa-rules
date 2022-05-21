@@ -20,11 +20,11 @@ detection:
 falsepositives:
 - Legitimate use of VSSVC. Maybe backup operations. It would usually be done by C:\Windows\System32\VSSVC.exe.
 id: e9faba72-4974-4ab2-a4c5-46e25ad59e9b
-level: low
+level: informational
 logsource:
   product: windows
   service: security
-modified: 2021/11/30
+modified: 2022/04/28
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1003.002/T1003.002.md#atomic-test-3---esentutlexe-sam-copy
 status: experimental

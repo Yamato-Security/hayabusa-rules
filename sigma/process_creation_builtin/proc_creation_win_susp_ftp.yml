@@ -15,11 +15,11 @@ detection:
   SELECTION_4:
     CommandLine: '*-s:*'
   SELECTION_5:
-    OriginalFileName: '*ftp.exe*'
+    OriginalFileName: ftp.exe
   SELECTION_6:
     CommandLine: '*-s:*'
   SELECTION_7:
-    OriginalFileName: '*ftp.exe*'
+    OriginalFileName: ftp.exe
   SELECTION_8:
     NewProcessName: '*ftp.exe'
   SELECTION_9:
@@ -36,7 +36,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/05/13
 references:
 - https://github.com/LOLBAS-Project/LOLBAS/blob/master/yml/OSBinaries/Ftp.yml
 status: test

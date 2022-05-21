@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/03/23
-modified:  2022/03/23
+modified: 2022/05/21
 
 title: DNS Query_Sysmon Alert
-details: '%RuleName | Query: %QueryName% | Result: %QueryResults% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%' 
+details: 'Rule: %RuleName | Query: %QueryName% | Result: %QueryResults% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%' 
          #The Status field gives by status codes like 0, 123, and 1460. 0 seems to mean success but I am not sure what 123 and 1460 mean so we will omit this for now.
 description: |
     This event is generated when a process executes a DNS query, whether the result is successful or fails, cached or not. 
@@ -26,6 +26,7 @@ detection:
     condition: selection_basic and not filter_no_alerts
 falsepositives:
 tags:
+    - SysmonAlert
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 ruletype: Hayabusa

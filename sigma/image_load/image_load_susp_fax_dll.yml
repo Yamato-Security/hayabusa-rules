@@ -11,14 +11,11 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image:
-    - '*fxssvc.exe'
+    Image: '*fxssvc.exe'
   SELECTION_4:
-    ImageLoaded:
-    - '*ualapi.dll'
+    ImageLoaded: '*ualapi.dll'
   SELECTION_5:
-    ImageLoaded:
-    - C:\Windows\WinSxS\\*
+    ImageLoaded: C:\Windows\WinSxS\\*
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
     (SELECTION_5))
 falsepositives:
