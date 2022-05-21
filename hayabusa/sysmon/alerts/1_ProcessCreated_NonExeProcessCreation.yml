@@ -1,13 +1,10 @@
 author: Zach Mathis
 date: 2022/02/05
-modified: 2022/03/22
+modified: 2022/05/21
 
 title: Process Created_Non-Exe Filetype
-title_jp: EXE以外の実行
 details: 'Cmd: %CommandLine% | Process: %Image% | User: %User% | Parent Cmd: %ParentCommandLine% | LID: %LogonId% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hashes%'
-details_jp: 'コマンド: %CommandLine% | プロセス: %Image% | ユーザ: %User% | 親コマンド: %ParentCommandLine% | ログオンID: %LogonId% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hashes%'
 description: Checks whether the image specified in a process creation event doesn't refer to an .exe file.
-description_jp: 
 
 id: 8d1487f1-7664-4bda-83b5-cb2f79491b6a
 level: high

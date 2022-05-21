@@ -1,11 +1,11 @@
 author: Zach Mathis
 date: 2022/03/23
-modified:  2022/03/23
+modified: 2022/05/21
 
-title: Alternate Data Stream Created_Sysmon Alert
+title: ADS Created_Sysmon Alert
 details: 'Path: %TargetFilename% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hash%' # Currently not including "Alert: %RuleName% | " as the Swift on Security symon file has super long and unneeded alert titles for this EID.
 description: |
-    This event logs when a named file stream is created, and it generates events that log the hash of the contents of the file to which the stream is assigned (the unnamed stream), as well as the contents of the named stream. 
+    This event logs when a named file stream (Alternate Data Stream) is created, and it generates events that log the hash of the contents of the file to which the stream is assigned (the unnamed stream), as well as the contents of the named stream. 
     There are malware variants that drop their executables or configuration settings via browser downloads, and this event is aimed at capturing that based on the browser attaching a Zone.Identifier "mark of the web" stream.
 
 id: 43c90e94-2806-424b-a75b-36d8590c00a6
@@ -25,6 +25,7 @@ detection:
     condition: selection_basic and not filter_no_alerts
 falsepositives:
 tags:
+    - SysmonAlert
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 ruletype: Hayabusa

@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2022/03/23
-modified:  2022/03/23
+modified: 2022/03/23
 
 title: File Deleted_Sysmon Alert
 details: '%RuleName% | Path: %TargetFilename% | Process: %Image% | User: %User% | PID: %ProcessId% | PGUID: %ProcessGuid%'
@@ -23,6 +23,7 @@ detection:
     condition: selection_basic and not filter_no_alerts
 falsepositives:
 tags:
+    - SysmonAlert
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
 ruletype: Hayabusa
