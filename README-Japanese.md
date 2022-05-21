@@ -194,11 +194,13 @@ sample-evtx: |
 - `Cmd` -> Command
 - `Comp` -> Computer
 - `Dst` -> Destination
+- `Exec` -> Execution
 - `LID` -> Logon ID
 - `Src` -> Source
 - `Svc` -> Service
 - `Svr` -> Server
 - `Tgt` -> Target
+- `Pkg` -> Package
 - `PID` -> Process ID
 - `PGUID` -> Process GUID (Global Unique ID)
   
