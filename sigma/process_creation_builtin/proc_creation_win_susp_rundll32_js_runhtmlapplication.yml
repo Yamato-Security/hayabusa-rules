@@ -17,8 +17,7 @@ detection:
   SELECTION_5:
     CommandLine: '*..\..\mshtml,RunHTMLApplication*'
   SELECTION_6:
-    CommandLine:
-    - '*;document.write();GetObject("script*'
+    CommandLine: '*;document.write();GetObject("script*'
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
     SELECTION_5) or SELECTION_6))
 falsepositives:

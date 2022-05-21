@@ -27,8 +27,7 @@ detection:
     - '*process*'
     - '*vault*'
   SELECTION_5:
-    CommandLine:
-    - '*::*'
+    CommandLine: '*::*'
   SELECTION_6:
     CommandLine:
     - '*aadcookie*'
@@ -43,11 +42,9 @@ detection:
     - '*mstsc*'
     - '*multirdp*'
   SELECTION_7:
-    CommandLine:
-    - '*::*'
+    CommandLine: '*::*'
   SELECTION_8:
-    CommandLine:
-    - '*function Convert-GuidToCompressedGuid*'
+    CommandLine: '*function Convert-GuidToCompressedGuid*'
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
     SELECTION_5)) or (SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8)))
 falsepositives:

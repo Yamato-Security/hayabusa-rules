@@ -11,15 +11,13 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName:
-    - '*\rundll32.exe'
+    NewProcessName: '*\rundll32.exe'
   SELECTION_4:
     CommandLine:
     - '*,RunDLL'
     - '*,Control_RunDLL'
   SELECTION_5:
-    ParentProcessName:
-    - '*\tracker.exe'
+    ParentProcessName: '*\tracker.exe'
   SELECTION_6:
     CommandLine:
     - '*.dll,Control_RunDLL'

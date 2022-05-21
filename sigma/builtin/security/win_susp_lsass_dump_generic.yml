@@ -9,8 +9,9 @@ detection:
   SELECTION_1:
     Channel: Security
   SELECTION_10:
-    ProcessName:
-    - C:\Program Files*
+    ProcessName: C:\Program Files*
+  SELECTION_11:
+    ProcessName: C:\Windows\CCM\CcmExec.exe
   SELECTION_2:
     EventID: 4656
   SELECTION_3:
@@ -49,11 +50,14 @@ detection:
     - '*\vmtoolsd.exe'
     - '*\minionhost.exe'
     - '*\VsTskMgr.exe'
+    - '*\thor.exe'
     - '*\thor64.exe'
     - '*\MicrosoftEdgeUpdate.exe'
     - '*\GamingServices.exe'
     - '*\svchost.exe'
     - '*\MsMpEng.exe'
+    - '*\MRT.exe'
+    - '*RtkAudUService64'
   SELECTION_9:
     ProcessName:
     - C:\Windows\System32\\*
@@ -63,7 +67,8 @@ detection:
     - C:\Windows\Temp\asgard2-agent\\*
     - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
   condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or (SELECTION_5
-    and SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8 and SELECTION_9) or (SELECTION_10)))
+    and SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8 and SELECTION_9) or (SELECTION_10)
+    or (SELECTION_11)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason; update the whitelist
   with it
@@ -78,7 +83,7 @@ level: high
 logsource:
   product: windows
   service: security
-modified: 2021/11/22
+modified: 2022/04/29
 references:
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment

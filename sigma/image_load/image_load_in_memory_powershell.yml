@@ -15,6 +15,8 @@ detection:
     - '*\System.Management.Automation.Dll'
     - '*\System.Management.Automation.ni.Dll'
   SELECTION_4:
+    Image: C:\Windows\System32\dsac.exe
+  SELECTION_5:
     Image:
     - '*\powershell.exe'
     - '*\powershell_ise.exe'
@@ -33,18 +35,18 @@ detection:
     - '*\ServiceHub.SettingsHost.exe'
     - '*\ServiceHub.Host.CLR.x86.exe'
     - '*\Citrix\ConfigSync\ConfigSyncRun.exe'
-  SELECTION_5:
+  SELECTION_6:
     Image:
     - C:\Program Files (x86)\Microsoft Visual Studio\\*
     - C:\Program Files\Microsoft Visual Studio\\*
-  SELECTION_6:
-    Image: C:\Windows\Temp\asgard2-agent\\*
   SELECTION_7:
+    Image: C:\Windows\Temp\asgard2-agent\\*
+  SELECTION_8:
     Image:
     - '*\thor64.exe'
     - '*\thor.exe'
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-    or SELECTION_5) or (SELECTION_6 and SELECTION_7)))
+    or SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 enrichment:
 - EN_0001_cache_sysmon_event_id_1_info
 - EN_0003_enrich_other_sysmon_events_with_event_id_1_data
@@ -56,7 +58,7 @@ level: medium
 logsource:
   category: image_load
   product: windows
-modified: 2022/02/23
+modified: 2022/04/21
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/p3nt4/PowerShdll

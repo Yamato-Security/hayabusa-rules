@@ -18,8 +18,7 @@ detection:
     - '*.vhd.lnk'
     - '*.vhdx.lnk'
   SELECTION_4:
-    TargetFilename:
-    - '*\Microsoft\Windows\Recent\\*'
+    TargetFilename: '*\Microsoft\Windows\Recent\\*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Cases in which a user mounts an image file for legitimate reasons

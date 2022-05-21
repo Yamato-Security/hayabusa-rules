@@ -10,11 +10,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName:
-    - '*\rundll32.exe'
+    NewProcessName: '*\rundll32.exe'
   SELECTION_4:
-    Description:
-    - '*Windows-Hostprozess (Rundll32)*'
+    Description: '*Windows-Hostprozess (Rundll32)*'
   SELECTION_5:
     CommandLine:
     - '*Default.GetString*'

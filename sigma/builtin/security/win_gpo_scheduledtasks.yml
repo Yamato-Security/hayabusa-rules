@@ -20,7 +20,7 @@ detection:
     - '*%%4417*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
-- if the source IP is not localhost then it's super suspicious, better to monitor
+- If the source IP is not localhost then it's super suspicious, better to monitor
   both local and remote changes to GPO scheduledtasks
 id: a8f29a7b-b137-4446-80a0-b804272f3da2
 level: high

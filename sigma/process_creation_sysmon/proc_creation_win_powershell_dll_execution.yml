@@ -10,11 +10,9 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image:
-    - '*\rundll32.exe'
+    Image: '*\rundll32.exe'
   SELECTION_4:
-    Description:
-    - '*Windows-Hostprozess (Rundll32)*'
+    Description: '*Windows-Hostprozess (Rundll32)*'
   SELECTION_5:
     CommandLine:
     - '*Default.GetString*'

@@ -3,8 +3,8 @@ title: Suspicious AdvancedRun Runas Priv User
 ruletype: Sigma
 author: Florian Roth
 date: 2022/01/20
-description: Detects the execution of AdvancedRun utitlity in the context of the TrustedInstaller
-  or SYSTEM account
+description: Detects the execution of AdvancedRun utitlity in the context of the TrustedInstaller,
+  SYSTEM, Local Service or Network Service accounts
 detection:
   SELECTION_1:
     EventID: 1
@@ -18,10 +18,14 @@ detection:
     CommandLine:
     - '* /RunAs 8 *'
     - '* /RunAs 4 *'
+    - '* /RunAs 10 *'
+    - '* /RunAs 11 *'
   SELECTION_5:
     CommandLine:
     - '*/RunAs 8'
     - '*/RunAs 4'
+    - '*/RunAs 10'
+    - '*/RunAs 11'
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unknown
@@ -30,6 +34,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/05
 references:
 - https://twitter.com/splinter_code/status/1483815103279603714
 - https://medium.com/s2wblog/analysis-of-destructive-malware-whispergate-targeting-ukraine-9d5d158f19f3

@@ -25,8 +25,8 @@ detection:
     - '*svchost*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
-- https://twitter.com/SBousseaden/status/1388064061087260675 - rundll32.exe with zzzzInvokeManagedCustomActionOutOfProc
-  in command line and msiexec.exe as parent process
+- Rundll32.exe with zzzzInvokeManagedCustomActionOutOfProc in command line and msiexec.exe
+  as parent process - https://twitter.com/SBousseaden/status/1388064061087260675
 id: e4b63079-6198-405c-abd7-3fe8b0ce3263
 level: high
 logsource:

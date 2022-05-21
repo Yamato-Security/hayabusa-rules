@@ -22,7 +22,7 @@ detection:
     SubjectDomainName: Window Manager
   SELECTION_6:
     SubjectUserName:
-    - NT AUTHORITY*
+    - NT AUT*
     - MSOL_*
   SELECTION_7:
     SubjectUserName: '*$'
@@ -36,7 +36,7 @@ level: high
 logsource:
   product: windows
   service: security
-modified: 2022/03/15
+modified: 2022/04/26
 references:
 - https://twitter.com/gentilkiwi/status/1003236624925413376
 - https://gist.github.com/gentilkiwi/dcc132457408cf11ad2061340dcb53c2

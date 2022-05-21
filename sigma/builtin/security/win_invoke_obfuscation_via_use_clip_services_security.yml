@@ -10,7 +10,7 @@ detection:
   SELECTION_2:
     EventID: 4697
   SELECTION_3:
-    ServiceFileName|re: (?i).*?echo.*clip.*&&.*(Clipboard|i`?n`?v`?o`?k`?e`?).*
+    ServiceFileName: '*(Clipboard|i*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -19,7 +19,7 @@ level: high
 logsource:
   product: windows
   service: security
-modified: 2021/09/18
+modified: 2022/04/26
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 related:

@@ -11,8 +11,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image:
-    - '*\policydefinitions\postgresql.exe'
+    Image: '*\policydefinitions\postgresql.exe'
   SELECTION_4:
     CommandLine:
     - '*CSIDL_SYSTEM_DRIVE\temp\sys.tmp*'

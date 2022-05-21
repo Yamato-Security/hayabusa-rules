@@ -11,13 +11,14 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName:
-    - '*\wsl.exe'
+    NewProcessName: '*\wsl.exe'
   SELECTION_4:
+    OriginalFileName: wsl.exe
+  SELECTION_5:
     CommandLine:
     - '* -e *'
     - '* --exec *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Automation and orchestration scripts may use this method execute scripts etc
 id: dec44ca7-61ad-493c-bfd7-8819c5faa09b
@@ -25,7 +26,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/05/13
 references:
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Wsl/
 status: test

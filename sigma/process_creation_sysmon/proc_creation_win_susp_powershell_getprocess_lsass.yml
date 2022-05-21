@@ -11,8 +11,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    CommandLine:
-    - '*Get-Process lsass*'
+    CommandLine: '*Get-Process lsass*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown

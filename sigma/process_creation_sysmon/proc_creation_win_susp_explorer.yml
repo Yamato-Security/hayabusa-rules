@@ -10,14 +10,11 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image:
-    - '*\explorer.exe'
+    Image: '*\explorer.exe'
   SELECTION_4:
-    ParentImage:
-    - '*\cmd.exe'
+    ParentImage: '*\cmd.exe'
   SELECTION_5:
-    CommandLine:
-    - '*explorer.exe*'
+    CommandLine: '*explorer.exe*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate explorer.exe run from cmd.exe

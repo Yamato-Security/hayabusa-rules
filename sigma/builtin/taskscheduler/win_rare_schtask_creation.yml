@@ -12,8 +12,7 @@ detection:
   SELECTION_2:
     EventID: 106
   SELECTION_3:
-    TaskName:
-    - \Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan
+    TaskName: \Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan
   condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3))) | count() by TaskName
     < 5
   timeframe: 7d

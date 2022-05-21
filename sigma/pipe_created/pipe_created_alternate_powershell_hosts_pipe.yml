@@ -12,6 +12,8 @@ detection:
     Image:
     - C:\Program Files\Citrix\\*
     - C:\Program Files\Microsoft\Exchange Server\\*
+  SELECTION_11:
+    Image: C:\Windows\system32\ServerManager.exe
   SELECTION_2:
     EventID: 18
   SELECTION_3:
@@ -38,7 +40,7 @@ detection:
     Image: '*\Tools\Binn\SQLPS.exe'
   condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and SELECTION_4 and  not
     ((SELECTION_5) or (SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)
-    or (SELECTION_10)))
+    or (SELECTION_10) or (SELECTION_11)))
 falsepositives:
 - Programs using PowerShell directly without invocation of a dedicated interpreter.
 fields:
@@ -51,7 +53,7 @@ level: medium
 logsource:
   category: pipe_created
   product: windows
-modified: 2022/02/16
+modified: 2022/04/21
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190815181010.html
 status: test

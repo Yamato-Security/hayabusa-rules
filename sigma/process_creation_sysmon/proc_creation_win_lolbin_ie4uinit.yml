@@ -1,0 +1,39 @@
+
+title: Ie4uinit Lolbin Use From Invalid Path
+ruletype: Sigma
+author: frack113
+date: 2022/05/07
+description: Detect use of ie4uinit.exe to execute commands from a specially prepared
+  ie4uinit.inf file from a directory other than the usual directories
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\ie4uinit.exe'
+  SELECTION_4:
+    OriginalFileName: IE4UINIT.EXE
+  SELECTION_5:
+    CurrentDirectory:
+    - c:\windows\system32\
+    - c:\windows\sysWOW64\
+  SELECTION_6:
+    CurrentDirectory|re: ^$
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6)))
+falsepositives:
+- Unknown
+id: d3bf399f-b0cf-4250-8bb4-dfc192ab81dc
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/05/16
+references:
+- https://lolbas-project.github.io/lolbas/Binaries/Ie4uinit/
+- https://bohops.com/2018/03/10/leveraging-inf-sct-fetch-execute-techniques-for-bypass-evasion-persistence-part-2/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218

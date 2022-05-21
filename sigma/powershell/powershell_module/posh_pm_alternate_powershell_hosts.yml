@@ -16,8 +16,12 @@ detection:
     ContextInfo: '*powershell.exe*'
   SELECTION_5:
     ContextInfo: '*ConfigSyncRun.exe*'
+  SELECTION_6:
+    ContextInfo: '*C:\Windows\system32\dsac.exe*'
+  SELECTION_7:
+    ContextInfo: '*C:\Windows\system32\wsmprovhost.exe -Embedding*'
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-    or (SELECTION_5)))
+    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Programs using PowerShell directly without invocation of a dedicated interpreter
 - MSP Detection Searcher
@@ -28,7 +32,7 @@ logsource:
   category: ps_module
   definition: PowerShell Module Logging must be enabled
   product: windows
-modified: 2022/02/16
+modified: 2022/04/21
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190815181010.html
 status: test

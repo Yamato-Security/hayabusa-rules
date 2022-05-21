@@ -11,15 +11,13 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image:
-    - '*\rundll32.exe'
+    Image: '*\rundll32.exe'
   SELECTION_4:
     CommandLine:
     - '*,RunDLL'
     - '*,Control_RunDLL'
   SELECTION_5:
-    ParentImage:
-    - '*\tracker.exe'
+    ParentImage: '*\tracker.exe'
   SELECTION_6:
     CommandLine:
     - '*.dll,Control_RunDLL'

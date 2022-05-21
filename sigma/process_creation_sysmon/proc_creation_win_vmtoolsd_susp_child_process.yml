@@ -21,13 +21,21 @@ detection:
     - '*\wscript.exe'
     - '*\cscript.exe'
   SELECTION_5:
+    OriginalFileName:
+    - Cmd.Exe
+    - PowerShell.EXE
+    - RUNDLL32.EXE
+    - REGSVR32.EXE
+    - wscript.exe
+    - cscript.exe
+  SELECTION_6:
     CommandLine:
     - '*\VMware\VMware Tools\poweron-vm-default.bat*'
     - '*\VMware\VMware Tools\poweroff-vm-default.bat*'
     - '*\VMware\VMware Tools\resume-vm-default.bat*'
     - '*\VMware\VMware Tools\suspend-vm-default.bat*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and (SELECTION_4 or SELECTION_5))
+    and  not (SELECTION_6))
 falsepositives:
 - Legitimate use by adminstrator
 fields:
@@ -39,7 +47,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/10/10
+modified: 2022/05/13
 references:
 - https://bohops.com/2021/10/08/analyzing-and-detecting-a-vmtools-persistence-technique/
 status: experimental

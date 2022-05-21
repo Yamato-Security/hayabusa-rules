@@ -15,17 +15,13 @@ detection:
   SELECTION_4:
     CommandLine: '*.zip*'
   SELECTION_5:
-    ParentProcessName:
-    - C:\Windows\System32\wbem\wmiprvse.exe
+    ParentProcessName: C:\Windows\System32\wbem\wmiprvse.exe
   SELECTION_6:
-    NewProcessName:
-    - C:\Windows\System32\mshta.exe
+    NewProcessName: C:\Windows\System32\mshta.exe
   SELECTION_7:
-    ParentProcessName:
-    - '*:\Users\Public\\*'
+    ParentProcessName: '*:\Users\Public\\*'
   SELECTION_8:
-    NewProcessName:
-    - C:\Windows\System32\rundll32.exe
+    NewProcessName: C:\Windows\System32\rundll32.exe
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
     (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:

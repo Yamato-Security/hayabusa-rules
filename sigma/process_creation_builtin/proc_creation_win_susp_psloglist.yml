@@ -11,7 +11,7 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    OriginalFileName: '*psloglist*'
+    OriginalFileName: psloglist
   SELECTION_4:
     NewProcessName:
     - '*\psloglist.exe'
@@ -38,6 +38,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/13
 references:
 - https://research.nccgroup.com/2021/01/12/abusing-cloud-services-to-fly-under-the-radar/
 - https://www.cybereason.com/blog/deadringer-exposing-chinese-threat-actors-targeting-major-telcos

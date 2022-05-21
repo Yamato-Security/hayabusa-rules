@@ -11,8 +11,7 @@ detection:
   SELECTION_2:
     EventID: 4704
   SELECTION_3:
-    PrivilegeList:
-    - '*SeEnableDelegationPrivilege*'
+    PrivilegeList: '*SeEnableDelegationPrivilege*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown

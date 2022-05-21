@@ -27,8 +27,7 @@ detection:
   SELECTION_7:
     CommandLine: '*.yml*'
   SELECTION_8:
-    Image:
-    - '*ngrok.exe'
+    Image: '*ngrok.exe'
   SELECTION_9:
     CommandLine:
     - '* tcp *'
@@ -38,7 +37,7 @@ detection:
     and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Another tool that uses the command line switches of Ngrok
-- ngrok http 3978 (https://docs.microsoft.com/en-us/azure/bot-service/bot-service-debug-channel-ngrok?view=azure-bot-service-4.0)
+- Ngrok http 3978 (https://docs.microsoft.com/en-us/azure/bot-service/bot-service-debug-channel-ngrok?view=azure-bot-service-4.0)
 id: ee37eb7c-a4e7-4cd5-8fa4-efa27f1c3f31
 level: high
 logsource:

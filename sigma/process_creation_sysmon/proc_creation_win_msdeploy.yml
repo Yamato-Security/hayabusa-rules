@@ -16,8 +16,7 @@ detection:
   SELECTION_5:
     CommandLine: '*-dest:runCommand*'
   SELECTION_6:
-    Image:
-    - '*\msdeploy.exe'
+    Image: '*\msdeploy.exe'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
     and SELECTION_6)
 falsepositives:

@@ -15,8 +15,7 @@ detection:
   SELECTION_4:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_5:
-    TargetObject:
-    - '*\AppX82a6gwre4fdg3bt635tn5ctqjf8msdd2\Shell\open\command'
+    TargetObject: '*\AppX82a6gwre4fdg3bt635tn5ctqjf8msdd2\Shell\open\command'
   condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown

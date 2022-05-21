@@ -24,8 +24,7 @@ detection:
     - '*\procmon64.exe'
     - '*\procmon.exe'
   SELECTION_6:
-    Details:
-    - '*\WINDOWS\system32\Drivers\PROCEXP152.SYS*'
+    Details: '*\WINDOWS\system32\Drivers\PROCEXP152.SYS*'
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and  not
     (SELECTION_5)) and  not (SELECTION_6))
 falsepositives:

@@ -69,8 +69,12 @@ detection:
     CommandLine: '*dfshim.dll*'
   SELECTION_38:
     CommandLine: '*ShOpenVerbApplication*'
+  SELECTION_39:
+    CommandLine: '*dfshim.dll*'
   SELECTION_4:
     CommandLine: '*.RegisterXLL*'
+  SELECTION_40:
+    CommandLine: '*ShOpenVerbShortcut*'
   SELECTION_5:
     CommandLine: '*url.dll*'
   SELECTION_6:
@@ -88,7 +92,8 @@ detection:
     and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24)
     or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28) or (SELECTION_29
     and SELECTION_30) or (SELECTION_31 and SELECTION_32) or (SELECTION_33 and SELECTION_34)
-    or (SELECTION_35 and SELECTION_36) or (SELECTION_37 and SELECTION_38)))
+    or (SELECTION_35 and SELECTION_36) or (SELECTION_37 and SELECTION_38) or (SELECTION_39
+    and SELECTION_40)))
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment
@@ -97,11 +102,12 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/12/04
+modified: 2022/05/09
 references:
 - http://www.hexacorn.com/blog/2017/05/01/running-programs-via-proxy-jumping-on-a-edr-bypass-trampoline/
 - https://twitter.com/Hexacorn/status/885258886428725250
 - https://gist.github.com/ryhanson/227229866af52e2d963cf941af135a52
+- https://twitter.com/nas_bench/status/1433344116071583746
 status: test
 tags:
 - attack.defense_evasion

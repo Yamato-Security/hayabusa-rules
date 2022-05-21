@@ -12,12 +12,12 @@ detection:
   SELECTION_3:
     NewProcessName: '*\update.exe'
   SELECTION_4:
+    CommandLine: '*.exe*'
+  SELECTION_5:
     CommandLine:
     - '*--processStart*'
     - '*--processStartAndWait*'
     - '*--createShortcut*'
-  SELECTION_5:
-    CommandLine: '*.exe*'
   SELECTION_6:
     CommandLine: '*C:\Users\\*'
   SELECTION_7:
@@ -55,10 +55,10 @@ falsepositives:
 - WebTorrent
 - WhatsApp
 - WordPress.com
-- atom
-- gitkraken
-- slack
-- teams
+- Atom
+- Gitkraken
+- Slack
+- Teams
 id: fa4b21c9-0057-4493-b289-2556416ae4d7
 level: medium
 logsource:

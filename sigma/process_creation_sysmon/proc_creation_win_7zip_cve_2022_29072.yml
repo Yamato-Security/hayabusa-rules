@@ -1,0 +1,38 @@
+
+title: Suspicious 7zip Subprocess
+ruletype: Sigma
+author: frack113
+date: 2022/04/17
+description: 7-Zip through 21.07 on Windows allows privilege escalation (CVE-2022-29072)
+  and command execution when a file with the .7z extension is dragged to the Help>Contents
+  area. This is caused by misconfiguration of 7z.dll and a heap overflow. The command
+  runs in a child process under the 7zFM.exe process.
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\cmd.exe'
+  SELECTION_4:
+    ParentImage: '*\7zFM.exe'
+  SELECTION_5:
+    CommandLine: '* /c *'
+  SELECTION_6:
+    CommandLine|re: ^$
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6)))
+falsepositives:
+- Unknown
+id: 9a4ccd1a-3526-4d99-b980-9f9c5d3a6ee3
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/04/19
+references:
+- https://github.com/kagancapar/CVE-2022-29072
+- https://twitter.com/kagancapar/status/1515219358234161153
+status: experimental
+tags:
+- cve.2022.29072

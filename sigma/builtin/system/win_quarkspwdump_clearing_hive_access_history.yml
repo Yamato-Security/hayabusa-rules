@@ -10,10 +10,12 @@ detection:
   SELECTION_2:
     EventID: 16
   SELECTION_3:
-    HiveName: '*\AppData\Local\Temp\SAM*'
+    Provider_Name: Microsoft-Windows-Kernel-General
   SELECTION_4:
+    HiveName: '*\AppData\Local\Temp\SAM*'
+  SELECTION_5:
     HiveName: '*.dmp'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 39f919f3-980b-4e6f-a975-8af7e507ef2b
@@ -21,7 +23,7 @@ level: critical
 logsource:
   product: windows
   service: system
-modified: 2021/11/27
+modified: 2022/04/14
 status: test
 tags:
 - attack.credential_access

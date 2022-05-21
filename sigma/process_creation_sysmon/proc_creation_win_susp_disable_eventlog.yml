@@ -11,15 +11,13 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    CommandLine:
-    - '*logman *'
+    CommandLine: '*logman *'
   SELECTION_4:
     CommandLine:
     - '*stop *'
     - '*delete *'
   SELECTION_5:
-    CommandLine:
-    - '*EventLog-System*'
+    CommandLine: '*EventLog-System*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate deactivation by administrative staff
