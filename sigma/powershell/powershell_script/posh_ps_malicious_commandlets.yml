@@ -2,7 +2,7 @@
 title: Malicious PowerShell Commandlets
 ruletype: Sigma
 author: Sean Metcalf (source), Florian Roth (rule), Bartlomiej Czyz @bczyz1 (update),
-  oscd.community (update)
+  oscd.community (update), Nasreddine Bencherchali (update), Tim Shelton (fp)
 date: 2017/03/05
 description: Detects Commandlet names from well-known PowerShell exploitation frameworks
 detection:
@@ -107,11 +107,89 @@ detection:
     - '*Invoke-SMBScanner*'
     - '*Invoke-Mimikittenz*'
     - '*Invoke-AllChecks*'
+    - '*Invoke-BadPotato*'
+    - '*Invoke-BetterSafetyKatz*'
+    - '*Invoke-Carbuncle*'
+    - '*Invoke-Certify*'
+    - '*Invoke-DAFT*'
+    - '*Invoke-DinvokeKatz*'
+    - '*Invoke-Eyewitness*'
+    - '*Invoke-FakeLogonScreen*'
+    - '*Invoke-Farmer*'
+    - '*Invoke-Get-RBCD-Threaded*'
+    - '*Invoke-Gopher*'
+    - '*Invoke-Grouper2*'
+    - '*Invoke-HandleKatz*'
+    - '*Invoke-Internalmonologue*'
+    - '*Invoke-KrbRelayUp*'
+    - '*Invoke-LdapSignCheck*'
+    - '*Invoke-Lockless*'
+    - '*Invoke-MITM6*'
+    - '*Invoke-NanoDump*'
+    - '*Invoke-OxidResolver*'
+    - '*Invoke-P0wnedshell*'
+    - '*Invoke-PPLDump*'
+    - '*Invoke-Rubeus*'
+    - '*Invoke-SCShell*'
+    - '*Invoke-SafetyKatz*'
+    - '*Invoke-SauronEye*'
+    - '*Invoke-Seatbelt*'
+    - '*Invoke-SharPersist*'
+    - '*Invoke-SharpAllowedToAct*'
+    - '*Invoke-SharpBlock*'
+    - '*Invoke-SharpBypassUAC*'
+    - '*Invoke-SharpChromium*'
+    - '*Invoke-SharpClipboard*'
+    - '*Invoke-SharpCloud*'
+    - '*Invoke-SharpDPAPI*'
+    - '*Invoke-SharpDump*'
+    - '*Invoke-SharpGPO-RemoteAccessPolicies*'
+    - '*Invoke-SharpGPOAbuse*'
+    - '*Invoke-SharpHandler*'
+    - '*Invoke-SharpHide*'
+    - '*Invoke-SharpHound4*'
+    - '*Invoke-SharpImpersonation*'
+    - '*Invoke-SharpImpersonationNoSpace*'
+    - '*Invoke-SharpKatz*'
+    - '*Invoke-SharpLdapRelayScan*'
+    - '*Invoke-SharpLoginPrompt*'
+    - '*Invoke-SharpMove*'
+    - '*Invoke-SharpPrintNightmare*'
+    - '*Invoke-SharpPrinter*'
+    - '*Invoke-SharpRDP*'
+    - '*Invoke-SharpSSDP*'
+    - '*Invoke-SharpSecDump*'
+    - '*Invoke-SharpSniper*'
+    - '*Invoke-SharpSploit*'
+    - '*Invoke-SharpSpray*'
+    - '*Invoke-SharpStay*'
+    - '*Invoke-SharpUp*'
+    - '*Invoke-SharpWatson*'
+    - '*Invoke-Sharphound2*'
+    - '*Invoke-Sharphound3*'
+    - '*Invoke-Sharplocker*'
+    - '*Invoke-Sharpshares*'
+    - '*Invoke-Sharpview*'
+    - '*Invoke-Sharpweb*'
+    - '*Invoke-Snaffler*'
+    - '*Invoke-Spoolsample*'
+    - '*Invoke-StandIn*'
+    - '*Invoke-StickyNotesExtract*'
+    - '*Invoke-Thunderfox*'
+    - '*Invoke-Tokenvator*'
+    - '*Invoke-UrbanBishop*'
+    - '*Invoke-Whisker*'
+    - '*Invoke-WireTap*'
+    - '*Invoke-winPEAS*'
   SELECTION_4:
     ScriptBlockText:
     - '*Get-SystemDriveInfo*'
     - '*C:\ProgramData\Amazon\EC2-Windows\Launch\Module\Scripts\Set-Wallpaper.ps1*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+  SELECTION_5:
+    ScriptBlockText: '# Copyright 2016 Amazon.com, Inc. or its affiliates. All Rights
+      Reserved*'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+    or (SELECTION_5)))
 falsepositives:
 - Unknown
 id: 89819aa4-bbd6-46bc-88ec-c7f7fe30efa6
@@ -120,9 +198,10 @@ logsource:
   category: ps_script
   definition: Script Block Logging must be enable
   product: windows
-modified: 2021/11/29
+modified: 2022/05/26
 references:
 - https://adsecurity.org/?p=2921
+- https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries
 status: experimental
 tags:
 - attack.execution

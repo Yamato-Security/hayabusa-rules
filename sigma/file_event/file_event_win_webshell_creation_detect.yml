@@ -1,7 +1,7 @@
 
 title: Windows Webshell Creation
 ruletype: Sigma
-author: Beyu Denis, oscd.community
+author: Beyu Denis, oscd.community, Tim Shelton
 date: 2019/10/22
 description: Possible webshell file creation on a static web site
 detection:
@@ -15,6 +15,8 @@ detection:
     TargetFilename:
     - '*\AppData\Local\Temp\\*'
     - '*\Windows\Temp\\*'
+  SELECTION_13:
+    Image: System
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
@@ -42,8 +44,8 @@ detection:
   SELECTION_9:
     TargetFilename: '*.jsp'
   condition: ((SELECTION_1 and SELECTION_2) and ((((SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5)) or ((SELECTION_6 and SELECTION_7) and  not (SELECTION_8))) or ((SELECTION_9
-    or (SELECTION_10 and SELECTION_11)) and  not (SELECTION_12))))
+    (SELECTION_5)) or ((SELECTION_6 and SELECTION_7) and  not (SELECTION_8))) or (((SELECTION_9
+    or (SELECTION_10 and SELECTION_11)) and  not (SELECTION_12)) and  not (SELECTION_13))))
 falsepositives:
 - Legitimate administrator or developer creating legitimate executable files in a
   web application folder
@@ -52,7 +54,7 @@ level: critical
 logsource:
   category: file_event
   product: windows
-modified: 2021/11/27
+modified: 2022/05/24
 references:
 - PT ESC rule and personal experience
 status: test

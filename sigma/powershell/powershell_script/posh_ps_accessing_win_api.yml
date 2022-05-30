@@ -1,7 +1,7 @@
 
 title: Accessing WinAPI in PowerShell
 ruletype: Sigma
-author: Nikita Nazarov, oscd.community
+author: Nikita Nazarov, oscd.community, Tim Shelton
 date: 2020/10/06
 description: Detecting use WinAPI Functions in PowerShell
 detection:
@@ -56,7 +56,9 @@ detection:
     - '*msvcrt*'
     - '*ntdll*'
     - '*secur32*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  SELECTION_4:
+    ScriptBlockText: '# Copyright 2016 Amazon.com, Inc. or its affiliates.*'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
 falsepositives:
 - Carbon PowerShell Module (https://github.com/webmd-health-services/Carbon)
 id: 03d83090-8cba-44a0-b02f-0b756a050306
@@ -65,7 +67,7 @@ logsource:
   category: ps_script
   definition: Script block logging must be enabled
   product: windows
-modified: 2022/02/23
+modified: 2022/05/23
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 status: experimental

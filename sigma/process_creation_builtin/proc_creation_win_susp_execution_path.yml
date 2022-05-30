@@ -1,7 +1,7 @@
 
 title: Execution from Suspicious Folder
 ruletype: Sigma
-author: Florian Roth
+author: Florian Roth, Tim Shelton
 date: 2019/01/16
 description: Detects a suspicious execution from an uncommon folder
 detection:
@@ -31,7 +31,10 @@ detection:
     - '*\Windows\Tasks\\*'
   SELECTION_4:
     NewProcessName: C:\Perflogs\\*
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+  SELECTION_5:
+    NewProcessName: C:\Users\Public\IBM\ClientSolutions\Start_Programs\\*
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
+    (SELECTION_5))
 falsepositives:
 - Unknown
 fields:
@@ -42,7 +45,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/03/31
+modified: 2022/05/26
 references:
 - https://github.com/mbevilacqua/appcompatprocessor/blob/master/AppCompatSearch.txt
 - https://www.secureworks.com/research/bronze-butler-targets-japanese-businesses
