@@ -36,10 +36,7 @@ detection:
   SELECTION_4:
     NewProcessName:
     - C:\Windows\System32\\*
-    - C:\Windows\system32\\*
-    - C:\Windows\SysWow64\\*
     - C:\Windows\SysWOW64\\*
-    - C:\Windows\winsxs\\*
     - C:\Windows\WinSxS\\*
     - C:\avast! sandbox*
   SELECTION_5:
@@ -59,7 +56,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/03/02
+modified: 2021/05/23
 references:
 - https://twitter.com/GelosSnake/status/934900723426439170
 status: experimental
