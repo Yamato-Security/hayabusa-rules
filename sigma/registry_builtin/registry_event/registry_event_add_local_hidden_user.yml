@@ -18,7 +18,7 @@ detection:
   SELECTION_5:
     TargetObject: '*$'
   SELECTION_6:
-    NewProcessName: '*lsass.exe'
+    NewProcessName: '*\lsass.exe'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
     and SELECTION_6)
 falsepositives:
@@ -28,7 +28,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/05/12
+modified: 2022/06/02
 references:
 - https://twitter.com/SBousseaden/status/1387530414185664538
 status: experimental

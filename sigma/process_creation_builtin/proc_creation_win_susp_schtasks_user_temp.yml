@@ -10,7 +10,7 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*schtasks.exe'
+    NewProcessName: '*\schtasks.exe'
   SELECTION_4:
     CommandLine: '*/Create *'
   SELECTION_5:
@@ -28,7 +28,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/02/09
+modified: 2022/06/02
 references:
 - malware analyse https://www.joesandbox.com/analysis/514608/0/html#324415FF7D8324231381BAD48A052F85DF04
 status: experimental

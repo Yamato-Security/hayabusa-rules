@@ -10,7 +10,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*mobsync.exe'
+    Image: '*\mobsync.exe'
   SELECTION_4:
     TargetFilename:
     - '*.dll'
@@ -23,6 +23,7 @@ level: medium
 logsource:
   category: file_event
   product: windows
+modified: 2022/06/02
 references:
 - https://redcanary.com/blog/intelligence-insights-november-2021/
 status: experimental

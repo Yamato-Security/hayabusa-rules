@@ -1,7 +1,7 @@
 
 title: Disable Internal Tools or Feature in Registry
 ruletype: Sigma
-author: frack113
+author: frack113, Nasreddine Bencherchali
 date: 2022/03/18
 description: Detects registry modifications that change features of internal Windows
   tools (malware like Agent Tesla uses this technique)
@@ -26,7 +26,11 @@ detection:
   SELECTION_6:
     EventType: SetValue
   SELECTION_7:
-    TargetObject: '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\shutdownwithoutlogon'
+    TargetObject:
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\shutdownwithoutlogon'
+    - '*SOFTWARE\Microsoft\Windows\CurrentVersion\PushNotifications\ToastEnabled'
+    - '*\SYSTEM\CurrentControlSet\Control\Storage\Write Protection'
+    - '*\SYSTEM\CurrentControlSet\Control\StorageDevicePolicies\WriteProtect'
   SELECTION_8:
     Details: DWORD (0x00000000)
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
@@ -38,9 +42,10 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/03/26
+modified: 2022/06/03
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1112/T1112.md
+- https://www.mandiant.com/resources/unc2165-shifts-to-evade-sanctions
 status: experimental
 tags:
 - attack.defense_evasion

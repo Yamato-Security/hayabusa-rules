@@ -10,7 +10,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    SourceImage: '*winword.exe'
+    SourceImage: '*\winword.exe'
   SELECTION_4:
     CallTrace: '*:\Windows\Microsoft.NET\Framework64\v2.*'
   SELECTION_5:
@@ -23,6 +23,7 @@ level: high
 logsource:
   category: process_access
   product: windows
+modified: 2022/06/02
 references:
 - https://github.com/connormcgarr/LittleCorporal
 status: experimental

@@ -12,7 +12,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*wlrmdr.exe'
+    Image: '*\wlrmdr.exe'
   SELECTION_4:
     CommandLine: '*-s *'
   SELECTION_5:
@@ -34,7 +34,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/02/21
+modified: 2022/06/02
 references:
 - https://twitter.com/0gtweet/status/1493963591745220608?s=20&t=xUg9DsZhJy1q9bPTUWgeIQ
 status: experimental

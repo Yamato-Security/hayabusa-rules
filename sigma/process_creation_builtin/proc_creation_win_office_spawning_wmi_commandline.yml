@@ -16,9 +16,13 @@ detection:
     CommandLine: '*wmic *'
   SELECTION_5:
     ParentProcessName:
-    - winword.exe
-    - excel.exe
-    - powerpnt.exe
+    - \winword.exe
+    - \excel.exe
+    - \powerpnt.exe
+    - \msaccess.exe
+    - \mspub.exe
+    - \eqnedt32.exe
+    - \visio.exe
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
@@ -27,7 +31,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/03/30
+modified: 2022/06/02
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/main/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml

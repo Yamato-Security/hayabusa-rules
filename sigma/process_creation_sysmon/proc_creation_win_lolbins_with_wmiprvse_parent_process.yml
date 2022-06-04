@@ -12,11 +12,11 @@ detection:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
     Image:
-    - '*regsvr32'
-    - '*rundll32'
-    - '*msiexec'
-    - '*mshta'
-    - '*verclsid'
+    - '*\regsvr32'
+    - '*\rundll32'
+    - '*\msiexec'
+    - '*\mshta'
+    - '*\verclsid'
   SELECTION_4:
     ParentImage: '*\wbem\WmiPrvSE.exe'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
@@ -27,6 +27,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/06/02
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/main/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml

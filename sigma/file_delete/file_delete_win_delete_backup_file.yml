@@ -13,7 +13,7 @@ detection:
   SELECTION_3:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_4:
-    Image: '*cmd.exe'
+    Image: '*\cmd.exe'
   SELECTION_5:
     TargetFilename:
     - '*.VHD'
@@ -32,6 +32,7 @@ level: medium
 logsource:
   category: file_delete
   product: windows
+modified: 2022/06/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1490/T1490.md#atomic-test-6---windows---delete-backup-files
 status: experimental

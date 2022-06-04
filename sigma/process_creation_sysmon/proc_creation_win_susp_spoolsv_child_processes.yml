@@ -24,7 +24,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    ParentImage: '*\\spoolsv.exe'
+    ParentImage: '*\spoolsv.exe'
   SELECTION_4:
     IntegrityLevel: System
   SELECTION_5:
@@ -74,6 +74,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/06/02
 references:
 - https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries/blob/master/Exploits/Print%20Spooler%20RCE/Suspicious%20Spoolsv%20Child%20Process.md
 status: stable

@@ -25,8 +25,8 @@ detection:
     - '*\cmd.exe'
   SELECTION_5:
     User:
-    - NT AUTHORITY\SYSTEM*
-    - AUTORITE NT\Sys*
+    - '*AUTHORI*'
+    - '*AUTORI*'
   SELECTION_6:
     CommandLine: '* route *'
   SELECTION_7:
@@ -45,7 +45,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/05/27
 references:
 - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-74-638.jpg
 status: test
