@@ -10,7 +10,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*spoolsv.exe'
+    Image: '*\spoolsv.exe'
   SELECTION_4:
     ImageLoaded:
     - '*\Windows\System32\spool\drivers\x64\3\\*'
@@ -25,7 +25,7 @@ level: informational
 logsource:
   category: image_load
   product: windows
-modified: 2022/02/09
+modified: 2022/06/02
 references:
 - https://github.com/hhlxf/PrintNightmare
 - https://github.com/ly4k/SpoolFool

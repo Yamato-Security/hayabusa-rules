@@ -16,8 +16,8 @@ detection:
     Image: C:\WINDOWS\system32\rundll32.exe
   SELECTION_5:
     User:
-    - '*NT AUTHORI*'
-    - '*NT AUTORI*'
+    - '*AUTHORI*'
+    - '*AUTORI*'
   SELECTION_6:
     TargetFilename:
     - '*.rtf'
@@ -49,8 +49,8 @@ detection:
     TargetFilename: C:\Windows\Temp\procdump.exe
   SELECTION_8:
     User:
-    - '*NT AUTHO*'
-    - '*NT AUTO*'
+    - '*AUTHORI*'
+    - '*AUTORI*'
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
     SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
@@ -60,6 +60,7 @@ level: high
 logsource:
   category: file_event
   product: windows
+modified: 2022/05/27
 references:
 - https://mpgn.gitbook.io/crackmapexec/smb-protocol/obtaining-credentials/dump-lsass
 status: experimental

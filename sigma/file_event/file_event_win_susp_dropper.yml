@@ -30,6 +30,8 @@ detection:
     - C:\Windows\System32\msiexec.exe
     - C:\Windows\system32\cleanmgr.exe
     - C:\Windows\explorer.exe
+    - C:\WINDOWS\system32\dxgiadaptercache.exe
+    - C:\WINDOWS\system32\Dism.exe
   SELECTION_6:
     Image: C:\WINDOWS\system32\svchost.exe
   SELECTION_7:
@@ -49,7 +51,7 @@ level: low
 logsource:
   category: file_event
   product: windows
-modified: 2022/05/08
+modified: 2022/06/04
 references:
 - Malware Sandbox
 status: experimental

@@ -20,8 +20,8 @@ detection:
     CommandLine: sc  stop KSCWebConsoleMessageQueue
   SELECTION_6:
     User:
-    - NT AUTHORITY\SYSTEM*
-    - AUTORITE NT\Sys*
+    - '*AUTHORI*'
+    - '*AUTORI*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
     (SELECTION_5 and SELECTION_6))
 falsepositives:
@@ -35,7 +35,7 @@ level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/30
+modified: 2022/05/27
 status: experimental
 tags:
 - attack.impact

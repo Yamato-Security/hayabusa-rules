@@ -21,13 +21,14 @@ detection:
     - '*\tiworker.exe'
     - '*\dllhost.exe'
     - '*\searchindexer.exe'
-    - '*dismhost.exe'
-    - '*taskhostw.exe'
+    - '*\dismhost.exe'
+    - '*\taskhostw.exe'
     - '*\clussvc.exe'
     - '*\thor64.exe'
     - '*\thor.exe'
     - '*\rundll32.exe'
     - '*\inetsrv\iissetup.exe'
+    - '*\inetsrv\appcmd.exe'
   SELECTION_5:
     Image: '*c:\windows\\*'
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
@@ -39,7 +40,7 @@ level: high
 logsource:
   category: image_load
   product: windows
-modified: 2022/05/06
+modified: 2022/06/02
 references:
 - 1bd85e1caa1415ebdc8852c91e37bbb7
 - https://twitter.com/am0nsec/status/1412232114980982787

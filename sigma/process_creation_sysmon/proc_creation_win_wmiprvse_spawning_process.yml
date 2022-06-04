@@ -17,8 +17,8 @@ detection:
     - 'null'
   SELECTION_5:
     User:
-    - NT AUTHORITY\SYSTEM*
-    - AUTORITE NT\Sys*
+    - '*AUTHORI*'
+    - '*AUTORI*'
   SELECTION_6:
     Image:
     - '*\WmiPrvSE.exe'
@@ -34,7 +34,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/10
+modified: 2022/05/27
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190810201010.html
 status: experimental

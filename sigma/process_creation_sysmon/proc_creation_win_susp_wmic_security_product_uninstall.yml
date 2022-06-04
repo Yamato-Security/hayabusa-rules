@@ -1,7 +1,7 @@
 
 title: Wmic Uninstall Security Product
 ruletype: Sigma
-author: Florian Roth
+author: Florian Roth, Nasreddine Bencherchali
 date: 2021/01/30
 description: Detects deinstallation of security products using WMIC utility
 detection:
@@ -12,12 +12,16 @@ detection:
   SELECTION_3:
     CommandLine: '*wmic*'
   SELECTION_4:
-    CommandLine: '*product where name=*'
+    CommandLine: '*product where *'
   SELECTION_5:
     CommandLine: '*call uninstall*'
   SELECTION_6:
     CommandLine: '*/nointeractive*'
   SELECTION_7:
+    CommandLine:
+    - '* name=*'
+    - '*caption like *'
+  SELECTION_8:
     CommandLine:
     - '*Antivirus*'
     - '*AVG *'
@@ -35,8 +39,14 @@ detection:
     - '*VirusScan*'
     - '*Webroot SecureAnywhere*'
     - '*Windows Defender*'
+    - '*CarbonBlack*'
+    - '*Carbon Black*'
+    - '*Cb Defense Sensor 64-bit*'
+    - '*Dell Threat Defense*'
+    - '*Cylance *'
+    - '*LogRhythm System Monitor Service*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+    and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Legitimate administration
 id: 847d5ff3-8a31-4737-a970-aeae8fe21765
@@ -44,10 +54,11 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/10/18
+modified: 2022/06/03
 references:
 - https://twitter.com/cglyer/status/1355171195654709249
 - https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/
+- https://www.mandiant.com/resources/unc2165-shifts-to-evade-sanctions
 status: experimental
 tags:
 - attack.defense_evasion

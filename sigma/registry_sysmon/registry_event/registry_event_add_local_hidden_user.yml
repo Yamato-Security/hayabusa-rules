@@ -18,7 +18,7 @@ detection:
   SELECTION_6:
     TargetObject: '*$'
   SELECTION_7:
-    Image: '*lsass.exe'
+    Image: '*\lsass.exe'
   condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
     and SELECTION_6 and SELECTION_7)
 falsepositives:
@@ -28,7 +28,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2021/05/12
+modified: 2022/06/02
 references:
 - https://twitter.com/SBousseaden/status/1387530414185664538
 status: experimental

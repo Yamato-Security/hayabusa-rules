@@ -1,0 +1,29 @@
+
+title: Suspicious GPO Discovery With Get-GPO
+ruletype: Sigma
+author: frack113
+date: 2022/06/04
+description: Detect use of Get-GPO to get one GPO or all the GPOs in a domain.
+detection:
+  SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*Get-GPO*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Legitimate PowerShell scripts
+id: eb2fd349-ec67-4caa-9143-d79c7fb34441
+level: low
+logsource:
+  category: ps_script
+  definition: Script block logging must be enabled
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1615/T1615.md
+- https://docs.microsoft.com/en-us/powershell/module/grouppolicy/get-gpo?view=windowsserver2022-ps
+status: experimental
+tags:
+- attack.discovery
+- attack.t1615

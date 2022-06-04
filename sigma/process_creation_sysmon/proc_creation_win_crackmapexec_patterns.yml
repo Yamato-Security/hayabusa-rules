@@ -24,8 +24,8 @@ detection:
     CommandLine: '*Imagename eq lsass.exe*'
   SELECTION_6:
     User:
-    - '*NT AUTHO*'
-    - '*NT AUTO*'
+    - '*AUTHORI*'
+    - '*AUTORI*'
   SELECTION_7:
     CommandLine: '*do rundll32.exe C:\windows\System32\comsvcs.dll, MiniDump*'
   SELECTION_8:
@@ -42,6 +42,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/05/27
 references:
 - https://mpgn.gitbook.io/crackmapexec/smb-protocol/obtaining-credentials/dump-lsass
 status: experimental

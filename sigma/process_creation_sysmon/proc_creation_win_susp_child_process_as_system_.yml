@@ -18,16 +18,20 @@ detection:
     - AUTORITE NT\
   SELECTION_4:
     User:
-    - NT AUTHORITY\SYSTEM
-    - AUTORITE NT\Sys
+    - '*AUTHORI*'
+    - '*AUTORI*'
   SELECTION_5:
-    IntegrityLevel: System
+    User:
+    - '*\SYSTEM'
+    - '*\СИСТЕМА'
   SELECTION_6:
-    Image: '*\rundll32.exe'
+    IntegrityLevel: System
   SELECTION_7:
+    Image: '*\rundll32.exe'
+  SELECTION_8:
     CommandLine: '*DavSetCookie*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not (SELECTION_6 and SELECTION_7))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6) and  not (SELECTION_7 and SELECTION_8))
 falsepositives:
 - Unknown
 id: 590a5f4c-6c8c-4f10-8307-89afe9453a9d

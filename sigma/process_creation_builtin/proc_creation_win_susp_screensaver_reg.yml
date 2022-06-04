@@ -36,7 +36,7 @@ detection:
   SELECTION_21:
     CommandLine: '*/f*'
   SELECTION_3:
-    NewProcessName: '*reg.exe'
+    NewProcessName: '*\reg.exe'
   SELECTION_4:
     CommandLine:
     - '*HKEY_CURRENT_USER\Control Panel\Desktop*'
@@ -63,6 +63,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/06/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.002/T1546.002.md
 - https://www.welivesecurity.com/wp-content/uploads/2017/08/eset-gazer.pdf

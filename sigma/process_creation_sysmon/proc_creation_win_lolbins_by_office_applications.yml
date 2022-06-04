@@ -12,17 +12,20 @@ detection:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
     Image:
-    - '*regsvr32.exe'
-    - '*rundll32.exe'
-    - '*msiexec.exe'
-    - '*mshta.exe'
-    - '*verclsid.exe'
-    - '*msdt.exe'
+    - '*\regsvr32.exe'
+    - '*\rundll32.exe'
+    - '*\msiexec.exe'
+    - '*\mshta.exe'
+    - '*\verclsid.exe'
+    - '*\msdt.exe'
   SELECTION_4:
     ParentImage:
-    - '*winword.exe'
-    - '*excel.exe'
-    - '*powerpnt.exe'
+    - '*\winword.exe'
+    - '*\excel.exe'
+    - '*\powerpnt.exe'
+    - '*\msaccess.exe'
+    - '*\mspub.exe'
+    - '*\eqnedt32.exe'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
@@ -31,7 +34,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/30
+modified: 2022/06/02
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://doublepulsar.com/follina-a-microsoft-office-code-execution-vulnerability-1a47fce5629e

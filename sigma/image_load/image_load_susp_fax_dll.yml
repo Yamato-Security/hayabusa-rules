@@ -11,7 +11,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*fxssvc.exe'
+    Image: '*\fxssvc.exe'
   SELECTION_4:
     ImageLoaded: '*ualapi.dll'
   SELECTION_5:
@@ -25,7 +25,7 @@ level: high
 logsource:
   category: image_load
   product: windows
-modified: 2021/11/27
+modified: 2022/06/02
 references:
 - https://windows-internals.com/faxing-your-way-to-system/
 status: test
