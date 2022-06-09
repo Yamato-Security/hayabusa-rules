@@ -201,6 +201,7 @@ sample-evtx: |
 - `Svr` -> Server
 - `Tgt` -> Target
 - `Pkg` -> Package
+- `Priv` -> Privilege
 - `PID` -> Process ID
 - `PGUID` -> Process GUID (Global Unique ID)
   
