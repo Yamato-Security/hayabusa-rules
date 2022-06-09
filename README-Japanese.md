@@ -26,6 +26,7 @@
     - [grep検索](#grep検索)
     - [EventData](#eventdata)
     - [EventDataの例外的なパターン](#eventdataの例外的なパターン)
+      - [同じ名前の複数のフィールド名からフィールドデータを出力する](#同じ名前の複数のフィールド名からフィールドデータを出力する)
   - [パイプ](#パイプ)
   - [ワイルドカード](#ワイルドカード)
   - [イベントキー内のキーワードのネスト](#イベントキー内のキーワードのネスト)
@@ -292,7 +293,7 @@ detection:
 
 #### 注意: 未定義のイベントキーエイリアスについて
 
-すべてのイベントキーエイリアスが `rules/config/eventkey_alias.txt`に定義されているわけではありません。検知するはずのルールが検知しない場合や、`details`（アラートの詳細）メッセージに`%EventID%`のようなプレースホルダーが表示されている場合、`rules/config/eventkey_alias.txt`の設定を確認してください。
+すべてのイベントキーエイリアスが `rules/config/eventkey_alias.txt`に定義されているわけではありません。検知するはずのルールが検知しない場合や、`details`（アラートの詳細）メッセージに`n/a` (not available)が表示されている場合、`rules/config/eventkey_alias.txt`の設定を確認してください。
 
 ### XML属性を条件に使用する方法
 
@@ -338,7 +339,7 @@ detection:
 
 ### EventData
 
-Windowsのイベントログは、基本データ（イベントID、タイムスタンプ、レコードID、ログ名（チャンネル））が書き込まれる`System`タグと、イベントIDに応じて任意のデータが書き込まれる`EventData`タグの2つに分けられます。その内、`EventData`タグ はネストされたタグの名前がすべて `Data` であり、これまで説明したイベントキーでは `SubjectUserSid` と `SubjectUserName` を区別できません。
+Windowsのイベントログは、基本データ（イベントID、タイムスタンプ、レコードID、ログ名（チャンネル））が書き込まれる`System`タグと、イベントIDに応じて任意のデータが書き込まれる`EventData`もしくは`UserData`タグの2つに分けられます。その内、`EventData`もしくは`UserData`タグはネストされたタグの名前がすべて`Data`であり、これまで説明したイベントキーでは`SubjectUserSid`と`SubjectUserName`を区別できません。
 
 ```xml
 <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
@@ -384,12 +385,12 @@ detection:
     <EventData>
         <Data>Available</Data>
         <Data>None</Data>
-        <Data>NewEngineState=Available PreviousEngineState=None SequenceNumber=9 HostName=ConsoleHost HostVersion=2.0 HostId=5cbb33bf-acf7-47cc-9242-141cd0ba9f0c EngineVersion=2.0 RunspaceId=c6e94dca-0daf-418c-860a-f751a9f2cbe1 PipelineId= CommandName= CommandType= ScriptName= CommandPath= CommandLine=</Data>
+        <Data>NewEngineState=Available PreviousEngineState=None (省略)</Data>
     </EventData>
 </Event>
 ```
 
-上記のようなイベントログを検知するには、`EventData`というイベントキーを指定します。この場合、`EventData`にネストされたタグの内、値がNoneになるタグが1つ以上存在すれば、条件にマッチすることになります。
+上記のようなイベントログを検知するには、`EventData`というイベントキーを指定します。この場合、`EventData`にネストされたタグの内、`Data`フィールドが`None`になっている場合は、条件にマッチすることになります。
 
 ```yaml
 detection:
@@ -399,6 +400,16 @@ detection:
         EventData: None
     condition: selection
 ```
+
+#### 同じ名前の複数のフィールド名からフィールドデータを出力する
+
+いくつかのイベントは、前の例のように、データをすべて`Data`というフィールド名で保存します。
+`details:`に`%Data%`を指定すると、すべてのデータが配列として出力されます。
+
+例えば：
+`["rundll32.exe","6.1.7600.16385","4a5bc637","KERNELBASE.dll","6.1.7601.23392","56eb2fb9","c0000005"]`
+
+もし、最初の`Data`フィールドのデータだけを出力したい場合は、`details:`に `%Data[1]%` を指定すると `rundll32.exe`のみが出力されます。
 
 ## パイプ
 

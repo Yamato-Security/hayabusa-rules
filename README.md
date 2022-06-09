@@ -26,6 +26,7 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
     - [grep search](#grep-search)
     - [EventData](#eventdata)
     - [Abnormal patterns in EventData](#abnormal-patterns-in-eventdata)
+    - [Outputting field data from multiple field names with the same name](#outputting-field-data-from-multiple-field-names-with-the-same-name)
   - [Pipes](#pipes)
   - [Wildcards](#wildcards)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
@@ -289,7 +290,7 @@ detection:
 
 #### Caution: Undefined Eventkey Aliases
 
-Not all eventkey aliases are defined in `rules/config/eventkey_alias.txt`. If you are not getting the correct data in the `details`(Alert details) message, and instead are getting results like `%EventID%` or if the selection in your detection logic is not working properly, then you need to update `rules/config/eventkey_alias.txt` with a new alias.
+Not all eventkey aliases are defined in `rules/config/eventkey_alias.txt`. If you are not getting the correct data in the `details` (`Alert details`) message, and instead are getting `n/a` (not available) or if the selection in your detection logic is not working properly, then you may need to update `rules/config/eventkey_alias.txt` with a new alias.
 
 ### How to use XML attributes in conditions
 
@@ -335,7 +336,8 @@ detection:
 
 ### EventData
 
-Windows event logs are divided into two parts: the `System` part where the fundamental data (Event ID, Timestamp, Record ID, Log name (Channel)) is written, and the `EventData` part where arbitrary data is written depending on the Event ID. The problem is that the names of the tags nested in EventData are all called `Data` so the eventkeys described so far cannot distinguish between `SubjectUserSid` and `SubjectUserName`.
+Windows event logs are divided into two parts: the `System` part where the fundamental data (Event ID, Timestamp, Record ID, Log name (Channel)) is written, and the `EventData` or `UserData` part where arbitrary data is written depending on the Event ID.
+One problem that arises often is that the names of the fields nested in `EventData` are all called `Data` so the eventkeys described so far cannot distinguish between `SubjectUserSid` and `SubjectUserName`.
 
 ```xml
 <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
@@ -381,12 +383,13 @@ Some of the tags nested in `EventData` do not have a `Name` attribute.
     <EventData>
         <Data>Available</Data>
         <Data>None</Data>
-        <Data>NewEngineState=Available PreviousEngineState=None SequenceNumber=9 HostName=ConsoleHost HostVersion=2.0 HostId=5cbb33bf-acf7-47cc-9242-141cd0ba9f0c EngineVersion=2.0 RunspaceId=c6e94dca-0daf-418c-860a-f751a9f2cbe1 PipelineId= CommandName= CommandType= ScriptName= CommandPath= CommandLine=</Data>
+        <Data>NewEngineState=Available PreviousEngineState=None (...)</Data>
     </EventData>
 </Event>
 ```
 
-To detect an event log like the one above, you can specify an eventkey named `EventData`. In this case, the condition will match as long as any one of the nested tags without a `Name` attribute matches.
+To detect an event log like the one above, you can specify an eventkey named `EventData`.
+In this case, the condition will match as long as any one of the nested `Data` tags equals `None`.
 
 ```yaml
 detection:
@@ -396,6 +399,16 @@ detection:
         EventData: None
     condition: selection
 ```
+
+#### Outputting field data from multiple field names with the same name
+
+Some events will save their data to field names all called `Data` like in the previous example.
+If you specify `%Data%` in `details:`, all of the data will be outputted in an array.
+
+For example:
+`["rundll32.exe","6.1.7600.16385","4a5bc637","KERNELBASE.dll","6.1.7601.23392","56eb2fb9","c0000005"]`
+
+If you want to print out just the first `Data` field data, you can specify `%Data[1]%` in your `details:` alert string and only `rundll32.exe` will be outputted.
 
 ## Pipes
 
@@ -664,7 +677,7 @@ detection:
     condition: selection and not filter
 ```
 
-1. **When you need multiple sections, please name the first section with channel and event ID information in the `section_basic` section and other selections with meaningful names after `section_` and `filter_`. Also, please write comments to explain anything difficult to understand.** For example:
+3. **When you need multiple sections, please name the first section with channel and event ID information in the `section_basic` section and other selections with meaningful names after `section_` and `filter_`. Also, please write comments to explain anything difficult to understand.** For example:
 
 ### Instead of
 
