@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2021/12/17
-modified: 2022/05/21
+modified: 2022/06/14
 
 title: 'Explicit Logon_Suspicious Process'
 details: 'Src User: %SubjectUserName% | Tgt User: %TargetUserName% | IP Addr: %IpAddress% | Process: %ProcessName% | Tgt Svr: %TargetInfo%'
@@ -13,7 +13,7 @@ logsource:
     product: windows
     service: security
 detection:
-    selection_basic_info:
+    selection_basic:
         Channel: Security
         EventID: 4648
     selection_TargetUserIsComputerAccount:
@@ -31,7 +31,7 @@ detection:
     selection_SuspiciousProcess:
         - ProcessName|endswith: "powershell.exe"
         - ProcessName|endswith: "WMIC.exe"
-    condition: selection_basic_info and selection_SuspiciousProcess and not (selection_TargetUserIsComputerAccount 
+    condition: selection_basic and selection_SuspiciousProcess and not (selection_TargetUserIsComputerAccount 
                and not filter_SubjectUserIsComputerAccount) and not filter_SystemAccounts and not filter_UsersAndTargetServerAreComputerAccounts
 falsepositives:
     - normal system usage

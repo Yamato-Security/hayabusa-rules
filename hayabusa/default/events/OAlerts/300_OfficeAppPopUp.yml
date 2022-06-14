@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/06/13
-modified: 2022/06/13
+modified: 2022/06/14
 
-title: Office Activated App PopUp
-details: 'Msg: %Data[2]% | Ver: %Data[4]%' 
+title: Office App PopUp
+details: 'App: %Data[1]% | Msg: %Data[2]% | Ver: %Data[4]%' 
 description: Displays the dialog box message that popped up in Office Activated App for the user.
 
 id: 8cab5688-ca77-483d-a295-56dd6c1db944
@@ -16,7 +16,6 @@ detection:
     selection_basic:
         Channel: OAlerts
         EventID: 300
-        EventData: 'Activated App'
     condition: selection_basic
 falsepositives:
 tags:
@@ -33,17 +32,17 @@ sample-evtx: |
             <Level>4</Level> 
             <Task>0</Task> 
             <Keywords>0x80000000000000</Keywords> 
-            <TimeCreated SystemTime="2019-07-18T15:08:51.358381300Z" /> 
-            <EventRecordID>15</EventRecordID> 
+            <TimeCreated SystemTime="2017-04-18T18:32:09.000000000Z" /> 
+            <EventRecordID>85</EventRecordID> 
             <Channel>OAlerts</Channel> 
             <Computer>Computer</Computer> 
-            <Security UserID="S-1-5-21-3445421715-2530590580-3149308974-1116" /> 
+            <Security /> 
         </System>
         <EventData>
-            <Data>Activated App</Data> 
-            <Data>Id=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx, DisplayName=Action Items, Provider=Microsoft, StoreType=Exchange, StoreId=XXXXXXXXXXXXXXXXXxx</Data> 
-            <Data>Apps for Office</Data> 
-            <Data>16.0.8431.2270</Data> 
+            <Data>Microsoft Word</Data> 
+            <Data>Want to save your changes to "Akatsuki.docx"?</Data> 
+            <Data>200054</Data> 
+            <Data>16.0.4535.1000</Data> 
             <Data /> 
             <Data /> 
         </EventData>
