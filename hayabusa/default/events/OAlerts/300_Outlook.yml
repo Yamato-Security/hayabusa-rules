@@ -1,0 +1,50 @@
+author: Zach Mathis
+date: 2022/06/14
+modified: 2022/06/14
+
+title: Outlook PopUp
+details: 'Msg: %Data[2]% | Ver: %Data[4]%' 
+description: Displays the dialog box message that popped up in Outlook for the user.
+
+id: 38529733-c2af-4d73-b7af-466f5c2e0b66
+level: informational
+status: stable
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_basic:
+        Channel: OAlerts
+        EventID: 300
+        EventData: 'Microsoft Outlook'
+    condition: selection_basic
+falsepositives:
+tags:
+references:
+    - https://bromiley.medium.com/oalerts-the-microsoft-office-event-log-ad164e1eec0f
+ruletype: Hayabusa
+
+sample-message: 
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft Office 15 Alerts" /> 
+            <EventID Qualifiers="0">300</EventID> 
+            <Level>4</Level> 
+            <Task>0</Task> 
+            <Keywords>0x80000000000000</Keywords> 
+            <TimeCreated SystemTime="2015-06-18T20:17:29.000000000Z" /> 
+            <EventRecordID>82</EventRecordID> 
+            <Channel>OAlerts</Channel> 
+            <Computer>Computer</Computer> 
+            <Security /> 
+        </System>
+        <EventData>
+            <Data>Microsoft Outlook</Data> 
+            <Data>Everything in the "Deleted Items" folder will be permanently deleted. Continue?</Data> 
+            <Data>300894</Data> 
+            <Data>15.0.4525.1004</Data> 
+            <Data>6xk3</Data> 
+            <Data /> 
+        </EventData>
+    </Event>

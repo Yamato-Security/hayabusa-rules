@@ -1,0 +1,50 @@
+author: Zach Mathis
+date: 2022/06/14
+modified: 2022/06/14
+
+title: PowerPoint PopUp
+details: 'Msg: %Data[2]% | Ver: %Data[4]%' 
+description: Displays the dialog box message that popped up in PowerPoint for the user.
+
+id: d663d2f1-4b3e-41fa-bf9b-e0abaedef2cc
+level: informational
+status: stable
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_basic:
+        Channel: OAlerts
+        EventID: 300
+        EventData: 'Microsoft PowerPoint'
+    condition: selection_basic
+falsepositives:
+tags:
+references:
+    - https://bromiley.medium.com/oalerts-the-microsoft-office-event-log-ad164e1eec0f
+ruletype: Hayabusa
+
+sample-message: 
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft Office 15 Alerts" /> 
+            <EventID Qualifiers="0">300</EventID> 
+            <Level>4</Level> 
+            <Task>0</Task> 
+            <Keywords>0x80000000000000</Keywords> 
+            <TimeCreated SystemTime="2016-06-21T20:00:47.000000000Z" /> 
+            <EventRecordID>89</EventRecordID> 
+            <Channel>OAlerts</Channel> 
+            <Computer>Computer</Computer> 
+            <Security /> 
+        </System>
+        <EventData>
+            <Data>Microsoft PowerPoint</Data> 
+            <Data>PowerPoint can't open this type of file (C:\Users\Tanaka\AppData\Local\Microsoft\Windows\INetCache\IE\9BDF09TT\Malware.ppt).</Data> 
+            <Data>400010</Data> 
+            <Data>15.0.3354.1000</Data> 
+            <Data /> 
+            <Data /> 
+        </EventData>
+    </Event>
