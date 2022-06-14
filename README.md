@@ -144,19 +144,19 @@ sample-evtx: |
 
 > ## Author section
 
-* **author [required]**: Name of the author(s).
+- **author [required]**: Name of the author(s).
 - **date [required]**: Date the rule was made.
 - **modified** [optional]: Date the rule was updated.
 
 > ## Alert section
 
-* **title [required]**: Rule file title. This will also be the name of the alert that gets displayed so the briefer the better. (Should not be longer than 85 characters.)
+- **title [required]**: Rule file title. This will also be the name of the alert that gets displayed so the briefer the better. (Should not be longer than 85 characters.)
 - **details** [optional]: The details of the alert that gets displayed. Please output any fields in the Windows event log that are useful for analysis. Fields are seperated by `" | "`. Field placeholders are enclosed with a `%` (Example: `%MemberName%`) and need to be defined in `rules/config/eventkey_alias.txt`. (Explained below.)
 - **description** [optional]: A description of the rule. This does not get displayed so you can make this long and detailed.
 
 > ## Rule section
 
-* **id [required]**: A randomly generated version 4 UUID used to uniquely identify the rule. You can generate one [here](https://www.uuidgenerator.net/version4).
+- **id [required]**: A randomly generated version 4 UUID used to uniquely identify the rule. You can generate one [here](https://www.uuidgenerator.net/version4).
 - **level [required]**: Severity level based on [sigma's definition](https://github.com/SigmaHQ/sigma/wiki/Specification). Please write one of the following: `informational`,`low`,`medium`,`high`,`critical`
 - **status[required]**: Status based on [sigma's definition](https://github.com/SigmaHQ/sigma/wiki/Specification). Please write one of the following: `deprecated`, `experimental`, `test`, `stable`.
 - **logsource [required]**: While this is actually used by Hayabusa, we define logsource in the same way as sigma in order to be compatible with sigma rules.
@@ -182,8 +182,8 @@ sample-evtx: |
 
 > ## Sample XML Event
 
-* **sample-message [required]**: Starting forward, we ask rule authors to include sample messages for their rules. This is the rendered message that Windows' Event Viewer displays.
-* **sample-evtx [required]**: Starting forward, we ask rule authors to include sample XML events for their rules.
+- **sample-message [required]**: Starting forward, we ask rule authors to include sample messages for their rules. This is the rendered message that Windows' Event Viewer displays.
+- **sample-evtx [required]**: Starting forward, we ask rule authors to include sample XML events for their rules.
 
 # Abbreviations
 
