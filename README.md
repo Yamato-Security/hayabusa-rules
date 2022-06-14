@@ -26,7 +26,7 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
     - [grep search](#grep-search)
     - [EventData](#eventdata)
     - [Abnormal patterns in EventData](#abnormal-patterns-in-eventdata)
-    - [Outputting field data from multiple field names with the same name](#outputting-field-data-from-multiple-field-names-with-the-same-name)
+      - [Outputting field data from multiple field names with the same name](#outputting-field-data-from-multiple-field-names-with-the-same-name)
   - [Pipes](#pipes)
   - [Wildcards](#wildcards)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
@@ -145,7 +145,6 @@ sample-evtx: |
 > ## Author section
 
 * **author [required]**: Name of the author(s).
-- **contributor** [optional]: Name of any contributor(s) (anyone who made any minor corrections).
 - **date [required]**: Date the rule was made.
 - **modified** [optional]: Date the rule was updated.
 
@@ -195,9 +194,11 @@ The following abbreviations are used in rules in order to make the output as con
 - `Cli` -> Client
 - `Cmd` -> Command
 - `Comp` -> Computer
+- `Dir` -> Directory
 - `Dst` -> Destination
 - `Exec` -> Execution
 - `LID` -> Logon ID
+- `Obj` -> Object
 - `Src` -> Source
 - `Svc` -> Service
 - `Svr` -> Server

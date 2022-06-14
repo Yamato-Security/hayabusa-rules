@@ -144,7 +144,6 @@ sample-evtx: |
 > ## 作者セクション
 
 - **author [必須]**: 著者名（複数可）。
-- **contributor** [オプション]: 寄稿者の名前（細かい修正をした人）。
 - **date [必須]**: ルールが作成された日付。
 - **modified** [オプション]: ルールが更新された日付。
 
@@ -194,9 +193,11 @@ sample-evtx: |
 - `Cli` -> Client
 - `Cmd` -> Command
 - `Comp` -> Computer
+- `Dir` -> Directory
 - `Dst` -> Destination
 - `Exec` -> Execution
 - `LID` -> Logon ID
+- `Obj` -> Object
 - `Src` -> Source
 - `Svc` -> Service
 - `Svr` -> Server
