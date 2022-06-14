@@ -1,0 +1,50 @@
+author: Zach Mathis
+date: 2022/06/13
+modified: 2022/06/13
+
+title: Office Activated App PopUp
+details: 'Msg: %Data[2]% | Ver: %Data[4]%' 
+description: Displays the dialog box message that popped up in Office Activated App for the user.
+
+id: 8cab5688-ca77-483d-a295-56dd6c1db944
+level: informational
+status: stable
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_basic:
+        Channel: OAlerts
+        EventID: 300
+        EventData: 'Activated App'
+    condition: selection_basic
+falsepositives:
+tags:
+references:
+    - https://bromiley.medium.com/oalerts-the-microsoft-office-event-log-ad164e1eec0f
+ruletype: Hayabusa
+
+sample-message: 
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft Office 16 Alerts" /> 
+            <EventID Qualifiers="0">300</EventID> 
+            <Level>4</Level> 
+            <Task>0</Task> 
+            <Keywords>0x80000000000000</Keywords> 
+            <TimeCreated SystemTime="2019-07-18T15:08:51.358381300Z" /> 
+            <EventRecordID>15</EventRecordID> 
+            <Channel>OAlerts</Channel> 
+            <Computer>Computer</Computer> 
+            <Security UserID="S-1-5-21-3445421715-2530590580-3149308974-1116" /> 
+        </System>
+        <EventData>
+            <Data>Activated App</Data> 
+            <Data>Id=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx, DisplayName=Action Items, Provider=Microsoft, StoreType=Exchange, StoreId=XXXXXXXXXXXXXXXXXxx</Data> 
+            <Data>Apps for Office</Data> 
+            <Data>16.0.8431.2270</Data> 
+            <Data /> 
+            <Data /> 
+        </EventData>
+    </Event>

@@ -1,0 +1,50 @@
+author: Zach Mathis
+date: 2022/06/14
+modified: 2022/06/14
+
+title: OneNote PopUp
+details: 'Msg: %Data[2]% | Ver: %Data[4]%' 
+description: Displays the dialog box message that popped up in OneNote for the user.
+
+id: 3101147a-7bce-4622-a485-f54d02f3be80
+level: informational
+status: stable
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_basic:
+        Channel: OAlerts
+        EventID: 300
+        EventData: 'Microsoft OneNote'
+    condition: selection_basic
+falsepositives:
+tags:
+references:
+    - https://bromiley.medium.com/oalerts-the-microsoft-office-event-log-ad164e1eec0f
+ruletype: Hayabusa
+
+sample-message: 
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft Office 14 Alerts" /> 
+            <EventID Qualifiers="0">300</EventID> 
+            <Level>4</Level> 
+            <Task>0</Task> 
+            <Keywords>0x80000000000000</Keywords> 
+            <TimeCreated SystemTime="2015-03-18T01:55:13.000000000Z" /> 
+            <EventRecordID>73</EventRecordID> 
+            <Channel>OAlerts</Channel> 
+            <Computer>Computer</Computer> 
+            <Security /> 
+        </System>
+        <EventData>
+            <Data>Microsoft OneNote</Data> 
+            <Data>You can't add, change, or remove password protection for this section because it hasn't been completely synced. Try again once it syncs.</Data> 
+            <Data>0</Data> 
+            <Data>14.0.4535.1000</Data> 
+            <Data /> 
+            <Data /> 
+        </EventData>
+    </Event>
