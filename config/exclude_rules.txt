@@ -5,7 +5,7 @@ c92f1896-d1d2-43c3-92d5-7a5b35c217bb # "Possible Exploitation of Exchange RCE CV
 9f7aa113-9da6-4a8d-907c-5f1a4b908299 # "SyncAppvPublishingServer Execution to Bypass Powershell Restriction"
 f8931561-97f5-4c46-907f-0a4a592e47a7 # "Code Integrity Blocked Driver Load": problem in parsing.
 
-# Replaced by Hayabusa rules
+# Replaced by Hayabusa rules:
 c265cf08-3f99-46c1-8d59-328247057d57 # "User Added to Local Administrators". 
 66b6be3d-55d0-4f47-9855-d69df21740ea # "Local User Creation". 
 7b449a5e-1db5-4dd0-a2dc-4e3a67282538 # "Hidden Local User Creation".
@@ -17,7 +17,11 @@ d99b79d2-0a6f-4f46-ad8b-260b6e17f982 # "Security Eventlog Cleared". Hayabusa rul
 100ef69e-3327-481c-8e5c-6d80d9507556 # "System Eventlog  Cleared". Hayabusa rule: f481a1f3-969e-4187-b3a5-b47c272bfebd
 a62b37e0-45d3-48d9-a517-90c1a1b0186b # "Eventlog Cleared". Hayabusa rule: f481a1f3-969e-4187-b3a5-b47c272bfebd 
 
-# Disabled due to too many false positives:
+# Disabled because they require placeholders to be set so cannot be used as is:
+f8d98d6c-7a07-4d74-b064-dd4a3c244528 # Pass the Hash Activity (%Workstations%)
+dd7876d8-0f09-11eb-adc1-0242ac120002 # Possible Zerologon (CVE-2020-1472) Exploitation (%DC-MACHINE-NAME%)
+68fcba0d-73a5-475e-a915-e8b4c576827e # Remote Registry Management Using Reg Utility (%Admins_Workstations%)
+3ff152b2-1388-4984-9cd9-a323323fdadf # Interactive Logon to Server Systems (%ServerSystems%, %DomainControllers%, %Workstations%)
 
 # Test Files
 00000000-0000-0000-0000-000000000000 # TestFile
