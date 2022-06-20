@@ -1,34 +1,35 @@
 Provider, EID, Details
+Microsoft-Windows-PowerShell, 4103, '%Payload%'
 Microsoft-Windows-PowerShell, 4104, %ScriptBlockText%
-Microsoft-Windows-Security-Auditing, 4624, User: %TargetUserName% | Comp: %WorkstationName% | IP Addr: %IpAddress% | LID: %TargetLogonId% | Process: %ProcessName%
-Microsoft-Windows-Security-Auditing, 4625, User: %TargetUserName% | Type: %LogonType% | Comp: %WorkstationName% | IP Addr: %IpAddress% | AuthPkg: %AuthenticationPackageName%
-Microsoft-Windows-Security-Auditing, 4648, Src User: %SubjectUserName% | Tgt User: %TargetUserName% | IP Addr: %IpAddress% | Process: %ProcessName% | Tgt Svr: %TargetInfo%
-Microsoft-Windows-Security-Auditing, 4672, User: %SubjectUserName% | Priv List: %PrivilegeList% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4624, User: %TargetUserName% | Comp: %WorkstationName% | IP-Addr: %IpAddress% | Process: %ProcessName% | LID: %TargetLogonId%
+Microsoft-Windows-Security-Auditing, 4625, User: %TargetUserName% | Type: %LogonType% | Comp: %WorkstationName% | IP-Addr: %IpAddress% | AuthPkg: %AuthenticationPackageName%
+Microsoft-Windows-Security-Auditing, 4648, SrcUser: %SubjectUserName% | TgtUser: %TargetUserName% | IP-Addr: %IpAddress% | Process: %ProcessName% | TgtSvr: %TargetInfo%
+Microsoft-Windows-Security-Auditing, 4672, User: %SubjectUserName% | PrivList: %PrivilegeList% | LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4673, Process: %ProcessName% | User: %SubjectUserName% | LID: %SubjectLogonId%
-Microsoft-Windows-Security-Auditing, 4674, Svc: %ObjectName% | User: %SubjectUserName% | LID: %SubjectLogonId% | AccessMask: %AccessMask%
+Microsoft-Windows-Security-Auditing, 4674, Svc: %ObjectName% | User: %SubjectUserName% | AccessMask: %AccessMask% | LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4688, CmdLine: %CommandLine% | Path: %NewProcessName% | PID: %NewProcessId% | User: %SubjectUserName% | LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4698, Name: %TaskName% | Content: %TaskContent% | User: %SubjectUserName% | LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4699, Name: %TaskName% | User: %SubjectUserName% | LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4720, User: %TargetUserName% | SID: %TargetSid%
 Microsoft-Windows-Security-Auditing, 4728, SID: %MemberSid% | Group: %TargetUserName% | LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4732, SID: %MemberSid% | Group: %TargetUserName% | LID: %SubjectLogonId%
-Microsoft-Windows-Security-Auditing, 4768, User: %TargetUserName% | Svc: %ServiceName% | IP Addr: %IpAddress% | Status: %Status% | PreAuthType: %PreAuthType%
-Microsoft-Windows-Security-Auditing, 4769, User: %TargetUserName% | Svc: %ServiceName% | IP Addr: %IpAddress% | Status: %Status%
+Microsoft-Windows-Security-Auditing, 4768, User: %TargetUserName% | Svc: %ServiceName% | IP-Addr: %IpAddress% | Status: %Status% | PreAuthType: %PreAuthType%
+Microsoft-Windows-Security-Auditing, 4769, User: %TargetUserName% | Svc: %ServiceName% | IP-Addr: %IpAddress% | Status: %Status%
 Microsoft-Windows-Security-Auditing, 4776, User: %TargetUserName% | Comp: %Workstation% | Status: %Status%
 Microsoft-Windows-Security-Auditing, 4778, User: %AccountName% | Domain: %AccountDomain% | Cli: %ClientAddress% (%ClientName%) | LID: %LogonID%
 Microsoft-Windows-Security-Auditing, 4779, User: %AccountName% | Domain: %AccountDomain% | Cli: %ClientAddress% (%ClientName%) | LID: %LogonID%
-Microsoft-Windows-Security-Auditing, 5140, User: %SubjectUserName% | Share Name: %ShareName% | Share Path: %ShareLocalPath% | IP Addr: %IpAddress% | LID: %SubjectLogonId%
-Microsoft-Windows-Security-Auditing, 5145, User: %SubjectUserName% | Share Name: %ShareName% | Share Path: %ShareLocalPath% | Path: %RelativeTargetName% | IP Addr: %IpAddress% | LID: %SubjectLogonId%
-Microsoft-Windows-Sysmon, 1, Cmd: %CommandLine% | Process: %Image% | User: %User% | Parent Cmd: %ParentCommandLine% | LID: %LogonId% | PID: %ProcessId% | PGUID: %ProcessGuid%
+Microsoft-Windows-Security-Auditing, 5140, User: %SubjectUserName% | ShareName: %ShareName% | SharePath: %ShareLocalPath% | IP-Addr: %IpAddress% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 5145, User: %SubjectUserName% | ShareName: %ShareName% | SharePath: %ShareLocalPath% | Path: %RelativeTargetName% | IP-Addr: %IpAddress% | LID: %SubjectLogonId%
+Microsoft-Windows-Sysmon, 1, Cmd: %CommandLine% | Process: %Image% | User: %User% | ParentCmd: %ParentCommandLine% | LID: %LogonId% | PID: %ProcessId% | PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 2, Path: %TargetFilename% | Process: %Image% | User: %User% | CreationTime: %CreationUtcTime% | PreviousTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 3, %Protocol% | Src: %SourceIp%:%SourcePort% (%SourceHostname%) | Dst: %DestinationIp%:%DestinationPort% (%DestinationHostname%) | User: %User% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 4, State: %State% | SysmonVersion: %SysmonVersion% | SchemaVersion: %SchemaVersion%
 Microsoft-Windows-Sysmon, 5, Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 6, Path: %ImageLoaded% | Signature: %Signature%
 Microsoft-Windows-Sysmon, 7, Image: %ImageLoaded% | Process: %Image% | Company: %Company% | Signed: %Signed% | Signature: %SignatureStatus% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hashes%
-Microsoft-Windows-Sysmon, 8, Src Process: %SourceImage% | Tgt Process: %TargetImage% | Src PID: %SourceProcessId% | Src PGUID: %SourceProcessGuid% | Tgt PID: %TargetProcessId% | Tgt PGUID: %TargetProcessGuid%
+Microsoft-Windows-Sysmon, 8, SrcProcess: %SourceImage% | TgtProcess: %TargetImage% | Src PID: %SourceProcessId% | SrcPGUID: %SourceProcessGuid% | TgtPID: %TargetProcessId% | TgtPGUID: %TargetProcessGuid%
 Microsoft-Windows-Sysmon, 9, Process: %Image% | Device: %Device% | PID: %ProessId% | PGUID: %ProcessGuid%
-Microsoft-Windows-Sysmon, 10, Src Process: %SourceImage% | Tgt Process: %TargetImage% | Src User: %SourceUser% | Tgt User: %TargetUser% | Access: %GrantedAccess% | Src PID: %SourceProcessId% | Src PGUID: %SourceProcessGUID% | Tgt PID: %TargetProcessId% | Tgt PGUID: %TargetProcessGUID%
+Microsoft-Windows-Sysmon, 10, Src Process: %SourceImage% | TgtProcess: %TargetImage% | SrcUser: %SourceUser% | TgtUser: %TargetUser% | Access: %GrantedAccess% | SrcPID: %SourceProcessId% | SrcPGUID: %SourceProcessGUID% | TgtPID: %TargetProcessId% | TgtPGUID: %TargetProcessGUID%
 Microsoft-Windows-Sysmon, 11, Path: %TargetFilename% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 12, %EventType%: %TargetObject% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 13, %EventType%: %TargetObject%: %Details% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%
@@ -46,4 +47,28 @@ Microsoft-Windows-Sysmon, 24, Process: %Image% | User: %User% | CliInfo: %Client
 Microsoft-Windows-Sysmon, 25, Process: %Image% | Type: %Type% | User: %User% | PID: %ProcessId% | PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 26, Path: %TargetFilename% | Process: %Image% | User: %User% | PID: %ProcessId% | PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 255, %ID%: %Description%
-Service Control Manager, 7031, Svc: %param1% | Crash Count: %param2% | Action: %param5%
+Service Control Manager, 7031, Svc: %param1% | CrashCount: %param2% | Action: %param5%
+Service Control Manager, 7045, Svc: %ServiceName% | Path: %ImagePath% | Acct: %AccountName% | StartType: %StartType%
+Microsoft-Windows-Security-Auditing, 4616, PrevTime: %PreviousTime% | NewTime: %NewTime% | User: %SubjectUserName% | Process: %ProcessName% | PID: %ProcessId% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4697, Svc: %ServiceName% | Path: %ServiceFileName% | User: %SubjectUserName% | SvcAcct: %ServiceAccount% | SvcType: %ServiceType% | SvcStartType: %ServiceStartType% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4661, User: %SubjectUserName% | ObjSvr: %ObjectServer% | ObjType: %ObjectType% | ObjName: %ObjectName% | Process: %ProcessName% | PID: %ProcessId% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4662, User: %SubjectUserName% | ObjSvr: %ObjectServer% | ObjName: %ObjectName% | OpType: %OperationType% | HID: %HandleId% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4663, User: %SubjectUserName% | ObjSvr: %ObjectServer% | ObjName: %ObjectName% | ObjType: %ObjectType% | Process: %ProcessName% | PID: %ProcessId% | HID: %HandleId% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4656, User: %SubjectUserName% | ObjSvr: %ObjectServer% | ObjName: %ObjectName% | ObjType: %ObjectType% | AccessReason: %AccessReason% | Process: %ProcessName% | PID: %ProcessId% | HID: %HandleId% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4738, User: %SubjectUserName% | SID: %SubjectUserSid% | TgtUser: %TargetUserName% | TgtSID: %TargetSid% | Domain: %SubjectDomainName% | TgtDomain: %TargetDomainName% | SamUser: %SamAccountName% | DisplayName: %DisplayName% | UAC: %UserAccountControl% | OldUAC: %OldUacValue% | NewUAC: %NewUacValue% | AcctExpires: %AccountExpires% | AllowedToDelegateTo: %AllowedToDelegateTo% | HomeDir: %HomeDirectory% | HomePath: %HomePath% | LogonHours: %LogonHours% |  PwLastSet: %PasswordLastSet% | PrimaryGrpID: %PrimaryGroupId% | PrivList: %PrivilegeList% | ProfilePath: %ProfilePath% | ScriptPath: %ScriptPath% | SidHistory: %SidHistory% | UserParams: %UserParameters% | UPN: %UserPrincipalName% | Comp: %UserWorkstations% | LID: %SubjectLogonId% 
+Microsoft-Windows-Security-Auditing, 4825, Domain: %AccountDomain% | User: %AccountName% | CliAddr: %ClientAddress% | LID: %LogonID%
+Microsoft-Windows-Security-Auditing, 4904, AuditSrcName: %AuditSourceName% | EventSrcID: %EventSourceId% | User: %SubjectUserName% | SID: %SubjectUserSid% | Domain: %SubjectDomainName% | Process: %ProcessName% | PID: %ProcessId% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4905, AuditSrcName: %AuditSourceName% | User: %SubjectUserName% | SID: %SubjectUserSid% | Process: %ProcessName% | PID: %ProcessId% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4719, User: %SubjectUserName% | AuditPolicyChanges: %AuditPolicyChanges% | CategoryId: %CategoryId% | SubcategoryGuid: %SubcategoryGuid% | SubcategoryId: %SubcategoryId% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4742, SPN: %ServicePrincipalNames% | User: %SubjectUserName% | SID: %SubjectUserSid% | TgtUser: %TargetUserName% | TgtSID: %TargetSid% | Domain: %SubjectDomainName% | TgtDomain: %TargetDomainName% | SamUser: %SamAccountName% | DisplayName: %DisplayName% | UAC: %UserAccountControl% | OldUAC: %OldUacValue% | NewUAC: %NewUacValue% | AcctExpires: %AccountExpires% | AllowedToDelegateTo: %AllowedToDelegateTo% | HomeDir: %HomeDirectory% | HomePath: %HomePath% | LogonHours: %LogonHours% |  PwLastSet: %PasswordLastSet% | PrimaryGrpID: %PrimaryGroupId% | PrivList: %PrivilegeList% | ProfilePath: %ProfilePath% | ScriptPath: %ScriptPath% | SidHistory: %SidHistory% | UserParams: %UserParameters% | UPN: %UserPrincipalName% | Comp: %UserWorkstations% | LID: %SubjectLogonId% 
+Microsoft-Windows-Security-Auditing, 4765, User: %SubjectUserName% | SID: %SubjectUserSid% | SrcUser: %SourceUserName% | SrcSID: %SourceSid% | TgtUser: %TargetUserName% | TgtSID: %TargetSid% | Domain: %SubjectDomainName% | TgtDomain: %TargetDomainName% | PrivList: %PrivilegeList% | SidList: %SidList% | LID: %SubjectLogonId%
+Microsoft-Windows-Bits-Client, 3, JobTitle: %jobTitle% | JobID: %jobId% | JobOwner: %jobOwner% | Process: %processPath% | PID: %processId%
+Microsoft-Windows-Security-Auditing, 4781, OldTgtUser: %OldTargetUserName% | NewTgtUser: %NewTargetUserName% | TgtSID: %TargetSid% | User: %SubjectUserName% | SID: %SubjectUserSid% | Domain: %SubjectDomainName% | TgtDomain: %TargetDomainName% | PrivList: %PrivilegeList% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4794, User: %SubjectUserName% | SID: %SubjectUserSid% | Domain: %SubjectDomainName% | Status: %Status% | Comp: %Workstation% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 5136, User: %SubjectUserName% | SID: %SubjectUserSid% | ObjectDN: %ObjectDN% | AttrLDAPName: %AttributeLDAPDisplayName% | OperationType: %OperationType% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 5156, Process: %Application% | Src: %SourceAddress%:%SourcePort% | Tgt: %DestAddress%:%DestPort% | Protocol: %Protocol% | TgtMachineID: %RemoteMachineID% | TgtSID: %RemoteUserID% | PID: %ProcessID%
+Microsoft-Windows-Windows Firewall With Advanced Security, 2003, Profile: %Profiles% | Type: %SettingType% | Value: %SettingValueString% | User: %ModifyingUser% | App: %ModifyingApplication%
+Microsoft-Windows-Windows Firewall With Advanced Security, 2004, RuleName: %RuleName% | App: %ApplicationPath% | ModifyingApp: %ModifyingApplication% | User: %ModifyingUser% | Svc: %ServiceName% | Protocol: %Protocol% | LocalAddr: %LocalAddresses% | LocalPort: %LocalPorts% | RemoteAddr: %RemoteAddresses% | RemotePort: %RemotePorts% | Action: %Action%
+Microsoft-Windows-DNS-Server-Service, 150, %param1%
+Microsoft-Windows-DNS-Server-Service, 770, Path: %param1% | Comp: %param2%
+MSExchange CmdletLogs, 6, %Data%
