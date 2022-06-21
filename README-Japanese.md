@@ -198,6 +198,7 @@ sample-evtx: |
 - `Dir` -> Directory
 - `Dst` -> Destination
 - `Exec` -> Execution
+- `Grp` -> Group
 - `LID` -> Logon ID
 - `Net` -> Network
 - `Obj` -> Object

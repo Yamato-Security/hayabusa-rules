@@ -199,6 +199,7 @@ The following abbreviations are used in rules in order to make the output as con
 - `Dir` -> Directory
 - `Dst` -> Destination
 - `Exec` -> Execution
+- `Grp` -> Group
 - `LID` -> Logon ID
 - `Net` -> Network
 - `Obj` -> Object
