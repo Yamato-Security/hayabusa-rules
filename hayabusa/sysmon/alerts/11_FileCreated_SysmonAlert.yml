@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/03/22
+modified: 2022/06/21
 
-title: File Created_Sysmon Alert
-details: 'Rule: %RuleName% | Path: %TargetFilename% | Proc: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%'
+title: File Created
+details: 'Alert: %RuleName% | Path: %TargetFilename% | Proc: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%'
 description: |
     File create operations are logged when a file is created or overwritten. 
     This event is useful for monitoring autostart locations, like the Startup folder, as well as temporary and download directories, which are common places malware drops during initial infection.

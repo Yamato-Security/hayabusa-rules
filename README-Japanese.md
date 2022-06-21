@@ -194,12 +194,16 @@ sample-evtx: |
 - `Cli` -> Client
 - `Cmd` -> Command
 - `Comp` -> Computer
+- `Conn` -> Connection
 - `Dir` -> Directory
 - `Dst` -> Destination
 - `Exec` -> Execution
 - `LID` -> Logon ID
+- `Net` -> Network
 - `Obj` -> Object
+- `Proto` -> Protocol
 - `Sig` -> Signature
+- `Susp` -> Suspicious
 - `Src` -> Source
 - `Svc` -> Service
 - `Svr` -> Server
@@ -207,6 +211,7 @@ sample-evtx: |
 - `Op` -> Operation
 - `Pkg` -> Package
 - `Priv` -> Privilege
+- `Proc` -> Process
 - `PID` -> Process ID
 - `PGUID` -> Process GUID (Global Unique ID)
 - `Ver` -> Version

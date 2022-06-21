@@ -2,8 +2,8 @@ author: Zach Mathis
 date: 2022/03/23
 modified: 2022/06/21
 
-title: ADS Created_Sysmon Alert
-details: 'Rule: %RuleName% | Path: %TargetFilename% | Proc: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hash%' 
+title: ADS Created
+details: 'Alert: %RuleName% | Path: %TargetFilename% | Proc: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hash%' 
 description: |
     This event logs when a named file stream (Alternate Data Stream) is created, and it generates events that log the hash of the contents of the file to which the stream is assigned (the unnamed stream), as well as the contents of the named stream. 
     There are malware variants that drop their executables or configuration settings via browser downloads, and this event is aimed at capturing that based on the browser attaching a Zone.Identifier "mark of the web" stream.
