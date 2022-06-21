@@ -15,7 +15,9 @@ detection:
   SELECTION_4:
     Product: The curl executable
   SELECTION_5:
-    CommandLine: '* -O *'
+    CommandLine:
+    - '* -O*'
+    - '*--remote-name*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Scripts created by developers and admins
@@ -28,9 +30,9 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/06/11
 references:
-- https://twitter.com/reegun21/status/1222093798009790464
+- https://web.archive.org/web/20200128160046/https://twitter.com/reegun21/status/1222093798009790464
 status: test
 tags:
 - attack.command_and_control

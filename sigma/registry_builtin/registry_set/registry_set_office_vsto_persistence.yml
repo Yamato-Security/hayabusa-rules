@@ -31,8 +31,12 @@ detection:
     - '*\winword.exe'
     - '*\integrator.exe'
     - '*\OfficeClickToRun.exe'
+  SELECTION_8:
+    NewProcessName: C:\Program Files\AVG\Antivirus\RegSvr.exe
+  SELECTION_9:
+    TargetObject: '*\Microsoft\Office\Outlook\Addins\Antivirus.AsOutExt\\*'
   condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5)
-    and  not ((SELECTION_6) or (SELECTION_7)))
+    and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Legitimate Addin Installation
 id: 9d15044a-7cfe-4d23-8085-6ebc11df7685
@@ -40,7 +44,7 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/03/26
+modified: 2022/06/10
 references:
 - https://twitter.com/_vivami/status/1347925307643355138
 - https://vanmieghem.io/stealth-outlook-persistence/

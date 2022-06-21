@@ -1,0 +1,38 @@
+
+title: Use of Squirrel.exe
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/06/09
+description: The "Squirrel.exe" binary that is part of multiple softwares (Slack,
+  Teams, Discord...etc) can be used as a LOLBIN
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\squirrel.exe'
+  SELECTION_4:
+    CommandLine:
+    - '* --download *'
+    - '* --update *'
+    - '* --updateRollback=*'
+  SELECTION_5:
+    CommandLine: '*http*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- See rule (fa4b21c9-0057-4493-b289-2556416ae4d7) for possible FPs
+id: 45239e6a-b035-4aaf-b339-8ad379fcb67e
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Squirrel/
+related:
+- id: fa4b21c9-0057-4493-b289-2556416ae4d7
+  type: derived
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.execution

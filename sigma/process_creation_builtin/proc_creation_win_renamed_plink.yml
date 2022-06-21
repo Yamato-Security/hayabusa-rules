@@ -1,0 +1,30 @@
+
+title: Execution Of Renamed Plink Binary
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/06/06
+description: Execution of a renamed version of the Plink binary
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    OriginalFileName: Plink
+  SELECTION_4:
+    NewProcessName: '*\plink.exe'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: 1c12727d-02bf-45ff-a9f3-d49806a3cf43
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://thedfirreport.com/2022/06/06/will-the-real-msiexec-please-stand-up-exploit-leads-to-data-exfiltration/
+- https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter7.html
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036

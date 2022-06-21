@@ -9,22 +9,27 @@ description: Adversaries may use Valid Accounts to log into a computer using the
 detection:
   SELECTION_1:
     EventID: 1
+  SELECTION_10:
+    CommandLine: '* /p*'
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
     Image: '*\mstsc.exe'
   SELECTION_4:
-    CommandLine: '* /v:*'
+    OriginalFileName: mstsc.exe
   SELECTION_5:
-    Image: '*\cmdkey.exe'
+    CommandLine: '* /v:*'
   SELECTION_6:
-    CommandLine: '*/generic:*'
+    Image: '*\cmdkey.exe'
   SELECTION_7:
-    CommandLine: '*/user:*'
+    OriginalFileName: cmdkey.exe
   SELECTION_8:
-    CommandLine: '*/pass:*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8)))
+    CommandLine: '* /g*'
+  SELECTION_9:
+    CommandLine: '* /u*'
+  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
+    SELECTION_5) or ((SELECTION_6 or SELECTION_7) and (SELECTION_8 and SELECTION_9
+    and SELECTION_10))))
 falsepositives:
 - Unknown
 id: 954f0af7-62dd-418f-b3df-a84bc2c7a774
@@ -32,6 +37,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/06/12
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1021.001/T1021.001.md#t1021001---remote-desktop-protocol
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mstsc

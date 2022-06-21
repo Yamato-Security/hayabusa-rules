@@ -4,7 +4,7 @@ ruletype: Sigma
 author: Bhabesh Raj
 date: 2021/03/03
 description: Detects possible successful exploitation for vulnerability described
-  in CVE-2021-26857 by looking for | abnormal subprocesses spawning by Exchange Server’s
+  in CVE-2021-26857 by looking for | abnormal subprocesses spawning by Exchange Server's
   Unified Messaging service
 detection:
   SELECTION_1:
@@ -21,7 +21,7 @@ detection:
 falsepositives:
 - Unknown
 id: cd479ccc-d8f0-4c66-ba7d-e06286f3f887
-level: critical
+level: high
 logsource:
   category: process_creation
   product: windows
