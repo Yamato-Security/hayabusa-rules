@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2021/12/17
-modified: 2022/06/14
+modified: 2022/06/21
 
 title: 'Explicit Logon_Suspicious Process'
-details: 'Src User: %SubjectUserName% | Tgt User: %TargetUserName% | IP Addr: %IpAddress% | Process: %ProcessName% | Tgt Svr: %TargetInfo%'
+details: 'SrcUser: %SubjectUserName% | TgtUser: %TargetUserName% | IP-Addr: %IpAddress% | Proc: %ProcessName% | TgtSvr: %TargetInfo%'
 description: Alter on explicit credential logons with suspicous processes like powershell and wmic which are often abused by malware like Cobalt Strike.
 
 id: 7616e857-8e41-4976-bc21-811d122b9fc9

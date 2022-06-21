@@ -189,6 +189,7 @@ sample-evtx: |
 
 The following abbreviations are used in rules in order to make the output as concise as possible:
 
+- `Acct` -> Account
 - `Addr` -> Address
 - `Auth` -> Authentication
 - `Cli` -> Client
@@ -199,14 +200,17 @@ The following abbreviations are used in rules in order to make the output as con
 - `Exec` -> Execution
 - `LID` -> Logon ID
 - `Obj` -> Object
+- `Sig` -> Signature
 - `Src` -> Source
 - `Svc` -> Service
 - `Svr` -> Server
 - `Tgt` -> Target
+- `Op` -> Operation
 - `Pkg` -> Package
 - `Priv` -> Privilege
 - `PID` -> Process ID
 - `PGUID` -> Process GUID (Global Unique ID)
+- `Ver` -> Version
 
 # Detection field
 

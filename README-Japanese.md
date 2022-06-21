@@ -188,6 +188,7 @@ sample-evtx: |
 
 できるだけ簡潔にするために、以下の略語を使用しています:
 
+- `Acct` -> Account
 - `Addr` -> Address
 - `Auth` -> Authentication
 - `Cli` -> Client
@@ -198,14 +199,17 @@ sample-evtx: |
 - `Exec` -> Execution
 - `LID` -> Logon ID
 - `Obj` -> Object
+- `Sig` -> Signature
 - `Src` -> Source
 - `Svc` -> Service
 - `Svr` -> Server
 - `Tgt` -> Target
+- `Op` -> Operation
 - `Pkg` -> Package
 - `Priv` -> Privilege
 - `PID` -> Process ID
 - `PGUID` -> Process GUID (Global Unique ID)
+- `Ver` -> Version
   
 # detectionフィールド
 

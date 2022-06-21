@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/05/21
+modified: 2022/06/21
 
 title: Process Access_Sysmon Alert
-details: 'Rule: %RuleName% | Src Process: %SourceImage% | Tgt Process: %TargetImage% | Src User: %SourceUser% | Tgt User: %TargetUser% | Access: %GrantedAccess% | Src PID: %SourceProcessId% | Src PGUID: %SourceProcessGUID% | Tgt PID: %TargetProcessId% | Tgt PGUID: %TargetProcessGUID%'
+details: 'Rule: %RuleName% | SrcProcess: %SourceImage% | TgtProcess: %TargetImage% | SrcUser: %SourceUser% | TgtUser: %TargetUser% | Access: %GrantedAccess% | SrcPID: %SourceProcessId% | SrcPGUID: %SourceProcessGUID% | TgtPID: %TargetProcessId% | TgtPGUID: %TargetProcessGUID%'
 description: |
     The process accessed event reports when a process opens another process, an operation that is often followed by information queries or reading and writing the address space of the target process. 
     This enables detection of hacking tools that read the memory contents of processes like Local Security Authority (Lsass.exe) in order to steal credentials for use in Pass-the-Hash attacks. 
