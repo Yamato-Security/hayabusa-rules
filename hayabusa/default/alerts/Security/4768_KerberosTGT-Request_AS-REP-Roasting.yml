@@ -1,9 +1,9 @@
 author: Yusuke Matsui, Yamato Security
 date: 2020/11/08
-modified: 2022/05/21
+modified: 2022/06/21
 
 title: Possible AS-REP Roasting
-details: 'User: %TargetUserName% | Svc: %ServiceName% | IP Addr: %IpAddress% | Status: %Status% | PreAuthType: %PreAuthType%'
+details: 'User: %TargetUserName% | Svc: %ServiceName% | IP-Addr: %IpAddress% | Status: %Status% | PreAuthType: %PreAuthType%'
 description: For each account found without preauthentication, an adversary may send an AS-REQ message without the encrypted timestamp and receive an AS-REP message with TGT data which may be encrypted with an insecure algorithm such as RC4.
 
 id: dee2a01e-5d7c-45b4-aec3-ad9722f2165a

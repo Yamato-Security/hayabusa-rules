@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/03/22
-modified: 2022/05/21
+modified: 2022/06/21
 
-title: Network Connection_Sysmon Alert
-details: 'Rule: %RuleName% | %Protocol% | Src: %SourceIp%:%SourcePort% (%SourceHostname%) | Dst: %DestinationIp%:%DestinationPort% (%DestinationHostname%) | User: %User% | Process: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%'
+title: Net Conn
+details: 'Alert: %RuleName% | %Protocol% | SrcIP-Addr: %SourceIp% | SrcPort: %SourcePort% | SrcHost: %SourceHostname% | DstIP-Addr: %DestinationIp% | DstPort: %DestinationPort% | DstHost: %DestinationHostname% | User: %User% | Proc: %Image% | PID: %ProcessId% | PGUID: %ProcessGuid%'
 description: Display network connection with sysmon rule alerts. Disabled by default.
 
 id: e13c5fe0-73f1-4c0f-aef5-1bab99b4237b

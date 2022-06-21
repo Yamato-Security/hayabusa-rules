@@ -1,9 +1,9 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/05/21
+modified: 2022/06/21
 
-title: Deleted File Archived_Sysmon Alert
-details: 'Rule: %RuleName% | %TargetFilename% | Process: %Image% | User: %User% | PID: %ProcessId% | PGUID: %ProcessGuid%' 
+title: Deleted File Archived
+details: 'Alert: %RuleName% | Path: %TargetFilename% | Proc: %Image% | User: %User% | PID: %ProcessId% | PGUID: %ProcessGuid%' 
 description: |
     A file was deleted. Additionally to logging the event, the deleted file is also saved in the ArchiveDirectory (which is C:\Sysmon by default). 
     Under normal operating conditions this directory might grow to an unreasonable size - see event ID 26: FileDeleteDetected for similar behavior but without saving the deleted files.
