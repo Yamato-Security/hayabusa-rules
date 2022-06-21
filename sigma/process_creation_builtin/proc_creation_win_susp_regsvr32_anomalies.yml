@@ -41,6 +41,8 @@ detection:
     CommandLine:
     - '*\AppData\Local*'
     - '*C:\Users\Public*'
+  SELECTION_25:
+    CommandLine: '*\AppData\Local\Microsoft\Teams*'
   SELECTION_3:
     NewProcessName: '*\regsvr32.exe'
   SELECTION_4:
@@ -59,7 +61,8 @@ detection:
     (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
     and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
     and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18) or (SELECTION_19
-    and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24)))
+    and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24))
+    and  not (SELECTION_25))
 falsepositives:
 - Unknown
 fields:
@@ -70,7 +73,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/07/18
+modified: 2022/06/20
 references:
 - https://subt0x10.blogspot.de/2017/04/bypass-application-whitelisting-script.html
 - https://app.any.run/tasks/34221348-072d-4b70-93f3-aa71f6ebecad/

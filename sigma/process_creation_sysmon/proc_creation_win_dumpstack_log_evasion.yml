@@ -12,7 +12,7 @@ detection:
   SELECTION_3:
     Image: '*\DumpStack.log'
   SELECTION_4:
-    CommandLine: ' -o DumpStack.log'
+    CommandLine: '* -o DumpStack.log*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Unknown
@@ -21,6 +21,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
+modified: 2022/06/17
 references:
 - https://twitter.com/mrd0x/status/1479094189048713219
 status: test

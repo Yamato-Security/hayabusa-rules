@@ -37,6 +37,9 @@ detection:
     - '*\thor.exe'
     - '*\thor64.exe'
     - '*\Passwordstate.exe'
+    - '*\Avast Software\Avast\AvastSvc.exe'
+    - '*\Ranger\SentinelRanger.exe'
+    - '*\Avast\AvastSvc.exe'
   SELECTION_6:
     Image: C:\Program Files\SplunkUniversalForwarder\bin\\*
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
@@ -49,7 +52,7 @@ level: high
 logsource:
   category: network_connection
   product: windows
-modified: 2022/02/21
+modified: 2022/06/20
 references:
 - https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708
 status: test

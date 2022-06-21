@@ -11,23 +11,23 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    OriginalFileName: psloglist
+    OriginalFileName: psloglist.exe
   SELECTION_4:
     NewProcessName:
     - '*\psloglist.exe'
     - '*\psloglist64.exe'
   SELECTION_5:
-    CommandLine:
-    - '*-d*'
-    - '*/d*'
-    - '*-x*'
-    - '*/x*'
-    - '*-s*'
-    - '*/s*'
-  SELECTION_6:
     CommandLine: '*security*'
-  SELECTION_7:
+  SELECTION_6:
     CommandLine: '*accepteula*'
+  SELECTION_7:
+    CommandLine:
+    - '* -d*'
+    - '* /d*'
+    - '* -x*'
+    - '* /x*'
+    - '* -s*'
+    - '* /s*'
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) or (SELECTION_5
     and SELECTION_6 and SELECTION_7)))
 falsepositives:
@@ -38,7 +38,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/13
+modified: 2022/06/16
 references:
 - https://research.nccgroup.com/2021/01/12/abusing-cloud-services-to-fly-under-the-radar/
 - https://www.cybereason.com/blog/deadringer-exposing-chinese-threat-actors-targeting-major-telcos

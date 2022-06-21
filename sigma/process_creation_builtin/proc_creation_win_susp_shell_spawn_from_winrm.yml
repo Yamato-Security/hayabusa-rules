@@ -1,9 +1,10 @@
 
-title: Suspicious Shells Spawn by WinRM
+title: Suspicious Processes Spawned by WinRM
 ruletype: Sigma
 author: Andreas Hunkeler (@Karneades), Markus Neis
 date: 2021/05/20
-description: Detects suspicious shell spawn from WinRM host process
+description: Detects suspicious processes including shells spawnd from WinRM host
+  process
 detection:
   SELECTION_1:
     EventID: 4688
@@ -17,6 +18,7 @@ detection:
     - '*\sh.exe'
     - '*\bash.exe'
     - '*\powershell.exe'
+    - '*\wsl.exe'
     - '*\schtasks.exe'
     - '*\certutil.exe'
     - '*\whoami.exe'
@@ -29,7 +31,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/05/22
+modified: 2022/06/16
 status: experimental
 tags:
 - attack.t1190

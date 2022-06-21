@@ -3,7 +3,7 @@ title: GlobalFlags Registry Persistence Mechanisms
 ruletype: Sigma
 author: Karneades, Jonhnathan Ribeiro
 date: 2018/04/11
-description: Detects persistence registry keys
+description: Detects persistence using GlobalFlags in image file executiobn options
 detection:
   SELECTION_1:
     EventID: 4657
@@ -31,7 +31,7 @@ detection:
 falsepositives:
 - Unknown
 id: 36803969-5421-41ec-b92f-8500f79c23b0
-level: critical
+level: high
 logsource:
   category: registry_set
   product: windows

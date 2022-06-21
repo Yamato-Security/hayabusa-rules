@@ -17,7 +17,7 @@ detection:
   SELECTION_4:
     Description: Command line RAR
   SELECTION_5:
-    CommandLine: .dmp
+    CommandLine: '*.dmp*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Legitimate use of WinRAR with a command line in which .dmp appears incidentally
@@ -26,6 +26,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/06/17
 references:
 - https://www.crowdstrike.com/blog/overwatch-exposes-aquatic-panda-in-possession-of-log-4-shell-exploit-tools/
 status: experimental

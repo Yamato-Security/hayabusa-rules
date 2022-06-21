@@ -184,7 +184,7 @@ detection:
   SELECTION_4:
     ScriptBlockText:
     - '*Get-SystemDriveInfo*'
-    - '*C:\ProgramData\Amazon\EC2-Windows\Launch\Module\Scripts\Set-Wallpaper.ps1*'
+    - '*C:\ProgramData\Amazon\EC2-Windows\Launch\Module\\*'
   SELECTION_5:
     ScriptBlockText: '# Copyright 2016 Amazon.com, Inc. or its affiliates. All Rights
       Reserved*'
@@ -198,7 +198,7 @@ logsource:
   category: ps_script
   definition: Script Block Logging must be enabled
   product: windows
-modified: 2022/05/26
+modified: 2022/06/07
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries

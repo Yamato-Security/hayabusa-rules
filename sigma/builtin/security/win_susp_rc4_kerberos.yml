@@ -14,7 +14,7 @@ detection:
   SELECTION_4:
     TicketEncryptionType: '0x17'
   SELECTION_5:
-    ServiceName: $*
+    ServiceName: '*$'
   condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
     (SELECTION_5))
 falsepositives:
@@ -25,7 +25,7 @@ level: medium
 logsource:
   product: windows
   service: security
-modified: 2021/08/14
+modified: 2022/06/19
 references:
 - https://adsecurity.org/?p=3458
 - https://www.trimarcsecurity.com/single-post/TrimarcResearch/Detecting-Kerberoasting-Activity
