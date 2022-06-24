@@ -72,3 +72,16 @@ Microsoft-Windows-Windows Firewall With Advanced Security, 2004, RuleName: %Rule
 Microsoft-Windows-DNS-Server-Service, 150, %param1%
 Microsoft-Windows-DNS-Server-Service, 770, Path: %param1% | Comp: %param2%
 MSExchange CmdletLogs, 6, %Data%
+Microsoft-Windows-Windows Defender, 1116, Threat: %ThreatName% | Severity: %SeverityName% | Type: %CategoryName% | User: %DetectionUser% | Path: %Path% | Proc: %WindowsDefenderProcessName%
+Microsoft-Windows-Security-Auditing, 6416, DeviceDescrip: %DeviceDescription% | DeviceID: %DeviceId% | LocInfo: %LocationInformation% | CompatibleIDs: %CompatibleIds% | User: %SubjectUserName% | SID: %SubjectUserSid% | LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 5142, User: %SubjectUserName% | ShareName: %ShareName% | ShareLocalPath: %ShareLocalPath% | LID: %SubjectLogonId%
+Microsoft-Windows-PrintService, 301, DeletedPrinter: %Param1%
+Microsoft-Windows-PrintService, 302, PrinterDeletionPending: %PrinterDeletionPending%
+Microsoft-Windows-PrintService, 823, OldDefaultPrinter: %OldDefaultPrinter% | NewDefaultPrinter: %NewDefaultPrinter% | Status: %Status% | Module: %Module%
+Microsoft-Windows-PrintService, 848, PrinterName: %PrinterName% | ShareName: %ShareName%
+Microsoft-Windows-PrintService, 849, PrinterName: %PrinterName% | ShareName: %ShareName%
+Microsoft-Windows-PrintService, 354, Printer: %Param1% | DLL: %Param2% | Error: %Param3%
+Microsoft-Windows-PrintService, 300, PrinterCreated: %PrinterCreated%
+Microsoft-Windows-Security-Auditing, 6281, Path: %param1%
+Microsoft-Windows-Security-Auditing, 4692, User: %SubjectUserName% | SID: %SubjectUserSid% | Domain: %SubjectDomainName% | MasterKeyId: %MasterKeyId% | RecoveryServer: %RecoveryServer% | RecoveryKeyId: %RecoveryKeyId% | FailureReason: %FailureReason%
+Microsoft-Windows-Security-Auditing, 5038, Path: %param1%
