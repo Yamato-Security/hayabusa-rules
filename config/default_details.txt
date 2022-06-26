@@ -85,3 +85,10 @@ Microsoft-Windows-PrintService, 300, PrinterCreated: %PrinterCreated%
 Microsoft-Windows-Security-Auditing, 6281, Path: %param1%
 Microsoft-Windows-Security-Auditing, 4692, User: %SubjectUserName% | SID: %SubjectUserSid% | Domain: %SubjectDomainName% | MasterKeyId: %MasterKeyId% | RecoveryServer: %RecoveryServer% | RecoveryKeyId: %RecoveryKeyId% | FailureReason: %FailureReason%
 Microsoft-Windows-Security-Auditing, 5038, Path: %param1%
+Microsoft-Windows-WMI-Activity, 5859, Namespace: %OperationEssStartedNamespaceName% | Query: %UserDataQuery% | SID: %OperationEssStartedUser% | PID: %OperationEssStartedProcessid% | Provider: %OperationEssStartedProvider% | PossibleCause: %OperationEssStartedPossibleCause%
+Microsoft-Windows-DriverFrameworks-UserMode, 2003, Device: %DvrFmwk2003InstanceId%
+Microsoft-Windows-DriverFrameworks-UserMode, 2102, Device: %DvrFmwkInstanceId%
+Microsoft-Windows-DriverFrameworks-UserMode, 2100, Device: %DvrFmwkInstanceId%
+MsiInstaller, 1034, Product: %Data[1]% | Ver: %Data[2]% | Vendor: %Data[5]% | Status: %Data[4]%
+MsiInstaller, 11724, Product: %Data[1]%
+Microsoft-Windows-Ntfs, 98, Drive: %DriveName% | Device: %DeviceName%
