@@ -1,16 +1,17 @@
-import os
-import subprocess
-import shutil
-import ruamel.yaml
 import logging
-from typing import Dict, Set, List, Any
+import os
+import shutil
+import subprocess
+from typing import Dict, Set
+
+import ruamel.yaml
 
 FORMAT = ('[%(levelname)-8s] %(name)s, %(lineno)d: %(message)s')
 logging.basicConfig(format = FORMAT, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 yaml = ruamel.yaml.YAML()
-sigma_dir = "~/git/sigma"
+sigma_dir = "~/sigma"
 sigmac = "tools/sigmac"
 hayabusa_rule_path = "./hayabusa_rules"
 
@@ -19,7 +20,7 @@ def main():
         shutil.rmtree(hayabusa_rule_path)
     os.mkdir(hayabusa_rule_path)
     logconverter = Logconverter(sigma_dir,
-        rules_dir=os.path.join(sigma_dir, "rules/windows"),
+        rules_dir=os.path.join(sigma_dir, "rules/windows"), #.bak"),
         config_dir=os.path.join(sigma_dir, "tools/config/generic/")
     )
     logconverter.create_config_map()
@@ -64,6 +65,7 @@ class Logconverter():
                         f.write(l + '\n')
             except subprocess.TimeoutExpired:
                 logger.error("failed to convert " + output_path)
+                # process kill する
             except Exception as err:
                 logger.error(err)
 
@@ -93,40 +95,24 @@ class Logconverter():
         if category in self.config_map:
             configs = self.config_map[category]
         else:
-            configs = {}
+            configs = set()
 
         tmp = rule_path[len(self.rules_dir)+1:]
         off = tmp.find("/")
         rule_type = tmp[:off]
         path_from_off = tmp[off+1:]
 
-        # TODO: configs[i] に変更する
-        if len(configs) > 0:
-            for config in configs:
-                output_path = os.path.join(hayabusa_rule_path, rule_type + "_" + config[:-4], path_from_off)
-                output_dir = output_path[:-len(file_name)]
-                logger.debug("  output_path: " + output_path)
-                if not os.path.exists(output_dir):
-                    os.makedirs(output_dir)
+        for _ in range(len(configs) + 1):
+            if len(configs) > 0:
+                config = configs.pop()
+            else:
+                config = None
 
-                sigma_command = [
-                    "python3",
-                    os.path.join(sigma_dir, sigmac),
-                    "-t",
-                    "hayabusa",
-                    "-c",
-                    os.path.join(self.config_dir, config),
-                    "-c",
-                    os.path.join(self.config_dir, "windows-services.yml"),
-                    "--defer-abort",
-                    rule_path
-                ]
-                logger.debug("  command: " + str(sigma_command))
-                proc = subprocess.Popen(sigma_command, stdout=subprocess.PIPE)
-                self.convert_process.append((proc, output_path))
-                self.rule_count += 1
-        else:
-            output_path = os.path.join(hayabusa_rule_path, rule_type, path_from_off)
+            if config:
+                output_path = os.path.join(hayabusa_rule_path, rule_type + "_" + config[:-4], path_from_off)
+            else:
+                output_path = os.path.join(hayabusa_rule_path, rule_type, path_from_off)
+
             output_dir = output_path[:-len(file_name)]
             logger.debug("  output_path: " + output_path)
             if not os.path.exists(output_dir):
@@ -136,15 +122,19 @@ class Logconverter():
                 "python3",
                 os.path.join(sigma_dir, sigmac),
                 "-t",
-                "hayabusa",
+                "hayabusa"
+            ]
+            if config:
+                sigma_command.extend(["-c", os.path.join(self.config_dir, config)])
+            sigma_command.extend([
                 "-c",
                 os.path.join(self.config_dir, "windows-services.yml"),
                 "--defer-abort",
                 rule_path
-            ]
+            ])
             logger.debug("  command: " + str(sigma_command))
-            proc = subprocess.Popen(sigma_command, stdout=subprocess.PIPE)
-            self.convert_process.append((proc, output_path))
+            # proc = subprocess.Popen(sigma_command, stdout=subprocess.PIPE)
+            # self.convert_process.append((proc, output_path))
             self.rule_count += 1
 
 if __name__ == "__main__":
