@@ -2,6 +2,7 @@ import logging
 import os
 import shutil
 import subprocess
+from multiprocessing.pool import ThreadPool
 from typing import Dict, Set
 
 import ruamel.yaml
@@ -20,7 +21,7 @@ def main():
         shutil.rmtree(hayabusa_rule_path)
     os.mkdir(hayabusa_rule_path)
     logconverter = Logconverter(sigma_dir,
-        rules_dir=os.path.join(sigma_dir, "rules/windows"), #.bak"),
+        rules_dir=os.path.join(sigma_dir, "rules/windows.bak"),
         config_dir=os.path.join(sigma_dir, "tools/config/generic/")
     )
     logconverter.create_config_map()
@@ -53,21 +54,11 @@ class Logconverter():
                         self.config_map[category].add(config)
 
     def convert_rules(self):
-        self.convert_process = []
-        # TODO: 呼び出しを並行に
+        num = None
+        self.threadpool = ThreadPool(num)
         self._convert_rules(self.rules_dir)
-        for (p, output_path) in self.convert_process:
-            try:
-                p.wait(10)
-                with open(output_path, mode="w") as f:
-                    for l in p.stdout:
-                        l = l.decode("utf-8").strip()
-                        f.write(l + '\n')
-            except subprocess.TimeoutExpired:
-                logger.error("failed to convert " + output_path)
-                # process kill する
-            except Exception as err:
-                logger.error(err)
+        self.threadpool.close()
+        self.threadpool.join()
 
     def _convert_rules(self, rules_dir):
         for file in os.listdir(rules_dir):
@@ -75,9 +66,9 @@ class Logconverter():
             if os.path.isdir(file_path):
                 self._convert_rules(file_path)
             elif file.endswith(".yml"):
-                self._convert_rule(file_path, file)
+                self.threadpool.apply_async(self.convert_rule_worker, (file_path, file, ))
 
-    def _convert_rule(self, rule_path: str, file_name: str):
+    def convert_rule_worker(self, rule_path: str, file_name: str):
         with open(rule_path, 'r') as yml:
             rule_data = yaml.load(yml)
             if "logsource" in rule_data and "category" in rule_data["logsource"]:
@@ -133,9 +124,17 @@ class Logconverter():
                 rule_path
             ])
             logger.debug("  command: " + str(sigma_command))
-            # proc = subprocess.Popen(sigma_command, stdout=subprocess.PIPE)
-            # self.convert_process.append((proc, output_path))
+            proc = subprocess.Popen(sigma_command, stdout=subprocess.PIPE)
             self.rule_count += 1
+            try:
+                proc.wait(30)
+                with open(output_path, mode="w") as f:
+                    f.write(proc.stdout.read().decode("utf-8"))
+            except subprocess.TimeoutExpired:
+                logger.error("failed to convert " + output_path)
+                proc.kill()
+            except Exception as err:
+                logger.error(err)
 
 if __name__ == "__main__":
     main()
