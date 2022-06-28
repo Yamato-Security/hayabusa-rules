@@ -1,3 +1,7 @@
+# usage:
+#   1. set this python file in sigma/tools dir.
+#   2. cd sigma/tools dir
+#   3. `python3 convert.sh`
 import logging
 import os
 import shutil
@@ -12,7 +16,7 @@ logging.basicConfig(format = FORMAT, level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 yaml = ruamel.yaml.YAML()
-sigma_dir = "~/sigma"
+sigma_dir = "/user/sample/sigma" # path to SIGMA's git dir
 sigmac = "tools/sigmac"
 hayabusa_rule_path = "./hayabusa_rules"
 
