@@ -1,0 +1,31 @@
+
+title: Suspicious Query of MachineGUID
+ruletype: Sigma
+author: frack113
+date: 2022/01/01
+description: Use of reg to get MachineGuid information
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image: '*\reg.exe'
+  SELECTION_3:
+    CommandLine: '*SOFTWARE\Microsoft\Cryptography*'
+  SELECTION_4:
+    CommandLine: '*/v *'
+  SELECTION_5:
+    CommandLine: '*MachineGuid*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unknown
+id: f5240972-3938-4e56-8e4b-e33893176c1f
+level: low
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1082/T1082.md#atomic-test-8---windows-machineguid-discovery
+status: experimental
+tags:
+- attack.discovery
+- attack.t1082

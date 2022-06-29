@@ -1,0 +1,73 @@
+
+title: Raw Disk Access Using Illegitimate Tools
+ruletype: Sigma
+author: Teymur Kheirkhabarov, oscd.community
+date: 2019/10/22
+description: Raw disk access using illegitimate tools, possible defence evasion
+detection:
+  SELECTION_1:
+    EventID: 9
+  SELECTION_10:
+    Image:
+    - C:\Program Files\\*
+    - C:\Program Files (x86)\\*
+  SELECTION_11:
+    Image: '*C:\Users\\*'
+  SELECTION_12:
+    Image: '*\AppData\\*'
+  SELECTION_13:
+    Image: '*\Microsoft\\*'
+  SELECTION_14:
+    Image: C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost*
+  SELECTION_15:
+    Image: '*\StartMenuExperienceHost.exe'
+  SELECTION_2:
+    Device: '*floppy*'
+  SELECTION_3:
+    Image:
+    - C:\Windows\System32\\*
+    - C:\Windows\SystemApps\\*
+    - C:\Windows\WinSxS\\*
+    - C:\Windows\servicing\\*
+    - C:\Windows\CCM\\*
+    - C:\Windows\uus\\*
+    - C:\Windows\WinSxs\\*
+  SELECTION_4:
+    ProcessId: 4
+  SELECTION_5:
+    Image:
+    - C:\Windows\UUS\amd64\MoUsoCoreWorker.exe
+    - C:\Windows\explorer.exe
+  SELECTION_6:
+    Image:
+    - System
+    - Registry
+  SELECTION_7:
+    Image: '*\Keybase\upd.exe'
+  SELECTION_8:
+    Image: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+  SELECTION_9:
+    Image: '*\MsMpEng.exe'
+  condition: (SELECTION_1 and  not ((SELECTION_2) or (SELECTION_3) or (SELECTION_4)
+    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)
+    or (SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14
+    and SELECTION_15)))
+falsepositives:
+- Legitimate Administrator using tool for raw access or ongoing forensic investigation
+fields:
+- ComputerName
+- Image
+- ProcessID
+- Device
+id: db809f10-56ce-4420-8c86-d6a7d793c79c
+level: low
+logsource:
+  category: raw_access_thread
+  product: windows
+modified: 2022/02/21
+references:
+- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1006

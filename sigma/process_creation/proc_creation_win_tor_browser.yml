@@ -1,0 +1,27 @@
+
+title: Tor Client or Tor Browser Use
+ruletype: Sigma
+author: frack113
+date: 2022/02/20
+description: Detects the use of Tor or Tor-Browser to connect to onion routing networks
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Image:
+    - '*\tor.exe'
+    - '*\Tor Browser\Browser\firefox.exe'
+  condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- Unknown
+id: 62f7c9bf-9135-49b2-8aeb-1e54a6ecc13c
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://www.logpoint.com/en/blog/detecting-tor-use-with-logpoint/
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1090.003
