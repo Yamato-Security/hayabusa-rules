@@ -25,7 +25,7 @@ def main():
         shutil.rmtree(hayabusa_rule_path)
     os.mkdir(hayabusa_rule_path)
     logconverter = Logconverter(sigma_dir,
-        rules_dir=os.path.join(sigma_dir, "rules/windows"),
+        rules_dir=os.path.join(sigma_dir, "rules/windows.bak"),
         config_dir=os.path.join(sigma_dir, "tools/config/generic/")
     )
     logconverter.create_config_map()
