@@ -2,7 +2,7 @@
 title: Suspicious Download with BITS from Suspicious TLD
 ruletype: Sigma
 author: Florian Roth
-date: 2022/06/28
+date: 2022/06/10
 description: Detects a suspicious download using the BITS client from a FQDN that
   is unusual. Adversaries may abuse BITS jobs to persistently execute or clean up
   after malicious payloads.
@@ -13,26 +13,19 @@ detection:
     EventID: 16403
   SELECTION_3:
     RemoteName:
-    - '*raw.githubusercontent.com*'
-    - '*gist.githubusercontent.com*'
-    - '*pastebin.com*'
-    - '*cdn.discordapp.com/attachments/*'
-    - '*mediafire.com*'
-    - '*mega.nz*'
-    - '*ddns.net*'
-    - '*.paste.ee*'
-    - '*.hastebin.com*'
-    - '*.ghostbin.co/*'
-    - '*ufile.io*'
-    - '*storage.googleapis.com*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    - '*.com*'
+    - '*.azureedge.net*'
+    - '*.sfx.ms*'
+    - '*download.mozilla.org*'
+  condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
 falsepositives:
-- Unknown
-id: d635249d-86b5-4dad-a8c7-d7272b788586
-level: high
+- Other legitimate domains used by software updaters
+id: 6d44fb93-e7d2-475c-9d3d-54c9c1e33427
+level: medium
 logsource:
   product: windows
   service: bits-client
+modified: 2022/06/28
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1197/T1197.md
 - https://twitter.com/malmoeb/status/1535142803075960832

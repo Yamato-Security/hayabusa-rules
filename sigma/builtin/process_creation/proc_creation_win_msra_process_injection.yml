@@ -1,0 +1,41 @@
+
+title: Msra.exe Process Injection
+ruletype: Sigma
+author: Alexander McDonald
+date: 2022/06/24
+description: Detects process injection using Microsoft Remote Asssistance (Msra.exe)
+  which has been used for discovery and persistence tactics
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    ParentProcessName: '*\msra.exe'
+  SELECTION_4:
+    ParentCommandLine: '*msra.exe'
+  SELECTION_5:
+    NewProcessName:
+    - '*\arp.exe'
+    - '*\cmd.exe'
+    - '*\net.exe'
+    - '*\netstat.exe'
+    - '*\nslookup.exe'
+    - '*\route.exe'
+    - '*\schtasks.exe'
+    - '*\whoami.exe'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Legitimate use of Msra.exe
+id: 744a188b-0415-4792-896f-11ddb0588dbc
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://www.microsoft.com/security/blog/2021/12/09/a-closer-look-at-qakbots-latest-building-blocks-and-how-to-knock-them-down/
+- https://www.fortinet.com/content/dam/fortinet/assets/analyst-reports/ar-qakbot.pdf
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1055
