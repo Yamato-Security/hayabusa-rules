@@ -1,0 +1,32 @@
+
+title: WerFault LSASS Process Memory Dump
+ruletype: Sigma
+author: Florian Roth
+date: 2022/06/27
+description: Detects WerFault creating a dump file with a name that indicates that
+  the dump file could be an LSASS process memory, which contains user credentials
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: C:\WINDOWS\system32\WerFault.exe
+  SELECTION_4:
+    TargetFilename:
+    - '*\lsass*'
+    - '*lsass.exe*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: c3e76af5-4ce0-4a14-9c9a-25ceb8fda182
+level: high
+logsource:
+  category: file_event
+  product: windows
+references:
+- https://github.com/helpsystems/nanodump
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.001

@@ -1,0 +1,43 @@
+
+title: Registry Disable System Restore
+ruletype: Sigma
+author: frack113
+date: 2022/04/04
+description: Detects the modification of the registry to disable a system restore
+  on the computer
+detection:
+  SELECTION_1:
+    EventID: 4657
+  SELECTION_2:
+    OperationType:
+    - Existing registry value modified
+  SELECTION_3:
+    Channel: Security
+  SELECTION_4:
+    EventType: Setvalue
+  SELECTION_5:
+    TargetObject:
+    - HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore*
+    - HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore*
+  SELECTION_6:
+    TargetObject:
+    - '*DisableConfig'
+    - '*DisableSR'
+  SELECTION_7:
+    NewValue: DWORD (0x00000001)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Unknown
+id: 5de03871-5d46-4539-a82d-3aa992a69a83
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/06/26
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1490/T1490.md#atomic-test-9---disable-system-restore-through-registry
+status: experimental
+tags:
+- attack.impact
+- attack.t1490
