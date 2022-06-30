@@ -653,7 +653,7 @@ CountルールのDetails出力は固定で、`[condition]`にcount条件と`[res
 
 # ルール作成のアドバイス
 
-1. **可能な場合は、常に `Channel`と`EventID`を指定してください。** 将来的には、チャネル名とイベンドIDでフィルタリングする可能性があるため、適切な`Channel`と`EventID`が設定されていない場合はルールが無視される可能性があります。
+1. **可能な場合は、常に `Channel`もしくは`ProviderName`と`EventID`を指定してください。** デフォルトでは、`./rules/config/target_event_IDs.txt`に記載されているイベントIDしかスキャンされないので、記載されていない場合は追加する必要があります。
 
 2. **不要な場合は複数の `selection`と`filter`セクションを使用しないでください。**
 

@@ -653,7 +653,7 @@ The timestamp of the alert will be the time from the first event detected.
 
 # Rule creation advice
 
-1. **When possible, always specify the `Channel` and `EventID` name.** In the future, we may filter on channel names and event IDs so your rule may be ignored if this is not set.
+1. **When possible, always specify the `Channel` or `ProviderName` name and the `EventID` number.** By default, only the event IDs listed in `./rules/config/target_event_IDs.txt` will be scanned so you may need to add a new `EventID` number to this file if the EID is not already in there.
 
 2. **Please do not use multiple `selection` or `filter` fields and excessive grouping when it is not needed.** For example:
 
