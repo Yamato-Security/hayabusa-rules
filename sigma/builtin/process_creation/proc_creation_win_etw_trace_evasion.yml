@@ -11,31 +11,23 @@ detection:
   SELECTION_10:
     CommandLine: '*/e:false*'
   SELECTION_11:
-    CommandLine: '*Remove-EtwTraceProvider*'
-  SELECTION_12:
-    CommandLine: '*EventLog-Microsoft-Windows-WMI-Activity-Trace*'
-  SELECTION_13:
-    CommandLine: '*{1418ef04-b0b4-4623-bf7e-d74ab47bbdaa}*'
-  SELECTION_14:
-    CommandLine: '*Set-EtwTraceProvider*'
-  SELECTION_15:
-    CommandLine: '*{1418ef04-b0b4-4623-bf7e-d74ab47bbdaa}*'
-  SELECTION_16:
-    CommandLine: '*EventLog-Microsoft-Windows-WMI-Activity-Trace*'
-  SELECTION_17:
-    CommandLine: '*0x11*'
-  SELECTION_18:
     CommandLine: '*logman*'
-  SELECTION_19:
+  SELECTION_12:
     CommandLine: '*update*'
+  SELECTION_13:
+    CommandLine: '*trace*'
+  SELECTION_14:
+    CommandLine: '*--p*'
+  SELECTION_15:
+    CommandLine: '*-ets*'
+  SELECTION_16:
+    CommandLine: '*Remove-EtwTraceProvider*'
+  SELECTION_17:
+    CommandLine: '*Set-EtwTraceProvider*'
+  SELECTION_18:
+    CommandLine: '*0x11*'
   SELECTION_2:
     Channel: Security
-  SELECTION_20:
-    CommandLine: '*trace*'
-  SELECTION_21:
-    CommandLine: '*--p*'
-  SELECTION_22:
-    CommandLine: '*-ets*'
   SELECTION_3:
     CommandLine: '*cl*'
   SELECTION_4:
@@ -52,9 +44,8 @@ detection:
     CommandLine: '*set-log*'
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
     (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-    and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14
-    and SELECTION_15 and SELECTION_16 and SELECTION_17) or (SELECTION_18 and SELECTION_19
-    and SELECTION_20 and SELECTION_21 and SELECTION_22)))
+    and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14
+    and SELECTION_15) or SELECTION_16 or (SELECTION_17 and SELECTION_18)))
 falsepositives:
 - Unknown
 id: a238b5d0-ce2d-4414-a676-7a531b3d13d6
@@ -62,7 +53,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/06/28
 references:
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil
 - https://abuse.io/lockergoga.txt

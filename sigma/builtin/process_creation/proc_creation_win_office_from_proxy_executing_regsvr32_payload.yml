@@ -11,37 +11,32 @@ description: Excel called wmic to finally proxy execute regsvr32 with the payloa
 detection:
   SELECTION_1:
     EventID: 4688
-  SELECTION_10:
-    CommandLine: '*create*'
-  SELECTION_11:
-    CommandLine: '*call*'
   SELECTION_2:
     Channel: Security
   SELECTION_3:
     NewProcessName: '*\wbem\WMIC.exe'
   SELECTION_4:
-    CommandLine: '*wmic *'
-  SELECTION_5:
     OriginalFileName: wmic.exe
-  SELECTION_6:
-    Description: WMI Commandline Utility
-  SELECTION_7:
+  SELECTION_5:
     CommandLine:
     - '*regsvr32*'
     - '*rundll32*'
     - '*msiexec*'
     - '*mshta*'
     - '*verclsid*'
-  SELECTION_8:
+  SELECTION_6:
     ParentProcessName:
     - '*\winword.exe'
     - '*\excel.exe'
     - '*\powerpnt.exe'
-  SELECTION_9:
+  SELECTION_7:
     CommandLine: '*process*'
-  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4 or SELECTION_5
-    or SELECTION_6) and SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10
-    and SELECTION_11)
+  SELECTION_8:
+    CommandLine: '*create*'
+  SELECTION_9:
+    CommandLine: '*call*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and (SELECTION_5
+    and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9))
 falsepositives:
 - Unknown
 id: 9d1c72f5-43f0-4da5-9320-648cf2099dd0
@@ -49,7 +44,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/06/02
+modified: 2022/06/27
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/main/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml

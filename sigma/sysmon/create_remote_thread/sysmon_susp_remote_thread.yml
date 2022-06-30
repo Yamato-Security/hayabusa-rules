@@ -71,8 +71,12 @@ detection:
     - C:\Windows\System32\services.exe
     - C:\Windows\System32\wininit.exe
     - C:\Windows\System32\csrss.exe
+  SELECTION_7:
+    SourceImage: C:\Windows\System32\provtool.exe
+  SELECTION_8:
+    TargetParentProcessId: 0
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-    or (SELECTION_5 and SELECTION_6)))
+    or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 fields:
@@ -85,7 +89,7 @@ level: high
 logsource:
   category: create_remote_thread
   product: windows
-modified: 2022/04/07
+modified: 2022/06/29
 notes:
 - MonitoringHost.exe is a process that loads .NET CLR by default and thus a favorite
   for process injection for .NET in-memory offensive tools.
