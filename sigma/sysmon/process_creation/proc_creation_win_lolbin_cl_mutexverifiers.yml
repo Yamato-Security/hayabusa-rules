@@ -1,7 +1,7 @@
 
 title: CL_Mutexverifiers.ps1 Proxy Execution
 ruletype: Sigma
-author: frack113
+author: oscd.community, Natalia Shornikova, frack113
 date: 2022/05/21
 description: Detects the use of a Micorsoft signed script to execute commands
 detection:
@@ -10,10 +10,10 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    CommandLine:
-    - '*\CL_Mutexverifiers.ps1*'
-    - '*runAfterCancelProcess *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    CommandLine: '*\CL_Mutexverifiers.ps1*'
+  SELECTION_4:
+    CommandLine: '*runAfterCancelProcess *'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 1e0e1a81-e79b-44bc-935b-ddb9c8006b3d
@@ -21,6 +21,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/06/28
 references:
 - https://lolbas-project.github.io/lolbas/Scripts/CL_mutexverifiers/
 status: experimental

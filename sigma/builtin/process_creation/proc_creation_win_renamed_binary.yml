@@ -13,23 +13,23 @@ detection:
     Channel: Security
   SELECTION_3:
     OriginalFileName:
-    - cmd.exe
+    - Cmd.Exe
     - CONHOST.EXE
-    - powershell.exe
-    - powershell_ise.exe
+    - PowerShell.EXE
+    - powershell_ise.EXE
     - psexec.exe
     - psexec.c
     - cscript.exe
     - wscript.exe
-    - mshta.exe
-    - regsvr32.exe
+    - MSHTA.EXE
+    - REGSVR32.EXE
     - wmic.exe
-    - certutil.exe
-    - rundll32.exe
-    - cmstp.exe
+    - CertUtil.exe
+    - RUNDLL32.EXE
+    - CMSTP.EXE
     - msiexec.exe
     - 7z.exe
-    - winrar.exe
+    - WinRAR.exe
     - wevtutil.exe
     - net.exe
     - net1.exe
@@ -46,13 +46,13 @@ detection:
     - '*\wscript.exe'
     - '*\mshta.exe'
     - '*\regsvr32.exe'
-    - '*\wmic.exe'
+    - '*\WMIC.exe'
     - '*\certutil.exe'
     - '*\rundll32.exe'
     - '*\cmstp.exe'
     - '*\msiexec.exe'
     - '*\7z.exe'
-    - '*\winrar.exe'
+    - '*\WinRAR.exe'
     - '*\wevtutil.exe'
     - '*\net.exe'
     - '*\net1.exe'
@@ -61,12 +61,14 @@ detection:
 falsepositives:
 - Custom applications use renamed binaries adding slight change to binary name. Typically
   this is easy to spot and add to whitelist
+- PsExec installed via Windows Store doesn't contain original filename field (False
+  negative)
 id: 36480ae1-a1cb-4eaa-a0d6-29801d7e9142
 level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/12/01
+modified: 2022/06/28
 references:
 - https://attack.mitre.org/techniques/T1036/
 - https://mgreen27.github.io/posts/2019/05/12/BinaryRename.html

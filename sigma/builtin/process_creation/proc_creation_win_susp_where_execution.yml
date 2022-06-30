@@ -1,7 +1,7 @@
 
 title: Suspicious Where Execution
 ruletype: Sigma
-author: frack113
+author: frack113, Nasreddine Bencherchali
 date: 2021/12/13
 description: |
   Adversaries may enumerate browser bookmarks to learn more about compromised hosts.
@@ -18,8 +18,17 @@ detection:
     OriginalFileName: where.exe
   SELECTION_5:
     CommandLine:
-    - '*Bookmarks*'
     - '*places.sqlite*'
+    - '*cookies.sqlite*'
+    - '*formhistory.sqlite*'
+    - '*logins.json*'
+    - '*key4.db*'
+    - '*key3.db*'
+    - '*sessionstore.jsonlz4*'
+    - '*History*'
+    - '*Bookmarks*'
+    - '*Cookies*'
+    - '*Login Data*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
@@ -28,7 +37,7 @@ level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/13
+modified: 2022/06/29
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1217/T1217.md
 status: experimental

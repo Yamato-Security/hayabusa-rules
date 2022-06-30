@@ -17,7 +17,6 @@ detection:
     - '*\MsMpEng.exe'
     - '*\Mrt.exe'
     - '*\rpcnet.exe'
-    - '*\svchost.exe'
     - '*\ngen.exe'
     - '*\TiWorker.exe'
   SELECTION_5:
@@ -38,7 +37,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/02/09
+modified: 2022/06/28
 status: experimental
 tags:
 - attack.defense_evasion

@@ -11,20 +11,15 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: \wbem\WMIC.exe
+    NewProcessName: '*\wbem\WMIC.exe'
   SELECTION_4:
-    CommandLine: '*wmic *'
-  SELECTION_5:
     OriginalFileName: wmic.exe
-  SELECTION_6:
-    Description: WMI Commandline Utility
-  SELECTION_7:
+  SELECTION_5:
     ParentProcessName:
     - '*\winword.exe'
     - '*\excel.exe'
     - '*\powerpnt.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-    or SELECTION_6) and SELECTION_7)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
 id: 518643ba-7d9c-4fa5-9f37-baed36059f6a
