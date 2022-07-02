@@ -11,6 +11,10 @@ description: Offensive tradecraft is switching away from using APIs like "Create
 detection:
   SELECTION_1:
     EventID: 8
+  SELECTION_10:
+    TargetImage:
+    - '*\bin\git.exe'
+    - '*C:\Windows\System32\conhost.exe'
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
@@ -75,8 +79,11 @@ detection:
     SourceImage: C:\Windows\System32\provtool.exe
   SELECTION_8:
     TargetParentProcessId: 0
+  SELECTION_9:
+    SourceImage: '*\git.exe'
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-    or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+    or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+    and SELECTION_10)))
 falsepositives:
 - Unknown
 fields:
@@ -89,7 +96,7 @@ level: high
 logsource:
   category: create_remote_thread
   product: windows
-modified: 2022/06/29
+modified: 2022/06/30
 notes:
 - MonitoringHost.exe is a process that loads .NET CLR by default and thus a favorite
   for process injection for .NET in-memory offensive tools.

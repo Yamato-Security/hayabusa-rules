@@ -1,0 +1,33 @@
+
+title: Use of Scriptrunner.exe
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/07/01
+description: The "ScriptRunner.exe" binary can be abused to porxy execution through
+  it and bypass possible whitelisting
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    NewProcessName: '*\ScriptRunner.exe'
+  SELECTION_4:
+    OriginalFileName: ScriptRunner.exe
+  SELECTION_5:
+    CommandLine: '* -appvscript *'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+falsepositives:
+- Legitimate use when App-v is deployed
+id: 64760eef-87f7-4ed3-93fd-655668ea9420
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://lolbas-project.github.io/lolbas/Binaries/Scriptrunner/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1218
