@@ -78,9 +78,14 @@ class Logconverter():
             if "logsource" in rule_data and "category" in rule_data["logsource"]:
                 category = rule_data["logsource"]["category"]
             elif "service" in rule_data["logsource"]:
-                # category = rule_data["logsource"]["service"]
-                logger.info(rule_path + " has no logsoruce.category. This rule has logsoruce.service.")
-                category = None
+                # serviceにsysmonが書かれている場合に対応させる
+                # ex. sysmon/sysmon_process_hollowing.yml
+                if rule_data["logsource"]["service"] == "sysmon":
+                    category = "sysmon_status"
+                else:
+                    # category = rule_data["logsource"]["service"]
+                    logger.info(rule_path + " has no logsoruce.category. This rule has logsoruce.service.")
+                    category = None
             else:
                 category = None
                 logger.warning(rule_path + " has no log category description.")
@@ -88,7 +93,7 @@ class Logconverter():
 
         logger.debug("target: " + file_name)
         if category in self.config_map:
-            configs = self.config_map[category]
+            configs = copy.deepcopy(self.config_map[category])
         else:
             configs = set()
 
@@ -97,16 +102,17 @@ class Logconverter():
         rule_type = tmp[:off]
         path_from_off = tmp[off+1:]
 
-        for _ in range(len(configs) + 1):
+        while True:
             if len(configs) > 0:
                 config = configs.pop()
             else:
                 config = None
 
-            if config:
-                output_path = os.path.join(hayabusa_rule_path, rule_type + "_" + config[:-4], path_from_off)
-            else:
+            logger.debug("  config: " + str(config))
+            if config == "sysmon.yml":
                 output_path = os.path.join(hayabusa_rule_path, rule_type, path_from_off)
+            else:
+                output_path = os.path.join(hayabusa_rule_path, "builtin", rule_type, path_from_off)
 
             output_dir = output_path[:-len(file_name)]
             logger.debug("  output_path: " + output_path)
@@ -139,6 +145,8 @@ class Logconverter():
                 proc.kill()
             except Exception as err:
                 logger.error(err)
+            if len(configs) == 0:
+                break
 
 if __name__ == "__main__":
     main()
