@@ -27,8 +27,7 @@ def main():
         shutil.rmtree(export_dir_name)
     os.mkdir(export_dir_name)
     logconverter = Logconverter(sigma_dir,
-        rules_dir=os.path.join(sigma_dir, "rules/windows"),
-        config_dir=os.path.join(sigma_dir, "tools/config/generic/")
+    logconverter.convert_rules()
     )
     logconverter.create_config_map()
     converted_rules = logconverter.convert_rules()
@@ -68,13 +67,14 @@ class Logconverter():
                 for logsource in config_data["logsources"]:
                     if "category" in config_data["logsources"][logsource]:
                         category = config_data["logsources"][logsource]["category"]
-                        if category not in self.config_map:
+    def convert_rules(self):
                             self.config_map[category] = set()
                         self.config_map[category].add(config)
 
     def convert_rules(self) -> int:
-        num = None
-        convert_rule_list =self.create_rule_list(self.rules_dir)
+            result = threadpool.map(sigma_executer, convert_rule_list)
+        failed = sum(result)
+        print(str(len(result) - failed) + " rules where converted! (failed: " + str(failed) + ")")
         print("convert called!")
         with ThreadPool(num) as threadpool:
             print(threadpool.map(sigma_executer, convert_rule_list))
@@ -104,7 +104,6 @@ class Logconverter():
                 else:
                     # category = rule_data["logsource"]["service"]
                     logger.info(rule_path + " has no logsoruce.category. This rule has logsoruce.service.")
-                    category = None
             else:
                 category = None
                 logger.warning(rule_path + " has no log category description.")
@@ -154,16 +153,23 @@ class Logconverter():
             logger.debug("  command: " + str(sigma_command))
             convert_datas.append(ConvertData(file_name, output_path, sigma_command))
             if len(configs) == 0:
-                break
+    """
         return convert_datas
-
-def sigma_executer(data: ConvertData):
-    """実際にSigmacを実行する関数。
+        sigma_command (list[str]): convert command for sigma
+        file_name (str): target rule file path
+        output_path (str): output file path.
     Args:
-        sigma_command (_type_): _description_
+    proc = subprocess.Popen(data.sigma_command,
+                            stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         file_name (_type_): _description_
         output_path (_type_): _description_
     """
+        stderr = proc.stderr.read().decode("utf-8")
+        if len(stderr) > 0:
+            logger.warning('convert "' + data.file_name + '" failed.\n'
+                           'command: ' + str(data.sigma_command) + '\n'
+                           + stderr)
+            return 1
     proc = subprocess.Popen(data.sigma_command, stdout=subprocess.PIPE)
     try:
         proc.wait(30)
