@@ -1,37 +1,35 @@
-# usage:
-#   1. set this python file in sigma/tools dir.
-#   2. cd sigma/tools dir
-#   3. `python3 convert.sh`
 import argparse
 import copy
 import logging
 import os
 import shutil
 import subprocess
+import sys
 from multiprocessing.pool import ThreadPool
 from typing import Dict, List, Set
 
 import ruamel.yaml
 
-FORMAT = ('[%(levelname)-8s] %(name)s, %(lineno)-3d: %(message)s')
+SIGMA_DIR = ".../path/to/sigma/"
+SIGMAC = ".../path/to/sigma/tools/sigmac"
+EXPORT_DIR_NAME = "./hayabusa_rules"
+RULES_DIR = ".../path/to/sigma/rules/windows"
+
+FORMAT = ('[%(levelname)-8s] %(message)s')
 logging.basicConfig(format = FORMAT, level=logging.WARNING)
 logger = logging.getLogger(__name__)
-
 yaml = ruamel.yaml.YAML()
-sigma_dir = "/user/sample/sigma" # path to SIGMA's git dir
-sigmac = "tools/sigmac"
-export_dir_name = "./hayabusa_rules"
 
 def main():
-    if os.path.exists(export_dir_name):
-        shutil.rmtree(export_dir_name)
-    os.mkdir(export_dir_name)
-    logconverter = Logconverter(sigma_dir,
-    logconverter.convert_rules()
+    if os.path.exists(EXPORT_DIR_NAME):
+        shutil.rmtree(EXPORT_DIR_NAME)
+    os.mkdir(EXPORT_DIR_NAME)
+    logconverter = Logconverter(SIGMA_DIR,
+        rules_dir=RULES_DIR,
+        config_dir=os.path.join(SIGMA_DIR, "tools/config/generic/")
     )
     logconverter.create_config_map()
-    converted_rules = logconverter.convert_rules()
-    print(str(converted_rules) + " rules where converted!")
+    logconverter.convert_rules()
 
 class ConvertData(object):
     __slots__ = [
@@ -67,18 +65,18 @@ class Logconverter():
                 for logsource in config_data["logsources"]:
                     if "category" in config_data["logsources"][logsource]:
                         category = config_data["logsources"][logsource]["category"]
-    def convert_rules(self):
+                        if category not in self.config_map:
                             self.config_map[category] = set()
                         self.config_map[category].add(config)
 
-    def convert_rules(self) -> int:
+    def convert_rules(self):
+        num = None
+        convert_rule_list =self.create_rule_list(self.rules_dir)
+        print("convert start!")
+        with ThreadPool(num) as threadpool:
             result = threadpool.map(sigma_executer, convert_rule_list)
         failed = sum(result)
         print(str(len(result) - failed) + " rules where converted! (failed: " + str(failed) + ")")
-        print("convert called!")
-        with ThreadPool(num) as threadpool:
-            print(threadpool.map(sigma_executer, convert_rule_list))
-        return self.rule_count
 
     def create_rule_list(self, rules_dir) -> List[ConvertData]:
         convert_datas = list()
@@ -104,10 +102,10 @@ class Logconverter():
                 else:
                     # category = rule_data["logsource"]["service"]
                     logger.info(rule_path + " has no logsoruce.category. This rule has logsoruce.service.")
+                    category = None
             else:
                 category = None
                 logger.warning(rule_path + " has no log category description.")
-                return
 
         logger.debug("target: " + file_name)
         if category in self.config_map:
@@ -128,9 +126,9 @@ class Logconverter():
 
             logger.debug("  config: " + str(config))
             if config == "sysmon.yml":
-                output_path = os.path.join(export_dir_name, rule_type, path_from_off)
+                output_path = os.path.join(EXPORT_DIR_NAME, rule_type, path_from_off)
             else:
-                output_path = os.path.join(export_dir_name, "builtin", rule_type, path_from_off)
+                output_path = os.path.join(EXPORT_DIR_NAME, "builtin", rule_type, path_from_off)
             output_dir = output_path[:-len(file_name)]
             logger.debug("  output_path: " + output_path)
             if not os.path.exists(output_dir):
@@ -138,7 +136,7 @@ class Logconverter():
 
             sigma_command = [
                 "python3",
-                os.path.join(sigma_dir, sigmac),
+                SIGMAC,
                 "-t",
                 "hayabusa"
             ]
@@ -153,27 +151,27 @@ class Logconverter():
             logger.debug("  command: " + str(sigma_command))
             convert_datas.append(ConvertData(file_name, output_path, sigma_command))
             if len(configs) == 0:
-    """
+                break
         return convert_datas
+
+def sigma_executer(data: ConvertData):
+    """
+    Args:
         sigma_command (list[str]): convert command for sigma
         file_name (str): target rule file path
         output_path (str): output file path.
-    Args:
+    """
     proc = subprocess.Popen(data.sigma_command,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        file_name (_type_): _description_
-        output_path (_type_): _description_
-    """
+    try:
+        proc.wait(30)
+        logger.info(data.file_name + " were converted.")
         stderr = proc.stderr.read().decode("utf-8")
         if len(stderr) > 0:
             logger.warning('convert "' + data.file_name + '" failed.\n'
                            'command: ' + str(data.sigma_command) + '\n'
                            + stderr)
             return 1
-    proc = subprocess.Popen(data.sigma_command, stdout=subprocess.PIPE)
-    try:
-        proc.wait(30)
-        logger.info(data.file_name + " were converted.")
         with open(data.output_path, mode="w") as f:
             f.write(proc.stdout.read().decode("utf-8"))
     except subprocess.TimeoutExpired:
@@ -187,27 +185,45 @@ class Logconverter():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--sigma_dir", help="path to sigma's git dir")
     parser.add_argument("-c", "--cpu",
                         help="You can specify the number of CPUs to use. Deault is os.cpu_count()'s number",
                         default=None)
     parser.add_argument("-r", "--rule_path",
                         help="""
-                        full path to rule you want to convert.
-                        ex.> python3 convert.py -r /path/to/ruledir
+                        full path to rule dir you want to convert.
+                        Default: .../sigma/rules/windows/
                         """)
-    parser.add_argument("-o",
+    parser.add_argument("-o", "--output",
                         help="Export dir. Default: ./hayabusa_rules",
-                        default="hayabusa_rules")
+                        default="./hayabusa_rules")
     parser.add_argument("--debug", help="Debug mode.",
                     action="store_true")
     parser.add_argument("--verbose", help="Show more information",
                     action="store_true")
     args = parser.parse_args()
 
+    # CHECK DIR
+    convertpy_path = os.path.abspath(__file__) # Expect: .../sigma/tools/convert.py
+    files = os.listdir(os.path.dirname(convertpy_path))
+    if "sigmac" not in files:
+        logger.error("sigmac does not exist in same dir. You must set convert.py to sigma/tools dir.")
+        sys.exit(1)
+    SIGMAC = os.path.join(os.path.dirname(convertpy_path), "sigmac")
+    SIGMA_DIR = os.path.abspath(os.path.join(os.path.dirname(convertpy_path), ".."))
+
+    # DEBUG MODE
     if args.debug:
         logger.setLevel(level=logging.DEBUG)
     if args.verbose:
         logger.setLevel(level=logging.INFO)
+
+    # SET ENV
+    EXPORT_DIR_NAME = args.output
+    RULES_DIR = os.path.join(SIGMA_DIR, "rules/windows")
+    if args.rule_path:
+        RULES_DIR = args.rule_path
+        if not os.path.isdir(RULES_DIR):
+            logger.error(args.rule_path + " does not exist.")
+            sys.exit(1)
 
     main()
