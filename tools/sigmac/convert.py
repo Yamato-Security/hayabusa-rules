@@ -14,6 +14,7 @@ SIGMA_DIR = ".../path/to/sigma/"
 SIGMAC = ".../path/to/sigma/tools/sigmac"
 EXPORT_DIR_NAME = "./hayabusa_rules"
 RULES_DIR = ".../path/to/sigma/rules/windows"
+CPU = None
 
 FORMAT = ('[%(levelname)-8s] %(message)s')
 logging.basicConfig(format = FORMAT, level=logging.WARNING)
@@ -70,10 +71,9 @@ class Logconverter():
                         self.config_map[category].add(config)
 
     def convert_rules(self):
-        num = None
         convert_rule_list =self.create_rule_list(self.rules_dir)
         print("convert start!")
-        with ThreadPool(num) as threadpool:
+        with ThreadPool(CPU) as threadpool:
             result = threadpool.map(sigma_executer, convert_rule_list)
         failed = sum(result)
         print(str(len(result) - failed) + " rules where converted! (failed: " + str(failed) + ")")
@@ -187,7 +187,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--cpu",
                         help="You can specify the number of CPUs to use. Deault is os.cpu_count()'s number",
-                        default=None)
+                        type=int, default=None)
     parser.add_argument("-r", "--rule_path",
                         help="""
                         full path to rule dir you want to convert.
@@ -219,6 +219,7 @@ if __name__ == "__main__":
 
     # SET ENV
     EXPORT_DIR_NAME = args.output
+    CPU = args.cpu
     RULES_DIR = os.path.join(SIGMA_DIR, "rules/windows")
     if args.rule_path:
         RULES_DIR = args.rule_path
