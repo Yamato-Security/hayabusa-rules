@@ -14,7 +14,7 @@ detection:
   SELECTION_4:
     CommandLine:
     - '*-sta *'
-    - '*–localserver *'
+    - '*-localserver *'
   SELECTION_5:
     CommandLine: '*{*'
   SELECTION_6:
@@ -30,7 +30,7 @@ logsource:
   product: windows
 references:
 - https://nasbench.medium.com/a-deep-dive-into-rundll32-exe-642344b41e90
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.015/T1546.015.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.015/T1546.015.md
 status: experimental
 tags:
 - attack.privilege_escalation

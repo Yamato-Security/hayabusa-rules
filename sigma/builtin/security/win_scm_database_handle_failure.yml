@@ -14,17 +14,19 @@ detection:
   SELECTION_4:
     ObjectName: ServicesActive
   SELECTION_5:
+    AccessMask: '0xf003f'
+  SELECTION_6:
     SubjectLogonId: '0x3e4'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    and  not (SELECTION_6))
 falsepositives:
 - Unknown
 id: 13addce7-47b2-4ca0-a98f-1de964d1d669
-level: high
+level: medium
 logsource:
   product: windows
   service: security
-modified: 2021/11/12
+modified: 2022/07/11
 references:
 - https://threathunterplaybook.com/notebooks/windows/07_discovery/WIN-190826010110.html
 status: experimental

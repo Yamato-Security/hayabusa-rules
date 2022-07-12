@@ -13,17 +13,16 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\csi.exe'
+    NewProcessName:
+    - '*\csi.exe'
+    - '*\rcsi.exe'
   SELECTION_4:
-    NewProcessName: '*\rcsi.exe'
+    OriginalFileName:
+    - csi.exe
+    - rcsi.exe
   SELECTION_5:
-    OriginalFileName: csi.exe
-  SELECTION_6:
-    OriginalFileName: rcsi.exe
-  SELECTION_7:
     Company: Microsoft Corporation
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-    or SELECTION_6) and SELECTION_7)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Legitimate usage by software developers
 fields:
@@ -36,10 +35,10 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/05/11
+modified: 2022/07/11
 references:
-- https://github.com/LOLBAS-Project/LOLBAS/blob/master/yml/OtherMSBinaries/Csi.yml
-- https://github.com/LOLBAS-Project/LOLBAS/blob/master/yml/OtherMSBinaries/Rcsi.yml
+- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Csi/
+- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Rcsi/
 - https://enigma0x3.net/2016/11/21/bypassing-application-whitelisting-by-using-rcsi-exe/
 - https://twitter.com/Z3Jpa29z/status/1317545798981324801
 status: experimental

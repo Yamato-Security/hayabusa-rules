@@ -12,7 +12,6 @@ detection:
     Channel: Security
   SELECTION_3:
     ParentProcessName:
-    - '*\notepad.exe'
     - '*\minesweeper.exe'
     - '*\winver.exe'
     - '*\bitsadmin.exe'
@@ -23,6 +22,7 @@ detection:
     - '*\schtasks.exe'
     - '*\eventvwr.exe'
     - '*\calc.exe'
+    - '*\notepad.exe'
   SELECTION_5:
     NewProcessName:
     - '*\WerFault.exe'
@@ -30,6 +30,7 @@ detection:
     - '*\conhost.exe'
     - '*\mmc.exe'
     - '*\win32calc.exe'
+    - '*\notepad.exe'
   SELECTION_6:
     NewProcessName|re: ^$
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and  not
@@ -41,7 +42,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/03/28
+modified: 2022/07/08
 references:
 - https://twitter.com/x86matthew/status/1505476263464607744?s=12
 - https://svch0st.medium.com/stats-from-hunting-cobalt-strike-beacons-c17e56255f9b

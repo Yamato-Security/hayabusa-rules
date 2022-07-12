@@ -3,10 +3,9 @@ title: Testing Usage of Uncommonly Used Port
 ruletype: Sigma
 author: frack113
 date: 2022/01/23
-description: "Adversaries may communicate using a protocol and port paring that are\
-  \ typically not associated.\nFor example, HTTPS over port 8088(Citation: Symantec\
-  \ Elfin Mar 2019) or port 587(Citation: Fortinet Agent Tesla April 2018) as opposed\
-  \ to the traditional port 443. \n"
+description: |
+  Adversaries may communicate using a protocol and port paring that are typically not associated.
+  For example, HTTPS over port 8088(Citation: Symantec Elfin Mar 2019) or port 587(Citation: Fortinet Agent Tesla April 2018) as opposed to the traditional port 443.
 detection:
   SELECTION_1:
     EventID: 4104
@@ -30,9 +29,10 @@ id: adf876b3-f1f8-4aa9-a4e4-a64106feec06
 level: medium
 logsource:
   category: ps_script
+  definition: Script block logging must be enabled
   product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1571/T1571.md#atomic-test-1---testing-usage-of-uncommonly-used-port-with-powershell
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1571/T1571.md#atomic-test-1---testing-usage-of-uncommonly-used-port-with-powershell
 - https://docs.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=windowsserver2022-ps
 status: experimental
 tags:

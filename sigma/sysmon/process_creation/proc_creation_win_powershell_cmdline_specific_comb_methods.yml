@@ -1,7 +1,7 @@
 
 title: Encoded PowerShell Command Line
 ruletype: Sigma
-author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community
+author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
 date: 2020/10/11
 description: Detects specific combinations of encoding methods in the PowerShell command
   lines
@@ -12,16 +12,6 @@ detection:
     CommandLine: '*split*'
   SELECTION_11:
     CommandLine: '*join*'
-  SELECTION_12:
-    Image: '*\powershell.exe'
-  SELECTION_13:
-    CommandLine: '*ForEach*'
-  SELECTION_14:
-    CommandLine: '*Xor*'
-  SELECTION_15:
-    Image: '*\powershell.exe'
-  SELECTION_16:
-    CommandLine: '*cOnvErTTO-SECUreStRIng*'
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
@@ -47,20 +37,22 @@ detection:
     CommandLine: '*join*'
   SELECTION_9:
     Image: '*\powershell.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and (((((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)) or (SELECTION_9
-    and SELECTION_10 and SELECTION_11)) or (SELECTION_12 and SELECTION_13 and SELECTION_14))
-    or (SELECTION_15 and SELECTION_16)))
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+    SELECTION_5) or ((SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
+    and SELECTION_10 and SELECTION_11))))
 falsepositives:
 - Unlikely
 id: cdf05894-89e7-4ead-b2b0-0a5f97a90f2f
-level: medium
+level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/06
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=65
+related:
+- id: 5b572dcf-254b-425c-a8c5-d9af6bea35a6
+  type: similar
 status: test
 tags:
 - attack.defense_evasion

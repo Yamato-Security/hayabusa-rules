@@ -11,26 +11,26 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\powershell.exe'
-  SELECTION_4:
-    CommandLine:
-    - '*Clear-EventLog*'
-    - '*Remove-EventLog*'
-    - '*Limit-EventLog*'
-  SELECTION_5:
-    NewProcessName: '*\wmic.exe'
-  SELECTION_6:
-    CommandLine: '* ClearEventLog *'
-  SELECTION_7:
     NewProcessName: '*\wevtutil.exe'
-  SELECTION_8:
+  SELECTION_4:
     CommandLine:
     - '*clear-log*'
     - '* cl *'
     - '*set-log*'
     - '* sl *'
-  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6)) or (SELECTION_7 and SELECTION_8)))
+  SELECTION_5:
+    NewProcessName: '*\powershell.exe'
+  SELECTION_6:
+    CommandLine:
+    - '*Clear-EventLog*'
+    - '*Remove-EventLog*'
+    - '*Limit-EventLog*'
+  SELECTION_7:
+    NewProcessName: '*\wmic.exe'
+  SELECTION_8:
+    CommandLine: '* ClearEventLog *'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Admin activity
 - Scripts and administrative tools used in the monitored environment
@@ -39,9 +39,9 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/11
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1070.001/T1070.001.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.001/T1070.001.md
 - https://eqllib.readthedocs.io/en/latest/analytics/5b223758-07d6-4100-9e11-238cfdd0fe97.html
 status: stable
 tags:

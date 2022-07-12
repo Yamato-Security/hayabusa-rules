@@ -1,0 +1,45 @@
+
+title: Disable Winevt Event Logging Via Registry
+ruletype: Sigma
+author: frack113, Nasreddine Bencherchali
+date: 2022/07/04
+description: Detects tempering with the "Enabled" registry key in order to disable
+  windows logging of a windows event channel
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_10:
+    TargetObject: '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-IIS-Logging*'
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    EventType: SetValue
+  SELECTION_4:
+    TargetObject: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels\\*
+  SELECTION_5:
+    TargetObject: '*\Enabled'
+  SELECTION_6:
+    Details: DWORD (0x00000000)
+  SELECTION_7:
+    Image: '*\Windows\system32\wevtutil.exe'
+  SELECTION_8:
+    Image: C:\Windows\winsxs\\*
+  SELECTION_9:
+    Image: '*\TiWorker.exe'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9 and SELECTION_10)))
+falsepositives:
+- Legitimate administrators disabling specific event log for troubleshooting
+id: 2f78da12-f7c7-430b-8b19-a28f269b77a3
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/07/07
+references:
+- https://twitter.com/WhichbufferArda/status/1543900539280293889
+- https://github.com/DebugPrivilege/CPP/blob/c39d365617dbfbcb01fffad200d52b6239b2918c/Windows%20Defender/RestoreDefenderConfig.cpp
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.002

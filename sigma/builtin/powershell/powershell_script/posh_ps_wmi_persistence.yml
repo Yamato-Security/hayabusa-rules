@@ -36,12 +36,12 @@ id: 9e07f6e7-83aa-45c6-998e-0af26efd0a85
 level: medium
 logsource:
   category: ps_script
-  definition: EnableScriptBlockLogging must be set to enable
+  definition: Script block logging must be enabled
   product: windows
 modified: 2021/10/16
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1546.003/T1546.003.md
-- https://github.com/EmpireProject/Empire/blob/master/data/module_source/persistence/Persistence.psm1#L545
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.003/T1546.003.md
+- https://github.com/EmpireProject/Empire/blob/08cbd274bef78243d7a8ed6443b8364acd1fc48b/data/module_source/persistence/Persistence.psm1#L545
 status: experimental
 tags:
 - attack.privilege_escalation

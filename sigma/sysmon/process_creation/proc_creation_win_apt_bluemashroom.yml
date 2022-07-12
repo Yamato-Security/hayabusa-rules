@@ -26,8 +26,10 @@ detection:
     - '*\x86\Microsoft.Teams.AddinLoader.dll"'
     - '*\x64\Microsoft.Teams.AddinLoader.dll'
     - '*\x64\Microsoft.Teams.AddinLoader.dll"'
+  SELECTION_9:
+    CommandLine: '*\AppData\Local\WebEx\WebEx64\Meetings\atucfobj.dll'
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 or SELECTION_8)))
+    (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 or SELECTION_8) or (SELECTION_9)))
 falsepositives:
 - Unlikely
 id: bd70d3f8-e60e-4d25-89f0-0b5a9cff20e0
@@ -35,7 +37,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2022/03/02
+modified: 2022/07/05
 references:
 - https://www.virusbulletin.com/conference/vb2019/abstracts/apt-cases-exploiting-vulnerabilities-region-specific-software
 status: test

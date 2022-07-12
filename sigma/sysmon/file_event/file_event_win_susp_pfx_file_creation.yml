@@ -12,7 +12,12 @@ detection:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
     TargetFilename: '*.pfx'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  SELECTION_4:
+    TargetFilename: '*\Templates\Windows\Windows_TemporaryKey.pfx*'
+  SELECTION_5:
+    TargetFilename: '*\CMake\\*'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+    and SELECTION_5)))
 falsepositives:
 - System administrators managing certififcates.
 id: dca1b3e8-e043-4ec8-85d7-867f334b5724
@@ -20,7 +25,7 @@ level: medium
 logsource:
   category: file_event
   product: windows
-modified: 2021/11/27
+modified: 2022/07/07
 references:
 - https://github.com/OTRF/detection-hackathon-apt29/issues/14
 - https://threathunterplaybook.com/evals/apt29/detections/6.B.1_6392C9F1-D975-4F75-8A70-433DEDD7F622.html

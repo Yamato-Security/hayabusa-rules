@@ -1,13 +1,12 @@
 
-title: Suspicious Get Information for AD Groups or DoesNotRequirePreAuth User
+title: AD Groups Or Users Enumeration Using PowerShell - ScriptBlock
 ruletype: Sigma
 author: frack113
 date: 2021/12/15
-description: "Adversaries may attempt to find domain-level groups and permission settings.\n\
-  The knowledge of domain-level permission groups can help adversaries determine which\
-  \ groups exist and which users belong to a particular group.\nAdversaries may use\
-  \ this information to determine which users have elevated permissions, such as domain\
-  \ administrators. \n"
+description: |
+  Adversaries may attempt to find domain-level groups and permission settings.
+  The knowledge of domain-level permission groups can help adversaries determine which groups exist and which users belong to a particular group.
+  Adversaries may use this information to determine which users have elevated permissions, such as domain administrators.
 detection:
   SELECTION_1:
     EventID: 4104
@@ -31,9 +30,10 @@ id: 88f0884b-331d-403d-a3a1-b668cf035603
 level: low
 logsource:
   category: ps_script
+  definition: Script block logging must be enabled
   product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1069.002/T1069.002.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.002/T1069.002.md
 status: experimental
 tags:
 - attack.discovery

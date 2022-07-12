@@ -11,21 +11,26 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    CommandLine: '*curl*'
+    NewProcessName: '*\curl.exe'
   SELECTION_4:
-    CommandLine: '* start *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    Product: The curl executable
+  SELECTION_5:
+    CommandLine:
+    - '* start *'
+    - '*&call *'
+    - '*& call *'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Administrative scripts (installers)
 fields:
 - ParentImage
 - CommandLine
 id: 21dd6d38-2b18-4453-9404-a0fe4a0cc288
-level: medium
+level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/05
 references:
 - https://medium.com/@reegun/curl-exe-is-the-new-rundll32-exe-lolbin-3f79c5f35983
 status: test

@@ -3,7 +3,7 @@ title: Suspicious Execution of Systeminfo
 ruletype: Sigma
 author: frack113
 date: 2022/01/01
-description: Use of systeminfo to get information
+description: Detects usage of the "systeminfo" command to retrieve information
 detection:
   SELECTION_1:
     EventID: 4688
@@ -20,7 +20,7 @@ logsource:
   category: process_creation
   product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1082/T1082.md#atomic-test-1---system-information-discovery
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1082/T1082.md#atomic-test-1---system-information-discovery
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/systeminfo
 status: experimental
 tags:

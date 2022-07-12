@@ -31,8 +31,8 @@ detection:
   SELECTION_9:
     CommandLine: '*S-1-5-19:F*'
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    ((SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9)
-    or (SELECTION_10)))))
+    (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9)
+    or (SELECTION_10)))
 falsepositives:
 - Users interacting with the files on their own (unlikely unless privileged users).
 - Dynatrace app
@@ -47,7 +47,7 @@ logsource:
   product: windows
 modified: 2022/05/12
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1222.001/T1222.001.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.001/T1222.001.md
 status: test
 tags:
 - attack.defense_evasion

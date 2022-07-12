@@ -17,8 +17,13 @@ detection:
     - '*\doskey.exe'
     - '*\sc.exe'
   SELECTION_4:
+    OriginalFileName:
+    - wmic.exe
+    - DOSKEY.EXE
+    - sc.exe
+  SELECTION_5:
     ParentCommandLine: '* > %TEMP%\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
 id: aa2efee7-34dd-446e-8a37-40790a66efd7
@@ -27,7 +32,7 @@ logsource:
   category: process_creation
   product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1119/T1119.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1119/T1119.md
 status: experimental
 tags:
 - attack.collection

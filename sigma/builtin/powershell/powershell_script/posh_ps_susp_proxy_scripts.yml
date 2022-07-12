@@ -1,0 +1,33 @@
+
+title: Suspicious TCP Tunnel Via PowerShell Script
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/07/08
+description: Detects powershell scripts that creates sockets/listeners which could
+  be indicative of tunneling activity
+detection:
+  SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*[System.Net.HttpWebRequest]*'
+  SELECTION_4:
+    ScriptBlockText: '*System.Net.Sockets.TcpListener*'
+  SELECTION_5:
+    ScriptBlockText: '*AcceptTcpClient*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unknown
+id: bd33d2aa-497e-4651-9893-5c5364646595
+level: medium
+logsource:
+  category: ps_script
+  definition: Script block logging must be enabled
+  product: windows
+references:
+- https://github.com/Arno0x/PowerShellScripts/blob/a6b7d5490fbf0b20f91195838f3a11156724b4f7/proxyTunnel.ps1
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1090

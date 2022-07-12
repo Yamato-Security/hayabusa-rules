@@ -18,7 +18,12 @@ detection:
     OriginalFileName:
     - mavinject32.exe
     - mavinject64.exe
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+  SELECTION_6:
+    NewProcessName:
+    - '*\mavinject32.exe'
+    - '*\mavinject64.exe'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
+    (SELECTION_5 or SELECTION_6))
 falsepositives:
 - Unknown
 fields:
@@ -31,10 +36,10 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/13
+modified: 2022/07/11
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218/T1218.md
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1056.004/T1056.004.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1056.004/T1056.004.md
 - https://posts.specterops.io/mavinject-exe-functionality-deconstructed-c29ab2cf5c0e
 status: experimental
 tags:

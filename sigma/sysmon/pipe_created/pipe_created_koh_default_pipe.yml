@@ -1,0 +1,33 @@
+
+title: Koh Default Named Pipes
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/07/08
+description: Detects creation of default named pipes used by the Koh tool
+detection:
+  SELECTION_1:
+    EventID: 17
+  SELECTION_2:
+    EventID: 18
+  SELECTION_3:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_4:
+    PipeName:
+    - '*\imposecost*'
+    - '*\imposingcost*'
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unlikely
+id: 0adc67e0-a68f-4ffd-9c43-28905aad5d6a
+level: critical
+logsource:
+  category: pipe_created
+  product: windows
+references:
+- https://github.com/GhostPack/Koh/blob/0283d9f3f91cf74732ad377821986cfcb088e20a/Clients/BOF/KohClient.c#L12
+status: experimental
+tags:
+- attack.privilege_escalation
+- attack.credential_access
+- attack.t1528
+- attack.t1134.001

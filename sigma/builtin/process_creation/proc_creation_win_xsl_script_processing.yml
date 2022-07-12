@@ -17,8 +17,6 @@ detection:
   SELECTION_4:
     CommandLine: '*/format*'
   SELECTION_5:
-    NewProcessName: '*\msxsl.exe'
-  SELECTION_6:
     CommandLine:
     - '*/Format:List*'
     - '*/Format:htable*'
@@ -29,8 +27,10 @@ detection:
     - '*/Format:rawxml*'
     - '*/Format:xml*'
     - '*/Format:csv*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    SELECTION_5) and  not (SELECTION_6))
+  SELECTION_6:
+    NewProcessName: '*\msxsl.exe'
+  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5)) or SELECTION_6))
 falsepositives:
 - WMIC.exe FP depend on scripts and administrative methods used in the monitored environment.
 - Msxsl.exe is not installed by default, so unlikely.
@@ -42,7 +42,7 @@ logsource:
   product: windows
 modified: 2021/11/29
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1220/T1220.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1220/T1220.md
 status: test
 tags:
 - attack.defense_evasion

@@ -16,6 +16,14 @@ detection:
     - '*dl.dropboxusercontent.com'
     - '*.pastebin.com'
     - '*.githubusercontent.com'
+    - '*cdn.discordapp.com/attachments/'
+    - '*mediafire.com'
+    - '*mega.nz'
+    - '*ddns.net'
+    - '*.paste.ee'
+    - '*.hastebin.com/raw/'
+    - '*.ghostbin.co/'
+    - '*ufile.io'
   SELECTION_5:
     Image: C:\Windows\\*
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
@@ -26,7 +34,7 @@ level: high
 logsource:
   category: network_connection
   product: windows
-modified: 2021/11/27
+modified: 2022/07/03
 references:
 - https://twitter.com/M_haggis/status/900741347035889665
 - https://twitter.com/M_haggis/status/1032799638213066752

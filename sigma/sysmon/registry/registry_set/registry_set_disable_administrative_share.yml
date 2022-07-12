@@ -3,7 +3,7 @@ title: Disable Administrative Share Creation at Startup
 ruletype: Sigma
 author: frack113
 date: 2022/01/16
-description: Administrative shares are hidden network shares created by Microsoft’s
+description: Administrative shares are hidden network shares created by Microsoft
   Windows NT operating systems that grant system administrators remote access to every
   disk volume on a network-connected system
 detection:
@@ -32,7 +32,7 @@ logsource:
   product: windows
 modified: 2022/03/26
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1070.005/T1070.005.md#atomic-test-4---disable-administrative-share-creation-at-startup
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.005/T1070.005.md#atomic-test-4---disable-administrative-share-creation-at-startup
 status: experimental
 tags:
 - attack.defense_evasion

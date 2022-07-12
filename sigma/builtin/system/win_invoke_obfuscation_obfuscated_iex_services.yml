@@ -4,7 +4,7 @@ ruletype: Sigma
 author: Daniel Bohannon (@Mandiant/@FireEye), oscd.community
 date: 2019/11/08
 description: Detects all variations of obfuscated powershell IEX invocation code generated
-  by Invoke-Obfuscation framework from the following code block \u2014
+  by Invoke-Obfuscation framework from the code block linked in the references
 detection:
   SELECTION_1:
     Channel: System
@@ -33,9 +33,9 @@ level: high
 logsource:
   product: windows
   service: system
-modified: 2021/09/16
+modified: 2022/07/11
 references:
-- https://github.com/danielbohannon/Invoke-Obfuscation/blob/master/Out-ObfuscatedStringCommand.ps1#L873-L888
+- https://github.com/danielbohannon/Invoke-Obfuscation/blob/f20e7f843edd0a3a7716736e9eddfa423395dd26/Out-ObfuscatedStringCommand.ps1#L873-L888
 status: experimental
 tags:
 - attack.defense_evasion

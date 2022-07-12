@@ -3,7 +3,7 @@ title: Volume Shadow Copy Mount
 ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)
 date: 2020/10/20
-description: Detects volume shadow copy mount
+description: Detects volume shadow copy mount via windows event log
 detection:
   SELECTION_1:
     Channel: System
@@ -23,7 +23,7 @@ logsource:
   service: system
 modified: 2021/10/13
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1003.002/T1003.002.md#atomic-test-3---esentutlexe-sam-copy
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md#atomic-test-3---esentutlexe-sam-copy
 status: experimental
 tags:
 - attack.credential_access

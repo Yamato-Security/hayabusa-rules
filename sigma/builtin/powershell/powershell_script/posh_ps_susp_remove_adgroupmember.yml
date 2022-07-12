@@ -3,10 +3,9 @@ title: Remove Account From Domain Admin Group
 ruletype: Sigma
 author: frack113
 date: 2021/12/26
-description: "Adversaries may interrupt availability of system and network resources\
-  \ by inhibiting access to accounts utilized by legitimate users.\nAccounts may be\
-  \ deleted, locked, or manipulated (ex: changed credentials) to remove access to\
-  \ accounts. \n"
+description: |
+  Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users.
+  Accounts may be deleted, locked, or manipulated (ex: changed credentials) to remove access to accounts.
 detection:
   SELECTION_1:
     EventID: 4104
@@ -28,7 +27,7 @@ logsource:
   definition: Script block logging must be enabled
   product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1531/T1531.md#atomic-test-3---remove-account-from-domain-admin-group
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1531/T1531.md#atomic-test-3---remove-account-from-domain-admin-group
 status: experimental
 tags:
 - attack.impact
