@@ -3,7 +3,8 @@ title: Windows Defender Threat Detection Disabled - Registry
 ruletype: Sigma
 author: Ján Trenčanský, frack113, AlertIQ
 date: 2020/07/28
-description: Detects disabling Windows Defender threat protection
+description: Detects disabling Windows Defender threat protection based on windows
+  defender related registry keys
 detection:
   SELECTION_1:
     EventID: 4657
@@ -41,7 +42,7 @@ logsource:
 modified: 2022/05/04
 references:
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-antivirus/troubleshoot-windows-defender-antivirus
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
 - https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/
 related:
 - id: fe34868f-6e0e-4882-81f6-c43aa8f15b62

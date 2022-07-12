@@ -23,9 +23,10 @@ id: 95afc12e-3cbb-40c3-9340-84a032e596a3
 level: medium
 logsource:
   category: ps_script
+  definition: Script block logging must be enabled
   product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.011/T1574.011.md#atomic-test-1---service-registry-permissions-weakness
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1574.011/T1574.011.md#atomic-test-1---service-registry-permissions-weakness
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/get-acl?view=powershell-7.2
 status: experimental
 tags:

@@ -3,10 +3,9 @@ title: Creation Exe for Service with Unquoted Path
 ruletype: Sigma
 author: frack113
 date: 2021/12/30
-description: "Adversaries may execute their own malicious payloads by hijacking vulnerable\
-  \ file path references.\nAdversaries can take advantage of paths that lack surrounding\
-  \ quotations by placing an executable in a higher level directory within the path,\
-  \ so that Windows will choose the adversary's executable to launch. \n"
+description: |
+  Adversaries may execute their own malicious payloads by hijacking vulnerable file path references.
+  Adversaries can take advantage of paths that lack surrounding quotations by placing an executable in a higher level directory within the path, so that Windows will choose the adversary's executable to launch.
 detection:
   SELECTION_1:
     EventID: 11
@@ -23,7 +22,7 @@ logsource:
   category: file_event
   product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1574.009/T1574.009.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1574.009/T1574.009.md
 status: experimental
 tags:
 - attack.persistence

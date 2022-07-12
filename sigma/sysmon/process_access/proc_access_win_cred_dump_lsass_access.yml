@@ -98,6 +98,10 @@ detection:
     SourceImage: C:\Program Files (x86)\Microsoft\Edge\Application\\*
   SELECTION_36:
     SourceImage: '*\Installer\setup.exe'
+  SELECTION_37:
+    SourceImage: '*\AppData\Local\WebEx\WebexHost.exe'
+  SELECTION_38:
+    GrantedAccess: '0x401'
   SELECTION_4:
     GrantedAccess:
     - 0x40*
@@ -129,7 +133,7 @@ detection:
     and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24)
     or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28) or (SELECTION_29
     and SELECTION_30) or (SELECTION_31 and SELECTION_32) or (SELECTION_33 and SELECTION_34)
-    or (SELECTION_35 and SELECTION_36)))
+    or (SELECTION_35 and SELECTION_36) or (SELECTION_37 and SELECTION_38)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason; please add more
   filters
@@ -142,7 +146,7 @@ level: high
 logsource:
   category: process_access
   product: windows
-modified: 2022/06/24
+modified: 2022/07/05
 references:
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html

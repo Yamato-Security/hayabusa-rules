@@ -9,44 +9,49 @@ detection:
   SELECTION_1:
     EventID: 4657
   SELECTION_10:
+    NewProcessName: C:\Program Files (x86)\Microsoft\Temp\\*
+  SELECTION_11:
+    NewProcessName: '*\MicrosoftEdgeUpdate.exe'
+  SELECTION_12:
     TargetObject:
     - '*\ClickToRunStore\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\\*'
     - '*\ClickToRun\REGISTRY\MACHINE\Software\Microsoft\Windows NT\CurrentVersion\\*'
-  SELECTION_11:
+  SELECTION_13:
     NewProcessName:
     - C:\Program Files\Microsoft Office\root\integration\integrator.exe
     - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
-  SELECTION_12:
-    TargetObject:
-    - '*\Image File Execution Options\OSPPREARM.EXE\DisableExceptionChainValidation'
-    - '*\Image File Execution Options\LICLUA.EXE\DisableExceptionChainValidation'
-  SELECTION_13:
-    NewProcessName: '*\DropboxUpdate.exe'
   SELECTION_14:
-    TargetObject: '*\Image File Execution Options\DropboxUpdate.exe\DisableExceptionChainValidation'
-  SELECTION_15:
     NewProcessName:
     - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
     - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
-  SELECTION_16:
+  SELECTION_15:
     NewProcessName: '*\OfficeClickToRun.exe'
-  SELECTION_17:
+  SELECTION_16:
     NewProcessName: C:\Windows\system32\svchost.exe
-  SELECTION_18:
+  SELECTION_17:
     TargetObject:
     - '*\Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\PreviousPolicyAreas*'
     - '*\Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\MaxNoGPOListChangesInterval*'
-  SELECTION_19:
+  SELECTION_18:
     NewValue:
     - DWORD (0x00000009)
     - DWORD (0x000003c0)
+  SELECTION_19:
+    NewProcessName: C:\Windows\Microsoft.NET\Framework*
   SELECTION_2:
     OperationType:
     - Existing registry value modified
   SELECTION_20:
-    NewProcessName: C:\Windows\Microsoft.NET\Framework*
-  SELECTION_21:
     NewProcessName: '*\ngen.exe'
+  SELECTION_21:
+    NewProcessName: '*\AppData\Local\Microsoft\OneDrive\StandaloneUpdater\OneDriveSetup.exe'
+  SELECTION_22:
+    TargetObject: '*\Microsoft\Windows\CurrentVersion\RunOnce\Delete Cached Update
+      Binary'
+  SELECTION_23:
+    NewValue: C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\\*
+  SELECTION_24:
+    NewValue: '*\AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe"'
   SELECTION_3:
     Channel: Security
   SELECTION_4:
@@ -72,14 +77,16 @@ detection:
   SELECTION_7:
     NewValue: (Empty)
   SELECTION_8:
-    NewProcessName: C:\Program Files (x86)\Microsoft\Temp\\*
+    TargetObject: '*\Image File Execution Options\\*'
   SELECTION_9:
-    NewProcessName: '*\MicrosoftEdgeUpdate.exe'
+    TargetObject:
+    - '*\DisableExceptionChainValidation'
+    - '*\MitigationOptions'
   condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5
     and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9) or (SELECTION_10
-    or SELECTION_11 or SELECTION_12) or (SELECTION_13 and SELECTION_14) or (SELECTION_15
-    and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19) or (SELECTION_20
-    and SELECTION_21)))
+    and SELECTION_11) or (SELECTION_12 or SELECTION_13) or (SELECTION_14 and SELECTION_15)
+    or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19 and SELECTION_20)
+    or (SELECTION_21 and SELECTION_22 and SELECTION_23 and SELECTION_24)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
   keys for legitimate reason
@@ -94,9 +101,9 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/04/27
+modified: 2022/07/05
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
 - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
 related:

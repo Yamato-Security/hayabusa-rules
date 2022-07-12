@@ -14,8 +14,10 @@ detection:
   SELECTION_3:
     CommandLine: '*tasklist*'
   SELECTION_4:
-    Image: C:\Windows\System32\tasklist.exe
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+    Image: '*\tasklist.exe'
+  SELECTION_5:
+    OriginalFileName: tasklist.exe
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Administrator, hotline ask to user
 id: 63332011-f057-496c-ad8d-d2b6afb27f96
@@ -24,7 +26,7 @@ logsource:
   category: process_creation
   product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1057/T1057.md#atomic-test-2---process-discovery---tasklist
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1057/T1057.md#atomic-test-2---process-discovery---tasklist
 status: experimental
 tags:
 - attack.discovery

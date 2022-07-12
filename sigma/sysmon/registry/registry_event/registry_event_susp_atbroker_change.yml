@@ -15,11 +15,10 @@ detection:
   SELECTION_4:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_5:
-    TargetObject: '*Software\Microsoft\Windows NT\CurrentVersion\Accessibility\ATs*'
-  SELECTION_6:
-    TargetObject: '*Software\Microsoft\Windows NT\CurrentVersion\Accessibility\Configuration*'
-  condition: (((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4) and (SELECTION_5
-    or SELECTION_6))
+    TargetObject:
+    - '*Software\Microsoft\Windows NT\CurrentVersion\Accessibility\ATs*'
+    - '*Software\Microsoft\Windows NT\CurrentVersion\Accessibility\Configuration*'
+  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Creation of non-default, legitimate AT.
 id: 9577edbb-851f-4243-8c91-1d5b50c1a39b
@@ -30,7 +29,7 @@ logsource:
 modified: 2021/05/24
 references:
 - http://www.hexacorn.com/blog/2016/07/22/beyond-good-ol-run-key-part-42/
-- https://github.com/LOLBAS-Project/LOLBAS/blob/master/yml/OSBinaries/Atbroker.yml
+- https://lolbas-project.github.io/lolbas/Binaries/Atbroker/
 status: experimental
 tags:
 - attack.defense_evasion

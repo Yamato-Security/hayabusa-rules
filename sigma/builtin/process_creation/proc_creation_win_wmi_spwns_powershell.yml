@@ -3,7 +3,7 @@ title: WMI Spawning Windows PowerShell
 ruletype: Sigma
 author: Markus Neis / @Karneades
 date: 2019/04/03
-description: Detects WMI spawning PowerShell
+description: Detects WMI spawning a PowerShell process
 detection:
   SELECTION_1:
     EventID: 4688
@@ -31,7 +31,6 @@ logsource:
   product: windows
 modified: 2022/05/13
 references:
-- https://github.com/Neo23x0/sigma/blob/master/rules/windows/process_creation/win_shell_spawn_susp_program.yml
 - https://any.run/report/68bc255f9b0db6a0d30a8f2dadfbee3256acfe12497bf93943bc1eab0735e45e/a2385d6f-34f7-403c-90d3-b1f9d2a90a5e
 status: experimental
 tags:

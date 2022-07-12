@@ -3,11 +3,9 @@ title: Powershell File and Directory Discovery
 ruletype: Sigma
 author: frack113
 date: 2021/12/15
-description: "Adversaries may enumerate files and directories or may search in specific\
-  \ locations of a host or network share for certain information within a file system.\n\
-  Adversaries may use the information from [File and Directory Discovery](https://attack.mitre.org/techniques/T1083)\
-  \ during automated discovery to shape follow-on behaviors,\nincluding whether or\
-  \ not the adversary fully infects the target and/or attempts specific actions. \n"
+description: |
+  Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system.
+  Adversaries may use the information from [File and Directory Discovery](https://attack.mitre.org/techniques/T1083) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.
 detection:
   SELECTION_1:
     EventID: 4104
@@ -27,9 +25,10 @@ id: d23f2ba5-9da0-4463-8908-8ee47f614bb9
 level: low
 logsource:
   category: ps_script
+  definition: Script block logging must be enabled
   product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1083/T1083.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1083/T1083.md
 status: experimental
 tags:
 - attack.discovery

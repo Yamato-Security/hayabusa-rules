@@ -3,7 +3,8 @@ title: Suspicious Scripting in a WMI Consumer
 ruletype: Sigma
 author: Florian Roth, Jonhnathan Ribeiro
 date: 2019/04/15
-description: Detects suspicious scripting in WMI Event Consumers
+description: Detects suspicious commands that are related to scripting/powershell
+  in WMI Event Consumers
 detection:
   SELECTION_1:
     EventID: 19
@@ -41,7 +42,7 @@ detection:
     and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9 and SELECTION_10)
     or SELECTION_11 or SELECTION_12))
 falsepositives:
-- Administrative scripts
+- Legitimate administrative scripts
 fields:
 - User
 - Operation
@@ -50,10 +51,10 @@ level: high
 logsource:
   category: wmi_event
   product: windows
-modified: 2021/09/01
+modified: 2022/07/07
 references:
 - https://in.security/an-intro-into-abusing-and-identifying-wmi-event-subscriptions-for-persistence/
-- https://github.com/Neo23x0/signature-base/blob/master/yara/gen_susp_lnk_files.yar#L19
+- https://github.com/Neo23x0/signature-base/blob/615bf1f6bac3c1bdc417025c40c073e6c2771a76/yara/gen_susp_lnk_files.yar#L19
 - https://github.com/RiccardoAncarani/LiquidSnake
 status: experimental
 tags:

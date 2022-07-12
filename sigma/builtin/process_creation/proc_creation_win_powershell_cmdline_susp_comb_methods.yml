@@ -1,0 +1,37 @@
+
+title: Suspicious Encoded PowerShell Command Line
+ruletype: Sigma
+author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
+date: 2022/07/06
+description: Detects specific combinations of encoding methods in the PowerShell command
+  lines
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    NewProcessName: '*\powershell.exe'
+  SELECTION_4:
+    CommandLine: '*ForEach*'
+  SELECTION_5:
+    CommandLine: '*Xor*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unlikely
+id: 5b572dcf-254b-425c-a8c5-d9af6bea35a6
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=65
+related:
+- id: cdf05894-89e7-4ead-b2b0-0a5f97a90f2f
+  type: similar
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1027
+- attack.execution
+- attack.t1059.001

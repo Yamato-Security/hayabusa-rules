@@ -11,6 +11,7 @@ detection:
   SELECTION_10:
     NewProcessName:
     - C:\WINDOWS\system32\devicecensus.exe
+    - C:\Windows\system32\winsat.exe
     - C:\Program Files\Microsoft OneDrive\StandaloneUpdater\OneDriveSetup.exe
     - C:\Program Files\Microsoft OneDrive\Update\OneDriveSetup.exe
     - C:\Program Files (x86)\Microsoft OneDrive\Update\OneDriveSetup.exe
@@ -120,6 +121,7 @@ detection:
     NewProcessName:
     - '*\AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe'
     - '*\AppData\Roaming\Spotify\Spotify.exe'
+    - '*\AppData\Local\WebEx\WebexHost.exe'
   condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5
     and SELECTION_6) and  not ((SELECTION_7 or SELECTION_8 or SELECTION_9 or SELECTION_10)
     or (SELECTION_11 and SELECTION_12) or (SELECTION_13) or (SELECTION_14 and SELECTION_15
@@ -142,9 +144,9 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/06/24
+modified: 2022/07/06
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
 - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
 related:

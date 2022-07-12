@@ -1,9 +1,10 @@
 
 title: Powershell Install a DLL in System32
 ruletype: Sigma
-author: frack113
+author: frack113, Nasreddine Bencherchali
 date: 2021/12/27
-description: Uses PowerShell to install a DLL in System32
+description: Uses PowerShell to install/copy a a file into a system directory such
+  as "System32" or "SysWOW64"
 detection:
   SELECTION_1:
     EventID: 4104
@@ -14,7 +15,9 @@ detection:
   SELECTION_4:
     ScriptBlockText: '*-Destination *'
   SELECTION_5:
-    ScriptBlockText: '*\Windows\System32*'
+    ScriptBlockText:
+    - '*\Windows\System32*'
+    - '*\Windows\SysWOW64*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
@@ -22,9 +25,11 @@ id: 63bf8794-9917-45bc-88dd-e1b5abc0ecfd
 level: high
 logsource:
   category: ps_script
+  definition: Script block logging must be enabled
   product: windows
+modified: 2022/07/07
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1556.002/T1556.002.md#atomic-test-1---install-and-register-password-filter-dll
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1556.002/T1556.002.md#atomic-test-1---install-and-register-password-filter-dll
 status: experimental
 tags:
 - attack.credential_access
