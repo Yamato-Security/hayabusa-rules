@@ -13,7 +13,9 @@ detection:
   SELECTION_3:
     NewProcessName: '*\chrome.exe'
   SELECTION_4:
-    ParentProcessName: '*\powershell.exe'
+    ParentProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_5:
     CommandLine: '*--load-extension=*'
   SELECTION_6:
@@ -27,6 +29,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/07/14
 references:
 - https://redcanary.com/blog/chromeloader/
 - https://emkc.org/s/RJjuLa

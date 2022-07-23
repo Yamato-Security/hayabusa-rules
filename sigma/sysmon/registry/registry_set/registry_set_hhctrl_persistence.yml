@@ -1,0 +1,33 @@
+
+title: Persistence Via Hhctrl.ocx
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/07/21
+description: Detects when an attacker modifies the registry value of the "hhctrl"
+  to point to a custom binary
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    EventType: SetValue
+  SELECTION_4:
+    TargetObject: '*\CLSID\{52A2AAAE-085D-4187-97EA-8C30DB990436}\InprocServer32\(Default)*'
+  SELECTION_5:
+    Details: C:\Windows\System32\hhctrl.ocx
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
+falsepositives:
+- Unlikely
+id: f10ed525-97fe-4fed-be7c-2feecca941b1
+level: high
+logsource:
+  category: registry_set
+  product: windows
+references:
+- https://persistence-info.github.io/Data/hhctrl.html
+- https://www.hexacorn.com/blog/2018/04/23/beyond-good-ol-run-key-part-77/
+status: experimental
+tags:
+- attack.persistence

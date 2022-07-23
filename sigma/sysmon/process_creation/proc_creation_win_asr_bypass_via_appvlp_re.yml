@@ -18,6 +18,7 @@ detection:
     CommandLine:
     - '*cmd.exe*'
     - '*powershell.exe*'
+    - '*pwsh.exe*'
   SELECTION_5:
     CommandLine:
     - '*.sh*'
@@ -47,7 +48,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/04/14
+modified: 2022/07/14
 status: experimental
 tags:
 - attack.t1218

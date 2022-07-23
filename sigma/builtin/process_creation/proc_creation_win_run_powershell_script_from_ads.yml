@@ -10,9 +10,13 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    ParentProcessName: '*\powershell.exe'
+    ParentProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
-    NewProcessName: '*\powershell.exe'
+    NewProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_5:
     CommandLine: '*Get-Content*'
   SELECTION_6:
@@ -26,7 +30,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://github.com/p0shkatz/Get-ADS/blob/1c3a3562e713c254edce1995a7d9879c687c7473/Get-ADS.ps1
 status: test

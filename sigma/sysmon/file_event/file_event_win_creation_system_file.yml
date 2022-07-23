@@ -22,6 +22,7 @@ detection:
     - '*\rundll32.exe'
     - '*\services.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\regsvr32.exe'
     - '*\spoolsv.exe'
     - '*\lsass.exe'
@@ -75,7 +76,7 @@ level: high
 logsource:
   category: file_event
   product: windows
-modified: 2022/07/06
+modified: 2022/07/14
 status: test
 tags:
 - attack.defense_evasion

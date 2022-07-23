@@ -16,6 +16,7 @@ detection:
     - '*\sh.exe'
     - '*\bash.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\schtasks.exe'
     - '*\certutil.exe'
     - '*\whoami.exe'
@@ -42,7 +43,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/12/22
+modified: 2022/07/14
 status: experimental
 tags:
 - attack.initial_access

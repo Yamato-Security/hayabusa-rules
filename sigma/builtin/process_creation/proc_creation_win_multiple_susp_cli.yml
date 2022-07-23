@@ -43,6 +43,7 @@ detection:
     - '*certutil.exe*'
     - '*vssadmin.exe*'
     - '*powershell.exe*'
+    - '*pwsh.exe*'
     - '*wevtutil.exe*'
     - '*psexec.exe*'
     - '*bcedit.exe*'
@@ -60,7 +61,7 @@ level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2021/06/13
+modified: 2022/07/14
 references:
 - https://car.mitre.org/wiki/CAR-2013-04-002
 status: experimental

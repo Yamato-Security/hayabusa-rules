@@ -10,7 +10,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\Powershell.exe'
+    NewProcessName:
+    - '*\Powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine:
     - '* -windowstyle h *'
@@ -129,7 +131,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/02/23
+modified: 2022/07/14
 references:
 - http://www.danielbohannon.com/blog-1/2017/3/12/powershell-execution-argument-obfuscation-how-it-can-make-detection-easier
 status: test

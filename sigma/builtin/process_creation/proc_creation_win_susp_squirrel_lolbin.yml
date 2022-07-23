@@ -7,6 +7,8 @@ description: Detects Possible Squirrel Packages Manager as Lolbin
 detection:
   SELECTION_1:
     EventID: 4688
+  SELECTION_10:
+    CommandLine: '*\AppData\Local\GitHubDesktop\Update.exe --createShortcut GitHubDesktop.exe*'
   SELECTION_2:
     Channel: Security
   SELECTION_3:
@@ -24,8 +26,10 @@ detection:
     CommandLine: '*\AppData\Local\Discord\Update.exe*'
   SELECTION_8:
     CommandLine: '* --processStart Discord.exe*'
+  SELECTION_9:
+    CommandLine: '*C:\Users\\*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8)))
+    and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 or SELECTION_9 and SELECTION_10)))
 falsepositives:
 - 1Clipboard
 - Beaker Browser
@@ -64,7 +68,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/01/12
+modified: 2022/07/20
 references:
 - http://www.hexacorn.com/blog/2019/03/30/sqirrel-packages-manager-as-a-lolbin-a-k-a-many-electron-apps-are-lolbins-by-default/
 - http://www.hexacorn.com/blog/2018/08/16/squirrel-as-a-lolbin/

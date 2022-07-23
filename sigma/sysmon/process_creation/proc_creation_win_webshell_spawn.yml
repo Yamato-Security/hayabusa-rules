@@ -43,6 +43,7 @@ detection:
     - '*\sh.exe'
     - '*\bash.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\bitsadmin.exe'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)
     or (SELECTION_6 and SELECTION_7)) and SELECTION_8)
@@ -56,7 +57,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/03/17
+modified: 2022/07/14
 status: test
 tags:
 - attack.persistence

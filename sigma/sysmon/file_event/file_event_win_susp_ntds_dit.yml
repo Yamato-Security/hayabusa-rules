@@ -15,7 +15,12 @@ detection:
   SELECTION_4:
     Image:
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\cmd.exe'
+    - '*\wscript.exe'
+    - '*\cscript.exe'
+    - '*\mshta.exe'
+    - '*\wsl.exe'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
@@ -24,6 +29,7 @@ level: high
 logsource:
   category: file_event
   product: windows
+modified: 2022/07/14
 references:
 - https://stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file/
 - https://adsecurity.org/?p=2398

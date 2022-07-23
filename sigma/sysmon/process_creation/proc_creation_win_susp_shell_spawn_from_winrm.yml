@@ -18,6 +18,7 @@ detection:
     - '*\sh.exe'
     - '*\bash.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\wsl.exe'
     - '*\schtasks.exe'
     - '*\certutil.exe'
@@ -31,7 +32,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/06/16
+modified: 2022/07/14
 status: experimental
 tags:
 - attack.t1190

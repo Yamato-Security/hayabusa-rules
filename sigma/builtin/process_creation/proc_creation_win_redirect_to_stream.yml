@@ -3,8 +3,8 @@ title: Cmd Stream Redirection
 ruletype: Sigma
 author: frack113
 date: 2022/02/04
-description: Detects the redirection of an output stream of / within a Windows command
-  line session
+description: Detects the redirection of an alternate data stream (ADS) of / within
+  a Windows command line session
 detection:
   SELECTION_1:
     EventID: 4688
@@ -13,15 +13,21 @@ detection:
   SELECTION_3:
     NewProcessName: '*\cmd.exe'
   SELECTION_4:
-    CommandLine: '*>*:*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    CommandLine: '*> *'
+  SELECTION_5:
+    CommandLine: '*:*'
+  SELECTION_6:
+    CommandLine: '*:\\*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
+    and  not (SELECTION_6))
 falsepositives:
 - Unknown
 id: 70e68156-6571-427b-a6e9-4476a173a9b6
-level: low
+level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/07/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.004/T1564.004.md#atomic-test-3---create-ads-command-prompt
 status: experimental

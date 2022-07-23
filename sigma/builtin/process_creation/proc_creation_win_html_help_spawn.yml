@@ -16,6 +16,7 @@ detection:
     NewProcessName:
     - '*\cmd.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\wscript.exe'
     - '*\cscript.exe'
     - '*\regsvr32.exe'
@@ -32,7 +33,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/chm-badness-delivers-a-banking-trojan/
 status: test

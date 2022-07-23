@@ -11,7 +11,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\powershell.exe'
+    NewProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine: '*ConvertTo-SecureString*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
@@ -22,7 +24,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/06/30
+modified: 2022/07/14
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=65
 status: test

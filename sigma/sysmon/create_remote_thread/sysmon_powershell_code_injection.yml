@@ -10,7 +10,9 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    SourceImage: '*\powershell.exe'
+    SourceImage:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -21,7 +23,7 @@ logsource:
   definition: Note that you have to configure logging for CreateRemoteThread in Symson
     config
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 status: test

@@ -11,7 +11,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\powershell.exe'
+    NewProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine:
     - '*TgBlAFQALgB3AEUAQg*'
@@ -167,6 +169,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/07/14
 references:
 - https://app.any.run/tasks/b9040c63-c140-479b-ad59-f1bb56ce7a97/
 status: experimental

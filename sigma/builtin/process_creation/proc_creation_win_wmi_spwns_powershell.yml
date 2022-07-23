@@ -12,9 +12,13 @@ detection:
   SELECTION_3:
     ParentProcessName: '*\wmiprvse.exe'
   SELECTION_4:
-    NewProcessName: '*\powershell.exe'
+    NewProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_5:
-    OriginalFileName: PowerShell.EXE
+    OriginalFileName:
+    - PowerShell.EXE
+    - pwsh.dll
   SELECTION_6:
     CommandLine: 'null'
   SELECTION_7:
@@ -29,7 +33,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/13
+modified: 2022/07/14
 references:
 - https://any.run/report/68bc255f9b0db6a0d30a8f2dadfbee3256acfe12497bf93943bc1eab0735e45e/a2385d6f-34f7-403c-90d3-b1f9d2a90a5e
 status: experimental

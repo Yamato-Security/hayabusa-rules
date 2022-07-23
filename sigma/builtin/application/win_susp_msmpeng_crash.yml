@@ -17,9 +17,9 @@ detection:
   SELECTION_5:
     EventID: 1001
   SELECTION_6:
-  - MsMpEng.exe
+    Data: '*MsMpEng.exe*'
   SELECTION_7:
-  - mpengine.dll
+    Data: '*mpengine.dll*'
   condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and SELECTION_5))
     and (SELECTION_6 and SELECTION_7))
 falsepositives:
@@ -29,7 +29,7 @@ level: high
 logsource:
   product: windows
   service: application
-modified: 2021/10/13
+modified: 2022/07/12
 references:
 - https://bugs.chromium.org/p/project-zero/issues/detail?id=1252&desc=5
 - https://technet.microsoft.com/en-us/library/security/4022344

@@ -16,7 +16,9 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*\powershell.exe'
+    Image:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     TargetFilename: '*\start menu\programs\startup\\*'
   SELECTION_5:
@@ -31,6 +33,7 @@ level: high
 logsource:
   category: file_event
   product: windows
+modified: 2022/07/14
 references:
 - https://redcanary.com/blog/intelligence-insights-october-2021/
 - https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1547.001/T1547.001.md#atomic-test-7---add-executable-shortcut-link-to-user-startup-folder

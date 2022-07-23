@@ -10,7 +10,9 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*\powershell.exe'
+    Image:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine: "*-' | iex;' -' | iex ' -' | iex}' -' | IEX;' -' | IEX ;' -' | IEX\
       \ -Error' -' | IEX (new' -' | IEX (New' -');IEX '*"

@@ -19,6 +19,7 @@ detection:
     ParentProcessName:
     - '*\cmd.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_5:
     CommandLine:
     - '*\AppData\Local*'
@@ -46,6 +47,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/07/14
 references:
 - https://en.wikipedia.org/wiki/HTML_Application
 - https://www.echotrail.io/insights/search/mshta.exe

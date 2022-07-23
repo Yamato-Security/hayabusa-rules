@@ -11,7 +11,7 @@ detection:
   SELECTION_10:
     NewProcessName: '*\TiWorker.exe'
   SELECTION_11:
-    TargetObject: '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-IIS-Logging*'
+    TargetObject: '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-IIS-*'
   SELECTION_2:
     OperationType:
     - Existing registry value modified
@@ -39,7 +39,7 @@ level: high
 logsource:
   category: registry_set
   product: windows
-modified: 2022/07/07
+modified: 2022/07/12
 references:
 - https://twitter.com/WhichbufferArda/status/1543900539280293889
 - https://github.com/DebugPrivilege/CPP/blob/c39d365617dbfbcb01fffad200d52b6239b2918c/Windows%20Defender/RestoreDefenderConfig.cpp
