@@ -10,7 +10,9 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*\powershell.exe'
+    Image:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine: '*new-object system.net.sockets.tcpclient*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
@@ -24,7 +26,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/06/27
+modified: 2022/07/14
 references:
 - https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/
 - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/

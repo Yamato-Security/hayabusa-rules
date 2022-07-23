@@ -16,6 +16,7 @@ detection:
     Image:
     - '*\cmd.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\rundll32.exe'
     - '*\regsvr32.exe'
     - '*\wscript.exe'
@@ -24,6 +25,7 @@ detection:
     OriginalFileName:
     - Cmd.Exe
     - PowerShell.EXE
+    - pwsh.dll
     - RUNDLL32.EXE
     - REGSVR32.EXE
     - wscript.exe
@@ -47,7 +49,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/13
+modified: 2022/07/14
 references:
 - https://bohops.com/2021/10/08/analyzing-and-detecting-a-vmtools-persistence-technique/
 status: experimental

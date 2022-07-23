@@ -10,7 +10,7 @@ detection:
   SELECTION_2:
     EventID: 6
   SELECTION_3:
-  - Install-TransportAgent
+    Data: '*Install-TransportAgent*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate installations of exchange TransportAgents. AssemblyPath is a good indicator
@@ -22,6 +22,7 @@ level: high
 logsource:
   product: windows
   service: msexchange-management
+modified: 2022/07/12
 references:
 - https://twitter.com/blueteamsec1/status/1401290874202382336?s=20
 status: experimental

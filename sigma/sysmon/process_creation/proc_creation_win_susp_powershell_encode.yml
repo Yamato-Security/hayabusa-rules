@@ -10,7 +10,9 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*\powershell.exe'
+    Image:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine:
     - '* -e *'
@@ -29,7 +31,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/02/10
+modified: 2022/07/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.001/T1059.001.md#atomic-test-20---powershell-invoke-known-malicious-cmdlets
 - https://unit42.paloaltonetworks.com/unit42-pulling-back-the-curtains-on-encodedcommand-powershell-attacks/

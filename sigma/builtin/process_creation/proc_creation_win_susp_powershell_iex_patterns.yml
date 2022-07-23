@@ -10,7 +10,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\powershell.exe'
+    NewProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine: "*-' | iex;' -' | iex ' -' | iex}' -' | IEX;' -' | IEX ;' -' | IEX\
       \ -Error' -' | IEX (new' -' | IEX (New' -');IEX '*"

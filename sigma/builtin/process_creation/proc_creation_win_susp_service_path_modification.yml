@@ -1,9 +1,10 @@
 
 title: Suspicious Service Path Modification
 ruletype: Sigma
-author: Victor Sergeev, oscd.community
+author: Victor Sergeev, oscd.community, Nasreddine Bencherchali (update)
 date: 2019/10/21
-description: Detects service path modification to PowerShell or cmd.
+description: Detects service path modification via the "sc" binary to a suspicious
+  command or path
 detection:
   SELECTION_1:
     EventID: 4688
@@ -14,15 +15,25 @@ detection:
   SELECTION_4:
     CommandLine: '*config*'
   SELECTION_5:
-    CommandLine: '*binpath*'
+    CommandLine: '*binPath*'
   SELECTION_6:
     CommandLine:
     - '*powershell*'
     - '*cmd*'
+    - '*mshta*'
+    - '*wscript*'
+    - '*cscript*'
+    - '*rundll32*'
+    - '*C:\Users\Public*'
+    - '*\Downloads\\*'
+    - '*\Desktop\\*'
+    - '*\Microsoft\Windows\Start Menu\Programs\Startup\\*'
+    - '*C:\Windows\TEMP\\*'
+    - '*\AppData\Local\Temp*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
     and SELECTION_6)
 falsepositives:
-- Unknown
+- Unlikely
 fields:
 - CommandLine
 - ParentCommandLine
@@ -31,7 +42,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/07/11
+modified: 2022/07/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md
 status: test

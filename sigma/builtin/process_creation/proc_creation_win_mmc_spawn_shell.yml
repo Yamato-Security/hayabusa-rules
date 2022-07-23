@@ -15,6 +15,7 @@ detection:
     NewProcessName:
     - '*\cmd.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\wscript.exe'
     - '*\cscript.exe'
     - '*\sh.exe'
@@ -34,7 +35,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://enigma0x3.net/2017/01/05/lateral-movement-using-the-mmc20-application-com-object/
 status: test

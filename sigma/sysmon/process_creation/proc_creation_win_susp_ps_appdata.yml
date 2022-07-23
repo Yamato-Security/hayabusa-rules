@@ -14,6 +14,8 @@ detection:
     CommandLine:
     - '*powershell.exe*'
     - '*\powershell*'
+    - '*\pwsh*'
+    - '*pwsh.exe*'
   SELECTION_4:
     CommandLine: '*/c *'
   SELECTION_5:
@@ -31,7 +33,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/28
+modified: 2022/07/14
 references:
 - https://twitter.com/JohnLaTwC/status/1082851155481288706
 - https://app.any.run/tasks/f87f1c4e-47e2-4c46-9cf4-31454c06ce03

@@ -8,13 +8,19 @@ detection:
   SELECTION_1:
     EventID: 4688
   SELECTION_10:
-    CommandLine: '*/TR*'
-  SELECTION_11:
     CommandLine: '*powershell*'
+  SELECTION_11:
+    CommandLine:
+    - '*ONLOGON*'
+    - '*DAILY*'
+    - '*ONIDLE*'
+    - '*Updater*'
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    ParentProcessName: '*\powershell.exe'
+    ParentProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     NewProcessName: '*\schtasks.exe'
   SELECTION_5:
@@ -22,15 +28,11 @@ detection:
   SELECTION_6:
     CommandLine: '*/SC*'
   SELECTION_7:
-    CommandLine:
-    - '*ONLOGON*'
-    - '*DAILY*'
-    - '*ONIDLE*'
-    - '*Updater*'
-  SELECTION_8:
     CommandLine: '*/TN*'
-  SELECTION_9:
+  SELECTION_8:
     CommandLine: '*Updater*'
+  SELECTION_9:
+    CommandLine: '*/TR*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
     and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10
     and SELECTION_11)
@@ -41,7 +43,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://github.com/0xdeadbeefJERKY/PowerSploit/blob/8690399ef70d2cad10213575ac67e8fa90ddf7c3/Persistence/Persistence.psm1
 - https://github.com/EmpireProject/Empire/blob/08cbd274bef78243d7a8ed6443b8364acd1fc48b/lib/modules/powershell/persistence/userland/schtasks.py

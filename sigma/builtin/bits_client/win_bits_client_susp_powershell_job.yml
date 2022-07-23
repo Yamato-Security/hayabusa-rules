@@ -12,7 +12,9 @@ detection:
   SELECTION_2:
     EventID: 3
   SELECTION_3:
-    processPath: '*\powershell.exe'
+    processPath:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Administrator PowerShell scripts
@@ -21,6 +23,7 @@ level: low
 logsource:
   product: windows
   service: bits-client
+modified: 2022/07/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md
 status: experimental

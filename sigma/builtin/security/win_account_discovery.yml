@@ -27,7 +27,10 @@ detection:
     - '*-555'
   SELECTION_5:
     ObjectName: '*admin*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and (SELECTION_4 or SELECTION_5))
+  SELECTION_6:
+    SubjectUserName: '*$'
+  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) and (SELECTION_4 or SELECTION_5))
+    and  not (SELECTION_6))
 falsepositives:
 - If source account name is not an admin then its super suspicious
 id: 35ba1d85-724d-42a3-889f-2e2362bcaf23
@@ -36,7 +39,7 @@ logsource:
   definition: 'Requirements: enable Object Access SAM on your Domain Controllers'
   product: windows
   service: security
-modified: 2021/09/08
+modified: 2022/07/13
 references:
 - https://blog.menasec.net/2019/02/threat-hunting-5-detecting-enumeration.html
 status: experimental

@@ -12,8 +12,8 @@ detection:
   SELECTION_3:
     Provider_Name: MsiInstaller
   SELECTION_4:
-  - test pkg
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and SELECTION_4)
+    Data: '*test pkg*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Other MSI packages for which your admins have used that name
 id: 7dbb86de-a0cc-494c-8aa8-b2996c9ef3c8
@@ -21,6 +21,7 @@ level: high
 logsource:
   product: windows
   service: application
+modified: 2022/07/12
 references:
 - https://github.com/klinix5/InstallerFileTakeOver
 status: experimental

@@ -13,6 +13,7 @@ detection:
   SELECTION_3:
     OriginalFileName:
     - powershell.exe
+    - pwsh.dll
     - powershell_ise.exe
     - psexec.exe
     - psexec.c
@@ -28,6 +29,7 @@ detection:
   SELECTION_4:
     Image:
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\powershell_ise.exe'
     - '*\psexec.exe'
     - '*\psexec64.exe'
@@ -49,7 +51,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://attack.mitre.org/techniques/T1036/
 - https://mgreen27.github.io/posts/2019/05/12/BinaryRename.html

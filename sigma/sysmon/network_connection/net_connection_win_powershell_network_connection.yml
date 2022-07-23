@@ -12,7 +12,9 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*\powershell.exe'
+    Image:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     Initiated: 'true'
   SELECTION_5:
@@ -51,7 +53,7 @@ level: low
 logsource:
   category: network_connection
   product: windows
-modified: 2022/02/09
+modified: 2022/07/14
 references:
 - https://www.youtube.com/watch?v=DLtJTxMWZ2o
 status: experimental

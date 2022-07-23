@@ -8,14 +8,12 @@ description: Detects specific combinations of encoding methods in the PowerShell
 detection:
   SELECTION_1:
     EventID: 4688
-  SELECTION_10:
-    CommandLine: '*split*'
-  SELECTION_11:
-    CommandLine: '*join*'
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\powershell.exe'
+    NewProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine:
     - '*ToInt*'
@@ -30,16 +28,15 @@ detection:
     - '*ToString*'
     - '*String*'
   SELECTION_6:
-    NewProcessName: '*\powershell.exe'
-  SELECTION_7:
     CommandLine: '*char*'
-  SELECTION_8:
+  SELECTION_7:
     CommandLine: '*join*'
+  SELECTION_8:
+    CommandLine: '*split*'
   SELECTION_9:
-    NewProcessName: '*\powershell.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or ((SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-    and SELECTION_10 and SELECTION_11))))
+    CommandLine: '*join*'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and ((SELECTION_4 and
+    SELECTION_5) or ((SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9))))
 falsepositives:
 - Unlikely
 id: cdf05894-89e7-4ead-b2b0-0a5f97a90f2f
@@ -47,7 +44,7 @@ level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2022/07/06
+modified: 2022/07/14
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=65
 related:

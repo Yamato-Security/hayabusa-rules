@@ -1,7 +1,7 @@
 
 title: Regsvr32 Anomaly
 ruletype: Sigma
-author: Florian Roth, oscd.community
+author: Florian Roth, oscd.community, Tim Shelton
 date: 2019/01/16
 description: Detects various anomalies in relation to regsvr32.exe
 detection:
@@ -57,6 +57,10 @@ detection:
     CommandLine:
     - '*\AppData\Local\Microsoft\Teams*'
     - '*\AppData\Local\WebEx\WebEx64\Meetings\atucfobj.dll*'
+  SELECTION_28:
+    ParentImage: C:\Program Files\Box\Box\FS\streem.exe
+  SELECTION_29:
+    CommandLine: '*\Program Files\Box\Box\Temp\\*'
   SELECTION_3:
     Image: '*\regsvr32.exe'
   SELECTION_4:
@@ -64,7 +68,10 @@ detection:
   SELECTION_5:
     Image: '*\regsvr32.exe'
   SELECTION_6:
-    ParentImage: '*\powershell.exe'
+    ParentImage:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
+    - '*\powershell_ise.exe'
   SELECTION_7:
     Image: '*\regsvr32.exe'
   SELECTION_8:
@@ -76,7 +83,8 @@ detection:
     and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
     and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18) or (SELECTION_19
     and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24)
-    or (SELECTION_25 and SELECTION_26)) and  not (SELECTION_27))
+    or (SELECTION_25 and SELECTION_26)) and  not ((SELECTION_27) or (SELECTION_28
+    and SELECTION_29)))
 falsepositives:
 - Unknown
 fields:
@@ -87,7 +95,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/07/05
+modified: 2022/07/20
 references:
 - https://subt0x10.blogspot.de/2017/04/bypass-application-whitelisting-script.html
 - https://app.any.run/tasks/34221348-072d-4b70-93f3-aa71f6ebecad/

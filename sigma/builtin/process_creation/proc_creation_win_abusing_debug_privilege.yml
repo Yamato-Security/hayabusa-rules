@@ -22,6 +22,7 @@ detection:
   SELECTION_4:
     NewProcessName:
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\cmd.exe'
   SELECTION_5:
     User:
@@ -45,7 +46,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/06/28
+modified: 2022/07/14
 references:
 - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-74-638.jpg
 status: test

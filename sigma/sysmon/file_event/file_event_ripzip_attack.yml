@@ -1,0 +1,34 @@
+
+title: RipZip Attack on Startup Folder
+ruletype: Sigma
+author: Greg (rule)
+date: 2022/07/21
+description: Detects a phishing attack which expands a ZIP file containing a malicious
+  shortcut. If the victim expands the ZIP file via the explorer process, then the
+  explorer process expands the malicious ZIP file and drops a malicious shortcut redirected
+  to a backdoor into the Startup folder. Additionally, the file name of the malicious
+  shortcut in Startup folder contains {0AFACED1-E828-11D1-9187-B532F1E9575D} meaning
+  the folder shortcut operation.
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFileName: '*\Microsoft\Windows\Start Menu\Programs\Startup*'
+  SELECTION_4:
+    TargetFileName: '*.lnk.{0AFACED1-E828-11D1-9187-B532F1E9575D}*'
+  SELECTION_5:
+    Image: '*\explorer.exe'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+id: a6976974-ea6f-4e97-818e-ea08625c52cb
+level: high
+logsource:
+  category: file_event
+  product: windows
+references:
+- https://twitter.com/jonasLyk/status/1549338335243534336?t=CrmPocBGLbDyE4p6zTX1cg&s=19
+status: experimental
+tags:
+- attack.t1547
+- attack.persistence

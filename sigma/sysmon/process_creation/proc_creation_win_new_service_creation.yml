@@ -14,11 +14,11 @@ detection:
   SELECTION_4:
     CommandLine: '*create*'
   SELECTION_5:
-    CommandLine: '*binpath*'
+    CommandLine: '*binPath*'
   SELECTION_6:
-    Image: '*\powershell.exe'
+    CommandLine: '*New-Service*'
   SELECTION_7:
-    CommandLine: '*new-service*'
+    CommandLine: '*-BinaryPathName*'
   condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
     SELECTION_5) or (SELECTION_6 and SELECTION_7)))
 falsepositives:
@@ -28,7 +28,7 @@ level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md
 status: test

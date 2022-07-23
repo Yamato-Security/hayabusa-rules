@@ -14,7 +14,9 @@ detection:
     - '*add portopening*'
     - '*rule name*'
   SELECTION_12:
-    NewProcessName: '*\powershell.exe'
+    NewProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_13:
     CommandLine: '*.spl*'
   SELECTION_14:
@@ -74,7 +76,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/06/02
+modified: 2022/07/14
 references:
 - https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries/blob/efa17a600b43c897b4b7463cc8541daa1987eeb4/Exploits/Print%20Spooler%20RCE/Suspicious%20Spoolsv%20Child%20Process.md
 status: stable

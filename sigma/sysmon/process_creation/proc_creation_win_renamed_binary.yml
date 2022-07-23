@@ -16,6 +16,7 @@ detection:
     - Cmd.Exe
     - CONHOST.EXE
     - PowerShell.EXE
+    - pwsh.dll
     - powershell_ise.EXE
     - psexec.exe
     - psexec.c
@@ -39,6 +40,7 @@ detection:
     - '*\cmd.exe'
     - '*\conhost.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\powershell_ise.exe'
     - '*\psexec.exe'
     - '*\psexec64.exe'
@@ -68,7 +70,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/06/28
+modified: 2022/07/14
 references:
 - https://attack.mitre.org/techniques/T1036/
 - https://mgreen27.github.io/posts/2019/05/12/BinaryRename.html

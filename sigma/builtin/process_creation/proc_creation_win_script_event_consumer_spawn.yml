@@ -16,6 +16,7 @@ detection:
     - '*\svchost.exe'
     - '*\dllhost.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\wscript.exe'
     - '*\cscript.exe'
     - '*\schtasks.exe'
@@ -35,6 +36,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/07/14
 references:
 - https://redcanary.com/blog/child-processes/
 - https://docs.paloaltonetworks.com/cortex/cortex-xdr/cortex-xdr-analytics-alert-reference/cortex-xdr-analytics-alert-reference/scrcons-exe-rare-child-process.html

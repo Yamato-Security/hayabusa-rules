@@ -13,6 +13,7 @@ detection:
   SELECTION_3:
     NewProcessName:
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\mshta.exe'
     - '*\wscript.exe'
     - '*\cscript.exe'
@@ -26,6 +27,7 @@ detection:
   SELECTION_5:
     OriginalFileName:
     - powershell.exe
+    - pwsh.dll
     - mshta.exe
     - wscript.exe
     - cscript.exe

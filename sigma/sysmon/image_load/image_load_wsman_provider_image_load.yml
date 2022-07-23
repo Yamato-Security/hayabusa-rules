@@ -18,6 +18,10 @@ detection:
     Image: C:\Windows\Temp\asgard2-agent\\*
   SELECTION_13:
     Image: C:\Program Files\Citrix\\*
+  SELECTION_14:
+    Image: '*\svchost.exe'
+  SELECTION_15:
+    CommandLine|re: ^$
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
@@ -49,9 +53,10 @@ detection:
     Image:
     - C:\Windows\Microsoft.NET\Framework64\v*
     - C:\Windows\Microsoft.NET\Framework\v*
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) or (SELECTION_5
-    and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9 and
-    SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13)))
+  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) or
+    (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9
+    and SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13))) and  not
+    ((SELECTION_14 and SELECTION_15)))
 falsepositives:
 - Unknown
 id: ad1f4bb9-8dfb-4765-adb6-2a7cfb6c0f94
@@ -59,7 +64,7 @@ level: medium
 logsource:
   category: image_load
   product: windows
-modified: 2022/02/21
+modified: 2022/07/18
 references:
 - https://twitter.com/chadtilbury/status/1275851297770610688
 - https://bohops.com/2020/05/12/ws-management-com-another-approach-for-winrm-lateral-movement/

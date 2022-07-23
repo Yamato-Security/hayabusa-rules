@@ -15,12 +15,12 @@ detection:
   SELECTION_4:
     Image:
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\cmd.exe'
     - '*\mshta.exe'
     - '*\cscript.exe'
     - '*\wscript.exe'
     - '*\taskkill.exe'
-    - '*\csc.exe'
     - '*\calc.exe'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
@@ -30,7 +30,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/07/11
+modified: 2022/07/14
 references:
 - https://twitter.com/nao_sec/status/1530196847679401984
 - https://app.any.run/tasks/713f05d2-fe78-4b9d-a744-f7c133e3fafb/

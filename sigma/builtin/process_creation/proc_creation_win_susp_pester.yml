@@ -11,7 +11,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\powershell.exe'
+    NewProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine: '*Pester*'
   SELECTION_5:
@@ -35,7 +37,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://twitter.com/Oddvarmoe/status/993383596244258816
 status: test

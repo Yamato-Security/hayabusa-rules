@@ -17,9 +17,9 @@ detection:
   SELECTION_5:
     SourcePort: 3389
   SELECTION_6:
-    TargetPort: 80
+    DestinationPort: 80
   SELECTION_7:
-    TargetPort: 443
+    DestinationPort: 443
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
     and (SELECTION_6 or SELECTION_7))
 falsepositives:
@@ -29,6 +29,7 @@ level: high
 logsource:
   category: network_connection
   product: windows
+modified: 2022/07/14
 references:
 - https://twitter.com/tekdefense/status/1519711183162556416?s=12&t=OTsHCBkQOTNs1k3USz65Zg
 - https://www.mandiant.com/resources/bypassing-network-restrictions-through-rdp-tunneling

@@ -14,7 +14,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\powershell.exe'
+    NewProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     CommandLine:
     - '*-DisableBehaviorMonitoring $true*'
@@ -41,7 +43,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/06/07
+modified: 2022/07/14
 references:
 - https://research.nccgroup.com/2020/06/23/wastedlocker-a-new-ransomware-variant-developed-by-the-evil-corp-group/
 - https://rvsec0n.wordpress.com/2020/01/24/malwares-that-bypass-windows-defender/

@@ -12,7 +12,9 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    ParentProcessName: '*\powershell.exe'
+    ParentProcessName:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     NewProcessName: '*\nslookup.exe'
   SELECTION_5:
@@ -30,7 +32,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://github.com/lukebaggett/dnscat2-powershell
 - https://blu3-team.blogspot.com/2019/08/powershell-dns-c2-notes.html

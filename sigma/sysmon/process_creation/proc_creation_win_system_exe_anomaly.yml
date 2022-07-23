@@ -16,6 +16,7 @@ detection:
     - '*\services.exe'
     - '*\powershell.exe'
     - '*\powershell_ise.exe'
+    - '*\pwsh.exe'
     - '*\regsvr32.exe'
     - '*\spoolsv.exe'
     - '*\lsass.exe'
@@ -81,7 +82,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/07/03
+modified: 2022/07/14
 references:
 - https://twitter.com/GelosSnake/status/934900723426439170
 status: experimental

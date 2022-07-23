@@ -13,6 +13,7 @@ detection:
     Image:
     - '*\cmd.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
     - '*\wscript.exe'
     - '*\cscript.exe'
     - '*\sh.exe'
@@ -49,7 +50,7 @@ level: high
 logsource:
   category: file_event
   product: windows
-modified: 2021/11/24
+modified: 2022/07/14
 references:
 - No references
 status: experimental

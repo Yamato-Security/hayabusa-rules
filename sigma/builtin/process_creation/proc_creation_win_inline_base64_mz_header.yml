@@ -1,0 +1,31 @@
+
+title: Base64 MZ Header In CommandLine
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/07/12
+description: Detects encoded base64 MZ header in the commandline
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    CommandLine:
+    - '*TVqQAAMAAAAEAAAA*'
+    - '*TVpQAAIAAAAEAA8A*'
+    - '*TVqAAAEAAAAEABAA*'
+    - '*TVoAAAAAAAAAAAAA*'
+    - '*TVpTAQEAAAAEAAAA*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unlikley
+id: 22e58743-4ac8-4a9f-bf19-00a0428d8c5f
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
+status: experimental
+tags:
+- attack.execution

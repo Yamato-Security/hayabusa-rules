@@ -12,7 +12,9 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    ParentImage: '*\powershell.exe'
+    ParentImage:
+    - '*\powershell.exe'
+    - '*\pwsh.exe'
   SELECTION_4:
     Image: '*\nslookup.exe'
   SELECTION_5:
@@ -30,7 +32,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/07/14
 references:
 - https://github.com/lukebaggett/dnscat2-powershell
 - https://blu3-team.blogspot.com/2019/08/powershell-dns-c2-notes.html

@@ -75,6 +75,8 @@ detection:
     CommandLine: '*.RegisterXLL*'
   SELECTION_40:
     CommandLine: '*ShOpenVerbShortcut*'
+  SELECTION_41:
+    CommandLine: '*shell32.dll,Control_RunDLL desk.cpl,screensaver,@screensaver*'
   SELECTION_5:
     CommandLine: '*url.dll*'
   SELECTION_6:
@@ -93,7 +95,7 @@ detection:
     or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28) or (SELECTION_29
     and SELECTION_30) or (SELECTION_31 and SELECTION_32) or (SELECTION_33 and SELECTION_34)
     or (SELECTION_35 and SELECTION_36) or (SELECTION_37 and SELECTION_38) or (SELECTION_39
-    and SELECTION_40)))
+    and SELECTION_40)) and  not (SELECTION_41))
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
   environment
@@ -102,7 +104,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/09
+modified: 2022/07/20
 references:
 - http://www.hexacorn.com/blog/2017/05/01/running-programs-via-proxy-jumping-on-a-edr-bypass-trampoline/
 - https://twitter.com/Hexacorn/status/885258886428725250
