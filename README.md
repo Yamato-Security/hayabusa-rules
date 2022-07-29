@@ -435,7 +435,7 @@ detection:
 ```
 
 This is a list of what you can specify after the pipe. At the moment, hayabusa does not support chaining multiple pipes together.
-String matches are normally case insensitive. However, they become case sensitive whenever the following are used:
+String matches are case insensitive. However, they become case sensitive whenever `|re` or `|equalsfield` are used.
 
 - `|startswith`: Checks the string from the beginning
 - `|endswith`: Checks the end of the string
