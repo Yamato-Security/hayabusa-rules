@@ -15,6 +15,7 @@ SIGMAC = ".../path/to/sigma/tools/sigmac"
 EXPORT_DIR_NAME = "./hayabusa_rules"
 RULES_DIR = ".../path/to/sigma/rules/windows"
 CPU = None
+IGNORE_CONFIGS = ["windows-services.yml", "powershell.yml"]
 
 FORMAT = ('[%(levelname)-8s] %(message)s')
 logging.basicConfig(format = FORMAT, level=logging.WARNING)
@@ -59,7 +60,7 @@ class Logconverter():
         for config in configs:
             if not config.endswith(".yml"):
                 continue
-            if config == "windows-services.yml":
+            if config in IGNORE_CONFIGS:
                 continue
             with open(os.path.join(self.config_dir, config), 'r') as yml:
                 config_data = yaml.load(yml)
