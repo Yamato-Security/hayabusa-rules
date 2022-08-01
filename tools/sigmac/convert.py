@@ -91,21 +91,17 @@ class Logconverter():
 
     def create_convert_command(self, rule_path: str, file_name: str) -> List[ConvertData]:
         convert_datas: List[ConvertData] = list()
+        sysmon_related = False
+        category = None
+
         with open(rule_path, 'r') as yml:
             rule_data = yaml.load(yml)
-            if "logsource" in rule_data and "category" in rule_data["logsource"]:
-                category = rule_data["logsource"]["category"]
-            elif "service" in rule_data["logsource"]:
-                # serviceにsysmonが書かれている場合に対応させる
-                # ex. sysmon/sysmon_process_hollowing.yml
-                if rule_data["logsource"]["service"] == "sysmon":
-                    category = "sysmon_status"
-                else:
-                    # category = rule_data["logsource"]["service"]
-                    logger.info(rule_path + " has no logsoruce.category. This rule has logsoruce.service.")
-                    category = None
+            if "logsource" in rule_data:
+                if "category" in rule_data["logsource"]:
+                    category = rule_data["logsource"]["category"]
+                if "service" in rule_data["logsource"] and rule_data["logsource"]["service"] == "sysmon":
+                    sysmon_related = True
             else:
-                category = None
                 logger.warning(rule_path + " has no log category description.")
 
         logger.debug("target: " + file_name)
@@ -126,7 +122,7 @@ class Logconverter():
                 config = None
 
             logger.debug("  config: " + str(config))
-            if config == "sysmon.yml":
+            if config == "sysmon.yml" or sysmon_related == True:
                 output_path = os.path.join(EXPORT_DIR_NAME, "sysmon", rule_type, path_from_off)
             else:
                 output_path = os.path.join(EXPORT_DIR_NAME, rule_type, path_from_off)
