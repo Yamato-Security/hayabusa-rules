@@ -1,7 +1,7 @@
 
 title: Service Binary in Suspicious Folder
 ruletype: Sigma
-author: Florian Roth
+author: Florian Roth, frack113
 date: 2022/05/02
 description: Detect the creation of a service with a service binary located in a suspicious
   directory
@@ -15,6 +15,7 @@ detection:
     - '*\Users\Public\\*'
     - '*\Perflogs\\*'
     - '*\ADMIN$\\*'
+    - '*\Temp\\*'
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
@@ -28,6 +29,7 @@ detection:
     - '*\Users\Public\\*'
     - '*\Perflogs\\*'
     - '*\ADMIN$\\*'
+    - '*\Temp\\*'
   SELECTION_7:
     Details:
     - DWORD (0x00000000)
@@ -49,6 +51,9 @@ logsource:
   product: windows
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
+related:
+- id: c0abc838-36b0-47c9-b3b3-a90c39455382
+  type: obsoletes
 status: experimental
 tags:
 - attack.defense_evasion

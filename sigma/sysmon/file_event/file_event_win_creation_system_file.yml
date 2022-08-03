@@ -14,6 +14,8 @@ detection:
     TargetFilename: C:\Windows\SoftwareDistribution\Download\\*
   SELECTION_12:
     Image: '*:\Windows\system32\svchost.exe'
+  SELECTION_13:
+    Image: C:\Windows\System32\wuauclt.exe
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
@@ -66,7 +68,7 @@ detection:
     Image: C:\Windows\system32\wbengine.exe
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
     and SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-    or (SELECTION_10 and SELECTION_11 and SELECTION_12)))
+    or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13)))
 falsepositives:
 - System processes copied outside the default folder
 fields:
@@ -76,7 +78,7 @@ level: high
 logsource:
   category: file_event
   product: windows
-modified: 2022/07/14
+modified: 2022/07/27
 status: test
 tags:
 - attack.defense_evasion

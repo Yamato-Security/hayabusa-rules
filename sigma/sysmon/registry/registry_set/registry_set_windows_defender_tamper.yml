@@ -1,0 +1,57 @@
+
+title: Disable Windows Defender Functionalities Via Registry Keys
+ruletype: Sigma
+author: AlertIQ, Ján Trenčanský, frack113, Nasreddine Bencherchali
+date: 2022/08/01
+description: Detects when attackers or tools disable Windows Defender functionalities
+  via the windows registry
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    EventType: SetValue
+  SELECTION_4:
+    TargetObject: '*\SOFTWARE\Microsoft\Windows Defender\\*'
+  SELECTION_5:
+    TargetObject:
+    - '*\Real-Time Protection\DisableBehaviorMonitoring'
+    - '*\Real-Time Protection\DisableIOAVProtection'
+    - '*\Real-Time Protection\DisableOnAccessProtection'
+    - '*\Real-Time Protection\DisableRealtimeMonitoring'
+    - '*\Real-Time Protection\DisableScanOnRealtimeEnable'
+    - '*\SpyNet\DisableBlockAtFirstSeen'
+    - '*\DisableAntiSpyware'
+    - '*\DisableAntiVirus'
+  SELECTION_6:
+    Details: DWORD (0x00000001)
+  SELECTION_7:
+    TargetObject:
+    - '*\SpyNet\SpynetReporting'
+    - '*\SpyNet\SubmitSamplesConsent'
+    - '*\MpEngine\MpEnablePus'
+  SELECTION_8:
+    Details: DWORD (0x00000000)
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
+    ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+falsepositives:
+- Administrator actions
+id: 0eb46774-f1ab-4a74-8238-1155855f2263
+level: high
+logsource:
+  category: registry_set
+  product: windows
+references:
+- https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/
+- https://gist.github.com/anadr/7465a9fde63d41341136949f14c21105
+- https://admx.help/?Category=Windows_7_2008R2&Policy=Microsoft.Policies.WindowsDefender::SpyNetReporting
+related:
+- id: a64e4198-c1c8-46a5-bc9c-324c86455fd4
+  type: obsoletes
+- id: fd115e64-97c7-491f-951c-fc8da7e042fa
+  type: obsoletes
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001

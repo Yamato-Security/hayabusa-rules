@@ -1,10 +1,11 @@
 
 title: Shells Spawned by Web Servers
 ruletype: Sigma
-author: Thomas Patzke, Florian Roth, Zach Stanford @svch0st
+author: Thomas Patzke, Florian Roth, Zach Stanford @svch0st, Tim Shelton, Nasreddine
+  Bencherchali (update)
 date: 2019/01/16
-description: Web servers that spawn shell processes could be the result of a successfully
-  placed web shell or an other attack
+description: Detects web servers that spawn shell processes which could be the result
+  of a successfully placed web shell or another attack
 detection:
   SELECTION_1:
     EventID: 4688
@@ -45,8 +46,48 @@ detection:
     - '*\powershell.exe'
     - '*\pwsh.exe'
     - '*\bitsadmin.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)
-    or (SELECTION_6 and SELECTION_7)) and SELECTION_8)
+    - '*\arp.exe'
+    - '*\at.exe'
+    - '*\certutil.exe'
+    - '*\dsget.exe'
+    - '*\dsquery.exe'
+    - '*\find.exe'
+    - '*\findstr.exe'
+    - '*\fsutil.exe'
+    - '*\hostname.exe'
+    - '*\ipconfig.exe'
+    - '*\nbtstat.exe'
+    - '*\net.exe'
+    - '*\net1.exe'
+    - '*\netdom.exe'
+    - '*\netsh.exe'
+    - '*\netstat.exe'
+    - '*\nltest.exe'
+    - '*\nslookup.exe'
+    - '*\ntdutil.exe'
+    - '*\pathping.exe'
+    - '*\ping.exe'
+    - '*\qprocess.exe'
+    - '*\query.exe'
+    - '*\qwinsta.exe'
+    - '*\reg.exe'
+    - '*\rundll32.exe'
+    - '*\sc.exe'
+    - '*\schtasks.exe'
+    - '*\systeminfo.exe'
+    - '*\tasklist.exe'
+    - '*\tracert.exe'
+    - '*\ver.exe'
+    - '*\vssadmin.exe'
+    - '*\wevtutil.exe'
+    - '*\whoami.exe'
+    - '*\wmic.exe'
+    - '*\wusa.exe'
+  SELECTION_9:
+    CommandLine: '*Windows\system32\cmd.exe /c C:\ManageEngine\ADManager "Plus\ES\bin\elasticsearch.bat
+      -Enode.name=RMP-NODE1 -pelasticsearch-pid.txt'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
+    SELECTION_5) or (SELECTION_6 and SELECTION_7)) and SELECTION_8) and  not ((SELECTION_9)))
 falsepositives:
 - Particular web applications may spawn a shell process legitimately
 fields:
@@ -57,7 +98,9 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/07/14
+modified: 2022/08/01
+references:
+- https://media.defense.gov/2020/Jun/09/2002313081/-1/-1/0/CSI-DETECT-AND-PREVENT-WEB-SHELL-MALWARE-20200422.PDF
 status: test
 tags:
 - attack.persistence

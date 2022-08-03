@@ -15,8 +15,14 @@ detection:
     SourceImage: '*\git.exe'
   SELECTION_11:
     TargetImage:
-    - '*\bin\git.exe'
+    - '*\git.exe'
     - '*C:\Windows\System32\conhost.exe'
+  SELECTION_12:
+    SourceImage: C:\Windows\System32\VSSVC.exe
+  SELECTION_13:
+    TargetImage: System
+  SELECTION_14:
+    SourceParentImage: C:\Windows\System32\CompatTelRunner.exe
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
@@ -32,7 +38,6 @@ detection:
     - '*\find.exe'
     - '*\findstr.exe'
     - '*\forfiles.exe'
-    - '*\git.exe'
     - '*\gpupdate.exe'
     - '*\hh.exe'
     - '*\iexplore.exe'
@@ -86,7 +91,7 @@ detection:
     TargetParentProcessId: 0
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
     or SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-    or (SELECTION_10 and SELECTION_11)))
+    or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)))
 falsepositives:
 - Unknown
 fields:
@@ -99,7 +104,7 @@ level: high
 logsource:
   category: create_remote_thread
   product: windows
-modified: 2022/07/20
+modified: 2022/07/31
 notes:
 - MonitoringHost.exe is a process that loads .NET CLR by default and thus a favorite
   for process injection for .NET in-memory offensive tools.

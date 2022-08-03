@@ -1,0 +1,31 @@
+
+title: Query Usage To Exfil Data
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/01
+description: Detects usage of "query.exe" a system binary to exfil information such
+  as "sessions" and "processes" for later use
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\Windows\System32\query.exe'
+  SELECTION_4:
+    CommandLine:
+    - '*session >*'
+    - '*process >*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 53ef0cef-fa24-4f25-a34a-6c72dfa2e6e2
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://twitter.com/MichalKoczwara/status/1553634816016498688
+status: experimental
+tags:
+- attack.execution

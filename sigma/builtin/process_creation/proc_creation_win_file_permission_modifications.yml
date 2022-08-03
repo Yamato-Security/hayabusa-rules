@@ -1,7 +1,7 @@
 
 title: File or Folder Permissions Modifications
 ruletype: Sigma
-author: Jakob Weinzettl, oscd.community
+author: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali
 date: 2019/10/23
 description: Detects a file or folder's permissions being modified.
 detection:
@@ -16,6 +16,8 @@ detection:
     - '*\takeown.exe'
     - '*\cacls.exe'
     - '*\icacls.exe'
+    - '*\net.exe'
+    - '*\net1.exe'
   SELECTION_4:
     CommandLine: '*/grant*'
   SELECTION_5:
@@ -45,9 +47,10 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/12
+modified: 2022/08/01
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.001/T1222.001.md
+- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh750728(v=ws.11)
 status: test
 tags:
 - attack.defense_evasion

@@ -1,0 +1,59 @@
+
+title: Suspicious Double Extension Files
+ruletype: Sigma
+author: Nasreddine Bencherchali, frack113
+date: 2022/06/19
+description: Detects dropped files with double extensions which is often used by malware
+  as a method to abuse the fact that windows hide default extensions by default.
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFilename:
+    - '*.zip'
+    - '*.rar'
+    - '*.lnk'
+    - '*.iso'
+    - '*.exe'
+  SELECTION_4:
+    TargetFilename:
+    - '*.doc.*'
+    - '*.docx.*'
+    - '*.xls.*'
+    - '*.xlsx.*'
+    - '*.ppt.*'
+    - '*.pptx.*'
+    - '*.jpg.*'
+  SELECTION_5:
+    TargetFilename:
+    - '*.zip.exe'
+    - '*.rar.exe'
+  SELECTION_6:
+    TargetFilename:
+    - '*\AppData\Roaming\Microsoft\Office\Recent\\*'
+    - '*\AppData\Roaming\Microsoft\Windows\Recent\\*'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+    SELECTION_5) and  not (SELECTION_6))
+falsepositives:
+- Unlikely
+id: b4926b47-a9d7-434c-b3a0-adc3fa0bd13e
+level: high
+logsource:
+  category: file_event
+  product: windows
+modified: 2022/07/28
+references:
+- https://www.crowdstrike.com/blog/meet-crowdstrikes-adversary-of-the-month-for-june-mustang-panda/
+- https://www.anomali.com/blog/china-based-apt-mustang-panda-targets-minority-groups-public-and-private-sector-organizations
+- https://www.cybereason.com/blog/research/a-bazar-of-tricks-following-team9s-development-cycles
+- https://twitter.com/malwrhunterteam/status/1235135745611960321
+- https://twitter.com/luc4m/status/1073181154126254080
+related:
+- id: 1cdd9a09-06c9-4769-99ff-626e2b3991b8
+  type: derived
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036.007

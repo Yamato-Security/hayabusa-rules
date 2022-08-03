@@ -31,8 +31,12 @@ detection:
     - '*\inetsrv\appcmd.exe'
   SELECTION_5:
     Image: '*c:\windows\\*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-    and SELECTION_5))
+  SELECTION_6:
+    CommandLine: C:\$WinREAgent\Scratch\\*
+  SELECTION_7:
+    CommandLine: '*\dismhost.exe {*'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+    and SELECTION_5) or (SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Unknown
 id: 333cdbe8-27bb-4246-bf82-b41a0dca4b70
@@ -40,7 +44,7 @@ level: high
 logsource:
   category: image_load
   product: windows
-modified: 2022/06/02
+modified: 2022/07/27
 references:
 - 1bd85e1caa1415ebdc8852c91e37bbb7
 - https://twitter.com/am0nsec/status/1412232114980982787

@@ -1,0 +1,65 @@
+
+title: Suspicious WindowsTerminal Child Processes
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/07/25
+description: Detects suspicious children spawned via the Windows Terminal application
+  which could be a sign of persistence via WindowsTerminal (see referneces section)
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_10:
+    CommandLine: '*\AppData\Local\Packages\Microsoft.WindowsTerminal_*'
+  SELECTION_11:
+    CommandLine: '*\LocalState\settings.json*'
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    ParentProcessName: '*\WindowsTerminal.exe'
+  SELECTION_4:
+    NewProcessName:
+    - '*\rundll32.exe'
+    - '*\regsvr32.exe'
+    - '*\certutil.exe'
+    - '*\cscript.exe'
+    - '*\wscript.exe'
+    - '*\csc.exe'
+  SELECTION_5:
+    NewProcessName:
+    - '*C:\Users\Public\\*'
+    - '*\Downloads\\*'
+    - '*\Desktop\\*'
+    - '*\AppData\Local\Temp\\*'
+    - '*\Windows\TEMP\\*'
+  SELECTION_6:
+    CommandLine:
+    - '* iex *'
+    - '*Invoke-*'
+    - '*Import-Module*'
+    - '*DownloadString(*'
+    - '* /c *'
+    - '* /k *'
+  SELECTION_7:
+    CommandLine: '*Import-Module*'
+  SELECTION_8:
+    CommandLine: '*Microsoft.VisualStudio.DevShell.dll*'
+  SELECTION_9:
+    CommandLine: '*Enter-VsDevShell*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and (SELECTION_4 or SELECTION_5
+    or SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and SELECTION_9) or (SELECTION_10
+    and SELECTION_11)))
+falsepositives:
+- Other legitimate "Windows Terminal" profiles
+id: 8de89e52-f6e1-4b5b-afd1-41ecfa300d48
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/07/27
+references:
+- https://persistence-info.github.io/Data/windowsterminalprofile.html
+- https://twitter.com/nas_bench/status/1550836225652686848
+status: experimental
+tags:
+- attack.execution
+- attack.persistence

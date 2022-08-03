@@ -3,9 +3,9 @@ title: Webshell Recon Detection Via CommandLine & Processes
 ruletype: Sigma
 author: Cian Heasley, Florian Roth
 date: 2020/07/22
-description: Looking for processes spawned by web server components that indicate
-  reconnaissance by popular public domain webshells for whether perl, python or wget
-  are installed.
+description: Detects processes spawned from web servers (php, tomcat, iis...etc) that
+  perform reconnaissance looking for the existence of popular scripting tools (perl,
+  python, wget) on the system via the help commands
 detection:
   SELECTION_1:
     EventID: 1
@@ -39,6 +39,9 @@ detection:
     CommandLine:
     - '*perl --help*'
     - '*python --help*'
+    - '*python -h*'
+    - '*python3 --help*'
+    - '*python3 -h*'
     - '*wget --help*'
     - '*perl -h*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)
@@ -54,7 +57,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/03/17
+modified: 2022/07/27
 references:
 - https://ragged-lab.blogspot.com/2020/07/webshells-automating-reconnaissance.html
 status: test

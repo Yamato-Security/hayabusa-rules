@@ -24,8 +24,12 @@ detection:
     ParentProcessName: C:\Program Files (x86)\NVIDIA Corporation\\*
   SELECTION_6:
     NewProcessName: '*setup.exe'
+  SELECTION_7:
+    NewProcessName: C:\Program Files (x86)\Microsoft\Temp\\*
+  SELECTION_8:
+    NewProcessName: '*.tmp\MicrosoftEdgeUpdate.exe'
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-    or SELECTION_5) or (SELECTION_6)))
+    or SELECTION_5) or (SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: dca91cfd-d7ab-4c66-8da7-ee57d487b35b
@@ -33,7 +37,7 @@ level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2022/06/04
+modified: 2022/07/27
 references:
 - Malware sandbox results
 status: experimental

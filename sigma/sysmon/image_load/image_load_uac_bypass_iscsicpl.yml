@@ -14,11 +14,13 @@ detection:
   SELECTION_3:
     Image: C:\Windows\SysWOW64\iscsicpl.exe
   SELECTION_4:
-    ImageLoaded: '*C:\Windows\\*'
+    ImageLoaded: '*\iscsiexe.dll'
   SELECTION_5:
+    ImageLoaded: '*C:\Windows\\*'
+  SELECTION_6:
     ImageLoaded: '*iscsiexe.dll*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-    and SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5 and SELECTION_6))
 falsepositives:
 - Unknown
 id: 9ed5959a-c43c-4c59-84e3-d28628429456
@@ -26,6 +28,7 @@ level: high
 logsource:
   category: image_load
   product: windows
+modified: 2022/07/25
 references:
 - https://github.com/hackerhouse-opensource/iscsicpl_bypassUAC
 - https://twitter.com/wdormann/status/1547583317410607110

@@ -16,6 +16,7 @@ detection:
     Image:
     - '*\cmd.exe'
     - '*\powershell.exe'
+    - '*\pwsh.exe'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Case in which administrators are allowed to use ScreenConnect's Backstage mode
@@ -24,6 +25,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/07/27
 references:
 - https://www.mandiant.com/resources/telegram-malware-iranian-espionage
 - https://docs.connectwise.com/ConnectWise_Control_Documentation/Get_started/Host_client/View_menu/Backstage_mode

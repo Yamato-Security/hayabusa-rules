@@ -61,7 +61,7 @@ detection:
   SELECTION_26:
     NewValue: C:\Program Files\Google\Drive File Stream\\*
   SELECTION_27:
-    NewValue: '*\GoogleDriveFS.exe --startup_mode'
+    NewValue: '*\GoogleDriveFS.exe*'
   SELECTION_28:
     TargetObject: '*GoogleDrive*'
   SELECTION_29:
@@ -144,7 +144,7 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/07/06
+modified: 2022/07/25
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

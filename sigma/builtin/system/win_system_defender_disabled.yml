@@ -3,7 +3,7 @@ title: Windows Defender Threat Detection Disabled - Service
 ruletype: Sigma
 author: Ján Trenčanský, frack113
 date: 2020/07/28
-description: Detects disabling Windows Defender threat protection
+description: Detects the "Windows Defender Threat Protection" service has been disabled
 detection:
   SELECTION_1:
     Channel: System
@@ -26,7 +26,7 @@ level: low
 logsource:
   product: windows
   service: system
-modified: 2022/05/04
+modified: 2022/08/01
 references:
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-antivirus/troubleshoot-windows-defender-antivirus
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md

@@ -3,7 +3,7 @@ title: System File Execution Location Anomaly
 ruletype: Sigma
 author: Florian Roth, Patrick Bareiss, Anton Kutepov, oscd.community, Nasreddine Bencherchali
 date: 2017/11/27
-description: Detects a Windows program executable started in a suspicious folder
+description: Detects a Windows program executable started from a suspicious folder
 detection:
   SELECTION_1:
     EventID: 4688

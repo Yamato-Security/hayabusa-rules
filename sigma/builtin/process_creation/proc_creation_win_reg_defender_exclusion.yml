@@ -16,7 +16,7 @@ detection:
     NewProcessName: '*\reg.exe'
   SELECTION_4:
     CommandLine:
-    - '*HKLM\SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths\\*'
+    - '*HKLM\SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths*'
     - '*HKLM\SOFTWARE\Microsoft\Microsoft Antimalware\Exclusions\Paths*'
   SELECTION_5:
     CommandLine: '*ADD *'
@@ -37,6 +37,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/07/28
 references:
 - https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/
 - https://redcanary.com/threat-detection-report/threats/qbot/

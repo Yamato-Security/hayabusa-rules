@@ -1,9 +1,9 @@
 
-title: Suspicious Explorer Child Of Regsvr32
+title: Regsvr32 Spawning Explorer
 ruletype: Sigma
 author: elhoim
 date: 2022/05/05
-description: Suspicious explorer.exe child of regsvr32.exe
+description: Detects "regsvr32.exe" spawning "explorer.exe", which is very uncommon.
 detection:
   SELECTION_1:
     EventID: 4688
@@ -21,6 +21,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/07/28
 references:
 - https://redcanary.com/blog/intelligence-insights-april-2022/
 - https://www.echotrail.io/insights/search/regsvr32.exe

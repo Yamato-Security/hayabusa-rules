@@ -1,10 +1,11 @@
 
 title: Winword LOLBIN Usage
 ruletype: Sigma
-author: Nasreddine Bencherchali
+author: Nasreddine Bencherchali, Victor Sergeev, oscd.community
 date: 2022/05/17
-description: Winword can be abused as a LOLBIN to download arbitary file or load arbitary
-  DLLs
+description: |
+  Detects Winword process loading custmom dlls via the '/l' switch.
+  Winword can be abused as a LOLBIN to download arbitary file or load arbitary DLLs.
 detection:
   SELECTION_1:
     EventID: 1
@@ -16,14 +17,11 @@ detection:
     OriginalFileName: WinWord.exe
   SELECTION_5:
     CommandLine:
-    - '*http://*'
-    - '*https://*'
-  SELECTION_6:
-    CommandLine:
     - '*/l *'
     - '*.dll*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and (SELECTION_5
-    or SELECTION_6))
+    - '*http://*'
+    - '*https://*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
 falsepositives:
 - Unknown
 id: 4ae3e30b-b03f-43aa-87e3-b622f4048eed
@@ -31,7 +29,14 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/07/25
 references:
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Winword/
 - https://github.com/D4Vinci/One-Lin3r/blob/9fdfa5f0b9c698dfbd4cdfe7d2473192777ae1c6/one_lin3r/core/liners/windows/cmd/dll_loader_word.py
+related:
+- id: 2621b3a6-3840-4810-ac14-a02426086171
+  type: obsoletes
 status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1202

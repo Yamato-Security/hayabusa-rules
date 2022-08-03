@@ -13,7 +13,9 @@ detection:
     SourceImage:
     - '*\powershell.exe'
     - '*\pwsh.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  SELECTION_4:
+    SourceParentImage: C:\Windows\System32\CompatTelRunner.exe
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
 falsepositives:
 - Unknown
 id: eeb2e3dc-c1f4-40dd-9bd5-149ee465ad50
@@ -23,7 +25,7 @@ logsource:
   definition: Note that you have to configure logging for CreateRemoteThread in Symson
     config
   product: windows
-modified: 2022/07/14
+modified: 2022/07/28
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 status: test
