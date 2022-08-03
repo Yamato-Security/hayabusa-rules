@@ -73,7 +73,7 @@ class Logconverter():
 
     def convert_rules(self):
         convert_rule_list =self.create_rule_list(self.rules_dir)
-        print("convert start!")
+        print("Converting rules. Please wait.")
         with ThreadPool(CPU) as threadpool:
             result = threadpool.map(sigma_executer, convert_rule_list)
         failed = sum(result)
@@ -165,14 +165,14 @@ def sigma_executer(data: ConvertData):
         logger.info(data.file_name + " were converted.")
         stderr = proc.stderr.read().decode("utf-8")
         if len(stderr) > 0:
-            logger.warning('convert "' + data.file_name + '" failed.\n'
+            logger.warning('Conversion of "' + data.file_name + '" failed.\n'
                            'command: ' + str(data.sigma_command) + '\n'
                            + stderr)
             return 1
         with open(data.output_path, mode="w") as f:
             f.write(proc.stdout.read().decode("utf-8"))
     except subprocess.TimeoutExpired:
-        logger.error("failed to convert " + data.output_path)
+        logger.error("Failed to convert " + data.output_path)
         proc.kill()
         return 1
     except Exception as err:
@@ -183,7 +183,7 @@ def sigma_executer(data: ConvertData):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--cpu",
-                        help="You can specify the number of CPUs to use. Deault is os.cpu_count()'s number",
+                        help="You can specify the number of CPUs to use. The deault number is os.cpu_count().",
                         type=int, default=None)
     parser.add_argument("-r", "--rule_path",
                         help="""
@@ -191,7 +191,7 @@ if __name__ == "__main__":
                         Default: .../sigma/rules/windows/
                         """)
     parser.add_argument("-o", "--output",
-                        help="Export dir. Default: ./hayabusa_rules",
+                        help="Export directory. Default: ./hayabusa_rules",
                         default="./hayabusa_rules")
     parser.add_argument("--debug", help="Debug mode.",
                     action="store_true")
@@ -203,7 +203,7 @@ if __name__ == "__main__":
     convertpy_path = os.path.abspath(__file__) # Expect: .../sigma/tools/convert.py
     files = os.listdir(os.path.dirname(convertpy_path))
     if "sigmac" not in files:
-        logger.error("sigmac does not exist in same dir. You must set convert.py to sigma/tools dir.")
+        logger.error("Could not find sigmac in this directory. You must place convert.py in the sigma/tools directory.")
         sys.exit(1)
     SIGMAC = os.path.join(os.path.dirname(convertpy_path), "sigmac")
     SIGMA_DIR = os.path.abspath(os.path.join(os.path.dirname(convertpy_path), ".."))
