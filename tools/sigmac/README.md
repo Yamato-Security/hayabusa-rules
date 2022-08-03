@@ -63,7 +63,7 @@ If you want to use some option, edit `convert.sh`
 
 ## Currently unsupported rules
 
-The following rules currently cannot be automatically converted because it contains an aggregation operator that has not been implemented yet.
+The following rules currently cannot be automatically converted because it contains an aggregation operator (`|near`) that has not been implemented yet.
 
 ```
 sigma/rules/windows/builtin/win_susp_samr_pwset.yml

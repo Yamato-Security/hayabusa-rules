@@ -63,7 +63,7 @@ sh convert.sh
 
 ## 現在サポートされていないルール
 
-以下のルールは、まだ実装されていないaggregation operatorが含まれているため、現在は自動変換できません。
+以下のルールは、まだ実装されていないaggregation operator (`|near`)が含まれているため、現在は自動変換できません。
 
 ```
 sigma/rules/windows/builtin/win_susp_samr_pwset.yml
