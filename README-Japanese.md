@@ -31,6 +31,7 @@
   - [ワイルドカード](#ワイルドカード)
   - [イベントキー内のキーワードのネスト](#イベントキー内のキーワードのネスト)
     - [regexesとallowlistキーワード](#regexesとallowlistキーワード)
+  - [null keyword](#null-keyword)
   - [condition (条件)](#condition-条件)
   - [notロジック](#notロジック)
   - [aggregation condition](#aggregation-condition)
@@ -505,6 +506,18 @@ Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemPro
 
 また、`regexes` と `allowlist` にはユーザーが独自で作成したファイルを指定することも可能です。
 デフォルトの `./rules/config/detectlist_suspicous_services.txt` と `./rules/config/allowlist_legitimate_services.txt` を参考にして、独自のファイルを作成してください。
+
+## null keyword
+
+Hayabusaルールではnullを値に入れることで、フィールドが存在しないことを条件とすることができます。
+
+```yaml
+detection:
+    selection:
+        EventID: 4688
+        ProcessCommandLine: null
+    condition: selection
+```
 
 ## condition (条件)
 

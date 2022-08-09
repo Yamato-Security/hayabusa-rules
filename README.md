@@ -31,6 +31,7 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
   - [Wildcards](#wildcards)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
     - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
+  - [null keyword](#null-keyword)
   - [condition](#condition)
   - [not logic](#not-logic)
   - [Aggregation conditions (Count rules)](#aggregation-conditions-count-rules)
@@ -505,6 +506,18 @@ Files defined in `regexes` and `allowlist` can be edited to change the behavior 
 
 You can also use different detectlist and allowlist textfiles that you create.
 Please refer to the built-in `./rules/config/regex/detectlist_suspicous_services.txt` and `./rules/config/regex/allowlist_legitimate_services.txt` when creating your own.
+
+## null keyword
+
+null keyword in Hayabusa rules can be used to check if field is not exist.
+
+```yaml
+detection:
+    selection:
+        EventID: 4688
+        ProcessCommandLine: null
+    condition: selection
+```
 
 ## condition
 
