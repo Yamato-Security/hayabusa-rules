@@ -509,7 +509,7 @@ Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemPro
 
 ## null keyword
 
-Hayabusaルールではnullを値に入れることで、フィールドが存在しないことを条件とすることができます。
+`null`を値に入れることで、フィールドが存在しないことを条件とすることができます。
 
 ```yaml
 detection:
@@ -518,6 +518,8 @@ detection:
         ProcessCommandLine: null
     condition: selection
 ```
+
+注意: フィールド自体は存在するが、値がヌルであることを確認したい場合は、`ProcessCommandLine: ''`のように定義します。
 
 ## condition (条件)
 
