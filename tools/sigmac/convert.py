@@ -10,10 +10,10 @@ from typing import Dict, List, Set
 
 import ruamel.yaml
 
-SIGMA_DIR = ".../path/to/sigma/"
-SIGMAC = ".../path/to/sigma/tools/sigmac"
+SIGMA_DIR = "./"
+SIGMAC = "./tools/sigmac"
 EXPORT_DIR_NAME = "./hayabusa_rules"
-RULES_DIR = ".../path/to/sigma/rules/windows"
+RULES_DIR = "./rules/windows"
 CPU = None
 IGNORE_CONFIGS = ["windows-services.yml", "powershell.yml"]
 
@@ -182,13 +182,14 @@ def sigma_executer(data: ConvertData):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    cpu_num = str(os.cpu_count())
     parser.add_argument("-c", "--cpu",
-                        help="You can specify the number of CPUs to use. The deault number is os.cpu_count().",
+                        help="You can specify the number of CPUs to use. The default number is " + cpu_num + ".",
                         type=int, default=None)
     parser.add_argument("-r", "--rule_path",
                         help="""
-                        full path to rule dir you want to convert.
-                        Default: .../sigma/rules/windows/
+                        Full path to the rule directory you want to convert.
+                        Default: ./rules/windows/
                         """)
     parser.add_argument("-o", "--output",
                         help="Export directory. Default: ./hayabusa_rules",
@@ -200,7 +201,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # CHECK DIR
-    convertpy_path = os.path.abspath(__file__) # Expect: .../sigma/tools/convert.py
+    convertpy_path = os.path.abspath(__file__) # Get PWD
     files = os.listdir(os.path.dirname(convertpy_path))
     if "sigmac" not in files:
         logger.error("Could not find sigmac in this directory. You must place convert.py in the sigma/tools directory.")
