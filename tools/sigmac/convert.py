@@ -161,7 +161,7 @@ def sigma_executer(data: ConvertData):
     proc = subprocess.Popen(data.sigma_command,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
-        proc.wait(30)
+        proc.wait(60)
         logger.info(data.file_name + " were converted.")
         stderr = proc.stderr.read().decode("utf-8")
         if len(stderr) > 0:
@@ -172,7 +172,8 @@ def sigma_executer(data: ConvertData):
         with open(data.output_path, mode="w") as f:
             f.write(proc.stdout.read().decode("utf-8"))
     except subprocess.TimeoutExpired:
-        logger.error("Failed to convert " + data.output_path)
+        logger.error("Timeout Expired, failed to convert " + data.output_path
+                    + "\n" + "Command: " + data.sigma_command)
         proc.kill()
         return 1
     except Exception as err:
