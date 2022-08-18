@@ -21,6 +21,7 @@ detection:
     - '*narrator.exe*'
     - '*displayswitch.exe*'
     - '*atbroker.exe*'
+    - '*HelpPane.exe*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
@@ -29,9 +30,10 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/08/06
 references:
 - https://blogs.technet.microsoft.com/jonathantrull/2016/10/03/detecting-sticky-key-backdoors/
+- https://bazaar.abuse.ch/sample/6f3aa9362d72e806490a8abce245331030d1ab5ac77e400dd475748236a6cc81/
 status: test
 tags:
 - attack.persistence

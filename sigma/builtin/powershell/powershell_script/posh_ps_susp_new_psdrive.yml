@@ -2,7 +2,7 @@
 title: Suspicious New-PSDrive to Admin Share
 ruletype: Sigma
 author: frack113
-date: 2022/01/01
+date: 2022/08/13
 description: Adversaries may use to interact with a remote network share using Server
   Message Block (SMB). The adversary may then perform actions as the logged-on user.
 detection:
@@ -19,7 +19,7 @@ detection:
   SELECTION_6:
     ScriptBlockText: '*-root *'
   SELECTION_7:
-    ScriptBlockText: '*\\\*'
+    ScriptBlockText: '*\\\\\*'
   SELECTION_8:
     ScriptBlockText: '*$*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5

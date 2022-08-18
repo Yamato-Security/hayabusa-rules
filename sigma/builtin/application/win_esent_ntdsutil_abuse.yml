@@ -1,0 +1,36 @@
+
+title: Ntdsutil Abuse
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/14
+description: Detects potential abuse of ntdsutil to dump ntds.dit database
+detection:
+  SELECTION_1:
+    Channel: Application
+  SELECTION_2:
+    Provider_Name: ESENT
+  SELECTION_3:
+    EventID: 216
+  SELECTION_4:
+    EventID: 325
+  SELECTION_5:
+    EventID: 326
+  SELECTION_6:
+    EventID: 327
+  SELECTION_7:
+    Data: '*ntds.dit*'
+  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4 or SELECTION_5
+    or SELECTION_6) and SELECTION_7)
+falsepositives:
+- Legitimate backup operation/creating shadow copies
+id: e6e88853-5f20-4c4a-8d26-cd469fd8d31f
+level: medium
+logsource:
+  product: windows
+  service: application
+references:
+- https://twitter.com/mgreen27/status/1558223256704122882
+- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/jj574207(v=ws.11)
+status: experimental
+tags:
+- attack.execution

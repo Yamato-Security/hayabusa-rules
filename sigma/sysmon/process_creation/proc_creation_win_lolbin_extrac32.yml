@@ -21,7 +21,7 @@ detection:
     CommandLine:
     - '*/C*'
     - '*/Y*'
-    - '* \\\*'
+    - '* \\\\\*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
     and SELECTION_6 and SELECTION_7)
 falsepositives:
@@ -31,7 +31,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2022/07/08
+modified: 2022/08/13
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Extrac32/
 status: experimental

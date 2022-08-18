@@ -30,8 +30,8 @@ detection:
     CommandLine: '*\\\\\*'
   SELECTION_9:
     CommandLine: '*$*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
-    SELECTION_5)) or (SELECTION_6 and SELECTION_7)) and (SELECTION_8 and SELECTION_9))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)
+    or (SELECTION_6 and SELECTION_7)) and (SELECTION_8 and SELECTION_9))
 falsepositives:
 - Administrative scripts
 fields:

@@ -11,7 +11,7 @@ detection:
     Channel: Security
   SELECTION_3:
     CommandLine:
-    - net use \\%DomainController%\C$ "P@ssw0rd" *
+    - net use \\\\%DomainController%\C$ "P@ssw0rd" *
     - dir c:\\*.doc* /s
     - dir %TEMP%\\*.exe
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)

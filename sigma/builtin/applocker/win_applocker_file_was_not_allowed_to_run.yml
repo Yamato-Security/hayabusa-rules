@@ -17,7 +17,11 @@ detection:
     EventID: 8004
   SELECTION_3:
     EventID: 8007
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+  SELECTION_4:
+    EventID: 8022
+  SELECTION_5:
+    EventID: 8025
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Need tuning applocker or add exceptions in SIEM
 fields:

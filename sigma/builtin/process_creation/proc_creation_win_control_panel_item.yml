@@ -8,28 +8,28 @@ detection:
   SELECTION_1:
     EventID: 4688
   SELECTION_10:
-    CommandLine: '*CurrentVersion\Control Panel\CPLs*'
+    CommandLine: '*igfxCPL.cpl*'
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    CommandLine: '*.cpl'
+    NewProcessName: '*\reg.exe'
   SELECTION_4:
+    CommandLine: '*add*'
+  SELECTION_5:
+    CommandLine: '*CurrentVersion\Control Panel\CPLs*'
+  SELECTION_6:
+    CommandLine: '*.cpl'
+  SELECTION_7:
     CommandLine:
     - '*\System32\\*'
     - '*%System%*'
-  SELECTION_5:
-    CommandLine: '*regsvr32 *'
-  SELECTION_6:
-    CommandLine: '* /s *'
-  SELECTION_7:
-    CommandLine: '*igfxCPL.cpl*'
   SELECTION_8:
-    NewProcessName: '*\reg.exe'
+    CommandLine: '*regsvr32 *'
   SELECTION_9:
-    CommandLine: '*add*'
-  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and  not (SELECTION_4))
-    and  not (SELECTION_5 and SELECTION_6 and SELECTION_7)) or (SELECTION_8 and SELECTION_9
-    and SELECTION_10)))
+    CommandLine: '* /s *'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+    SELECTION_5) or (SELECTION_6 and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9
+    and SELECTION_10)))))
 falsepositives:
 - Unknown
 id: 0ba863e6-def5-4e50-9cea-4dd8c7dc46a4
@@ -37,7 +37,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/10
+modified: 2022/08/11
 references:
 - https://attack.mitre.org/techniques/T1196/
 - https://ired.team/offensive-security/code-execution/code-execution-through-control-panel-add-ins

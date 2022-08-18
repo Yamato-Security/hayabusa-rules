@@ -24,6 +24,8 @@ detection:
     - '*.hastebin.com/raw/'
     - '*.ghostbin.co/'
     - '*ufile.io'
+    - '*anonfiles.com'
+    - '*send.exploit.in'
   SELECTION_5:
     Image:
     - C:\Windows\\*
@@ -36,10 +38,11 @@ level: high
 logsource:
   category: network_connection
   product: windows
-modified: 2022/07/22
+modified: 2022/08/09
 references:
 - https://twitter.com/M_haggis/status/900741347035889665
 - https://twitter.com/M_haggis/status/1032799638213066752
+- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/ransomware-hive-conti-avoslocker
 status: test
 tags:
 - attack.lateral_movement

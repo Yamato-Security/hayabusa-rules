@@ -1,0 +1,46 @@
+
+title: Creation Suspicious File In Uncommon AppData Folder
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/05
+description: Detects the creation of suspicious files and folders inside the user's
+  AppData folder but not inside any of the common and well known directories (Local,
+  Romaing, LocalLow). This method could be used as a method to bypass detection who
+  exclude the AppData folder in fear of FPs
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    TargetFilename: '*\AppData\\*'
+  SELECTION_4:
+    TargetFilename:
+    - '*.exe'
+    - '*.bat'
+    - '*.vbe'
+    - '*.vbs'
+    - '*.msi'
+    - '*.iso'
+    - '*.lnk'
+    - '*.cmd'
+  SELECTION_5:
+    TargetFilename:
+    - '*\AppData\Local\\*'
+    - '*\AppData\LocalLow\\*'
+    - '*\AppData\Roaming\\*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5))
+falsepositives:
+- Unlikely
+id: d7b50671-d1ad-4871-aa60-5aa5b331fe04
+level: high
+logsource:
+  category: file_event
+  product: windows
+references:
+- Internal Research
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.execution

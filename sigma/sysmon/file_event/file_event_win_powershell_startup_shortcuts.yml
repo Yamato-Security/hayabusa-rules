@@ -33,11 +33,11 @@ level: high
 logsource:
   category: file_event
   product: windows
-modified: 2022/07/14
+modified: 2022/08/10
 references:
 - https://redcanary.com/blog/intelligence-insights-october-2021/
 - https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1547.001/T1547.001.md#atomic-test-7---add-executable-shortcut-link-to-user-startup-folder
 status: experimental
 tags:
-- attack.registry_run_keys_/_startup_folder
+- attack.persistence
 - attack.t1547.001

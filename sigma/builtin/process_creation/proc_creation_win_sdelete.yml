@@ -16,7 +16,7 @@ detection:
     - '* -h*'
     - '* -c*'
     - '* -z*'
-    - '* /?*'
+    - '* /\?*'
   condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - System administrator Usage
@@ -30,6 +30,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/08/13
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1485/T1485.md
 status: experimental

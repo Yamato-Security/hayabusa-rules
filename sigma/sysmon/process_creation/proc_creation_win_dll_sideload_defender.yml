@@ -1,0 +1,35 @@
+
+title: DLL Sideloading by Microsoft Defender
+ruletype: Sigma
+author: Bhabesh Raj
+date: 2022/08/01
+description: Detects execution of Microsoft Defender's CLI process (MpCmdRun.exe)
+  from the non-default directory which may be an attempt to sideload arbitary DLL
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\MpCmdRun.exe'
+  SELECTION_4:
+    Image:
+    - C:\Program Files\Windows Defender\\*
+    - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+    - C:\Windows\winsxs\\*
+    - C:\Program Files\Microsoft Security Client\MpCmdRun.exe*
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: 7002aa10-b8d4-47ae-b5ba-51ab07e228b9
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/08/09
+references:
+- https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1574.002

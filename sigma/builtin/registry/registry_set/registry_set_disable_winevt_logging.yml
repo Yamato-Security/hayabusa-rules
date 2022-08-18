@@ -11,7 +11,9 @@ detection:
   SELECTION_10:
     NewProcessName: '*\TiWorker.exe'
   SELECTION_11:
-    TargetObject: '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-IIS-*'
+    NewProcessName: C:\Windows\System32\svchost.exe
+  SELECTION_12:
+    TargetObject: '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-FileInfoMinifilter*'
   SELECTION_2:
     OperationType:
     - Existing registry value modified
@@ -30,8 +32,8 @@ detection:
   SELECTION_9:
     NewProcessName: C:\Windows\winsxs\\*
   condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9 and SELECTION_10
-    and SELECTION_11)))
+    and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9 and SELECTION_10)
+    or (SELECTION_11 and SELECTION_12)))
 falsepositives:
 - Legitimate administrators disabling specific event log for troubleshooting
 id: 2f78da12-f7c7-430b-8b19-a28f269b77a3
@@ -39,7 +41,7 @@ level: high
 logsource:
   category: registry_set
   product: windows
-modified: 2022/07/12
+modified: 2022/08/10
 references:
 - https://twitter.com/WhichbufferArda/status/1543900539280293889
 - https://github.com/DebugPrivilege/CPP/blob/c39d365617dbfbcb01fffad200d52b6239b2918c/Windows%20Defender/RestoreDefenderConfig.cpp

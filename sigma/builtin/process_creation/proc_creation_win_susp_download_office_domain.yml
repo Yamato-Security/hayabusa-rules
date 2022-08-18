@@ -1,7 +1,7 @@
 
 title: Suspicious Download from Office Domain
 ruletype: Sigma
-author: Florian Roth
+author: Florian Roth, Nasreddine Bencherchali
 date: 2021/12/27
 description: Detects suspicious ways to download files from Microsoft domains that
   are used to store attachments in Emails or OneNote documents
@@ -16,6 +16,10 @@ detection:
     - '*\wget.exe'
   SELECTION_4:
     CommandLine:
+    - '*Invoke-WebRequest*'
+    - '*iwr *'
+    - '*curl *'
+    - '*wget *'
     - '*Start-BitsTransfer*'
     - '*.DownloadFile(*'
     - '*.DownloadString(*'
@@ -32,6 +36,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/08/02
 references:
 - https://twitter.com/an0n_r0/status/1474698356635193346?s=12
 - https://twitter.com/mrd0x/status/1475085452784844803?s=12

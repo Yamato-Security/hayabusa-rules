@@ -13,15 +13,12 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    CommandLine: '* -ma *'
+    CommandLine:
+    - '* -ma *'
+    - '* /ma *'
   SELECTION_4:
-    CommandLine: '* lsass*'
-  SELECTION_5:
-    CommandLine: '* -ma *'
-  SELECTION_6:
     CommandLine: '* ls*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6)))
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unlikely, because no one should dump an lsass process memory
 - Another tool that uses the command line switches of Procdump
@@ -30,7 +27,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2021/02/02
+modified: 2022/08/12
 references:
 - Internal Research
 status: stable

@@ -1,0 +1,35 @@
+
+title: Unsigned Binary Loaded From Suspicious Location
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/03
+description: Detects Code Integrity (CI) engine blocking processes from loading unsigned
+  DLLs residing in suspicious locations
+detection:
+  SELECTION_1:
+    EventID: 11
+  SELECTION_2:
+    EventID: 12
+  SELECTION_3:
+    ImageName:
+    - '*\Users\Public\\*'
+    - '*\PerfLogs\\*'
+    - '*\Desktop\\*'
+    - '*\Downloads\\*'
+    - '*\AppData\Local\Temp\\*'
+    - '*C:\Windows\TEMP\\*'
+  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
+falsepositives:
+- Unknown
+id: 8289bf8c-4aca-4f5a-9db3-dc3d7afe5c10
+level: high
+logsource:
+  category: security-mitigations
+  product: windows
+modified: 2022/08/05
+references:
+- https://github.com/nasbench/EVTX-ETW-Resources/blob/45fd5be71a51aa518b1b36d4e1f36af498084e27/ETWEventsList/CSV/Windows11/21H2/W11_21H2_Pro_20220719_22000.795/Providers/Microsoft-Windows-Security-Mitigations.csv
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1574.002

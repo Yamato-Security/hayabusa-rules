@@ -1,7 +1,7 @@
 
 title: Stop Windows Service
 ruletype: Sigma
-author: Jakob Weinzettl, oscd.community
+author: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali
 date: 2019/10/23
 description: Detects a windows service to be stopped
 detection:
@@ -27,8 +27,12 @@ detection:
     User:
     - '*AUTHORI*'
     - '*AUTORI*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-    SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
+  SELECTION_8:
+    NewProcessName: '*\powershell.exe'
+  SELECTION_9:
+    CommandLine: '*Stop-Service *'
+  condition: ((SELECTION_1 and SELECTION_2) and ((((SELECTION_3 or SELECTION_4) and
+    SELECTION_5) and  not (SELECTION_6 and SELECTION_7)) or (SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Administrator shutting down the service due to upgrade or removal purposes
 fields:
@@ -40,7 +44,7 @@ level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2022/06/20
+modified: 2022/08/08
 status: experimental
 tags:
 - attack.impact

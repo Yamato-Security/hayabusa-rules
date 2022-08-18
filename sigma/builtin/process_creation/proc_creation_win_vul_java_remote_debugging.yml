@@ -13,11 +13,15 @@ detection:
   SELECTION_3:
     CommandLine: '*transport=dt_socket,address=*'
   SELECTION_4:
-    CommandLine: '*address=127.0.0.1*'
+    CommandLine:
+    - '*jre1.*'
+    - '*jdk1.*'
   SELECTION_5:
+    CommandLine: '*address=127.0.0.1*'
+  SELECTION_6:
     CommandLine: '*address=localhost*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-    or SELECTION_5))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    (SELECTION_5 or SELECTION_6))
 falsepositives:
 - Unknown
 fields:
@@ -29,6 +33,8 @@ logsource:
   category: process_creation
   product: windows
 modified: 2021/11/27
+references:
+- https://dzone.com/articles/remote-debugging-java-applications-with-jdwp
 status: test
 tags:
 - attack.t1203

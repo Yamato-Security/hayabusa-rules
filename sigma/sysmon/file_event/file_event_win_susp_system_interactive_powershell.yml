@@ -13,7 +13,7 @@ detection:
   SELECTION_3:
     TargetFilename:
     - C:\Windows\System32\config\systemprofile\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
-    - C:\Windows\System32\config\systemprofile\AppData\\Local\Microsoft\Windows\PowerShell\StartupProfileData-Interactive
+    - C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Windows\PowerShell\StartupProfileData-Interactive
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Administrative activity
@@ -23,6 +23,7 @@ level: high
 logsource:
   category: file_event
   product: windows
+modified: 2022/08/13
 references:
 - https://jpcertcc.github.io/ToolAnalysisResultSheet/details/PowerSploit_Invoke-Mimikatz.htm
 status: experimental

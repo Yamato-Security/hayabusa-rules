@@ -3,7 +3,8 @@ title: Disable UAC Using Registry
 ruletype: Sigma
 author: frack113
 date: 2022/01/05
-description: Disable User Account Conrol (UAC) by changing its registry key HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA
+description: Detects when an attacker tries to disable User Account Conrol (UAC) by
+  changing its registry key HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA
   from 1 to 0
 detection:
   SELECTION_1:
@@ -16,7 +17,7 @@ detection:
   SELECTION_4:
     EventType: SetValue
   SELECTION_5:
-    TargetObject: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA
+    TargetObject: '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA*'
   SELECTION_6:
     NewValue: DWORD (0x00000000)
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
@@ -28,7 +29,7 @@ level: medium
 logsource:
   category: registry_set
   product: windows
-modified: 2022/03/26
+modified: 2022/08/06
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1548.002/T1548.002.md#atomic-test-8---disable-uac-using-regexe
 status: experimental

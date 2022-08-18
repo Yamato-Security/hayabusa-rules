@@ -18,7 +18,7 @@ detection:
   SELECTION_6:
     CommandLine: '*-nomutex *'
   SELECTION_7:
-    CommandLine: '*-p \\\*'
+    CommandLine: '*-p \\\\\*'
   SELECTION_8:
     CommandLine: '*$*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
@@ -30,6 +30,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
+modified: 2022/08/13
 references:
 - https://news.sophos.com/en-us/2021/09/03/conti-affiliates-use-proxyshell-exchange-exploit-in-ransomware-attacks/
 - https://twitter.com/VK_Intel/status/1447795359900704769?t=Xz7vaLTvaaCZ5kHoZa6gMw&s=19

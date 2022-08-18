@@ -3,7 +3,8 @@ title: Accessing WinAPI in PowerShell. Code Injection
 ruletype: Sigma
 author: Nikita Nazarov, oscd.community
 date: 2020/10/06
-description: Detecting Code injection with PowerShell in another process
+description: Detects the creation of a remote thread from a Powershell process to
+  another process
 detection:
   SELECTION_1:
     EventID: 8
@@ -25,7 +26,7 @@ logsource:
   definition: Note that you have to configure logging for CreateRemoteThread in Symson
     config
   product: windows
-modified: 2022/07/28
+modified: 2022/08/12
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 status: test

@@ -12,7 +12,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    TargetFilename: '*\\127.0.0*'
+    TargetFilename: '*\\\\127.0.0*'
   SELECTION_4:
     TargetFilename: '*\ADMIN$\\*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
@@ -23,6 +23,7 @@ level: medium
 logsource:
   category: file_event
   product: windows
+modified: 2022/08/13
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.002/T1021.002.md#atomic-test-4---execute-command-writing-output-to-local-admin-share
 status: experimental
