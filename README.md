@@ -31,6 +31,7 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
   - [Wildcards](#wildcards)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
     - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
+  - [null keyword](#null-keyword)
   - [condition](#condition)
   - [not logic](#not-logic)
   - [Aggregation conditions (Count rules)](#aggregation-conditions-count-rules)
@@ -159,7 +160,7 @@ sample-evtx: |
 - **id [required]**: A randomly generated version 4 UUID used to uniquely identify the rule. You can generate one [here](https://www.uuidgenerator.net/version4).
 - **level [required]**: Severity level based on [sigma's definition](https://github.com/SigmaHQ/sigma/wiki/Specification). Please write one of the following: `informational`,`low`,`medium`,`high`,`critical`
 - **status[required]**: Status based on [sigma's definition](https://github.com/SigmaHQ/sigma/wiki/Specification). Please write one of the following: `deprecated`, `experimental`, `test`, `stable`.
-- **logsource [required]**: While this is actually used by Hayabusa, we define logsource in the same way as sigma in order to be compatible with sigma rules.
+- **logsource [required]**: While this is not actually used by Hayabusa at the moment, we define logsource in the same way as sigma in order to be compatible with sigma rules.
 - **detection  [required]**: The detection logic goes here. (Explained below.)
 - **falsepositives [required]**: The possibilities for false positives. For example: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`. If it is unknown, please write `unknown`.
 - **tags** [optional]: If the technique is a [LOLBINS/LOLBAS](https://lolbas-project.github.io/) technique, please add the `lolbas` tag. If the alert can be mapped to a technique in the [MITRE ATT&CK](https://attack.mitre.org/) framework, please add the tactic ID (Example: `attack.t1098`) and any applicable tactics below:
@@ -505,6 +506,20 @@ Files defined in `regexes` and `allowlist` can be edited to change the behavior 
 
 You can also use different detectlist and allowlist textfiles that you create.
 Please refer to the built-in `./rules/config/regex/detectlist_suspicous_services.txt` and `./rules/config/regex/allowlist_legitimate_services.txt` when creating your own.
+
+## null keyword
+
+The `null` keyword can be used to check if field does not exist.
+
+```yaml
+detection:
+    selection:
+        EventID: 4688
+        ProcessCommandLine: null
+    condition: selection
+```
+
+Note: This is different from `ProcessCommandLine: ''` which checks if the value of a field is empty.
 
 ## condition
 
