@@ -1,7 +1,8 @@
 
 title: Powerview Add-DomainObjectAcl DCSync AD Extend Right
 ruletype: Sigma
-author: Samir Bousseaden; Roberto Rodriguez @Cyb3rWard0g; oscd.community; Tim Shelton
+author: Samir Bousseaden; Roberto Rodriguez @Cyb3rWard0g; oscd.community; Tim Shelton;
+  Maxence Fossat
 date: 2019/04/03
 description: Backdooring domain object to grant the rights associated with DCSync
   to a regular user or machine account using Powerview\Add-DomainObjectAcl DCSync
@@ -19,9 +20,10 @@ detection:
     - '*1131f6aa-9c07-11d1-f79f-00c04fc2dcd2*'
     - '*89e95b76-444d-4c62-991a-0facbeda640c*'
   SELECTION_5:
-    ObjectType:
+    ObjectClass:
     - dnsNode
     - dnsZoneScope
+    - dnsZone
   condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
     ((SELECTION_5)))
 falsepositives:
@@ -32,7 +34,7 @@ level: high
 logsource:
   product: windows
   service: security
-modified: 2022/05/10
+modified: 2022/08/16
 references:
 - https://twitter.com/menasec1/status/1111556090137903104
 - https://www.specterops.io/assets/resources/an_ace_up_the_sleeve.pdf

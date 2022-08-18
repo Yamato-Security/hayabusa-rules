@@ -1,0 +1,34 @@
+
+title: Obfuscated IP Via CLI
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/03
+description: Detects usage of an encoded/obfuscated version of an IP address (hex,
+  octal...) via commandline
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image:
+    - '*\ping.exe'
+    - '*\arp.exe'
+  SELECTION_4:
+    CommandLine: '* 0x*'
+  SELECTION_5:
+    CommandLine|re: ' [0-9]{7,13}'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5))
+falsepositives:
+- Unknown
+id: 56d19cb4-6414-4769-9644-1ed35ffbb148
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://h.43z.one/ipconverter/
+- https://twitter.com/Yasser_Elsnbary/status/1553804135354564608
+status: experimental
+tags:
+- attack.discovery

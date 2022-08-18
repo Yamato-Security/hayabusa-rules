@@ -23,41 +23,36 @@ detection:
   SELECTION_14:
     SourceImage: '*Antivirus*'
   SELECTION_15:
-    SourceImage: C:\WINDOWS\system32\wbem\wmiprvse.exe
-  SELECTION_16:
-    SourceImage: C:\Windows\sysWOW64\wbem\wmiprvse.exe
-  SELECTION_17:
-    SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
-  SELECTION_18:
     SourceImage:
     - '*\thor64.exe'
     - '*\thor.exe'
-  SELECTION_19:
+  SELECTION_16:
     SourceImage: '*\AppData\Local\Temp\\*'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_20:
+  SELECTION_17:
     SourceImage: '*\vs_bootstrapper_*'
-  SELECTION_21:
+  SELECTION_18:
     GrantedAccess: '0x1410'
-  SELECTION_22:
+  SELECTION_19:
     SourceImage:
     - C:\Program Files\\*
     - C:\Program Files (x86)\\*
     - C:\WINDOWS\system32\\*
-  SELECTION_23:
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_20:
     SourceCommandLine: C:\WINDOWS\system32\wermgr.exe -upload
-  SELECTION_24:
+  SELECTION_21:
     SourceImage: '*C:\Users\\*'
-  SELECTION_25:
+  SELECTION_22:
     SourceImage: '*\AppData\Local\\*'
-  SELECTION_26:
+  SELECTION_23:
     SourceImage:
     - '*\Microsoft VS Code\Code.exe'
     - '*\software_reporter_tool.exe'
     - '*\DropboxUpdate.exe'
     - '*\MBAMInstallerService.exe'
     - '*\WebEx\WebexHost.exe '
+    - '*\Programs\Microsoft VS Code\Code.exe'
   SELECTION_3:
     TargetImage: '*\lsass.exe'
   SELECTION_4:
@@ -68,12 +63,14 @@ detection:
     - C:\Program Files\Malwarebytes\Anti-Malware\MBAMService.exe
     - C:\PROGRAMDATA\MALWAREBYTES\MBAMSERVICE\ctlrupdate\mbupdatr.exe
     - C:\WINDOWS\system32\taskhostw.exe
-    - C:\Users\\*\AppData\Local\Programs\Microsoft VS Code\Code.exe
     - C:\Program Files\Windows Defender\MsMpEng.exe
     - C:\Windows\SysWOW64\msiexec.exe
     - C:\Windows\System32\msiexec.exe
     - C:\Windows\System32\lsass.exe
     - C:\WINDOWS\System32\perfmon.exe
+    - C:\WINDOWS\system32\wbem\wmiprvse.exe
+    - C:\Windows\sysWOW64\wbem\wmiprvse.exe
+    - C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
   SELECTION_6:
     SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
   SELECTION_7:
@@ -85,9 +82,8 @@ detection:
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
     ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
     or (SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14)
-    or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18) or (SELECTION_19
-    and SELECTION_20 and SELECTION_21) or (SELECTION_22) or (SELECTION_23) or (SELECTION_24
-    and SELECTION_25 and SELECTION_26)))
+    or (SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19)
+    or (SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason
 fields:
@@ -99,7 +95,7 @@ level: medium
 logsource:
   category: process_access
   product: windows
-modified: 2022/07/21
+modified: 2022/08/13
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

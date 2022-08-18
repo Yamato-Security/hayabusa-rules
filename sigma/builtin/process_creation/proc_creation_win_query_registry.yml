@@ -20,12 +20,8 @@ detection:
   SELECTION_5:
     CommandLine:
     - '*currentVersion\windows*'
-    - '*currentVersion\runServicesOnce*'
-    - '*currentVersion\runServices*'
     - '*winlogon\\*'
     - '*currentVersion\shellServiceObjectDelayLoad*'
-    - '*currentVersion\runOnce*'
-    - '*currentVersion\runOnceEx*'
     - '*currentVersion\run*'
     - '*currentVersion\policies\explorer\run*'
     - '*currentcontrolset\services*'
@@ -43,7 +39,7 @@ level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/08/04
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1012/T1012.md
 status: test

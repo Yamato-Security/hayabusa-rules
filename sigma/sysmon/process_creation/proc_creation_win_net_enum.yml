@@ -17,7 +17,7 @@ detection:
   SELECTION_4:
     CommandLine: '*view*'
   SELECTION_5:
-    CommandLine: '*\\\\*'
+    CommandLine: '*\\\\\*'
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
     (SELECTION_5))
 falsepositives:
@@ -31,7 +31,7 @@ level: low
 logsource:
   category: process_creation
   product: windows
-modified: 2019/11/11
+modified: 2022/08/13
 references:
 - https://eqllib.readthedocs.io/en/latest/analytics/b8a94d2f-dc75-4630-9d73-1edc6bd26fff.html
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md

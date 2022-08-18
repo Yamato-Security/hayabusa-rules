@@ -9,11 +9,13 @@ detection:
   SELECTION_1:
     EventID: 13
   SELECTION_10:
-    Image: C:\Windows\Microsoft.NET\Framework\\*
-  SELECTION_11:
     Image: '*\ngen.exe'
-  SELECTION_12:
+  SELECTION_11:
     TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{B66B135D-DA06-4FC4-95F8-7458E1D10129}*'
+  SELECTION_12:
+    Image:
+    - C:\Program Files\Microsoft Office\root\Integration\Integrator.exe
+    - C:\Program Files (x86)\Microsoft Office\root\Integration\Integrator.exe
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
@@ -30,16 +32,12 @@ detection:
   SELECTION_7:
     Image: '*\TiWorker.exe'
   SELECTION_8:
-    TargetObject:
-    - '*\MICROSOFT\WINDOWS NT\CURRENTVERSION\SCHEDULE\TASKCACHE\PLAIN\{1A552422-F571-4376-A7F1-5941E63D7B40}*'
-    - '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\Windows\DeviceDirectoryClient\\*'
-    - '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{04622042-F26B-4CCA-815F-E7A8375D87E6}*'
-    - '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{C130EB11-1FDE-4953-B222-F44EEC6E1E8B}*'
-  SELECTION_9:
     Image: C:\WINDOWS\system32\svchost.exe
+  SELECTION_9:
+    Image: C:\Windows\Microsoft.NET\Framework\\*
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9)
-    or (SELECTION_10 and SELECTION_11 and SELECTION_12)))
+    ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9
+    and SELECTION_10 and SELECTION_11) or (SELECTION_12)))
 falsepositives:
 - Unknown
 id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
@@ -47,7 +45,7 @@ level: high
 logsource:
   category: registry_set
   product: windows
-modified: 2022/07/29
+modified: 2022/08/11
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://labs.f-secure.com/blog/scheduled-task-tampering/

@@ -11,8 +11,8 @@ detection:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
     CommandLine:
-    - '* -NoP -NonI -w Hidden -c $x=$((gp HKCU:Software\\Microsoft\\Windows Update).Update)*'
-    - '* -NoP -NonI -c $x=$((gp HKCU:Software\\Microsoft\\Windows Update).Update);*'
+    - '* -NoP -NonI -w Hidden -c $x=$((gp HKCU:Software\Microsoft\Windows Update).Update)*'
+    - '* -NoP -NonI -c $x=$((gp HKCU:Software\Microsoft\Windows Update).Update);*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -24,7 +24,7 @@ level: critical
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/08/13
 references:
 - https://github.com/EmpireProject/Empire/blob/e37fb2eef8ff8f5a0a689f1589f424906fe13055/data/module_source/privesc/Invoke-EventVwrBypass.ps1#L64
 - https://github.com/EmpireProject/Empire/blob/e37fb2eef8ff8f5a0a689f1589f424906fe13055/data/module_source/privesc/Invoke-FodHelperBypass.ps1#L64

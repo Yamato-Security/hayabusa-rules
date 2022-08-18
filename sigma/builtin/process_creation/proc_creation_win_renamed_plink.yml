@@ -12,15 +12,23 @@ detection:
   SELECTION_3:
     OriginalFileName: Plink
   SELECTION_4:
+    CommandLine: '* -l forward*'
+  SELECTION_5:
+    CommandLine: '* -P *'
+  SELECTION_6:
+    CommandLine: '* -R *'
+  SELECTION_7:
     NewProcessName: '*\plink.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5
+    and SELECTION_6)) and  not (SELECTION_7))
 falsepositives:
 - Unknown
 id: 1c12727d-02bf-45ff-a9f3-d49806a3cf43
-level: medium
+level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/08/04
 references:
 - https://thedfirreport.com/2022/06/06/will-the-real-msiexec-please-stand-up-exploit-leads-to-data-exfiltration/
 - https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter7.html

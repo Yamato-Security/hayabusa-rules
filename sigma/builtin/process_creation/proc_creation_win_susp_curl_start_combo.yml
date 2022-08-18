@@ -1,7 +1,7 @@
 
 title: Curl Start Combination
 ruletype: Sigma
-author: Sreeman
+author: Sreeman, Nasreddine Bencherchali
 date: 2020/01/13
 description: Adversaries can use curl to download payloads remotely and execute them.
   Curl is included by default in Windows 10 build 17063 and later.
@@ -11,15 +11,17 @@ detection:
   SELECTION_2:
     Channel: Security
   SELECTION_3:
-    NewProcessName: '*\curl.exe'
+    CommandLine: '* /c *'
   SELECTION_4:
-    Product: The curl executable
+    CommandLine: '*curl *'
   SELECTION_5:
-    CommandLine:
-    - '* start *'
-    - '*&call *'
-    - '*& call *'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+    CommandLine: '*http*'
+  SELECTION_6:
+    CommandLine: '*-o*'
+  SELECTION_7:
+    CommandLine: '*&*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Administrative scripts (installers)
 fields:
@@ -30,7 +32,7 @@ level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/07/05
+modified: 2022/08/02
 references:
 - https://medium.com/@reegun/curl-exe-is-the-new-rundll32-exe-lolbin-3f79c5f35983
 status: test

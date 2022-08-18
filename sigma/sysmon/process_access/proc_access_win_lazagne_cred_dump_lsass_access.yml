@@ -12,9 +12,9 @@ detection:
   SELECTION_3:
     TargetImage: '*\lsass.exe'
   SELECTION_4:
-    CallTrace: '*C:\\Windows\\SYSTEM32\\ntdll.dll+*'
+    CallTrace: '*C:\Windows\SYSTEM32\ntdll.dll+*'
   SELECTION_5:
-    CallTrace: '*|C:\\Windows\\System32\\KERNELBASE.dll+*'
+    CallTrace: '*|C:\Windows\System32\KERNELBASE.dll+*'
   SELECTION_6:
     CallTrace: '*_ctypes.pyd+*'
   SELECTION_7:
@@ -30,6 +30,7 @@ level: critical
 logsource:
   category: process_access
   product: windows
+modified: 2022/08/13
 references:
 - https://twitter.com/bh4b3sh/status/1303674603819081728
 status: stable

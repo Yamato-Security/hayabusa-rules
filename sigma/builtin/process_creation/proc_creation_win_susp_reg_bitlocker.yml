@@ -14,7 +14,7 @@ detection:
   SELECTION_4:
     CommandLine: '*ADD*'
   SELECTION_5:
-    CommandLine: '*HKLM\SOFTWARE\Policies\Microsoft\FVE*'
+    CommandLine: '*\SOFTWARE\Policies\Microsoft\FVE*'
   SELECTION_6:
     CommandLine: '*/v*'
   SELECTION_7:
@@ -38,6 +38,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/08/05
 references:
 - https://thedfirreport.com/2021/11/15/exchange-exploit-leads-to-domain-wide-ransomware/
 status: experimental

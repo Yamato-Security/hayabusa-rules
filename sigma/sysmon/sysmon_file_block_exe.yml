@@ -1,0 +1,27 @@
+
+title: Sysmon Blocked Executable
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/16
+description: Triggers on any Sysmon file block executable event. Which should indicates
+  a violation of the block policy set
+detection:
+  SELECTION_1:
+    EventID: 27
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unlikely
+id: 23b71bc5-953e-4971-be4c-c896cda73fc2
+level: high
+logsource:
+  category: file_block
+  product: windows
+references:
+- https://medium.com/@olafhartong/sysmon-14-0-fileblockexecutable-13d7ba3dff3e
+status: experimental
+tags:
+- attack.defense_evasion

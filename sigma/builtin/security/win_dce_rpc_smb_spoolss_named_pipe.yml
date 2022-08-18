@@ -12,7 +12,7 @@ detection:
   SELECTION_2:
     EventID: 5145
   SELECTION_3:
-    ShareName: \\\*\IPC$
+    ShareName: \\\\\*\\IPC$
   SELECTION_4:
     RelativeTargetName: spoolss
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
@@ -23,7 +23,7 @@ level: medium
 logsource:
   product: windows
   service: security
-modified: 2021/11/27
+modified: 2022/08/11
 references:
 - https://posts.specterops.io/hunting-in-active-directory-unconstrained-delegation-forests-trusts-71f2b33688e1
 - https://dirkjanm.io/a-different-way-of-abusing-zerologon/

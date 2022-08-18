@@ -16,20 +16,21 @@ detection:
     - '*create*'
     - '*config*'
   SELECTION_5:
-    CommandLine: '*binPath=*'
+    CommandLine: '*binPath*'
   SELECTION_6:
-    CommandLine: '*type=*'
+    CommandLine: '*type*'
   SELECTION_7:
     CommandLine: '*kernel*'
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
     and SELECTION_6 and SELECTION_7)
 falsepositives:
-- Legitimate installation of drivers via sc.exe
+- Rare legitimate installation of kernel drivers via sc.exe
 id: 431a1fdb-4799-4f3b-91c3-a683b003fc49
 level: medium
 logsource:
   category: process_creation
   product: windows
+modified: 2022/08/08
 references:
 - https://www.aon.com/cyber-solutions/aon_cyber_labs/yours-truly-signed-av-driver-weaponizing-an-antivirus-driver/
 status: experimental

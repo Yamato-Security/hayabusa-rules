@@ -14,7 +14,7 @@ detection:
   SELECTION_3:
     Channel: Security
   SELECTION_4:
-    TargetObject: HKLM\SAM\SAM\Domains\Account\Users\Names\\*
+    TargetObject: '*\SAM\SAM\Domains\Account\Users\Names\\*'
   SELECTION_5:
     TargetObject: '*$'
   SELECTION_6:
@@ -28,7 +28,7 @@ level: high
 logsource:
   category: registry_event
   product: windows
-modified: 2022/06/02
+modified: 2022/08/05
 references:
 - https://twitter.com/SBousseaden/status/1387530414185664538
 status: experimental

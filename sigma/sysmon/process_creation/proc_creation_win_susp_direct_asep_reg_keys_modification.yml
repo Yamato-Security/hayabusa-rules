@@ -17,10 +17,6 @@ detection:
   SELECTION_5:
     CommandLine:
     - '*\software\Microsoft\Windows\CurrentVersion\Run*'
-    - '*\software\Microsoft\Windows\CurrentVersion\RunOnce*'
-    - '*\software\Microsoft\Windows\CurrentVersion\RunOnceEx*'
-    - '*\software\Microsoft\Windows\CurrentVersion\RunServices*'
-    - '*\software\Microsoft\Windows\CurrentVersion\RunServicesOnce*'
     - '*\software\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit*'
     - '*\software\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell*'
     - '*\software\Microsoft\Windows NT\CurrentVersion\Windows*'
@@ -39,7 +35,7 @@ level: medium
 logsource:
   category: process_creation
   product: windows
-modified: 2021/11/27
+modified: 2022/08/04
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 status: test

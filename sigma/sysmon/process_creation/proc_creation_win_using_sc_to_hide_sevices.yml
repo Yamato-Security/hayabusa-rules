@@ -21,13 +21,13 @@ detection:
   condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and (SELECTION_5
     and SELECTION_6))
 falsepositives:
-- Intended use of hidden services
+- Rare intended use of hidden services
 id: a537cfc3-4297-4789-92b5-345bfd845ad0
 level: high
 logsource:
   category: process_creation
   product: windows
-modified: 2022/05/13
+modified: 2022/08/08
 references:
 - https://blog.talosintelligence.com/2021/10/threat-hunting-in-large-datasets-by.html
 - https://www.sans.org/blog/red-team-tactics-hiding-windows-services/

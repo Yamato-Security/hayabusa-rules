@@ -12,9 +12,9 @@ detection:
   SELECTION_2:
     EventID: 5156
   SELECTION_3:
-    DestinationPort: 3268
+    DestPort: 3268
   SELECTION_4:
-    DestinationPort: 3269
+    DestPort: 3269
   condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4)) | count()
     by SourceAddress > 2000
   timeframe: 1h
@@ -27,7 +27,7 @@ logsource:
     Platform Connection" must be configured for Success
   product: windows
   service: security
-modified: 2021/06/01
+modified: 2022/08/15
 references:
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-5156
 status: experimental

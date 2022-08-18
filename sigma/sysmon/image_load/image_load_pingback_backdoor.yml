@@ -11,7 +11,7 @@ detection:
   SELECTION_2:
     Channel: Microsoft-Windows-Sysmon/Operational
   SELECTION_3:
-    Image: '*msdtc.exe'
+    Image: '*\msdtc.exe'
   SELECTION_4:
     ImageLoaded: C:\Windows\oci.dll
   condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
@@ -22,7 +22,7 @@ level: high
 logsource:
   category: image_load
   product: windows
-modified: 2021/09/09
+modified: 2022/08/14
 references:
 - https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/backdoor-at-the-end-of-the-icmp-tunnel
 - https://app.any.run/tasks/4a54c651-b70b-4b72-84d7-f34d301d6406

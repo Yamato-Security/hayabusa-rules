@@ -26,6 +26,9 @@ detection:
     - '*mshta*'
     - '*wscript*'
     - '*cscript*'
+    - '*svchost*'
+    - '*dllhost*'
+    - '*cmd *'
     - '*cmd.exe /c*'
     - '*rundll32*'
     - '*C:\Users\Public*'
@@ -43,8 +46,10 @@ level: high
 logsource:
   category: process_creation
   product: windows
+modified: 2022/08/04
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md
+- https://web.archive.org/web/20180331144337/https://www.fireeye.com/blog/threat-research/2018/03/sanny-malware-delivery-method-updated-in-recently-observed-attacks.html
 related:
 - id: 7fe71fc9-de3b-432a-8d57-8c809efc10ab
   type: derived
