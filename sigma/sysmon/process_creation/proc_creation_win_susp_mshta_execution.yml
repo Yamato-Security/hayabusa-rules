@@ -1,37 +1,36 @@
-
 title: MSHTA Suspicious Execution 01
 ruletype: Sigma
 author: Diego Perez (@darkquassar), Markus Neis, Swisscom (Improve Rule)
 date: 2019/02/22
 description: Detection for mshta.exe suspicious execution patterns sometimes involving
-  file polyglotism
+    file polyglotism
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\mshta.exe'
-  SELECTION_4:
-    CommandLine:
-    - '*vbscript*'
-    - '*.jpg*'
-    - '*.png*'
-    - '*.lnk*'
-    - '*.xls*'
-    - '*.doc*'
-    - '*.zip*'
-    - '*.dll*'
-    - '*.exe*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\mshta.exe'
+    SELECTION_4:
+        CommandLine:
+        - '*vbscript*'
+        - '*.jpg*'
+        - '*.png*'
+        - '*.lnk*'
+        - '*.xls*'
+        - '*.doc*'
+        - '*.zip*'
+        - '*.dll*'
+        - '*.exe*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
-  environment
+    environment
 id: cc7abbd0-762b-41e3-8a26-57ad50d2eea3
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/12/01
 references:
 - http://blog.sevagas.com/?Hacking-around-HTA-files
@@ -47,3 +46,7 @@ tags:
 - attack.execution
 - attack.t1059.007
 - cve.2020.1599
+yml_filename: proc_creation_win_susp_mshta_execution.yml
+yml_path: rules/windows/process_creation
+---
+

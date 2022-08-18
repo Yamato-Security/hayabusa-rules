@@ -1,25 +1,24 @@
-
 title: Suspicious Add User to Remote Desktop Users Group
 ruletype: Sigma
 author: Florian Roth
 date: 2021/12/06
 description: Detects suspicious command line in which a user gets added to the local
-  Remote Desktop Users group
+    Remote Desktop Users group
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*net *'
-  SELECTION_4:
-    CommandLine: '*localgroup*'
-  SELECTION_5:
-    CommandLine: '*Remote Desktop Users*'
-  SELECTION_6:
-    CommandLine: '*/add*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*net *'
+    SELECTION_4:
+        CommandLine: '*localgroup*'
+    SELECTION_5:
+        CommandLine: '*Remote Desktop Users*'
+    SELECTION_6:
+        CommandLine: '*/add*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Administrative activity
 fields:
@@ -28,8 +27,8 @@ fields:
 id: ffa28e60-bdb1-46e0-9f82-05f7a61cc06e
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://www.microsoft.com/security/blog/2021/11/16/evolving-trends-in-iranian-threat-actor-activity-mstic-presentation-at-cyberwarcon-2021/
 status: experimental
@@ -39,3 +38,7 @@ tags:
 - attack.t1136.001
 - attack.lateral_movement
 - attack.t1021.001
+yml_filename: proc_creation_win_susp_add_user_remote_desktop.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,0 +1,58 @@
+title: Abused Debug Privilege by Arbitrary Parent Processes
+ruletype: Sigma
+author: Semanur Guneysu @semanurtg, oscd.community
+date: 2020/10/28
+description: Detection of unusual child processes by different system processes
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName:
+        - '*\winlogon.exe'
+        - '*\services.exe'
+        - '*\lsass.exe'
+        - '*\csrss.exe'
+        - '*\smss.exe'
+        - '*\wininit.exe'
+        - '*\spoolsv.exe'
+        - '*\searchindexer.exe'
+    SELECTION_4:
+        NewProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\cmd.exe'
+    SELECTION_5:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_6:
+        CommandLine: '* route *'
+    SELECTION_7:
+        CommandLine: '* ADD *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
+falsepositives:
+- Unknown
+fields:
+- ParentImage
+- Image
+- User
+- CommandLine
+id: d522eca2-2973-4391-a3e0-ef0374321dae
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/07/14
+references:
+- https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-74-638.jpg
+status: test
+tags:
+- attack.privilege_escalation
+- attack.t1548
+yml_filename: proc_creation_win_abusing_debug_privilege.yml
+yml_path: rules/windows/process_creation
+---
+

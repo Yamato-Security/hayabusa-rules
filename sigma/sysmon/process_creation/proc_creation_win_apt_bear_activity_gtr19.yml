@@ -1,48 +1,47 @@
-
 title: Judgement Panda Credential Access Activity
 ruletype: Sigma
 author: Florian Roth
 date: 2019/02/21
 description: Detects Russian group activity as described in Global Threat Report 2019
-  by Crowdstrike
+    by Crowdstrike
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    Image: '*\adexplorer.exe'
-  SELECTION_11:
-    CommandLine: '*-snapshot*'
-  SELECTION_12:
-    CommandLine: '*""*'
-  SELECTION_13:
-    CommandLine: '*c:\users\\*'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\xcopy.exe'
-  SELECTION_4:
-    CommandLine: '*/S*'
-  SELECTION_5:
-    CommandLine: '*/E*'
-  SELECTION_6:
-    CommandLine: '*/C*'
-  SELECTION_7:
-    CommandLine: '*/Q*'
-  SELECTION_8:
-    CommandLine: '*/H*'
-  SELECTION_9:
-    CommandLine: '*\\\*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9) or
-    (SELECTION_10 and SELECTION_11 and SELECTION_12 and SELECTION_13)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        Image: '*\adexplorer.exe'
+    SELECTION_11:
+        CommandLine: '*-snapshot*'
+    SELECTION_12:
+        CommandLine: '*""*'
+    SELECTION_13:
+        CommandLine: '*c:\users\\*'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\xcopy.exe'
+    SELECTION_4:
+        CommandLine: '*/S*'
+    SELECTION_5:
+        CommandLine: '*/E*'
+    SELECTION_6:
+        CommandLine: '*/C*'
+    SELECTION_7:
+        CommandLine: '*/Q*'
+    SELECTION_8:
+        CommandLine: '*/H*'
+    SELECTION_9:
+        CommandLine: '*\\\\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11 and SELECTION_12 and SELECTION_13)))
 falsepositives:
 - Unknown
 id: b83f5166-9237-4b5e-9cd4-7b5d52f4d8ee
 level: critical
 logsource:
-  category: process_creation
-  product: windows
-modified: 2022/06/28
+    category: process_creation
+    product: windows
+modified: 2022/08/13
 references:
 - https://www.crowdstrike.com/resources/reports/2019-crowdstrike-global-threat-report/
 status: test
@@ -50,3 +49,7 @@ tags:
 - attack.credential_access
 - attack.t1552.001
 - attack.t1003.003
+yml_filename: proc_creation_win_apt_bear_activity_gtr19.yml
+yml_path: rules/windows/process_creation
+---
+

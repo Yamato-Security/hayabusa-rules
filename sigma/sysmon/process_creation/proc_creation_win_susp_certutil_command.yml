@@ -1,47 +1,46 @@
-
-title: Suspicious Certutil Command
+title: Suspicious Certutil Command Usage
 ruletype: Sigma
 author: Florian Roth, juju4, keepwatch
 date: 2019/01/16
 description: Detects a suspicious Microsoft certutil execution with sub commands like
-  'decode' sub command, which is sometimes used to decode malicious code with the
-  built-in certutil utility
+    'decode' sub command, which is sometimes used to decode malicious code
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '* -decode *'
-    - '* -decodehex *'
-    - '* -urlcache *'
-    - '* -verifyctl *'
-    - '* -encode *'
-    - '* /decode *'
-    - '* /decodehex *'
-    - '* /urlcache *'
-    - '* /verifyctl *'
-    - '* /encode *'
-  SELECTION_4:
-    Image: '*\certutil.exe'
-  SELECTION_5:
-    CommandLine:
-    - '*URL*'
-    - '*ping*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '* -decode *'
+        - '* -decodehex *'
+        - '* -urlcache *'
+        - '* -verifyctl *'
+        - '* -encode *'
+        - '* /decode *'
+        - '* /decodehex *'
+        - '* /urlcache *'
+        - '* /verifyctl *'
+        - '* /encode *'
+    SELECTION_4:
+        Image: '*\certutil.exe'
+    SELECTION_5:
+        CommandLine:
+        - '*URL*'
+        - '*ping*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5)))
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
-  environment
+    environment
 fields:
 - CommandLine
 - ParentCommandLine
 id: e011a729-98a6-4139-b5c4-bf6f6dd8239a
 level: high
 logsource:
-  category: process_creation
-  product: windows
-modified: 2021/04/23
+    category: process_creation
+    product: windows
+modified: 2022/08/04
 references:
 - https://twitter.com/JohnLaTwC/status/835149808817991680
 - https://blogs.technet.microsoft.com/pki/2006/11/30/basic-crl-checking-with-certutil/
@@ -61,3 +60,7 @@ tags:
 - attack.g0049
 - attack.g0075
 - attack.g0096
+yml_filename: proc_creation_win_susp_certutil_command.yml
+yml_path: rules/windows/process_creation
+---
+

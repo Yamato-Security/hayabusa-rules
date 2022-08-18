@@ -1,0 +1,40 @@
+title: Delete SafeBoot Keys Via Reg Utility
+ruletype: Sigma
+author: Nasreddine Bencherchali, Tim Shelton
+date: 2022/08/08
+description: Detects execution of "reg.exe" commands with the "delete" flag on safe
+    boot registry keys. Often used by attacker to prevent safeboot execution of security
+    products
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*reg.exe'
+    SELECTION_4:
+        OriginalFileName: reg.exe
+    SELECTION_5:
+        CommandLine: '* delete *'
+    SELECTION_6:
+        CommandLine: '*\SYSTEM\CurrentControlSet\Control\SafeBoot*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
+falsepositives:
+- Unlikely
+id: fc0e89b5-adb0-43c1-b749-c12a10ec37de
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/08/12
+references:
+- https://www.trendmicro.com/en_us/research/22/e/avoslocker-ransomware-variant-abuses-driver-file-to-disable-anti-Virus-scans-log4shell.html
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+yml_filename: proc_creation_win_reg_delete_safeboot.yml
+yml_path: rules/windows/process_creation
+---
+

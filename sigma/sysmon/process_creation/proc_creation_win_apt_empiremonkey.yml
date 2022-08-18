@@ -1,31 +1,30 @@
-
 title: Empire Monkey
 ruletype: Sigma
 author: Markus Neis
 date: 2019/04/02
 description: Detects EmpireMonkey APT reported Activity
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*/i:%APPDATA%\logs.txt scrobj.dll'
-  SELECTION_4:
-    Image: '*\cutil.exe'
-  SELECTION_5:
-    CommandLine: '*/i:%APPDATA%\logs.txt scrobj.dll'
-  SELECTION_6:
-    Description: Microsoft(C) Registerserver
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*/i:%APPDATA%\logs.txt scrobj.dll'
+    SELECTION_4:
+        Image: '*\cutil.exe'
+    SELECTION_5:
+        CommandLine: '*/i:%APPDATA%\logs.txt scrobj.dll'
+    SELECTION_6:
+        Description: Microsoft(C) Registerserver
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Very Unlikely
 id: 10152a7b-b566-438f-a33c-390b607d1c8d
 level: critical
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/11/27
 references:
 - https://app.any.run/tasks/a4107649-8cb0-41af-ad75-113152d4d57b
@@ -33,3 +32,7 @@ status: test
 tags:
 - attack.defense_evasion
 - attack.t1218.010
+yml_filename: proc_creation_win_apt_empiremonkey.yml
+yml_path: rules/windows/process_creation
+---
+

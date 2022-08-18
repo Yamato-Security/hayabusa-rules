@@ -1,28 +1,27 @@
-
 title: Parent in Public Folder Suspicious Process
 ruletype: Sigma
 author: Florian Roth
 date: 2022/02/25
 description: This rule detects suspicious processes with parent images located in
-  the C:\Users\Public folder
+    the C:\Users\Public folder
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: C:\Users\Public\\*
-  SELECTION_4:
-    CommandLine:
-    - '*powershell*'
-    - '*cmd.exe /c *'
-    - '*cmd /c *'
-    - '*wscript.exe*'
-    - '*cscript.exe*'
-    - '*bitsadmin*'
-    - '*certutil*'
-    - '*mshta.exe*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: C:\Users\Public\\*
+    SELECTION_4:
+        CommandLine:
+        - '*powershell*'
+        - '*cmd.exe /c *'
+        - '*cmd /c *'
+        - '*wscript.exe*'
+        - '*cscript.exe*'
+        - '*bitsadmin*'
+        - '*certutil*'
+        - '*mshta.exe*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 fields:
@@ -32,8 +31,12 @@ fields:
 id: 69bd9b97-2be2-41b6-9816-fb08757a4d1a
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://redcanary.com/blog/blackbyte-ransomware/
 status: experimental
+yml_filename: proc_creation_win_public_folder_parent.yml
+yml_path: rules/windows/process_creation
+---
+

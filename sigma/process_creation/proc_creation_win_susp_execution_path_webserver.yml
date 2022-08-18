@@ -1,0 +1,45 @@
+title: Execution in Webserver Root Folder
+ruletype: Sigma
+author: Florian Roth
+date: 2019/01/16
+description: Detects a suspicious program execution in a web service root folder (filter
+    out false positives)
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\wwwroot\\*'
+        - '*\wmpub\\*'
+        - '*\htdocs\\*'
+    SELECTION_4:
+        NewProcessName:
+        - '*bin\\*'
+        - '*\Tools\\*'
+        - '*\SMSComponent\\*'
+    SELECTION_5:
+        ParentProcessName: '*\services.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
+        and SELECTION_5))
+falsepositives:
+- Various applications
+- Tools that include ping or nslookup command invocations
+fields:
+- CommandLine
+- ParentCommandLine
+id: 35efb964-e6a5-47ad-bbcd-19661854018d
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2021/11/27
+status: test
+tags:
+- attack.persistence
+- attack.t1505.003
+yml_filename: proc_creation_win_susp_execution_path_webserver.yml
+yml_path: rules/windows/process_creation
+---
+

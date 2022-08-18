@@ -1,30 +1,29 @@
-
 title: Turla Service Install
 ruletype: Sigma
 author: Florian Roth
 date: 2017/03/31
 description: This method detects a service install of malicious services mentioned
-  in Carbon Paper - Turla report by ESET
+    in Carbon Paper - Turla report by ESET
 detection:
-  SELECTION_1:
-    Channel: System
-  SELECTION_2:
-    Provider_Name: Service Control Manager
-  SELECTION_3:
-    EventID: 7045
-  SELECTION_4:
-    ServiceName:
-    - srservice
-    - ipvpn
-    - hkmsvc
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7045
+    SELECTION_4:
+        ServiceName:
+        - srservice
+        - ipvpn
+        - hkmsvc
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 1df8b3da-b0ac-4d8a-b7c7-6cb7c24160e4
 level: high
 logsource:
-  product: windows
-  service: system
+    product: windows
+    service: system
 modified: 2021/11/30
 references:
 - https://www.welivesecurity.com/2017/03/30/carbon-paper-peering-turlas-second-stage-backdoor/
@@ -33,3 +32,7 @@ tags:
 - attack.persistence
 - attack.g0010
 - attack.t1543.003
+yml_filename: win_apt_carbonpaper_turla.yml
+yml_path: rules/windows/builtin/system
+---
+

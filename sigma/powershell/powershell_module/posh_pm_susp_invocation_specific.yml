@@ -1,0 +1,106 @@
+title: Suspicious PowerShell Invocations - Specific
+ruletype: Sigma
+author: Florian Roth (rule), Jonhnathan Ribeiro
+date: 2017/03/05
+description: Detects suspicious PowerShell invocation command parameters
+detection:
+    SELECTION_1:
+        EventID: 4103
+    SELECTION_10:
+        ContextInfo: '*-noni*'
+    SELECTION_11:
+        ContextInfo: '*-nop*'
+    SELECTION_12:
+        ContextInfo: '* -c *'
+    SELECTION_13:
+        ContextInfo: '*iex*'
+    SELECTION_14:
+        ContextInfo: '*New-Object*'
+    SELECTION_15:
+        ContextInfo: '* -w *'
+    SELECTION_16:
+        ContextInfo: '*hidden*'
+    SELECTION_17:
+        ContextInfo: '*-ep*'
+    SELECTION_18:
+        ContextInfo: '*bypass*'
+    SELECTION_19:
+        ContextInfo: '*-Enc*'
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_20:
+        ContextInfo: '*powershell*'
+    SELECTION_21:
+        ContextInfo: '*reg*'
+    SELECTION_22:
+        ContextInfo: '*add*'
+    SELECTION_23:
+        ContextInfo: '*HKCU\software\microsoft\windows\currentversion\run*'
+    SELECTION_24:
+        ContextInfo: '*bypass*'
+    SELECTION_25:
+        ContextInfo: '*-noprofile*'
+    SELECTION_26:
+        ContextInfo: '*-windowstyle*'
+    SELECTION_27:
+        ContextInfo: '*hidden*'
+    SELECTION_28:
+        ContextInfo: '*new-object*'
+    SELECTION_29:
+        ContextInfo: '*system.net.webclient*'
+    SELECTION_3:
+        ContextInfo: '*-nop*'
+    SELECTION_30:
+        ContextInfo: '*.download*'
+    SELECTION_31:
+        ContextInfo: '*iex*'
+    SELECTION_32:
+        ContextInfo: '*New-Object*'
+    SELECTION_33:
+        ContextInfo: '*Net.WebClient*'
+    SELECTION_34:
+        ContextInfo: '*.Download*'
+    SELECTION_35:
+        ContextInfo:
+        - '*(New-Object System.Net.WebClient).DownloadString(''https://community.chocolatey.org/install.ps1*'
+        - '*Write-ChocolateyWarning*'
+    SELECTION_4:
+        ContextInfo: '* -w *'
+    SELECTION_5:
+        ContextInfo: '*hidden*'
+    SELECTION_6:
+        ContextInfo: '* -c *'
+    SELECTION_7:
+        ContextInfo: '*[Convert]::FromBase64String*'
+    SELECTION_8:
+        ContextInfo: '* -w *'
+    SELECTION_9:
+        ContextInfo: '*hidden*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10 and SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14)
+        or (SELECTION_15 and SELECTION_16 and SELECTION_17 and SELECTION_18 and SELECTION_19)
+        or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
+        and SELECTION_25 and SELECTION_26 and SELECTION_27 and SELECTION_28 and SELECTION_29
+        and SELECTION_30) or (SELECTION_31 and SELECTION_32 and SELECTION_33 and SELECTION_34))
+        and  not ((SELECTION_35)))
+falsepositives:
+- Unknown
+id: 8ff28fdd-e2fa-4dfa-aeda-ef3d61c62090
+level: high
+logsource:
+    category: ps_module
+    definition: PowerShell Module Logging must be enabled
+    product: windows
+modified: 2022/02/21
+related:
+-   id: fce5f582-cc00-41e1-941a-c6fabf0fdb8c
+    type: derived
+status: experimental
+tags:
+- attack.execution
+- attack.t1059.001
+yml_filename: posh_pm_susp_invocation_specific.yml
+yml_path: rules/windows/powershell/powershell_module
+---
+

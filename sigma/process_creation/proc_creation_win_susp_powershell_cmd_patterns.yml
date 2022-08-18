@@ -1,0 +1,50 @@
+title: Suspicious PowerShell Encoded Command Patterns
+ruletype: Sigma
+author: Florian Roth
+date: 2022/05/24
+description: Detects PowerShell command line patterns in combincation with encoded
+    commands that often appear in malware infection chains
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* -e *'
+        - '* -en *'
+        - '* -enc *'
+        - '* -enco*'
+    SELECTION_5:
+        CommandLine:
+        - '* JAB*'
+        - '* SUVYI*'
+        - '* SQBFAFgA*'
+        - '* aWV4I*'
+        - '* IAB*'
+        - '* PAA*'
+        - '* aQBlAHgA*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Other tools that work with encoded scripts in the command line instead of script
+    files
+id: b9d9cc83-380b-4ba3-8d8f-60c0e7e2930c
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/07/14
+references:
+- https://app.any.run/tasks/b9040c63-c140-479b-ad59-f1bb56ce7a97/
+status: experimental
+tags:
+- attack.execution
+- attack.t1059.001
+yml_filename: proc_creation_win_susp_powershell_cmd_patterns.yml
+yml_path: rules/windows/process_creation
+---
+

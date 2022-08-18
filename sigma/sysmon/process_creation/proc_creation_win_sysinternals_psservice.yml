@@ -1,29 +1,28 @@
-
 title: Use of Sysinternals PsService
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/06/16
 description: Detects usage of Sysinternals PsService for service reconnaissance or
-  tamper
+    tamper
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    OriginalFileName: psservice.exe
-  SELECTION_4:
-    Image:
-    - '*\PsService.exe'
-    - '*\PsService64.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        OriginalFileName: psservice.exe
+    SELECTION_4:
+        Image:
+        - '*\PsService.exe'
+        - '*\PsService64.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Legitimate use of PsService by an administrator
 id: 3371f518-5fe3-4cf6-a14b-2a0ae3fd8a4f
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://docs.microsoft.com/en-us/sysinternals/downloads/psservice
 status: experimental
@@ -31,3 +30,7 @@ tags:
 - attack.discovery
 - attack.persistence
 - attack.t1543.003
+yml_filename: proc_creation_win_sysinternals_psservice.yml
+yml_path: rules/windows/process_creation
+---
+

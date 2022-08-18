@@ -1,28 +1,27 @@
-
 title: HTML Help Shell Spawn
 ruletype: Sigma
 author: Maxim Pavlunin
 date: 2020/04/01
 description: Detects a suspicious child process of a Microsoft HTML Help system when
-  executing compiled HTML files (.chm)
+    executing compiled HTML files (.chm)
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: C:\Windows\hh.exe
-  SELECTION_4:
-    Image:
-    - '*\cmd.exe'
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-    - '*\wscript.exe'
-    - '*\cscript.exe'
-    - '*\regsvr32.exe'
-    - '*\wmic.exe'
-    - '*\rundll32.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: C:\Windows\hh.exe
+    SELECTION_4:
+        Image:
+        - '*\cmd.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+        - '*\regsvr32.exe'
+        - '*\wmic.exe'
+        - '*\rundll32.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 fields:
@@ -31,8 +30,8 @@ fields:
 id: 52cad028-0ff0-4854-8f67-d25dfcbc78b4
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/chm-badness-delivers-a-banking-trojan/
@@ -48,3 +47,7 @@ tags:
 - attack.t1059.005
 - attack.t1059.007
 - attack.t1047
+yml_filename: proc_creation_win_html_help_spawn.yml
+yml_path: rules/windows/process_creation
+---
+

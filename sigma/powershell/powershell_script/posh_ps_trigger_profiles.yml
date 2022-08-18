@@ -1,0 +1,42 @@
+title: Powershell Trigger Profiles by Add_Content
+ruletype: Sigma
+author: frack113
+date: 2021/08/18
+description: Adversaries may gain persistence and elevate privileges by executing
+    malicious content triggered by PowerShell profiles.
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText: '*Add-Content*'
+    SELECTION_4:
+        ScriptBlockText: '*$profile*'
+    SELECTION_5:
+        ScriptBlockText: '*-Value*'
+    SELECTION_6:
+        ScriptBlockText:
+        - '*Start-Process*'
+        - '*""*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: 05b3e303-faf0-4f4a-9b30-46cc13e69152
+level: medium
+logsource:
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
+modified: 2021/10/16
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.013/T1546.013.md
+status: experimental
+tags:
+- attack.privilege_escalation
+- attack.t1546.013
+yml_filename: posh_ps_trigger_profiles.yml
+yml_path: rules/windows/powershell/powershell_script
+---
+

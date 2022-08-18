@@ -1,35 +1,34 @@
-
 title: Suspicious ConfigSecurityPolicy Execution
 ruletype: Sigma
 author: frack113
 date: 2021/11/26
 description: Upload file, credentials or data exfiltration with Binary part of Windows
-  Defender
+    Defender
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*ConfigSecurityPolicy.exe*'
-  SELECTION_4:
-    Image: '*\ConfigSecurityPolicy.exe'
-  SELECTION_5:
-    OriginalFileName: ConfigSecurityPolicy.exe
-  SELECTION_6:
-    CommandLine:
-    - '*https://*'
-    - '*http://*'
-    - '*ftp://*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
-    and SELECTION_6)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*ConfigSecurityPolicy.exe*'
+    SELECTION_4:
+        Image: '*\ConfigSecurityPolicy.exe'
+    SELECTION_5:
+        OriginalFileName: ConfigSecurityPolicy.exe
+    SELECTION_6:
+        CommandLine:
+        - '*https://*'
+        - '*http://*'
+        - '*ftp://*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: 1f0f6176-6482-4027-b151-00071af39d7e
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/05/16
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/ConfigSecurityPolicy/
@@ -37,3 +36,7 @@ status: experimental
 tags:
 - attack.exfiltration
 - attack.t1567
+yml_filename: proc_creation_win_lolbin_configsecuritypolicy.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,33 +1,32 @@
-
 title: Too Long PowerShell Commandlines
 ruletype: Sigma
 author: oscd.community, Natalia Shornikova
 date: 2020/10/06
 description: Detects Too long PowerShell command lines
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '*powershell*'
-    - '*pwsh*'
-  SELECTION_4:
-    Description: Windows Powershell
-  SELECTION_5:
-    Product: PowerShell Core 6
-  SELECTION_6:
-    CommandLine|re: .{1000,}
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
-    and SELECTION_6)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '*powershell*'
+        - '*pwsh*'
+    SELECTION_4:
+        Description: Windows Powershell
+    SELECTION_5:
+        Product: PowerShell Core 6
+    SELECTION_6:
+        CommandLine|re: .{1000,}
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: d0d28567-4b9a-45e2-8bbc-fb1b66a1f7f6
 level: low
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/12/02
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
@@ -35,3 +34,7 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1059.001
+yml_filename: proc_creation_win_long_powershell_commandline.yml
+yml_path: rules/windows/process_creation
+---
+

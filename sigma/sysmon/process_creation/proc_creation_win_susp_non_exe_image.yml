@@ -1,109 +1,112 @@
-
 title: Execution of Suspicious File Type Extension
 ruletype: Sigma
 author: Max Altgelt
 date: 2021/12/09
 description: Checks whether the image specified in a process creation event doesn't
-  refer to an .exe file (caused by process ghosting or other unorthodox methods to
-  start a process)
+    refer to an .exe file (caused by process ghosting or other unorthodox methods
+    to start a process)
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    Image: '*NVIDIA\NvBackend\\*'
-  SELECTION_11:
-    Image: '*.dat'
-  SELECTION_12:
-    Image:
-    - C:\Windows\System32\\*
-    - C:\Windows\SysWOW64\\*
-  SELECTION_13:
-    Image: '*.com'
-  SELECTION_14:
-    Image: '*\WinSCP.com'
-  SELECTION_15:
-    Image: '*C:\Users\\*'
-  SELECTION_16:
-    Image: '*\AppData\\*'
-  SELECTION_17:
-    Image: '*.tmp*'
-  SELECTION_18:
-    Image: '*CodeSetup*'
-  SELECTION_19:
-    Image: '*\program\soffice.bin'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_20:
-    Image:
-    - C:\Program Files\EMC NetWorker\Management\GST\apache\cgi-bin\update_jnlp.cgi
-    - C:\Program Files (x86)\EMC NetWorker\Management\GST\apache\cgi-bin\update_jnlp.cgi
-  SELECTION_21:
-    Image:
-    - C:\Program Files (x86)\WINPAKPRO\\*
-    - C:\Program Files\WINPAKPRO\\*
-  SELECTION_22:
-    Image: '*.ngn'
-  SELECTION_23:
-    Image:
-    - C:\Program Files (x86)\MyQ\Server\pcltool.dll
-    - C:\Program Files\MyQ\Server\pcltool.dll
-  SELECTION_24:
-    Image:
-    - C:\Program Files\Microsoft Visual Studio\\*
-    - C:\Program Files (x86)\Microsoft Visual Studio*
-  SELECTION_25:
-    Image: '*.com'
-  SELECTION_26:
-    Image: C:\Config.Msi\\*
-  SELECTION_27:
-    Image:
-    - '*.rbf'
-    - '*.rbs'
-  SELECTION_28:
-    Image: '*\AppData\Local\Packages\\*'
-  SELECTION_29:
-    Image: '*\LocalState\rootfs\\*'
-  SELECTION_3:
-    Image:
-    - '*.exe'
-    - '*.tmp'
-  SELECTION_30:
-    Image: '*\LZMA_EXE'
-  SELECTION_4:
-    Image|re: ^$
-  SELECTION_5:
-    Image:
-    - Registry
-    - MemCompression
-  SELECTION_6:
-    Image:
-    - '-'
-    - ''
-  SELECTION_7:
-    Image: C:\Windows\Installer\MSI*
-  SELECTION_8:
-    ParentImage:
-    - C:\ProgramData\Avira\\*
-    - C:\Windows\System32\DriverStore\FileRepository\\*
-  SELECTION_9:
-    Image: '*.scr'
-  condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3) and  not ((SELECTION_4)
-    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9)
-    or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
-    or (SELECTION_15 and SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19)
-    or (SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23) or (SELECTION_24
-    and SELECTION_25) or (SELECTION_26 and SELECTION_27) or (SELECTION_28 and SELECTION_29)
-    or (SELECTION_30)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        Image: '*NVIDIA\NvBackend\\*'
+    SELECTION_11:
+        Image: '*.dat'
+    SELECTION_12:
+        Image:
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
+    SELECTION_13:
+        Image: '*.com'
+    SELECTION_14:
+        Image: '*\WinSCP.com'
+    SELECTION_15:
+        Image: '*C:\Users\\*'
+    SELECTION_16:
+        Image: '*\AppData\\*'
+    SELECTION_17:
+        Image: '*.tmp*'
+    SELECTION_18:
+        Image: '*CodeSetup*'
+    SELECTION_19:
+        Image: '*\program\soffice.bin'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        Image:
+        - C:\Program Files\EMC NetWorker\Management\GST\apache\cgi-bin\update_jnlp.cgi
+        - C:\Program Files (x86)\EMC NetWorker\Management\GST\apache\cgi-bin\update_jnlp.cgi
+    SELECTION_21:
+        Image:
+        - C:\Program Files (x86)\WINPAKPRO\\*
+        - C:\Program Files\WINPAKPRO\\*
+    SELECTION_22:
+        Image: '*.ngn'
+    SELECTION_23:
+        Image:
+        - C:\Program Files (x86)\MyQ\Server\pcltool.dll
+        - C:\Program Files\MyQ\Server\pcltool.dll
+    SELECTION_24:
+        Image:
+        - C:\Program Files\Microsoft Visual Studio\\*
+        - C:\Program Files (x86)\Microsoft Visual Studio*
+    SELECTION_25:
+        Image: '*.com'
+    SELECTION_26:
+        Image: C:\Config.Msi\\*
+    SELECTION_27:
+        Image:
+        - '*.rbf'
+        - '*.rbs'
+    SELECTION_28:
+        Image: '*\AppData\Local\Packages\\*'
+    SELECTION_29:
+        Image: '*\LocalState\rootfs\\*'
+    SELECTION_3:
+        Image:
+        - '*.exe'
+        - '*.tmp'
+    SELECTION_30:
+        Image: '*\LZMA_EXE'
+    SELECTION_4:
+        Image|re: ^$
+    SELECTION_5:
+        Image:
+        - Registry
+        - MemCompression
+    SELECTION_6:
+        Image:
+        - '-'
+        - ''
+    SELECTION_7:
+        Image: C:\Windows\Installer\MSI*
+    SELECTION_8:
+        ParentImage:
+        - C:\ProgramData\Avira\\*
+        - C:\Windows\System32\DriverStore\FileRepository\\*
+    SELECTION_9:
+        Image: '*.scr'
+    condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3) and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9)
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
+        or (SELECTION_15 and SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19)
+        or (SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23) or
+        (SELECTION_24 and SELECTION_25) or (SELECTION_26 and SELECTION_27) or (SELECTION_28
+        and SELECTION_29) or (SELECTION_30)))
 falsepositives:
 - Unknown
 id: c09dad97-1c78-4f71-b127-7edb2b8e491a
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/06/20
 references:
 - https://pentestlaboratories.com/2021/12/08/process-ghosting/
 status: experimental
 tags:
 - attack.defense_evasion
+yml_filename: proc_creation_win_susp_non_exe_image.yml
+yml_path: rules/windows/process_creation
+---
+

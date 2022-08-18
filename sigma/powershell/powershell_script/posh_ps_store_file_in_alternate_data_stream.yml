@@ -1,0 +1,39 @@
+title: Powershell Store File In Alternate Data Stream
+ruletype: Sigma
+author: frack113
+date: 2021/09/02
+description: Storing files in Alternate Data Stream (ADS) similar to Astaroth malware.
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText: '*Start-Process*'
+    SELECTION_4:
+        ScriptBlockText: '*-FilePath "$env:comspec" *'
+    SELECTION_5:
+        ScriptBlockText: '*-ArgumentList *'
+    SELECTION_6:
+        ScriptBlockText: '*>*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: a699b30e-d010-46c8-bbd1-ee2e26765fe9
+level: medium
+logsource:
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
+modified: 2021/10/16
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.004/T1564.004.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1564.004
+yml_filename: posh_ps_store_file_in_alternate_data_stream.yml
+yml_path: rules/windows/powershell/powershell_script
+---
+

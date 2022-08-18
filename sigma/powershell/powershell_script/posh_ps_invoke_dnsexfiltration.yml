@@ -1,0 +1,44 @@
+title: Powershell DNSExfiltration
+ruletype: Sigma
+author: frack113
+date: 2022/01/07
+description: DNSExfiltrator allows for transfering (exfiltrate) a file over a DNS
+    request covert channel
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText: '*Invoke-DNSExfiltrator*'
+    SELECTION_4:
+        ScriptBlockText: '* -i *'
+    SELECTION_5:
+        ScriptBlockText: '* -d *'
+    SELECTION_6:
+        ScriptBlockText: '* -p *'
+    SELECTION_7:
+        ScriptBlockText: '* -doh *'
+    SELECTION_8:
+        ScriptBlockText: '* -t *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8)))
+falsepositives:
+- Legitimate script
+id: d59d7842-9a21-4bc6-ba98-64bfe0091355
+level: high
+logsource:
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048/T1048.md#atomic-test-3---dnsexfiltration-doh
+- https://github.com/Arno0x/DNSExfiltrator
+status: experimental
+tags:
+- attack.exfiltration
+- attack.t1048
+yml_filename: posh_ps_invoke_dnsexfiltration.yml
+yml_path: rules/windows/powershell/powershell_script
+---
+

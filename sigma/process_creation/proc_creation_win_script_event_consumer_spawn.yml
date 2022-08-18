@@ -1,0 +1,49 @@
+title: Script Event Consumer Spawning Process
+ruletype: Sigma
+author: Sittikorn S
+date: 2021/06/21
+description: Detects a suspicious child process of Script Event Consumer (scrcons.exe).
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\scrcons.exe'
+    SELECTION_4:
+        NewProcessName:
+        - '*\svchost.exe'
+        - '*\dllhost.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+        - '*\schtasks.exe'
+        - '*\regsvr32.exe'
+        - '*\mshta.exe'
+        - '*\rundll32.exe'
+        - '*\msiexec.exe'
+        - '*\msbuild.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+- ParentCommandLine
+id: f6d1dd2f-b8ce-40ca-bc23-062efb686b34
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/07/14
+references:
+- https://redcanary.com/blog/child-processes/
+- https://docs.paloaltonetworks.com/cortex/cortex-xdr/cortex-xdr-analytics-alert-reference/cortex-xdr-analytics-alert-reference/scrcons-exe-rare-child-process.html
+status: experimental
+tags:
+- attack.execution
+- attack.t1047
+yml_filename: proc_creation_win_script_event_consumer_spawn.yml
+yml_path: rules/windows/process_creation
+---
+

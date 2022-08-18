@@ -1,48 +1,47 @@
-
 title: Jlaive Usage For Assembly Execution In-Memory
 ruletype: Sigma
 author: Jose Luis Sanchez Martinez (@Joseliyo_Jstnk)
 date: 2022/05/24
 description: Detect the use of Jlaive to execute assemblies in a copied PowerShell
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    CommandLine: '*.bat.exe*'
-  SELECTION_11:
-    Image: '*\attrib.exe'
-  SELECTION_12:
-    CommandLine: '*+s*'
-  SELECTION_13:
-    CommandLine: '*+h*'
-  SELECTION_14:
-    CommandLine: '*.bat.exe*'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: '*\cmd.exe'
-  SELECTION_4:
-    ParentCommandLine: '*.bat'
-  SELECTION_5:
-    Image: '*\xcopy.exe'
-  SELECTION_6:
-    CommandLine: '*powershell.exe*'
-  SELECTION_7:
-    CommandLine: '*.bat.exe*'
-  SELECTION_8:
-    Image: '*\xcopy.exe'
-  SELECTION_9:
-    CommandLine: '*pwsh.exe*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
-    ((SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
-    and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine: '*.bat.exe*'
+    SELECTION_11:
+        Image: '*\attrib.exe'
+    SELECTION_12:
+        CommandLine: '*+s*'
+    SELECTION_13:
+        CommandLine: '*+h*'
+    SELECTION_14:
+        CommandLine: '*.bat.exe*'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\cmd.exe'
+    SELECTION_4:
+        ParentCommandLine: '*.bat'
+    SELECTION_5:
+        Image: '*\xcopy.exe'
+    SELECTION_6:
+        CommandLine: '*powershell.exe*'
+    SELECTION_7:
+        CommandLine: '*.bat.exe*'
+    SELECTION_8:
+        Image: '*\xcopy.exe'
+    SELECTION_9:
+        CommandLine: '*pwsh.exe*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
+        ((SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14)))
 falsepositives:
 - Unknown
 id: 0a99eb3e-1617-41bd-b095-13dc767f3def
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://jstnk9.github.io/jstnk9/research/Jlaive-Antivirus-Evasion-Tool
@@ -51,3 +50,7 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1059.003
+yml_filename: proc_creation_win_jlaive_batch_execution.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,24 +1,23 @@
-
 title: Koadic Execution
 ruletype: Sigma
 author: wagga, Jonhnathan Ribeiro, oscd.community
 date: 2020/01/12
 description: Detects command line parameters used by Koadic hack tool
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\cmd.exe'
-  SELECTION_4:
-    CommandLine: '*/q*'
-  SELECTION_5:
-    CommandLine: '*/c*'
-  SELECTION_6:
-    CommandLine: '*chcp*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\cmd.exe'
+    SELECTION_4:
+        CommandLine: '*/q*'
+    SELECTION_5:
+        CommandLine: '*/c*'
+    SELECTION_6:
+        CommandLine: '*chcp*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Unknown
 fields:
@@ -27,8 +26,8 @@ fields:
 id: 5cddf373-ef00-4112-ad72-960ac29bac34
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/01/07
 references:
 - https://unit42.paloaltonetworks.com/unit42-sofacy-groups-parallel-attacks/
@@ -40,3 +39,7 @@ tags:
 - attack.t1059.003
 - attack.t1059.005
 - attack.t1059.007
+yml_filename: proc_creation_win_hack_koadic.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,37 +1,41 @@
-
 title: Suspicious PowerShell IEX Execution Patterns
 ruletype: Sigma
 author: Florian Roth
 date: 2022/03/24
 description: Detects suspicious ways to run Invoke-Execution using IEX acronym
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image:
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-  SELECTION_4:
-    CommandLine: "*-' | iex;' -' | iex ' -' | iex}' -' | IEX;' -' | IEX ;' -' | IEX\
-      \ -Error' -' | IEX (new' -' | IEX (New' -');IEX '*"
-  SELECTION_5:
-    CommandLine:
-    - '*::FromBase64String*'
-    - '*.GetString([System.Convert]::*'
-  SELECTION_6:
-    CommandLine: "*-')|iex;$' -')|IEX;$' -');iex($' -');iex $' -' | IEX | '*"
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or SELECTION_6))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        CommandLine: '*-'' | iex;'' -'' | iex '' -'' | iex}'' -'' | IEX;'' -'' | IEX
+            ;'' -'' | IEX -Error'' -'' | IEX (new'' -'' | IEX (New'' -'');IEX ''*'
+    SELECTION_5:
+        CommandLine:
+        - '*::FromBase64String*'
+        - '*.GetString([System.Convert]::*'
+    SELECTION_6:
+        CommandLine: '*-'')|iex;$'' -'')|IEX;$'' -'');iex($'' -'');iex $'' -'' | IEX
+            | ''*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or SELECTION_6))
 falsepositives:
 - Legitimate scripts that use IEX
 id: 09576804-7a05-458e-a817-eb718ca91f54
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/03/28
 references:
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-expression?view=powershell-7.2
 status: experimental
+yml_filename: proc_creation_win_susp_powershell_iex_patterns.yml
+yml_path: rules/windows/process_creation
+---
+

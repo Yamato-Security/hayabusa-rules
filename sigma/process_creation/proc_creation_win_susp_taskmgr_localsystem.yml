@@ -1,0 +1,33 @@
+title: Taskmgr as LOCAL_SYSTEM
+ruletype: Sigma
+author: Florian Roth
+date: 2018/03/18
+description: Detects the creation of taskmgr.exe process in context of LOCAL_SYSTEM
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_4:
+        NewProcessName: '*\taskmgr.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 9fff585c-c33e-4a86-b3cd-39312079a65f
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/05/27
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036
+yml_filename: proc_creation_win_susp_taskmgr_localsystem.yml
+yml_path: rules/windows/process_creation
+---
+

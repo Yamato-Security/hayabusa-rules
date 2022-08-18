@@ -1,0 +1,38 @@
+title: Mshtml DLL RunHTMLApplication Abuse
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/14
+description: Detects suspicious command line using the "mshtml.dll" RunHTMLApplication
+    export to run arbitrary code via different protocol handlers (vbscript, javascript,
+    file, htpp...)
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*\..\\*'
+    SELECTION_4:
+        CommandLine: '*mshtml*'
+    SELECTION_5:
+        CommandLine: '*RunHTMLApplication*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unlikely
+id: 4782eb5a-a513-4523-a0ac-f3082b26ac5c
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/n1nj4sec/status/1421190238081277959
+related:
+-   id: 9f06447a-a33a-4cbe-a94f-a3f43184a7a3
+    type: derived
+status: experimental
+tags:
+- attack.defense_evasion
+yml_filename: proc_creation_win_susp_mshtml_runhtmlapplication.yml
+yml_path: rules/windows/process_creation
+---
+

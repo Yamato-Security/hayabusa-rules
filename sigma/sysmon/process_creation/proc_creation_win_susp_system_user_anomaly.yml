@@ -1,78 +1,78 @@
-
 title: Suspicious SYSTEM User Process Creation
 ruletype: Sigma
 author: Florian Roth (rule), David ANDRE (additional keywords)
 date: 2021/12/20
 description: Detects a suspicious process creation as SYSTEM user (suspicious program
-  or command line parameter)
+    or command line parameter)
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    IntegrityLevel: System
-  SELECTION_4:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  SELECTION_5:
-    Image:
-    - '*\calc.exe'
-    - '*\wscript.exe'
-    - '*\cscript.exe'
-    - '*\hh.exe'
-    - '*\mshta.exe'
-    - '*\forfiles.exe'
-    - '*\ping.exe'
-  SELECTION_6:
-    CommandLine:
-    - '* -NoP *'
-    - '* -W Hidden *'
-    - '* -decode *'
-    - '* /decode *'
-    - '* /urlcache *'
-    - '* -urlcache *'
-    - '* -e* JAB*'
-    - '* -e* SUVYI*'
-    - '* -e* SQBFAFgA*'
-    - '* -e* aWV4I*'
-    - '* -e* IAB*'
-    - '* -e* PAA*'
-    - '* -e* aQBlAHgA*'
-    - '*vssadmin delete shadows*'
-    - '*reg SAVE HKLM*'
-    - '* -ma *'
-    - '*Microsoft\Windows\CurrentVersion\Run*'
-    - '*.downloadstring(*'
-    - '*.downloadfile(*'
-    - '* /ticket:*'
-    - '*dpapi::*'
-    - '*event::clear*'
-    - '*event::drop*'
-    - '*id::modify*'
-    - '*kerberos::*'
-    - '*lsadump::*'
-    - '*misc::*'
-    - '*privilege::*'
-    - '*rpc::*'
-    - '*sekurlsa::*'
-    - '*sid::*'
-    - '*token::*'
-    - '*vault::cred*'
-    - '*vault::list*'
-    - '* p::d *'
-    - '*;iex(*'
-    - '*MiniDump*'
-    - '*net user *'
-  SELECTION_7:
-    CommandLine: ping 127.0.0.1 -n 5
-  SELECTION_8:
-    Image: '*\PING.EXE'
-  SELECTION_9:
-    ParentCommandLine: '*\DismFoDInstall.cmd*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and
-    (SELECTION_5 or SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        IntegrityLevel: System
+    SELECTION_4:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_5:
+        Image:
+        - '*\calc.exe'
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+        - '*\hh.exe'
+        - '*\mshta.exe'
+        - '*\forfiles.exe'
+        - '*\ping.exe'
+    SELECTION_6:
+        CommandLine:
+        - '* -NoP *'
+        - '* -W Hidden *'
+        - '* -decode *'
+        - '* /decode *'
+        - '* /urlcache *'
+        - '* -urlcache *'
+        - '* -e* JAB*'
+        - '* -e* SUVYI*'
+        - '* -e* SQBFAFgA*'
+        - '* -e* aWV4I*'
+        - '* -e* IAB*'
+        - '* -e* PAA*'
+        - '* -e* aQBlAHgA*'
+        - '*vssadmin delete shadows*'
+        - '*reg SAVE HKLM*'
+        - '* -ma *'
+        - '*Microsoft\Windows\CurrentVersion\Run*'
+        - '*.downloadstring(*'
+        - '*.downloadfile(*'
+        - '* /ticket:*'
+        - '*dpapi::*'
+        - '*event::clear*'
+        - '*event::drop*'
+        - '*id::modify*'
+        - '*kerberos::*'
+        - '*lsadump::*'
+        - '*misc::*'
+        - '*privilege::*'
+        - '*rpc::*'
+        - '*sekurlsa::*'
+        - '*sid::*'
+        - '*token::*'
+        - '*vault::cred*'
+        - '*vault::list*'
+        - '* p::d *'
+        - '*;iex(*'
+        - '*MiniDump*'
+        - '*net user *'
+    SELECTION_7:
+        CommandLine: ping 127.0.0.1 -n 5
+    SELECTION_8:
+        Image: '*\PING.EXE'
+    SELECTION_9:
+        ParentCommandLine: '*\DismFoDInstall.cmd*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and
+        (SELECTION_5 or SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8 and
+        SELECTION_9)))
 falsepositives:
 - Administrative activity
 - Scripts and administrative tools used in the monitored environment
@@ -80,10 +80,14 @@ falsepositives:
 id: 2617e7ed-adb7-40ba-b0f3-8f9945fe6c09
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/04/27
 references:
 - Internal Research
 - https://tools.thehacker.recipes/mimikatz/modules
 status: test
+yml_filename: proc_creation_win_susp_system_user_anomaly.yml
+yml_path: rules/windows/process_creation
+---
+

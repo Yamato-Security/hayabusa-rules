@@ -1,29 +1,28 @@
-
 title: ProcessHacker Privilege Elevation
 ruletype: Sigma
 author: Florian Roth
 date: 2021/05/27
 description: Detects a ProcessHacker tool that elevated privileges to a very high
-  level
+    level
 detection:
-  SELECTION_1:
-    Channel: System
-  SELECTION_2:
-    Provider_Name: Service Control Manager
-  SELECTION_3:
-    EventID: 7045
-  SELECTION_4:
-    ServiceName: ProcessHacker*
-  SELECTION_5:
-    AccountName: LocalSystem
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7045
+    SELECTION_4:
+        ServiceName: ProcessHacker*
+    SELECTION_5:
+        AccountName: LocalSystem
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unlikely
 id: c4ff1eac-84ad-44dd-a6fb-d56a92fc43a9
 level: high
 logsource:
-  product: windows
-  service: system
+    product: windows
+    service: system
 modified: 2021/11/30
 references:
 - https://twitter.com/1kwpeter/status/1397816101455765504
@@ -33,3 +32,7 @@ tags:
 - attack.privilege_escalation
 - attack.t1543.003
 - attack.t1569.002
+yml_filename: win_susp_proceshacker.yml
+yml_path: rules/windows/builtin/system
+---
+

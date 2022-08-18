@@ -1,31 +1,34 @@
-
 title: MSSQL XPCmdshell Option Change
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/12
 description: Detects when the MSSQL "xp_cmdshell" stored procedure setting is changed
 detection:
-  SELECTION_1:
-    Channel: Application
-  SELECTION_2:
-    Provider_Name: MSSQLSERVER
-  SELECTION_3:
-    EventID: 15457
-  SELECTION_4:
-    Data: '*xp_cmdshell*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        Channel: Application
+    SELECTION_2:
+        Provider_Name: MSSQLSERVER
+    SELECTION_3:
+        EventID: 15457
+    SELECTION_4:
+        Data: '*xp_cmdshell*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate enable/disable of the setting
 - Note that since the event contain the change for both values. This means that this
-  will trigger on both enable and disable
+    will trigger on both enable and disable
 id: d08dd86f-681e-4a00-a92c-1db218754417
 level: high
 logsource:
-  product: windows
-  service: application
+    product: windows
+    service: application
 references:
 - https://www.netspi.com/blog/technical/network-penetration-testing/sql-server-persistence-part-1-startup-stored-procedures/
 - https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
 status: experimental
 tags:
 - attack.execution
+yml_filename: win_mssql_xp_cmdshell_change.yml
+yml_path: rules/windows/builtin/application
+---
+

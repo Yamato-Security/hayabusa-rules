@@ -1,0 +1,46 @@
+title: Invoke-Obfuscation COMPRESS OBFUSCATION
+ruletype: Sigma
+author: Timur Zinniatullin, oscd.community
+date: 2020/10/18
+description: Detects Obfuscated Powershell via COMPRESS OBFUSCATION
+detection:
+    SELECTION_1:
+        EventID: 4103
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        Payload: '*new-object*'
+    SELECTION_4:
+        Payload: '*text.encoding]::ascii*'
+    SELECTION_5:
+        Payload:
+        - '*system.io.compression.deflatestream*'
+        - '*system.io.streamreader*'
+    SELECTION_6:
+        Payload: '*readtoend'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: 7034cbbb-cc55-4dc2-8dad-36c0b942e8f1
+level: medium
+logsource:
+    category: ps_module
+    definition: PowerShell Module Logging must be enabled
+    product: windows
+modified: 2021/10/16
+references:
+- https://github.com/Neo23x0/sigma/issues/1009
+related:
+-   id: 20e5497e-331c-4cd5-8d36-935f6e2a9a07
+    type: derived
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1027
+- attack.execution
+- attack.t1059.001
+yml_filename: posh_pm_invoke_obfuscation_via_compress.yml
+yml_path: rules/windows/powershell/powershell_module
+---
+

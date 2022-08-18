@@ -1,28 +1,27 @@
-
 title: Suspicious Windows ANONYMOUS LOGON Local Account Created
 ruletype: Sigma
 author: James Pemberton / @4A616D6573
 date: 2019/10/31
 description: Detects the creation of suspicious accounts similar to ANONYMOUS LOGON,
-  such as using additional spaces. Created as an covering detection for exclusion
-  of Logon Type 3 from ANONYMOUS LOGON accounts.
+    such as using additional spaces. Created as an covering detection for exclusion
+    of Logon Type 3 from ANONYMOUS LOGON accounts.
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    EventID: 4720
-  SELECTION_3:
-    SamAccountName: '*ANONYMOUS*'
-  SELECTION_4:
-    SamAccountName: '*LOGON*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 4720
+    SELECTION_3:
+        SamAccountName: '*ANONYMOUS*'
+    SELECTION_4:
+        SamAccountName: '*LOGON*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 1bbf25b9-8038-4154-a50b-118f2a32be27
 level: high
 logsource:
-  product: windows
-  service: security
+    product: windows
+    service: security
 modified: 2021/07/06
 references:
 - https://twitter.com/SBousseaden/status/1189469425482829824
@@ -31,3 +30,7 @@ tags:
 - attack.persistence
 - attack.t1136.001
 - attack.t1136.002
+yml_filename: win_susp_local_anon_logon_created.yml
+yml_path: rules/windows/builtin/security
+---
+

@@ -1,23 +1,22 @@
-
 title: Sysinternals SDelete Delete File
 ruletype: Sigma
 author: frack113
 date: 2021/06/03
 description: Use of SDelete to erase a file not the free space
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    OriginalFileName: sdelete.exe
-  SELECTION_4:
-    CommandLine:
-    - '* -h*'
-    - '* -c*'
-    - '* -z*'
-    - '* /?*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        OriginalFileName: sdelete.exe
+    SELECTION_4:
+        CommandLine:
+        - '* -h*'
+        - '* -c*'
+        - '* -z*'
+        - '* /\?*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - System administrator Usage
 fields:
@@ -28,11 +27,16 @@ fields:
 id: a4824fca-976f-4964-b334-0621379e84c4
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
+modified: 2022/08/13
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1485/T1485.md
 status: experimental
 tags:
 - attack.impact
 - attack.t1485
+yml_filename: proc_creation_win_sdelete.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,34 +1,33 @@
-
 title: Suspicious Process Writes Ntds.dit
 ruletype: Sigma
 author: Florian Roth
 date: 2022/01/11
 description: Detects suspicious processes that write (copy) a Active Directory database
-  (ntds.dit) file
+    (ntds.dit) file
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*\ntds.dit'
-  SELECTION_4:
-    Image:
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-    - '*\cmd.exe'
-    - '*\wscript.exe'
-    - '*\cscript.exe'
-    - '*\mshta.exe'
-    - '*\wsl.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*\ntds.dit'
+    SELECTION_4:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\cmd.exe'
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+        - '*\mshta.exe'
+        - '*\wsl.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 11b1ed55-154d-4e82-8ad7-83739298f720
 level: high
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/07/14
 references:
 - https://stealthbits.com/blog/extracting-password-hashes-from-the-ntds-dit-file/
@@ -38,3 +37,7 @@ tags:
 - attack.credential_access
 - attack.t1003.002
 - attack.t1003.003
+yml_filename: file_event_win_susp_ntds_dit.yml
+yml_path: rules/windows/file_event
+---
+

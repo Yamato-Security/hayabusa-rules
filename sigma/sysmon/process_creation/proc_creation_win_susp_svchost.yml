@@ -1,32 +1,31 @@
-
 title: Suspicious Svchost Process
 ruletype: Sigma
 author: Florian Roth
 date: 2017/08/15
 description: Detects a suspicious svchost process start
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\svchost.exe'
-  SELECTION_4:
-    ParentImage:
-    - '*\services.exe'
-    - '*\MsMpEng.exe'
-    - '*\Mrt.exe'
-    - '*\rpcnet.exe'
-    - '*\ngen.exe'
-    - '*\TiWorker.exe'
-  SELECTION_5:
-    ParentImage|re: ^$
-  SELECTION_6:
-    ParentImage: ''
-  SELECTION_7:
-    ParentImage: '-'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\svchost.exe'
+    SELECTION_4:
+        ParentImage:
+        - '*\services.exe'
+        - '*\MsMpEng.exe'
+        - '*\Mrt.exe'
+        - '*\rpcnet.exe'
+        - '*\ngen.exe'
+        - '*\TiWorker.exe'
+    SELECTION_5:
+        ParentImage|re: ^$
+    SELECTION_6:
+        ParentImage: ''
+    SELECTION_7:
+        ParentImage: '-'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Unknown
 fields:
@@ -35,10 +34,14 @@ fields:
 id: 01d2e2a1-5f09-44f7-9fc1-24faa7479b6d
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/06/28
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1036.005
+yml_filename: proc_creation_win_susp_svchost.yml
+yml_path: rules/windows/process_creation
+---
+

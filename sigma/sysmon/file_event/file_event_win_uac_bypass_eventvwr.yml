@@ -1,28 +1,27 @@
-
 title: UAC Bypass Using EventVwr
 ruletype: Sigma
 author: Antonio Cocomazzi (idea), Florian Roth (rule)
 date: 2022/04/27
 description: Detects the pattern of a UAC bypass using Windows Event Viewer
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*\AppData\Local\Microsoft\Event Viewer\RecentViews*'
-  SELECTION_4:
-    Image:
-    - C:\Windows\System32\\*
-    - C:\Windows\SysWOW64\\*
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*\AppData\Local\Microsoft\Event Viewer\RecentViews*'
+    SELECTION_4:
+        Image:
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
 id: 63e4f530-65dc-49cc-8f80-ccfa95c69d43
 level: high
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/04/27
 references:
 - https://twitter.com/orange_8361/status/1518970259868626944?s=20&t=RFXqZjtA7tWM3HxqEH78Aw
@@ -31,3 +30,7 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.privilege_escalation
+yml_filename: file_event_win_uac_bypass_eventvwr.yml
+yml_path: rules/windows/file_event
+---
+

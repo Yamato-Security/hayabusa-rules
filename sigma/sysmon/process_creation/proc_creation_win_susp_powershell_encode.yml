@@ -1,36 +1,35 @@
-
 title: Suspicious Execution of Powershell with Base64
 ruletype: Sigma
 author: frack113
 date: 2022/01/02
 description: Commandline to lauch powershell with a base64 payload
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image:
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-  SELECTION_4:
-    CommandLine:
-    - '* -e *'
-    - '* -en *'
-    - '* -enc *'
-    - '* -enco*'
-    - '* -ec *'
-  SELECTION_5:
-    CommandLine: '* -Encoding *'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* -e *'
+        - '* -en *'
+        - '* -enc *'
+        - '* -enco*'
+        - '* -ec *'
+    SELECTION_5:
+        CommandLine: '* -Encoding *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Unknown
 id: fb843269-508c-4b76-8b8d-88679db22ce7
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.001/T1059.001.md#atomic-test-20---powershell-invoke-known-malicious-cmdlets
@@ -40,3 +39,7 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1059.001
+yml_filename: proc_creation_win_susp_powershell_encode.yml
+yml_path: rules/windows/process_creation
+---
+

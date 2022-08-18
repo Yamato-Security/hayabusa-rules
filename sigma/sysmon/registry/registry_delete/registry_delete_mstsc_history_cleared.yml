@@ -1,32 +1,31 @@
-
 title: Terminal Server Client Connection History Cleared
 ruletype: Sigma
 author: Christian Burkard
 date: 2021/10/19
 description: Detects the deletion of registry keys containing the MSTSC connection
-  history
+    history
 detection:
-  SELECTION_1:
-    EventID: 12
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: DeleteValue
-  SELECTION_4:
-    TargetObject: '*\Microsoft\Terminal Server Client\Default\MRU*'
-  SELECTION_5:
-    EventType: DeleteKey
-  SELECTION_6:
-    TargetObject: '*\Microsoft\Terminal Server Client\Servers\\*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6)))
+    SELECTION_1:
+        EventID: 12
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: DeleteValue
+    SELECTION_4:
+        TargetObject: '*\Microsoft\Terminal Server Client\Default\MRU*'
+    SELECTION_5:
+        EventType: DeleteKey
+    SELECTION_6:
+        TargetObject: '*\Microsoft\Terminal Server Client\Servers\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Unknown
 id: 07bdd2f5-9c58-4f38-aec8-e101bb79ef8d
 level: high
 logsource:
-  category: registry_delete
-  product: windows
+    category: registry_delete
+    product: windows
 modified: 2022/03/26
 references:
 - https://docs.microsoft.com/en-us/troubleshoot/windows-server/remote/remove-entries-from-remote-desktop-connection-computer
@@ -36,3 +35,7 @@ tags:
 - attack.defense_evasion
 - attack.t1070
 - attack.t1112
+yml_filename: registry_delete_mstsc_history_cleared.yml
+yml_path: rules/windows/registry/registry_delete
+---
+

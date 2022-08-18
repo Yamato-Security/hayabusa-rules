@@ -1,22 +1,21 @@
-
 title: InstallerFileTakeOver LPE CVE-2021-41379 File Create Event
 ruletype: Sigma
 author: Florian Roth
 date: 2021/11/22
 description: Detects signs of the exploitation of LPE CVE-2021-41379 that include
-  an msiexec process that creates an elevation_service.exe file
+    an msiexec process that creates an elevation_service.exe file
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\msiexec.exe'
-  SELECTION_4:
-    TargetFilename: C:\Program Files (x86)\Microsoft\Edge\Application*
-  SELECTION_5:
-    TargetFilename: '*\elevation_service.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\msiexec.exe'
+    SELECTION_4:
+        TargetFilename: C:\Program Files (x86)\Microsoft\Edge\Application*
+    SELECTION_5:
+        TargetFilename: '*\elevation_service.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 - Possibly some Microsoft Edge upgrades
@@ -26,8 +25,8 @@ fields:
 id: 3be82d5d-09fe-4d6a-a275-0d40d234d324
 level: critical
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 references:
 - https://github.com/klinix5/InstallerFileTakeOver
 - https://www.zerodayinitiative.com/advisories/ZDI-21-1308/
@@ -35,3 +34,7 @@ status: experimental
 tags:
 - attack.privilege_escalation
 - attack.t1068
+yml_filename: file_event_win_cve_2021_41379_msi_lpe.yml
+yml_path: rules/windows/file_event
+---
+

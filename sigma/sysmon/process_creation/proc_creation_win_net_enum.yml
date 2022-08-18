@@ -1,25 +1,24 @@
-
 title: Windows Network Enumeration
 ruletype: Sigma
 author: Endgame, JHasenbusch (ported for oscd.community)
 date: 2018/10/30
 description: Identifies attempts to enumerate hosts in a network using the built-in
-  Windows net.exe tool.
+    Windows net.exe tool.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image:
-    - '*\net.exe'
-    - '*\net1.exe'
-  SELECTION_4:
-    CommandLine: '*view*'
-  SELECTION_5:
-    CommandLine: '*\\\\*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\net.exe'
+        - '*\net1.exe'
+    SELECTION_4:
+        CommandLine: '*view*'
+    SELECTION_5:
+        CommandLine: '*\\\\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Legitimate use of net.exe utility by legitimate user
 fields:
@@ -29,9 +28,9 @@ fields:
 id: 62510e69-616b-4078-b371-847da438cc03
 level: low
 logsource:
-  category: process_creation
-  product: windows
-modified: 2019/11/11
+    category: process_creation
+    product: windows
+modified: 2022/08/13
 references:
 - https://eqllib.readthedocs.io/en/latest/analytics/b8a94d2f-dc75-4630-9d73-1edc6bd26fff.html
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md
@@ -39,3 +38,7 @@ status: stable
 tags:
 - attack.discovery
 - attack.t1018
+yml_filename: proc_creation_win_net_enum.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,32 +1,35 @@
-
 title: Suspicious Key Manager Access
 ruletype: Sigma
 author: Florian Roth
 date: 2022/04/21
 description: Detects the invocation of the Stored User Names and Passwords dialogue
-  (Key Manager)
+    (Key Manager)
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\rundll32.exe'
-  SELECTION_4:
-    CommandLine: '*keymgr*'
-  SELECTION_5:
-    CommandLine: '*KRShowKeyMgr*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\rundll32.exe'
+    SELECTION_4:
+        CommandLine: '*keymgr*'
+    SELECTION_5:
+        CommandLine: '*KRShowKeyMgr*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Administrative activity
 id: a4694263-59a8-4608-a3a0-6f8d3a51664c
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://twitter.com/NinjaParanoid/status/1516442028963659777
 status: experimental
 tags:
 - attack.credential_access
 - attack.t1555.004
+yml_filename: proc_creation_win_susp_rundll32_keymgr.yml
+yml_path: rules/windows/process_creation
+---
+

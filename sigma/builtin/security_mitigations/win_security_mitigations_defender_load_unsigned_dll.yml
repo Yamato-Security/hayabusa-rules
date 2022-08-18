@@ -1,0 +1,35 @@
+title: Microsoft Defender Blocked from Loading Unsigned DLL
+ruletype: Sigma
+author: Bhabesh Raj
+date: 2022/08/02
+description: Detects Code Integrity (CI) engine blocking Microsoft Defender's processes
+    (MpCmdRun and NisSrv) from loading unsigned DLLs which may be an attempt to sideload
+    arbitary DLL
+detection:
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        EventID: 12
+    SELECTION_3:
+        ProcessPath:
+        - '*\MpCmdRun.exe'
+        - '*\NisSrv.exe'
+    condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
+falsepositives:
+- Unknown
+id: 0b0ea3cc-99c8-4730-9c53-45deee2a4c86
+level: high
+logsource:
+    category: security-mitigations
+    product: windows
+modified: 2022/08/05
+references:
+- https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1574.002
+yml_filename: win_security_mitigations_defender_load_unsigned_dll.yml
+yml_path: rules/windows/builtin/security_mitigations
+---
+

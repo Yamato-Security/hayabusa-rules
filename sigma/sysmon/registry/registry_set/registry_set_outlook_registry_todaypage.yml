@@ -1,35 +1,35 @@
-
 title: Persistent Outlook Landing Pages
 ruletype: Sigma
 author: Tobias Michalski
 date: 2021/06/10
 description: Detects the manipulation of persistent URLs which could execute malicious
-  code
+    code
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject:
-    - '*Software\Microsoft\Office\\*'
-    - '*\Outlook\Today\\*'
-  SELECTION_5:
-    TargetObject: '*Stamp'
-  SELECTION_6:
-    Details: DWORD (0x00000001)
-  SELECTION_7:
-    TargetObject: '*UserDefinedUrl'
-  SELECTION_8:
-    Image:
-    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
-    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
-  SELECTION_9:
-    Image: '*\OfficeClickToRun.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and
-    ((SELECTION_5 and SELECTION_6) or SELECTION_7)) and  not ((SELECTION_8 and SELECTION_9)))
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject:
+        - '*Software\Microsoft\Office\\*'
+        - '*\Outlook\Today\\*'
+    SELECTION_5:
+        TargetObject: '*Stamp'
+    SELECTION_6:
+        Details: DWORD (0x00000001)
+    SELECTION_7:
+        TargetObject: '*UserDefinedUrl'
+    SELECTION_8:
+        Image:
+        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
+        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
+    SELECTION_9:
+        Image: '*\OfficeClickToRun.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and
+        ((SELECTION_5 and SELECTION_6) or SELECTION_7)) and  not ((SELECTION_8 and
+        SELECTION_9)))
 falsepositives:
 - Unknown
 fields:
@@ -37,8 +37,8 @@ fields:
 id: 487bb375-12ef-41f6-baae-c6a1572b4dd1
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/06/26
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=70
@@ -46,3 +46,7 @@ status: experimental
 tags:
 - attack.persistence
 - attack.t1112
+yml_filename: registry_set_outlook_registry_todaypage.yml
+yml_path: rules/windows/registry/registry_set
+---
+

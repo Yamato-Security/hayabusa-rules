@@ -1,27 +1,26 @@
-
 title: Enabling COR Profiler Environment Variables
 ruletype: Sigma
 author: Jose Rodriguez (@Cyb3rPandaH), OTR (Open Threat Research)
 date: 2020/09/10
 description: This rule detects cor_enable_profiling and cor_profiler environment variables
-  being set and configured.
+    being set and configured.
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: Setvalue
-  SELECTION_4:
-    TargetObject:
-    - '*\COR_ENABLE_PROFILING'
-    - '*\COR_PROFILER'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: Setvalue
+    SELECTION_4:
+        TargetObject:
+        - '*\COR_ENABLE_PROFILING'
+        - '*\COR_PROFILER'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 id: ad89044a-8f49-4673-9a55-cbd88a1b374f
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/06/26
 references:
 - https://twitter.com/jamieantisocial/status/1304520651248668673
@@ -33,3 +32,7 @@ tags:
 - attack.privilege_escalation
 - attack.defense_evasion
 - attack.t1574.012
+yml_filename: registry_set_enabling_cor_profiler_env_variables.yml
+yml_path: rules/windows/registry/registry_set
+---
+

@@ -1,25 +1,24 @@
-
 title: Network Sniffing
 ruletype: Sigma
 author: Timur Zinniatullin, oscd.community
 date: 2019/10/21
 description: Network sniffing refers to using the network interface on a system to
-  monitor or capture information sent over a wired or wireless connection. An adversary
-  may place a network interface into promiscuous mode to passively access data in
-  transit over the network, or use span ports to capture a larger amount of data.
+    monitor or capture information sent over a wired or wireless connection. An adversary
+    may place a network interface into promiscuous mode to passively access data in
+    transit over the network, or use span ports to capture a larger amount of data.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\tshark.exe'
-  SELECTION_4:
-    CommandLine: '*-i*'
-  SELECTION_5:
-    Image: '*\windump.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\tshark.exe'
+    SELECTION_4:
+        CommandLine: '*-i*'
+    SELECTION_5:
+        Image: '*\windump.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        SELECTION_5))
 falsepositives:
 - Admin activity
 fields:
@@ -33,8 +32,8 @@ fields:
 id: ba1f7802-adc7-48b4-9ecb-81e227fddfd5
 level: low
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/11
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1040/T1040.md
@@ -43,3 +42,7 @@ tags:
 - attack.credential_access
 - attack.discovery
 - attack.t1040
+yml_filename: proc_creation_win_network_sniffing.yml
+yml_path: rules/windows/process_creation
+---
+

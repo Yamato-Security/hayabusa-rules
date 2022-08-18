@@ -1,0 +1,40 @@
+title: Netsh Firewall Rule Deletion
+ruletype: Sigma
+author: frack113
+date: 2022/08/14
+description: Detects the removal of a port or application rule in the Windows Firewall
+    configuration using netsh
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\netsh.exe'
+    SELECTION_4:
+        CommandLine: '*firewall*'
+    SELECTION_5:
+        CommandLine: '*delete*'
+    SELECTION_6:
+        ParentProcessName: '*\Dropbox.exe'
+    SELECTION_7:
+        CommandLine: '*name=Dropbox*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
+falsepositives:
+- Legitimate administration
+id: 1a5fefe6-734f-452e-a07d-fc1c35bce4b2
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://app.any.run/tasks/8bbd5b4c-b82d-4e6d-a3ea-d454594a37cc/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.004
+yml_filename: proc_creation_win_netsh_fw_delete.yml
+yml_path: rules/windows/process_creation
+---
+

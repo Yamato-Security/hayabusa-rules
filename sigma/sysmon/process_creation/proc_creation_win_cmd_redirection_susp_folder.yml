@@ -1,39 +1,42 @@
-
 title: Suspicious CMD Shell Redirect
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/12
 description: Detects inline windows shell commands redirecting output via the ">"
-  symbol to a suspicous location
+    symbol to a suspicous location
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\cmd.exe'
-  SELECTION_4:
-    CommandLine: '* > %USERPROFILE%\\*'
-  SELECTION_5:
-    CommandLine: '* > %APPDATA%\\*'
-  SELECTION_6:
-    CommandLine: '* > \Users\Public\\*'
-  SELECTION_7:
-    CommandLine: '* > C:\Users\Public\\*'
-  SELECTION_8:
-    CommandLine: '* > %TEMP%\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7 and SELECTION_8)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\cmd.exe'
+    SELECTION_4:
+        CommandLine: '* > %USERPROFILE%\\*'
+    SELECTION_5:
+        CommandLine: '* > %APPDATA%\\*'
+    SELECTION_6:
+        CommandLine: '* > \Users\Public\\*'
+    SELECTION_7:
+        CommandLine: '* > C:\Users\Public\\*'
+    SELECTION_8:
+        CommandLine: '* > %TEMP%\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Legitimate admin scripts
 id: 8e0bb260-d4b2-4fff-bb8d-3f82118e6892
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
 status: experimental
 tags:
 - attack.execution
 - attack.t1218
+yml_filename: proc_creation_win_cmd_redirection_susp_folder.yml
+yml_path: rules/windows/process_creation
+---
+

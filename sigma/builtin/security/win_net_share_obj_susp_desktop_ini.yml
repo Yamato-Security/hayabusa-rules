@@ -1,35 +1,34 @@
-
 title: Windows Network Access Suspicious desktop.ini Action
 ruletype: Sigma
 author: Tim Shelton (HAWK.IO)
 date: 2021/12/06
 description: Detects unusual processes accessing desktop.ini remotely over network
-  share, which can be leveraged to alter how Explorer displays a folder's content
-  (i.e. renaming files) without changing them on disk.
+    share, which can be leveraged to alter how Explorer displays a folder's content
+    (i.e. renaming files) without changing them on disk.
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    EventID: 5145
-  SELECTION_3:
-    ObjectType: File
-  SELECTION_4:
-    RelativeTargetName: '*\desktop.ini'
-  SELECTION_5:
-    AccessList:
-    - '*WriteData*'
-    - '*DELETE*'
-    - '*WriteDAC*'
-    - '*AppendData*'
-    - '*AddSubdirectory*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 5145
+    SELECTION_3:
+        ObjectType: File
+    SELECTION_4:
+        RelativeTargetName: '*\desktop.ini'
+    SELECTION_5:
+        AccessList:
+        - '*WriteData*'
+        - '*DELETE*'
+        - '*WriteDAC*'
+        - '*AppendData*'
+        - '*AddSubdirectory*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Read only access list authority
 id: 35bc7e28-ee6b-492f-ab04-da58fcf6402e
 level: medium
 logsource:
-  product: windows
-  service: security
+    product: windows
+    service: security
 modified: 2022/01/16
 references:
 - https://isc.sans.edu/forums/diary/Desktopini+as+a+postexploitation+tool/25912/
@@ -37,3 +36,7 @@ status: test
 tags:
 - attack.persistence
 - attack.t1547.009
+yml_filename: win_net_share_obj_susp_desktop_ini.yml
+yml_path: rules/windows/builtin/security
+---
+

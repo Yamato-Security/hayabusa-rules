@@ -1,39 +1,38 @@
-
 title: Wmiprvse Spawning Process
 ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/08/15
 description: Detects wmiprvse spawning processes
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: '*\WmiPrvSe.exe'
-  SELECTION_4:
-    LogonId:
-    - '0x3e7'
-    - 'null'
-  SELECTION_5:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  SELECTION_6:
-    Image:
-    - '*\WmiPrvSE.exe'
-    - '*\WerFault.exe'
-  SELECTION_7:
-    LogonId|re: ^$
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not (SELECTION_4
-    or SELECTION_5 or SELECTION_6)) and  not (SELECTION_7))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\WmiPrvSe.exe'
+    SELECTION_4:
+        LogonId:
+        - '0x3e7'
+        - 'null'
+    SELECTION_5:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_6:
+        Image:
+        - '*\WmiPrvSE.exe'
+        - '*\WerFault.exe'
+    SELECTION_7:
+        LogonId|re: ^$
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not (SELECTION_4
+        or SELECTION_5 or SELECTION_6)) and  not (SELECTION_7))
 falsepositives:
 - Unknown
 id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/05/27
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190810201010.html
@@ -41,3 +40,7 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1047
+yml_filename: proc_creation_win_wmiprvse_spawning_process.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,0 +1,45 @@
+title: Logon Scripts (UserInitMprLogonScript)
+ruletype: Sigma
+author: Tom Ueltschi (@c_APT_ure), Tim Shelton
+date: 2019/01/12
+description: Detects creation or execution of UserInitMprLogonScript persistence method
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\userinit.exe'
+    SELECTION_4:
+        NewProcessName:
+        - '*explorer.exe'
+        - '*\proquota.exe'
+    SELECTION_5:
+        CommandLine:
+        - '*netlogon*.bat*'
+        - '*UsrLogon.cmd*'
+        - '*C:\WINDOWS\Explorer.EXE*'
+    SELECTION_6:
+        NewProcessName: '*\Citrix\System32\icast.exe'
+    SELECTION_7:
+        CommandLine: '*UserInitMprLogonScript*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6))) or SELECTION_7))
+falsepositives:
+- Exclude legitimate logon scripts
+id: 0a98a10c-685d-4ab0-bddc-b6bdd1d48458
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/05/31
+references:
+- https://attack.mitre.org/techniques/T1037/
+status: test
+tags:
+- attack.t1037.001
+- attack.persistence
+yml_filename: proc_creation_win_logon_scripts_userinitmprlogonscript_proc.yml
+yml_path: rules/windows/process_creation
+---
+

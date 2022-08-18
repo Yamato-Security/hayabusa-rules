@@ -1,0 +1,48 @@
+title: Invoke-Obfuscation Via Use MSHTA
+ruletype: Sigma
+author: Nikita Nazarov, oscd.community
+date: 2020/10/08
+description: Detects Obfuscated Powershell via use MSHTA in Scripts
+detection:
+    SELECTION_1:
+        EventID: 4103
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        Payload: '*set*'
+    SELECTION_4:
+        Payload: '*&&*'
+    SELECTION_5:
+        Payload: '*mshta*'
+    SELECTION_6:
+        Payload: '*vbscript:createobject*'
+    SELECTION_7:
+        Payload: '*.run*'
+    SELECTION_8:
+        Payload: '*(window.close)*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7 and SELECTION_8)
+falsepositives:
+- Unknown
+id: 07ad2ea8-6a55-4ac6-bf3e-91b8e59676eb
+level: high
+logsource:
+    category: ps_module
+    definition: PowerShell Module Logging must be enabledd
+    product: windows
+modified: 2022/03/07
+references:
+- https://github.com/Neo23x0/sigma/issues/1009
+related:
+-   id: e55a5195-4724-480e-a77e-3ebe64bd3759
+    type: derived
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1027
+- attack.execution
+- attack.t1059.001
+yml_filename: posh_pm_invoke_obfuscation_via_use_mhsta.yml
+yml_path: rules/windows/powershell/powershell_module
+---
+

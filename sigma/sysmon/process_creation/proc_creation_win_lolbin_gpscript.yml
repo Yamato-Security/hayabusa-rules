@@ -1,31 +1,31 @@
-
 title: Gpscript Execution
 ruletype: Sigma
 author: frack113
 date: 2022/05/16
 description: Detects the execution of the LOLBIN gpscript, which executes logon or
-  startup scripts configured in Group Policy
+    startup scripts configured in Group Policy
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\gpscript.exe'
-  SELECTION_4:
-    OriginalFileName: GPSCRIPT.EXE
-  SELECTION_5:
-    CommandLine:
-    - '* /logon*'
-    - '* /startup*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\gpscript.exe'
+    SELECTION_4:
+        OriginalFileName: GPSCRIPT.EXE
+    SELECTION_5:
+        CommandLine:
+        - '* /logon*'
+        - '* /startup*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Legitimate uses of logon scripts distributed via group policy
 id: 1e59c230-6670-45bf-83b0-98903780607e
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://oddvar.moe/2018/04/27/gpscript-exe-another-lolbin-to-the-list/
 - https://lolbas-project.github.io/lolbas/Binaries/Gpscript/
@@ -33,3 +33,7 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1218
+yml_filename: proc_creation_win_lolbin_gpscript.yml
+yml_path: rules/windows/process_creation
+---
+

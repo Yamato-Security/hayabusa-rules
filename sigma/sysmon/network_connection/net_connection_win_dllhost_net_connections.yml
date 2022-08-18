@@ -1,57 +1,56 @@
-
 title: Dllhost Internet Connection
 ruletype: Sigma
 author: bartblaze
 date: 2020/07/13
 description: Detects Dllhost that communicates with public IP addresses
 detection:
-  SELECTION_1:
-    EventID: 3
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\dllhost.exe'
-  SELECTION_4:
-    Initiated: 'true'
-  SELECTION_5:
-    DestinationIp:
-    - 10.*
-    - 192.168.*
-    - 172.16.*
-    - 172.17.*
-    - 172.18.*
-    - 172.19.*
-    - 172.20.*
-    - 172.21.*
-    - 172.22.*
-    - 172.23.*
-    - 172.24.*
-    - 172.25.*
-    - 172.26.*
-    - 172.27.*
-    - 172.28.*
-    - 172.29.*
-    - 172.30.*
-    - 172.31.*
-    - 169.254.*
-    - 127.*
-  SELECTION_6:
-    DestinationIp:
-    - ::1*
-    - 0:0:0:0:0:0:0:1*
-    - fe80:*
-    - fc*
-    - fd*
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5) or (SELECTION_6)))
+    SELECTION_1:
+        EventID: 3
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\dllhost.exe'
+    SELECTION_4:
+        Initiated: 'true'
+    SELECTION_5:
+        DestinationIp:
+        - 10.*
+        - 192.168.*
+        - 172.16.*
+        - 172.17.*
+        - 172.18.*
+        - 172.19.*
+        - 172.20.*
+        - 172.21.*
+        - 172.22.*
+        - 172.23.*
+        - 172.24.*
+        - 172.25.*
+        - 172.26.*
+        - 172.27.*
+        - 172.28.*
+        - 172.29.*
+        - 172.30.*
+        - 172.31.*
+        - 169.254.*
+        - 127.*
+    SELECTION_6:
+        DestinationIp:
+        - ::1*
+        - 0:0:0:0:0:0:0:1*
+        - fe80:*
+        - fc*
+        - fd*
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - Communication to other corporate systems that use IP addresses from public address
-  spaces
+    spaces
 id: cfed2f44-16df-4bf3-833a-79405198b277
 level: medium
 logsource:
-  category: network_connection
-  product: windows
+    category: network_connection
+    product: windows
 modified: 2022/04/21
 references:
 - https://redcanary.com/blog/child-processes/
@@ -62,3 +61,7 @@ tags:
 - attack.t1218
 - attack.execution
 - attack.t1559.001
+yml_filename: net_connection_win_dllhost_net_connections.yml
+yml_path: rules/windows/network_connection
+---
+

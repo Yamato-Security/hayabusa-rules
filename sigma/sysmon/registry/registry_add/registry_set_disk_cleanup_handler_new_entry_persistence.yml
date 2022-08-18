@@ -1,73 +1,76 @@
-
 title: Persistence Via Disk Cleanup Handler - NewEntry
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/21
 description: "Detects when an attacker modifies values of the Disk Cleanup Handler\
-  \ in the registry to achieve persistence.\nThe disk cleanup manager is part of the\
-  \ operating system. It displays the dialog box […] The user has the option of enabling\
-  \ or disabling individual handlers by selecting or clearing their check box in the\
-  \ disk cleanup manager's UI. Although Windows comes with a number of disk cleanup\
-  \ handlers, they aren't designed to handle files produced by other applications.\
-  \ Instead, the disk cleanup manager is designed to be flexible and extensible by\
-  \ enabling any developer to implement and register their own disk cleanup handler.\
-  \ Any developer can extend the available disk cleanup services by implementing and\
-  \ registering a disk cleanup handler.\n"
+    \ in the registry to achieve persistence.\nThe disk cleanup manager is part of\
+    \ the operating system. It displays the dialog box [\u2026] The user has the option\
+    \ of enabling or disabling individual handlers by selecting or clearing their\
+    \ check box in the disk cleanup manager's UI. Although Windows comes with a number\
+    \ of disk cleanup handlers, they aren't designed to handle files produced by other\
+    \ applications. Instead, the disk cleanup manager is designed to be flexible and\
+    \ extensible by enabling any developer to implement and register their own disk\
+    \ cleanup handler. Any developer can extend the available disk cleanup services\
+    \ by implementing and registering a disk cleanup handler.\n"
 detection:
-  SELECTION_1:
-    EventID: 12
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: CreateKey
-  SELECTION_4:
-    TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\\*'
-  SELECTION_5:
-    TargetObject:
-    - '*\Active Setup Temp Folders'
-    - '*\BranchCache'
-    - '*\Content Indexer Cleaner'
-    - '*\D3D Shader Cache'
-    - '*\Delivery Optimization Files'
-    - '*\Device Driver Packages'
-    - '*\Diagnostic Data Viewer database files'
-    - '*\Downloaded Program Files'
-    - '*\DownloadsFolder'
-    - '*\Feedback Hub Archive log files'
-    - '*\Internet Cache Files'
-    - '*\Language Pack'
-    - '*\Microsoft Office Temp Files'
-    - '*\Offline Pages Files'
-    - '*\Old ChkDsk Files'
-    - '*\Previous Installations'
-    - '*\Recycle Bin'
-    - '*\RetailDemo Offline Content'
-    - '*\Setup Log Files'
-    - '*\System error memory dump files'
-    - '*\System error minidump files'
-    - '*\Temporary Files'
-    - '*\Temporary Setup Files'
-    - '*\Temporary Sync Files'
-    - '*\Thumbnail Cache'
-    - '*\Update Cleanup'
-    - '*\Upgrade Discarded Files'
-    - '*\User file versions'
-    - '*\Windows Defender'
-    - '*\Windows Error Reporting Files'
-    - '*\Windows ESD installation files'
-    - '*\Windows Upgrade Log Files'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 12
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: CreateKey
+    SELECTION_4:
+        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\\*'
+    SELECTION_5:
+        TargetObject:
+        - '*\Active Setup Temp Folders'
+        - '*\BranchCache'
+        - '*\Content Indexer Cleaner'
+        - '*\D3D Shader Cache'
+        - '*\Delivery Optimization Files'
+        - '*\Device Driver Packages'
+        - '*\Diagnostic Data Viewer database files'
+        - '*\Downloaded Program Files'
+        - '*\DownloadsFolder'
+        - '*\Feedback Hub Archive log files'
+        - '*\Internet Cache Files'
+        - '*\Language Pack'
+        - '*\Microsoft Office Temp Files'
+        - '*\Offline Pages Files'
+        - '*\Old ChkDsk Files'
+        - '*\Previous Installations'
+        - '*\Recycle Bin'
+        - '*\RetailDemo Offline Content'
+        - '*\Setup Log Files'
+        - '*\System error memory dump files'
+        - '*\System error minidump files'
+        - '*\Temporary Files'
+        - '*\Temporary Setup Files'
+        - '*\Temporary Sync Files'
+        - '*\Thumbnail Cache'
+        - '*\Update Cleanup'
+        - '*\Upgrade Discarded Files'
+        - '*\User file versions'
+        - '*\Windows Defender'
+        - '*\Windows Error Reporting Files'
+        - '*\Windows ESD installation files'
+        - '*\Windows Upgrade Log Files'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Legitimate new entry added by windows
 id: d4f4e0be-cf12-439f-9e25-4e2cdcf7df5a
 level: medium
 logsource:
-  category: registry_add
-  product: windows
+    category: registry_add
+    product: windows
 references:
 - https://persistence-info.github.io/Data/diskcleanuphandler.html
 - https://www.hexacorn.com/blog/2018/09/02/beyond-good-ol-run-key-part-86/
 status: experimental
 tags:
 - attack.persistence
+yml_filename: registry_set_disk_cleanup_handler_new_entry_persistence.yml
+yml_path: rules/windows/registry/registry_add
+---
+

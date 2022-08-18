@@ -1,0 +1,65 @@
+title: Suspicious Values In App Paths Default Property
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/10
+description: |
+    Detects changes to the "Default" property for keys located in the \Software\Microsoft\Windows\CurrentVersion\App Paths\ registry. Which might be used as a method of persistence
+    The entries found under App Paths are used primarily for the following purposes.
+    First, to map an application's executable file name to that file's fully qualified path.
+    Second, to pre-pend information to the PATH environment variable on a per-application, per-process basis.
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths*'
+    SELECTION_6:
+        TargetObject:
+        - '*(Default)'
+        - '*Path'
+    SELECTION_7:
+        NewValue:
+        - '*\Users\Public*'
+        - '*\AppData\Local\Temp\\*'
+        - '*\Windows\Temp\\*'
+        - '*\Desktop\\*'
+        - '*\Downloads\\*'
+        - '*%temp%*'
+        - '*iex*'
+        - '*Invoke-*'
+        - '*rundll32*'
+        - '*regsvr32*'
+        - '*mshta*'
+        - '*cscript*'
+        - '*wscript*'
+        - '*.bat*'
+        - '*.hta*'
+        - '*.dll*'
+        - '*.ps1*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Legitimate applications registering their binary from on of the suspicious locations
+    mentioned above (tune it)
+id: 707e097c-e20f-4f67-8807-1f72ff4500d6
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://www.hexacorn.com/blog/2013/01/19/beyond-good-ol-run-key-part-3/
+- https://docs.microsoft.com/en-us/windows/win32/shell/app-registration?redirectedfrom=MSDN
+status: experimental
+tags:
+- attack.persistence
+- attack.t1546.012
+yml_filename: registry_set_susp_app_paths_persistence.yml
+yml_path: rules/windows/registry/registry_set
+---
+

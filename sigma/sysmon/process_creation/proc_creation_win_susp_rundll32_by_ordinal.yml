@@ -1,37 +1,36 @@
-
 title: Suspicious Call by Ordinal
 ruletype: Sigma
 author: Florian Roth
 date: 2019/10/22
 description: Detects suspicious calls of DLLs in rundll32.dll exports by ordinal
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\rundll32.exe'
-  SELECTION_4:
-    CommandLine:
-    - '*,#*'
-    - '*, #*'
-    - '*.dll #*'
-    - '*.ocx #*'
-  SELECTION_5:
-    CommandLine: '*EDGEHTML.dll*'
-  SELECTION_6:
-    CommandLine: '*#141*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5 and SELECTION_6))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\rundll32.exe'
+    SELECTION_4:
+        CommandLine:
+        - '*,#*'
+        - '*, #*'
+        - '*.dll #*'
+        - '*.ocx #*'
+    SELECTION_5:
+        CommandLine: '*EDGEHTML.dll*'
+    SELECTION_6:
+        CommandLine: '*#141*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
-  environment
+    environment
 - Windows control panel elements have been identified as source (mmc)
 id: e79a9e79-eb72-4e78-a628-0e7e8f59e89c
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/03/08
 references:
 - https://techtalk.pcmatic.com/2017/11/30/running-dll-files-malware-analysis/
@@ -42,3 +41,7 @@ status: stable
 tags:
 - attack.defense_evasion
 - attack.t1218.011
+yml_filename: proc_creation_win_susp_rundll32_by_ordinal.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,28 +1,27 @@
-
 title: Suspicious TSCON Start as SYSTEM
 ruletype: Sigma
 author: Florian Roth
 date: 2018/03/17
 description: Detects a tscon.exe start as LOCAL SYSTEM
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  SELECTION_4:
-    Image: '*\tscon.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_4:
+        Image: '*\tscon.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 9847f263-4a81-424f-970c-875dab15b79b
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/05/27
 references:
 - http://www.korznikov.com/2017/03/0-day-or-feature-privilege-escalation.html
@@ -32,3 +31,7 @@ status: experimental
 tags:
 - attack.command_and_control
 - attack.t1219
+yml_filename: proc_creation_win_susp_tscon_localsystem.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,29 +1,29 @@
-
 title: Windows Credential Manager Access via VaultCmd
 ruletype: Sigma
 author: frack113
 date: 2022/04/08
 description: List credentials currently stored in Windows Credential Manager via the
-  native Windows utility vaultcmd.exe
+    native Windows utility vaultcmd.exe
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\VaultCmd.exe'
-  SELECTION_4:
-    OriginalFileName: VAULTCMD.EXE
-  SELECTION_5:
-    CommandLine: '*/listcreds:*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\VaultCmd.exe'
+    SELECTION_4:
+        OriginalFileName: VAULTCMD.EXE
+    SELECTION_5:
+        CommandLine: '*/listcreds:*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unknown
 id: 58f50261-c53b-4c88-bd12-1d71f12eda4c
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/05/13
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1555.004/T1555.004.md#atomic-test-1---access-saved-credentials-via-vaultcmd
@@ -31,3 +31,7 @@ status: experimental
 tags:
 - attack.credential_access
 - attack.t1555.004
+yml_filename: proc_creation_win_susp_vaultcmd.yml
+yml_path: rules/windows/process_creation
+---
+

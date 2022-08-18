@@ -1,0 +1,44 @@
+title: Add DLLPathOverride Entry For Persistence
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/07/21
+description: Detects when an attacker adds a new "DLLPathOverride" value to the "Natural
+    Language" key in order to achieve persistence which will get invoked by "SearchIndexer.exe"
+    process
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\SYSTEM\CurrentControlSet\Control\ContentIndex\Language\\*'
+    SELECTION_6:
+        TargetObject:
+        - '*\StemmerDLLPathOverride*'
+        - '*\WBDLLPathOverride*'
+        - '*\StemmerClass*'
+        - '*\WBreakerClass*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: a1b1fd53-9c4a-444c-bae0-34a330fc7aa8
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://persistence-info.github.io/Data/naturallanguage6.html
+- https://www.hexacorn.com/blog/2018/12/30/beyond-good-ol-run-key-part-98/
+status: experimental
+tags:
+- attack.persistence
+yml_filename: regsitry_set_natural_language_persistence.yml
+yml_path: rules/windows/registry/registry_set
+---
+

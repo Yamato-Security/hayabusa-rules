@@ -1,31 +1,34 @@
-
 title: New Shim Database Created in the Default Directory
 ruletype: Sigma
 author: frack113
 date: 2021/12/29
 description: |
-  Adversaries may establish persistence and/or elevate privileges by executing malicious content triggered by application shims.
-  The Microsoft Windows Application Compatibility Infrastructure/Framework (Application Shim) was created to allow for backward compatibility of software as the operating system codebase changes over time.
+    Adversaries may establish persistence and/or elevate privileges by executing malicious content triggered by application shims.
+    The Microsoft Windows Application Compatibility Infrastructure/Framework (Application Shim) was created to allow for backward compatibility of software as the operating system codebase changes over time.
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*.sdb'
-  SELECTION_4:
-    TargetFilename: '*\Windows\apppatch\Custom\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*.sdb'
+    SELECTION_4:
+        TargetFilename: '*\Windows\apppatch\Custom\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: ee63c85c-6d51-4d12-ad09-04e25877a947
 level: medium
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.011/T1546.011.md#atomic-test-2---new-shim-database-files-created-in-the-default-shim-database-directory
 status: experimental
 tags:
 - attack.persistence
 - attack.t1547.009
+yml_filename: file_event_win_creation_new_shim_database.yml
+yml_path: rules/windows/file_event
+---
+

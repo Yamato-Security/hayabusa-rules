@@ -1,30 +1,29 @@
-
 title: Removal Amsi Provider Reg Key
 ruletype: Sigma
 author: frack113
 date: 2021/06/07
 description: Remove the AMSI Provider registry key in HKLM\Software\Microsoft\AMSI
-  to disable AMSI inspection
+    to disable AMSI inspection
 detection:
-  SELECTION_1:
-    EventID: 12
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: DeleteKey
-  SELECTION_4:
-    TargetObject:
-    - '*{2781761E-28E0-4109-99FE-B9D127C57AFE}'
-    - '*{A7C452EF-8E9F-42EB-9F2B-245613CA0DC9}'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 12
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: DeleteKey
+    SELECTION_4:
+        TargetObject:
+        - '*{2781761E-28E0-4109-99FE-B9D127C57AFE}'
+        - '*{A7C452EF-8E9F-42EB-9F2B-245613CA0DC9}'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 41d1058a-aea7-4952-9293-29eaaf516465
 level: high
 logsource:
-  category: registry_delete
-  definition: key must be add to the sysmon configuration to works
-  product: windows
+    category: registry_delete
+    definition: key must be add to the sysmon configuration to works
+    product: windows
 modified: 2022/03/26
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
@@ -33,3 +32,7 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1562.001
+yml_filename: registry_delete_removal_amsi_registry_key.yml
+yml_path: rules/windows/registry/registry_delete
+---
+

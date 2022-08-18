@@ -1,0 +1,36 @@
+title: Exfiltration and Tunneling Tools Execution
+ruletype: Sigma
+author: Daniil Yugoslavskiy, oscd.community
+date: 2019/10/24
+description: Execution of well known tools for data exfiltration and tunneling
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\plink.exe'
+        - '*\socat.exe'
+        - '*\stunnel.exe'
+        - '*\httptunnel.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Legitimate Administrator using tools
+id: c75309a3-59f8-4a8d-9c2c-4c927ad50555
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2021/11/27
+status: test
+tags:
+- attack.exfiltration
+- attack.command_and_control
+- attack.t1041
+- attack.t1572
+- attack.t1071.001
+yml_filename: proc_creation_win_exfiltration_and_tunneling_tools_execution.yml
+yml_path: rules/windows/process_creation
+---
+

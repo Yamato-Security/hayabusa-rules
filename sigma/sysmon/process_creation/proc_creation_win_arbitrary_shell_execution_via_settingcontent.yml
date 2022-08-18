@@ -1,21 +1,20 @@
-
 title: Arbitrary Shell Command Execution Via Settingcontent-Ms
 ruletype: Sigma
 author: Sreeman
 date: 2020/03/13
 description: The .SettingContent-ms file type was introduced in Windows 10 and allows
-  a user to create "shortcuts" to various Windows 10 setting pages. These files are
-  simply XML and contain paths to various Windows 10 settings binaries.
+    a user to create "shortcuts" to various Windows 10 setting pages. These files
+    are simply XML and contain paths to various Windows 10 settings binaries.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*.SettingContent-ms*'
-  SELECTION_4:
-    CommandLine: '*immersivecontrolpanel*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*.SettingContent-ms*'
+    SELECTION_4:
+        CommandLine: '*immersivecontrolpanel*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
 fields:
@@ -25,8 +24,8 @@ fields:
 id: 24de4f3b-804c-4165-b442-5a06a2302c7e
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/04/14
 references:
 - https://posts.specterops.io/the-tale-of-settingcontent-ms-files-f1ea253e4d39
@@ -36,3 +35,7 @@ tags:
 - attack.t1566.001
 - attack.execution
 - attack.initial_access
+yml_filename: proc_creation_win_arbitrary_shell_execution_via_settingcontent.yml
+yml_path: rules/windows/process_creation
+---
+

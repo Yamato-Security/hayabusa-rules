@@ -1,0 +1,62 @@
+title: Chafer Activity
+ruletype: Sigma
+author: Florian Roth, Markus Neis, Jonhnathan Ribeiro, Daniil Yugoslavskiy, oscd.community
+date: 2018/03/23
+description: Detects Chafer activity attributed to OilRig as reported in Nyotron report
+    in March 2018
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine: '*-q=TXT*'
+    SELECTION_11:
+        ParentProcessName: '*\Autoit*'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*\Service.exe*'
+    SELECTION_4:
+        CommandLine:
+        - '*i'
+        - '*u'
+    SELECTION_5:
+        CommandLine: '*\microsoft\Taskbar\autoit3.exe'
+    SELECTION_6:
+        CommandLine: C:\wsc.exe*
+    SELECTION_7:
+        NewProcessName: '*\Windows\Temp\DB\\*'
+    SELECTION_8:
+        NewProcessName: '*.exe'
+    SELECTION_9:
+        CommandLine: '*\nslookup.exe*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11)))
+falsepositives:
+- Unknown
+id: ce6e34ca-966d-41c9-8d93-5b06c8b97a06
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2021/09/19
+references:
+- https://nyotron.com/nyotron-discovers-next-generation-oilrig-attacks/
+related:
+-   id: 53ba33fd-3a50-4468-a5ef-c583635cfa92
+    type: derived
+status: test
+tags:
+- attack.persistence
+- attack.g0049
+- attack.t1053.005
+- attack.s0111
+- attack.t1543.003
+- attack.defense_evasion
+- attack.t1112
+- attack.command_and_control
+- attack.t1071.004
+yml_filename: proc_creation_win_apt_chafer_mar18.yml
+yml_path: rules/windows/process_creation
+---
+

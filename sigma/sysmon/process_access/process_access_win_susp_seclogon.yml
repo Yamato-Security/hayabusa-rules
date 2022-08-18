@@ -1,31 +1,30 @@
-
 title: Suspicious LSASS Access Via MalSecLogon
 ruletype: Sigma
 author: Samir Bousseaden (original elastic rule), Nasreddine Bencherchali (sigma)
 date: 2022/06/29
 description: Detects suspicious access to Lsass handle via a call trace to "seclogon.dll"
 detection:
-  SELECTION_1:
-    EventID: 10
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetImage: '*\lsass.exe'
-  SELECTION_4:
-    SourceImage: '*\svchost.exe'
-  SELECTION_5:
-    GrantedAccess: '0x14c0'
-  SELECTION_6:
-    CallTrace: '*seclogon.dll*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+    SELECTION_1:
+        EventID: 10
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetImage: '*\lsass.exe'
+    SELECTION_4:
+        SourceImage: '*\svchost.exe'
+    SELECTION_5:
+        GrantedAccess: '0x14c0'
+    SELECTION_6:
+        CallTrace: '*seclogon.dll*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: 472159c5-31b9-4f56-b794-b766faa8b0a7
 level: high
 logsource:
-  category: process_access
-  product: windows
+    category: process_access
+    product: windows
 references:
 - https://twitter.com/SBousseaden/status/1541920424635912196
 - https://github.com/elastic/detection-rules/blob/2bc1795f3d7bcc3946452eb4f07ae799a756d94e/rules/windows/credential_access_lsass_handle_via_malseclogon.toml
@@ -34,3 +33,7 @@ status: experimental
 tags:
 - attack.credential_access
 - attack.t1003.001
+yml_filename: process_access_win_susp_seclogon.yml
+yml_path: rules/windows/process_access
+---
+

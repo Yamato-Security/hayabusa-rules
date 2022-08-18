@@ -1,44 +1,43 @@
-
 title: Suspicious Curl Usage on Windows
 ruletype: Sigma
 author: Florian Roth, Nasreddine Bencherchali (updated)
 date: 2020/07/03
 description: Detects a suspicious curl process start on Windows and outputs the requested
-  document to a local file
+    document to a local file
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\curl.exe'
-  SELECTION_4:
-    Product: The curl executable
-  SELECTION_5:
-    CommandLine:
-    - '*\AppData\\*'
-    - '*\Users\Public\\*'
-    - '*\Temp*'
-    - '*%AppData%*'
-    - '*%Temp%*'
-    - '*%Public%*'
-    - '*\Desktop*'
-  SELECTION_6:
-    CommandLine:
-    - '*.jpg'
-    - '*.jpeg'
-    - '*.png'
-    - '*.gif'
-    - '*.tmp'
-    - '*.temp'
-    - '*.txt'
-  SELECTION_7:
-    CommandLine:
-    - '* -O*'
-    - '*--remote-name*'
-    - '*--output*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and (SELECTION_5
-    or SELECTION_6 or SELECTION_7))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\curl.exe'
+    SELECTION_4:
+        Product: The curl executable
+    SELECTION_5:
+        CommandLine:
+        - '*\AppData\\*'
+        - '*\Users\Public\\*'
+        - '*\Temp\\*'
+        - '*%AppData%*'
+        - '*%Temp%*'
+        - '*%Public%*'
+        - '*\Desktop\\*'
+    SELECTION_6:
+        CommandLine:
+        - '*.jpg'
+        - '*.jpeg'
+        - '*.png'
+        - '*.gif'
+        - '*.tmp'
+        - '*.temp'
+        - '*.txt'
+    SELECTION_7:
+        CommandLine:
+        - '* -O*'
+        - '*--remote-name*'
+        - '*--output*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 or SELECTION_6 or SELECTION_7))
 falsepositives:
 - Unknown
 fields:
@@ -47,8 +46,8 @@ fields:
 id: e218595b-bbe7-4ee5-8a96-f32a24ad3468
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/28
 references:
 - https://twitter.com/max_mal_/status/1542461200797163522
@@ -59,3 +58,7 @@ status: experimental
 tags:
 - attack.command_and_control
 - attack.t1105
+yml_filename: proc_creation_win_susp_curl_download.yml
+yml_path: rules/windows/process_creation
+---
+

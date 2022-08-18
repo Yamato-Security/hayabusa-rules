@@ -1,0 +1,40 @@
+title: ScreenConnect Remote Access
+ruletype: Sigma
+author: Florian Roth
+date: 2021/02/11
+description: Detects ScreenConnect program starts that establish a remote access to
+    that system (not meeting, not remote support)
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*e=Access&*'
+    SELECTION_4:
+        CommandLine: '*y=Guest&*'
+    SELECTION_5:
+        CommandLine: '*&p=*'
+    SELECTION_6:
+        CommandLine: '*&c=*'
+    SELECTION_7:
+        CommandLine: '*&k=*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Legitimate use by administrative staff
+id: 75bfe6e6-cd8e-429e-91d3-03921e1d7962
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.anomali.com/blog/probable-iranian-cyber-actors-static-kitten-conducting-cyberespionage-campaign-targeting-uae-and-kuwait-government-agencies
+status: experimental
+tags:
+- attack.initial_access
+- attack.t1133
+yml_filename: proc_creation_win_susp_screenconnect_access.yml
+yml_path: rules/windows/process_creation
+---
+

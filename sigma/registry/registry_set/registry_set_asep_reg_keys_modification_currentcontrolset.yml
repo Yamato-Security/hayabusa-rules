@@ -1,0 +1,81 @@
+title: CurrentControlSet Autorun Keys Modification
+ruletype: Sigma
+author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
+    oscd.community, Tim Shelton, frack113 (split)
+date: 2019/10/25
+description: Detects modification of autostart extensibility point (ASEP) in registry.
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_10:
+        NewValue:
+        - cpwmon64_v40.dll
+        - CutePDF Writer
+    SELECTION_11:
+        NewProcessName: C:\Windows\System32\spoolsv.exe
+    SELECTION_12:
+        TargetObject: '*Print\Monitors\Appmon\Ports\Microsoft.Office.OneNote_*'
+    SELECTION_13:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\SYSTEM\CurrentControlSet\Control*'
+    SELECTION_6:
+        TargetObject:
+        - '*\Terminal Server\WinStations\RDP-Tcp\InitialProgram*'
+        - '*\Terminal Server\Wds\rdpwd\StartupPrograms*'
+        - '*\SecurityProviders\SecurityProviders*'
+        - '*\SafeBoot\AlternateShell*'
+        - '*\Print\Providers*'
+        - '*\Print\Monitors*'
+        - '*\NetworkProvider\Order*'
+        - '*\Lsa\Notification Packages*'
+        - '*\Lsa\Authentication Packages*'
+        - '*\BootVerificationProgram\ImagePath*'
+    SELECTION_7:
+        NewValue: (Empty)
+    SELECTION_8:
+        NewProcessName: C:\Windows\System32\spoolsv.exe
+    SELECTION_9:
+        TargetObject: '*\Print\Monitors\CutePDF Writer Monitor*'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13)))
+falsepositives:
+- Legitimate software automatically (mostly, during installation) sets up autorun
+    keys for legitimate reason
+- Legitimate administrator sets up autorun keys for legitimate reason
+fields:
+- SecurityID
+- ObjectName
+- OldValueType
+- NewValueType
+id: f674e36a-4b91-431e-8aef-f8a96c2aca35
+level: medium
+logsource:
+    category: registry_set
+    product: windows
+modified: 2022/08/09
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
+- https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
+- https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
+related:
+-   id: 17f878b8-9968-4578-b814-c4217fc5768c
+    type: derived
+status: experimental
+tags:
+- attack.persistence
+- attack.t1547.001
+yml_filename: registry_set_asep_reg_keys_modification_currentcontrolset.yml
+yml_path: rules/windows/registry/registry_set
+---
+

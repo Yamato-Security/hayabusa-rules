@@ -1,20 +1,19 @@
-
 title: Node Process Executions
 ruletype: Sigma
 author: Max Altgelt
 date: 2022/04/06
 description: Detects the execution of other scripts using the Node executable packaged
-  with Adobe Creative Cloud
+    with Adobe Creative Cloud
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\Adobe Creative Cloud Experience\libs\node.exe'
-  SELECTION_4:
-    CommandLine: '*Adobe Creative Cloud Experience\js*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\Adobe Creative Cloud Experience\libs\node.exe'
+    SELECTION_4:
+        CommandLine: '*Adobe Creative Cloud Experience\js*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
 fields:
@@ -24,8 +23,8 @@ fields:
 id: df1f26d3-bea7-4700-9ea2-ad3e990cf90e
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://twitter.com/mttaggart/status/1511804863293784064
 status: experimental
@@ -33,3 +32,7 @@ tags:
 - attack.defense_evasion
 - attack.t1127
 - attack.t1059.007
+yml_filename: proc_creation_win_creative_cloud_node_abuse.yml
+yml_path: rules/windows/process_creation
+---
+

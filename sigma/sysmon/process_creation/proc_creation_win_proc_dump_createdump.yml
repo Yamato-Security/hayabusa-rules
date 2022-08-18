@@ -1,33 +1,32 @@
-
 title: CreateDump Process Dump
 ruletype: Sigma
 author: Florian Roth
 date: 2022/01/04
 description: Detects uses of the createdump.exe LOLOBIN utility to dump process memory
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\createdump.exe'
-  SELECTION_4:
-    CommandLine: '* -u *'
-  SELECTION_5:
-    CommandLine: '* -f *'
-  SELECTION_6:
-    CommandLine: '* -u -f *'
-  SELECTION_7:
-    CommandLine: '*.dmp *'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\createdump.exe'
+    SELECTION_4:
+        CommandLine: '* -u *'
+    SELECTION_5:
+        CommandLine: '* -f *'
+    SELECTION_6:
+        CommandLine: '* -u -f *'
+    SELECTION_7:
+        CommandLine: '*.dmp *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Command lines that use the same flags
 id: 515c8be5-e5df-4c5e-8f6d-a4a2f05e4b48
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://www.crowdstrike.com/blog/overwatch-exposes-aquatic-panda-in-possession-of-log-4-shell-exploit-tools/
 status: experimental
@@ -35,3 +34,7 @@ tags:
 - attack.defense_evasion
 - attack.t1036
 - attack.t1003.001
+yml_filename: proc_creation_win_proc_dump_createdump.yml
+yml_path: rules/windows/process_creation
+---
+

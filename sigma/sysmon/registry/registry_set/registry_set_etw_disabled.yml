@@ -1,28 +1,27 @@
-
 title: COMPlus_ETWEnabled Registry Modification
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2020/06/05
 description: Potential adversaries stopping ETW providers recording loaded .NET assemblies.
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject: '*SOFTWARE\Microsoft\.NETFramework\ETWEnabled'
-  SELECTION_5:
-    Details: DWORD (0x00000000)
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*SOFTWARE\Microsoft\.NETFramework\ETWEnabled'
+    SELECTION_5:
+        Details: DWORD (0x00000000)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: bf4fc428-dcc3-4bbd-99fe-2422aeee2544
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/03/26
 references:
 - https://twitter.com/_xpn_/status/1268712093928378368
@@ -38,3 +37,7 @@ status: test
 tags:
 - attack.defense_evasion
 - attack.t1112
+yml_filename: registry_set_etw_disabled.yml
+yml_path: rules/windows/registry/registry_set
+---
+

@@ -1,23 +1,22 @@
-
 title: DNS ServerLevelPluginDll Install
 ruletype: Sigma
 author: Florian Roth
 date: 2017/05/08
 description: Detects the installation of a plugin DLL via ServerLevelPluginDll parameter
-  in Registry, which can be used to execute code in context of the DNS server (restart
-  required)
+    in Registry, which can be used to execute code in context of the DNS server (restart
+    required)
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\dnscmd.exe'
-  SELECTION_4:
-    CommandLine: '*/config*'
-  SELECTION_5:
-    CommandLine: '*/serverlevelplugindll*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\dnscmd.exe'
+    SELECTION_4:
+        CommandLine: '*/config*'
+    SELECTION_5:
+        CommandLine: '*/serverlevelplugindll*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 fields:
@@ -30,16 +29,20 @@ fields:
 id: f63b56ee-3f79-4b8a-97fb-5c48007e8573
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/09/12
 references:
 - https://medium.com/@esnesenon/feature-not-bug-dnsadmin-to-dc-compromise-in-one-line-a0f779b8dc83
 related:
-- id: e61e8a88-59a9-451c-874e-70fcc9740d67
-  type: derived
+-   id: e61e8a88-59a9-451c-874e-70fcc9740d67
+    type: derived
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1574.002
 - attack.t1112
+yml_filename: proc_creation_win_dns_serverlevelplugindll.yml
+yml_path: rules/windows/process_creation
+---
+

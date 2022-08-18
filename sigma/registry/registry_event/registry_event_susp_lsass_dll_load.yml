@@ -1,0 +1,47 @@
+title: DLL Load via LSASS
+ruletype: Sigma
+author: Florian Roth
+date: 2019/10/16
+description: Detects a method to load DLL via LSASS process using an undocumented
+    Registry key
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - New registry value created
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        TargetObject:
+        - '*\CurrentControlSet\Services\NTDS\DirectoryServiceExtPt*'
+        - '*\CurrentControlSet\Services\NTDS\LsaDbExtPt*'
+    SELECTION_5:
+        NewProcessName: C:\Windows\system32\lsass.exe
+    SELECTION_6:
+        NewValue:
+        - '%%systemroot%%\system32\ntdsa.dll'
+        - '%%systemroot%%\system32\lsadb.dll'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and SELECTION_4 and  not
+        ((SELECTION_5 and SELECTION_6)))
+falsepositives:
+- Unknown
+id: b3503044-60ce-4bf4-bbcb-e3db98788823
+level: high
+logsource:
+    category: registry_event
+    product: windows
+modified: 2022/04/21
+references:
+- https://blog.xpnsec.com/exploring-mimikatz-part-1/
+- https://twitter.com/SBousseaden/status/1183745981189427200
+status: test
+tags:
+- attack.execution
+- attack.persistence
+- attack.t1547.008
+yml_filename: registry_event_susp_lsass_dll_load.yml
+yml_path: rules/windows/registry/registry_event
+---
+

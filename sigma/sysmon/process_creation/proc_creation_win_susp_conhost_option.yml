@@ -1,29 +1,28 @@
-
 title: Suspicious Conhost Legacy Option
 ruletype: Sigma
 author: frack113
 date: 2022/04/04
 description: ForceV1 asks for information directly from the kernel space. Conhost
-  connects to the console application
+    connects to the console application
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*conhost.exe*'
-  SELECTION_4:
-    CommandLine: '*0xffffffff*'
-  SELECTION_5:
-    CommandLine: '*-ForceV1*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*conhost.exe*'
+    SELECTION_4:
+        CommandLine: '*0xffffffff*'
+    SELECTION_5:
+        CommandLine: '*-ForceV1*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 3037d961-21e9-4732-b27a-637bcc7bf539
 level: informational
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://cybercryptosec.medium.com/covid-19-cyber-infection-c615ead7c29
 - https://thedfirreport.com/2022/04/04/stolen-images-campaign-ends-in-conti-ransomware/
@@ -31,3 +30,7 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1202
+yml_filename: proc_creation_win_susp_conhost_option.yml
+yml_path: rules/windows/process_creation
+---
+

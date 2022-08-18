@@ -1,0 +1,58 @@
+title: COM Hijacking For Persistence With Suspicious Locations
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/07/28
+description: Detects potential COM object hijacking where the "Server" (In/Out) is
+    pointing to a supsicious or unsuale location
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject:
+        - HKCR\CLSID\\*
+        - HKEY_CLASSES_ROOT\CLSID\\*
+        - HKCU\Software\Classes\CLSID\\*
+        - HKEY_CURRENT_USER\Software\Classes\CLSID\\*
+    SELECTION_6:
+        TargetObject:
+        - '*\InprocServer32\(Default)'
+        - '*\LocalServer32\(Default)'
+    SELECTION_7:
+        NewValue:
+        - '*\Users\Public\\*'
+        - '*\Desktop\\*'
+        - '*\AppData\Local\Temp\\*'
+        - '*\Downloads\\*'
+        - '*\Windows\Temp\\*'
+        - '*\Microsoft\Windows\Start Menu\Programs\Startup\\*'
+        - '*\System32\spool\drivers\color\\*'
+        - '*%temp%*'
+        - '*%appdata%*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Probable legitimate applications. If you find these please add them to an exclusion
+    list
+id: 3d968d17-ffa4-4bc0-bfdc-f139de76ce77
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://www.microsoft.com/security/blog/2022/07/27/untangling-knotweed-european-private-sector-offensive-actor-using-0-day-exploits/
+    (idea)
+status: experimental
+tags:
+- attack.persistence
+- attack.t1546.015
+yml_filename: registry_set_persistence_com_hijacking_susp_locations.yml
+yml_path: rules/windows/registry/registry_set
+---
+

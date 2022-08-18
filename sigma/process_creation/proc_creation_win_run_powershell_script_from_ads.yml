@@ -1,0 +1,42 @@
+title: Run PowerShell Script from ADS
+ruletype: Sigma
+author: Sergey Soldatov, Kaspersky Lab, oscd.community
+date: 2019/10/30
+description: Detects PowerShell script execution from Alternate Data Stream (ADS)
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        NewProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_5:
+        CommandLine: '*Get-Content*'
+    SELECTION_6:
+        CommandLine: '*-Stream*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: 45a594aa-1fbd-4972-a809-ff5a99dd81b8
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/07/14
+references:
+- https://github.com/p0shkatz/Get-ADS/blob/1c3a3562e713c254edce1995a7d9879c687c7473/Get-ADS.ps1
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1564.004
+yml_filename: proc_creation_win_run_powershell_script_from_ads.yml
+yml_path: rules/windows/process_creation
+---
+

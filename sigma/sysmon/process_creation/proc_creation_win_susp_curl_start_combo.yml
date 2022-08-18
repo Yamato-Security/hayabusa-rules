@@ -1,25 +1,26 @@
-
 title: Curl Start Combination
 ruletype: Sigma
-author: Sreeman
+author: Sreeman, Nasreddine Bencherchali
 date: 2020/01/13
 description: Adversaries can use curl to download payloads remotely and execute them.
-  Curl is included by default in Windows 10 build 17063 and later.
+    Curl is included by default in Windows 10 build 17063 and later.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\curl.exe'
-  SELECTION_4:
-    Product: The curl executable
-  SELECTION_5:
-    CommandLine:
-    - '* start *'
-    - '*&call *'
-    - '*& call *'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '* /c *'
+    SELECTION_4:
+        CommandLine: '*curl *'
+    SELECTION_5:
+        CommandLine: '*http*'
+    SELECTION_6:
+        CommandLine: '*-o*'
+    SELECTION_7:
+        CommandLine: '*&*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Administrative scripts (installers)
 fields:
@@ -28,9 +29,9 @@ fields:
 id: 21dd6d38-2b18-4453-9404-a0fe4a0cc288
 level: high
 logsource:
-  category: process_creation
-  product: windows
-modified: 2022/07/05
+    category: process_creation
+    product: windows
+modified: 2022/08/02
 references:
 - https://medium.com/@reegun/curl-exe-is-the-new-rundll32-exe-lolbin-3f79c5f35983
 status: test
@@ -39,3 +40,7 @@ tags:
 - attack.t1218
 - attack.command_and_control
 - attack.t1105
+yml_filename: proc_creation_win_susp_curl_start_combo.yml
+yml_path: rules/windows/process_creation
+---
+

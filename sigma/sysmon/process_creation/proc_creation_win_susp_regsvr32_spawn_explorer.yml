@@ -1,26 +1,25 @@
-
 title: Regsvr32 Spawning Explorer
 ruletype: Sigma
 author: elhoim
 date: 2022/05/05
 description: Detects "regsvr32.exe" spawning "explorer.exe", which is very uncommon.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: '*\regsvr32.exe'
-  SELECTION_4:
-    Image: '*\explorer.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\regsvr32.exe'
+    SELECTION_4:
+        Image: '*\explorer.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 6f0947a4-1c5e-4e0d-8ac7-53159b8f23ca
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/28
 references:
 - https://redcanary.com/blog/intelligence-insights-april-2022/
@@ -29,3 +28,7 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1218.010
+yml_filename: proc_creation_win_susp_regsvr32_spawn_explorer.yml
+yml_path: rules/windows/process_creation
+---
+

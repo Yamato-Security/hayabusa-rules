@@ -1,63 +1,62 @@
-
 title: Raw Disk Access Using Illegitimate Tools
 ruletype: Sigma
 author: Teymur Kheirkhabarov, oscd.community
 date: 2019/10/22
 description: Raw disk access using illegitimate tools, possible defence evasion
 detection:
-  SELECTION_1:
-    EventID: 9
-  SELECTION_10:
-    Image: '*\MsMpEng.exe'
-  SELECTION_11:
-    Image:
-    - C:\Program Files\\*
-    - C:\Program Files (x86)\\*
-  SELECTION_12:
-    Image: '*C:\Users\\*'
-  SELECTION_13:
-    Image: '*\AppData\\*'
-  SELECTION_14:
-    Image: '*\Microsoft\\*'
-  SELECTION_15:
-    Image: C:\Windows\Temp\asgard2-agent\\*
-  SELECTION_16:
-    Image: '*\thor.exe'
-  SELECTION_17:
-    Image: C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost*
-  SELECTION_18:
-    Image: '*\StartMenuExperienceHost.exe'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Device: '*floppy*'
-  SELECTION_4:
-    Image:
-    - C:\Windows\System32\\*
-    - C:\Windows\SystemApps\\*
-    - C:\Windows\WinSxS\\*
-    - C:\Windows\servicing\\*
-    - C:\Windows\CCM\\*
-    - C:\Windows\uus\\*
-    - C:\Windows\WinSxs\\*
-  SELECTION_5:
-    ProcessId: 4
-  SELECTION_6:
-    Image:
-    - C:\Windows\UUS\amd64\MoUsoCoreWorker.exe
-    - C:\Windows\explorer.exe
-  SELECTION_7:
-    Image:
-    - System
-    - Registry
-  SELECTION_8:
-    Image: '*\Keybase\upd.exe'
-  SELECTION_9:
-    Image: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
-  condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4)
-    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9
-    and SELECTION_10) or (SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14)
-    or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)))
+    SELECTION_1:
+        EventID: 9
+    SELECTION_10:
+        Image: '*\MsMpEng.exe'
+    SELECTION_11:
+        Image:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
+    SELECTION_12:
+        Image: '*C:\Users\\*'
+    SELECTION_13:
+        Image: '*\AppData\\*'
+    SELECTION_14:
+        Image: '*\Microsoft\\*'
+    SELECTION_15:
+        Image: C:\Windows\Temp\asgard2-agent\\*
+    SELECTION_16:
+        Image: '*\thor.exe'
+    SELECTION_17:
+        Image: C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost*
+    SELECTION_18:
+        Image: '*\StartMenuExperienceHost.exe'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Device: '*floppy*'
+    SELECTION_4:
+        Image:
+        - C:\Windows\System32\\*
+        - C:\Windows\SystemApps\\*
+        - C:\Windows\WinSxS\\*
+        - C:\Windows\servicing\\*
+        - C:\Windows\CCM\\*
+        - C:\Windows\uus\\*
+        - C:\Windows\WinSxs\\*
+    SELECTION_5:
+        ProcessId: 4
+    SELECTION_6:
+        Image:
+        - C:\Windows\UUS\amd64\MoUsoCoreWorker.exe
+        - C:\Windows\explorer.exe
+    SELECTION_7:
+        Image:
+        - System
+        - Registry
+    SELECTION_8:
+        Image: '*\Keybase\upd.exe'
+    SELECTION_9:
+        Image: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+    condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11) or (SELECTION_12 and SELECTION_13 and
+        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)))
 falsepositives:
 - Legitimate Administrator using tool for raw access or ongoing forensic investigation
 fields:
@@ -68,8 +67,8 @@ fields:
 id: db809f10-56ce-4420-8c86-d6a7d793c79c
 level: low
 logsource:
-  category: raw_access_thread
-  product: windows
+    category: raw_access_thread
+    product: windows
 modified: 2022/03/15
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
@@ -77,3 +76,7 @@ status: test
 tags:
 - attack.defense_evasion
 - attack.t1006
+yml_filename: sysmon_raw_disk_access_using_illegitimate_tools.yml
+yml_path: rules/windows/raw_access_thread
+---
+

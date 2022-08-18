@@ -1,5 +1,9 @@
 # Changes
 
+## v1.5.0 [2022/08/18]
+
+Using `convert.py` to convert sigma rules now.
+
 ## v1.4.2 [2022/07/20]
 
 Include Channel in rule filename.

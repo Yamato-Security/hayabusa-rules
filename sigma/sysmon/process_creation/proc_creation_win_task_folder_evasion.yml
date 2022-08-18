@@ -1,28 +1,27 @@
-
 title: Tasks Folder Evasion
 ruletype: Sigma
 author: Sreeman
 date: 2020/01/13
 description: The Tasks folder in system32 and syswow64 are globally writable paths.
-  Adversaries can take advantage of this and load or influence any script hosts or
-  ANY .NET Application in Tasks to load and execute a custom assembly into cscript,
-  wscript, regsvr32, mshta, eventvwr
+    Adversaries can take advantage of this and load or influence any script hosts
+    or ANY .NET Application in Tasks to load and execute a custom assembly into cscript,
+    wscript, regsvr32, mshta, eventvwr
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '*echo *'
-    - '*copy *'
-    - '*type *'
-    - '*file createnew*'
-  SELECTION_4:
-    CommandLine:
-    - '* C:\Windows\System32\Tasks\\*'
-    - '* C:\Windows\SysWow64\Tasks\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '*echo *'
+        - '*copy *'
+        - '*type *'
+        - '*file createnew*'
+    SELECTION_4:
+        CommandLine:
+        - '* C:\Windows\System32\Tasks\\*'
+        - '* C:\Windows\SysWow64\Tasks\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 fields:
@@ -31,8 +30,8 @@ fields:
 id: cc4e02ba-9c06-48e2-b09e-2500cace9ae0
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/11/06
 references:
 - https://twitter.com/subTee/status/1216465628946563073
@@ -43,3 +42,7 @@ tags:
 - attack.persistence
 - attack.execution
 - attack.t1574.002
+yml_filename: proc_creation_win_task_folder_evasion.yml
+yml_path: rules/windows/process_creation
+---
+

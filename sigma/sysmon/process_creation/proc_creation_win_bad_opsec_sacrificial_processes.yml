@@ -1,42 +1,42 @@
-
 title: Bad Opsec Defaults Sacrificial Processes With Improper Arguments
 ruletype: Sigma
 author: Oleg Kolesnikov @securonix invrep_de, oscd.community, Florian Roth, Christian
-  Burkard
+    Burkard
 date: 2020/10/23
 description: Detects attackers using tooling with bad opsec defaults e.g. spawning
-  a sacrificial process to inject a capability into the process without taking into
-  account how the process is normally run, one trivial example of this is using rundll32.exe
-  without arguments as a sacrificial process (default in CS, now highlighted by c2lint),
-  running WerFault without arguments (Kraken - credit am0nsec), and other examples.
+    a sacrificial process to inject a capability into the process without taking into
+    account how the process is normally run, one trivial example of this is using
+    rundll32.exe without arguments as a sacrificial process (default in CS, now highlighted
+    by c2lint), running WerFault without arguments (Kraken - credit am0nsec), and
+    other examples.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    CommandLine: '*\regasm.exe'
-  SELECTION_11:
-    Image: '*\regsvr32.exe'
-  SELECTION_12:
-    CommandLine: '*\regsvr32.exe'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\WerFault.exe'
-  SELECTION_4:
-    CommandLine: '*\WerFault.exe'
-  SELECTION_5:
-    Image: '*\rundll32.exe'
-  SELECTION_6:
-    CommandLine: '*\rundll32.exe'
-  SELECTION_7:
-    Image: '*\regsvcs.exe'
-  SELECTION_8:
-    CommandLine: '*\regsvcs.exe'
-  SELECTION_9:
-    Image: '*\regasm.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-    and SELECTION_10) or (SELECTION_11 and SELECTION_12)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine: '*\regasm.exe'
+    SELECTION_11:
+        Image: '*\regsvr32.exe'
+    SELECTION_12:
+        CommandLine: '*\regsvr32.exe'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\WerFault.exe'
+    SELECTION_4:
+        CommandLine: '*\WerFault.exe'
+    SELECTION_5:
+        Image: '*\rundll32.exe'
+    SELECTION_6:
+        CommandLine: '*\rundll32.exe'
+    SELECTION_7:
+        Image: '*\regsvcs.exe'
+    SELECTION_8:
+        CommandLine: '*\regsvcs.exe'
+    SELECTION_9:
+        Image: '*\regasm.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12)))
 falsepositives:
 - Unlikely
 fields:
@@ -45,8 +45,8 @@ fields:
 id: a7c3d773-caef-227e-a7e7-c2f13c622329
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/09/01
 references:
 - https://blog.malwarebytes.com/malwarebytes-news/2020/10/kraken-attack-abuses-wer-service/
@@ -57,9 +57,13 @@ references:
 - https://docs.microsoft.com/en-us/dotnet/framework/tools/regasm-exe-assembly-registration-tool
 - https://docs.microsoft.com/en-us/dotnet/framework/tools/regsvcs-exe-net-services-installation-tool#feedback
 related:
-- id: f5647edc-a7bf-4737-ab50-ef8c60dc3add
-  type: obsoletes
+-   id: f5647edc-a7bf-4737-ab50-ef8c60dc3add
+    type: obsoletes
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1218.011
+yml_filename: proc_creation_win_bad_opsec_sacrificial_processes.yml
+yml_path: rules/windows/process_creation
+---
+

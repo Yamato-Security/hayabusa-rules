@@ -1,0 +1,33 @@
+title: Set Windows System File with Attrib
+ruletype: Sigma
+author: frack113
+date: 2022/02/04
+description: Marks a file as a system file using the attrib.exe utility
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\attrib.exe'
+    SELECTION_4:
+        CommandLine: '* +s *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: bb19e94c-59ae-4c15-8c12-c563d23fe52b
+level: low
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.001/T1564.001.md#atomic-test-3---create-windows-system-file-with-attrib
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/attrib
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1564.001
+yml_filename: proc_creation_win_attrib_system.yml
+yml_path: rules/windows/process_creation
+---
+

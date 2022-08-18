@@ -1,34 +1,35 @@
-
 title: Set TimeProviders DllName
 ruletype: Sigma
 author: frack113
 date: 2022/06/19
-description: "Detects processes setting a new DLL in DllName in under HKEY_LOCAL_MACHINE\\\
-  SYSTEM\\CurrentControlSet\\Services\\W32Time\\TimeProvider. Adversaries may abuse\
-  \ time providers to execute DLLs when the system boots. The Windows Time service\
-  \ (W32Time) enables time synchronization across and within domains.\n"
+description: 'Detects processes setting a new DLL in DllName in under HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\TimeProvider.
+    Adversaries may abuse time providers to execute DLLs when the system boots. The
+    Windows Time service (W32Time) enables time synchronization across and within
+    domains.
+
+    '
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject: HKLM\System\CurrentControlSet\Services\W32Time\TimeProviders*
-  SELECTION_5:
-    TargetObject: '*DllName'
-  SELECTION_6:
-    Details: C:\Windows\SYSTEM32\w32time.DLL
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not (SELECTION_6))
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: HKLM\System\CurrentControlSet\Services\W32Time\TimeProviders*
+    SELECTION_5:
+        TargetObject: '*DllName'
+    SELECTION_6:
+        Details: C:\Windows\SYSTEM32\w32time.DLL
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6))
 falsepositives:
 - Unknown
 id: e88a6ddc-74f7-463b-9b26-f69fc0d2ce85
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.003/T1547.003.md
 status: experimental
@@ -36,3 +37,7 @@ tags:
 - attack.persistence
 - attack.privilege_escalation
 - attack.t1547.003
+yml_filename: registry_set_timeproviders_dllname.yml
+yml_path: rules/windows/registry/registry_set
+---
+

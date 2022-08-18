@@ -1,30 +1,36 @@
-
 title: PsExec Service Execution
 ruletype: Sigma
 author: Romaissa Adjailia, FLorian Roth
 date: 2022/07/21
 description: Detects launch of the PSEXESVC service, which means that this system
-  was the target of a psexec remote execution
+    was the target of a psexec remote execution
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: C:\Windows\PSEXESVC.exe
-  SELECTION_4:
-    OriginalFileName: psexesvc.exe
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: C:\Windows\PSEXESVC.exe
+    SELECTION_4:
+        OriginalFileName: psexesvc.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Legitimate administrative tasks
 id: fdfcbd78-48f1-4a4b-90ac-d82241e368c5
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://docs.microsoft.com/en-us/sysinternals/downloads/psexec
 - https://www.youtube.com/watch?v=ro2QuZTIMBM
+related:
+-   id: fa91cc36-24c9-41ce-b3c8-3bbc3f2f67ba
+    type: similar
 status: experimental
 tags:
 - attack.execution
+yml_filename: proc_creation_win_suspicious_psexesvc.yml
+yml_path: rules/windows/process_creation
+---
+

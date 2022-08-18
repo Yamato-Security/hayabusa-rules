@@ -1,32 +1,31 @@
-
 title: Suspicious RazerInstaller Explorer Subprocess
 ruletype: Sigma
 author: Florian Roth, Maxime Thiebaut
 date: 2021/08/23
 description: Detects a explorer.exe sub process of the RazerInstaller software which
-  can be invoked from the installer to select a different installation folder but
-  can also be exploited to escalate privileges to LOCAL SYSTEM
+    can be invoked from the installer to select a different installation folder but
+    can also be exploited to escalate privileges to LOCAL SYSTEM
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: '*\RazerInstaller.exe'
-  SELECTION_4:
-    IntegrityLevel: System
-  SELECTION_5:
-    Image: C:\Windows\Installer\Razer\Installer\\*
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\RazerInstaller.exe'
+    SELECTION_4:
+        IntegrityLevel: System
+    SELECTION_5:
+        Image: C:\Windows\Installer\Razer\Installer\\*
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - User selecting a different installation folder (check for other sub processes of
-  this explorer.exe process)
+    this explorer.exe process)
 id: a4eaf250-7dc1-4842-862a-5e71cd59a167
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/08/24
 references:
 - https://twitter.com/j0nh4t/status/1429049506021138437
@@ -35,3 +34,7 @@ status: experimental
 tags:
 - attack.privilege_escalation
 - attack.t1553
+yml_filename: proc_creation_win_susp_razorinstaller_explorer.yml
+yml_path: rules/windows/process_creation
+---
+

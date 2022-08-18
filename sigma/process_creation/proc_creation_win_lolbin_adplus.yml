@@ -1,0 +1,46 @@
+title: Use of Adplus.exe
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/06/09
+description: The "AdPlus.exe" binary that is part of the Windows SDK can be used as
+    a lolbin to dump process memory and execute arbitrary commands
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\adplus.exe'
+    SELECTION_4:
+        OriginalFileName: Adplus.exe
+    SELECTION_5:
+        CommandLine:
+        - '* -hang *'
+        - '* -pn *'
+        - '* -pmn *'
+        - '* -p *'
+        - '* -po *'
+        - '* -c *'
+        - '* -sc *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Legitimate usage of Adplus
+id: 2f869d59-7f6a-4931-992c-cce556ff2d53
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Adplus/
+- https://twitter.com/nas_bench/status/1534916659676422152
+- https://twitter.com/nas_bench/status/1534915321856917506
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1003.001
+yml_filename: proc_creation_win_lolbin_adplus.yml
+yml_path: rules/windows/process_creation
+---
+

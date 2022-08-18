@@ -1,0 +1,68 @@
+title: Wmic Uninstall Security Product
+ruletype: Sigma
+author: Florian Roth, Nasreddine Bencherchali
+date: 2021/01/30
+description: Detects deinstallation of security products using WMIC utility
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*wmic*'
+    SELECTION_4:
+        CommandLine: '*product where *'
+    SELECTION_5:
+        CommandLine: '*call uninstall*'
+    SELECTION_6:
+        CommandLine: '*/nointeractive*'
+    SELECTION_7:
+        CommandLine:
+        - '* name=*'
+        - '*caption like *'
+    SELECTION_8:
+        CommandLine:
+        - '*Antivirus*'
+        - '*AVG *'
+        - '*Crowdstrike Sensor*'
+        - '*DLP Endpoint*'
+        - '*Endpoint Detection*'
+        - '*Endpoint Protection*'
+        - '*Endpoint Security*'
+        - '*Endpoint Sensor*'
+        - '*ESET File Security*'
+        - '*Malwarebytes*'
+        - '*McAfee Agent*'
+        - '*Microsoft Security Client*'
+        - '*Threat Protection*'
+        - '*VirusScan*'
+        - '*Webroot SecureAnywhere*'
+        - '*Windows Defender*'
+        - '*CarbonBlack*'
+        - '*Carbon Black*'
+        - '*Cb Defense Sensor 64-bit*'
+        - '*Dell Threat Defense*'
+        - '*Cylance *'
+        - '*LogRhythm System Monitor Service*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7 and SELECTION_8)
+falsepositives:
+- Legitimate administration
+id: 847d5ff3-8a31-4737-a970-aeae8fe21765
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/06/03
+references:
+- https://twitter.com/cglyer/status/1355171195654709249
+- https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/
+- https://www.mandiant.com/resources/unc2165-shifts-to-evade-sanctions
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+yml_filename: proc_creation_win_susp_wmic_security_product_uninstall.yml
+yml_path: rules/windows/process_creation
+---
+

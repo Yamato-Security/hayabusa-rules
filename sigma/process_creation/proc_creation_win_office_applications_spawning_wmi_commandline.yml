@@ -1,0 +1,44 @@
+title: Office Applications Spawning Wmi Cli
+ruletype: Sigma
+author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule)
+date: 2021/08/23
+description: Initial execution of malicious document calls wmic to execute the file
+    with regsvr32
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\wbem\WMIC.exe'
+    SELECTION_4:
+        OriginalFileName: wmic.exe
+    SELECTION_5:
+        ParentProcessName:
+        - '*\winword.exe'
+        - '*\excel.exe'
+        - '*\powerpnt.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: 518643ba-7d9c-4fa5-9f37-baed36059f6a
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/06/02
+references:
+- https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
+- https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/02bcbfc2bfb8b4da601bb30de0344ae453aa1afe/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml
+status: experimental
+tags:
+- attack.t1204.002
+- attack.t1047
+- attack.t1218.010
+- attack.execution
+- attack.defense_evasion
+yml_filename: proc_creation_win_office_applications_spawning_wmi_commandline.yml
+yml_path: rules/windows/process_creation
+---
+

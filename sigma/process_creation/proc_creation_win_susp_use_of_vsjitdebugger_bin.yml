@@ -1,0 +1,41 @@
+title: Malicious PE Execution by Microsoft Visual Studio Debugger
+ruletype: Sigma
+author: "Agro (@agro_sev), Ensar \u015Eamil (@sblmsrsn), oscd.community"
+date: 2020/10/14
+description: There is an option for a MS VS Just-In-Time Debugger "vsjitdebugger.exe"
+    to launch specified executable and attach a debugger. This option may be used
+    adversaries to execute malicious code by signed verified binary. The debugger
+    is installed alongside with Microsoft Visual Studio package.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\vsjitdebugger.exe'
+    SELECTION_4:
+        NewProcessName: '*\vsimmersiveactivatehelper*.exe'
+    SELECTION_5:
+        NewProcessName: '*\devenv.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        or SELECTION_5)))
+falsepositives:
+- The process spawned by vsjitdebugger.exe is uncommon.
+id: 15c7904e-6ad1-4a45-9b46-5fb25df37fd2
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2021/07/06
+references:
+- https://twitter.com/pabraeken/status/990758590020452353
+- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Vsjitdebugger/
+- https://docs.microsoft.com/en-us/visualstudio/debugger/debug-using-the-just-in-time-debugger?view=vs-2019
+status: experimental
+tags:
+- attack.t1218
+- attack.defense_evasion
+yml_filename: proc_creation_win_susp_use_of_vsjitdebugger_bin.yml
+yml_path: rules/windows/process_creation
+---
+

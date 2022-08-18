@@ -1,36 +1,39 @@
-
 title: Vulnerable WinRing0 Driver Load
 ruletype: Sigma
 author: Florian Roth
 date: 2022/07/26
 description: Detects the load of a signed WinRing0 driver often used by threat actors,
-  crypto miners (XMRIG) or malware for privilege escalation
+    crypto miners (XMRIG) or malware for privilege escalation
 detection:
-  SELECTION_1:
-    EventID: 6
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ImageLoaded:
-    - '*\WinRing0x64.sys'
-    - '*\WinRing0.sys'
-    - '*\WinRing0.dll'
-    - '*\WinRing0x64.dll'
-  SELECTION_4:
-    Hashes: '*IMPHASH=D41FA95D4642DC981F10DE36F4DC8CD7*'
-  SELECTION_5:
-    IMPHASH: d41fa95d4642dc981f10de36f4dc8cd7
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+    SELECTION_1:
+        EventID: 6
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ImageLoaded:
+        - '*\WinRing0x64.sys'
+        - '*\WinRing0.sys'
+        - '*\WinRing0.dll'
+        - '*\WinRing0x64.dll'
+    SELECTION_4:
+        Hashes: '*IMPHASH=D41FA95D4642DC981F10DE36F4DC8CD7*'
+    SELECTION_5:
+        IMPHASH: d41fa95d4642dc981f10de36f4dc8cd7
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unknown
 id: 1a42dfa6-6cb2-4df9-9b48-295be477e835
 level: high
 logsource:
-  category: driver_load
-  product: windows
+    category: driver_load
+    product: windows
 references:
 - https://github.com/xmrig/xmrig/tree/master/bin/WinRing0
 status: experimental
 tags:
 - attack.privilege_escalation
 - attack.t1543.003
+yml_filename: driver_load_vuln_winring0_driver.yml
+yml_path: rules/windows/driver_load
+---
+

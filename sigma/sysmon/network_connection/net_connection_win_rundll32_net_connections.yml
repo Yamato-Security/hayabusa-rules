@@ -1,57 +1,56 @@
-
 title: Rundll32 Internet Connection
 ruletype: Sigma
 author: Florian Roth
 date: 2017/11/04
 description: Detects a rundll32 that communicates with public IP addresses
 detection:
-  SELECTION_1:
-    EventID: 3
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\rundll32.exe'
-  SELECTION_4:
-    Initiated: 'true'
-  SELECTION_5:
-    DestinationIp:
-    - 10.*
-    - 192.168.*
-    - 172.16.*
-    - 172.17.*
-    - 172.18.*
-    - 172.19.*
-    - 172.20.*
-    - 172.21.*
-    - 172.22.*
-    - 172.23.*
-    - 172.24.*
-    - 172.25.*
-    - 172.26.*
-    - 172.27.*
-    - 172.28.*
-    - 172.29.*
-    - 172.30.*
-    - 172.31.*
-    - 127.*
-    - 20.*
-  SELECTION_6:
-    CommandLine:
-    - '*PcaSvc.dll,PcaPatchSdbTask*'
-  SELECTION_7:
-    ParentImage: C:\Windows\System32\svchost.exe
-  SELECTION_8:
-    RemoteAddress: '*:443'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+    SELECTION_1:
+        EventID: 3
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\rundll32.exe'
+    SELECTION_4:
+        Initiated: 'true'
+    SELECTION_5:
+        DestinationIp:
+        - 10.*
+        - 192.168.*
+        - 172.16.*
+        - 172.17.*
+        - 172.18.*
+        - 172.19.*
+        - 172.20.*
+        - 172.21.*
+        - 172.22.*
+        - 172.23.*
+        - 172.24.*
+        - 172.25.*
+        - 172.26.*
+        - 172.27.*
+        - 172.28.*
+        - 172.29.*
+        - 172.30.*
+        - 172.31.*
+        - 127.*
+        - 20.*
+    SELECTION_6:
+        CommandLine:
+        - '*PcaSvc.dll,PcaPatchSdbTask*'
+    SELECTION_7:
+        ParentImage: C:\Windows\System32\svchost.exe
+    SELECTION_8:
+        RemoteAddress: '*:443'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Communication to other corporate systems that use IP addresses from public address
-  spaces
+    spaces
 id: cdc8da7d-c303-42f8-b08c-b4ab47230263
 level: medium
 logsource:
-  category: network_connection
-  product: windows
+    category: network_connection
+    product: windows
 modified: 2022/04/29
 references:
 - https://www.hybrid-analysis.com/sample/759fb4c0091a78c5ee035715afe3084686a8493f39014aea72dae36869de9ff6?environmentId=100
@@ -60,3 +59,7 @@ tags:
 - attack.defense_evasion
 - attack.t1218.011
 - attack.execution
+yml_filename: net_connection_win_rundll32_net_connections.yml
+yml_path: rules/windows/network_connection
+---
+

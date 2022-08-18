@@ -1,0 +1,46 @@
+title: NetNTLM Downgrade Attack
+ruletype: Sigma
+author: Florian Roth, wagga
+date: 2018/03/20
+description: Detects NetNTLM downgrade attack
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - New registry value created
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        TargetObject: '*SYSTEM\\*'
+    SELECTION_5:
+        TargetObject: '*ControlSet*'
+    SELECTION_6:
+        TargetObject: '*\Control\Lsa*'
+    SELECTION_7:
+        TargetObject:
+        - '*\lmcompatibilitylevel'
+        - '*\NtlmMinClientSec'
+        - '*\RestrictSendingNTLMTraffic'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Unknown
+id: d67572a0-e2ec-45d6-b8db-c100d14b8ef2
+level: high
+logsource:
+    category: registry_event
+    product: windows
+modified: 2021/09/21
+references:
+- https://www.optiv.com/blog/post-exploitation-using-netntlm-downgrade-attacks
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+- attack.t1112
+yml_filename: registry_event_net_ntlm_downgrade.yml
+yml_path: rules/windows/registry/registry_event
+---
+

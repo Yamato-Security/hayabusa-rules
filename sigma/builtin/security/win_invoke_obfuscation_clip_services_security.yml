@@ -1,40 +1,43 @@
-
 title: Invoke-Obfuscation CLIP+ Launcher
 ruletype: Sigma
 author: Jonathan Cheong, oscd.community
 date: 2020/10/13
 description: Detects Obfuscated use of Clip.exe to execute PowerShell
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    Provider_Name: Microsoft-Windows-Security-Auditing
-  SELECTION_3:
-    EventID: 4697
-  SELECTION_4:
-    ServiceFileName: '*cmd*'
-  SELECTION_5:
-    ServiceFileName: '*&&*'
-  SELECTION_6:
-    ServiceFileName: '*clipboard]::*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        Provider_Name: Microsoft-Windows-Security-Auditing
+    SELECTION_3:
+        EventID: 4697
+    SELECTION_4:
+        ServiceFileName: '*cmd*'
+    SELECTION_5:
+        ServiceFileName: '*&&*'
+    SELECTION_6:
+        ServiceFileName: '*clipboard]::*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: 4edf51e1-cb83-4e1a-bc39-800e396068e3
 level: high
 logsource:
-  product: windows
-  service: security
+    product: windows
+    service: security
 modified: 2022/02/24
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 related:
-- id: f7385ee2-0e0c-11eb-adc1-0242ac120002
-  type: derived
+-   id: f7385ee2-0e0c-11eb-adc1-0242ac120002
+    type: derived
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1027
 - attack.execution
 - attack.t1059.001
+yml_filename: win_invoke_obfuscation_clip_services_security.yml
+yml_path: rules/windows/builtin/security
+---
+

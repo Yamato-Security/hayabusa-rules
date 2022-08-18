@@ -1,0 +1,41 @@
+title: WMIC Hotfix Recon
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/06/20
+description: Detects wmic known recon method to look for installed hotfixes, often
+    used by pentest and attackers enum scripts
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        OriginalFileName: wmic.exe
+    SELECTION_4:
+        NewProcessName: '*\WMIC.exe'
+    SELECTION_5:
+        CommandLine: '* qfe *'
+    SELECTION_6:
+        CommandLine: '* get *'
+    SELECTION_7:
+        CommandLine: '*Caption,Description,HotFixID,InstalledOn*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7))
+falsepositives:
+- Unknown
+id: dfd2fcb7-8bd5-4daa-b132-5adb61d6ad45
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/carlospolop/PEASS-ng/blob/fa0f2e17fbc1d86f1fd66338a40e665e7182501d/winPEAS/winPEASbat/winPEAS.bat
+- https://sushant747.gitbooks.io/total-oscp-guide/content/privilege_escalation_windows.html
+status: experimental
+tags:
+- attack.execution
+- attack.t1047
+yml_filename: proc_creation_win_wmic_hotfix_enum.yml
+yml_path: rules/windows/process_creation
+---
+

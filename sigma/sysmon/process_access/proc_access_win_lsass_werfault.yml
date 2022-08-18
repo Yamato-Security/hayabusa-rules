@@ -1,31 +1,30 @@
-
 title: WerFault Accassing LSASS
 ruletype: Sigma
 author: Florian Roth
 date: 2012/06/27
 description: Detects process LSASS memory dump using Mimikatz, NanoDump, Invoke-Mimikatz,
-  Procdump or Taskmgr based on the CallTrace pointing to ntdll.dll, dbghelp.dll or
-  dbgcore.dll for win10, server2016 and up.
+    Procdump or Taskmgr based on the CallTrace pointing to ntdll.dll, dbghelp.dll
+    or dbgcore.dll for win10, server2016 and up.
 detection:
-  SELECTION_1:
-    EventID: 10
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    SourceImage: '*\WerFault.exe'
-  SELECTION_4:
-    TargetImage: '*\lsass.exe'
-  SELECTION_5:
-    GrantedAccess: '0x1FFFFF'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 10
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        SourceImage: '*\WerFault.exe'
+    SELECTION_4:
+        TargetImage: '*\lsass.exe'
+    SELECTION_5:
+        GrantedAccess: '0x1FFFFF'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Actual failures in lsass.exe that trigger a crash dump (unlikely)
 - Unknown cases in which WerFault accesses lsass.exe
 id: e5b33f7d-eb93-48b6-9851-09e1e610b6d7
 level: high
 logsource:
-  category: process_access
-  product: windows
+    category: process_access
+    product: windows
 references:
 - https://github.com/helpsystems/nanodump/commit/578116faea3d278d53d70ea932e2bbfe42569507
 status: experimental
@@ -33,3 +32,7 @@ tags:
 - attack.credential_access
 - attack.t1003.001
 - attack.s0002
+yml_filename: proc_access_win_lsass_werfault.yml
+yml_path: rules/windows/process_access
+---
+

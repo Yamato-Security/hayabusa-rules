@@ -1,31 +1,31 @@
-
 title: MMC Spawning Windows Shell
 ruletype: Sigma
 author: Karneades, Swisscom CSIRT
 date: 2019/08/05
 description: Detects a Windows command line executable started from MMC
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: '*\mmc.exe'
-  SELECTION_4:
-    Image:
-    - '*\cmd.exe'
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-    - '*\wscript.exe'
-    - '*\cscript.exe'
-    - '*\sh.exe'
-    - '*\bash.exe'
-    - '*\reg.exe'
-    - '*\regsvr32.exe'
-  SELECTION_5:
-    Image:
-    - '*\BITSADMIN*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\mmc.exe'
+    SELECTION_4:
+        Image:
+        - '*\cmd.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+        - '*\sh.exe'
+        - '*\bash.exe'
+        - '*\reg.exe'
+        - '*\regsvr32.exe'
+    SELECTION_5:
+        Image:
+        - '*\BITSADMIN*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
+        SELECTION_5))
 fields:
 - CommandLine
 - Image
@@ -33,8 +33,8 @@ fields:
 id: 05a2ab7e-ce11-4b63-86db-ab32e763e11d
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://enigma0x3.net/2017/01/05/lateral-movement-using-the-mmc20-application-com-object/
@@ -42,3 +42,7 @@ status: test
 tags:
 - attack.lateral_movement
 - attack.t1021.003
+yml_filename: proc_creation_win_mmc_spawn_shell.yml
+yml_path: rules/windows/process_creation
+---
+

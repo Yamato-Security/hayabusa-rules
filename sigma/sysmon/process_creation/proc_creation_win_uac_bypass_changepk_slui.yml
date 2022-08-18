@@ -1,30 +1,29 @@
-
 title: UAC Bypass Using ChangePK and SLUI
 ruletype: Sigma
 author: Christian Burkard
 date: 2021/08/23
 description: Detects an UAC bypass that uses changepk.exe and slui.exe (UACMe 61)
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\changepk.exe'
-  SELECTION_4:
-    ParentImage: '*\slui.exe'
-  SELECTION_5:
-    IntegrityLevel:
-    - High
-    - System
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\changepk.exe'
+    SELECTION_4:
+        ParentImage: '*\slui.exe'
+    SELECTION_5:
+        IntegrityLevel:
+        - High
+        - System
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 503d581c-7df0-4bbe-b9be-5840c0ecc1fc
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://mattharr0ey.medium.com/privilege-escalation-uac-bypass-in-changepk-c40b92818d1b
 - https://github.com/hfiref0x/UACME
@@ -34,3 +33,7 @@ tags:
 - attack.defense_evasion
 - attack.privilege_escalation
 - attack.t1548.002
+yml_filename: proc_creation_win_uac_bypass_changepk_slui.yml
+yml_path: rules/windows/process_creation
+---
+

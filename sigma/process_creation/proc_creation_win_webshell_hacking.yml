@@ -1,0 +1,110 @@
+title: Webshell Hacking Activity Patterns
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/17
+description: Detects certain parent child patterns found in cases in which a webshell
+    is used to perform certain credential dumping or exfiltration activities on a
+    compromised system
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine: '* -hp*'
+    SELECTION_11:
+        CommandLine: '* a *'
+    SELECTION_12:
+        CommandLine: '* -m*'
+    SELECTION_13:
+        CommandLine: '*net*'
+    SELECTION_14:
+        CommandLine: '* user *'
+    SELECTION_15:
+        CommandLine: '* /add*'
+    SELECTION_16:
+        CommandLine: '*net*'
+    SELECTION_17:
+        CommandLine: '* localgroup *'
+    SELECTION_18:
+        CommandLine: '* administrators *'
+    SELECTION_19:
+        CommandLine: '*/add*'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_20:
+        NewProcessName:
+        - '*\ntdsutil.exe'
+        - '*\ldifde.exe'
+        - '*\adfind.exe'
+        - '*\procdump.exe'
+        - '*\Nanodump.exe'
+        - '*\vssadmin.exe'
+        - '*\fsutil.exe'
+    SELECTION_21:
+        CommandLine:
+        - '* -NoP *'
+        - '* -W Hidden *'
+        - '* -decode *'
+        - '* /decode *'
+        - '*reg save *'
+        - '*.downloadstring(*'
+        - '*.downloadfile(*'
+        - '*FromBase64String*'
+        - '* /ticket:*'
+        - '* sekurlsa*'
+        - '*.dmp full*'
+        - '*process call create*'
+        - '*whoami /priv*'
+    SELECTION_3:
+        ParentProcessName:
+        - '*\w3wp.exe'
+        - '*\php-cgi.exe'
+        - '*\nginx.exe'
+        - '*\httpd.exe'
+        - '*\caddy.exe'
+        - '*\ws_tomcatservice.exe'
+    SELECTION_4:
+        ParentProcessName:
+        - '*\java.exe'
+        - '*\javaw.exe'
+    SELECTION_5:
+        ParentProcessName:
+        - '*-tomcat-*'
+        - '*\tomcat*'
+    SELECTION_6:
+        ParentProcessName:
+        - '*\java.exe'
+        - '*\javaw.exe'
+    SELECTION_7:
+        CommandLine:
+        - '*catalina.jar*'
+        - '*CATALINA_HOME*'
+    SELECTION_8:
+        CommandLine: '*rundll32*'
+    SELECTION_9:
+        CommandLine: '*comsvcs*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7)) and ((SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18 and SELECTION_19)
+        or SELECTION_20 or SELECTION_21))
+falsepositives:
+- Unlikely
+id: 4ebc877f-4612-45cb-b3a5-8e3834db36c9
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/08/04
+references:
+- https://youtu.be/7aemGhaE9ds?t=641
+status: experimental
+tags:
+- attack.persistence
+- attack.t1505.003
+- attack.t1018
+- attack.t1033
+- attack.t1087
+yml_filename: proc_creation_win_webshell_hacking.yml
+yml_path: rules/windows/process_creation
+---
+

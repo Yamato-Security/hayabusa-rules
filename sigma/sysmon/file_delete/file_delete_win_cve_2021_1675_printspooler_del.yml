@@ -1,28 +1,27 @@
-
 title: Windows Spooler Service Suspicious File Deletion
 ruletype: Sigma
 author: Bhabesh Raj
 date: 2021/07/01
 description: Detect DLL deletions from Spooler Service driver folder
 detection:
-  SELECTION_1:
-    EventID: 23
-  SELECTION_2:
-    EventID: 26
-  SELECTION_3:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_4:
-    Image: '*\spoolsv.exe'
-  SELECTION_5:
-    TargetFilename: '*C:\Windows\System32\spool\drivers\x64\3\\*'
-  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 23
+    SELECTION_2:
+        EventID: 26
+    SELECTION_3:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_4:
+        Image: '*\spoolsv.exe'
+    SELECTION_5:
+        TargetFilename: '*C:\Windows\System32\spool\drivers\x64\3\\*'
+    condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 5b2bbc47-dead-4ef7-8908-0cf73fcbecbf
 level: high
 logsource:
-  category: file_delete
-  product: windows
+    category: file_delete
+    product: windows
 modified: 2022/06/02
 references:
 - https://github.com/hhlxf/PrintNightmare
@@ -34,3 +33,7 @@ tags:
 - attack.privilege_escalation
 - attack.t1574
 - cve.2021.1675
+yml_filename: file_delete_win_cve_2021_1675_printspooler_del.yml
+yml_path: rules/windows/file_delete
+---
+

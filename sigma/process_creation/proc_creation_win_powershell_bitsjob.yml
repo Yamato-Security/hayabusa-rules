@@ -1,0 +1,41 @@
+title: Suspicious Bitsadmin Job via PowerShell
+ruletype: Sigma
+author: Endgame, JHasenbusch (ported to sigma for oscd.community)
+date: 2018/10/30
+description: Detect download by BITS jobs via PowerShell
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        CommandLine: '*Start-BitsTransfer*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+fields:
+- ComputerName
+- User
+- CommandLine
+id: f67dbfce-93bc-440d-86ad-a95ae8858c90
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/07/14
+references:
+- https://eqllib.readthedocs.io/en/latest/analytics/ec5180c9-721a-460f-bddc-27539a284273.html
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md
+status: test
+tags:
+- attack.defense_evasion
+- attack.persistence
+- attack.t1197
+yml_filename: proc_creation_win_powershell_bitsjob.yml
+yml_path: rules/windows/process_creation
+---
+

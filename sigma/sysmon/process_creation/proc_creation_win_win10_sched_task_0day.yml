@@ -1,35 +1,34 @@
-
 title: Windows 10 Scheduled Task SandboxEscaper 0-day
 ruletype: Sigma
 author: Olaf Hartong
 date: 2019/05/22
 description: Detects Task Scheduler .job import arbitrary DACL write\par
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\schtasks.exe'
-  SELECTION_4:
-    OriginalFileName: schtasks.exe
-  SELECTION_5:
-    CommandLine: '*/change*'
-  SELECTION_6:
-    CommandLine: '*/TN*'
-  SELECTION_7:
-    CommandLine: '*/RU*'
-  SELECTION_8:
-    CommandLine: '*/RP*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7 and SELECTION_8)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\schtasks.exe'
+    SELECTION_4:
+        OriginalFileName: schtasks.exe
+    SELECTION_5:
+        CommandLine: '*/change*'
+    SELECTION_6:
+        CommandLine: '*/TN*'
+    SELECTION_7:
+        CommandLine: '*/RU*'
+    SELECTION_8:
+        CommandLine: '*/RP*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Unknown
 id: 931b6802-d6a6-4267-9ffa-526f57f22aaf
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/05/13
 references:
 - https://github.com/SandboxEscaper/polarbearrepo/tree/master/bearlpe
@@ -38,3 +37,7 @@ tags:
 - attack.privilege_escalation
 - attack.t1053.005
 - car.2013-08-001
+yml_filename: proc_creation_win_win10_sched_task_0day.yml
+yml_path: rules/windows/process_creation
+---
+

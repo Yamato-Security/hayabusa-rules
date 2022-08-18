@@ -1,0 +1,42 @@
+title: Powershell ChromeLoader Browser Hijacker
+ruletype: Sigma
+author: Aedan Russell, frack113 (sigma)
+date: 2022/06/19
+description: Detects PowerShell spawning chrome.exe containing load-extension and
+    AppData\Local in the process command line
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\chrome.exe'
+    SELECTION_4:
+        ParentProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_5:
+        CommandLine: '*--load-extension=*'
+    SELECTION_6:
+        CommandLine: '*\AppData\Local\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: 27ba3207-dd30-4812-abbf-5d20c57d474e
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/07/14
+references:
+- https://redcanary.com/blog/chromeloader/
+- https://emkc.org/s/RJjuLa
+status: experimental
+tags:
+- attack.persistence
+- attack.t1176
+yml_filename: proc_creation_win_chrome_load_extension.yml
+yml_path: rules/windows/process_creation
+---
+

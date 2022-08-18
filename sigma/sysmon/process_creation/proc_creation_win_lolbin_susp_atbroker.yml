@@ -1,56 +1,55 @@
-
 title: Suspicious Atbroker Execution
 ruletype: Sigma
 author: Mateusz Wydra, oscd.community
 date: 2020/10/12
 description: Atbroker executing non-deafualt Assistive Technology applications
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*AtBroker.exe'
-  SELECTION_4:
-    CommandLine: '*start*'
-  SELECTION_5:
-    CommandLine:
-    - '*animations*'
-    - '*audiodescription*'
-    - '*caretbrowsing*'
-    - '*caretwidth*'
-    - '*colorfiltering*'
-    - '*cursorscheme*'
-    - '*filterkeys*'
-    - '*focusborderheight*'
-    - '*focusborderwidth*'
-    - '*highcontrast*'
-    - '*keyboardcues*'
-    - '*keyboardpref*'
-    - '*magnifierpane*'
-    - '*messageduration*'
-    - '*minimumhitradius*'
-    - '*mousekeys*'
-    - '*Narrator*'
-    - '*osk*'
-    - '*overlappedcontent*'
-    - '*showsounds*'
-    - '*soundsentry*'
-    - '*stickykeys*'
-    - '*togglekeys*'
-    - '*windowarranging*'
-    - '*windowtracking*'
-    - '*windowtrackingtimeout*'
-    - '*windowtrackingzorder*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*AtBroker.exe'
+    SELECTION_4:
+        CommandLine: '*start*'
+    SELECTION_5:
+        CommandLine:
+        - '*animations*'
+        - '*audiodescription*'
+        - '*caretbrowsing*'
+        - '*caretwidth*'
+        - '*colorfiltering*'
+        - '*cursorscheme*'
+        - '*filterkeys*'
+        - '*focusborderheight*'
+        - '*focusborderwidth*'
+        - '*highcontrast*'
+        - '*keyboardcues*'
+        - '*keyboardpref*'
+        - '*magnifierpane*'
+        - '*messageduration*'
+        - '*minimumhitradius*'
+        - '*mousekeys*'
+        - '*Narrator*'
+        - '*osk*'
+        - '*overlappedcontent*'
+        - '*showsounds*'
+        - '*soundsentry*'
+        - '*stickykeys*'
+        - '*togglekeys*'
+        - '*windowarranging*'
+        - '*windowtracking*'
+        - '*windowtrackingtimeout*'
+        - '*windowtrackingzorder*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Legitimate, non-default assistive technology applications execution
 id: f24bcaea-0cd1-11eb-adc1-0242ac120002
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/08/14
 references:
 - http://www.hexacorn.com/blog/2016/07/22/beyond-good-ol-run-key-part-42/
@@ -59,3 +58,7 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1218
+yml_filename: proc_creation_win_lolbin_susp_atbroker.yml
+yml_path: rules/windows/process_creation
+---
+

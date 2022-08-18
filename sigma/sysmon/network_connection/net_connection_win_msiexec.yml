@@ -1,28 +1,27 @@
-
 title: Msiexec Initiated Connection
 ruletype: Sigma
 author: frack113
 date: 2022/01/16
 description: |
-  Adversaries may abuse msiexec.exe to proxy execution of malicious payloads.
-  Msiexec.exe is the command-line utility for the Windows Installer and is thus commonly associated with executing installation packages (.msi)
+    Adversaries may abuse msiexec.exe to proxy execution of malicious payloads.
+    Msiexec.exe is the command-line utility for the Windows Installer and is thus commonly associated with executing installation packages (.msi)
 detection:
-  SELECTION_1:
-    EventID: 3
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Initiated: 'true'
-  SELECTION_4:
-    Image: '*\msiexec.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 3
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Initiated: 'true'
+    SELECTION_4:
+        Image: '*\msiexec.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate msiexec over networks
 id: 8e5e38e4-5350-4c0b-895a-e872ce0dd54f
 level: medium
 logsource:
-  category: network_connection
-  product: windows
+    category: network_connection
+    product: windows
 references:
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md
@@ -30,3 +29,7 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1218.007
+yml_filename: net_connection_win_msiexec.yml
+yml_path: rules/windows/network_connection
+---
+

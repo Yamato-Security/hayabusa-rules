@@ -1,0 +1,51 @@
+title: Powershell WMI Persistence
+ruletype: Sigma
+author: frack113
+date: 2021/08/19
+description: Adversaries may establish persistence and elevate privileges by executing
+    malicious content triggered by a Windows Management Instrumentation (WMI) event
+    subscription.
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_10:
+        ScriptBlockText: '*-Property *'
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText: '*New-CimInstance *'
+    SELECTION_4:
+        ScriptBlockText: '*-Namespace root/subscription *'
+    SELECTION_5:
+        ScriptBlockText: '*-ClassName __EventFilter *'
+    SELECTION_6:
+        ScriptBlockText: '*-Property *'
+    SELECTION_7:
+        ScriptBlockText: '*New-CimInstance *'
+    SELECTION_8:
+        ScriptBlockText: '*-Namespace root/subscription *'
+    SELECTION_9:
+        ScriptBlockText: '*-ClassName CommandLineEventConsumer *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9
+        and SELECTION_10)))
+falsepositives:
+- Unknown
+id: 9e07f6e7-83aa-45c6-998e-0af26efd0a85
+level: medium
+logsource:
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
+modified: 2021/10/16
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.003/T1546.003.md
+- https://github.com/EmpireProject/Empire/blob/08cbd274bef78243d7a8ed6443b8364acd1fc48b/data/module_source/persistence/Persistence.psm1#L545
+status: experimental
+tags:
+- attack.privilege_escalation
+- attack.t1546.003
+yml_filename: posh_ps_wmi_persistence.yml
+yml_path: rules/windows/powershell/powershell_script
+---
+

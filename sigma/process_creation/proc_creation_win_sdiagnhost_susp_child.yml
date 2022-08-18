@@ -1,0 +1,46 @@
+title: Sdiagnhost Calling Suspicious Child Process
+ruletype: Sigma
+author: Nextron Systems
+date: 2022/06/01
+description: Detects sdiagnhost.exe calling a suspicious child process (e.g. used
+    in exploits for Follina / CVE-2022-30190)
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\sdiagnhost.exe'
+    SELECTION_4:
+        NewProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\cmd.exe'
+        - '*\mshta.exe'
+        - '*\cscript.exe'
+        - '*\wscript.exe'
+        - '*\taskkill.exe'
+        - '*\calc.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: f3d39c45-de1a-4486-a687-ab126124f744
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/07/14
+references:
+- https://twitter.com/nao_sec/status/1530196847679401984
+- https://app.any.run/tasks/713f05d2-fe78-4b9d-a744-f7c133e3fafb/
+- https://app.any.run/tasks/f420d295-0457-4e9b-9b9e-6732be227583/
+- https://app.any.run/tasks/c4117d9a-f463-461a-b90f-4cd258746798/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036
+- attack.t1218
+yml_filename: proc_creation_win_sdiagnhost_susp_child.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,0 +1,36 @@
+title: SQLite Firefox Cookie DB Access
+ruletype: Sigma
+author: frack113
+date: 2022/04/08
+description: Detect use of sqlite binary to query the Firefox cookies.sqlite database
+    and steal the cookie data contained within it
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        Product: SQLite
+    SELECTION_4:
+        NewProcessName: '*\sqlite.exe'
+    SELECTION_5:
+        CommandLine: '*cookies.sqlite*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: 4833155a-4053-4c9c-a997-777fcea0baa7
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1539/T1539.md#atomic-test-1---steal-firefox-cookies-windows
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1539
+yml_filename: proc_creation_win_sqlite_firefox_cookies.yml
+yml_path: rules/windows/process_creation
+---
+

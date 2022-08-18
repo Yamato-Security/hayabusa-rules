@@ -1,29 +1,28 @@
-
 title: SilentProcessExit Monitor Registrytion
 ruletype: Sigma
 author: Florian Roth
 date: 2021/02/26
 description: Detects changes to the Registry in which a monitor program gets registered
-  to monitor the exit of another process
+    to monitor the exit of another process
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject: '*Microsoft\Windows NT\CurrentVersion\SilentProcessExit*'
-  SELECTION_5:
-    Details: '*MonitorProcess*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*Microsoft\Windows NT\CurrentVersion\SilentProcessExit*'
+    SELECTION_5:
+        Details: '*MonitorProcess*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: c81fe886-cac0-4913-a511-2822d72ff505
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/03/26
 references:
 - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
@@ -32,3 +31,7 @@ status: experimental
 tags:
 - attack.persistence
 - attack.t1546.012
+yml_filename: registry_set_silentprocessexit.yml
+yml_path: rules/windows/registry/registry_set
+---
+

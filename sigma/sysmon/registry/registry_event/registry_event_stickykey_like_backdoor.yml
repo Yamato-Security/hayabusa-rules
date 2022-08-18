@@ -1,39 +1,41 @@
-
 title: Sticky Key Like Backdoor Usage
 ruletype: Sigma
 author: Florian Roth, @twjackomo, Jonhnathan Ribeiro, oscd.community
 date: 2018/03/15
 description: Detects the usage and installation of a backdoor that uses an option
-  to register a malicious debugger for built-in tools that are accessible in the login
-  screen
+    to register a malicious debugger for built-in tools that are accessible in the
+    login screen
 detection:
-  SELECTION_1:
-    EventID: 12
-  SELECTION_2:
-    EventID: 13
-  SELECTION_3:
-    EventID: 14
-  SELECTION_4:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_5:
-    TargetObject:
-    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\Debugger'
-    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger'
-    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe\Debugger'
-    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Magnify.exe\Debugger'
-    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Narrator.exe\Debugger'
-    - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\DisplaySwitch.exe\Debugger'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 12
+    SELECTION_2:
+        EventID: 13
+    SELECTION_3:
+        EventID: 14
+    SELECTION_4:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_5:
+        TargetObject:
+        - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\sethc.exe\Debugger'
+        - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger'
+        - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\osk.exe\Debugger'
+        - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Magnify.exe\Debugger'
+        - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\Narrator.exe\Debugger'
+        - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\DisplaySwitch.exe\Debugger'
+        - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\atbroker.exe\Debugger'
+        - '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\HelpPane.exe\Debugger'
+    condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unlikely
 id: baca5663-583c-45f9-b5dc-ea96a22ce542
 level: critical
 logsource:
-  category: registry_event
-  product: windows
-modified: 2021/09/12
+    category: registry_event
+    product: windows
+modified: 2022/08/06
 references:
 - https://blogs.technet.microsoft.com/jonathantrull/2016/10/03/detecting-sticky-key-backdoors/
+- https://bazaar.abuse.ch/sample/6f3aa9362d72e806490a8abce245331030d1ab5ac77e400dd475748236a6cc81/
 status: experimental
 tags:
 - attack.privilege_escalation
@@ -41,3 +43,7 @@ tags:
 - attack.t1546.008
 - car.2014-11-003
 - car.2014-11-008
+yml_filename: registry_event_stickykey_like_backdoor.yml
+yml_path: rules/windows/registry/registry_event
+---
+

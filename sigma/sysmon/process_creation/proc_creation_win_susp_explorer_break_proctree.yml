@@ -1,26 +1,25 @@
-
 title: Explorer Process Tree Break
 ruletype: Sigma
 author: Florian Roth, Nasreddine Bencherchali
 date: 2019/06/29
 description: Detects a command line process that uses explorer.exe to launch arbitrary
-  commands or binaries, which is similar to cmd.exe /c, only it breaks the process
-  tree and makes its parent a new instance of explorer spawning from "svchost"
+    commands or binaries, which is similar to cmd.exe /c, only it breaks the process
+    tree and makes its parent a new instance of explorer spawning from "svchost"
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*/factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*/factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown how many legitimate software products use that method
 id: 949f1ffb-6e85-4f00-ae1e-c3c5b190d605
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/06/14
 references:
 - https://twitter.com/CyberRaiju/status/1273597319322058752
@@ -31,3 +30,7 @@ status: test
 tags:
 - attack.defense_evasion
 - attack.t1036
+yml_filename: proc_creation_win_susp_explorer_break_proctree.yml
+yml_path: rules/windows/process_creation
+---
+

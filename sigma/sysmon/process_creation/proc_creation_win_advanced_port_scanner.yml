@@ -1,29 +1,29 @@
-
 title: Advanced Port Scanner
 ruletype: Sigma
 author: Nasreddine Bencherchali @nas_bench
 date: 2021/12/18
 description: Detects the use of Advanced Port Scanner.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\advanced_port_scanner*'
-  SELECTION_4:
-    CommandLine: '*/portable*'
-  SELECTION_5:
-    CommandLine: '*/lng*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\advanced_port_scanner*'
+    SELECTION_4:
+        CommandLine: '*/portable*'
+    SELECTION_5:
+        CommandLine: '*/lng*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5)))
 falsepositives:
 - Legitimate administrative use
 - Tools with similar commandline (very rare)
 id: 54773c5f-f1cc-4703-9126-2f797d96a69d
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://github.com/3CORESec/MAL-CL/tree/master/Descriptors/Other/Advanced%20Port%20Scanner
 status: experimental
@@ -31,3 +31,7 @@ tags:
 - attack.discovery
 - attack.t1046
 - attack.t1135
+yml_filename: proc_creation_win_advanced_port_scanner.yml
+yml_path: rules/windows/process_creation
+---
+

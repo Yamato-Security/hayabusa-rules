@@ -1,0 +1,59 @@
+title: Rundll32 Execution Without DLL File
+ruletype: Sigma
+author: Tim Shelton, Florian Roth, Yassine Oukessou (fix + fp)
+date: 2022/01/13
+description: Detects the execution of rundll32 with a command line that doesn't contain
+    a .dll file
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        ParentCommandLine: C:\Windows\syswow64\MsiExec.exe -Embedding*
+    SELECTION_11:
+        ParentProcessName: '*:\Windows\System32\msiexec.exe'
+    SELECTION_12:
+        ParentCommandLine: C:\Windows\system32\MsiExec.exe -Embedding*
+    SELECTION_13:
+        ParentProcessName: '*:\Windows\System32\cmd.exe'
+    SELECTION_14:
+        ParentCommandLine: '* C:\Program Files\SplunkUniversalForwarder\\*'
+    SELECTION_15:
+        CommandLine: '* -localserver *'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\rundll32.exe'
+    SELECTION_4:
+        CommandLine|re: ^$
+    SELECTION_5:
+        CommandLine: '*.dll*'
+    SELECTION_6:
+        CommandLine: ''
+    SELECTION_7:
+        ParentProcessName: '*:\Program Files\Internet Explorer\iexplore.exe'
+    SELECTION_8:
+        CommandLine: '*.cpl*'
+    SELECTION_9:
+        ParentProcessName: '*:\Windows\SysWOW64\msiexec.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
+        SELECTION_14) or (SELECTION_15)))
+falsepositives:
+- Unknown
+fields:
+- Image
+- CommandLine
+id: c3a99af4-35a9-4668-879e-c09aeb4f2bdf
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/07/27
+references:
+- https://twitter.com/mrd0x/status/1481630810495139841?s=12
+status: experimental
+yml_filename: proc_creation_win_run_executable_invalid_extension.yml
+yml_path: rules/windows/process_creation
+---
+

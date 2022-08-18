@@ -1,0 +1,34 @@
+title: Ps.exe Renamed SysInternals Tool
+ruletype: Sigma
+author: Florian Roth
+date: 2017/10/22
+description: Detects renamed SysInternals tool execution with a binary named ps.exe
+    as used by Dragonfly APT group and documented in TA17-293A report
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: ps.exe -accepteula
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Renamed SysInternals tool
+id: 18da1007-3f26-470f-875d-f77faf1cab31
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2021/11/27
+references:
+- https://www.us-cert.gov/ncas/alerts/TA17-293A
+status: test
+tags:
+- attack.defense_evasion
+- attack.g0035
+- attack.t1036.003
+- car.2013-05-009
+yml_filename: proc_creation_win_apt_ta17_293a_ps.yml
+yml_path: rules/windows/process_creation
+---
+

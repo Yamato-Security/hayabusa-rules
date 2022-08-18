@@ -1,49 +1,52 @@
-
 title: Suspicious Process Parents
 ruletype: Sigma
 author: Florian Roth
 date: 2022/03/21
 description: Detects suspicious parent processes that should not have any children
-  or should only have a single possible child program
+    or should only have a single possible child program
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage:
-    - '*\minesweeper.exe'
-    - '*\winver.exe'
-    - '*\bitsadmin.exe'
-  SELECTION_4:
-    ParentImage:
-    - '*\csrss.exe'
-    - '*\certutil.exe'
-    - '*\schtasks.exe'
-    - '*\eventvwr.exe'
-    - '*\calc.exe'
-    - '*\notepad.exe'
-  SELECTION_5:
-    Image:
-    - '*\WerFault.exe'
-    - '*\wermgr.exe'
-    - '*\conhost.exe'
-    - '*\mmc.exe'
-    - '*\win32calc.exe'
-    - '*\notepad.exe'
-  SELECTION_6:
-    Image|re: ^$
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and  not
-    ((SELECTION_5) or (SELECTION_6)))))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage:
+        - '*\minesweeper.exe'
+        - '*\winver.exe'
+        - '*\bitsadmin.exe'
+    SELECTION_4:
+        ParentImage:
+        - '*\csrss.exe'
+        - '*\certutil.exe'
+        - '*\schtasks.exe'
+        - '*\eventvwr.exe'
+        - '*\calc.exe'
+        - '*\notepad.exe'
+    SELECTION_5:
+        Image:
+        - '*\WerFault.exe'
+        - '*\wermgr.exe'
+        - '*\conhost.exe'
+        - '*\mmc.exe'
+        - '*\win32calc.exe'
+        - '*\notepad.exe'
+    SELECTION_6:
+        Image|re: ^$
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and  not
+        ((SELECTION_5) or (SELECTION_6)))))
 falsepositives:
 - Unknown
 id: cbec226f-63d9-4eca-9f52-dfb6652f24df
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/08
 references:
 - https://twitter.com/x86matthew/status/1505476263464607744?s=12
 - https://svch0st.medium.com/stats-from-hunting-cobalt-strike-beacons-c17e56255f9b
 status: experimental
+yml_filename: proc_creation_win_susp_parents.yml
+yml_path: rules/windows/process_creation
+---
+

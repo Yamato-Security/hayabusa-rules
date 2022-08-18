@@ -1,54 +1,53 @@
-
 title: SMB Relay Attack Tools
 ruletype: Sigma
 author: Florian Roth
 date: 2021/07/24
 description: Detects different hacktools used for relay attacks on Windows for privilege
-  escalation
+    escalation
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image:
-    - '*PetitPotam*'
-    - '*RottenPotato*'
-    - '*HotPotato*'
-    - '*JuicyPotato*'
-    - '*\just_dce_*'
-    - '*Juicy Potato*'
-    - '*\temp\rot.exe*'
-    - '*\Potato.exe*'
-    - '*\SpoolSample.exe*'
-    - '*\Responder.exe*'
-    - '*\smbrelayx*'
-    - '*\ntlmrelayx*'
-  SELECTION_4:
-    CommandLine:
-    - '*Invoke-Tater*'
-    - '* smbrelay*'
-    - '* ntlmrelay*'
-    - '*cme smb *'
-    - '* /ntlm:NTLMhash *'
-    - '*Invoke-PetitPotam*'
-  SELECTION_5:
-    Image:
-    - '*HotPotatoes6*'
-    - '*HotPotatoes 6*'
-    - '*HotPotatoes7*'
-    - '*HotPotatoes 7*'
-    - '*HotPotatoes Help*'
-    - '*HotPotatoes Tutorial*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-    ((SELECTION_5)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*PetitPotam*'
+        - '*RottenPotato*'
+        - '*HotPotato*'
+        - '*JuicyPotato*'
+        - '*\just_dce_*'
+        - '*Juicy Potato*'
+        - '*\temp\rot.exe*'
+        - '*\Potato.exe*'
+        - '*\SpoolSample.exe*'
+        - '*\Responder.exe*'
+        - '*\smbrelayx*'
+        - '*\ntlmrelayx*'
+    SELECTION_4:
+        CommandLine:
+        - '*Invoke-Tater*'
+        - '* smbrelay*'
+        - '* ntlmrelay*'
+        - '*cme smb *'
+        - '* /ntlm:NTLMhash *'
+        - '*Invoke-PetitPotam*'
+    SELECTION_5:
+        Image:
+        - '*HotPotatoes6*'
+        - '*HotPotatoes 6*'
+        - '*HotPotatoes7*'
+        - '*HotPotatoes 7*'
+        - '*HotPotatoes Help*'
+        - '*HotPotatoes Tutorial*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
+        ((SELECTION_5)))
 falsepositives:
 - Legitimate files with these rare hacktool names
 id: 5589ab4f-a767-433c-961d-c91f3f704db1
 level: critical
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/03/03
 references:
 - https://attack.mitre.org/techniques/T1557/001/
@@ -61,3 +60,7 @@ status: test
 tags:
 - attack.execution
 - attack.t1557.001
+yml_filename: proc_creation_win_tools_relay_attacks.yml
+yml_path: rules/windows/process_creation
+---
+

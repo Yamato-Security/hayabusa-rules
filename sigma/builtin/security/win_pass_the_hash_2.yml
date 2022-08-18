@@ -1,42 +1,42 @@
-
 title: Pass the Hash Activity 2
 ruletype: Sigma
 author: Dave Kennedy, Jeff Warren (method) / David Vassallo (rule)
 date: 2019/06/14
 description: Detects the attack technique pass the hash which is used to move laterally
-  inside the network
+    inside the network
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_10:
-    TargetUserName: ANONYMOUS LOGON
-  SELECTION_2:
-    EventID: 4624
-  SELECTION_3:
-    SubjectUserSid: S-1-0-0
-  SELECTION_4:
-    LogonType: '3'
-  SELECTION_5:
-    LogonProcessName: NtLmSsp
-  SELECTION_6:
-    KeyLength: '0'
-  SELECTION_7:
-    EventID: 4624
-  SELECTION_8:
-    LogonType: '9'
-  SELECTION_9:
-    LogonProcessName: seclogo
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)) and  not (SELECTION_10))
+    SELECTION_1:
+        Channel: Security
+    SELECTION_10:
+        TargetUserName: ANONYMOUS LOGON
+    SELECTION_2:
+        EventID: 4624
+    SELECTION_3:
+        SubjectUserSid: S-1-0-0
+    SELECTION_4:
+        LogonType: '3'
+    SELECTION_5:
+        LogonProcessName: NtLmSsp
+    SELECTION_6:
+        KeyLength: '0'
+    SELECTION_7:
+        EventID: 4624
+    SELECTION_8:
+        LogonType: '9'
+    SELECTION_9:
+        LogonProcessName: seclogo
+    condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9))
+        and  not (SELECTION_10))
 falsepositives:
 - Administrator activity
 id: 8eef149c-bd26-49f2-9e5a-9b00e3af499b
 level: medium
 logsource:
-  definition: The successful use of PtH for lateral movement between workstations
-    would trigger event ID 4624
-  product: windows
-  service: security
+    definition: The successful use of PtH for lateral movement between workstations
+        would trigger event ID 4624
+    product: windows
+    service: security
 references:
 - https://github.com/iadgov/Event-Forwarding-Guidance/tree/master/Events
 - https://blog.binarydefense.com/reliably-detecting-pass-the-hash-through-event-log-analysis
@@ -45,3 +45,7 @@ status: stable
 tags:
 - attack.lateral_movement
 - attack.t1550.002
+yml_filename: win_pass_the_hash_2.yml
+yml_path: rules/windows/builtin/security
+---
+

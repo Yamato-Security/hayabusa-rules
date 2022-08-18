@@ -1,0 +1,30 @@
+title: Renamed Rundll32.exe Execution
+ruletype: Sigma
+author: Florian Roth
+date: 2022/06/08
+description: Detects the execution of rundll32.exe that has been renamed to a different
+    name to avoid detection
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        OriginalFileName: RUNDLL32.EXE
+    SELECTION_4:
+        NewProcessName: '*\rundll32.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: d4d2574f-ac17-4d9e-b986-aeeae0dc8fe2
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://threatresearch.ext.hp.com/svcready-a-new-loader-reveals-itself/
+status: experimental
+yml_filename: proc_creation_win_renamed_rundll32.yml
+yml_path: rules/windows/process_creation
+---
+

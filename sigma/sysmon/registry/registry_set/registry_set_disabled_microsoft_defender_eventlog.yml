@@ -1,34 +1,37 @@
-
 title: Disabled Windows Defender Eventlog
 ruletype: Sigma
 author: Florian Roth
 date: 2022/07/04
 description: Detects the disabling of the Windows Defender eventlog as seen in relation
-  to Lockbit 3.0 infections
+    to Lockbit 3.0 infections
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject: '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Windows
-      Defender/Operational\Enabled*'
-  SELECTION_5:
-    Details: DWORD (0x00000000)
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Windows
+            Defender/Operational\Enabled*'
+    SELECTION_5:
+        Details: DWORD (0x00000000)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Other Antivirus software installations could cause Windows to disable that eventlog
-  (unknown)
+    (unknown)
 id: fcddca7c-b9c0-4ddf-98da-e1e2d18b0157
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://twitter.com/WhichbufferArda/status/1543900539280293889/photo/2
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1562.001
+yml_filename: registry_set_disabled_microsoft_defender_eventlog.yml
+yml_path: rules/windows/registry/registry_set
+---
+

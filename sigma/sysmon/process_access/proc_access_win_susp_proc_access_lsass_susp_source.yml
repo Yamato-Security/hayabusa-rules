@@ -1,92 +1,91 @@
-
 title: LSASS Access from Program in Suspicious Folder
 ruletype: Sigma
 author: Florian Roth
 date: 2021/11/27
 description: Detects process access to LSASS memory with suspicious access flags and
-  from a suspicious folder
+    from a suspicious folder
 detection:
-  SELECTION_1:
-    EventID: 10
-  SELECTION_10:
-    SourceImage: C:\Windows\Temp\\*
-  SELECTION_11:
-    SourceImage: '*.tmp\DropboxUpdate.exe'
-  SELECTION_12:
-    GrantedAccess: '0x410'
-  SELECTION_13:
-    SourceImage: C:\Windows\Temp\asgard2-agent\\*
-  SELECTION_14:
-    SourceImage:
-    - '*\thor64.exe'
-    - '*\thor.exe'
-  SELECTION_15:
-    GrantedAccess:
-    - '0x1fffff'
-    - '0x1010'
-  SELECTION_16:
-    SourceImage: '*\AppData\Local\Temp\\*'
-  SELECTION_17:
-    SourceImage: '*\vs_bootstrapper_*'
-  SELECTION_18:
-    GrantedAccess: '0x1410'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetImage: '*\lsass.exe'
-  SELECTION_4:
-    GrantedAccess:
-    - '*10'
-    - '*30'
-    - '*50'
-    - '*70'
-    - '*90'
-    - '*B0'
-    - '*D0'
-    - '*F0'
-    - '*18'
-    - '*38'
-    - '*58'
-    - '*78'
-    - '*98'
-    - '*B8'
-    - '*D8'
-    - '*F8'
-    - '*1A'
-    - '*3A'
-    - '*5A'
-    - '*7A'
-    - '*9A'
-    - '*BA'
-    - '*DA'
-    - '*FA'
-    - '*0x14C2'
-    - '*FF'
-  SELECTION_5:
-    SourceImage:
-    - '*\Temp\\*'
-    - '*\Users\Public\\*'
-    - '*\PerfLogs\\*'
-    - '*\AppData\\*'
-    - '*\Temporary*'
-  SELECTION_6:
-    SourceImage: '*C:\Users\\*'
-  SELECTION_7:
-    SourceImage: '*\AppData\Local\\*'
-  SELECTION_8:
-    SourceImage:
-    - '*\Microsoft VS Code\Code.exe'
-    - '*\software_reporter_tool.exe'
-    - '*\DropboxUpdate.exe'
-    - '*\MBAMInstallerService.exe'
-    - '*\WebexMTA.exe'
-    - '*\WebEx\WebexHost.exe'
-  SELECTION_9:
-    GrantedAccess: '0x410'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9) or (SELECTION_10
-    and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14 and SELECTION_15)
-    or (SELECTION_16 and SELECTION_17 and SELECTION_18)))
+    SELECTION_1:
+        EventID: 10
+    SELECTION_10:
+        SourceImage: C:\Windows\Temp\\*
+    SELECTION_11:
+        SourceImage: '*.tmp\DropboxUpdate.exe'
+    SELECTION_12:
+        GrantedAccess: '0x410'
+    SELECTION_13:
+        SourceImage: C:\Windows\Temp\asgard2-agent\\*
+    SELECTION_14:
+        SourceImage:
+        - '*\thor64.exe'
+        - '*\thor.exe'
+    SELECTION_15:
+        GrantedAccess:
+        - '0x1fffff'
+        - '0x1010'
+    SELECTION_16:
+        SourceImage: '*\AppData\Local\Temp\\*'
+    SELECTION_17:
+        SourceImage: '*\vs_bootstrapper_*'
+    SELECTION_18:
+        GrantedAccess: '0x1410'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetImage: '*\lsass.exe'
+    SELECTION_4:
+        GrantedAccess:
+        - '*10'
+        - '*30'
+        - '*50'
+        - '*70'
+        - '*90'
+        - '*B0'
+        - '*D0'
+        - '*F0'
+        - '*18'
+        - '*38'
+        - '*58'
+        - '*78'
+        - '*98'
+        - '*B8'
+        - '*D8'
+        - '*F8'
+        - '*1A'
+        - '*3A'
+        - '*5A'
+        - '*7A'
+        - '*9A'
+        - '*BA'
+        - '*DA'
+        - '*FA'
+        - '*0x14C2'
+        - '*FF'
+    SELECTION_5:
+        SourceImage:
+        - '*\Temp\\*'
+        - '*\Users\Public\\*'
+        - '*\PerfLogs\\*'
+        - '*\AppData\\*'
+        - '*\Temporary*'
+    SELECTION_6:
+        SourceImage: '*C:\Users\\*'
+    SELECTION_7:
+        SourceImage: '*\AppData\Local\\*'
+    SELECTION_8:
+        SourceImage:
+        - '*\Microsoft VS Code\Code.exe'
+        - '*\software_reporter_tool.exe'
+        - '*\DropboxUpdate.exe'
+        - '*\MBAMInstallerService.exe'
+        - '*\WebexMTA.exe'
+        - '*\WebEx\WebexHost.exe'
+    SELECTION_9:
+        GrantedAccess: '0x410'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason
 fields:
@@ -96,8 +95,8 @@ fields:
 id: fa34b441-961a-42fa-a100-ecc28c886725
 level: high
 logsource:
-  category: process_access
-  product: windows
+    category: process_access
+    product: windows
 modified: 2022/07/07
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
@@ -110,3 +109,7 @@ tags:
 - attack.credential_access
 - attack.t1003.001
 - attack.s0002
+yml_filename: proc_access_win_susp_proc_access_lsass_susp_source.yml
+yml_path: rules/windows/process_access
+---
+

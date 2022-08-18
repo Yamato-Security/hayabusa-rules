@@ -1,0 +1,68 @@
+title: Tamper Windows Defender - PSClassic
+ruletype: Sigma
+author: frack113
+date: 2021/06/07
+description: Attempting to disable scheduled scanning and other parts of windows defender
+    atp. Or set default actions to allow.
+detection:
+    SELECTION_1:
+        EventID: 600
+    SELECTION_2:
+        Channel: Windows PowerShell
+    SELECTION_3:
+        HostApplication: '*Set-MpPreference*'
+    SELECTION_4:
+        HostApplication:
+        - '*DisableRealtimeMonitoring 1*'
+        - '*DisableBehaviorMonitoring 1*'
+        - '*DisableScriptScanning 1*'
+        - '*DisableArchiveScanning 1*'
+        - '*DisableBlockAtFirstSeen 1*'
+        - '*DisableIOAVProtection 1*'
+        - '*DisableIntrusionPreventionSystem 1*'
+        - '*DisableRemovableDriveScanning 1*'
+        - '*DisableScanningMappedNetworkDrivesForFullScan 1*'
+        - '*DisableScanningNetworkFiles 1*'
+        - '*DisableRealtimeMonitoring $true*'
+        - '*DisableBehaviorMonitoring $true*'
+        - '*DisableScriptScanning $true*'
+        - '*DisableArchiveScanning $true*'
+        - '*DisableBlockAtFirstSeen $true*'
+        - '*DisableIOAVProtection $true*'
+        - '*DisableIntrusionPreventionSystem $true*'
+        - '*DisableRemovableDriveScanning $true*'
+        - '*DisableScanningMappedNetworkDrivesForFullScan $true*'
+        - '*DisableScanningNetworkFiles $true*'
+    SELECTION_5:
+        HostApplication: '*Set-MpPreference*'
+    SELECTION_6:
+        HostApplication: '*Allow*'
+    SELECTION_7:
+        HostApplication:
+        - '*LowThreatDefaultAction*'
+        - '*ModerateThreatDefaultAction*'
+        - '*HighThreatDefaultAction*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Unknown
+id: ec19ebab-72dc-40e1-9728-4c0b805d722c
+level: high
+logsource:
+    category: ps_classic_provider_start
+    definition: fields have to be extract from event
+    product: windows
+modified: 2022/08/05
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
+related:
+-   id: ec19ebab-72dc-40e1-9728-4c0b805d722c
+    type: similar
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+yml_filename: posh_pc_tamper_with_windows_defender.yml
+yml_path: rules/windows/powershell/powershell_classic
+---
+

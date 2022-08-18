@@ -1,43 +1,42 @@
-
 title: Windows Shell Spawning Suspicious Program
 ruletype: Sigma
 author: Florian Roth, Tim Shelton
 date: 2018/04/06
 description: Detects a suspicious child process of a Windows shell
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage:
-    - '*\mshta.exe'
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-    - '*\rundll32.exe'
-    - '*\cscript.exe'
-    - '*\wscript.exe'
-    - '*\wmiprvse.exe'
-    - '*\regsvr32.exe'
-  SELECTION_4:
-    Image:
-    - '*\schtasks.exe'
-    - '*\nslookup.exe'
-    - '*\certutil.exe'
-    - '*\bitsadmin.exe'
-    - '*\mshta.exe'
-  SELECTION_5:
-    CurrentDirectory: '*\ccmcache\\*'
-  SELECTION_6:
-    ParentCommandLine:
-    - '*\Program Files\Amazon\WorkSpacesConfig\Scripts\setup-scheduledtask.ps1*'
-    - '*\Program Files\Amazon\WorkSpacesConfig\Scripts\set-selfhealing.ps1*'
-    - '*\Program Files\Amazon\WorkSpacesConfig\Scripts\check-workspacehealth.ps1*'
-    - '*\nessus_*'
-  SELECTION_7:
-    CommandLine: '*\nessus_*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage:
+        - '*\mshta.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\rundll32.exe'
+        - '*\cscript.exe'
+        - '*\wscript.exe'
+        - '*\wmiprvse.exe'
+        - '*\regsvr32.exe'
+    SELECTION_4:
+        Image:
+        - '*\schtasks.exe'
+        - '*\nslookup.exe'
+        - '*\certutil.exe'
+        - '*\bitsadmin.exe'
+        - '*\mshta.exe'
+    SELECTION_5:
+        CurrentDirectory: '*\ccmcache\\*'
+    SELECTION_6:
+        ParentCommandLine:
+        - '*\Program Files\Amazon\WorkSpacesConfig\Scripts\setup-scheduledtask.ps1*'
+        - '*\Program Files\Amazon\WorkSpacesConfig\Scripts\set-selfhealing.ps1*'
+        - '*\Program Files\Amazon\WorkSpacesConfig\Scripts\check-workspacehealth.ps1*'
+        - '*\nessus_*'
+    SELECTION_7:
+        CommandLine: '*\nessus_*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Administrative scripts
 - Microsoft SCCM
@@ -50,8 +49,8 @@ fields:
 id: 3a6586ad-127a-4d3b-a677-1e6eacdf8fde
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/27
 references:
 - https://mgreen27.github.io/posts/2018/04/02/DownloadCradle.html
@@ -62,3 +61,7 @@ tags:
 - attack.t1059.005
 - attack.t1059.001
 - attack.t1218
+yml_filename: proc_creation_win_shell_spawn_susp_program.yml
+yml_path: rules/windows/process_creation
+---
+

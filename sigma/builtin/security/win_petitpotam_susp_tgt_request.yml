@@ -1,40 +1,39 @@
-
 title: PetitPotam Suspicious Kerberos TGT Request
 ruletype: Sigma
 author: Mauricio Velazco, Michael Haag
 date: 2021/09/02
 description: Detect suspicious Kerberos TGT requests. Once an attacer obtains a computer
-  certificate by abusing Active Directory Certificate Services in combination with
-  PetitPotam, the next step would be to leverage the certificate for malicious purposes.
-  One way of doing this is to request a Kerberos Ticket Granting Ticket using a tool
-  like Rubeus. This request will generate a 4768 event with some unusual fields depending
-  on the environment. This analytic will require tuning, we recommend filtering Account_Name
-  to the Domain Controller computer accounts.
+    certificate by abusing Active Directory Certificate Services in combination with
+    PetitPotam, the next step would be to leverage the certificate for malicious purposes.
+    One way of doing this is to request a Kerberos Ticket Granting Ticket using a
+    tool like Rubeus. This request will generate a 4768 event with some unusual fields
+    depending on the environment. This analytic will require tuning, we recommend
+    filtering Account_Name to the Domain Controller computer accounts.
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    EventID: 4768
-  SELECTION_3:
-    TargetUserName: '*$'
-  SELECTION_4:
-    CertThumbprint: '*'
-  SELECTION_5:
-    IpAddress: ::1
-  SELECTION_6:
-    CertThumbprint: ''
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5) or (SELECTION_6)))
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 4768
+    SELECTION_3:
+        TargetUserName: '*$'
+    SELECTION_4:
+        CertThumbprint: '*'
+    SELECTION_5:
+        IpAddress: ::1
+    SELECTION_6:
+        CertThumbprint: ''
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - False positives are possible if the environment is using certificates for authentication.
-  We recommend filtering Account_Name to the Domain Controller computer accounts.
+    We recommend filtering Account_Name to the Domain Controller computer accounts.
 id: 6a53d871-682d-40b6-83e0-b7c1a6c4e3a5
 level: high
 logsource:
-  definition: The advanced audit policy setting "Account Logon > Kerberos Authentication
-    Service" must be configured for Success/Failure
-  product: windows
-  service: security
+    definition: The advanced audit policy setting "Account Logon > Kerberos Authentication
+        Service" must be configured for Success/Failure
+    product: windows
+    service: security
 modified: 2021/09/07
 references:
 - https://github.com/topotam/PetitPotam
@@ -44,3 +43,7 @@ status: experimental
 tags:
 - attack.credential_access
 - attack.t1187
+yml_filename: win_petitpotam_susp_tgt_request.yml
+yml_path: rules/windows/builtin/security
+---
+

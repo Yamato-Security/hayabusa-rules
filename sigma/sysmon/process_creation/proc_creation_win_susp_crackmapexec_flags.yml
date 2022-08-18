@@ -1,78 +1,77 @@
-
 title: CrackMapExec Command Line Flags
 ruletype: Sigma
 author: Florian Roth
 date: 2022/02/25
 description: This rule detect common flag combinations used by CrackMapExec in order
-  to detect its use even if the binary has been replaced.
+    to detect its use even if the binary has been replaced.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    CommandLine: "* -H 'NTHASH'*"
-  SELECTION_11:
-    CommandLine: '* mssql *'
-  SELECTION_12:
-    CommandLine: '* -u *'
-  SELECTION_13:
-    CommandLine: '* -p *'
-  SELECTION_14:
-    CommandLine: '* -M *'
-  SELECTION_15:
-    CommandLine: '* -d *'
-  SELECTION_16:
-    CommandLine: '* smb *'
-  SELECTION_17:
-    CommandLine: '* -u *'
-  SELECTION_18:
-    CommandLine: '* -H *'
-  SELECTION_19:
-    CommandLine: '* -M *'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_20:
-    CommandLine: '* -o *'
-  SELECTION_21:
-    CommandLine: '* smb *'
-  SELECTION_22:
-    CommandLine: '* -u *'
-  SELECTION_23:
-    CommandLine: '* -p *'
-  SELECTION_24:
-    CommandLine: '* --local-auth*'
-  SELECTION_25:
-    CommandLine: '* --local-auth*'
-  SELECTION_26:
-    CommandLine: '* -u *'
-  SELECTION_27:
-    CommandLine: '* -p *'
-  SELECTION_28:
-    CommandLine: '* 10.*'
-  SELECTION_29:
-    CommandLine: '* 192.168.*'
-  SELECTION_3:
-    CommandLine: '* -M pe_inject *'
-  SELECTION_30:
-    CommandLine: '*/24 *'
-  SELECTION_4:
-    CommandLine: '* --local-auth*'
-  SELECTION_5:
-    CommandLine: '* -u *'
-  SELECTION_6:
-    CommandLine: '* -x *'
-  SELECTION_7:
-    CommandLine: '* --local-auth*'
-  SELECTION_8:
-    CommandLine: '* -u *'
-  SELECTION_9:
-    CommandLine: '* -p *'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
-    SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9 and
-    SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14
-    and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18 and SELECTION_19
-    and SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23 and SELECTION_24))
-    or (SELECTION_25 and SELECTION_26 and SELECTION_27 and SELECTION_28 and SELECTION_29
-    and SELECTION_30)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine: '* -H ''NTHASH''*'
+    SELECTION_11:
+        CommandLine: '* mssql *'
+    SELECTION_12:
+        CommandLine: '* -u *'
+    SELECTION_13:
+        CommandLine: '* -p *'
+    SELECTION_14:
+        CommandLine: '* -M *'
+    SELECTION_15:
+        CommandLine: '* -d *'
+    SELECTION_16:
+        CommandLine: '* smb *'
+    SELECTION_17:
+        CommandLine: '* -u *'
+    SELECTION_18:
+        CommandLine: '* -H *'
+    SELECTION_19:
+        CommandLine: '* -M *'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        CommandLine: '* -o *'
+    SELECTION_21:
+        CommandLine: '* smb *'
+    SELECTION_22:
+        CommandLine: '* -u *'
+    SELECTION_23:
+        CommandLine: '* -p *'
+    SELECTION_24:
+        CommandLine: '* --local-auth*'
+    SELECTION_25:
+        CommandLine: '* --local-auth*'
+    SELECTION_26:
+        CommandLine: '* -u *'
+    SELECTION_27:
+        CommandLine: '* -p *'
+    SELECTION_28:
+        CommandLine: '* 10.*'
+    SELECTION_29:
+        CommandLine: '* 192.168.*'
+    SELECTION_3:
+        CommandLine: '* -M pe_inject *'
+    SELECTION_30:
+        CommandLine: '*/24 *'
+    SELECTION_4:
+        CommandLine: '* --local-auth*'
+    SELECTION_5:
+        CommandLine: '* -u *'
+    SELECTION_6:
+        CommandLine: '* -x *'
+    SELECTION_7:
+        CommandLine: '* --local-auth*'
+    SELECTION_8:
+        CommandLine: '* -u *'
+    SELECTION_9:
+        CommandLine: '* -p *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18 and SELECTION_19
+        and SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23 and SELECTION_24))
+        or (SELECTION_25 and SELECTION_26 and SELECTION_27 and SELECTION_28 and SELECTION_29
+        and SELECTION_30)))
 falsepositives:
 - Unknown
 fields:
@@ -82,11 +81,15 @@ fields:
 id: 42a993dd-bb3e-48c8-b372-4d6684c4106c
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://mpgn.gitbook.io/crackmapexec/smb-protocol/authentication/checking-credentials-local
 - https://www.mandiant.com/resources/telegram-malware-iranian-espionage
 - https://www.infosecmatter.com/crackmapexec-module-library/?cmem=mssql-mimikatz
 - https://www.infosecmatter.com/crackmapexec-module-library/?cmem=smb-pe_inject
 status: experimental
+yml_filename: proc_creation_win_susp_crackmapexec_flags.yml
+yml_path: rules/windows/process_creation
+---
+

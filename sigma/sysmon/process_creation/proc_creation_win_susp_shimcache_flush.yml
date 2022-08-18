@@ -1,32 +1,31 @@
-
 title: ShimCache Flush
 ruletype: Sigma
 author: Florian Roth
 date: 2021/02/01
 description: Detects actions that clear the local ShimCache and remove forensic evidence
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*rundll32*'
-  SELECTION_4:
-    CommandLine: '*apphelp.dll*'
-  SELECTION_5:
-    CommandLine:
-    - '*ShimFlushCache*'
-    - '*#250*'
-  SELECTION_6:
-    CommandLine: '*rundll32*'
-  SELECTION_7:
-    CommandLine: '*kernel32.dll*'
-  SELECTION_8:
-    CommandLine:
-    - '*BaseFlushAppcompatCache*'
-    - '*#46*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*rundll32*'
+    SELECTION_4:
+        CommandLine: '*apphelp.dll*'
+    SELECTION_5:
+        CommandLine:
+        - '*ShimFlushCache*'
+        - '*#250*'
+    SELECTION_6:
+        CommandLine: '*rundll32*'
+    SELECTION_7:
+        CommandLine: '*kernel32.dll*'
+    SELECTION_8:
+        CommandLine:
+        - '*BaseFlushAppcompatCache*'
+        - '*#46*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 fields:
@@ -36,11 +35,15 @@ fields:
 id: b0524451-19af-4efa-a46f-562a977f792e
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://medium.com/@blueteamops/shimcache-flush-89daff28d15e
 status: stable
 tags:
 - attack.defense_evasion
 - attack.t1112
+yml_filename: proc_creation_win_susp_shimcache_flush.yml
+yml_path: rules/windows/process_creation
+---
+

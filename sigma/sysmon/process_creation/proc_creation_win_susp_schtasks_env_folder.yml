@@ -1,52 +1,51 @@
-
 title: Suspicious Schtasks From Env Var Folder
 ruletype: Sigma
 author: Florian Roth
 date: 2022/02/21
 description: Detects Schtask creations that point to a suspicious folder or an environment
-  variable often used by malware
+    variable often used by malware
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\schtasks.exe'
-  SELECTION_4:
-    CommandLine: '* /create *'
-  SELECTION_5:
-    CommandLine:
-    - '*%AppData%*'
-    - '*\AppData\Local\\*'
-    - '*\AppData\Roaming\\*'
-    - '*%Public%*'
-    - '*\Users\Public*'
-    - '*C:\Windows\Temp*'
-    - '*C:\Perflogs*'
-  SELECTION_6:
-    ParentCommandLine: '*\svchost.exe -k netsvcs -p -s Schedule'
-  SELECTION_7:
-    CommandLine:
-    - '*%Public%*'
-    - '*\Users\Public*'
-    - '*C:\Windows\Temp*'
-    - '*C:\Perflogs*'
-  SELECTION_8:
-    CommandLine: '*update_task.xml*'
-  SELECTION_9:
-    ParentCommandLine: '*unattended.ini*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8 or SELECTION_9)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\schtasks.exe'
+    SELECTION_4:
+        CommandLine: '* /create *'
+    SELECTION_5:
+        CommandLine:
+        - '*%AppData%*'
+        - '*\AppData\Local\\*'
+        - '*\AppData\Roaming\\*'
+        - '*%Public%*'
+        - '*\Users\Public*'
+        - '*C:\Windows\Temp*'
+        - '*C:\Perflogs*'
+    SELECTION_6:
+        ParentCommandLine: '*\svchost.exe -k netsvcs -p -s Schedule'
+    SELECTION_7:
+        CommandLine:
+        - '*%Public%*'
+        - '*\Users\Public*'
+        - '*C:\Windows\Temp*'
+        - '*C:\Perflogs*'
+    SELECTION_8:
+        CommandLine: '*update_task.xml*'
+    SELECTION_9:
+        ParentCommandLine: '*unattended.ini*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8 or SELECTION_9)))
 falsepositives:
 - Benign scheduled tasks creations or executions that happen often during software
-  installations
+    installations
 - Software that uses the AppData folder and scheduled tasks to update the software
-  in the AppData folders
+    in the AppData folders
 id: 81325ce1-be01-4250-944f-b4789644556f
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/28
 references:
 - https://www.welivesecurity.com/2022/01/18/donot-go-do-not-respawn/
@@ -55,3 +54,7 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1053.005
+yml_filename: proc_creation_win_susp_schtasks_env_folder.yml
+yml_path: rules/windows/process_creation
+---
+

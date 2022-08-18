@@ -1,33 +1,32 @@
-
 title: New Service Creation
 ruletype: Sigma
 author: Timur Zinniatullin, Daniil Yugoslavskiy, oscd.community
 date: 2019/10/21
 description: Detects creation of a new service.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\sc.exe'
-  SELECTION_4:
-    CommandLine: '*create*'
-  SELECTION_5:
-    CommandLine: '*binPath*'
-  SELECTION_6:
-    CommandLine: '*New-Service*'
-  SELECTION_7:
-    CommandLine: '*-BinaryPathName*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\sc.exe'
+    SELECTION_4:
+        CommandLine: '*create*'
+    SELECTION_5:
+        CommandLine: '*binPath*'
+    SELECTION_6:
+        CommandLine: '*New-Service*'
+    SELECTION_7:
+        CommandLine: '*-BinaryPathName*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Legitimate administrator or user creates a service for legitimate reasons.
 id: 7fe71fc9-de3b-432a-8d57-8c809efc10ab
 level: low
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md
@@ -36,3 +35,7 @@ tags:
 - attack.persistence
 - attack.privilege_escalation
 - attack.t1543.003
+yml_filename: proc_creation_win_new_service_creation.yml
+yml_path: rules/windows/process_creation
+---
+

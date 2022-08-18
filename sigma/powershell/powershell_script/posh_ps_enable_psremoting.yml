@@ -1,0 +1,34 @@
+title: Enable Windows Remote Management
+ruletype: Sigma
+author: frack113
+date: 2022/01/07
+description: Adversaries may use Valid Accounts to interact with remote systems using
+    Windows Remote Management (WinRM). The adversary may then perform actions as the
+    logged-on user.
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText: '*Enable-PSRemoting *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Legitimate script
+id: 991a9744-f2f0-44f2-bd33-9092eba17dc3
+level: medium
+logsource:
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.006/T1021.006.md#atomic-test-1---enable-windows-remote-management
+- https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/enable-psremoting?view=powershell-7.2
+status: experimental
+tags:
+- attack.lateral_movement
+- attack.t1021.006
+yml_filename: posh_ps_enable_psremoting.yml
+yml_path: rules/windows/powershell/powershell_script
+---
+

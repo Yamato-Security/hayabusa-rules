@@ -1,114 +1,113 @@
-
 title: Suspicious In-Memory Module Execution
 ruletype: Sigma
 author: Perez Diego (@darkquassar), oscd.community, Jonhnathan Ribeiro
 date: 2019/10/27
 description: Detects the access to processes by other suspicious processes which have
-  reflectively loaded libraries in their memory space. An example is SilentTrinity
-  C2 behaviour. Generally speaking, when Sysmon EventID 10 cannot reference a stack
-  call to a dll loaded from disk (the standard way), it will display "UNKNOWN" as
-  the module name. Usually this means the stack call points to a module that was reflectively
-  loaded in memory. Adding to this, it is not common to see such few calls in the
-  stack (ntdll.dll --> kernelbase.dll --> unknown) which essentially means that most
-  of the functions required by the process to execute certain routines are already
-  present in memory, not requiring any calls to external libraries. The latter should
-  also be considered suspicious.
+    reflectively loaded libraries in their memory space. An example is SilentTrinity
+    C2 behaviour. Generally speaking, when Sysmon EventID 10 cannot reference a stack
+    call to a dll loaded from disk (the standard way), it will display "UNKNOWN" as
+    the module name. Usually this means the stack call points to a module that was
+    reflectively loaded in memory. Adding to this, it is not common to see such few
+    calls in the stack (ntdll.dll --> kernelbase.dll --> unknown) which essentially
+    means that most of the functions required by the process to execute certain routines
+    are already present in memory, not requiring any calls to external libraries.
+    The latter should also be considered suspicious.
 detection:
-  SELECTION_1:
-    EventID: 10
-  SELECTION_10:
-    CallTrace: '*UNKNOWN*'
-  SELECTION_11:
-    GrantedAccess:
-    - '0x1F0FFF'
-    - '0x1F1FFF'
-    - '0x143A'
-    - '0x1410'
-    - '0x1010'
-    - '0x1F2FFF'
-    - '0x1F3FFF'
-    - '0x1FFFFF'
-  SELECTION_12:
-    SourceImage:
-    - '*\Windows\System32\sdiagnhost.exe'
-    - '*\procexp64.exe'
-    - '*\procexp.exe'
-    - '*\Microsoft VS Code\Code.exe'
-    - '*\aurora-agent-64.exe'
-    - '*\aurora-agent.exe'
-    - '*\git\usr\bin\sh.exe'
-    - '*\IDE\devenv.exe'
-    - '*\GitHubDesktop\Update.exe'
-    - '*\RuntimeBroker.exe'
-    - '*\backgroundTaskHost.exe'
-    - '*\GitHubDesktop.exe'
-  SELECTION_13:
-    SourceImage:
-    - C:\Program Files (x86)\\*
-    - C:\Program Files\\*
-    - C:\Windows\Microsoft.NET\Framework\\*\NGenTask.exe*
-    - C:\Program Files (x86)\Microsoft Visual Studio\\*
-    - C:\Program Files\Microsoft Visual Studio\\*
-    - C:\Windows\Microsoft.NET\Framework*
-    - C:\WINDOWS\System32\DriverStore\\*
-    - C:\Windows\System32\WindowsPowerShell\\*
-  SELECTION_14:
-    SourceImage:
-    - C:\Users\\*\AppData\Local\Programs\Microsoft VS Code\Code.exe
-    - C:\WINDOWS\system32\taskhostw.exe
-    - C:\WINDOWS\system32\ctfmon.exe
-    - C:\WINDOWS\system32\NhNotifSys.exe
-    - C:\Windows\ImmersiveControlPanel\SystemSettings.exe
-    - C:\Windows\explorer.exe
-  SELECTION_15:
-    TargetImage: C:\Windows\System32\RuntimeBroker.exe
-  SELECTION_16:
-    TargetImage: '*\Microsoft VS Code\Code.exe'
-  SELECTION_17:
-    CallTrace: '*|C:\WINDOWS\System32\RPCRT4.dll+*'
-  SELECTION_18:
-    SourceImage: C:\WINDOWS\Explorer.EXE
-  SELECTION_19:
-    TargetImage:
-    - C:\WINDOWS\system32\backgroundTaskHost.exe
-    - C:\WINDOWS\explorer.exe
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_20:
-    SourceImage: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
-  SELECTION_21:
-    SourceImage: '*\MsMpEng.exe'
-  SELECTION_22:
-    SourceImage: '*\eclipse.exe'
-  SELECTION_23:
-    CallTrace:
-    - '*\jre\bin\java.dll*'
-    - '*|C:\Windows\SYSTEM32\windows.storage.dll+*'
-    - '*\configuration\org.eclipse.osgi\\*'
-  SELECTION_24:
-    SourceImage: C:\Windows\system32\OpenWith.exe
-  SELECTION_25:
-    TargetImage: C:\Windows\Explorer.EXE
-  SELECTION_3:
-    CallTrace: '*C:\WINDOWS\SYSTEM32\ntdll.dll+*'
-  SELECTION_4:
-    CallTrace: '*|C:\WINDOWS\System32\KERNELBASE.dll+*'
-  SELECTION_5:
-    CallTrace: '*|UNKNOWN(*'
-  SELECTION_6:
-    CallTrace: '*)*'
-  SELECTION_7:
-    CallTrace: '*UNKNOWN(*'
-  SELECTION_8:
-    CallTrace: '*)|UNKNOWN(*'
-  SELECTION_9:
-    CallTrace: '*)'
-  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4 and
-    SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9))
-    or (SELECTION_10 and SELECTION_11)) and  not ((SELECTION_12 or SELECTION_13 or
-    SELECTION_14 or SELECTION_15 or SELECTION_16 or SELECTION_17) or (SELECTION_18
-    and SELECTION_19) or (SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23)
-    or (SELECTION_24 and SELECTION_25)))
+    SELECTION_1:
+        EventID: 10
+    SELECTION_10:
+        CallTrace: '*UNKNOWN*'
+    SELECTION_11:
+        GrantedAccess:
+        - '0x1F0FFF'
+        - '0x1F1FFF'
+        - '0x143A'
+        - '0x1410'
+        - '0x1010'
+        - '0x1F2FFF'
+        - '0x1F3FFF'
+        - '0x1FFFFF'
+    SELECTION_12:
+        SourceImage:
+        - '*\Windows\System32\sdiagnhost.exe'
+        - '*\procexp64.exe'
+        - '*\procexp.exe'
+        - '*\Microsoft VS Code\Code.exe'
+        - '*\aurora-agent-64.exe'
+        - '*\aurora-agent.exe'
+        - '*\git\usr\bin\sh.exe'
+        - '*\IDE\devenv.exe'
+        - '*\GitHubDesktop\Update.exe'
+        - '*\RuntimeBroker.exe'
+        - '*\backgroundTaskHost.exe'
+        - '*\GitHubDesktop.exe'
+    SELECTION_13:
+        SourceImage:
+        - C:\Program Files (x86)\\*
+        - C:\Program Files\\*
+        - C:\Windows\Microsoft.NET\Framework\\*\NGenTask.exe*
+        - C:\Program Files (x86)\Microsoft Visual Studio\\*
+        - C:\Program Files\Microsoft Visual Studio\\*
+        - C:\Windows\Microsoft.NET\Framework*
+        - C:\WINDOWS\System32\DriverStore\\*
+        - C:\Windows\System32\WindowsPowerShell\\*
+    SELECTION_14:
+        SourceImage:
+        - C:\Users\\*\AppData\Local\Programs\Microsoft VS Code\Code.exe
+        - C:\WINDOWS\system32\taskhostw.exe
+        - C:\WINDOWS\system32\ctfmon.exe
+        - C:\WINDOWS\system32\NhNotifSys.exe
+        - C:\Windows\ImmersiveControlPanel\SystemSettings.exe
+        - C:\Windows\explorer.exe
+    SELECTION_15:
+        TargetImage: C:\Windows\System32\RuntimeBroker.exe
+    SELECTION_16:
+        TargetImage: '*\Microsoft VS Code\Code.exe'
+    SELECTION_17:
+        CallTrace: '*|C:\WINDOWS\System32\RPCRT4.dll+*'
+    SELECTION_18:
+        SourceImage: C:\WINDOWS\Explorer.EXE
+    SELECTION_19:
+        TargetImage:
+        - C:\WINDOWS\system32\backgroundTaskHost.exe
+        - C:\WINDOWS\explorer.exe
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        SourceImage: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+    SELECTION_21:
+        SourceImage: '*\MsMpEng.exe'
+    SELECTION_22:
+        SourceImage: '*\eclipse.exe'
+    SELECTION_23:
+        CallTrace:
+        - '*\jre\bin\java.dll*'
+        - '*|C:\Windows\SYSTEM32\windows.storage.dll+*'
+        - '*\configuration\org.eclipse.osgi\\*'
+    SELECTION_24:
+        SourceImage: C:\Windows\system32\OpenWith.exe
+    SELECTION_25:
+        TargetImage: C:\Windows\Explorer.EXE
+    SELECTION_3:
+        CallTrace: '*C:\WINDOWS\SYSTEM32\ntdll.dll+*'
+    SELECTION_4:
+        CallTrace: '*|C:\WINDOWS\System32\KERNELBASE.dll+*'
+    SELECTION_5:
+        CallTrace: '*|UNKNOWN(*'
+    SELECTION_6:
+        CallTrace: '*)*'
+    SELECTION_7:
+        CallTrace: '*UNKNOWN(*'
+    SELECTION_8:
+        CallTrace: '*)|UNKNOWN(*'
+    SELECTION_9:
+        CallTrace: '*)'
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9))
+        or (SELECTION_10 and SELECTION_11)) and  not ((SELECTION_12 or SELECTION_13
+        or SELECTION_14 or SELECTION_15 or SELECTION_16 or SELECTION_17) or (SELECTION_18
+        and SELECTION_19) or (SELECTION_20 and SELECTION_21) or (SELECTION_22 and
+        SELECTION_23) or (SELECTION_24 and SELECTION_25)))
 falsepositives:
 - SysInternals Process Explorer
 fields:
@@ -120,8 +119,8 @@ fields:
 id: 5f113a8f-8b61-41ca-b90f-d374fa7e4a39
 level: low
 logsource:
-  category: process_access
-  product: windows
+    category: process_access
+    product: windows
 modified: 2022/03/16
 references:
 - https://azure.microsoft.com/en-ca/blog/detecting-in-memory-attacks-with-sysmon-and-azure-security-center/
@@ -131,3 +130,7 @@ tags:
 - attack.defense_evasion
 - attack.t1055.001
 - attack.t1055.002
+yml_filename: proc_access_win_in_memory_assembly_execution.yml
+yml_path: rules/windows/process_access
+---
+

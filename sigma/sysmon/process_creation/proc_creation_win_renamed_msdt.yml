@@ -1,29 +1,32 @@
-
 title: Renamed Msdt.exe
 ruletype: Sigma
 author: pH-T
 date: 2022/06/03
 description: Detects process creation with a renamed Msdt.exe
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    OriginalFileName: msdt.exe
-  SELECTION_4:
-    Image: '*\msdt.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        OriginalFileName: msdt.exe
+    SELECTION_4:
+        Image: '*\msdt.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
 falsepositives:
 - Unlikely
 id: bd1c6866-65fc-44b2-be51-5588fcff82b9
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Msdt/
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1036.003
+yml_filename: proc_creation_win_renamed_msdt.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,31 +1,31 @@
-
 title: MSHTA Spawning Windows Shell
 ruletype: Sigma
 author: Michael Haag
 date: 2019/01/16
 description: Detects a Windows command line executable started from MSHTA
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: '*\mshta.exe'
-  SELECTION_4:
-    Image:
-    - '*\cmd.exe'
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-    - '*\wscript.exe'
-    - '*\cscript.exe'
-    - '*\sh.exe'
-    - '*\bash.exe'
-    - '*\reg.exe'
-    - '*\regsvr32.exe'
-  SELECTION_5:
-    Image:
-    - '*\BITSADMIN*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\mshta.exe'
+    SELECTION_4:
+        Image:
+        - '*\cmd.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+        - '*\sh.exe'
+        - '*\bash.exe'
+        - '*\reg.exe'
+        - '*\regsvr32.exe'
+    SELECTION_5:
+        Image:
+        - '*\BITSADMIN*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
+        SELECTION_5))
 falsepositives:
 - Printer software / driver installations
 - HP software
@@ -35,8 +35,8 @@ fields:
 id: 03cc0c25-389f-4bf8-b48d-11878079f1ca
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://www.trustedsec.com/july-2015/malicious-htas/
@@ -47,3 +47,7 @@ tags:
 - car.2013-02-003
 - car.2013-03-001
 - car.2014-04-003
+yml_filename: proc_creation_win_mshta_spawn_shell.yml
+yml_path: rules/windows/process_creation
+---
+

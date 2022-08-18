@@ -1,40 +1,43 @@
-
 title: Suspicious PsExec Execution
 ruletype: Sigma
 author: Samir Bousseaden
 date: 2019/04/03
 description: detects execution of psexec or paexec with renamed service name, this
-  rule helps to filter out the noise if psexec is used for legit purposes or if attacker
-  uses a different psexec client other than sysinternal one
+    rule helps to filter out the noise if psexec is used for legit purposes or if
+    attacker uses a different psexec client other than sysinternal one
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    EventID: 5145
-  SELECTION_3:
-    ShareName: \\\*\IPC$
-  SELECTION_4:
-    RelativeTargetName:
-    - '*-stdin'
-    - '*-stdout'
-    - '*-stderr'
-  SELECTION_5:
-    RelativeTargetName: PSEXESVC*
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 5145
+    SELECTION_3:
+        ShareName: \\\\\*\\IPC$
+    SELECTION_4:
+        RelativeTargetName:
+        - '*-stdin'
+        - '*-stdout'
+        - '*-stderr'
+    SELECTION_5:
+        RelativeTargetName: PSEXESVC*
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Unknown
 id: c462f537-a1e3-41a6-b5fc-b2c2cef9bf82
 level: high
 logsource:
-  definition: The advanced audit policy setting "Object Access > Audit Detailed File
-    Share" must be configured for Success/Failure
-  product: windows
-  service: security
-modified: 2021/12/08
+    definition: The advanced audit policy setting "Object Access > Audit Detailed
+        File Share" must be configured for Success/Failure
+    product: windows
+    service: security
+modified: 2022/08/11
 references:
 - https://blog.menasec.net/2019/02/threat-hunting-3-detecting-psexec.html
 status: test
 tags:
 - attack.lateral_movement
 - attack.t1021.002
+yml_filename: win_susp_psexec.yml
+yml_path: rules/windows/builtin/security
+---
+

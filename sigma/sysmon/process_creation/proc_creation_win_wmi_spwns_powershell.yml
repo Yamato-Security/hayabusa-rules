@@ -1,38 +1,37 @@
-
 title: WMI Spawning Windows PowerShell
 ruletype: Sigma
 author: Markus Neis / @Karneades
 date: 2019/04/03
 description: Detects WMI spawning a PowerShell process
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: '*\wmiprvse.exe'
-  SELECTION_4:
-    Image:
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-  SELECTION_5:
-    OriginalFileName:
-    - PowerShell.EXE
-    - pwsh.dll
-  SELECTION_6:
-    CommandLine: 'null'
-  SELECTION_7:
-    CommandLine|re: ^$
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and (SELECTION_4 or
-    SELECTION_5)) and  not (SELECTION_6)) and  not (SELECTION_7))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\wmiprvse.exe'
+    SELECTION_4:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_5:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_6:
+        CommandLine: 'null'
+    SELECTION_7:
+        CommandLine|re: ^$
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and (SELECTION_4 or
+        SELECTION_5)) and  not (SELECTION_6)) and  not (SELECTION_7))
 falsepositives:
 - AppvClient
 - CCM
 id: 692f0bec-83ba-4d04-af7e-e884a96059b6
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://any.run/report/68bc255f9b0db6a0d30a8f2dadfbee3256acfe12497bf93943bc1eab0735e45e/a2385d6f-34f7-403c-90d3-b1f9d2a90a5e
@@ -41,3 +40,7 @@ tags:
 - attack.execution
 - attack.t1047
 - attack.t1059.001
+yml_filename: proc_creation_win_wmi_spwns_powershell.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,32 +1,35 @@
-
 title: Service Installation in Suspicious Folder
 ruletype: Sigma
 author: pH-T
 date: 2022/03/18
 description: Detects service installation in suspicious folder appdata
 detection:
-  SELECTION_1:
-    Channel: System
-  SELECTION_2:
-    Provider_Name: Service Control Manager
-  SELECTION_3:
-    EventID: 7045
-  SELECTION_4:
-    ImagePath:
-    - '*\AppData\\*'
-    - '*\\\\127.0.0.1*'
-    - '*\\\\localhost*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7045
+    SELECTION_4:
+        ImagePath:
+        - '*\AppData\\*'
+        - '*\\\\127.0.0.1*'
+        - '*\\\\localhost*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 5e993621-67d4-488a-b9ae-b420d08b96cb
 level: medium
 logsource:
-  product: windows
-  service: system
+    product: windows
+    service: system
 status: experimental
 tags:
 - attack.persistence
 - attack.privilege_escalation
 - car.2013-09-005
 - attack.t1543.003
+yml_filename: win_susp_service_installation_folder.yml
+yml_path: rules/windows/builtin/system
+---
+

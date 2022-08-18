@@ -1,29 +1,29 @@
-
 title: TA505 Dropper Load Pattern
 ruletype: Sigma
 author: Florian Roth
 date: 2020/12/08
 description: Detects mshta loaded by wmiprvse as parent as used by TA505 malicious
-  documents
+    documents
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: '*\wmiprvse.exe'
-  SELECTION_4:
-    Image: '*\mshta.exe'
-  SELECTION_5:
-    OriginalFileName: mshta.exe
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\wmiprvse.exe'
+    SELECTION_4:
+        Image: '*\mshta.exe'
+    SELECTION_5:
+        OriginalFileName: mshta.exe
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
+        SELECTION_5))
 falsepositives:
 - Unknown
 id: 18cf6cf0-39b0-4c22-9593-e244bdc9a2d4
 level: critical
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/03/31
 references:
 - https://twitter.com/ForensicITGuy/status/1334734244120309760
@@ -32,3 +32,7 @@ tags:
 - attack.execution
 - attack.g0092
 - attack.t1106
+yml_filename: proc_creation_win_apt_ta505_dropper.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,0 +1,52 @@
+title: Accesschk Usage To Check Privileges
+ruletype: Sigma
+author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community, Nasreddine
+    Bencherchali (modified)
+date: 2020/10/13
+description: Accesschk is an access and privilege audit tool developed by SysInternal
+    and often being used by attacker to verify privileges
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        Product: '*AccessChk'
+    SELECTION_4:
+        Description: '*Reports effective permissions*'
+    SELECTION_5:
+        NewProcessName: '*\accesschk.exe'
+    SELECTION_6:
+        CommandLine:
+        - '*uwcqv *'
+        - '*kwsu *'
+        - '*qwsu *'
+        - '*uwdqs *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and SELECTION_6)
+falsepositives:
+- System administrator Usage
+fields:
+- IntegrityLevel
+- Product
+- Description
+- CommandLine
+id: c625d754-6a3d-4f65-9c9a-536aea960d37
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/06/20
+references:
+- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment?slide=43
+- https://www.youtube.com/watch?v=JGs-aKf2OtU&ab_channel=OFFZONEMOSCOW
+- https://github.com/carlospolop/PEASS-ng/blob/fa0f2e17fbc1d86f1fd66338a40e665e7182501d/winPEAS/winPEASbat/winPEAS.bat
+- https://github.com/gladiatx0r/Powerless/blob/04f553bbc0c65baf4e57344deff84e3f016e6b51/Powerless.bat
+status: test
+tags:
+- attack.discovery
+- attack.t1069.001
+yml_filename: proc_creation_win_accesschk_usage_after_priv_escalation.yml
+yml_path: rules/windows/process_creation
+---
+

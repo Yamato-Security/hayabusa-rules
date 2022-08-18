@@ -1,30 +1,29 @@
-
 title: Bitsadmin Download
 ruletype: Sigma
 author: Michael Haag, FPT.EagleEye
 date: 2017/03/09
 description: Detects usage of bitsadmin downloading a file
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\bitsadmin.exe'
-  SELECTION_4:
-    CommandLine:
-    - '* /create *'
-    - '* /addfile *'
-  SELECTION_5:
-    CommandLine: '*http*'
-  SELECTION_6:
-    Image: '*\bitsadmin.exe'
-  SELECTION_7:
-    CommandLine: '* /transfer *'
-  SELECTION_8:
-    CommandLine: '*copy bitsadmin.exe*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7) or SELECTION_8))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\bitsadmin.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* /create *'
+        - '* /addfile *'
+    SELECTION_5:
+        CommandLine: '*http*'
+    SELECTION_6:
+        Image: '*\bitsadmin.exe'
+    SELECTION_7:
+        CommandLine: '* /transfer *'
+    SELECTION_8:
+        CommandLine: '*copy bitsadmin.exe*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7) or SELECTION_8))
 falsepositives:
 - Some legitimate apps use this, but limited.
 fields:
@@ -33,8 +32,8 @@ fields:
 id: d059842b-6b9d-4ed1-b5c3-5b89143c6ede
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/07/16
 references:
 - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
@@ -47,3 +46,7 @@ tags:
 - attack.t1197
 - attack.s0190
 - attack.t1036.003
+yml_filename: proc_creation_win_bitsadmin_download.yml
+yml_path: rules/windows/process_creation
+---
+

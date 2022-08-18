@@ -1,33 +1,39 @@
-
 title: PsExec Service Execution as LOCAL SYSTEM
 ruletype: Sigma
 author: FLorian Roth
 date: 2022/07/21
 description: Detects suspicious launch of the PSEXESVC service on this system and
-  a sub process run as LOCAL_SYSTEM (-s), which means that someone remotely started
-  a command on this system running it with highest privileges and not only the privileges
-  of the login user account (e.g. the administrator account)
+    a sub process run as LOCAL_SYSTEM (-s), which means that someone remotely started
+    a command on this system running it with highest privileges and not only the privileges
+    of the login user account (e.g. the administrator account)
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentImage: C:\Windows\PSEXESVC.exe
-  SELECTION_4:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: C:\Windows\PSEXESVC.exe
+    SELECTION_4:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate administrative tasks
 id: 7c0dcd3d-acf8-4f71-9570-f448b0034f94
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://docs.microsoft.com/en-us/sysinternals/downloads/psexec
+related:
+-   id: fa91cc36-24c9-41ce-b3c8-3bbc3f2f67ba
+    type: similar
 status: experimental
 tags:
 - attack.execution
+yml_filename: proc_creation_win_suspicious_psexesvc_as_system.yml
+yml_path: rules/windows/process_creation
+---
+

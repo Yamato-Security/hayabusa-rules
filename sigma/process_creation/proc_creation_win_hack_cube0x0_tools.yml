@@ -1,0 +1,30 @@
+title: Hacktool by Cube0x0
+ruletype: Sigma
+author: Florian Roth
+date: 2022/04/27
+description: Detects the use of tools created by a well-known hacktool producer named
+    Cube0x0, which includes his handle in all binaries as company information in the
+    PE headers (SharpPrintNightmare, KrbRelay, SharpMapExec etc.)
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        Company: Cube0x0
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unlikely
+id: 37c1333a-a0db-48be-b64b-7393b2386e3b
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/cube0x0
+- https://www.virustotal.com/gui/search/metadata%253ACube0x0/files
+status: experimental
+yml_filename: proc_creation_win_hack_cube0x0_tools.yml
+yml_path: rules/windows/process_creation
+---
+

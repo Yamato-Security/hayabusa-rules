@@ -1,31 +1,30 @@
-
 title: Suspicious Subsystem for Linux Bash Execution
 ruletype: Sigma
 author: frack113
 date: 2021/11/24
 description: Performs execution of specified file, can be used for defensive evasion.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*bash.exe*'
-  SELECTION_4:
-    CommandLine: '*-c *'
-  SELECTION_5:
-    ParentCommandLine:
-    - '*C:\Program Files\Git\post-install.bat*'
-    - '*C:\Program Files (x86)\Git\post-install.bat*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*bash.exe*'
+    SELECTION_4:
+        CommandLine: '*-c *'
+    SELECTION_5:
+        ParentCommandLine:
+        - '*C:\Program Files\Git\post-install.bat*'
+        - '*C:\Program Files (x86)\Git\post-install.bat*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5)))
 falsepositives:
 - Unknown
 id: 5edc2273-c26f-406c-83f3-f4d948e740dd
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/05
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Bash/
@@ -33,3 +32,7 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1202
+yml_filename: proc_creation_win_lolbin_bash.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,0 +1,33 @@
+title: Suspicious Splwow64 Without Params
+ruletype: Sigma
+author: Florian Roth
+date: 2021/08/23
+description: Detects suspicious Splwow64.exe process without any command line parameters
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\splwow64.exe'
+    SELECTION_4:
+        CommandLine: '*splwow64.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 1f1a8509-2cbb-44f5-8751-8e1571518ce2
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2021/11/29
+references:
+- https://twitter.com/sbousseaden/status/1429401053229891590?s=12
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1202
+yml_filename: proc_creation_win_susp_splwow64.yml
+yml_path: rules/windows/process_creation
+---
+

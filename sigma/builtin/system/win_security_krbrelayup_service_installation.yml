@@ -1,25 +1,25 @@
-
 title: KrbRelayUp Service Installation
 ruletype: Sigma
 author: Sittikorn S, Tim Shelton
 date: 2022/05/11
 description: Detects service creation from KrbRelayUp tool used for privilege escalation
-  in windows domain environments where LDAP signing is not enforced (the default settings)
+    in windows domain environments where LDAP signing is not enforced (the default
+    settings)
 detection:
-  SELECTION_1:
-    Channel: System
-  SELECTION_2:
-    EventID: '7045'
-  SELECTION_3:
-    ServiceName: KrbSCM
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        EventID: '7045'
+    SELECTION_3:
+        ServiceName: KrbSCM
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: e97d9903-53b2-41fc-8cb9-889ed4093e80
 level: high
 logsource:
-  product: windows
-  service: system
+    product: windows
+    service: system
 references:
 - https://github.com/Dec0ne/KrbRelayUp
 status: experimental
@@ -27,3 +27,7 @@ tags:
 - attack.privilege_escalation
 - attack.t1543
 updated: 2022/05/16
+yml_filename: win_security_krbrelayup_service_installation.yml
+yml_path: rules/windows/builtin/system
+---
+

@@ -1,28 +1,31 @@
-
 title: Mimikatz Kirbi File Creation
 ruletype: Sigma
 author: Florian Roth
 date: 2021/11/08
 description: Detects the creation of files that contain Kerberos tickets based on
-  an extension used by the popular tool Mimikatz
+    an extension used by the popular tool Mimikatz
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*.kirbi'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*.kirbi'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unlikely
 id: 9e099d99-44c2-42b6-a6d8-54c3545cab29
 level: critical
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 references:
 - https://cobalt.io/blog/kerberoast-attack-techniques
 status: test
 tags:
 - attack.credential_access
 - attack.t1558
+yml_filename: file_event_win_mimikatz_kirbi_file_creation.yml
+yml_path: rules/windows/file_event
+---
+

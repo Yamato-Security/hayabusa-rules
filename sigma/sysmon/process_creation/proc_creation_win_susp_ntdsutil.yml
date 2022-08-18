@@ -1,25 +1,24 @@
-
 title: Invocation of Active Directory Diagnostic Tool (ntdsutil.exe)
 ruletype: Sigma
 author: Thomas Patzke
 date: 2019/01/16
 description: Detects execution of ntdsutil.exe, which can be used for various attacks
-  against the NTDS database (NTDS.DIT)
+    against the NTDS database (NTDS.DIT)
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\ntdsutil.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\ntdsutil.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - NTDS maintenance
 id: 2afafd61-6aae-4df4-baed-139fa1f4c345
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/03/11
 references:
 - https://jpcertcc.github.io/ToolAnalysisResultSheet/details/ntdsutil.htm
@@ -27,3 +26,7 @@ status: test
 tags:
 - attack.credential_access
 - attack.t1003.003
+yml_filename: proc_creation_win_susp_ntdsutil.yml
+yml_path: rules/windows/process_creation
+---
+

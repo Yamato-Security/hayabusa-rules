@@ -1,0 +1,91 @@
+title: RDP Sensitive Settings Changed
+ruletype: Sigma
+author: Samir Bousseaden, David ANDRE, Roberto Rodriguez @Cyb3rWard0g, Nasreddine
+    Bencherchali
+date: 2022/08/06
+description: Detects tampering to RDP Terminal Service/Server sensitive settings.
+    Such as allowing unauthorized users access to a system via the 'fAllowUnsolicited'
+    or enabling RDP via 'fDenyTSConnections'...etc
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_10:
+        TargetObject:
+        - '*\fDenyTSConnections'
+        - '*\fSingleSessionPerUser'
+        - '*\UserAuthentication'
+    SELECTION_11:
+        NewValue: DWORD (0x00000000)
+    SELECTION_12:
+        TargetObject:
+        - '*\fAllowUnsolicited'
+        - '*\fAllowUnsolicitedFullControl'
+    SELECTION_13:
+        NewValue: DWORD (0x00000001)
+    SELECTION_14:
+        EventType: SetValue
+    SELECTION_15:
+        TargetObject:
+        - '*\services\TermService\Parameters\ServiceDll*'
+        - '*\Control\Terminal Server\WinStations\RDP-Tcp\InitialProgram*'
+        - '*\Control\Terminal Server\InitialProgram*'
+        - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\InitialProgram*'
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject:
+        - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\\*'
+        - '*\Control\Terminal Server\\*'
+    SELECTION_6:
+        TargetObject: '*\Shadow'
+    SELECTION_7:
+        NewValue:
+        - DWORD (0x00000001)
+        - DWORD (0x00000002)
+        - DWORD (0x00000003)
+        - DWORD (0x00000004)
+    SELECTION_8:
+        EventType: SetValue
+    SELECTION_9:
+        TargetObject:
+        - '*\Control\Terminal Server\\*'
+        - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\\*'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (((SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7) or ((SELECTION_8 and SELECTION_9)
+        and ((SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13))))
+        or (SELECTION_14 and SELECTION_15)))
+falsepositives:
+- Some of the keys mentioned here could be modified by an administrator while setting
+    group policy (it should be investigated either way)
+id: 3f6b7b62-61aa-45db-96bd-9c31b36b653c
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://blog.menasec.net/2019/02/threat-hunting-rdp-hijacking-via.html
+- http://woshub.com/rds-shadow-how-to-connect-to-a-user-session-in-windows-server-2012-r2/
+- https://twitter.com/SagieSec/status/1469001618863624194?t=HRf0eA0W1YYzkTSHb-Ky1A&s=03
+- https://threathunterplaybook.com/notebooks/windows/05_defense_evasion/WIN-190407183310.html
+- https://bazaar.abuse.ch/sample/6f3aa9362d72e806490a8abce245331030d1ab5ac77e400dd475748236a6cc81/
+- http://etutorials.org/Microsoft+Products/microsoft+windows+server+2003+terminal+services/Chapter+6+Registry/Registry+Keys+for+Terminal+Services/
+- https://admx.help/HKLM/SOFTWARE/Policies/Microsoft/Windows%20NT/Terminal%20Services
+related:
+-   id: 171b67e1-74b4-460e-8d55-b331f3e32d67
+    type: obsoletes
+-   id: 41904ebe-d56c-4904-b9ad-7a77bdf154b3
+    type: obsoletes
+status: test
+tags:
+- attack.defense_evasion
+- attack.persistence
+- attack.t1112
+yml_filename: registry_set_terminal_server_tampering.yml
+yml_path: rules/windows/registry/registry_set
+---
+

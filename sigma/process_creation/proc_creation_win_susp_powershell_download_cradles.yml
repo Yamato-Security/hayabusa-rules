@@ -1,0 +1,29 @@
+title: PowerShell Web Download
+ruletype: Sigma
+author: Florian Roth
+date: 2022/03/24
+description: Detects suspicious ways to download files or content using PowerShell
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '*.DownloadString(*'
+        - '*.DownloadFile(*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Scripts or tools that download files
+id: 6e897651-f157-4d8f-aaeb-df8151488385
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/VirtualAlllocEx/Payload-Download-Cradles/blob/88e8eca34464a547c90d9140d70e9866dcbc6a12/Download-Cradles.cmd
+status: experimental
+yml_filename: proc_creation_win_susp_powershell_download_cradles.yml
+yml_path: rules/windows/process_creation
+---
+

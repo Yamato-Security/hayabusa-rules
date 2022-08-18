@@ -1,0 +1,34 @@
+title: CL_LoadAssembly.ps1 Proxy Execution
+ruletype: Sigma
+author: frack113
+date: 2022/05/21
+description: Detects the use of a Micorsoft signed script to execute commands and
+    bypassing AppLocker.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '*\CL_LoadAssembly.ps1*'
+        - '*LoadAssemblyFromPath *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unknown
+id: c57872c7-614f-4d7f-a40d-b78c8df2d30d
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://bohops.com/2018/01/07/executing-commands-and-bypassing-applocker-with-powershell-diagnostic-scripts/
+- https://lolbas-project.github.io/lolbas/Scripts/CL_LoadAssembly/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1216
+yml_filename: proc_creation_win_lolbin_cl_loadassembly.yml
+yml_path: rules/windows/process_creation
+---
+

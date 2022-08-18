@@ -1,0 +1,60 @@
+title: File or Folder Permissions Modifications
+ruletype: Sigma
+author: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali
+date: 2019/10/23
+description: Detects a file or folder's permissions being modified.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine: '*\AppData\Local\Programs\Microsoft VS Code*'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\takeown.exe'
+        - '*\cacls.exe'
+        - '*\icacls.exe'
+        - '*\net.exe'
+        - '*\net1.exe'
+    SELECTION_4:
+        CommandLine: '*/grant*'
+    SELECTION_5:
+        NewProcessName: '*\attrib.exe'
+    SELECTION_6:
+        CommandLine: '*-r*'
+    SELECTION_7:
+        CommandLine: '*ICACLS C:\ProgramData\dynatrace\gateway\config\connectivity.history
+            /reset'
+    SELECTION_8:
+        CommandLine: '*ICACLS C:\ProgramData\dynatrace\gateway\config\config.properties
+            /grant :r *'
+    SELECTION_9:
+        CommandLine: '*S-1-5-19:F*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8 and
+        SELECTION_9) or (SELECTION_10)))
+falsepositives:
+- Users interacting with the files on their own (unlikely unless privileged users).
+- Dynatrace app
+fields:
+- ComputerName
+- User
+- CommandLine
+id: 37ae075c-271b-459b-8d7b-55ad5f993dd8
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/08/01
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.001/T1222.001.md
+- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh750728(v=ws.11)
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1222.001
+yml_filename: proc_creation_win_file_permission_modifications.yml
+yml_path: rules/windows/process_creation
+---
+

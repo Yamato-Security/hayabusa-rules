@@ -1,25 +1,24 @@
-
 title: Suspicious Nmap Execution
 ruletype: Sigma
 author: frack113
 date: 2021/12/10
 description: Adversaries may attempt to get a listing of services running on remote
-  hosts, including those that may be vulnerable to remote software exploitation
+    hosts, including those that may be vulnerable to remote software exploitation
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    OriginalFileName: nmap.exe
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        OriginalFileName: nmap.exe
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Network administator computeur
 id: f6ecd1cf-19b8-4488-97f6-00f0924991a3
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://nmap.org/
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1046/T1046.md#atomic-test-3---port-scan-nmap-for-windows
@@ -27,3 +26,7 @@ status: experimental
 tags:
 - attack.discovery
 - attack.t1046
+yml_filename: proc_creation_win_susp_nmap.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,25 +1,24 @@
-
 title: DNS Server Error Failed Loading the ServerLevelPluginDLL
 ruletype: Sigma
 author: Florian Roth
 date: 2017/05/08
 description: This rule detects a DNS server error in which a specified plugin DLL
-  (in registry) could not be loaded
+    (in registry) could not be loaded
 detection:
-  SELECTION_1:
-    Channel: DNS Server
-  SELECTION_2:
-    EventID: 150
-  SELECTION_3:
-    EventID: 770
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+    SELECTION_1:
+        Channel: DNS Server
+    SELECTION_2:
+        EventID: 150
+    SELECTION_3:
+        EventID: 770
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - Unknown
 id: cbe51394-cd93-4473-b555-edf0144952d9
 level: high
 logsource:
-  product: windows
-  service: dns-server
+    product: windows
+    service: dns-server
 modified: 2021/11/27
 references:
 - https://medium.com/@esnesenon/feature-not-bug-dnsadmin-to-dc-compromise-in-one-line-a0f779b8dc83
@@ -29,3 +28,7 @@ status: test
 tags:
 - attack.defense_evasion
 - attack.t1574.002
+yml_filename: win_susp_dns_config.yml
+yml_path: rules/windows/builtin/dns_server
+---
+

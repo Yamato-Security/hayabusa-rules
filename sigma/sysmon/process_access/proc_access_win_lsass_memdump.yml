@@ -1,45 +1,44 @@
-
 title: LSASS Memory Dump
 ruletype: Sigma
 author: Samir Bousseaden, Michael Haag
 date: 2019/04/03
 description: Detects process LSASS memory dump using Mimikatz, NanoDump, Invoke-Mimikatz,
-  Procdump or Taskmgr based on the CallTrace pointing to ntdll.dll, dbghelp.dll or
-  dbgcore.dll for win10, server2016 and up.
+    Procdump or Taskmgr based on the CallTrace pointing to ntdll.dll, dbghelp.dll
+    or dbgcore.dll for win10, server2016 and up.
 detection:
-  SELECTION_1:
-    EventID: 10
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetImage: '*\lsass.exe'
-  SELECTION_4:
-    GrantedAccess:
-    - '*0x1038*'
-    - '*0x1438*'
-    - '*0x143a*'
-  SELECTION_5:
-    CallTrace:
-    - '*dbghelp.dll*'
-    - '*dbgcore.dll*'
-    - '*ntdll.dll*'
-  SELECTION_6:
-    CallTrace: '*|C:\Windows\Temp\asgard2-agent\\*'
-  SELECTION_7:
-    CallTrace: '*\thor\thor64.exe+*'
-  SELECTION_8:
-    CallTrace: '*|UNKNOWN(*'
-  SELECTION_9:
-    GrantedAccess: '0x103800'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)))
+    SELECTION_1:
+        EventID: 10
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetImage: '*\lsass.exe'
+    SELECTION_4:
+        GrantedAccess:
+        - '*0x1038*'
+        - '*0x1438*'
+        - '*0x143a*'
+    SELECTION_5:
+        CallTrace:
+        - '*dbghelp.dll*'
+        - '*dbgcore.dll*'
+        - '*ntdll.dll*'
+    SELECTION_6:
+        CallTrace: '*|C:\Windows\Temp\asgard2-agent\\*'
+    SELECTION_7:
+        CallTrace: '*\thor\thor64.exe+*'
+    SELECTION_8:
+        CallTrace: '*|UNKNOWN(*'
+    SELECTION_9:
+        GrantedAccess: '0x103800'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - False positives are present when looking for 0x1410. Exclusions may be required.
 id: 5ef9853e-4d0e-4a70-846f-a9ca37d876da
 level: high
 logsource:
-  category: process_access
-  product: windows
+    category: process_access
+    product: windows
 modified: 2022/03/20
 references:
 - https://blog.menasec.net/2019/02/threat-hunting-21-procdump-or-taskmgr.html
@@ -51,3 +50,7 @@ tags:
 - attack.credential_access
 - attack.t1003.001
 - attack.s0002
+yml_filename: proc_access_win_lsass_memdump.yml
+yml_path: rules/windows/process_access
+---
+

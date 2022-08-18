@@ -1,27 +1,30 @@
-
 title: Installation of TeamViewer Desktop
 ruletype: Sigma
 author: frack113
 date: 2022/01/28
 description: TeamViewer_Desktop.exe is create during install
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*\TeamViewer_Desktop.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*\TeamViewer_Desktop.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 9711de76-5d4f-4c50-a94f-21e4e8f8384d
 level: medium
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-1---teamviewer-files-detected-test-on-windows
 status: experimental
 tags:
 - attack.command_and_control
 - attack.t1219
+yml_filename: file_event_win_install_teamviewer_desktop.yml
+yml_path: rules/windows/file_event
+---
+

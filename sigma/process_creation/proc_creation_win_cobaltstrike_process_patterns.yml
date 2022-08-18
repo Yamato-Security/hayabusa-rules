@@ -1,0 +1,58 @@
+title: CobaltStrike Process Patterns
+ruletype: Sigma
+author: Florian Roth
+date: 2021/07/27
+description: Detects process patterns found in Cobalt Strike beacon activity (see
+    reference for more details) and also cases in which a China Chopper like webshell
+    is used to run whoami
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        ParentProcessName: '*\runonce.exe'
+    SELECTION_11:
+        ParentCommandLine: '*\runonce.exe'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*\cmd.exe /C whoami*'
+    SELECTION_4:
+        ParentProcessName: C:\Temp*
+    SELECTION_5:
+        CommandLine: '*conhost.exe 0xffffffff -ForceV1*'
+    SELECTION_6:
+        ParentCommandLine:
+        - '*/C whoami*'
+        - '*cmd.exe /C echo*'
+        - '* > \\\\.\\pipe*'
+    SELECTION_7:
+        CommandLine:
+        - '*cmd.exe /c echo*'
+        - '*> \\\\.\\pipe*'
+        - '*\whoami.exe*'
+    SELECTION_8:
+        ParentProcessName: '*\dllhost.exe'
+    SELECTION_9:
+        NewProcessName: '*\cmd.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11)))
+falsepositives:
+- Other programs that cause these patterns (please report)
+id: f35c5d71-b489-4e22-a115-f003df287317
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/03/05
+references:
+- https://hausec.com/2021/07/26/cobalt-strike-and-tradecraft/
+- https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/
+status: experimental
+tags:
+- attack.execution
+- attack.t1059
+yml_filename: proc_creation_win_cobaltstrike_process_patterns.yml
+yml_path: rules/windows/process_creation
+---
+

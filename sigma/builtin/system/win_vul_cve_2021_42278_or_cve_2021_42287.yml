@@ -1,33 +1,32 @@
-
 title: Exploit SamAccountName Spoofing with Kerberos
 ruletype: Sigma
 author: frack113
 date: 2021/12/15
 description: |
-  The attacker creates a computer object using those permissions with a password known to her.
-  After that she clears the attribute ServicePrincipalName on the computer object.
-  Because she created the object (CREATOR OWNER), she gets granted additional permissions and can do many changes to the object.
+    The attacker creates a computer object using those permissions with a password known to her.
+    After that she clears the attribute ServicePrincipalName on the computer object.
+    Because she created the object (CREATOR OWNER), she gets granted additional permissions and can do many changes to the object.
 detection:
-  SELECTION_1:
-    Channel: System
-  SELECTION_2:
-    Provider_Name: Microsoft-Windows-Kerberos-Key-Distribution-Center
-  SELECTION_3:
-    EventID: 35
-  SELECTION_4:
-    EventID: 36
-  SELECTION_5:
-    EventID: 37
-  SELECTION_6:
-    EventID: 38
-  SELECTION_7:
-    Provider_Name: Microsoft-Windows-Directory-Services-SAM
-  SELECTION_8:
-    EventID: 16990
-  SELECTION_9:
-    EventID: 16991
-  condition: (SELECTION_1 and ((SELECTION_2 and (SELECTION_3 or SELECTION_4 or SELECTION_5
-    or SELECTION_6)) or (SELECTION_7 and (SELECTION_8 or SELECTION_9))))
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Microsoft-Windows-Kerberos-Key-Distribution-Center
+    SELECTION_3:
+        EventID: 35
+    SELECTION_4:
+        EventID: 36
+    SELECTION_5:
+        EventID: 37
+    SELECTION_6:
+        EventID: 38
+    SELECTION_7:
+        Provider_Name: Microsoft-Windows-Directory-Services-SAM
+    SELECTION_8:
+        EventID: 16990
+    SELECTION_9:
+        EventID: 16991
+    condition: (SELECTION_1 and ((SELECTION_2 and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6)) or (SELECTION_7 and (SELECTION_8 or SELECTION_9))))
 falsepositives:
 - Unknown
 fields:
@@ -35,11 +34,15 @@ fields:
 id: 44bbff3e-4ca3-452d-a49a-6efa4cafa06f
 level: medium
 logsource:
-  product: windows
-  service: system
+    product: windows
+    service: system
 references:
 - https://cloudbrothers.info/en/exploit-kerberos-samaccountname-spoofing/
 status: experimental
 tags:
 - attack.credential_access
 - attack.t1558.003
+yml_filename: win_vul_cve_2021_42278_or_cve_2021_42287.yml
+yml_path: rules/windows/builtin/system
+---
+

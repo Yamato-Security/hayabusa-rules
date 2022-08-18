@@ -1,27 +1,26 @@
-
 title: Startup Folder File Write
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2020/05/02
 description: A General detection for files being created in the Windows startup directory.
-  This could be an indicator of persistence.
+    This could be an indicator of persistence.
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp*'
-  SELECTION_4:
-    Image: C:\Windows\System32\wuauclt.exe
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp*'
+    SELECTION_4:
+        Image: C:\Windows\System32\wuauclt.exe
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
 id: 2aa0a6b4-a865-495b-ab51-c28249537b75
 level: low
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/07/27
 references:
 - https://github.com/OTRF/detection-hackathon-apt29/issues/12
@@ -30,3 +29,7 @@ status: test
 tags:
 - attack.persistence
 - attack.t1547.001
+yml_filename: file_event_win_startup_folder_file_write.yml
+yml_path: rules/windows/file_event
+---
+

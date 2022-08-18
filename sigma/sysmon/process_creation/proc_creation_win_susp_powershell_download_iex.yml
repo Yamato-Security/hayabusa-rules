@@ -1,39 +1,42 @@
-
 title: PowerShell Web Download and Execution
 ruletype: Sigma
 author: Florian Roth
 date: 2022/03/24
 description: Detects suspicious ways to download files or content using PowerShell
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '*.DownloadString(*'
-    - '*.DownloadFile(*'
-  SELECTION_4:
-    CommandLine:
-    - '*IEX(*'
-    - '*IEX (*'
-    - '*I`EX*'
-    - '*IE`X*'
-    - '*I`E`X*'
-    - '* | IEX*'
-    - '*|IEX *'
-    - '*Invoke-Execution*'
-    - '*;iex $*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '*.DownloadString(*'
+        - '*.DownloadFile(*'
+    SELECTION_4:
+        CommandLine:
+        - '*IEX(*'
+        - '*IEX (*'
+        - '*I`EX*'
+        - '*IE`X*'
+        - '*I`E`X*'
+        - '* | IEX*'
+        - '*|IEX *'
+        - '*Invoke-Execution*'
+        - '*;iex $*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Scripts or tools that download files and execute them
 id: 85b0b087-eddf-4a2b-b033-d771fa2b9775
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://github.com/VirtualAlllocEx/Payload-Download-Cradles/blob/88e8eca34464a547c90d9140d70e9866dcbc6a12/Download-Cradles.cmd
 status: experimental
 tags:
 - attack.t1546.013
+yml_filename: proc_creation_win_susp_powershell_download_iex.yml
+yml_path: rules/windows/process_creation
+---
+

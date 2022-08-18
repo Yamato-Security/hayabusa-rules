@@ -1,65 +1,64 @@
-
 title: CrackMapExec File Creation Patterns
 ruletype: Sigma
 author: Florian Roth
 date: 2022/03/12
 description: Detects suspicious file creation patterns found in logs when CrackMapExec
-  is used
+    is used
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: C:\Windows\Temp\\*
-  SELECTION_4:
-    Image: C:\WINDOWS\system32\rundll32.exe
-  SELECTION_5:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  SELECTION_6:
-    TargetFilename:
-    - '*.rtf'
-    - '*.otf'
-    - '*.odt'
-    - '*.txt'
-    - '*.doc'
-    - '*.pdf'
-    - '*.dll'
-    - '*.docx'
-    - '*.wpd'
-    - '*.icns'
-    - '*.db'
-    - '*.ini'
-    - '*.tex'
-    - '*.sys'
-    - '*.csv'
-    - '*.fon'
-    - '*.tar'
-    - '*.ttf'
-    - '*.xml'
-    - '*.cfg'
-    - '*.cpl'
-    - '*.jpg'
-    - '*.drv'
-    - '*.cur'
-    - '*.tmp'
-  SELECTION_7:
-    TargetFilename: C:\Windows\Temp\procdump.exe
-  SELECTION_8:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: C:\Windows\Temp\\*
+    SELECTION_4:
+        Image: C:\WINDOWS\system32\rundll32.exe
+    SELECTION_5:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_6:
+        TargetFilename:
+        - '*.rtf'
+        - '*.otf'
+        - '*.odt'
+        - '*.txt'
+        - '*.doc'
+        - '*.pdf'
+        - '*.dll'
+        - '*.docx'
+        - '*.wpd'
+        - '*.icns'
+        - '*.db'
+        - '*.ini'
+        - '*.tex'
+        - '*.sys'
+        - '*.csv'
+        - '*.fon'
+        - '*.tar'
+        - '*.ttf'
+        - '*.xml'
+        - '*.cfg'
+        - '*.cpl'
+        - '*.jpg'
+        - '*.drv'
+        - '*.cur'
+        - '*.tmp'
+    SELECTION_7:
+        TargetFilename: C:\Windows\Temp\procdump.exe
+    SELECTION_8:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: 9433ff9c-5d3f-4269-99f8-95fc826ea489
 level: high
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/05/27
 references:
 - https://mpgn.gitbook.io/crackmapexec/smb-protocol/obtaining-credentials/dump-lsass
@@ -67,3 +66,7 @@ status: experimental
 tags:
 - attack.credential_access
 - attack.t1003.001
+yml_filename: file_event_win_crackmapexec_patterns.yml
+yml_path: rules/windows/file_event
+---
+

@@ -1,36 +1,35 @@
-
 title: ScreenSaver Registry Key Set
 ruletype: Sigma
 author: Jose Luis Sanchez Martinez (@Joseliyo_Jstnk)
 date: 2022/05/04
 description: Detects registry key established after masqueraded .scr file execution
-  using Rundll32 through desk.cpl
+    using Rundll32 through desk.cpl
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    Image: '*\rundll32.exe'
-  SELECTION_5:
-    TargetObject: '*\Control Panel\Desktop\SCRNSAVE.EXE*'
-  SELECTION_6:
-    Details: '*.scr'
-  SELECTION_7:
-    Details:
-    - '*C:\Windows\System32\\*'
-    - '*C:\Windows\SysWOW64\\*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) and  not (SELECTION_7))
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        Image: '*\rundll32.exe'
+    SELECTION_5:
+        TargetObject: '*\Control Panel\Desktop\SCRNSAVE.EXE*'
+    SELECTION_6:
+        Details: '*.scr'
+    SELECTION_7:
+        Details:
+        - '*C:\Windows\System32\\*'
+        - '*C:\Windows\SysWOW64\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
 falsepositives:
 - Legitimate use of screen saver
 id: 40b6e656-4e11-4c0c-8772-c1cc6dae34ce
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/05/04
 references:
 - https://twitter.com/VakninHai/status/1517027824984547329
@@ -40,3 +39,7 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1218.011
+yml_filename: registry_set_scr_file_executed_by_rundll32.yml
+yml_path: rules/windows/registry/registry_set
+---
+

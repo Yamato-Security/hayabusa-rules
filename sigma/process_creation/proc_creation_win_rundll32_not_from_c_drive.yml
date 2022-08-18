@@ -1,0 +1,38 @@
+title: Rundll32 From Abnormal Drive
+ruletype: Sigma
+author: Christopher Peacock '@securepeacock', SCYTHE '@scythe_io'
+date: 2022/01/25
+description: Detects rundll32.exe executing from an abnormal drive such as a mounted
+    ISO.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\rundll32.exe'
+    SELECTION_4:
+        CurrentDirectory: '*C:\\*'
+    SELECTION_5:
+        CurrentDirectory: ''
+    SELECTION_6:
+        CurrentDirectory|re: ^$
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        or SELECTION_5) or (SELECTION_6)))
+falsepositives:
+- Rare false positives could occur on servers with multiple drives.
+id: d4ca7c59-e9e4-42d8-bf57-91a776efcb87
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/02/14
+references:
+- https://thedfirreport.com/2021/12/13/diavol-ransomware/
+status: experimental
+tags:
+- attack.t1218.001
+yml_filename: proc_creation_win_rundll32_not_from_c_drive.yml
+yml_path: rules/windows/process_creation
+---
+

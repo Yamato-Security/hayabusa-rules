@@ -1,30 +1,29 @@
-
 title: Suspicious Screensaver Binary File Creation
 ruletype: Sigma
 author: frack113
 date: 2021/12/29
 description: |
-  Adversaries may establish persistence by executing malicious content triggered by user inactivity.
-  Screensavers are programs that execute after a configurable time of user inactivity and consist of Portable Executable (PE) files with a .scr file extension
+    Adversaries may establish persistence by executing malicious content triggered by user inactivity.
+    Screensavers are programs that execute after a configurable time of user inactivity and consist of Portable Executable (PE) files with a .scr file extension
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*.scr'
-  SELECTION_4:
-    Image:
-    - '*\Kindle.exe'
-    - '*\Bin\ccSvcHst.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*.scr'
+    SELECTION_4:
+        Image:
+        - '*\Kindle.exe'
+        - '*\Bin\ccSvcHst.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
 falsepositives:
 - Unknown
 id: 97aa2e88-555c-450d-85a6-229bcd87efb8
 level: medium
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/01/10
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.002/T1546.002.md
@@ -32,3 +31,7 @@ status: experimental
 tags:
 - attack.persistence
 - attack.t1546.002
+yml_filename: file_event_win_creation_scr_binary_file.yml
+yml_path: rules/windows/file_event
+---
+

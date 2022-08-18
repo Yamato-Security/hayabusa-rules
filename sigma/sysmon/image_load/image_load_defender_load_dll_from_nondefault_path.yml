@@ -1,0 +1,41 @@
+title: Microsoft Defender Loading DLL from Nondefault Path
+ruletype: Sigma
+author: Bhabesh Raj
+date: 2022/08/02
+description: Detects loading of Microsoft Defender's DLLs by its processes (MpCmdRun
+    and NisSrv) from the non-default directory which may be an attempt to sideload
+    arbitary DLL
+detection:
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\MpCmdRun.exe'
+        - '*\NisSrv.exe'
+    SELECTION_4:
+        ImageLoaded: '*\mpclient.dll'
+    SELECTION_5:
+        ImageLoaded:
+        - C:\Program Files\Windows Defender\\*
+        - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
+falsepositives:
+- Very unlikely
+id: 418dc89a-9808-4b87-b1d7-e5ae0cb6effc
+level: high
+logsource:
+    category: image_load
+    product: windows
+references:
+- https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1574.002
+yml_filename: image_load_defender_load_dll_from_nondefault_path.yml
+yml_path: rules/windows/image_load
+---
+

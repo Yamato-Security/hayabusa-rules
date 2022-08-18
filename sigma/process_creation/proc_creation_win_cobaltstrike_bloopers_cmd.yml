@@ -1,0 +1,51 @@
+title: Operator Bloopers Cobalt Strike Commands
+ruletype: Sigma
+author: _pete_0, TheDFIRReport
+date: 2022/05/06
+description: Detects use of Cobalt Strike commands accidentally entered in the CMD
+    shell
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - cmd.exe*
+        - c:\windows\system32\cmd.exe*
+    SELECTION_4:
+        CommandLine:
+        - '*psinject*'
+        - '*spawnas*'
+        - '*make_token*'
+        - '*remote-exec*'
+        - '*rev2self*'
+        - '*dcsync*'
+        - '*logonpasswords*'
+        - '*execute-assembly*'
+        - '*getsystem*'
+    SELECTION_5:
+        NewProcessName: '*\cmd.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+id: 647c7b9e-d784-4fda-b9a0-45c565a7b729
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/05/06
+references:
+- https://hstechdocs.helpsystems.com/manuals/cobaltstrike/current/userguide/content/cobalt-4-5-user-guide.pdf
+- https://thedfirreport.com/2021/10/04/bazarloader-and-the-conti-leaks/
+- https://thedfirreport.com/2022/06/16/sans-ransomware-summit-2022-can-you-detect-this/
+status: experimental
+tags:
+- attack.execution
+- attack.t1059.003
+yml_filename: proc_creation_win_cobaltstrike_bloopers_cmd.yml
+yml_path: rules/windows/process_creation
+---
+

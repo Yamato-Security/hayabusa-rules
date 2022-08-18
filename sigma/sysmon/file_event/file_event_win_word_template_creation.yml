@@ -1,51 +1,54 @@
-
 title: Office Template Creation
 ruletype: Sigma
 author: Max Altgelt
 date: 2022/06/02
 description: Detects creation of template files for Microsoft Office from outside
-  Office
+    Office
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename:
-    - '*.dot'
-    - '*.dotm'
-    - '*.doc'
-    - '*.docm'
-    - '*.docx'
-    - '*.rtf'
-  SELECTION_4:
-    TargetFilename: '*\Microsoft\Word\Startup*'
-  SELECTION_5:
-    TargetFilename:
-    - '*.xlt'
-    - '*.xltm'
-    - '*.xls'
-    - '*.xlsm'
-    - '*.xlsx'
-  SELECTION_6:
-    TargetFilename: '*\Microsoft\Excel\Startup*'
-  SELECTION_7:
-    Image:
-    - '*\WINWORD.exe'
-    - '*\EXCEL.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6)) and  not (SELECTION_7))
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename:
+        - '*.dot'
+        - '*.dotm'
+        - '*.doc'
+        - '*.docm'
+        - '*.docx'
+        - '*.rtf'
+    SELECTION_4:
+        TargetFilename: '*\Microsoft\Word\Startup*'
+    SELECTION_5:
+        TargetFilename:
+        - '*.xlt'
+        - '*.xltm'
+        - '*.xls'
+        - '*.xlsm'
+        - '*.xlsx'
+    SELECTION_6:
+        TargetFilename: '*\Microsoft\Excel\Startup*'
+    SELECTION_7:
+        Image:
+        - '*\WINWORD.exe'
+        - '*\EXCEL.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)) and  not (SELECTION_7))
 falsepositives:
 - Loading a user environment from a backup or a domain controller
 - Synchronization of templates
 id: 0e20c89d-2264-44ae-8238-aeeaba609ece
 level: high
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 references:
 - https://insight-jp.nttsecurity.com/post/102hojk/operation-restylink-apt-campaign-targeting-japanese-companies
 status: experimental
 tags:
 - attack.persistence
 - attack.t1137
+yml_filename: file_event_win_word_template_creation.yml
+yml_path: rules/windows/file_event
+---
+

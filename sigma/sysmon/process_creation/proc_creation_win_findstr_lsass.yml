@@ -1,0 +1,42 @@
+title: Findstr LSASS
+ruletype: Sigma
+author: Florian Roth
+date: 2022/08/12
+description: Detects findstring commands that include the keyword lsass, which indicates
+    recon actviity for the LSASS process PID
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\findstr.exe'
+    SELECTION_4:
+        CommandLine: '*lsass*'
+    SELECTION_5:
+        CommandLine:
+        - '* /i lsass.exe*'
+        - '* /i "lsass*'
+        - '*findstr lsass*'
+        - '*findstr.exe lsass*'
+        - '*findstr "lsass*'
+        - '*findstr.exe "lsass*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        SELECTION_5))
+falsepositives:
+- Unknown
+id: fe63010f-8823-4864-a96b-a7b4a0f7b929
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://blog.talosintelligence.com/2022/08/recent-cyber-attack.html?m=1
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1552.006
+yml_filename: proc_creation_win_findstr_lsass.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,0 +1,42 @@
+title: Abuse of Service Permissions to Hide Services in Tools
+ruletype: Sigma
+author: Andreas Hunkeler (@Karneades)
+date: 2021/12/20
+description: Detection of sc.exe utility adding a new service with special permission
+    which hides that service.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\sc.exe'
+    SELECTION_4:
+        OriginalFileName: sc.exe
+    SELECTION_5:
+        CommandLine: '*sdset*'
+    SELECTION_6:
+        CommandLine: '*DCLCWPDTSD*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
+falsepositives:
+- Rare intended use of hidden services
+id: a537cfc3-4297-4789-92b5-345bfd845ad0
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/08/08
+references:
+- https://blog.talosintelligence.com/2021/10/threat-hunting-in-large-datasets-by.html
+- https://www.sans.org/blog/red-team-tactics-hiding-windows-services/
+status: experimental
+tags:
+- attack.persistence
+- attack.defense_evasion
+- attack.privilege_escalation
+- attack.t1574.011
+yml_filename: proc_creation_win_using_sc_to_hide_sevices.yml
+yml_path: rules/windows/process_creation
+---
+

@@ -1,0 +1,40 @@
+title: Troubleshooting Pack Cmdlet Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/06/21
+description: Detects execution of "TroubleshootingPack" cmdlets to leverage CVE-2022-30190
+    or action similar to "msdt" lolbin (as described in LOLBAS)
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText: '*Invoke-TroubleshootingPack*'
+    SELECTION_4:
+        ScriptBlockText: '*C:\Windows\Diagnostics\System\PCW*'
+    SELECTION_5:
+        ScriptBlockText: '*-AnswerFile*'
+    SELECTION_6:
+        ScriptBlockText: '*-Unattended*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Legitimate usage of "TroubleshootingPack" cmdlet for troubleshooting purposes
+id: 03409c93-a7c7-49ba-9a4c-a00badf2a153
+level: medium
+logsource:
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
+references:
+- https://twitter.com/nas_bench/status/1537919885031772161
+- https://lolbas-project.github.io/lolbas/Binaries/Msdt/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1202
+yml_filename: posh_ps_susp_follina_execution.yml
+yml_path: rules/windows/powershell/powershell_script
+---
+
