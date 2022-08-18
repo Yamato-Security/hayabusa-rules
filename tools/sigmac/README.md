@@ -11,7 +11,7 @@ You can use `hayabusa.py`, a `sigmac` backend, to automatically convert Sigma ru
 
 ## Pre-converted Sigma rules
 
-Sigma rules have already been pre-converted to hayabusa format and placed in the `./rules/sigma` directory. 
+Sigma rules have already been pre-converted to hayabusa format and placed in the `./rules/Sigma` directory. 
 Please refer to this documentation to convert rules on your own for local testing, using the latest rules, etc...
 
 ## Python requirements
@@ -42,23 +42,28 @@ Create an environmental variable `$sigma_path` that points to the Sigma reposito
 ```sh
 export sigma_path=/path/to/sigma_repository
 cp hayabusa.py $sigma_path/tools/sigma/backends
-cp convert.py $sigma_path
+cp convert.sh $sigma_path
+cp splitter.py $sigma_path
 ```
 
 * Caution：Be sure to specify the path to your Sigma repository in place of `/path/to/sigma_repository`.
 
 ### Convert Rule
 
-`convert.py` will convert sigma rules to hayabusa rules and save them in a new `hayabusa_rules` folder.
+`convert.sh` will convert sigma rules to hayabusa rules and save them in a new `hayabusa_rules` folder.
 
 ```sh
+export sigma_path=/path/to/sigma_repository
 cd $sigma_path
-python3 convert.py
+sh convert.sh
 ```
+
+`sigmac` which we use for convert rule files has many options.
+If you want to use some option, edit `convert.sh`
 
 ## Currently unsupported rules
 
-The following rules currently cannot be automatically converted because it contains an aggregation operator (`|near`) that has not been implemented yet.
+The following rules currently cannot be automatically converted because it contains an aggregation operator that has not been implemented yet.
 
 ```
 sigma/rules/windows/builtin/win_susp_samr_pwset.yml
