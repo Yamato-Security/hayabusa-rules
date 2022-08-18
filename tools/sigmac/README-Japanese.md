@@ -12,7 +12,7 @@ Sigmaの持つ多くの検知ルールをHayabusaのルールセットに追加�
 
 ## 事前に変換されたSigmaルールについて
 
-Sigmaからhayabusa形式に変換されたルールが`./rules/Sigma`ディレクトリに用意されています。 
+Sigmaからhayabusa形式に変換されたルールが`./rules/sigma`ディレクトリに用意されています。 
 ローカル環境で新しいルールをテストしたり、Sigmaの最新のルールを変換したりしたい場合は、以下のドキュメンテーションをご参考下さい。
 
 ## Pythonの環境依存
@@ -44,26 +44,22 @@ Sigmaレポジトリのパスが書いてある`$sigma_path`という環境変�
 ```sh
 export sigma_path=/path/to/sigma_repository
 cp hayabusa.py $sigma_path/tools/sigma/backends
-cp convert.sh $sigma_path
-cp splitter.py $sigma_path
+cp convert.py $sigma_path
 ```
 
 * 注意：`/path/to/sigma_repository`そのままではなくて、自分のSigmaレポジトリのパスを指定してください。
 
 ### ルールの変換
-`convert.sh`を実行することでルールの変換が実行されます。変換されたルールは`hayabusa_rules`フォルダに作成されます。
+`convert.py`を実行することでルールの変換が実行されます。変換されたルールは`hayabusa_rules`フォルダに作成されます。
 
 ```sh
-export sigma_path=/path/to/sigma_repository
 cd $sigma_path
-sh convert.sh
+python3 convert.py
 ```
-
-ルールの変換に利用しているsigmacには様々なオプションが用意されています。オプションを変更する場合はconvert.shを編集してください。
 
 ## 現在サポートされていないルール
 
-以下のルールは、まだ実装されていないaggregation operatorが含まれているため、現在は自動変換できません。
+以下のルールは、まだ実装されていないaggregation operator (`|near`)が含まれているため、現在は自動変換できません。
 
 ```
 sigma/rules/windows/builtin/win_susp_samr_pwset.yml
