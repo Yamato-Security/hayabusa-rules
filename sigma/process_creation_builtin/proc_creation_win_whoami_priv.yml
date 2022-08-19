@@ -1,0 +1,35 @@
+
+title: Run Whoami Showing Privileges
+ruletype: Sigma
+author: Florian Roth
+date: 2021/05/05
+description: Detects a whoami.exe executed with the /priv command line flag instructing
+  the tool to show all current user privieleges. This is often used after a privilege
+  escalation attempt.
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    NewProcessName: '*\whoami.exe'
+  SELECTION_4:
+    OriginalFileName: whoami.exe
+  SELECTION_5:
+    CommandLine: '*/priv*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+falsepositives:
+- Administrative activity (rare lookups on current privileges)
+id: 97a80ec7-0e2f-4d05-9ef4-65760e634f6b
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/05/13
+references:
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/whoami
+status: experimental
+tags:
+- attack.privilege_escalation
+- attack.discovery
+- attack.t1033

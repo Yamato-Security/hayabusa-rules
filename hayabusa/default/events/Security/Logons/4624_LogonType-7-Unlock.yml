@@ -1,17 +1,17 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2021/11/26
+modified: 2022/05/21
 
 title: Logon Type 7 - Unlock
-title_jp: ログオンタイプ 7 - アンロック
-details: 'User: %TargetUserName%  :  Workstation: %WorkstationName%  :  IP Address: %IpAddress%  :  LogonID: %TargetLogonId%'
-details_jp: 'ユーザ: %TargetUserName%  :  端末: %WorkstationName%  :  IPアドレス: %IpAddress%  :  ログオンID: %TargetLogonId%'
+details: 'User: %TargetUserName% | Comp: %WorkstationName% | IP Addr: %IpAddress% | LID: %TargetLogonId%'
 description: Prints logon information
-description_jp: Prints logon information
 
 id: b61bfa39-48ec-4bdf-9d4e-e7205f49acd2
 level: informational
 status: stable
+logsource:
+    product: windows
+    service: security
 detection:
     selection:
         Channel: Security
@@ -23,5 +23,4 @@ falsepositives:
 tags:
 references:
 sample-evtx: 
-logsource: default
 ruletype: Hayabusa

@@ -1,17 +1,19 @@
 
-title: New or Renamed User Account with '$' in Attribute 'SamAccountName'.
+title: New or Renamed User Account with '$' in Attribute 'SamAccountName'
 ruletype: Sigma
 author: Ilyas Ochkov, oscd.community
 date: 2019/10/25
 description: Detects possible bypass EDR and SIEM via abnormal user account name.
 detection:
   SELECTION_1:
-    EventID: 4720
+    Channel: Security
   SELECTION_2:
-    EventID: 4781
+    EventID: 4720
   SELECTION_3:
+    EventID: 4781
+  SELECTION_4:
     SamAccountName: '*$*'
-  condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
 falsepositives:
 - Unknown
 fields:

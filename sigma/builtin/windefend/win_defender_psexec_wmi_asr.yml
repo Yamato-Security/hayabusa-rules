@@ -7,12 +7,14 @@ description: Detects blocking of process creations originating from PSExec and W
   commands
 detection:
   SELECTION_1:
-    EventID: 1121
+    Channel: Microsoft-Windows-Windows Defender/Operational
   SELECTION_2:
+    EventID: 1121
+  SELECTION_3:
     ProcessName:
     - '*\wmiprvse.exe'
     - '*\psexesvc.exe'
-  condition: (SELECTION_1 and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 97b9ce1e-c5ab-11ea-87d0-0242ac130003

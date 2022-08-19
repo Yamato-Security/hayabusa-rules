@@ -1,0 +1,40 @@
+
+title: Windows Cmd Delete File
+ruletype: Sigma
+author: frack113
+date: 2022/01/15
+description: "Adversaries may delete files left behind by the actions of their intrusion\
+  \ activity.\nMalware, tools, or other non-native files dropped or created on a system\
+  \ by an adversary may leave traces to indicate to what was done within a network\
+  \ and how.\nRemoval of these files can occur during an intrusion, or as part of\
+  \ a post-intrusion process to minimize the adversary's footprint. \n"
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    CommandLine: '*del *'
+  SELECTION_4:
+    CommandLine: '*/f*'
+  SELECTION_5:
+    CommandLine: '*rmdir*'
+  SELECTION_6:
+    CommandLine: '*/s*'
+  SELECTION_7:
+    CommandLine: '*/q*'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Legitimate script
+id: 379fa130-190e-4c3f-b7bc-6c8e834485f3
+level: low
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1070.004/T1070.004.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1070.004

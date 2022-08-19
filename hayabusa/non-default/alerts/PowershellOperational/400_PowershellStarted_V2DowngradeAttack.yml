@@ -1,0 +1,30 @@
+author: Yusuke Matsui, Yamato Security
+date: 2020/11/08
+modified: 2022/05/21
+
+title: Powershell 2.0 Downgrade Attack
+details: 'EventData: %EventData%'
+description: An attacker may have started Powershell 2.0 to evade detection.
+
+id: bc082394-73e6-4d00-a9af-e7b524ef5085
+level: medium
+status: test
+logsource:
+    product: windows
+    service: powershell
+detection:
+    selection:
+        Channel: Microsoft-Windows-PowerShell/Operational
+        EventID: 400
+        EventData|re: '[\s\S]*EngineVersion=2\.0[\s\S]*'
+    condition: selection
+falsepositives:
+    - legacy application
+tags:
+    - attack.defense_evasion
+    - attack.t1562.010
+    - lolbas
+references:
+    - https://attack.mitre.org/techniques/T1562/010/
+    - https://kurtroggen.wordpress.com/2017/05/17/powershell-security-powershell-downgrade-attacks/
+ruletype: Hayabusa

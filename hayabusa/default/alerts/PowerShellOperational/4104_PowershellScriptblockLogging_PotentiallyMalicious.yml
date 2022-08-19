@@ -1,0 +1,31 @@
+author: Zach Mathis
+date: 2020/11/08
+modified: 2022/05/21
+
+title: Potentially Malicious PwSh
+details: '%ScriptBlockText%'
+description: 'On Powershell v5+, Windows will automatically log suspicious powershell execution and mark the Level as Warning.'
+
+id: 73be1519-4648-4ed7-b305-605504afc242
+level: medium
+status: stable
+logsource:
+    product: windows
+    service: powershell
+    description: Default with PwSh 5+ (Ex. Win 10+)
+detection:
+    selection_basic:
+        Channel: Microsoft-Windows-PowerShell/Operational
+        EventID: 4104
+    selection_level_warning:
+        Level: 3
+    condition: selection_basic and selection_level_warning
+falsepositives:
+    - normal system usage
+tags:
+    - PwSh
+references:
+ruletype: Hayabusa
+
+sample-message: Rendered XML
+sample-evtx: 

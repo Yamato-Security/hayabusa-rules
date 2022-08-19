@@ -1,0 +1,49 @@
+
+title: Service Binary in Temp Folder
+ruletype: Sigma
+author: frack113
+date: 2022/05/01
+description: Detect the creation of a service with a service binary located in a temporary
+  directory
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_10:
+    TargetObject: '*\ImagePath'
+  SELECTION_11:
+    Details: '*\Temp\\*'
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    EventType: SetValue
+  SELECTION_4:
+    TargetObject: HKLM\System\CurrentControlSet\Services\\*
+  SELECTION_5:
+    TargetObject: '*\Start'
+  SELECTION_6:
+    Image: '*\Temp\\*'
+  SELECTION_7:
+    Details:
+    - DWORD (0x00000000)
+    - DWORD (0x00000001)
+    - DWORD (0x00000002)
+  SELECTION_8:
+    EventType: SetValue
+  SELECTION_9:
+    TargetObject: HKLM\System\CurrentControlSet\Services\\*
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+    SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9 and
+    SELECTION_10 and SELECTION_11)))
+falsepositives:
+- Unknown
+id: c0abc838-36b0-47c9-b3b3-a90c39455382
+level: high
+logsource:
+  category: registry_set
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1112

@@ -1,0 +1,32 @@
+
+title: Suspicious Get-WmiObject
+ruletype: Sigma
+author: frack113
+date: 2022/01/12
+description: The infrastructure for management data and operations that enables local
+  and remote management of Windows personal computers and servers
+detection:
+  SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText:
+    - '*Get-WmiObject*'
+    - '*gwmi*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Legitimate PowerShell scripts
+id: 0332a266-b584-47b4-933d-a00b103e1b37
+level: low
+logsource:
+  category: ps_script
+  definition: Script block logging must be enabled
+  product: windows
+references:
+- https://attack.mitre.org/datasources/DS0005/
+- https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject?view=powershell-5.1&viewFallbackFrom=powershell-7
+status: experimental
+tags:
+- attack.persistence
+- attack.t1546

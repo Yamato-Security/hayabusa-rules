@@ -8,12 +8,16 @@ description: Detects Exfiltration Over Alternative Protocol - ICMP. Adversaries 
   of the existing command and control channel.
 detection:
   SELECTION_1:
-    ScriptBlockText: '*New-Object*'
+    EventID: 4104
   SELECTION_2:
-    ScriptBlockText: '*System.Net.NetworkInformation.Ping*'
+    Channel: Microsoft-Windows-PowerShell/Operational
   SELECTION_3:
+    ScriptBlockText: '*New-Object*'
+  SELECTION_4:
+    ScriptBlockText: '*System.Net.NetworkInformation.Ping*'
+  SELECTION_5:
     ScriptBlockText: '*.Send(*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate usage of System.Net.NetworkInformation.Ping class
 id: 4c4af3cd-2115-479c-8193-6b8bfce9001c

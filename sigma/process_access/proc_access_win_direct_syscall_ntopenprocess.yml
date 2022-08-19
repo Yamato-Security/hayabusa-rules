@@ -1,0 +1,47 @@
+
+title: Direct Syscall of NtOpenProcess
+ruletype: Sigma
+author: Christian Burkard, Tim Shelton
+date: 2021/07/28
+description: Detects the usage of the direct syscall of NtOpenProcess which might
+  be done from a CobaltStrike BOF.
+detection:
+  SELECTION_1:
+    EventID: 10
+  SELECTION_10:
+    TargetImage: C:\Windows\system32\systeminfo.exe
+  SELECTION_11:
+    SourceImage: '*setup64.exe'
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    CallTrace: UNKNOWN*
+  SELECTION_4:
+    TargetImage: C:\Program Files\Cylance\Desktop\CylanceUI.exe
+  SELECTION_5:
+    SourceImage: C:\Windows\Explorer.EXE
+  SELECTION_6:
+    TargetImage: C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe
+  SELECTION_7:
+    SourceImage: C:\Program Files (x86)\Microsoft\Temp\*\MicrosoftEdgeUpdate.exe
+  SELECTION_8:
+    TargetImage: '*vcredist_x64.exe'
+  SELECTION_9:
+    SourceImage: '*vcredist_x64.exe'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+    and SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
+    or (SELECTION_10 and SELECTION_11)))
+falsepositives:
+- Unknown
+id: 3f3f3506-1895-401b-9cc3-e86b16e630d0
+level: critical
+logsource:
+  category: process_access
+  product: windows
+modified: 2022/05/15
+references:
+- https://medium.com/falconforce/falconfriday-direct-system-calls-and-cobalt-strike-bofs-0xff14-741fa8e1bdd6
+status: experimental
+tags:
+- attack.execution
+- attack.t1106

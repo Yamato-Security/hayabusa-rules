@@ -1,0 +1,35 @@
+
+title: DLL Injection with Tracker.exe
+ruletype: Sigma
+author: Avneet Singh @v3t0_, oscd.community
+date: 2020/10/18
+description: This rule detects DLL injection and execution via LOLBAS - Tracker.exe
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    NewProcessName: '*\tracker.exe'
+  SELECTION_4:
+    Description: Tracker
+  SELECTION_5:
+    CommandLine: '* /d *'
+  SELECTION_6:
+    CommandLine: '* /c *'
+  condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4) and SELECTION_5
+    and SELECTION_6)
+falsepositives:
+- Unknown
+id: 148431ce-4b70-403d-8525-fcc2993f29ea
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+modified: 2021/11/27
+references:
+- https://github.com/LOLBAS-Project/LOLBAS/blob/master/yml/OtherMSBinaries/Tracker.yml
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1055.001

@@ -1,0 +1,44 @@
+
+title: Bypass UAC via CMSTP
+ruletype: Sigma
+author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
+date: 2019/10/24
+description: Detect commandline usage of Microsoft Connection Manager Profile Installer
+  (cmstp.exe) to install specially formatted local .INF files
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\cmstp.exe'
+  SELECTION_4:
+    OriginalFileName: CMSTP.EXE
+  SELECTION_5:
+    CommandLine:
+    - '*/s*'
+    - '*/au*'
+    - '*/ni*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+falsepositives:
+- Legitimate use of cmstp.exe utility by legitimate user
+fields:
+- ComputerName
+- User
+- CommandLine
+id: e66779cc-383e-4224-a3a4-267eeb585c40
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/05/16
+references:
+- https://eqllib.readthedocs.io/en/latest/analytics/e584f1a1-c303-4885-8a66-21360c90995b.html
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1191/T1191.md
+- https://lolbas-project.github.io/lolbas/Binaries/Cmstp/
+status: test
+tags:
+- attack.privilege_escalation
+- attack.defense_evasion
+- attack.t1548.002
+- attack.t1218.003

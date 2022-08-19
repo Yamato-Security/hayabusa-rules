@@ -7,6 +7,10 @@ description: Detects Commandlet names and arguments from the Nishang exploitatio
   framework
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*Add-ConstrainedDelegationBackdoor*'
     - '*Set-DCShadowPermissions*'
@@ -78,9 +82,9 @@ detection:
     - '*NotAllNameSpaces*'
     - '*exfill*'
     - '*FakeDC*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- Penetration testing
+- Unknown
 id: f772cee9-b7c2-4cb2-8f07-49870adc02e0
 level: high
 logsource:

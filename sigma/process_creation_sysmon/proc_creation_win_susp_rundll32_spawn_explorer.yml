@@ -1,0 +1,30 @@
+
+title: RunDLL32 Spawning Explorer
+ruletype: Sigma
+author: elhoim
+date: 2022/04/27
+description: Detects RunDLL32.exe spawning explorer.exe as child, which is very uncommon,
+  often observes Gamarue spawning the explorer.exe process in an unusual way
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    ParentImage: '*\rundll32.exe'
+  SELECTION_4:
+    Image: '*\explorer.exe'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: caa06de8-fdef-4c91-826a-7f9e163eef4b
+level: high
+logsource:
+  category: process_creation
+  product: windows
+references:
+- https://redcanary.com/blog/intelligence-insights-november-2021/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218.011

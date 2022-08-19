@@ -1,17 +1,17 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2021/11/26
+modified: 2022/05/21
 
 title: Admin Logon
-title_jp: 管理者ログオン
-details: 'User: %SubjectUserName%  :  LogonID: %SubjectLogonId%'
-details_jp: 'ユーザ: %SubjectUserName%  :  ログオンID: %SubjectLogonId%'
+details: 'User: %SubjectUserName% | LID: %SubjectLogonId%'
 description: Prints logon information. 
-description_jp: Prints logon information.
 
 id: fdd0b325-8b89-469c-8b0c-e5ddfe39b62e
 level: informational
 status: stable
+logsource:
+    product: windows
+    service: security
 detection:
     selection:
         Channel: Security
@@ -28,5 +28,4 @@ falsepositives:
 tags:
 references:
 sample-evtx: 
-logsource: default
 ruletype: Hayabusa

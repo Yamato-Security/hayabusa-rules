@@ -1,0 +1,42 @@
+
+title: Monitoring Winget For LOLbin Execution
+ruletype: Sigma
+author: Sreeman, Florian Roth, Frack113
+date: 2020/04/21
+description: Adversaries can abuse winget to download payloads remotely and execute
+  them without touching disk. Winget will be included by default in Windows 10 and
+  is already available in Windows 10 insider programs. The manifest option enables
+  you to install an application by passing in a YAML file directly to the client.
+  Winget can be used to download and install exe's, msi, msix files later.
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    CommandLine: '*winget*'
+  SELECTION_4:
+    CommandLine: '*install*'
+  SELECTION_5:
+    CommandLine:
+    - '*-m *'
+    - '*--manifest*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Admin activity installing packages not in the official Microsoft repo. Winget probably
+  won't be used by most users.
+fields:
+- CommandLine
+id: 313d6012-51a0-4d93-8dfc-de8553239e25
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/01/11
+references:
+- https://docs.microsoft.com/en-us/windows/package-manager/winget/install#local-install
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1059

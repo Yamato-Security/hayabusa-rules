@@ -1,0 +1,45 @@
+
+title: Suspicious Svchost Process
+ruletype: Sigma
+author: Florian Roth
+date: 2017/08/15
+description: Detects a suspicious svchost process start
+detection:
+  SELECTION_1:
+    EventID: 4688
+  SELECTION_2:
+    Channel: Security
+  SELECTION_3:
+    NewProcessName: '*\svchost.exe'
+  SELECTION_4:
+    ParentProcessName:
+    - '*\services.exe'
+    - '*\MsMpEng.exe'
+    - '*\Mrt.exe'
+    - '*\rpcnet.exe'
+    - '*\svchost.exe'
+    - '*\ngen.exe'
+    - '*\TiWorker.exe'
+  SELECTION_5:
+    ParentProcessName|re: ^$
+  SELECTION_6:
+    ParentProcessName: ''
+  SELECTION_7:
+    ParentProcessName: '-'
+  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+    or (SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+- ParentCommandLine
+id: 01d2e2a1-5f09-44f7-9fc1-24faa7479b6d
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/02/09
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036.005

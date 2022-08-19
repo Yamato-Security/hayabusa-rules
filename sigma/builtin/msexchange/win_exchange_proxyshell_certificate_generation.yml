@@ -7,21 +7,24 @@ description: Detects a write of an Exchange CSR to an untypical directory or wit
   aspx name suffix which can be used to place a webshell
 detection:
   SELECTION_1:
-  - New-ExchangeCertificate
+    Channel: MSExchange Management
   SELECTION_2:
-  - ' -GenerateRequest'
+  - New-ExchangeCertificate
   SELECTION_3:
-  - ' -BinaryEncoded'
+  - ' -GenerateRequest'
   SELECTION_4:
-  - ' -RequestFile'
+  - ' -BinaryEncoded'
   SELECTION_5:
+  - ' -RequestFile'
+  SELECTION_6:
   - \\\\localhost\\C$
   - \\\\127.0.0.1\\C$
   - C:\\inetpub
   - .aspx
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4) and (SELECTION_5))
+  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    and (SELECTION_6))
 falsepositives:
-- unlikely
+- Unlikely
 id: b7bc7038-638b-4ffd-880c-292c692209ef
 level: critical
 logsource:

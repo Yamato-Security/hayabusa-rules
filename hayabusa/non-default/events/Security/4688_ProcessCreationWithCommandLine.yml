@@ -1,17 +1,18 @@
 author: Zach Mathis
 date: 2022/02/05
-modified: 2022/02/05
+modified: 2022/05/21
 
 title: Process Creation
-title_jp: プロセス起動
-details: 'Command Line: %CommandLine%  :  Path: %NewProcessName%  :  Process ID: %NewProcessId%  :  User: %SubjectUserName%  :  LogonID: %SubjectLogonId%'
-details_jp: 'コマンドライン: %CommandLine%  :  パス: %NewProcessName%  :  プロセスID: %NewProcessId%  :  ユーザ: %SubjectUserName%  :  ログオンID: %SubjectLogonId%'
+details: 'CmdLine: %CommandLine% | Path: %NewProcessName% | PID: %NewProcessId% | User: %SubjectUserName% | LID: %SubjectLogonId%'
 description: 
-description_jp: 
 
-id: a3d42feb-ca30-4fce-ac98-fbc92107d3aa
+id: ac933178-c222-430d-8dcf-17b4f3a2fed8
 level: informational
 status: stable
+logsource:
+    product: windows
+    service: security
+    description: Process Creation with command line option logging needs to be turned on.
 detection:
     selection:
         Channel: Security
@@ -22,6 +23,4 @@ falsepositives:
     - normal system usage
 tags:
 references:
-sample-evtx: 
-logsource: non-default
 ruletype: Hayabusa

@@ -21,9 +21,9 @@ jobs:
 
       - name: get Hayabusa backend for sigmac
         run: |
-          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/convert.sh > sigma-repo/convert.sh
-          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/splitter.py > sigma-repo/splitter.py
-          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/hayabusa.py > sigma-repo/tools/sigma/backends/hayabusa.py
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa-rules/main/tools/sigmac/convert.sh > sigma-repo/convert.sh
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa-rules/main/tools/sigmac/splitter.py > sigma-repo/splitter.py
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa-rules/main/tools/sigmac/hayabusa.py > sigma-repo/tools/sigma/backends/hayabusa.py
 
       - name: Setup Python
         uses: actions/setup-python@v2
@@ -32,7 +32,7 @@ jobs:
 
       - name: setup Python for use script
         run: |
-          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa/main/tools/sigmac/requirements.txt > requirements.txt
+          curl https://raw.githubusercontent.com/Yamato-Security/hayabusa-rules/main/tools/sigmac/requirements.txt > requirements.txt
           pip install -r requirements.txt
           rm requirements.txt
 
@@ -64,7 +64,7 @@ jobs:
       - name: Create Pull Request
         if: env.change_exist == 'true'
         id: cpr
-        uses: peter-evans/create-pull-request@v3
+        uses: peter-evans/create-pull-request@v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Sigma Rule Update (${{ env.action_date }})

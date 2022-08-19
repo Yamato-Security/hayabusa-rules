@@ -9,6 +9,10 @@ description: Adversaries may modify file time attributes to hide new or changes 
   the same folder.
 detection:
   SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
     ScriptBlockText:
     - '*.CreationTime =*'
     - '*.LastWriteTime =*'
@@ -16,9 +20,9 @@ detection:
     - '*[IO.File]::SetCreationTime*'
     - '*[IO.File]::SetLastAccessTime*'
     - '*[IO.File]::SetLastWriteTime*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- legitime admin script
+- Legitimate admin script
 id: c6438007-e081-42ce-9483-b067fbef33c3
 level: medium
 logsource:

@@ -1,0 +1,27 @@
+author: Eric Conrad, Yamato Security
+date: 2020/11/08
+modified: 2022/05/21
+
+title: System Log File Cleared
+details: "User: %LogFileClearedSubjectUserName%"
+description: Somebody has cleared the System event log.
+
+id: f481a1f3-969e-4187-b3a5-b47c272bfebd
+level: high
+status: stable
+logsource:
+    product: windows
+    service: system
+detection:
+    selection:
+        Channel: System
+        EventID: 104
+    condition: selection
+falsepositives:
+    - system administrator
+tags:
+    - attack.defense_evasion
+    - attack.t1070.001
+references:
+    - https://attack.mitre.org/techniques/T1070/001/
+ruletype: Hayabusa

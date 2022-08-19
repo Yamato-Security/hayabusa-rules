@@ -7,12 +7,14 @@ description: Detects block of attempt to disable real time protection of Microso
   Defender by tamper protection
 detection:
   SELECTION_1:
-    EventID: 5013
+    Channel: Microsoft-Windows-Windows Defender/Operational
   SELECTION_2:
+    EventID: 5013
+  SELECTION_3:
     Value:
     - '*\Windows Defender\DisableAntiSpyware = 0x1()'
     - '*\Real-Time Protection\DisableRealtimeMonitoring = (Current)'
-  condition: ((SELECTION_1) and SELECTION_2)
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Administrator actions
 id: 49e5bc24-8b86-49f1-b743-535f332c2856

@@ -1,17 +1,17 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2021/11/26
+modified: 2022/05/21
 
 title: Logoff - User Initiated
-title_jp: ログオフ - ユーザが行った
-details: 'User: %TargetUserName%  :  LogonID: %TargetLogonId%'
-details_jp: 'ユーザ: %TargetUserName%  :  ログオンID: %TargetLogonId%'
+details: 'User: %TargetUserName% | LID: %TargetLogonId%'
 description: Prints logon information. 
-description_jp: Prints logon information.
 
 id: 6bad16f1-02c4-4075-b414-3cd16944bc65
 level: informational
 status: stable
+logsource:
+    product: windows
+    service: security
 detection:
     selection:
         Channel: Security
@@ -22,5 +22,4 @@ falsepositives:
 tags:
 references:
 sample-evtx: 
-logsource: default
 ruletype: Hayabusa

@@ -1,0 +1,38 @@
+
+title: PowerShell WMI Win32_Product Install MSI
+ruletype: Sigma
+author: frack113
+date: 2022/04/24
+description: Detects the execution of an MSI file using PowerShell and the WMI Win32_Product
+  class
+detection:
+  SELECTION_1:
+    EventID: 4104
+  SELECTION_2:
+    Channel: Microsoft-Windows-PowerShell/Operational
+  SELECTION_3:
+    ScriptBlockText: '*Invoke-CimMethod *'
+  SELECTION_4:
+    ScriptBlockText: '*-ClassName *'
+  SELECTION_5:
+    ScriptBlockText: '*Win32_Product *'
+  SELECTION_6:
+    ScriptBlockText: '*-MethodName *'
+  SELECTION_7:
+    ScriptBlockText: '*.msi*'
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+    and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Unknown
+id: 91109523-17f0-4248-a800-f81d9e7c081d
+level: medium
+logsource:
+  category: ps_script
+  definition: Script block logging must be enabled
+  product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.007/T1218.007.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218.007

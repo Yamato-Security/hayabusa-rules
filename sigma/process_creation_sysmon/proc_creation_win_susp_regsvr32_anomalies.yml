@@ -1,0 +1,82 @@
+
+title: Regsvr32 Anomaly
+ruletype: Sigma
+author: Florian Roth, oscd.community
+date: 2019/01/16
+description: Detects various anomalies in relation to regsvr32.exe
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_10:
+    CommandLine: '*/i:*'
+  SELECTION_11:
+    CommandLine: '*http*'
+  SELECTION_12:
+    CommandLine: '*scrobj.dll'
+  SELECTION_13:
+    Image: '*\regsvr32.exe'
+  SELECTION_14:
+    CommandLine: '*/i:*'
+  SELECTION_15:
+    CommandLine: '*ftp*'
+  SELECTION_16:
+    CommandLine: '*scrobj.dll'
+  SELECTION_17:
+    Image: '*\wscript.exe'
+  SELECTION_18:
+    ParentImage: '*\regsvr32.exe'
+  SELECTION_19:
+    Image: '*\EXCEL.EXE'
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_20:
+    CommandLine: '*..\..\..\Windows\System32\regsvr32.exe *'
+  SELECTION_21:
+    ParentImage: '*\mshta.exe'
+  SELECTION_22:
+    Image: '*\regsvr32.exe'
+  SELECTION_23:
+    Image: '*\regsvr32.exe'
+  SELECTION_24:
+    CommandLine:
+    - '*\AppData\Local*'
+    - '*C:\Users\Public*'
+  SELECTION_3:
+    Image: '*\regsvr32.exe'
+  SELECTION_4:
+    CommandLine: '*\Temp\\*'
+  SELECTION_5:
+    Image: '*\regsvr32.exe'
+  SELECTION_6:
+    ParentImage: '*\powershell.exe'
+  SELECTION_7:
+    Image: '*\regsvr32.exe'
+  SELECTION_8:
+    ParentImage: '*\cmd.exe'
+  SELECTION_9:
+    Image: '*\regsvr32.exe'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+    (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+    and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
+    and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18) or (SELECTION_19
+    and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24)))
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+- ParentCommandLine
+id: 8e2b24c9-4add-46a0-b4bb-0057b4e6187d
+level: high
+logsource:
+  category: process_creation
+  product: windows
+modified: 2021/07/18
+references:
+- https://subt0x10.blogspot.de/2017/04/bypass-application-whitelisting-script.html
+- https://app.any.run/tasks/34221348-072d-4b70-93f3-aa71f6ebecad/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218.010
+- car.2019-04-002
+- car.2019-04-003

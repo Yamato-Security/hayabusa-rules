@@ -1,0 +1,41 @@
+
+title: Suspicious WMI Reconnaissance
+ruletype: Sigma
+author: frack113
+date: 2022/01/01
+description: An adversary might use WMI to list Processes running on the compromised
+  host or list installed Software hotfix and patches.
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\WMIC.exe'
+  SELECTION_4:
+    OriginalFileName: wmic.exe
+  SELECTION_5:
+    CommandLine:
+    - '*process*'
+    - '*qfe*'
+  SELECTION_6:
+    CommandLine: '*call*'
+  SELECTION_7:
+    CommandLine: '*create*'
+  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+    SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
+falsepositives:
+- Unknown
+id: 221b251a-357a-49a9-920a-271802777cc0
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/05/13
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1047/T1047.md
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/wmic
+status: experimental
+tags:
+- attack.execution
+- attack.t1047

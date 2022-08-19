@@ -1,0 +1,47 @@
+
+title: Scheduled TaskCache Change by Uncommon Program
+ruletype: Sigma
+author: Syed Hasan (@syedhasan009)
+date: 2021/06/18
+description: Monitor the creation of a new key under 'TaskCache' when a new scheduled
+  task is registered by a process that is not svchost.exe, which is suspicious
+detection:
+  SELECTION_1:
+    EventID: 13
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    EventType: SetValue
+  SELECTION_4:
+    TargetObject: '*SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\\*'
+  SELECTION_5:
+    TargetObject:
+    - '*Microsoft\Windows\UpdateOrchestrator*'
+    - '*Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTask\Index*'
+    - '*Microsoft\Windows\Flighting\OneSettings\RefreshCache\Index*'
+  SELECTION_6:
+    Image: C:\Windows\\*
+  SELECTION_7:
+    Image: '*\TiWorker.exe'
+  SELECTION_8:
+    TargetObject: '*\MICROSOFT\WINDOWS NT\CURRENTVERSION\SCHEDULE\TASKCACHE\PLAIN\{1A552422-F571-4376-A7F1-5941E63D7B40}*'
+  SELECTION_9:
+    Image: C:\WINDOWS\system32\svchost.exe
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+    ((SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9)))
+falsepositives:
+- Unknown
+id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/05/23
+references:
+- https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
+- https://labs.f-secure.com/blog/scheduled-task-tampering/
+status: experimental
+tags:
+- attack.persistence
+- attack.t1053
+- attack.t1053.005

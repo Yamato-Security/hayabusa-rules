@@ -1,0 +1,32 @@
+
+title: WMI Uninstall An Application
+ruletype: Sigma
+author: frac113
+date: 2022/01/28
+description: Uninstall an application with wmic
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    Image: '*\WMIC.exe'
+  SELECTION_4:
+    OriginalFileName: wmic.exe
+  SELECTION_5:
+    CommandLine: '*call uninstall*'
+  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+falsepositives:
+- Unknown
+id: b53317a0-8acf-4fd1-8de8-a5401e776b96
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/05/13
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1047/T1047.md#atomic-test-10---application-uninstall-using-wmic
+status: experimental
+tags:
+- attack.execution
+- attack.t1047

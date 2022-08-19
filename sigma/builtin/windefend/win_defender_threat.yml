@@ -6,16 +6,18 @@ date: 2020/07/28
 description: Detects all actions taken by Windows Defender malware detection engines
 detection:
   SELECTION_1:
-    EventID: 1006
+    Channel: Microsoft-Windows-Windows Defender/Operational
   SELECTION_2:
-    EventID: 1116
+    EventID: 1006
   SELECTION_3:
-    EventID: 1015
+    EventID: 1116
   SELECTION_4:
+    EventID: 1015
+  SELECTION_5:
     EventID: 1117
-  condition: (SELECTION_1 or SELECTION_2 or SELECTION_3 or SELECTION_4)
+  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
-- unlikely
+- Unlikely
 id: 57b649ef-ff42-4fb0-8bf6-62da243a1708
 level: high
 logsource:

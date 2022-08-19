@@ -7,10 +7,12 @@ description: Detects potential mimikatz-like tools accessing LSASS from non syst
   account
 detection:
   SELECTION_1:
-    EventID: 4663
+    Channel: Security
   SELECTION_2:
-    EventID: 4656
+    EventID: 4663
   SELECTION_3:
+    EventID: 4656
+  SELECTION_4:
     AccessMask:
     - '0x40'
     - '0x1400'
@@ -37,16 +39,16 @@ detection:
     - 1f1fff
     - 1f2fff
     - 1f3fff
-  SELECTION_4:
-    ObjectType: Process
   SELECTION_5:
-    ObjectName: '*\lsass.exe'
+    ObjectType: Process
   SELECTION_6:
-    SubjectUserName: '*$'
+    ObjectName: '*\lsass.exe'
   SELECTION_7:
+    SubjectUserName: '*$'
+  SELECTION_8:
     ProcessName: C:\Program Files*
-  condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not ((SELECTION_6) or (SELECTION_7)))
+  condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
+    and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Unknown
 fields:

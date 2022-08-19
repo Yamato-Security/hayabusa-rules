@@ -8,8 +8,12 @@ description: Adversaries may attempt to get a listing of network connections to 
   by querying for information over the network.
 detection:
   SELECTION_1:
+    EventID: 400
+  SELECTION_2:
+    Channel: Windows PowerShell
+  SELECTION_3:
     HostApplication: '*Get-NetTCPConnection*'
-  condition: SELECTION_1
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: b366adb4-d63d-422d-8a2c-186463b5ded0

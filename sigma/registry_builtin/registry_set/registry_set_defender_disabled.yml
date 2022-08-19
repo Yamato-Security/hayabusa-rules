@@ -1,0 +1,52 @@
+
+title: Windows Defender Threat Detection Disabled - Registry
+ruletype: Sigma
+author: Ján Trenčanský, frack113, AlertIQ
+date: 2020/07/28
+description: Detects disabling Windows Defender threat protection
+detection:
+  SELECTION_1:
+    EventID: 4657
+  SELECTION_2:
+    OperationType:
+    - Existing registry value modified
+  SELECTION_3:
+    Channel: Security
+  SELECTION_4:
+    EventType: SetValue
+  SELECTION_5:
+    TargetObject:
+    - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware
+    - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiVirus
+  SELECTION_6:
+    NewValue: DWORD (0x00000001)
+  SELECTION_7:
+    EventType: SetValue
+  SELECTION_8:
+    TargetObject:
+    - HKLM\SYSTEM\CurrentControlSet\Services\WinDefend
+    - HKLM\SOFTWARE\Microsoft\Windows Defender
+    - HKLM\SOFTWARE\Policies\Microsoft\Windows Defender
+  SELECTION_9:
+    NewValue: DWORD (0x00000001)
+  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
+    SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
+falsepositives:
+- Administrator actions
+id: a64e4198-c1c8-46a5-bc9c-324c86455fd4
+level: high
+logsource:
+  category: registry_set
+  product: windows
+modified: 2022/05/04
+references:
+- https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-antivirus/troubleshoot-windows-defender-antivirus
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1562.001/T1562.001.md
+- https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/
+related:
+- id: fe34868f-6e0e-4882-81f6-c43aa8f15b62
+  type: derived
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001

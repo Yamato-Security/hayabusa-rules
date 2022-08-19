@@ -1,0 +1,44 @@
+
+title: Mavinject Inject DLL Into Running Process
+ruletype: Sigma
+author: frack113
+date: 2021/07/12
+description: Injects arbitrary DLL into running process specified by process ID. Requires
+  Windows 10.
+detection:
+  SELECTION_1:
+    EventID: 1
+  SELECTION_2:
+    Channel: Microsoft-Windows-Sysmon/Operational
+  SELECTION_3:
+    CommandLine: '* /INJECTRUNNING*'
+  SELECTION_4:
+    CommandLine: '*.dll*'
+  SELECTION_5:
+    OriginalFileName:
+    - mavinject32.exe
+    - mavinject64.exe
+  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unknown
+fields:
+- ComputerName
+- User
+- CommandLine
+- ParentCommandLine
+id: 4f73421b-5a0b-4bbf-a892-5a7fb99bea66
+level: medium
+logsource:
+  category: process_creation
+  product: windows
+modified: 2022/05/13
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218/T1218.md
+- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1056.004/T1056.004.md
+- https://posts.specterops.io/mavinject-exe-functionality-deconstructed-c29ab2cf5c0e
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.collection
+- attack.t1218.013
+- attack.t1056.004
