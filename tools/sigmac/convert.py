@@ -202,15 +202,11 @@ if __name__ == "__main__":
                     action="store_true")
     args = parser.parse_args()
 
-    # CHECK DIR
-    #convertpy_path = os.path.abspath(__file__) # Get PWD
-    #files = os.listdir(os.path.dirname(convertpy_path))
     files = os.listdir(SIGMAC_DIR)
     if "sigmac" not in files:
-        logger.error("Could not find sigmac in this directory. You must place convert.py in the sigma/tools directory.")
+        logger.error("Could not find sigmac in this directory. You must place convert.py in the sigma directory.")
         sys.exit(1)
     SIGMAC = os.path.join(SIGMAC_DIR, "sigmac")
-    #SIGMA_DIR = os.path.abspath(os.path.join(os.path.dirname(convertpy_path), ".."))
 
     # DEBUG MODE
     if args.debug:
