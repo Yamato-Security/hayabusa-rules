@@ -264,6 +264,10 @@ class HayabusaBackend(SingleTextQueryBackend):
         with StringIO() as bs:
             # 元のyamlをいじるとこの後の処理に影響を与える可能性があるので、deepCopyする
             parsed_yaml = copy.deepcopy(parsed.sigmaParser.parsedyaml)
+            if 'yml_filename' in parsed_yaml:
+                parsed_yaml.pop('yml_filename')
+            if 'yml_path' in parsed_yaml:
+                parsed_yaml.pop('yml_path')
 
             # なんかタイトルは先頭に来てほしいので、そのための処理
             # parsed.sigmaParser.parsedyamlがOrderedDictならこんなことしなくていい、後で別のやり方があるか調べる
