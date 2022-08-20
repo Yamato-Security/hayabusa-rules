@@ -111,10 +111,9 @@ class Logconverter():
         else:
             configs = set()
 
-        tmp = rule_path[len(self.rules_dir)+1:]
-        off = tmp.find("/")
-        rule_type = tmp[:off]
-        path_from_off = tmp[off+1:]
+        rule_path_from_rule_root = rule_path[len(self.rules_dir)+1:] # rm ./rules/windows
+        if rule_path_from_rule_root.startswith("builtin/"):
+            rule_path_from_rule_root = rule_path_from_rule_root[8:] # rm .builtin
 
         while True:
             if len(configs) > 0:
@@ -124,9 +123,9 @@ class Logconverter():
 
             logger.debug("  config: " + str(config))
             if config == "sysmon.yml" or sysmon_related == True:
-                output_path = os.path.join(EXPORT_DIR_NAME, "sysmon", rule_type, path_from_off)
+                output_path = os.path.join(EXPORT_DIR_NAME, "sysmon", rule_path_from_rule_root)
             else:
-                output_path = os.path.join(EXPORT_DIR_NAME, rule_type, path_from_off)
+                output_path = os.path.join(EXPORT_DIR_NAME, "builtin", rule_path_from_rule_root)
             output_dir = output_path[:-len(file_name)]
             logger.debug("  output_path: " + output_path)
             if not os.path.exists(output_dir):
