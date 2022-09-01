@@ -1,34 +1,33 @@
-
 title: HybridConnectionManager Service Installation
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2021/04/12
 description: Detects the installation of the Azure Hybrid Connection Manager service
-  to allow remote code execution from Azure function.
+    to allow remote code execution from Azure function.
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - New registry value created
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    TargetObject: '*\Services\HybridConnectionManager*'
-  SELECTION_5:
-    EventType: SetValue
-  SELECTION_6:
-    NewValue: '*Microsoft.HybridConnectionManager.Listener.exe*'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 or (SELECTION_5
-    and SELECTION_6)))
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - New registry value created
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        TargetObject: '*\Services\HybridConnectionManager*'
+    SELECTION_5:
+        EventType: SetValue
+    SELECTION_6:
+        NewValue: '*Microsoft.HybridConnectionManager.Listener.exe*'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 or
+        (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Unknown
 id: ac8866c7-ce44-46fd-8c17-b24acff96ca8
 level: high
 logsource:
-  category: registry_event
-  product: windows
+    category: registry_event
+    product: windows
 modified: 2022/01/13
 references:
 - https://twitter.com/Cyb3rWard0g/status/1381642789369286662
@@ -36,3 +35,4 @@ status: experimental
 tags:
 - attack.resource_development
 - attack.t1608
+

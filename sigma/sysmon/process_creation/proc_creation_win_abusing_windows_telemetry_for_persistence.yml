@@ -1,23 +1,22 @@
-
 title: Abusing Windows Telemetry For Persistence
 ruletype: Sigma
 author: Sreeman
 date: 2020/09/29
 description: Windows telemetry makes use of the binary CompatTelRunner.exe to run
-  a variety of commands and perform the actual telemetry collections. This binary
-  was created to be easily extensible, and to that end, it relies on the registry
-  to instruct on which commands to run. The problem is, it will run any arbitrary
-  command without restriction of location or type.
+    a variety of commands and perform the actual telemetry collections. This binary
+    was created to be easily extensible, and to that end, it relies on the registry
+    to instruct on which commands to run. The problem is, it will run any arbitrary
+    command without restriction of location or type.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*schtasks*'
-  SELECTION_4:
-    CommandLine: '*\Application Experience\Microsoft Compatibility Appraiser*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*schtasks*'
+    SELECTION_4:
+        CommandLine: '*\Application Experience\Microsoft Compatibility Appraiser*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 fields:
@@ -28,8 +27,8 @@ fields:
 id: f548a603-c9f2-4c89-b511-b089f7e94549
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/02/21
 references:
 - https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/
@@ -39,3 +38,4 @@ tags:
 - attack.persistence
 - attack.t1112
 - attack.t1053
+

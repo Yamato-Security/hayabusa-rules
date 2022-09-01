@@ -1,0 +1,36 @@
+title: Suspicious Execution of InstallUtil To Download
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/19
+description: Detects the use the .NET InstallUtil.exe application in order to download
+    arbitrary files. The files will be written to %LOCALAPPDATA%\Microsoft\Windows\INetCache\IE\
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\InstallUtil.exe'
+    SELECTION_4:
+        OriginalFileName: InstallUtil.exe
+    SELECTION_5:
+        CommandLine:
+        - '*http://*'
+        - '*https://*'
+        - '*ftp://*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: 75edd216-1939-4c73-8d61-7f3a0d85b5cc
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/LOLBAS-Project/LOLBAS/pull/239
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218
+

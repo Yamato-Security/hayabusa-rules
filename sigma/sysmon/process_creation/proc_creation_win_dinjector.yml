@@ -1,34 +1,33 @@
-
 title: DInject PowerShell Cradle CommandLine Flags
 ruletype: Sigma
 author: Florian Roth
 date: 2021/12/07
 description: Detects the use of the Dinject PowerShell cradle based on the specific
-  flags
+    flags
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '* /am51*'
-    - '* /password*'
-  SELECTION_4:
-    CommandLine: '* /PASSWORDCHG*'
-  SELECTION_5:
-    ParentImage:
-    - C:\Program Files\CEETIS\CEETIS_IDE.exe
-    - C:\Program Files (x86)\CEETIS\CEETIS_IDE.exe
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-    or SELECTION_5)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '* /am51*'
+        - '* /password*'
+    SELECTION_4:
+        CommandLine: '* /PASSWORDCHG*'
+    SELECTION_5:
+        ParentImage:
+        - C:\Program Files\CEETIS\CEETIS_IDE.exe
+        - C:\Program Files (x86)\CEETIS\CEETIS_IDE.exe
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        or SELECTION_5)))
 falsepositives:
 - Unlikely
 id: d78b5d61-187d-44b6-bf02-93486a80de5a
 level: critical
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/03/07
 references:
 - https://github.com/snovvcrash/DInjector
@@ -36,3 +35,4 @@ status: test
 tags:
 - attack.defense_evasion
 - attack.t1055
+

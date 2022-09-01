@@ -1,0 +1,31 @@
+title: REGISTER_APP.VBS Proxy Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/19
+description: Detects the use of a Microsoft signed script 'REGISTER_APP.VBS' to register
+    a VSS/VDS Provider as a COM+ application.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*\register_app.vbs*'
+    SELECTION_4:
+        CommandLine: '*-register*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate usage of the script. Always investigate what's being registered to confirm
+    if it's benign
+id: 1c8774a0-44d4-4db0-91f8-e792359c70bd
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/sblmsrsn/status/1456613494783160325?s=20
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218
+

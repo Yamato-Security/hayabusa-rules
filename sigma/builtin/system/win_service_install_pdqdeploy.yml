@@ -1,35 +1,36 @@
-
 title: New PDQDeploy Service - Server Side
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/22
 description: |
-  Detects a PDQDeploy service installation which indicates that PDQDeploy was installed on the machines.
-  PDQDeploy can be abused by attackers to remotely install packages or execute commands on target machines
+    Detects a PDQDeploy service installation which indicates that PDQDeploy was installed on the machines.
+    PDQDeploy can be abused by attackers to remotely install packages or execute commands on target machines
 detection:
-  SELECTION_1:
-    Channel: System
-  SELECTION_2:
-    Provider_Name: Service Control Manager
-  SELECTION_3:
-    EventID: 7045
-  SELECTION_4:
-    ImagePath: '*PDQDeployService.exe*'
-  SELECTION_5:
-    ServiceName:
-    - PDQDeploy
-    - PDQ Deploy
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and (SELECTION_4 or SELECTION_5))
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7045
+    SELECTION_4:
+        ImagePath: '*PDQDeployService.exe*'
+    SELECTION_5:
+        ServiceName:
+        - PDQDeploy
+        - PDQ Deploy
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and (SELECTION_4 or
+        SELECTION_5))
 falsepositives:
 - Legitimate use of the tool
 id: ee9ca27c-9bd7-4cee-9b01-6e906be7cae3
 level: medium
 logsource:
-  product: windows
-  service: system
+    product: windows
+    service: system
 references:
 - https://documentation.pdq.com/PDQDeploy/13.0.3.0/index.html?windows-services.htm
 status: experimental
 tags:
 - attack.privilege_escalation
 - attack.t1543.003
+

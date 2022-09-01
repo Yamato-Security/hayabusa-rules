@@ -1,27 +1,27 @@
-
 title: DNS Query for Ufile.io Upload Domain
 ruletype: Sigma
 author: yatinwad and TheDFIRReport
 date: 2022/06/23
 description: Detects DNS queries for subdomains used for upload to ufile.io
 detection:
-  SELECTION_1:
-    EventID: 22
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    QueryName: '*ufile.io*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 22
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        QueryName: '*ufile.io*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate Ufile upload
 id: 1cbbeaaf-3c8c-4e4c-9d72-49485b6a176b
 level: high
 logsource:
-  category: dns_query
-  product: windows
+    category: dns_query
+    product: windows
 references:
 - https://thedfirreport.com/2021/12/13/diavol-ransomware/
 status: experimental
 tags:
 - attack.exfiltration
 - attack.t1567.002
+

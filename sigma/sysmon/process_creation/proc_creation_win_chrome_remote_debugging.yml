@@ -1,34 +1,35 @@
-
 title: Browser Started with Remote Debugging
 ruletype: Sigma
 author: pH-T
 date: 2022/07/27
 description: Detects starting browser with remote debugging flag, may be used for
-  browser injection attacks
+    browser injection attacks
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '* --remote-debugging-address=*'
-    - '* --remote-debugging-port=*'
-  SELECTION_4:
-    Image: '*\firefox.exe'
-  SELECTION_5:
-    CommandLine: '* -start-debugger-server *'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '* --remote-debugging-address=*'
+        - '* --remote-debugging-port=*'
+    SELECTION_4:
+        Image: '*\firefox.exe'
+    SELECTION_5:
+        CommandLine: '* -start-debugger-server *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5)))
 falsepositives:
 - Unknown
 id: b3d34dc5-2efd-4ae3-845f-8ec14921f449
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://yoroi.company/wp-content/uploads/2022/05/EternityGroup_report_compressed.pdf
 status: experimental
 tags:
 - attack.credential_access
 - attack.t1185
+

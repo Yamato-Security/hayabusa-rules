@@ -1,26 +1,25 @@
-
 title: Suspicious SYSVOL Domain Group Policy Access
 ruletype: Sigma
 author: Markus Neis, Jonhnathan Ribeiro, oscd.community
 date: 2018/04/09
 description: Detects Access to Domain Group Policies stored in SYSVOL
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    CommandLine: '*\SYSVOL\\*'
-  SELECTION_4:
-    CommandLine: '*\policies\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*\SYSVOL\\*'
+    SELECTION_4:
+        CommandLine: '*\policies\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Administrative activity
 id: 05f3c945-dcc8-4393-9f3d-af65077a8f86
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/01/07
 references:
 - https://adsecurity.org/?p=2288
@@ -29,3 +28,4 @@ status: test
 tags:
 - attack.credential_access
 - attack.t1552.006
+

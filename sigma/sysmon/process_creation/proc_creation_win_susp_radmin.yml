@@ -1,29 +1,28 @@
-
 title: Use Radmin Viewer Utility
 ruletype: Sigma
 author: frack113
 date: 2022/01/22
 description: An adversary may use Radmin Viewer Utility to remotely control Windows
-  device
+    device
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Description: Radmin Viewer
-  SELECTION_4:
-    Product: Radmin Viewer
-  SELECTION_5:
-    OriginalFileName: Radmin.exe
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Description: Radmin Viewer
+    SELECTION_4:
+        Product: Radmin Viewer
+    SELECTION_5:
+        OriginalFileName: Radmin.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unknown
 id: 5817e76f-4804-41e6-8f1d-5fa0b3ecae2d
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1072/T1072.md
 - https://www.radmin.fr/
@@ -32,3 +31,4 @@ tags:
 - attack.execution
 - attack.lateral_movement
 - attack.t1072
+

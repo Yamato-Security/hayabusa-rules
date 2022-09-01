@@ -1,27 +1,26 @@
-
 title: Use of Remote.exe
 ruletype: Sigma
 author: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io
 date: 2022/06/02
 description: Remote.exe is part of WinDbg in the Windows SDK and can be used for AWL
-  bypass and running remote files.
+    bypass and running remote files.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\remote.exe'
-  SELECTION_4:
-    OriginalFileName: remote.exe
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\remote.exe'
+    SELECTION_4:
+        OriginalFileName: remote.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Approved installs of Windows SDK with Debugging Tools for Windows (WinDbg).
 id: 4eddc365-79b4-43ff-a9d7-99422dc34b93
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://blog.thecybersecuritytutor.com/Exeuction-AWL-Bypass-Remote-exe-LOLBin/
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Remote/
@@ -29,3 +28,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1127
+

@@ -1,30 +1,30 @@
-
 title: Microsoft Defender Tamper Protection Trigger
 ruletype: Sigma
 author: Bhabesh Raj
 date: 2021/07/05
 description: Detects block of attempt to disable real time protection of Microsoft
-  Defender by tamper protection
+    Defender by tamper protection
 detection:
-  SELECTION_1:
-    Channel: Microsoft-Windows-Windows Defender/Operational
-  SELECTION_2:
-    EventID: 5013
-  SELECTION_3:
-    Value:
-    - '*\Windows Defender\DisableAntiSpyware = 0x1()'
-    - '*\Real-Time Protection\DisableRealtimeMonitoring = (Current)'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        Channel: Microsoft-Windows-Windows Defender/Operational
+    SELECTION_2:
+        EventID: 5013
+    SELECTION_3:
+        Value:
+        - '*\Windows Defender\DisableAntiSpyware = 0x1()'
+        - '*\Real-Time Protection\DisableRealtimeMonitoring = (Current)'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Administrator actions
 id: 49e5bc24-8b86-49f1-b743-535f332c2856
 level: high
 logsource:
-  product: windows
-  service: windefend
+    product: windows
+    service: windefend
 references:
 - https://bhabeshraj.com/post/tampering-with-microsoft-defenders-tamper-protection
 status: stable
 tags:
 - attack.defense_evasion
 - attack.t1562.001
+

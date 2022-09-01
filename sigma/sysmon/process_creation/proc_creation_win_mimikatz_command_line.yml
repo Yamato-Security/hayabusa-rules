@@ -1,59 +1,58 @@
-
 title: Mimikatz Command Line
 ruletype: Sigma
 author: Teymur Kheirkhabarov, oscd.community, David ANDRE (additional keywords), Tim
-  Shelton
+    Shelton
 date: 2019/10/22
 description: Detection well-known mimikatz command line arguments
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '*DumpCreds*'
-    - '*invoke-mimikatz*'
-  SELECTION_4:
-    CommandLine:
-    - '*rpc*'
-    - '*token*'
-    - '*crypto*'
-    - '*dpapi*'
-    - '*sekurlsa*'
-    - '*kerberos*'
-    - '*lsadump*'
-    - '*privilege*'
-    - '*process*'
-    - '*vault*'
-  SELECTION_5:
-    CommandLine: '*::*'
-  SELECTION_6:
-    CommandLine:
-    - '*aadcookie*'
-    - '*detours*'
-    - '*memssp*'
-    - '*mflt*'
-    - '*ncroutemon*'
-    - '*ngcsign*'
-    - '*printnightmare*'
-    - '*skeleton*'
-    - '*preshutdown*'
-    - '*mstsc*'
-    - '*multirdp*'
-  SELECTION_7:
-    CommandLine: '*::*'
-  SELECTION_8:
-    CommandLine: '*function Convert-GuidToCompressedGuid*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
-    SELECTION_5)) or (SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8)))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '*DumpCreds*'
+        - '*invoke-mimikatz*'
+    SELECTION_4:
+        CommandLine:
+        - '*rpc*'
+        - '*token*'
+        - '*crypto*'
+        - '*dpapi*'
+        - '*sekurlsa*'
+        - '*kerberos*'
+        - '*lsadump*'
+        - '*privilege*'
+        - '*process*'
+        - '*vault*'
+    SELECTION_5:
+        CommandLine: '*::*'
+    SELECTION_6:
+        CommandLine:
+        - '*aadcookie*'
+        - '*detours*'
+        - '*memssp*'
+        - '*mflt*'
+        - '*ncroutemon*'
+        - '*ngcsign*'
+        - '*printnightmare*'
+        - '*skeleton*'
+        - '*preshutdown*'
+        - '*mstsc*'
+        - '*multirdp*'
+    SELECTION_7:
+        CommandLine: '*::*'
+    SELECTION_8:
+        CommandLine: '*function Convert-GuidToCompressedGuid*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
+        SELECTION_5)) or (SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8)))
 falsepositives:
 - Legitimate Administrator using tool for password recovery
 id: a642964e-bead-4bed-8910-1bb4d63e3b4d
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/02/07
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
@@ -66,3 +65,4 @@ tags:
 - attack.t1003.004
 - attack.t1003.005
 - attack.t1003.006
+

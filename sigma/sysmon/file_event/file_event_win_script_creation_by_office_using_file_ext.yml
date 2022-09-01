@@ -1,63 +1,62 @@
-
 title: Created Files by Office Applications
 ruletype: Sigma
 author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule)
 date: 2021/08/23
 description: This rule will monitor executable and script file creation by office
-  applications. Please add more file extensions or magic bytes to the logic of your
-  choice.
+    applications. Please add more file extensions or magic bytes to the logic of your
+    choice.
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_10:
-    TargetFilename: '*\AppData\Local\Temp\webexdelta\\*'
-  SELECTION_11:
-    TargetFilename:
-    - '*.dll'
-    - '*.exe'
-  SELECTION_12:
-    TargetFilename: '*\AppData\Local\assembly\tmp\\*'
-  SELECTION_13:
-    TargetFilename: '*.dll'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image:
-    - '*\winword.exe'
-    - '*\excel.exe'
-    - '*\powerpnt.exe'
-  SELECTION_4:
-    TargetFilename:
-    - '*.exe'
-    - '*.dll'
-    - '*.ocx'
-    - '*.com'
-    - '*.ps1'
-    - '*.vbs'
-    - '*.sys'
-    - '*.bat'
-    - '*.scr'
-    - '*.proj'
-  SELECTION_5:
-    TargetFilename: '*C:\Users\\*'
-  SELECTION_6:
-    TargetFilename: '*\AppData\Local\Microsoft\Office\\*'
-  SELECTION_7:
-    TargetFilename: '*\WebServiceCache\AllUsers*'
-  SELECTION_8:
-    TargetFilename: '*.com'
-  SELECTION_9:
-    Image: '*\winword.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-    and SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13)))
+    SELECTION_1:
+        EventID: 11
+    SELECTION_10:
+        TargetFilename: '*\AppData\Local\Temp\webexdelta\\*'
+    SELECTION_11:
+        TargetFilename:
+        - '*.dll'
+        - '*.exe'
+    SELECTION_12:
+        TargetFilename: '*\AppData\Local\assembly\tmp\\*'
+    SELECTION_13:
+        TargetFilename: '*.dll'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\winword.exe'
+        - '*\excel.exe'
+        - '*\powerpnt.exe'
+    SELECTION_4:
+        TargetFilename:
+        - '*.exe'
+        - '*.dll'
+        - '*.ocx'
+        - '*.com'
+        - '*.ps1'
+        - '*.vbs'
+        - '*.sys'
+        - '*.bat'
+        - '*.scr'
+        - '*.proj'
+    SELECTION_5:
+        TargetFilename: '*C:\Users\\*'
+    SELECTION_6:
+        TargetFilename: '*\AppData\Local\Microsoft\Office\\*'
+    SELECTION_7:
+        TargetFilename: '*\WebServiceCache\AllUsers*'
+    SELECTION_8:
+        TargetFilename: '*.com'
+    SELECTION_9:
+        Image: '*\winword.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13)))
 falsepositives:
 - Unknown
 id: c7a74c80-ba5a-486e-9974-ab9e682bc5e4
 level: high
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/07/11
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
@@ -66,3 +65,4 @@ status: experimental
 tags:
 - attack.t1204.002
 - attack.execution
+

@@ -1,0 +1,32 @@
+title: Script Initiated Connection
+ruletype: Sigma
+author: frack113
+date: 2022/08/28
+description: Detects a script interpreter wscript/cscript opening a network connection.
+    Adversaries may use script to download malicious payloads.
+detection:
+    SELECTION_1:
+        EventID: 3
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Initiated: 'true'
+    SELECTION_4:
+        Image:
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate scripts
+id: 08249dc0-a28d-4555-8ba5-9255a198e08c
+level: medium
+logsource:
+    category: network_connection
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/28d190330fe44de6ff4767fc400cc10fa7cd6540/atomics/T1105/T1105.md
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1105
+

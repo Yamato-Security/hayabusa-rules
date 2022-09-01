@@ -1,37 +1,36 @@
-
 title: Metasploit SMB Authentication
 ruletype: Sigma
 author: Chakib Gzenayi (@Chak092), Hosni Mribah
 date: 2020/05/06
 description: Alerts on Metasploit host's authentications on the domain.
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    EventID: 4625
-  SELECTION_3:
-    EventID: 4624
-  SELECTION_4:
-    LogonType: 3
-  SELECTION_5:
-    AuthenticationPackageName: NTLM
-  SELECTION_6:
-    WorkstationName|re: ^[A-Za-z0-9]{16}$
-  SELECTION_7:
-    ProcessName|re: ^$
-  SELECTION_8:
-    EventID: 4776
-  SELECTION_9:
-    Workstation|re: ^[A-Za-z0-9]{16}$
-  condition: (SELECTION_1 and (((SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 4625
+    SELECTION_3:
+        EventID: 4624
+    SELECTION_4:
+        LogonType: 3
+    SELECTION_5:
+        AuthenticationPackageName: NTLM
+    SELECTION_6:
+        WorkstationName|re: ^[A-Za-z0-9]{16}$
+    SELECTION_7:
+        ProcessName|re: ^$
+    SELECTION_8:
+        EventID: 4776
+    SELECTION_9:
+        Workstation|re: ^[A-Za-z0-9]{16}$
+    condition: (SELECTION_1 and (((SELECTION_2 or SELECTION_3) and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Linux hostnames composed of 16 characters.
 id: 72124974-a68b-4366-b990-d30e0b2a190d
 level: high
 logsource:
-  product: windows
-  service: security
+    product: windows
+    service: security
 modified: 2021/07/07
 references:
 - https://github.com/rapid7/metasploit-framework/blob/1416b5776d963f21b7b5b45d19f3e961201e0aed/lib/rex/proto/smb/client.rb
@@ -39,3 +38,4 @@ status: experimental
 tags:
 - attack.lateral_movement
 - attack.t1021.002
+

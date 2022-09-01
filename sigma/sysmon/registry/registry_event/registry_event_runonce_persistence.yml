@@ -1,44 +1,44 @@
-
 title: Run Once Task Configuration in Registry
 ruletype: Sigma
 author: Avneet Singh @v3t0_, oscd.community
 date: 2020/11/15
 description: Rule to detect the configuration of Run Once registry key. Configured
-  payload can be run by runonce.exe /AlternateShellStartup
+    payload can be run by runonce.exe /AlternateShellStartup
 detection:
-  SELECTION_1:
-    EventID: 12
-  SELECTION_10:
-    Details: '*\Installer\setup.exe" --configure-user-settings --verbose-logging --system-level
-      --msedge --channel=stable'
-  SELECTION_2:
-    EventID: 13
-  SELECTION_3:
-    EventID: 14
-  SELECTION_4:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_5:
-    TargetObject: HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components*
-  SELECTION_6:
-    TargetObject: '*\StubPath'
-  SELECTION_7:
-    Details: '"C:\Program Files\Google\Chrome\Application\\*'
-  SELECTION_8:
-    Details: '*\Installer\chrmstp.exe" --configure-user-settings --verbose-logging
-      --system-level'
-  SELECTION_9:
-    Details:
-    - '"C:\Program Files (x86)\Microsoft\Edge\Application\\*'
-    - '"C:\Program Files\Microsoft\Edge\Application\\*'
-  condition: (((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4) and (SELECTION_5
-    and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8) or (SELECTION_9 and SELECTION_10)))
+    SELECTION_1:
+        EventID: 12
+    SELECTION_10:
+        Details: '*\Installer\setup.exe" --configure-user-settings --verbose-logging
+            --system-level --msedge --channel=stable'
+    SELECTION_2:
+        EventID: 13
+    SELECTION_3:
+        EventID: 14
+    SELECTION_4:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_5:
+        TargetObject: HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components*
+    SELECTION_6:
+        TargetObject: '*\StubPath'
+    SELECTION_7:
+        Details: '"C:\Program Files\Google\Chrome\Application\\*'
+    SELECTION_8:
+        Details: '*\Installer\chrmstp.exe" --configure-user-settings --verbose-logging
+            --system-level'
+    SELECTION_9:
+        Details:
+        - '"C:\Program Files (x86)\Microsoft\Edge\Application\\*'
+        - '"C:\Program Files\Microsoft\Edge\Application\\*'
+    condition: (((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4) and
+        (SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10)))
 falsepositives:
 - Legitimate modification of the registry key by legitimate program
 id: c74d7efc-8826-45d9-b8bb-f04fac9e4eff
 level: medium
 logsource:
-  category: registry_event
-  product: windows
+    category: registry_event
+    product: windows
 modified: 2022/04/04
 references:
 - https://twitter.com/pabraeken/status/990717080805789697
@@ -47,3 +47,4 @@ status: test
 tags:
 - attack.defense_evasion
 - attack.t1112
+

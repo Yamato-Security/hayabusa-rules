@@ -1,36 +1,36 @@
-
 title: Suspicious Startup Folder Persistence
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/08/10
 description: Detects when a file with a suspicious extension is created in the startup
-  folder
+    folder
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*\Windows\Start Menu\Programs\Startup\\*'
-  SELECTION_4:
-    TargetFilename:
-    - '*.vbs'
-    - '*.vbe'
-    - '*.bat'
-    - '*.ps1'
-    - '*.hta'
-    - '*.dll'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*\Windows\Start Menu\Programs\Startup\\*'
+    SELECTION_4:
+        TargetFilename:
+        - '*.vbs'
+        - '*.vbe'
+        - '*.bat'
+        - '*.ps1'
+        - '*.hta'
+        - '*.dll'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Rare legitimate usage of some of the extensions mentioned in the rule
 id: 28208707-fe31-437f-9a7f-4b1108b94d2e
 level: high
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 references:
 - https://github.com/last-byte/PersistenceSniper
 status: experimental
 tags:
 - attack.persistence
 - attack.t1547.001
+

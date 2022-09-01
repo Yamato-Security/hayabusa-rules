@@ -1,0 +1,38 @@
+title: Sideloading Link.EXE
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/22
+description: Detects the execution utitilies often found in Visual Studio tools that
+    hardcode the call to the binary "link.exe". They can be abused to sideload any
+    binary with the same name
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\link.exe'
+    SELECTION_4:
+        CommandLine: '*LINK /*'
+    SELECTION_5:
+        ParentImage:
+        - C:\Program Files\Microsoft Visual Studio\\*
+        - C:\Program Files (x86)\Microsoft Visual Studio\\*
+    SELECTION_6:
+        ParentImage: '*\VC\Tools\MSVC\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5 and SELECTION_6)))
+falsepositives:
+- Unknown
+id: 6e968eb1-5f05-4dac-94e9-fd0c5cb49fd6
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/0gtweet/status/1560732860935729152
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218
+

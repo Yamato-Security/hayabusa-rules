@@ -1,0 +1,39 @@
+title: Reg Add Suspicious Path To AppDataLow
+ruletype: Sigma
+author: frack113
+date: 2022/08/19
+description: Detects when an adversary uses the 'AppDataLow' subkeys as a place to
+    store data as seen in the URSNIF phishing campaign
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\reg.exe'
+    SELECTION_4:
+        OriginalFileName: reg.exe
+    SELECTION_5:
+        CommandLine:
+        - '*\Software\AppDataLow\Software\Microsoft\\*'
+        - '*\Software\Policies\Microsoft\Windows\OOBE*'
+        - '*\Software\Policies\Microsoft\Windows NT\CurrentVersion\Winlogon*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Legitimate use
+id: b7e2a8d4-74bb-4b78-adc9-3f92af2d4829
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/08/20
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1112/T1112.md
+- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1562.001/T1562.001.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1112
+- attack.t1562.001
+

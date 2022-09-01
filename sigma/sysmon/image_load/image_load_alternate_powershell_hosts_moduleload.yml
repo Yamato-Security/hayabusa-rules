@@ -1,38 +1,37 @@
-
 title: Alternate PowerShell Hosts
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2019/09/12
 description: Detects alternate PowerShell hosts potentially bypassing detections looking
-  for powershell.exe
+    for powershell.exe
 detection:
-  SELECTION_1:
-    EventID: 7
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Description: System.Management.Automation
-  SELECTION_4:
-    ImageLoaded: '*System.Management.Automation*'
-  SELECTION_5:
-    Image:
-    - '*\powershell.exe'
-    - '*\mscorsvw.exe'
-  SELECTION_6:
-    Image:
-    - C:\Program Files (x86)\Microsoft Visual Studio\\*
-    - C:\Program Files\Microsoft Visual Studio\\*
-    - C:\Windows\System32\\*
-    - C:\Program Files\Citrix\ConfigSync\\*
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5 or SELECTION_6))
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Description: System.Management.Automation
+    SELECTION_4:
+        ImageLoaded: '*System.Management.Automation*'
+    SELECTION_5:
+        Image:
+        - '*\powershell.exe'
+        - '*\mscorsvw.exe'
+    SELECTION_6:
+        Image:
+        - C:\Program Files (x86)\Microsoft Visual Studio\\*
+        - C:\Program Files\Microsoft Visual Studio\\*
+        - C:\Windows\System32\\*
+        - C:\Program Files\Citrix\ConfigSync\\*
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5 or SELECTION_6))
 falsepositives:
 - Unknown
 id: fe6e002f-f244-4278-9263-20e4b593827f
 level: low
 logsource:
-  category: image_load
-  product: windows
+    category: image_load
+    product: windows
 modified: 2022/02/21
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190610201010.html
@@ -40,3 +39,4 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1059.001
+

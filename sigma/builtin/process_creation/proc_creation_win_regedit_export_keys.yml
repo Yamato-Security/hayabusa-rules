@@ -1,31 +1,30 @@
-
 title: Exports Registry Key To a File
 ruletype: Sigma
 author: Oddvar Moe, Sander Wiebing, oscd.community
 date: 2020/10/07
 description: Detects the export of the target Registry key to a file.
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\regedit.exe'
-  SELECTION_4:
-    CommandLine:
-    - '* /E *'
-    - '* -E *'
-  SELECTION_5:
-    CommandLine:
-    - '*hklm*'
-    - '*hkey_local_machine*'
-  SELECTION_6:
-    CommandLine:
-    - '*\system'
-    - '*\sam'
-    - '*\security'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5) and (SELECTION_6)))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\regedit.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* /E *'
+        - '* -E *'
+    SELECTION_5:
+        CommandLine:
+        - '*hklm*'
+        - '*hkey_local_machine*'
+    SELECTION_6:
+        CommandLine:
+        - '*\system'
+        - '*\sam'
+        - '*\security'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5) and (SELECTION_6)))
 falsepositives:
 - Legitimate export of keys
 fields:
@@ -34,8 +33,8 @@ fields:
 id: f0e53e89-8d22-46ea-9db5-9d4796ee2f8a
 level: low
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/07
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Regedit/
@@ -44,3 +43,4 @@ status: test
 tags:
 - attack.exfiltration
 - attack.t1012
+

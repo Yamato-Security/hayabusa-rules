@@ -1,37 +1,36 @@
-
 title: Suspicious Processes Spawned by WinRM
 ruletype: Sigma
 author: Andreas Hunkeler (@Karneades), Markus Neis
 date: 2021/05/20
 description: Detects suspicious processes including shells spawnd from WinRM host
-  process
+    process
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    ParentProcessName: '*\wsmprovhost.exe'
-  SELECTION_4:
-    NewProcessName:
-    - '*\cmd.exe'
-    - '*\sh.exe'
-    - '*\bash.exe'
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-    - '*\wsl.exe'
-    - '*\schtasks.exe'
-    - '*\certutil.exe'
-    - '*\whoami.exe'
-    - '*\bitsadmin.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\wsmprovhost.exe'
+    SELECTION_4:
+        NewProcessName:
+        - '*\cmd.exe'
+        - '*\sh.exe'
+        - '*\bash.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\wsl.exe'
+        - '*\schtasks.exe'
+        - '*\certutil.exe'
+        - '*\whoami.exe'
+        - '*\bitsadmin.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate WinRM usage
 id: 5cc2cda8-f261-4d88-a2de-e9e193c86716
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 status: experimental
 tags:
@@ -39,3 +38,4 @@ tags:
 - attack.initial_access
 - attack.persistence
 - attack.privilege_escalation
+

@@ -1,0 +1,36 @@
+title: Persistence Via TypedPaths
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/22
+description: Detects modification addition to the 'TypedPaths' key in the user or
+    admin registry from a non standard application. Which might indicate persistence
+    attempt
+detection:
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths\\*'
+    SELECTION_5:
+        Image:
+        - C:\Windows\explorer.exe
+        - C:\Windows\SysWOW64\explorer.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
+falsepositives:
+- Unlikely
+id: 086ae989-9ca6-4fe7-895a-759c5544f247
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://twitter.com/dez_/status/1560101453150257154
+- https://forensafe.com/blogs/typedpaths.html
+status: experimental
+tags:
+- attack.persistence
+

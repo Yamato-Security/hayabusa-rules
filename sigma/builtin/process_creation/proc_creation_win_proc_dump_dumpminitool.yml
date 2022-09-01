@@ -1,31 +1,30 @@
-
 title: DumpMinitool Usage
 ruletype: Sigma
 author: Florian Roth
 date: 2022/04/06
 description: Detects the use of a Visual Studio bundled tool named DumpMinitool.exe
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\DumpMinitool.exe'
-  SELECTION_4:
-    OriginalName: DumpMinitool.exe
-  SELECTION_5:
-    CommandLine: '* --processId *'
-  SELECTION_6:
-    CommandLine: '* --dumpType Full*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
-    and SELECTION_6)))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\DumpMinitool.exe'
+    SELECTION_4:
+        OriginalName: DumpMinitool.exe
+    SELECTION_5:
+        CommandLine: '* --processId *'
+    SELECTION_6:
+        CommandLine: '* --dumpType Full*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
+        and SELECTION_6)))
 falsepositives:
 - Unknown
 id: dee0a7a3-f200-4112-a99b-952196d81e42
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://twitter.com/mrd0x/status/1511415432888131586?s=20&t=DvVrzeZ1OcGiWowbhPV8Lg
 - https://twitter.com/mrd0x/status/1511489821247684615
@@ -34,3 +33,4 @@ tags:
 - attack.defense_evasion
 - attack.t1036
 - attack.t1003.001
+

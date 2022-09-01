@@ -1,38 +1,37 @@
-
 title: PowerShell Writing Startup Shortcuts
 ruletype: Sigma
 author: Christopher Peacock '@securepeacock', SCYTHE
 date: 2021/10/24
 description: Attempts to detect PowerShell writing startup shortcuts. This procedure
-  was highlighted in Red Canary Intel Insights Oct. 2021, "We frequently observe adversaries
-  using PowerShell to write malicious .lnk files into the startup directory to establish
-  persistence. Accordingly, this detection opportunity is likely to identify persistence
-  mechanisms in multiple threats. In the context of Yellow Cockatoo, this persistence
-  mechanism eventually launches the command-line script that leads to the installation
-  of a malicious DLL"
+    was highlighted in Red Canary Intel Insights Oct. 2021, "We frequently observe
+    adversaries using PowerShell to write malicious .lnk files into the startup directory
+    to establish persistence. Accordingly, this detection opportunity is likely to
+    identify persistence mechanisms in multiple threats. In the context of Yellow
+    Cockatoo, this persistence mechanism eventually launches the command-line script
+    that leads to the installation of a malicious DLL"
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image:
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-  SELECTION_4:
-    TargetFilename: '*\start menu\programs\startup\\*'
-  SELECTION_5:
-    TargetFilename: '*.lnk'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        TargetFilename: '*\start menu\programs\startup\\*'
+    SELECTION_5:
+        TargetFilename: '*.lnk'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 - Depending on your environment accepted applications may leverage this at times.
-  It is recomended to search for anomolies inidicative of malware.
+    It is recommended to search for anomalies inidicative of malware.
 id: 92fa78e7-4d39-45f1-91a3-8b23f3f1088d
 level: high
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/08/10
 references:
 - https://redcanary.com/blog/intelligence-insights-october-2021/
@@ -41,3 +40,4 @@ status: experimental
 tags:
 - attack.persistence
 - attack.t1547.001
+

@@ -1,43 +1,42 @@
-
 title: Persistence Via New SIP Provider
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/21
 description: Detects when an attacker register a new SIP provider for persistence
-  and defense evasion
+    and defense evasion
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: SetValue
-  SELECTION_5:
-    TargetObject:
-    - '*\SOFTWARE\Microsoft\Cryptography\Providers\\*'
-    - '*\SOFTWARE\Microsoft\Cryptography\OID\EncodingType*'
-    - '*\SOFTWARE\WOW6432Node\Microsoft\Cryptography\Providers\\*'
-    - '*\SOFTWARE\WOW6432Node\Microsoft\Cryptography\OID\EncodingType*'
-  SELECTION_6:
-    TargetObject:
-    - '*\Dll*'
-    - '*\$DLL*'
-  SELECTION_7:
-    NewValue:
-    - WINTRUST.DLL
-    - mso.dll
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5
-    and SELECTION_6) and  not (SELECTION_7))
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject:
+        - '*\SOFTWARE\Microsoft\Cryptography\Providers\\*'
+        - '*\SOFTWARE\Microsoft\Cryptography\OID\EncodingType*'
+        - '*\SOFTWARE\WOW6432Node\Microsoft\Cryptography\Providers\\*'
+        - '*\SOFTWARE\WOW6432Node\Microsoft\Cryptography\OID\EncodingType*'
+    SELECTION_6:
+        TargetObject:
+        - '*\Dll*'
+        - '*\$DLL*'
+    SELECTION_7:
+        NewValue:
+        - WINTRUST.DLL
+        - mso.dll
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
 falsepositives:
 - Legitimate SIP being registered by the OS or different software.
 id: 5a2b21ee-6aaa-4234-ac9d-59a59edf90a1
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://persistence-info.github.io/Data/codesigning.html
 - https://github.com/gtworek/PSBits/tree/master/SIP
@@ -47,3 +46,4 @@ tags:
 - attack.persistence
 - attack.defense_evasion
 - attack.t1553.003
+

@@ -1,48 +1,47 @@
-
 title: DNS-over-HTTPS Enabled by Registry
 ruletype: Sigma
 author: Austin Songer
 date: 2021/07/22
 description: Detects when a user enables DNS-over-HTTPS. This can be used to hide
-  internet activity or be used to hide the process of exfiltrating data. With this
-  enabled organization will lose visibility into data such as query type, response
-  and originating IP that are used to determine bad actors.
+    internet activity or be used to hide the process of exfiltrating data. With this
+    enabled organization will lose visibility into data such as query type, response
+    and originating IP that are used to determine bad actors.
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_10:
-    EventType: SetValue
-  SELECTION_11:
-    TargetObject: '*\SOFTWARE\Policies\Mozilla\Firefox\DNSOverHTTPS\Enabled'
-  SELECTION_12:
-    NewValue: DWORD (0x00000001)
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: SetValue
-  SELECTION_5:
-    TargetObject: '*\SOFTWARE\Policies\Microsoft\Edge\BuiltInDnsClientEnabled'
-  SELECTION_6:
-    NewValue: DWORD (0x00000001)
-  SELECTION_7:
-    EventType: SetValue
-  SELECTION_8:
-    TargetObject: '*\SOFTWARE\Google\Chrome\DnsOverHttpsMode'
-  SELECTION_9:
-    NewValue: secure
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
-    SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)
-    or (SELECTION_10 and SELECTION_11 and SELECTION_12)))
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_10:
+        EventType: SetValue
+    SELECTION_11:
+        TargetObject: '*\SOFTWARE\Policies\Mozilla\Firefox\DNSOverHTTPS\Enabled'
+    SELECTION_12:
+        NewValue: DWORD (0x00000001)
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\SOFTWARE\Policies\Microsoft\Edge\BuiltInDnsClientEnabled'
+    SELECTION_6:
+        NewValue: DWORD (0x00000001)
+    SELECTION_7:
+        EventType: SetValue
+    SELECTION_8:
+        TargetObject: '*\SOFTWARE\Google\Chrome\DnsOverHttpsMode'
+    SELECTION_9:
+        NewValue: secure
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11 and SELECTION_12)))
 falsepositives:
 - Unlikely
 id: 04b45a8a-d11d-49e4-9acc-4a1b524407a5
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/03/26
 references:
 - https://www.tenforums.com/tutorials/151318-how-enable-disable-dns-over-https-doh-microsoft-edge.html
@@ -54,3 +53,4 @@ tags:
 - attack.defense_evasion
 - attack.t1140
 - attack.t1112
+

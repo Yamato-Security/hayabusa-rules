@@ -1,23 +1,22 @@
-
 title: Alternate PowerShell Hosts
 ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/08/11
 description: Detects alternate PowerShell hosts potentially bypassing detections looking
-  for powershell.exe
+    for powershell.exe
 detection:
-  SELECTION_1:
-    EventID: 400
-  SELECTION_2:
-    Channel: Windows PowerShell
-  SELECTION_3:
-    HostApplication: '*'
-  SELECTION_4:
-    HostApplication: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe*
-  SELECTION_5:
-    ContextInfo: '*Citrix\ConfigSync\ConfigSync.ps1*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-    or SELECTION_5))
+    SELECTION_1:
+        EventID: 400
+    SELECTION_2:
+        Channel: Windows PowerShell
+    SELECTION_3:
+        HostApplication: '*'
+    SELECTION_4:
+        HostApplication: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe*
+    SELECTION_5:
+        ContextInfo: '*Citrix\ConfigSync\ConfigSync.ps1*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
+        or SELECTION_5))
 falsepositives:
 - Programs using PowerShell directly without invocation of a dedicated interpreter
 - MSP Detection Searcher
@@ -25,16 +24,17 @@ falsepositives:
 id: d7326048-328b-4d5e-98af-86e84b17c765
 level: medium
 logsource:
-  category: ps_classic_start
-  definition: fields have to be extract from event
-  product: windows
+    category: ps_classic_start
+    definition: fields have to be extract from event
+    product: windows
 modified: 2022/02/21
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190815181010.html
 related:
-- id: 64e8e417-c19a-475a-8d19-98ea705394cc
-  type: derived
+-   id: 64e8e417-c19a-475a-8d19-98ea705394cc
+    type: derived
 status: test
 tags:
 - attack.execution
 - attack.t1059.001
+

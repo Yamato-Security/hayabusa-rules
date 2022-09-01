@@ -1,0 +1,58 @@
+title: Remote PowerShell Session (Network)
+ruletype: Sigma
+author: Roberto Rodriguez @Cyb3rWard0g
+date: 2019/09/12
+description: Detects remote PowerShell connections by monitoring network outbound
+    connections to ports 5985 or 5986 from a non-network service account.
+detection:
+    SELECTION_1:
+        EventID: 3
+    SELECTION_10:
+        Image:
+        - C:\Program Files\Avast Software\Avast\AvastSvc.exe
+        - C:\Program Files (x86)\Avast Software\Avast\AvastSvc.exe
+    SELECTION_11:
+        SourceIp: ::1
+    SELECTION_12:
+        DestinationIp: ::1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        DestinationPort: 5985
+    SELECTION_4:
+        DestinationPort: 5986
+    SELECTION_5:
+        Initiated: 'true'
+    SELECTION_6:
+        User:
+        - '*NETWORK SERVICE*'
+        - '*NETZWERKDIENST*'
+        - '*SERVIZIO DI RETE*'
+        - '*SERVICIO DE RED*'
+    SELECTION_7:
+        User: '*SERVICE R*'
+    SELECTION_8:
+        User: '*SEAU*'
+    SELECTION_9:
+        SourceIp: 0:0:*
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) and  not ((SELECTION_6 or SELECTION_7 and SELECTION_8 or SELECTION_9
+        or SELECTION_10) or (SELECTION_11 and SELECTION_12)))
+falsepositives:
+- Legitimate usage of remote PowerShell, e.g. remote administration and monitoring.
+- Network Service user name of a not-covered localization
+id: c539afac-c12a-46ed-b1bd-5a5567c9f045
+level: high
+logsource:
+    category: network_connection
+    product: windows
+modified: 2022/08/24
+references:
+- https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190511223310.html
+status: test
+tags:
+- attack.execution
+- attack.t1059.001
+- attack.lateral_movement
+- attack.t1021.006
+

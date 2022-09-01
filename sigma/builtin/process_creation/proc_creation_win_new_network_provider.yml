@@ -1,0 +1,40 @@
+title: New Network Provider - CommandLine
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/23
+description: Detects when an attacker tries to add a new network provider in order
+    to dump clear text credentials, similar to how the NPPSpy tool does it
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*\System\CurrentControlSet\Services\\*'
+    SELECTION_4:
+        CommandLine: '*\NetworkProvider*'
+    SELECTION_5:
+        CommandLine:
+        - '*\System\CurrentControlSet\Services\WebClient\NetworkProvider*'
+        - '*\System\CurrentControlSet\Services\LanmanWorkstation\NetworkProvider*'
+        - '*\System\CurrentControlSet\Services\RDPNP\NetworkProvider*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
+falsepositives:
+- Other legitimate network providers used and not filtred in this rule
+id: baef1ec6-2ca9-47a3-97cc-4cf2bda10b77
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://docs.microsoft.com/en-us/troubleshoot/windows-client/deployment/network-provider-settings-removed-in-place-upgrade
+- https://github.com/gtworek/PSBits/tree/master/PasswordStealing/NPPSpy
+related:
+-   id: 0442defa-b4a2-41c9-ae2c-ea7042fc4701
+    type: similar
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003
+

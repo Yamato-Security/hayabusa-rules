@@ -1,0 +1,29 @@
+title: Suspicious SysAidServer Child
+ruletype: Sigma
+author: Florian Roth
+date: 2022/08/26
+description: Detects suspicious child processes of SysAidServer (as seen in MERCURY
+    threat actor intrusions)
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage:
+        - '*\java.exe'
+        - '*\javaw.exe'
+    SELECTION_4:
+        ParentCommandLine: '*SysAidServer*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 60bfeac3-0d35-4302-8efb-1dd16f715bc6
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.microsoft.com/security/blog/2022/08/25/mercury-leveraging-log4j-2-vulnerabilities-in-unpatched-systems-to-target-israeli-organizations/
+status: experimental
+

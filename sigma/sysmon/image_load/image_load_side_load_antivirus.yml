@@ -1,0 +1,51 @@
+title: Antivirus Software DLL Sideloading
+ruletype: Sigma
+author: Nasreddine Bencherchali, Wietze Beukema (project and research)
+date: 2022/08/17
+description: Detects DLL sideloading of DLLs that are part of antivirus software suchas
+    McAfee, Symantec...etc
+detection:
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ImageLoaded: '*\log.dll'
+    SELECTION_4:
+        ImageLoaded:
+        - C:\Program Files\Bitdefender Antivirus Free\\*
+        - C:\Program Files (x86)\Bitdefender Antivirus Free\\*
+    SELECTION_5:
+        ImageLoaded: '*\qrt.dll'
+    SELECTION_6:
+        ImageLoaded:
+        - C:\Program Files\F-Secure\Anti-Virus\\*
+        - C:\Program Files (x86)\F-Secure\Anti-Virus\\*
+    SELECTION_7:
+        ImageLoaded:
+        - '*\ashldres.dll'
+        - '*\lockdown.dll'
+        - '*\vsodscpl.dll'
+    SELECTION_8:
+        ImageLoaded:
+        - C:\Program Files\McAfee\\*
+        - C:\Program Files (x86)\McAfee\\*
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and  not (SELECTION_4))
+        or (SELECTION_5 and  not (SELECTION_6))) or (SELECTION_7 and  not (SELECTION_8))))
+falsepositives:
+- Unknown
+id: 552b6b65-df37-4d3e-a258-f2fc4771ae54
+level: medium
+logsource:
+    category: image_load
+    product: windows
+references:
+- https://hijacklibs.net/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.persistence
+- attack.privilege_escalation
+- attack.t1574.001
+- attack.t1574.002
+

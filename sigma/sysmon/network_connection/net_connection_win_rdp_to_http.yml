@@ -1,34 +1,33 @@
-
 title: RDP to HTTP or HTTPS Target Ports
 ruletype: Sigma
 author: Florian Roth
 date: 2022/04/29
 description: Detects svchost hosting RDP termsvcs communicating to target systems
-  on TCP port 80 or 443
+    on TCP port 80 or 443
 detection:
-  SELECTION_1:
-    EventID: 3
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\svchost.exe'
-  SELECTION_4:
-    Initiated: 'true'
-  SELECTION_5:
-    SourcePort: 3389
-  SELECTION_6:
-    DestinationPort: 80
-  SELECTION_7:
-    DestinationPort: 443
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and (SELECTION_6 or SELECTION_7))
+    SELECTION_1:
+        EventID: 3
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\svchost.exe'
+    SELECTION_4:
+        Initiated: 'true'
+    SELECTION_5:
+        SourcePort: 3389
+    SELECTION_6:
+        DestinationPort: 80
+    SELECTION_7:
+        DestinationPort: 443
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and (SELECTION_6 or SELECTION_7))
 falsepositives:
 - Unknown
 id: b1e5da3b-ca8e-4adf-915c-9921f3d85481
 level: high
 logsource:
-  category: network_connection
-  product: windows
+    category: network_connection
+    product: windows
 modified: 2022/07/14
 references:
 - https://twitter.com/tekdefense/status/1519711183162556416?s=12&t=OTsHCBkQOTNs1k3USz65Zg
@@ -40,3 +39,4 @@ tags:
 - attack.lateral_movement
 - attack.t1021.001
 - car.2013-07-002
+

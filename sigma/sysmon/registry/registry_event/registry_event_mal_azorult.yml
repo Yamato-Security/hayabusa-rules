@@ -1,28 +1,27 @@
-
 title: Registry Entries For Azorult Malware
 ruletype: Sigma
 author: Trent Liffick
 date: 2020/05/08
 description: Detects the presence of a registry key created during Azorult execution
 detection:
-  SELECTION_1:
-    EventID: 12
-  SELECTION_2:
-    EventID: 13
-  SELECTION_3:
-    EventID: 14
-  SELECTION_4:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_5:
-    EventID: 12
-  SELECTION_6:
-    EventID: 13
-  SELECTION_7:
-    TargetObject: '*SYSTEM\\*'
-  SELECTION_8:
-    TargetObject: '*\services\localNETService'
-  condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and (SELECTION_5
-    or SELECTION_6) and SELECTION_7 and SELECTION_8)
+    SELECTION_1:
+        EventID: 12
+    SELECTION_2:
+        EventID: 13
+    SELECTION_3:
+        EventID: 14
+    SELECTION_4:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_5:
+        EventID: 12
+    SELECTION_6:
+        EventID: 13
+    SELECTION_7:
+        TargetObject: '*SYSTEM\\*'
+    SELECTION_8:
+        TargetObject: '*\services\localNETService'
+    condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and (SELECTION_5
+        or SELECTION_6) and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Unknown
 fields:
@@ -32,8 +31,8 @@ fields:
 id: f7f9ab88-7557-4a69-b30e-0a8f91b3a0e7
 level: critical
 logsource:
-  category: registry_event
-  product: windows
+    category: registry_event
+    product: windows
 modified: 2021/11/27
 references:
 - https://www.trendmicro.com/vinfo/us/threat-encyclopedia/malware/trojan.win32.azoruit.a
@@ -41,3 +40,4 @@ status: test
 tags:
 - attack.execution
 - attack.t1112
+

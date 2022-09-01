@@ -1,0 +1,29 @@
+title: Launch WebBrowserPassView Executable
+ruletype: Sigma
+author: frack113
+date: 2022/08/20
+description: Detect use of WebBrowserPassView.exe
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        Description: Web Browser Password Viewer
+    SELECTION_4:
+        NewProcessName: '*\WebBrowserPassView.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+falsepositives:
+- Legitimate use
+id: d0dae994-26c6-4d2d-83b5-b3c8b79ae513
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1555.003/T1555.003.md
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1555.003
+

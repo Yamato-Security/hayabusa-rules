@@ -1,0 +1,53 @@
+title: Regasm/Regsvcs Suspicious Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/25
+description: Detects suspicious execution of Regasm/Regsvcs utilities
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\Regsvcs.exe'
+        - '*\Regasm.exe'
+    SELECTION_4:
+        OriginalFileName: &id001
+        - RegSvcs.exe
+        - RegAsm.exe
+    SELECTION_5:
+        CommandLine:
+        - '*\Users\Public\\*'
+        - '*\AppData\Local\Temp\\*'
+        - '*\Desktop\\*'
+        - '*\Downloads\\*'
+        - '*\PerfLogs\\*'
+        - '*\Windows\Temp\\*'
+        - '*\Microsoft\Windows\Start Menu\Programs\Startup\\*'
+    SELECTION_6:
+        NewProcessName:
+        - '*\Regsvcs.exe'
+        - '*\Regasm.exe'
+    SELECTION_7:
+        OriginalFileName: *id001
+    SELECTION_8:
+        CommandLine: '*.dll*'
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) or ((SELECTION_6 or SELECTION_7) and  not (SELECTION_8))))
+falsepositives:
+- Unknown
+id: cc368ed0-2411-45dc-a222-510ace303cb2
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.fortiguard.com/threat-signal-report/4718?s=09
+- https://lolbas-project.github.io/lolbas/Binaries/Regasm/
+- https://lolbas-project.github.io/lolbas/Binaries/Regsvcs/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218.009
+

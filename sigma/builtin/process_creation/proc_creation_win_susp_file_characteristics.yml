@@ -1,31 +1,30 @@
-
 title: Suspicious File Characteristics Due to Missing Fields
 ruletype: Sigma
 author: Markus Neis, Sander Wiebing
 date: 2018/11/22
 description: Detects Executables in the Downloads folder without FileVersion,Description,Product,Company
-  likely created with py2exe
+    likely created with py2exe
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    Description: \?
-  SELECTION_4:
-    FileVersion: \?
-  SELECTION_5:
-    Description: \?
-  SELECTION_6:
-    Product: \?
-  SELECTION_7:
-    Description: \?
-  SELECTION_8:
-    Company: \?
-  SELECTION_9:
-    NewProcessName: '*\Downloads\\*'
-  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6)) or (SELECTION_7 and SELECTION_8)) and SELECTION_9)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        Description: \?
+    SELECTION_4:
+        FileVersion: \?
+    SELECTION_5:
+        Description: \?
+    SELECTION_6:
+        Product: \?
+    SELECTION_7:
+        Description: \?
+    SELECTION_8:
+        Company: \?
+    SELECTION_9:
+        NewProcessName: '*\Downloads\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4)
+        or (SELECTION_5 and SELECTION_6)) or (SELECTION_7 and SELECTION_8)) and SELECTION_9)
 falsepositives:
 - Unknown
 fields:
@@ -34,8 +33,8 @@ fields:
 id: 9637e8a5-7131-4f7f-bdc7-2b05d8670c43
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/06/27
 references:
 - https://securelist.com/muddywater/88059/
@@ -44,3 +43,4 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1059.006
+

@@ -1,34 +1,34 @@
-
 title: Delete Log from Application
 ruletype: Sigma
 author: frack113
 date: 2022/01/16
 description: Deletion of log files is a known anti-forensic technique
 detection:
-  SELECTION_1:
-    EventID: 23
-  SELECTION_2:
-    EventID: 26
-  SELECTION_3:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_4:
-    TargetFilename: '*.log'
-  SELECTION_5:
-    TargetFilename: '*\TeamViewer_*'
-  SELECTION_6:
-    Image: C:\Windows\system32\svchost.exe
-  condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and (SELECTION_4 and
-    SELECTION_5) and  not (SELECTION_6))
+    SELECTION_1:
+        EventID: 23
+    SELECTION_2:
+        EventID: 26
+    SELECTION_3:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_4:
+        TargetFilename: '*.log'
+    SELECTION_5:
+        TargetFilename: '*\TeamViewer_*'
+    SELECTION_6:
+        Image: C:\Windows\system32\svchost.exe
+    condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6))
 falsepositives:
 - Unknown
 id: b1decb61-ed83-4339-8e95-53ea51901720
 level: low
 logsource:
-  category: file_delete
-  product: windows
+    category: file_delete
+    product: windows
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.004/T1070.004.md
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1070.004
+

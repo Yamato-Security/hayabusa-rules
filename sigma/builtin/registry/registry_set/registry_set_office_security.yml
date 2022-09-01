@@ -1,33 +1,32 @@
-
 title: Office Security Settings Changed
 ruletype: Sigma
 author: Trent Liffick (@tliffick)
 date: 2020/05/22
 description: Detects registry changes to Office macro settings. The TrustRecords contain
-  information on executed macro-enabled documents. (see references)
+    information on executed macro-enabled documents. (see references)
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: Setvalue
-  SELECTION_5:
-    TargetObject:
-    - '*\Security\Trusted Documents\TrustRecords'
-    - '*\Security\AccessVBOM'
-    - '*\Security\VBAWarnings'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: Setvalue
+    SELECTION_5:
+        TargetObject:
+        - '*\Security\Trusted Documents\TrustRecords'
+        - '*\Security\AccessVBOM'
+        - '*\Security\VBAWarnings'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Valid Macros and/or internal documents
 id: a166f74e-bf44-409d-b9ba-ea4b2dd8b3cd
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/06/26
 references:
 - https://twitter.com/inversecos/status/1494174785621819397
@@ -37,3 +36,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1112
+

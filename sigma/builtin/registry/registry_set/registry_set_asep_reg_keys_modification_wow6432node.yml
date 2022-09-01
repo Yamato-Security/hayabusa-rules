@@ -1,92 +1,91 @@
-
 title: Wow6432Node CurrentVersion Autorun Keys Modification
 ruletype: Sigma
 author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
-  oscd.community, Tim Shelton, frack113 (split)
+    oscd.community, Tim Shelton, frack113 (split)
 date: 2019/10/25
 description: Detects modification of autostart extensibility point (ASEP) in registry.
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_10:
-    NewProcessName: C:\Program Files\Common Files\Microsoft Shared\ClickToRun\OfficeClickToRun.exe
-  SELECTION_11:
-    TargetObject: '*\Office\ClickToRun\REGISTRY\MACHINE\Software\Wow6432Node\\*'
-  SELECTION_12:
-    NewProcessName:
-    - C:\Program Files\Microsoft Office\root\integration\integrator.exe
-    - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
-  SELECTION_13:
-    TargetObject: '*\Explorer\Browser Helper Objects\{31D09BA0-12F5-4CCE-BE8A-2923E76605DA}\\*'
-  SELECTION_14:
-    NewValue: '*-A251-47B7-93E1-CDD82E34AF8B}'
-  SELECTION_15:
-    NewValue: grpconv -o
-  SELECTION_16:
-    NewValue: '*C:\Program Files*'
-  SELECTION_17:
-    NewValue: '*\Dropbox\Client\Dropbox.exe*'
-  SELECTION_18:
-    NewValue: '* /systemstartup*'
-  SELECTION_19:
-    TargetObject: '*\Explorer\Browser Helper Objects\{92EF2EAD-A7CE-4424-B0DB-499CF856608E}\NoExplorer'
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_20:
-    NewProcessName: '*\windowsdesktop-runtime-*'
-  SELECTION_21:
-    TargetObject:
-    - '*\WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce\{e2d1ae32-dd1d-4ad7-a298-10e42e7840fc}'
-    - '*\WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce\{7037b699-7382-448c-89a7-4765961d2537}'
-  SELECTION_22:
-    NewValue:
-    - '"C:\ProgramData\Package Cache\{7037b699-7382-448c-89a7-4765961d2537}\windowsdesktop-runtime-*'
-    - '"C:\ProgramData\Package Cache\{e2d1ae32-dd1d-4ad7-a298-10e42e7840fc}\windowsdesktop-runtime-*'
-  SELECTION_23:
-    NewValue: '*.exe" /burn.runonce'
-  SELECTION_24:
-    NewProcessName:
-    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
-    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
-  SELECTION_25:
-    NewProcessName: '*\OfficeClickToRun.exe'
-  SELECTION_26:
-    NewValue: '"C:\ProgramData\Package Cache\{d21a4f20-968a-4b0c-bf04-a38da5f06e41}\windowsdesktop-runtime-*'
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: SetValue
-  SELECTION_5:
-    TargetObject: '*\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion*'
-  SELECTION_6:
-    TargetObject:
-    - '*\ShellServiceObjectDelayLoad*'
-    - '*\Run\\*'
-    - '*\RunOnce\\*'
-    - '*\RunOnceEx\\*'
-    - '*\RunServices\\*'
-    - '*\RunServicesOnce\\*'
-    - '*\Explorer\ShellServiceObjects*'
-    - '*\Explorer\ShellIconOverlayIdentifiers*'
-    - '*\Explorer\ShellExecuteHooks*'
-    - '*\Explorer\SharedTaskScheduler*'
-    - '*\Explorer\Browser Helper Objects*'
-  SELECTION_7:
-    NewValue: (Empty)
-  SELECTION_8:
-    NewProcessName: '*C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{*'
-  SELECTION_9:
-    NewProcessName: '*\setup.exe*'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5
-    and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9) or (SELECTION_10
-    and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14 or SELECTION_15
-    or SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19) or (SELECTION_20
-    and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24 and SELECTION_25)
-    or (SELECTION_26)))
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_10:
+        NewProcessName: C:\Program Files\Common Files\Microsoft Shared\ClickToRun\OfficeClickToRun.exe
+    SELECTION_11:
+        TargetObject: '*\Office\ClickToRun\REGISTRY\MACHINE\Software\Wow6432Node\\*'
+    SELECTION_12:
+        NewProcessName:
+        - C:\Program Files\Microsoft Office\root\integration\integrator.exe
+        - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+    SELECTION_13:
+        TargetObject: '*\Explorer\Browser Helper Objects\{31D09BA0-12F5-4CCE-BE8A-2923E76605DA}\\*'
+    SELECTION_14:
+        NewValue: '*-A251-47B7-93E1-CDD82E34AF8B}'
+    SELECTION_15:
+        NewValue: grpconv -o
+    SELECTION_16:
+        NewValue: '*C:\Program Files*'
+    SELECTION_17:
+        NewValue: '*\Dropbox\Client\Dropbox.exe*'
+    SELECTION_18:
+        NewValue: '* /systemstartup*'
+    SELECTION_19:
+        TargetObject: '*\Explorer\Browser Helper Objects\{92EF2EAD-A7CE-4424-B0DB-499CF856608E}\NoExplorer'
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_20:
+        NewProcessName: '*\windowsdesktop-runtime-*'
+    SELECTION_21:
+        TargetObject:
+        - '*\WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce\{e2d1ae32-dd1d-4ad7-a298-10e42e7840fc}'
+        - '*\WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce\{7037b699-7382-448c-89a7-4765961d2537}'
+    SELECTION_22:
+        NewValue:
+        - '"C:\ProgramData\Package Cache\{7037b699-7382-448c-89a7-4765961d2537}\windowsdesktop-runtime-*'
+        - '"C:\ProgramData\Package Cache\{e2d1ae32-dd1d-4ad7-a298-10e42e7840fc}\windowsdesktop-runtime-*'
+    SELECTION_23:
+        NewValue: '*.exe" /burn.runonce'
+    SELECTION_24:
+        NewProcessName:
+        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
+        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
+    SELECTION_25:
+        NewProcessName: '*\OfficeClickToRun.exe'
+    SELECTION_26:
+        NewValue: '"C:\ProgramData\Package Cache\{d21a4f20-968a-4b0c-bf04-a38da5f06e41}\windowsdesktop-runtime-*'
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion*'
+    SELECTION_6:
+        TargetObject:
+        - '*\ShellServiceObjectDelayLoad*'
+        - '*\Run\\*'
+        - '*\RunOnce\\*'
+        - '*\RunOnceEx\\*'
+        - '*\RunServices\\*'
+        - '*\RunServicesOnce\\*'
+        - '*\Explorer\ShellServiceObjects*'
+        - '*\Explorer\ShellIconOverlayIdentifiers*'
+        - '*\Explorer\ShellExecuteHooks*'
+        - '*\Explorer\SharedTaskScheduler*'
+        - '*\Explorer\Browser Helper Objects*'
+    SELECTION_7:
+        NewValue: (Empty)
+    SELECTION_8:
+        NewProcessName: '*C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{*'
+    SELECTION_9:
+        NewProcessName: '*\setup.exe*'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14
+        or SELECTION_15 or SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19)
+        or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
+        and SELECTION_25) or (SELECTION_26)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
-  keys for legitimate reason
+    keys for legitimate reason
 - Legitimate administrator sets up autorun keys for legitimate reason
 fields:
 - SecurityID
@@ -96,8 +95,8 @@ fields:
 id: b29aed60-ebd1-442b-9cb5-16a1d0324adb
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/08/05
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
@@ -105,9 +104,10 @@ references:
 - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
 - https://oddvar.moe/2018/03/21/persistence-using-runonceex-hidden-from-autoruns-exe/
 related:
-- id: 17f878b8-9968-4578-b814-c4217fc5768c
-  type: derived
+-   id: 17f878b8-9968-4578-b814-c4217fc5768c
+    type: derived
 status: experimental
 tags:
 - attack.persistence
 - attack.t1547.001
+

@@ -1,89 +1,89 @@
-
 title: Rare GrantedAccess Flags on LSASS Access
 ruletype: Sigma
 author: Florian Roth
 date: 2022/03/13
 description: Detects process access to LSASS memory with suspicious access flags 0x410
-  and 0x01410 (spin-off of similar rule)
+    and 0x01410 (spin-off of similar rule)
 detection:
-  SELECTION_1:
-    EventID: 10
-  SELECTION_10:
-    SourceImage:
-    - '*\PROCEXP64.EXE'
-    - '*\PROCEXP.EXE'
-  SELECTION_11:
-    SourceImage: C:\ProgramData\VMware\VMware Tools\\*
-  SELECTION_12:
-    SourceImage: '*\vmtoolsd.exe'
-  SELECTION_13:
-    SourceImage:
-    - C:\Program Files\\*
-    - C:\Program Files (x86)\\*
-  SELECTION_14:
-    SourceImage: '*Antivirus*'
-  SELECTION_15:
-    SourceImage:
-    - '*\thor64.exe'
-    - '*\thor.exe'
-  SELECTION_16:
-    SourceImage: '*\AppData\Local\Temp\\*'
-  SELECTION_17:
-    SourceImage: '*\vs_bootstrapper_*'
-  SELECTION_18:
-    GrantedAccess: '0x1410'
-  SELECTION_19:
-    SourceImage:
-    - C:\Program Files\\*
-    - C:\Program Files (x86)\\*
-    - C:\WINDOWS\system32\\*
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_20:
-    SourceCommandLine: C:\WINDOWS\system32\wermgr.exe -upload
-  SELECTION_21:
-    SourceImage: '*C:\Users\\*'
-  SELECTION_22:
-    SourceImage: '*\AppData\Local\\*'
-  SELECTION_23:
-    SourceImage:
-    - '*\Microsoft VS Code\Code.exe'
-    - '*\software_reporter_tool.exe'
-    - '*\DropboxUpdate.exe'
-    - '*\MBAMInstallerService.exe'
-    - '*\WebEx\WebexHost.exe '
-    - '*\Programs\Microsoft VS Code\Code.exe'
-  SELECTION_3:
-    TargetImage: '*\lsass.exe'
-  SELECTION_4:
-    GrantedAccess: '*10'
-  SELECTION_5:
-    SourceImage:
-    - C:\WINDOWS\system32\taskmgr.exe
-    - C:\Program Files\Malwarebytes\Anti-Malware\MBAMService.exe
-    - C:\PROGRAMDATA\MALWAREBYTES\MBAMSERVICE\ctlrupdate\mbupdatr.exe
-    - C:\WINDOWS\system32\taskhostw.exe
-    - C:\Program Files\Windows Defender\MsMpEng.exe
-    - C:\Windows\SysWOW64\msiexec.exe
-    - C:\Windows\System32\msiexec.exe
-    - C:\Windows\System32\lsass.exe
-    - C:\WINDOWS\System32\perfmon.exe
-    - C:\WINDOWS\system32\wbem\wmiprvse.exe
-    - C:\Windows\sysWOW64\wbem\wmiprvse.exe
-    - C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
-  SELECTION_6:
-    SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
-  SELECTION_7:
-    SourceImage: '*\MsMpEng.exe'
-  SELECTION_8:
-    SourceImage: C:\Program Files\WindowsApps\\*
-  SELECTION_9:
-    SourceImage: '*\GamingServices.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-    or (SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14)
-    or (SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19)
-    or (SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23)))
+    SELECTION_1:
+        EventID: 10
+    SELECTION_10:
+        SourceImage:
+        - '*\PROCEXP64.EXE'
+        - '*\PROCEXP.EXE'
+    SELECTION_11:
+        SourceImage: C:\ProgramData\VMware\VMware Tools\\*
+    SELECTION_12:
+        SourceImage: '*\vmtoolsd.exe'
+    SELECTION_13:
+        SourceImage:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
+    SELECTION_14:
+        SourceImage: '*Antivirus*'
+    SELECTION_15:
+        SourceImage:
+        - '*\thor64.exe'
+        - '*\thor.exe'
+    SELECTION_16:
+        SourceImage: '*\AppData\Local\Temp\\*'
+    SELECTION_17:
+        SourceImage: '*\vs_bootstrapper_*'
+    SELECTION_18:
+        GrantedAccess: '0x1410'
+    SELECTION_19:
+        SourceImage:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
+        - C:\WINDOWS\system32\\*
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        SourceCommandLine: C:\WINDOWS\system32\wermgr.exe -upload
+    SELECTION_21:
+        SourceImage: '*C:\Users\\*'
+    SELECTION_22:
+        SourceImage: '*\AppData\Local\\*'
+    SELECTION_23:
+        SourceImage:
+        - '*\Microsoft VS Code\Code.exe'
+        - '*\software_reporter_tool.exe'
+        - '*\DropboxUpdate.exe'
+        - '*\MBAMInstallerService.exe'
+        - '*\WebEx\WebexHost.exe '
+        - '*\Programs\Microsoft VS Code\Code.exe'
+    SELECTION_3:
+        TargetImage: '*\lsass.exe'
+    SELECTION_4:
+        GrantedAccess: '*10'
+    SELECTION_5:
+        SourceImage:
+        - C:\WINDOWS\system32\taskmgr.exe
+        - C:\Program Files\Malwarebytes\Anti-Malware\MBAMService.exe
+        - C:\PROGRAMDATA\MALWAREBYTES\MBAMSERVICE\ctlrupdate\mbupdatr.exe
+        - C:\WINDOWS\system32\taskhostw.exe
+        - C:\Program Files\Windows Defender\MsMpEng.exe
+        - C:\Windows\SysWOW64\msiexec.exe
+        - C:\Windows\System32\msiexec.exe
+        - C:\Windows\System32\lsass.exe
+        - C:\WINDOWS\System32\perfmon.exe
+        - C:\WINDOWS\system32\wbem\wmiprvse.exe
+        - C:\Windows\sysWOW64\wbem\wmiprvse.exe
+        - C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
+    SELECTION_6:
+        SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
+    SELECTION_7:
+        SourceImage: '*\MsMpEng.exe'
+    SELECTION_8:
+        SourceImage: C:\Program Files\WindowsApps\\*
+    SELECTION_9:
+        SourceImage: '*\GamingServices.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
+        or (SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
+        SELECTION_14) or (SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18)
+        or (SELECTION_19) or (SELECTION_20) or (SELECTION_21 and SELECTION_22 and
+        SELECTION_23)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason
 fields:
@@ -93,8 +93,8 @@ fields:
 id: 678dfc63-fefb-47a5-a04c-26bcf8cc9f65
 level: medium
 logsource:
-  category: process_access
-  product: windows
+    category: process_access
+    product: windows
 modified: 2022/08/13
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
@@ -103,10 +103,11 @@ references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 - http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
 related:
-- id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
-  type: obsoletes
+-   id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
+    type: obsoletes
 status: experimental
 tags:
 - attack.credential_access
 - attack.t1003.001
 - attack.s0002
+

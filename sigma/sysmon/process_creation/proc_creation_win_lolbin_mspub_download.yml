@@ -1,0 +1,37 @@
+title: Download Arbitrary Files Via MSPUB.EXE
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/19
+description: Detects usage of "MSPUB" (Microsoft Publisher) to download arbitrary
+    files
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\MSPUB.exe'
+    SELECTION_4:
+        OriginalFileName: MSPUB.exe
+    SELECTION_5:
+        CommandLine:
+        - '*http://*'
+        - '*https://*'
+        - '*ftp://*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: 3b3c7f55-f771-4dd6-8a6e-08d057a17caf
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/LOLBAS-Project/LOLBAS/pull/238/files
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1218
+

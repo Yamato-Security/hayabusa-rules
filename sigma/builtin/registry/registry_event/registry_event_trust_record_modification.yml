@@ -1,29 +1,28 @@
-
 title: Windows Registry Trust Record Modification
 ruletype: Sigma
 author: Antonlovesdnb
 date: 2020/02/19
 description: Alerts on trust record modification within the registry, indicating usage
-  of macros
+    of macros
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - New registry value created
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    TargetObject: '*TrustRecords*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - New registry value created
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        TargetObject: '*TrustRecords*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Alerts on legitimate macro usage as well, will need to filter as appropriate
 id: 295a59c1-7b79-4b47-a930-df12c15fc9c2
 level: medium
 logsource:
-  category: registry_event
-  product: windows
+    category: registry_event
+    product: windows
 modified: 2021/11/27
 references:
 - https://outflank.nl/blog/2018/01/16/hunting-for-evil-detect-macros-being-executed/
@@ -32,3 +31,4 @@ status: test
 tags:
 - attack.initial_access
 - attack.t1566.001
+

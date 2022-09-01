@@ -1,37 +1,37 @@
-
 title: Custom File Open Handler Executes PowerShell
 ruletype: Sigma
 author: CD_R0M_
 date: 2022/06/11
 description: Detects the abuse of custom file open handler, executing powershell
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    TargetObject: '*shell\open\command\\*'
-  SELECTION_5:
-    NewValue: '*powershell*'
-  SELECTION_6:
-    NewValue: '*-command*'
-  SELECTION_7:
-    EventType: SetValue
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        TargetObject: '*shell\open\command\\*'
+    SELECTION_5:
+        NewValue: '*powershell*'
+    SELECTION_6:
+        NewValue: '*-command*'
+    SELECTION_7:
+        EventType: SetValue
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: 7530b96f-ad8e-431d-a04d-ac85cc461fdc
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://news.sophos.com/en-us/2022/02/01/solarmarker-campaign-used-novel-registry-changes-to-establish-persistence/?cmp=30728
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1202
+

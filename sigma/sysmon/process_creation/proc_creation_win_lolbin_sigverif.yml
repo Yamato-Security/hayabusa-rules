@@ -1,0 +1,29 @@
+title: Suspicious Sigverif Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/19
+description: Detects the execution of sigverif binary as a parent process which could
+    indicate it being used as a LOLBIN to proxy execution
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\sigverif.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unknown
+id: 7d4aaec2-08ed-4430-8b96-28420e030e04
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.hexacorn.com/blog/2018/04/27/i-shot-the-sigverif-exe-the-gui-based-lolbin/
+- https://twitter.com/0gtweet/status/1457676633809330184
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1216
+

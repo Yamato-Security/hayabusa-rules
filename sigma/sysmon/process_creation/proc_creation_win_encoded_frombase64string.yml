@@ -1,26 +1,25 @@
-
 title: Encoded FromBase64String
 ruletype: Sigma
 author: Florian Roth
 date: 2019/08/24
 description: Detects a base64 encoded FromBase64String keyword in a process command
-  line
+    line
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '*OjpGcm9tQmFzZTY0U3RyaW5n*'
-    - '*o6RnJvbUJhc2U2NFN0cmluZ*'
-    - '*6OkZyb21CYXNlNjRTdHJpbm*'
-  SELECTION_4:
-    CommandLine:
-    - '*OgA6AEYAcgBvAG0AQgBhAHMAZQA2ADQAUwB0AHIAaQBuAGcA*'
-    - '*oAOgBGAHIAbwBtAEIAYQBzAGUANgA0AFMAdAByAGkAbgBnA*'
-    - '*6ADoARgByAG8AbQBCAGEAcwBlADYANABTAHQAcgBpAG4AZw*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '*OjpGcm9tQmFzZTY0U3RyaW5n*'
+        - '*o6RnJvbUJhc2U2NFN0cmluZ*'
+        - '*6OkZyb21CYXNlNjRTdHJpbm*'
+    SELECTION_4:
+        CommandLine:
+        - '*OgA6AEYAcgBvAG0AQgBhAHMAZQA2ADQAUwB0AHIAaQBuAGcA*'
+        - '*oAOgBGAHIAbwBtAEIAYQBzAGUANgA0AFMAdAByAGkAbgBnA*'
+        - '*6ADoARgByAG8AbQBCAGEAcwBlADYANABTAHQAcgBpAG4AZw*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Unknown
 fields:
@@ -29,8 +28,8 @@ fields:
 id: fdb62a13-9a81-4e5c-a38f-ea93a16f6d7c
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/03/07
 status: test
 tags:
@@ -38,3 +37,4 @@ tags:
 - attack.t1140
 - attack.execution
 - attack.t1059.001
+

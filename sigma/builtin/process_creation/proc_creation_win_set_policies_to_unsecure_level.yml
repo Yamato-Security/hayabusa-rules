@@ -1,32 +1,31 @@
-
-title: Change PowerShell Policies to an Unsecure Level
+title: Change PowerShell Policies to an Insecure Level
 ruletype: Sigma
 author: frack113
 date: 2021/11/01
-description: Detects use of executionpolicy option to set a unsecure policies
+description: Detects use of executionpolicy option to set insecure policies
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    CommandLine:
-    - '* -executionpolicy *'
-    - '* -ep *'
-    - '* -exec *'
-  SELECTION_4:
-    CommandLine:
-    - '*Unrestricted*'
-    - '*bypass*'
-    - '*RemoteSigned*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '* -executionpolicy *'
+        - '* -ep *'
+        - '* -exec *'
+    SELECTION_4:
+        CommandLine:
+        - '*Unrestricted*'
+        - '*bypass*'
+        - '*RemoteSigned*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Administrator script
 id: 87e3c4e8-a6a8-4ad9-bb4f-46e7ff99a180
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/02/23
 references:
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.1
@@ -37,3 +36,4 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1059.001
+

@@ -1,27 +1,26 @@
-
 title: Protected Storage Service Access
 ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/08/10
 description: Detects access to a protected_storage service over the network. Potential
-  abuse of DPAPI to extract domain backup keys from Domain Controllers
+    abuse of DPAPI to extract domain backup keys from Domain Controllers
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    EventID: 5145
-  SELECTION_3:
-    ShareName: '*IPC*'
-  SELECTION_4:
-    RelativeTargetName: protected_storage
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 5145
+    SELECTION_3:
+        ShareName: '*IPC*'
+    SELECTION_4:
+        RelativeTargetName: protected_storage
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 45545954-4016-43c6-855e-eae8f1c369dc
 level: high
 logsource:
-  product: windows
-  service: security
+    product: windows
+    service: security
 modified: 2021/11/27
 references:
 - https://threathunterplaybook.com/notebooks/windows/06_credential_access/WIN-190620024610.html
@@ -29,3 +28,4 @@ status: test
 tags:
 - attack.lateral_movement
 - attack.t1021.002
+

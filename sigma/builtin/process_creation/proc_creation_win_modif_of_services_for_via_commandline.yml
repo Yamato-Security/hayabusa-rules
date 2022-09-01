@@ -1,83 +1,82 @@
-
 title: Modification Of Existing Services For Persistence
 ruletype: Sigma
 author: Sreeman
 date: 2020/09/29
 description: Detects modification of an existing service on a compromised host in
-  order to execute an arbitrary payload when the service is started or killed as a
-  method of persistence.
+    order to execute an arbitrary payload when the service is started or killed as
+    a method of persistence.
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_10:
-    CommandLine: '*add *'
-  SELECTION_11:
-    CommandLine: '*FailureCommand*'
-  SELECTION_12:
-    CommandLine:
-    - '*.sh*'
-    - '*.exe*'
-    - '*.dll*'
-    - '*.bin$*'
-    - '*.bat*'
-    - '*.cmd*'
-    - '*.js*'
-    - '*.msh$*'
-    - '*.reg$*'
-    - '*.scr*'
-    - '*.ps*'
-    - '*.vb*'
-    - '*.jar*'
-    - '*.pl*'
-  SELECTION_13:
-    CommandLine: '*reg *'
-  SELECTION_14:
-    CommandLine: '*add *'
-  SELECTION_15:
-    CommandLine: '*ImagePath*'
-  SELECTION_16:
-    CommandLine:
-    - '*.sh*'
-    - '*.exe*'
-    - '*.dll*'
-    - '*.bin$*'
-    - '*.bat*'
-    - '*.cmd*'
-    - '*.js*'
-    - '*.msh$*'
-    - '*.reg$*'
-    - '*.scr*'
-    - '*.ps*'
-    - '*.vb*'
-    - '*.jar*'
-    - '*.pl*'
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    CommandLine: '*sc *'
-  SELECTION_4:
-    CommandLine: '*config *'
-  SELECTION_5:
-    CommandLine: '*binpath=*'
-  SELECTION_6:
-    CommandLine: '*sc *'
-  SELECTION_7:
-    CommandLine: '*failure*'
-  SELECTION_8:
-    CommandLine: '*command=*'
-  SELECTION_9:
-    CommandLine: '*reg *'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-    and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
-    and SELECTION_15 and SELECTION_16)))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine: '*add *'
+    SELECTION_11:
+        CommandLine: '*FailureCommand*'
+    SELECTION_12:
+        CommandLine:
+        - '*.sh*'
+        - '*.exe*'
+        - '*.dll*'
+        - '*.bin$*'
+        - '*.bat*'
+        - '*.cmd*'
+        - '*.js*'
+        - '*.msh$*'
+        - '*.reg$*'
+        - '*.scr*'
+        - '*.ps*'
+        - '*.vb*'
+        - '*.jar*'
+        - '*.pl*'
+    SELECTION_13:
+        CommandLine: '*reg *'
+    SELECTION_14:
+        CommandLine: '*add *'
+    SELECTION_15:
+        CommandLine: '*ImagePath*'
+    SELECTION_16:
+        CommandLine:
+        - '*.sh*'
+        - '*.exe*'
+        - '*.dll*'
+        - '*.bin$*'
+        - '*.bat*'
+        - '*.cmd*'
+        - '*.js*'
+        - '*.msh$*'
+        - '*.reg$*'
+        - '*.scr*'
+        - '*.ps*'
+        - '*.vb*'
+        - '*.jar*'
+        - '*.pl*'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*sc *'
+    SELECTION_4:
+        CommandLine: '*config *'
+    SELECTION_5:
+        CommandLine: '*binpath=*'
+    SELECTION_6:
+        CommandLine: '*sc *'
+    SELECTION_7:
+        CommandLine: '*failure*'
+    SELECTION_8:
+        CommandLine: '*command=*'
+    SELECTION_9:
+        CommandLine: '*reg *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
+        and SELECTION_15 and SELECTION_16)))
 falsepositives:
 - Unknown
 id: 38879043-7e1e-47a9-8d46-6bec88e201df
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/03/06
 references:
 - https://pentestlab.blog/2020/01/22/persistence-modify-existing-service/
@@ -86,3 +85,4 @@ tags:
 - attack.persistence
 - attack.t1543.003
 - attack.t1574.011
+

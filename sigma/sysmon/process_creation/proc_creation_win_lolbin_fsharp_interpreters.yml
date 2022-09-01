@@ -1,32 +1,31 @@
-
 title: Use of FSharp Interpreters
 ruletype: Sigma
 author: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io
 date: 2022/06/02
 description: The FSharp Interpreters, FsiAnyCpu.exe and FSi.exe, can be used for AWL
-  bypass and is listed in Microsoft recommended block rules.
+    bypass and is listed in Microsoft recommended block rules.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\fsianycpu.exe'
-  SELECTION_4:
-    OriginalFileName: fsianycpu.exe
-  SELECTION_5:
-    Image: '*\fsi.exe'
-  SELECTION_6:
-    OriginalFileName: fsi.exe
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-    or SELECTION_6))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\fsianycpu.exe'
+    SELECTION_4:
+        OriginalFileName: fsianycpu.exe
+    SELECTION_5:
+        Image: '*\fsi.exe'
+    SELECTION_6:
+        OriginalFileName: fsi.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6))
 falsepositives:
 - Legitimate use by a software developer.
 id: b96b2031-7c17-4473-afe7-a30ce714db29
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-block-rules
 - https://bohops.com/2020/11/02/exploring-the-wdac-microsoft-recommended-block-rules-part-ii-wfc-fsi/
@@ -36,3 +35,4 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1059
+

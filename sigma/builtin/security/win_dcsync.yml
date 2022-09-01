@@ -1,41 +1,40 @@
-
 title: Mimikatz DC Sync
 ruletype: Sigma
 author: Benjamin Delpy, Florian Roth, Scott Dermott, Sorina Ionescu
 date: 2018/06/03
 description: Detects Mimikatz DC sync security events
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    EventID: 4662
-  SELECTION_3:
-    Properties:
-    - '*Replicating Directory Changes All*'
-    - '*1131f6ad-9c07-11d1-f79f-00c04fc2dcd2*'
-    - '*1131f6aa-9c07-11d1-f79f-00c04fc2dcd2*'
-    - '*9923a32a-3607-11d2-b9be-0000f87a36b2*'
-    - '*89e95b76-444d-4c62-991a-0facbeda640c*'
-  SELECTION_4:
-    AccessMask: '0x100'
-  SELECTION_5:
-    SubjectDomainName: Window Manager
-  SELECTION_6:
-    SubjectUserName:
-    - NT AUT*
-    - MSOL_*
-  SELECTION_7:
-    SubjectUserName: '*$'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 4662
+    SELECTION_3:
+        Properties:
+        - '*Replicating Directory Changes All*'
+        - '*1131f6ad-9c07-11d1-f79f-00c04fc2dcd2*'
+        - '*1131f6aa-9c07-11d1-f79f-00c04fc2dcd2*'
+        - '*9923a32a-3607-11d2-b9be-0000f87a36b2*'
+        - '*89e95b76-444d-4c62-991a-0facbeda640c*'
+    SELECTION_4:
+        AccessMask: '0x100'
+    SELECTION_5:
+        SubjectDomainName: Window Manager
+    SELECTION_6:
+        SubjectUserName:
+        - NT AUT*
+        - MSOL_*
+    SELECTION_7:
+        SubjectUserName: '*$'
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Valid DC Sync that is not covered by the filters; please report
 - Local Domain Admin account used for Azure AD Connect
 id: 611eab06-a145-4dfa-a295-3ccc5c20f59a
 level: high
 logsource:
-  product: windows
-  service: security
+    product: windows
+    service: security
 modified: 2022/04/26
 references:
 - https://twitter.com/gentilkiwi/status/1003236624925413376
@@ -47,3 +46,4 @@ tags:
 - attack.credential_access
 - attack.s0002
 - attack.t1003.006
+

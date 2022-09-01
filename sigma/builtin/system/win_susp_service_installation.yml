@@ -1,50 +1,49 @@
-
 title: Suspicious Service Installation
 ruletype: Sigma
 author: pH-T
 date: 2022/03/18
 description: Detects suspicious service installation commands
 detection:
-  SELECTION_1:
-    Channel: System
-  SELECTION_2:
-    Provider_Name: Service Control Manager
-  SELECTION_3:
-    EventID: 7045
-  SELECTION_4:
-    ImagePath:
-    - '* -w hidden *'
-    - '* -nop *'
-    - '* -sta *'
-    - '*\Users\Public\\*'
-    - '*\Windows\Temp\\*'
-    - '*\Perflogs\\*'
-    - '*\\\\.\\pipe*'
-    - '*\ADMIN$\\*'
-    - '*.downloadstring(*'
-    - '*.downloadfile(*'
-  SELECTION_5:
-    ImagePath: '* -e*'
-  SELECTION_6:
-    ImagePath:
-    - '* JAB*'
-    - '* SUVYI*'
-    - '* SQBFAFgA*'
-    - '* aWV4I*'
-    - '* IAB*'
-    - '* PAA*'
-    - '* aQBlAHgA*'
-  SELECTION_7:
-    ImagePath: C:\WINDOWS\TEMP\thor10-remote\thor64.exe*
-  condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) and (SELECTION_4 or (SELECTION_5
-    and SELECTION_6))) and  not ((SELECTION_7)))
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7045
+    SELECTION_4:
+        ImagePath:
+        - '* -w hidden *'
+        - '* -nop *'
+        - '* -sta *'
+        - '*\Users\Public\\*'
+        - '*\Windows\Temp\\*'
+        - '*\Perflogs\\*'
+        - '*\\\\.\\pipe*'
+        - '*\ADMIN$\\*'
+        - '*.downloadstring(*'
+        - '*.downloadfile(*'
+    SELECTION_5:
+        ImagePath: '* -e*'
+    SELECTION_6:
+        ImagePath:
+        - '* JAB*'
+        - '* SUVYI*'
+        - '* SQBFAFgA*'
+        - '* aWV4I*'
+        - '* IAB*'
+        - '* PAA*'
+        - '* aQBlAHgA*'
+    SELECTION_7:
+        ImagePath: C:\WINDOWS\TEMP\thor10-remote\thor64.exe*
+    condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) and (SELECTION_4 or
+        (SELECTION_5 and SELECTION_6))) and  not ((SELECTION_7)))
 falsepositives:
 - Unknown
 id: 1d61f71d-59d2-479e-9562-4ff5f4ead16b
 level: high
 logsource:
-  product: windows
-  service: system
+    product: windows
+    service: system
 modified: 2022/05/02
 status: experimental
 tags:
@@ -52,3 +51,4 @@ tags:
 - attack.privilege_escalation
 - car.2013-09-005
 - attack.t1543.003
+

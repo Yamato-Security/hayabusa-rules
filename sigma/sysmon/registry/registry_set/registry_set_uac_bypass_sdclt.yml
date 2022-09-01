@@ -1,34 +1,33 @@
-
 title: UAC Bypass via Sdclt
 ruletype: Sigma
 author: Omer Yampel, Christian Burkard
 date: 2017/03/17
 description: Detects the pattern of UAC Bypass using registry key manipulation of
-  sdclt.exe (e.g. UACMe 53)
+    sdclt.exe (e.g. UACMe 53)
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject: '*Software\Classes\exefile\shell\runas\command\isolatedCommand'
-  SELECTION_5:
-    EventType: SetValue
-  SELECTION_6:
-    TargetObject: '*Software\Classes\Folder\shell\open\command\SymbolicLinkValue'
-  SELECTION_7:
-    Details: '*-1???\Software\Classes\\*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*Software\Classes\exefile\shell\runas\command\isolatedCommand'
+    SELECTION_5:
+        EventType: SetValue
+    SELECTION_6:
+        TargetObject: '*Software\Classes\Folder\shell\open\command\SymbolicLinkValue'
+    SELECTION_7:
+        Details: '*-1???\Software\Classes\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Unknown
 id: 5b872a46-3b90-45c1-8419-f675db8053aa
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/06/26
 references:
 - https://enigma0x3.net/2017/03/17/fileless-uac-bypass-using-sdclt-exe/
@@ -39,3 +38,4 @@ tags:
 - attack.privilege_escalation
 - attack.t1548.002
 - car.2019-04-001
+

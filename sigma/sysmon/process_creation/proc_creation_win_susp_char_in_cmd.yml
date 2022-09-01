@@ -1,33 +1,32 @@
-
 title: Obfuscated Command Line Using Special Unicode Characters
 ruletype: Sigma
 author: frack113
 date: 2022/01/15
 description: Adversaries may attempt to make an executable or file difficult to discover
-  or analyze by encrypting, encoding, or otherwise obfuscating its contents on the
-  system or in transit.
+    or analyze by encrypting, encoding, or otherwise obfuscating its contents on the
+    system or in transit.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '*â*'
-    - '*€*'
-    - '*£*'
-    - '*¯*'
-    - '*®*'
-    - '*µ*'
-    - '*¶*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - "*\xE2*"
+        - "*\u20AC*"
+        - "*\xA3*"
+        - "*\xAF*"
+        - "*\xAE*"
+        - "*\xB5*"
+        - "*\xB6*"
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: e0552b19-5a83-4222-b141-b36184bb8d79
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1027/T1027.md#atomic-test-6---dlp-evasion-via-sensitive-data-in-vba-macro-over-http
@@ -35,3 +34,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1027
+

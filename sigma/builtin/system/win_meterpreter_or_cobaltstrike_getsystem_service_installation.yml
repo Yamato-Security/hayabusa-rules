@@ -1,53 +1,52 @@
-
 title: Meterpreter or Cobalt Strike Getsystem Service Installation
 ruletype: Sigma
 author: Teymur Kheirkhabarov, Ecco, Florian Roth
 date: 2019/10/26
 description: Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting
-  a specific service installation
+    a specific service installation
 detection:
-  SELECTION_1:
-    Channel: System
-  SELECTION_10:
-    ImagePath: '*echo*'
-  SELECTION_11:
-    ImagePath: '*\pipe\\*'
-  SELECTION_12:
-    ImagePath: '*cmd.exe*'
-  SELECTION_13:
-    ImagePath: '*/c*'
-  SELECTION_14:
-    ImagePath: '*echo*'
-  SELECTION_15:
-    ImagePath: '*\pipe\\*'
-  SELECTION_16:
-    ImagePath: '*rundll32*'
-  SELECTION_17:
-    ImagePath: '*.dll,a*'
-  SELECTION_18:
-    ImagePath: '*/p:*'
-  SELECTION_19:
-    ImagePath: \\\\127.0.0.1\\ADMIN$\\*
-  SELECTION_2:
-    Provider_Name: Service Control Manager
-  SELECTION_3:
-    EventID: 7045
-  SELECTION_4:
-    ImagePath: '*cmd*'
-  SELECTION_5:
-    ImagePath: '*/c*'
-  SELECTION_6:
-    ImagePath: '*echo*'
-  SELECTION_7:
-    ImagePath: '*\pipe\\*'
-  SELECTION_8:
-    ImagePath: '*%COMSPEC%*'
-  SELECTION_9:
-    ImagePath: '*/c*'
-  condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
-    SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9 and
-    SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14
-    and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or SELECTION_19))
+    SELECTION_1:
+        Channel: System
+    SELECTION_10:
+        ImagePath: '*echo*'
+    SELECTION_11:
+        ImagePath: '*\pipe\\*'
+    SELECTION_12:
+        ImagePath: '*cmd.exe*'
+    SELECTION_13:
+        ImagePath: '*/c*'
+    SELECTION_14:
+        ImagePath: '*echo*'
+    SELECTION_15:
+        ImagePath: '*\pipe\\*'
+    SELECTION_16:
+        ImagePath: '*rundll32*'
+    SELECTION_17:
+        ImagePath: '*.dll,a*'
+    SELECTION_18:
+        ImagePath: '*/p:*'
+    SELECTION_19:
+        ImagePath: \\\\127.0.0.1\\ADMIN$\\*
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7045
+    SELECTION_4:
+        ImagePath: '*cmd*'
+    SELECTION_5:
+        ImagePath: '*/c*'
+    SELECTION_6:
+        ImagePath: '*echo*'
+    SELECTION_7:
+        ImagePath: '*\pipe\\*'
+    SELECTION_8:
+        ImagePath: '*%COMSPEC%*'
+    SELECTION_9:
+        ImagePath: '*/c*'
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or SELECTION_19))
 falsepositives:
 - Highly unlikely
 fields:
@@ -58,8 +57,8 @@ fields:
 id: 843544a7-56e0-4dcc-a44f-5cc266dd97d6
 level: critical
 logsource:
-  product: windows
-  service: system
+    product: windows
+    service: system
 modified: 2022/02/01
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
@@ -69,3 +68,4 @@ tags:
 - attack.privilege_escalation
 - attack.t1134.001
 - attack.t1134.002
+

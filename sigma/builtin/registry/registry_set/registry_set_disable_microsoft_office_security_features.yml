@@ -1,39 +1,38 @@
-
 title: Disable Microsoft Office Security Features
 ruletype: Sigma
 author: frack113
 date: 2021/06/08
 description: Disable Microsoft Office Security Features by registry
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: SetValue
-  SELECTION_5:
-    TargetObject: '*\SOFTWARE\Microsoft\Office\\*'
-  SELECTION_6:
-    TargetObject:
-    - '*VBAWarnings'
-    - '*DisableInternetFilesInPV'
-    - '*DisableUnsafeLocationsInPV'
-    - '*DisableAttachementsInPV'
-  SELECTION_7:
-    NewValue: DWORD (0x00000001)
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6 and SELECTION_7)
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\SOFTWARE\Microsoft\Office\\*'
+    SELECTION_6:
+        TargetObject:
+        - '*VBAWarnings'
+        - '*DisableInternetFilesInPV'
+        - '*DisableUnsafeLocationsInPV'
+        - '*DisableAttachementsInPV'
+    SELECTION_7:
+        NewValue: DWORD (0x00000001)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: 7c637634-c95d-4bbf-b26c-a82510874b34
 level: high
 logsource:
-  category: registry_set
-  definition: key must be add to the sysmon configuration to works
-  product: windows
+    category: registry_set
+    definition: key must be add to the sysmon configuration to works
+    product: windows
 modified: 2022/03/26
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
@@ -43,3 +42,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1562.001
+

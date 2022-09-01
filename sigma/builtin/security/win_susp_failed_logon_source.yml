@@ -1,55 +1,54 @@
-
 title: Failed Logon From Public IP
 ruletype: Sigma
 author: NVISO
 date: 2020/05/06
 description: A login from a public IP can indicate a misconfigured firewall or network
-  boundary.
+    boundary.
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    EventID: 4625
-  SELECTION_3:
-    IpAddress: '*-*'
-  SELECTION_4:
-    IpAddress:
-    - 10.*
-    - 192.168.*
-    - 172.16.*
-    - 172.17.*
-    - 172.18.*
-    - 172.19.*
-    - 172.20.*
-    - 172.21.*
-    - 172.22.*
-    - 172.23.*
-    - 172.24.*
-    - 172.25.*
-    - 172.26.*
-    - 172.27.*
-    - 172.28.*
-    - 172.29.*
-    - 172.30.*
-    - 172.31.*
-    - 127.*
-    - 169.254.*
-  SELECTION_5:
-    IpAddress: ::1
-  SELECTION_6:
-    IpAddress:
-    - fe80::*
-    - fc00::*
-  condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3) or (SELECTION_4)
-    or (SELECTION_5 or SELECTION_6)))
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 4625
+    SELECTION_3:
+        IpAddress: '*-*'
+    SELECTION_4:
+        IpAddress:
+        - 10.*
+        - 192.168.*
+        - 172.16.*
+        - 172.17.*
+        - 172.18.*
+        - 172.19.*
+        - 172.20.*
+        - 172.21.*
+        - 172.22.*
+        - 172.23.*
+        - 172.24.*
+        - 172.25.*
+        - 172.26.*
+        - 172.27.*
+        - 172.28.*
+        - 172.29.*
+        - 172.30.*
+        - 172.31.*
+        - 127.*
+        - 169.254.*
+    SELECTION_5:
+        IpAddress: ::1
+    SELECTION_6:
+        IpAddress:
+        - fe80::*
+        - fc00::*
+    condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3) or (SELECTION_4)
+        or (SELECTION_5 or SELECTION_6)))
 falsepositives:
 - Legitimate logon attempts over the internet
 - IPv4-to-IPv6 mapped IPs
 id: f88e112a-21aa-44bd-9b01-6ee2a2bbbed1
 level: medium
 logsource:
-  product: windows
-  service: security
+    product: windows
+    service: security
 modified: 2021/11/27
 status: test
 tags:
@@ -58,3 +57,4 @@ tags:
 - attack.t1078
 - attack.t1190
 - attack.t1133
+

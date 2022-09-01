@@ -1,43 +1,42 @@
-
 title: Bitsadmin Download File from IP
 ruletype: Sigma
 author: Florian Roth
 date: 2022/06/28
 description: Detects usage of bitsadmin downloading a file using an URL that contains
-  an IP
+    an IP
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\bitsadmin.exe'
-  SELECTION_4:
-    CommandLine:
-    - '* /transfer *'
-    - '* /create *'
-    - '* /addfile *'
-  SELECTION_5:
-    CommandLine:
-    - '*http://1*'
-    - '*http://2*'
-    - '*http://3*'
-    - '*http://4*'
-    - '*http://5*'
-    - '*http://6*'
-    - '*http://7*'
-    - '*http://8*'
-    - '*http://9*'
-    - '*https://1*'
-    - '*https://2*'
-    - '*https://3*'
-    - '*https://4*'
-    - '*https://5*'
-    - '*https://6*'
-    - '*https://7*'
-    - '*https://8*'
-    - '*https://9*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\bitsadmin.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* /transfer *'
+        - '* /create *'
+        - '* /addfile *'
+    SELECTION_5:
+        CommandLine:
+        - '*http://1*'
+        - '*http://2*'
+        - '*http://3*'
+        - '*http://4*'
+        - '*http://5*'
+        - '*http://6*'
+        - '*http://7*'
+        - '*http://8*'
+        - '*http://9*'
+        - '*https://1*'
+        - '*https://2*'
+        - '*https://3*'
+        - '*https://4*'
+        - '*https://5*'
+        - '*https://6*'
+        - '*https://7*'
+        - '*https://8*'
+        - '*https://9*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 fields:
@@ -46,8 +45,8 @@ fields:
 id: 99c840f2-2012-46fd-9141-c761987550ef
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
 - https://isc.sans.edu/diary/22264
@@ -59,3 +58,4 @@ tags:
 - attack.t1197
 - attack.s0190
 - attack.t1036.003
+

@@ -1,35 +1,35 @@
-
 title: Powershell File and Directory Discovery
 ruletype: Sigma
 author: frack113
 date: 2021/12/15
 description: |
-  Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system.
-  Adversaries may use the information from [File and Directory Discovery](https://attack.mitre.org/techniques/T1083) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.
+    Adversaries may enumerate files and directories or may search in specific locations of a host or network share for certain information within a file system.
+    Adversaries may use the information from [File and Directory Discovery](https://attack.mitre.org/techniques/T1083) during automated discovery to shape follow-on behaviors, including whether or not the adversary fully infects the target and/or attempts specific actions.
 detection:
-  SELECTION_1:
-    EventID: 4104
-  SELECTION_2:
-    Channel: Microsoft-Windows-PowerShell/Operational
-  SELECTION_3:
-    ScriptBlockText:
-    - '*ls*'
-    - '*get-childitem*'
-    - '*gci*'
-  SELECTION_4:
-    ScriptBlockText: '*-recurse*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText:
+        - '*ls*'
+        - '*get-childitem*'
+        - '*gci*'
+    SELECTION_4:
+        ScriptBlockText: '*-recurse*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: d23f2ba5-9da0-4463-8908-8ee47f614bb9
 level: low
 logsource:
-  category: ps_script
-  definition: Script block logging must be enabled
-  product: windows
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1083/T1083.md
 status: experimental
 tags:
 - attack.discovery
 - attack.t1083
+

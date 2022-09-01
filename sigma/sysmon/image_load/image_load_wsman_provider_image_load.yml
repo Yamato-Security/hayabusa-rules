@@ -1,69 +1,68 @@
-
 title: Suspicious WSMAN Provider Image Loads
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2020/06/24
 description: Detects signs of potential use of the WSMAN provider from uncommon processes
-  locally and remote execution.
+    locally and remote execution.
 detection:
-  SELECTION_1:
-    EventID: 7
-  SELECTION_10:
-    Image: '*\mscorsvw.exe'
-  SELECTION_11:
-    Image:
-    - C:\Windows\System32\Configure-SMRemoting.exe
-    - C:\Windows\System32\ServerManager.exe
-  SELECTION_12:
-    Image: C:\Windows\Temp\asgard2-agent\\*
-  SELECTION_13:
-    Image: C:\Program Files\Citrix\\*
-  SELECTION_14:
-    Image: '*\svchost.exe'
-  SELECTION_15:
-    CommandLine|re: ^$
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ImageLoaded:
-    - '*\WsmSvc.dll'
-    - '*\WsmAuto.dll'
-    - '*\Microsoft.WSMan.Management.ni.dll'
-  SELECTION_4:
-    OriginalFileName:
-    - WsmSvc.dll
-    - WSMANAUTOMATION.DLL
-    - Microsoft.WSMan.Management.dll
-  SELECTION_5:
-    Image: '*\svchost.exe'
-  SELECTION_6:
-    OriginalFileName: WsmWmiPl.dll
-  SELECTION_7:
-    Image:
-    - '*\powershell.exe'
-    - '*C:\Windows\System32\sdiagnhost.exe'
-    - '*C:\Windows\System32\services.exe'
-  SELECTION_8:
-    CommandLine:
-    - '*svchost.exe -k netsvcs -p -s BITS*'
-    - '*svchost.exe -k GraphicsPerfSvcGroup -s GraphicsPerfSvc*'
-    - '*svchost.exe -k NetworkService -p -s Wecsvc*'
-    - '*svchost.exe -k netsvcs*'
-  SELECTION_9:
-    Image:
-    - C:\Windows\Microsoft.NET\Framework64\v*
-    - C:\Windows\Microsoft.NET\Framework\v*
-  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) or
-    (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9
-    and SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13))) and  not
-    ((SELECTION_14 and SELECTION_15)))
+    SELECTION_1:
+        EventID: 7
+    SELECTION_10:
+        Image: '*\mscorsvw.exe'
+    SELECTION_11:
+        Image:
+        - C:\Windows\System32\Configure-SMRemoting.exe
+        - C:\Windows\System32\ServerManager.exe
+    SELECTION_12:
+        Image: C:\Windows\Temp\asgard2-agent\\*
+    SELECTION_13:
+        Image: C:\Program Files\Citrix\\*
+    SELECTION_14:
+        Image: '*\svchost.exe'
+    SELECTION_15:
+        CommandLine|re: ^$
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ImageLoaded:
+        - '*\WsmSvc.dll'
+        - '*\WsmAuto.dll'
+        - '*\Microsoft.WSMan.Management.ni.dll'
+    SELECTION_4:
+        OriginalFileName:
+        - WsmSvc.dll
+        - WSMANAUTOMATION.DLL
+        - Microsoft.WSMan.Management.dll
+    SELECTION_5:
+        Image: '*\svchost.exe'
+    SELECTION_6:
+        OriginalFileName: WsmWmiPl.dll
+    SELECTION_7:
+        Image:
+        - '*\powershell.exe'
+        - '*C:\Windows\System32\sdiagnhost.exe'
+        - '*C:\Windows\System32\services.exe'
+    SELECTION_8:
+        CommandLine:
+        - '*svchost.exe -k netsvcs -p -s BITS*'
+        - '*svchost.exe -k GraphicsPerfSvcGroup -s GraphicsPerfSvc*'
+        - '*svchost.exe -k NetworkService -p -s Wecsvc*'
+        - '*svchost.exe -k netsvcs*'
+    SELECTION_9:
+        Image:
+        - C:\Windows\Microsoft.NET\Framework64\v*
+        - C:\Windows\Microsoft.NET\Framework\v*
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8) or
+        (SELECTION_9 and SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13)))
+        and  not ((SELECTION_14 and SELECTION_15)))
 falsepositives:
 - Unknown
 id: ad1f4bb9-8dfb-4765-adb6-2a7cfb6c0f94
 level: medium
 logsource:
-  category: image_load
-  product: windows
+    category: image_load
+    product: windows
 modified: 2022/07/18
 references:
 - https://twitter.com/chadtilbury/status/1275851297770610688
@@ -76,3 +75,4 @@ tags:
 - attack.t1059.001
 - attack.lateral_movement
 - attack.t1021.003
+

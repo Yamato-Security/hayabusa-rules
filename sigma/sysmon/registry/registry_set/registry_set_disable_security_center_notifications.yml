@@ -1,0 +1,32 @@
+title: Disable Windows Security Center Notifications
+ruletype: Sigma
+author: frack113
+date: 2022/08/19
+description: Detect set UseActionCenterExperience to 0 to disable the windows security
+    center notification
+detection:
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*Windows\CurrentVersion\ImmersiveShell\UseActionCenterExperience'
+    SELECTION_5:
+        Details: DWORD (0x00000000)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unknown
+id: 3ae1a046-f7db-439d-b7ce-b8b366b81fa6
+level: medium
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1112/T1112.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1112
+

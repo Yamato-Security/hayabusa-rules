@@ -1,30 +1,29 @@
-
 title: Bitsadmin Download to Uncommon Target Folder
 ruletype: Sigma
 author: Florian Roth
 date: 2022/06/28
 description: Detects usage of bitsadmin downloading a file to uncommon target folder
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\bitsadmin.exe'
-  SELECTION_4:
-    CommandLine:
-    - '* /transfer *'
-    - '* /create *'
-    - '* /addfile *'
-  SELECTION_5:
-    CommandLine:
-    - '*C:\Windows\Temp\\*'
-    - '*%temp%*'
-    - '*C:\ProgramData\\*'
-    - '*%ProgramData%*'
-    - '*\AppData\Local\\*'
-    - '*%AppData%*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\bitsadmin.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* /transfer *'
+        - '* /create *'
+        - '* /addfile *'
+    SELECTION_5:
+        CommandLine:
+        - '*C:\Windows\Temp\\*'
+        - '*%temp%*'
+        - '*C:\ProgramData\\*'
+        - '*%ProgramData%*'
+        - '*\AppData\Local\\*'
+        - '*%AppData%*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 fields:
@@ -33,8 +32,8 @@ fields:
 id: 6e30c82f-a9f8-4aab-b79c-7c12bce6f248
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
 - https://isc.sans.edu/diary/22264
@@ -46,3 +45,4 @@ tags:
 - attack.t1197
 - attack.s0190
 - attack.t1036.003
+

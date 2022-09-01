@@ -1,0 +1,30 @@
+title: Process Creation Using Sysnative Folder
+ruletype: Sigma
+author: Max Altgelt
+date: 2022/08/23
+description: Detects process creation events that use the Sysnative folder (common
+    for CobaltStrike spawns)
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: C:\Windows\Sysnative\\*
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+- ParentCommandLine
+id: 3c1b5fb0-c72f-45ba-abd1-4d4c353144ab
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/
+status: experimental
+tags:
+- attack.t1055
+

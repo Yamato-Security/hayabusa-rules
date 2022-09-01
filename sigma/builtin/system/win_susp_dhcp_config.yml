@@ -1,25 +1,24 @@
-
 title: DHCP Server Loaded the CallOut DLL
 ruletype: Sigma
 author: Dimitrios Slamaris
 date: 2017/05/15
 description: This rule detects a DHCP server in which a specified Callout DLL (in
-  registry) was loaded
+    registry) was loaded
 detection:
-  SELECTION_1:
-    Channel: System
-  SELECTION_2:
-    EventID: 1033
-  SELECTION_3:
-    Provider_Name: Microsoft-Windows-DHCP-Server
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        EventID: 1033
+    SELECTION_3:
+        Provider_Name: Microsoft-Windows-DHCP-Server
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 13fc89a9-971e-4ca6-b9dc-aa53a445bf40
 level: high
 logsource:
-  product: windows
-  service: system
+    product: windows
+    service: system
 modified: 2021/10/13
 references:
 - https://blog.3or.de/mimilib-dhcp-server-callout-dll-injection.html
@@ -29,3 +28,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1574.002
+

@@ -1,44 +1,52 @@
-
 title: Always Install Elevated Windows Installer
 ruletype: Sigma
 author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community
 date: 2020/10/13
 description: This rule looks for Windows Installer service (msiexec.exe) trying to
-  install MSI packages with SYSTEM privilege
+    install MSI packages with SYSTEM privilege
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_10:
-    ParentProcessName: C:\Windows\System32\services.exe
-  SELECTION_11:
-    CommandLine: '*\system32\msiexec.exe /V'
-  SELECTION_12:
-    ParentCommandLine: '*\system32\msiexec.exe /V'
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\Windows\Installer\\*'
-  SELECTION_4:
-    NewProcessName: '*msi*'
-  SELECTION_5:
-    NewProcessName: '*tmp'
-  SELECTION_6:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  SELECTION_7:
-    NewProcessName: '*\msiexec.exe'
-  SELECTION_8:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  SELECTION_9:
-    IntegrityLevel: System
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9))
-    and  not ((SELECTION_10) or (SELECTION_11 or SELECTION_12)))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        ParentProcessName: C:\Windows\System32\services.exe
+    SELECTION_11:
+        CommandLine: '*\system32\msiexec.exe /V'
+    SELECTION_12:
+        ParentCommandLine: '*\system32\msiexec.exe /V'
+    SELECTION_13:
+        ParentProcessName:
+        - C:\ProgramData\Sophos\\*
+        - C:\ProgramData\Avira\\*
+        - C:\Program Files\Avast Software\\*
+        - C:\Program Files (x86)\Avast Software\\*
+        - C:\Program Files\Google\Update\\*
+        - C:\Program Files (x86)\Google\Update\\*
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\Windows\Installer\\*'
+    SELECTION_4:
+        NewProcessName: '*msi*'
+    SELECTION_5:
+        NewProcessName: '*tmp'
+    SELECTION_6:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_7:
+        NewProcessName: '*\msiexec.exe'
+    SELECTION_8:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_9:
+        IntegrityLevel: System
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9))
+        and  not ((SELECTION_10) or (SELECTION_11 or SELECTION_12) or (SELECTION_13)))
 falsepositives:
-- System administrator Usage
+- System administrator usage
+- Anti virus products
 fields:
 - IntegrityLevel
 - User
@@ -46,12 +54,13 @@ fields:
 id: cd951fdc-4b2f-47f5-ba99-a33bf61e3770
 level: medium
 logsource:
-  category: process_creation
-  product: windows
-modified: 2022/02/18
+    category: process_creation
+    product: windows
+modified: 2022/08/25
 references:
 - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-48-638.jpg
 status: experimental
 tags:
 - attack.privilege_escalation
 - attack.t1548.002
+

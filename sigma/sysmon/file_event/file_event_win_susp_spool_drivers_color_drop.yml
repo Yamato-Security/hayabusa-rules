@@ -1,32 +1,32 @@
-
 title: Drop Binaries Into Spool Drivers Color Folder
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/28
 description: Detects the creation of suspcious binary files inside the "\windows\system32\spool\drivers\color\"
-  as seen in the blog referenced below
+    as seen in the blog referenced below
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: C:\Windows\System32\spool\drivers\color\\*
-  SELECTION_4:
-    TargetFilename:
-    - '*.dll'
-    - '*.exe'
-    - '*.sys'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: C:\Windows\System32\spool\drivers\color\\*
+    SELECTION_4:
+        TargetFilename:
+        - '*.dll'
+        - '*.exe'
+        - '*.sys'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: ce7066a6-508a-42d3-995b-2952c65dc2ce
 level: medium
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 references:
 - https://www.microsoft.com/security/blog/2022/07/27/untangling-knotweed-european-private-sector-offensive-actor-using-0-day-exploits/
 status: experimental
 tags:
 - attack.defense_evasion
+

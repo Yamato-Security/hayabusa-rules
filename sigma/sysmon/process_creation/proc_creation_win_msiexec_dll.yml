@@ -1,28 +1,27 @@
-
 title: Suspicious Msiexec Load DLL
 ruletype: Sigma
 author: frack113
 date: 2022/04/24
 description: Detects MsiExec loading a DLL and calling its DllUnregisterServer function
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\msiexec.exe'
-  SELECTION_4:
-    CommandLine: '* /z *'
-  SELECTION_5:
-    CommandLine: '*.dll*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\msiexec.exe'
+    SELECTION_4:
+        CommandLine: '* /z *'
+    SELECTION_5:
+        CommandLine: '*.dll*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 84f52741-8834-4a8c-a413-2eb2269aa6c8
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec
@@ -30,3 +29,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1218.007
+

@@ -1,28 +1,27 @@
-
 title: Created Files by Microsoft Sync Center
 ruletype: Sigma
 author: elhoim
 date: 2022/04/28
 description: This rule detects suspicious files created by Microsoft Sync Center (mobsync)
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\mobsync.exe'
-  SELECTION_4:
-    TargetFilename:
-    - '*.dll'
-    - '*.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\mobsync.exe'
+    SELECTION_4:
+        TargetFilename:
+        - '*.dll'
+        - '*.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 409f8a98-4496-4aaa-818a-c931c0a8b832
 level: medium
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/06/02
 references:
 - https://redcanary.com/blog/intelligence-insights-november-2021/
@@ -32,3 +31,4 @@ tags:
 - attack.t1218
 - attack.execution
 - attack.defense_evasion
+
