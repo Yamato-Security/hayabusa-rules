@@ -1,35 +1,34 @@
-
 title: Windows Registry Persistence DebugPath
 ruletype: Sigma
 author: frack113
 date: 2022/07/27
 description: Detects potential persistence using Appx DebugPath
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject: '*Classes\ActivatableClasses\Package\Microsoft.*'
-  SELECTION_5:
-    TargetObject: '*\DebugPath'
-  SELECTION_6:
-    EventType: SetValue
-  SELECTION_7:
-    TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\PackagedAppXDebug\Microsoft.*'
-  SELECTION_8:
-    TargetObject: '*\(Default)'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*Classes\ActivatableClasses\Package\Microsoft.*'
+    SELECTION_5:
+        TargetObject: '*\DebugPath'
+    SELECTION_6:
+        EventType: SetValue
+    SELECTION_7:
+        TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\PackagedAppXDebug\Microsoft.*'
+    SELECTION_8:
+        TargetObject: '*\(Default)'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: df4dc653-1029-47ba-8231-3c44238cc0ae
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://oddvar.moe/2018/09/06/persistence-using-universal-windows-platform-apps-appx/
 - https://github.com/rootm0s/WinPwnage
@@ -37,3 +36,4 @@ status: experimental
 tags:
 - attack.persistence
 - attack.t1546.015
+

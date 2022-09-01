@@ -1,35 +1,34 @@
-
 title: Suspicious Outbound Kerberos Connection
 ruletype: Sigma
 author: Ilyas Ochkov, oscd.community
 date: 2019/10/24
 description: Detects suspicious outbound network activity via kerberos default port
-  indicating possible lateral movement or first stage PrivEsc via delegation.
+    indicating possible lateral movement or first stage PrivEsc via delegation.
 detection:
-  SELECTION_1:
-    EventID: 3
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    DestinationPort: 88
-  SELECTION_4:
-    Initiated: 'true'
-  SELECTION_5:
-    Image:
-    - '*\lsass.exe'
-    - '*\opera.exe'
-    - '*\chrome.exe'
-    - '*\firefox.exe'
-    - '*\tomcat\bin\tomcat8.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 3
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        DestinationPort: 88
+    SELECTION_4:
+        Initiated: 'true'
+    SELECTION_5:
+        Image:
+        - '*\lsass.exe'
+        - '*\opera.exe'
+        - '*\chrome.exe'
+        - '*\firefox.exe'
+        - '*\tomcat\bin\tomcat8.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Other browsers
 id: e54979bd-c5f9-4d6c-967b-a04b19ac4c74
 level: high
 logsource:
-  category: network_connection
-  product: windows
+    category: network_connection
+    product: windows
 modified: 2021/12/02
 references:
 - https://github.com/GhostPack/Rubeus
@@ -39,3 +38,4 @@ tags:
 - attack.t1558
 - attack.lateral_movement
 - attack.t1550.003
+

@@ -1,29 +1,28 @@
-
 title: Possible Exploitation of Exchange RCE CVE-2021-42321
 ruletype: Sigma
 author: Florian Roth, @testanull
 date: 2021/11/18
 description: Detects log entries that appear in exploitation attempts against MS Exchange
-  RCE CVE-2021-42321
+    RCE CVE-2021-42321
 detection:
-  SELECTION_1:
-    Channel: MSExchange Management
-  SELECTION_2:
-    EventID: 6
-  SELECTION_3:
-    EventID: 8
-  SELECTION_4:
-    Data:
-    - '*Cmdlet failed. Cmdlet Get-App, *'
-    - '*Task Get-App throwing unhandled exception: System.InvalidCastException:*'
-  condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
+    SELECTION_1:
+        Channel: MSExchange Management
+    SELECTION_2:
+        EventID: 6
+    SELECTION_3:
+        EventID: 8
+    SELECTION_4:
+        Data:
+        - '*Cmdlet failed. Cmdlet Get-App, *'
+        - '*Task Get-App throwing unhandled exception: System.InvalidCastException:*'
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
 falsepositives:
 - Unknown, please report false positives via https://github.com/SigmaHQ/sigma/issues
 id: c92f1896-d1d2-43c3-92d5-7a5b35c217bb
 level: high
 logsource:
-  product: windows
-  service: msexchange-management
+    product: windows
+    service: msexchange-management
 modified: 2022/07/12
 references:
 - https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-42321
@@ -31,3 +30,4 @@ status: experimental
 tags:
 - attack.lateral_movement
 - attack.t1210
+

@@ -1,37 +1,37 @@
-
 title: Net.exe Execution
 ruletype: Sigma
 author: Michael Haag, Mark Woan (improvements), James Pemberton / @4A616D6573 / oscd.community
-  (improvements)
+    (improvements)
 date: 2019/01/16
 description: Detects execution of Net.exe, whether suspicious or benign.
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName:
-    - '*\net.exe'
-    - '*\net1.exe'
-  SELECTION_4:
-    OriginalFileName:
-    - net.exe
-    - net1.exe
-  SELECTION_5:
-    CommandLine:
-    - '* group*'
-    - '* localgroup*'
-    - '* user*'
-    - '* view*'
-    - '* share*'
-    - '* accounts*'
-    - '* stop *'
-    - '* start*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\net.exe'
+        - '*\net1.exe'
+    SELECTION_4:
+        OriginalFileName:
+        - net.exe
+        - net1.exe
+    SELECTION_5:
+        CommandLine:
+        - '* group*'
+        - '* localgroup*'
+        - '* user*'
+        - '* view*'
+        - '* share*'
+        - '* accounts*'
+        - '* stop *'
+        - '* start*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Will need to be tuned. If using Splunk, I recommend | stats count by Computer,CommandLine
-  following the search for easy hunting by computer/CommandLine.
+    following the search for easy hunting by computer/CommandLine.
 fields:
 - ComputerName
 - User
@@ -40,8 +40,8 @@ fields:
 id: 183e7ea8-ac4b-4c23-9aec-b3dac4e401ac
 level: low
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/11
 references:
 - https://pentest.blog/windows-privilege-escalation-methods-for-pentesters/
@@ -64,3 +64,4 @@ tags:
 - attack.lateral_movement
 - attack.t1021.002
 - attack.s0039
+

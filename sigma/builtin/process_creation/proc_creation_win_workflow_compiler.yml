@@ -1,22 +1,22 @@
-
 title: Microsoft Workflow Compiler
 ruletype: Sigma
 author: Nik Seetharaman, frack113
 date: 2019/01/16
 description: Detects invocation of Microsoft Workflow Compiler, which may permit the
-  execution of arbitrary unsigned code.
+    execution of arbitrary unsigned code.
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\Microsoft.Workflow.Compiler.exe'
-  SELECTION_4:
-    OriginalFileName: Microsoft.Workflow.Compiler.exe
-  SELECTION_5:
-    CommandLine: '*.xml*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and SELECTION_5)))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\Microsoft.Workflow.Compiler.exe'
+    SELECTION_4:
+        OriginalFileName: Microsoft.Workflow.Compiler.exe
+    SELECTION_5:
+        CommandLine: '*.xml*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5)))
 falsepositives:
 - Legitimate MWC use (unlikely in modern enterprise environments)
 fields:
@@ -25,8 +25,8 @@ fields:
 id: 419dbf2b-8a9b-4bea-bf99-7544b050ec8d
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/07/13
 references:
 - https://posts.specterops.io/arbitrary-unsigned-code-execution-vector-in-microsoft-workflow-compiler-exe-3d9294bc5efb
@@ -37,3 +37,4 @@ tags:
 - attack.execution
 - attack.t1127
 - attack.t1218
+

@@ -1,29 +1,28 @@
-
 title: Suspicious Diantz Download and Compress Into a CAB File
 ruletype: Sigma
 author: frack113
 date: 2021/11/26
 description: Download and compress a remote file and store it in a cab file on local
-  machine.
+    machine.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*diantz.exe*'
-  SELECTION_4:
-    CommandLine: '* \\\\\*'
-  SELECTION_5:
-    CommandLine: '*.cab*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*diantz.exe*'
+    SELECTION_4:
+        CommandLine: '* \\\\\*'
+    SELECTION_5:
+        CommandLine: '*.cab*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 185d7418-f250-42d0-b72e-0c8b70661e93
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/08/13
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Diantz/
@@ -31,3 +30,4 @@ status: experimental
 tags:
 - attack.command_and_control
 - attack.t1105
+

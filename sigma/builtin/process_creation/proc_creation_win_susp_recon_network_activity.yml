@@ -1,0 +1,33 @@
+title: Network Reconnaissance Activity
+ruletype: Sigma
+author: Florian Roth
+date: 2022/02/07
+description: Detects a set of suspicious network related commands often used in recon
+    stages
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*nslookup*'
+    SELECTION_4:
+        CommandLine: '*_ldap._tcp.dc._msdcs.*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+    environment
+id: e6313acd-208c-44fc-a0ff-db85d572e90e
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/
+status: experimental
+tags:
+- attack.discovery
+- attack.t1087
+- attack.t1082
+- car.2016-03-001
+

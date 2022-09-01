@@ -1,22 +1,22 @@
-
 title: Modifies the Registry From a ADS
 ruletype: Sigma
 author: Eli Salem, Sander Wiebing, oscd.community
 date: 2020/10/12
 description: Detects the import of an alternate data stream with regini.exe, regini.exe
-  can be used to modify registry keys.
+    can be used to modify registry keys.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\regini.exe'
-  SELECTION_4:
-    OriginalFileName: REGINI.EXE
-  SELECTION_5:
-    CommandLine|re: :[^ \\\\]
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\regini.exe'
+    SELECTION_4:
+        OriginalFileName: REGINI.EXE
+    SELECTION_5:
+        CommandLine|re: :[^ \\\\]
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unknown
 fields:
@@ -25,8 +25,8 @@ fields:
 id: 77946e79-97f1-45a2-84b4-f37b5c0d8682
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/05/09
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Regini/
@@ -36,3 +36,4 @@ status: experimental
 tags:
 - attack.t1112
 - attack.defense_evasion
+

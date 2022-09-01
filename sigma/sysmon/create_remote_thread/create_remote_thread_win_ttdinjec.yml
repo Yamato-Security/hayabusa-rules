@@ -1,24 +1,23 @@
-
 title: Remote Thread Creation Ttdinject.exe Proxy
 ruletype: Sigma
 author: frack113
 date: 2022/05/16
 description: Detects a remote thread creation of Ttdinject.exe used as proxy
 detection:
-  SELECTION_1:
-    EventID: 8
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    SourceImage: '*\ttdinject.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 8
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        SourceImage: '*\ttdinject.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: c15e99a3-c474-48ab-b9a7-84549a7a9d16
 level: high
 logsource:
-  category: create_remote_thread
-  product: windows
+    category: create_remote_thread
+    product: windows
 modified: 2022/06/02
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Ttdinject/
@@ -26,3 +25,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1127
+

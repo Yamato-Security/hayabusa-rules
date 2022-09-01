@@ -1,95 +1,94 @@
-
 title: CurrentVersion NT Autorun Keys Modification
 ruletype: Sigma
 author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
-  oscd.community, Tim Shelton, frack113 (split)
+    oscd.community, Tim Shelton, frack113 (split)
 date: 2019/10/25
 description: Detects modification of autostart extensibility point (ASEP) in registry.
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_10:
-    NewProcessName: C:\Program Files (x86)\Microsoft\Temp\\*
-  SELECTION_11:
-    NewProcessName: '*\MicrosoftEdgeUpdate.exe'
-  SELECTION_12:
-    TargetObject:
-    - '*\ClickToRunStore\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\\*'
-    - '*\ClickToRun\REGISTRY\MACHINE\Software\Microsoft\Windows NT\CurrentVersion\\*'
-  SELECTION_13:
-    NewProcessName:
-    - C:\Program Files\Microsoft Office\root\integration\integrator.exe
-    - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
-  SELECTION_14:
-    NewProcessName:
-    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
-    - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
-  SELECTION_15:
-    NewProcessName: '*\OfficeClickToRun.exe'
-  SELECTION_16:
-    NewProcessName: C:\Windows\system32\svchost.exe
-  SELECTION_17:
-    TargetObject:
-    - '*\Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\PreviousPolicyAreas*'
-    - '*\Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\MaxNoGPOListChangesInterval*'
-  SELECTION_18:
-    NewValue:
-    - DWORD (0x00000009)
-    - DWORD (0x000003c0)
-  SELECTION_19:
-    NewProcessName: C:\Windows\Microsoft.NET\Framework*
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_20:
-    NewProcessName: '*\ngen.exe'
-  SELECTION_21:
-    NewProcessName: '*\AppData\Local\Microsoft\OneDrive\StandaloneUpdater\OneDriveSetup.exe'
-  SELECTION_22:
-    TargetObject: '*\Microsoft\Windows\CurrentVersion\RunOnce\Delete Cached Update
-      Binary'
-  SELECTION_23:
-    NewValue: C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\\*
-  SELECTION_24:
-    NewValue: '*\AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe"'
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: SetValue
-  SELECTION_5:
-    TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion*'
-  SELECTION_6:
-    TargetObject:
-    - '*\Winlogon\VmApplet*'
-    - '*\Winlogon\Userinit*'
-    - '*\Winlogon\Taskman*'
-    - '*\Winlogon\Shell*'
-    - '*\Winlogon\GpExtensions*'
-    - '*\Winlogon\AppSetup*'
-    - '*\Winlogon\AlternateShells\AvailableShells*'
-    - '*\Windows\IconServiceLib*'
-    - '*\Windows\Appinit_Dlls*'
-    - '*\Image File Execution Options*'
-    - '*\Font Drivers*'
-    - '*\Drivers32*'
-    - '*\Windows\Run*'
-    - '*\Windows\Load*'
-  SELECTION_7:
-    NewValue: (Empty)
-  SELECTION_8:
-    TargetObject: '*\Image File Execution Options\\*'
-  SELECTION_9:
-    TargetObject:
-    - '*\DisableExceptionChainValidation'
-    - '*\MitigationOptions'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5
-    and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9) or (SELECTION_10
-    and SELECTION_11) or (SELECTION_12 or SELECTION_13) or (SELECTION_14 and SELECTION_15)
-    or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19 and SELECTION_20)
-    or (SELECTION_21 and SELECTION_22 and SELECTION_23 and SELECTION_24)))
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_10:
+        NewProcessName: C:\Program Files (x86)\Microsoft\Temp\\*
+    SELECTION_11:
+        NewProcessName: '*\MicrosoftEdgeUpdate.exe'
+    SELECTION_12:
+        TargetObject:
+        - '*\ClickToRunStore\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\\*'
+        - '*\ClickToRun\REGISTRY\MACHINE\Software\Microsoft\Windows NT\CurrentVersion\\*'
+    SELECTION_13:
+        NewProcessName:
+        - C:\Program Files\Microsoft Office\root\integration\integrator.exe
+        - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+    SELECTION_14:
+        NewProcessName:
+        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
+        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
+    SELECTION_15:
+        NewProcessName: '*\OfficeClickToRun.exe'
+    SELECTION_16:
+        NewProcessName: C:\Windows\system32\svchost.exe
+    SELECTION_17:
+        TargetObject:
+        - '*\Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\PreviousPolicyAreas*'
+        - '*\Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\MaxNoGPOListChangesInterval*'
+    SELECTION_18:
+        NewValue:
+        - DWORD (0x00000009)
+        - DWORD (0x000003c0)
+    SELECTION_19:
+        NewProcessName: C:\Windows\Microsoft.NET\Framework*
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_20:
+        NewProcessName: '*\ngen.exe'
+    SELECTION_21:
+        NewProcessName: '*\AppData\Local\Microsoft\OneDrive\StandaloneUpdater\OneDriveSetup.exe'
+    SELECTION_22:
+        TargetObject: '*\Microsoft\Windows\CurrentVersion\RunOnce\Delete Cached Update
+            Binary'
+    SELECTION_23:
+        NewValue: C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\\*
+    SELECTION_24:
+        NewValue: '*\AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe"'
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion*'
+    SELECTION_6:
+        TargetObject:
+        - '*\Winlogon\VmApplet*'
+        - '*\Winlogon\Userinit*'
+        - '*\Winlogon\Taskman*'
+        - '*\Winlogon\Shell*'
+        - '*\Winlogon\GpExtensions*'
+        - '*\Winlogon\AppSetup*'
+        - '*\Winlogon\AlternateShells\AvailableShells*'
+        - '*\Windows\IconServiceLib*'
+        - '*\Windows\Appinit_Dlls*'
+        - '*\Image File Execution Options*'
+        - '*\Font Drivers*'
+        - '*\Drivers32*'
+        - '*\Windows\Run*'
+        - '*\Windows\Load*'
+    SELECTION_7:
+        NewValue: (Empty)
+    SELECTION_8:
+        TargetObject: '*\Image File Execution Options\\*'
+    SELECTION_9:
+        TargetObject:
+        - '*\DisableExceptionChainValidation'
+        - '*\MitigationOptions'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 or SELECTION_13) or (SELECTION_14
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19
+        and SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23 and SELECTION_24)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
-  keys for legitimate reason
+    keys for legitimate reason
 - Legitimate administrator sets up autorun keys for legitimate reason
 fields:
 - SecurityID
@@ -99,17 +98,18 @@ fields:
 id: cbf93e5d-ca6c-4722-8bea-e9119007c248
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/07/05
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
 - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
 related:
-- id: 17f878b8-9968-4578-b814-c4217fc5768c
-  type: derived
+-   id: 17f878b8-9968-4578-b814-c4217fc5768c
+    type: derived
 status: experimental
 tags:
 - attack.persistence
 - attack.t1547.001
+

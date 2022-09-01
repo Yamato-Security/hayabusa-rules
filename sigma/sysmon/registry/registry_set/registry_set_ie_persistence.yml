@@ -1,42 +1,41 @@
-
 title: Modification of IE Registry Settings
 ruletype: Sigma
 author: frack113
 date: 2022/01/22
 description: Detects the modification of the registry settings used for Internet Explorer
-  and other Windows components that use these settings
+    and other Windows components that use these settings
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\Internet Settings*'
-  SELECTION_5:
-    Details: DWORD*
-  SELECTION_6:
-    Details:
-    - 'Cookie:'
-    - 'Visited:'
-    - (Empty)
-  SELECTION_7:
-    TargetObject:
-    - '*\Cache*'
-    - '*\ZoneMap*'
-    - '*\WpadDecision*'
-  SELECTION_8:
-    Details: Binary Data
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    ((SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\Internet Settings*'
+    SELECTION_5:
+        Details: DWORD*
+    SELECTION_6:
+        Details:
+        - 'Cookie:'
+        - 'Visited:'
+        - (Empty)
+    SELECTION_7:
+        TargetObject:
+        - '*\Cache*'
+        - '*\ZoneMap*'
+        - '*\WpadDecision*'
+    SELECTION_8:
+        Details: Binary Data
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Unknown
 id: d88d0ab2-e696-4d40-a2ed-9790064e66b3
 level: low
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/03/29
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-5---javascript-in-registry
@@ -44,3 +43,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1112
+

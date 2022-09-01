@@ -1,54 +1,53 @@
-
 title: Direct Syscall of NtOpenProcess
 ruletype: Sigma
 author: Christian Burkard, Tim Shelton
 date: 2021/07/28
 description: Detects the usage of the direct syscall of NtOpenProcess which might
-  be done from a CobaltStrike BOF.
+    be done from a CobaltStrike BOF.
 detection:
-  SELECTION_1:
-    EventID: 10
-  SELECTION_10:
-    SourceImage: '*vcredist_x64.exe'
-  SELECTION_11:
-    TargetImage: C:\Windows\system32\systeminfo.exe
-  SELECTION_12:
-    SourceImage: '*setup64.exe'
-  SELECTION_13:
-    TargetImage: '*AmazonSSMAgentSetup.exe'
-  SELECTION_14:
-    SourceImage: '*AmazonSSMAgentSetup.exe'
-  SELECTION_15:
-    TargetImage: '*C:\Program Files\Mozilla Firefox\firefox.exe'
-  SELECTION_16:
-    SourceImage: '*C:\Program Files\Mozilla Firefox\firefox.exe'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CallTrace: UNKNOWN*
-  SELECTION_4:
-    TargetImage: C:\Program Files\Cylance\Desktop\CylanceUI.exe
-  SELECTION_5:
-    SourceImage: C:\Windows\Explorer.EXE
-  SELECTION_6:
-    TargetImage: C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe
-  SELECTION_7:
-    SourceImage: C:\Program Files (x86)\Microsoft\Temp\\*
-  SELECTION_8:
-    SourceImage: '*\MicrosoftEdgeUpdate.exe'
-  SELECTION_9:
-    TargetImage: '*vcredist_x64.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-    and SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-    and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14)
-    or (SELECTION_15 and SELECTION_16)))
+    SELECTION_1:
+        EventID: 10
+    SELECTION_10:
+        SourceImage: '*vcredist_x64.exe'
+    SELECTION_11:
+        TargetImage: C:\Windows\system32\systeminfo.exe
+    SELECTION_12:
+        SourceImage: '*setup64.exe'
+    SELECTION_13:
+        TargetImage: '*AmazonSSMAgentSetup.exe'
+    SELECTION_14:
+        SourceImage: '*AmazonSSMAgentSetup.exe'
+    SELECTION_15:
+        TargetImage: '*C:\Program Files\Mozilla Firefox\firefox.exe'
+    SELECTION_16:
+        SourceImage: '*C:\Program Files\Mozilla Firefox\firefox.exe'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CallTrace: UNKNOWN*
+    SELECTION_4:
+        TargetImage: C:\Program Files\Cylance\Desktop\CylanceUI.exe
+    SELECTION_5:
+        SourceImage: C:\Windows\Explorer.EXE
+    SELECTION_6:
+        TargetImage: C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe
+    SELECTION_7:
+        SourceImage: C:\Program Files (x86)\Microsoft\Temp\\*
+    SELECTION_8:
+        SourceImage: '*\MicrosoftEdgeUpdate.exe'
+    SELECTION_9:
+        TargetImage: '*vcredist_x64.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        and SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
+        SELECTION_14) or (SELECTION_15 and SELECTION_16)))
 falsepositives:
 - Unknown
 id: 3f3f3506-1895-401b-9cc3-e86b16e630d0
 level: high
 logsource:
-  category: process_access
-  product: windows
+    category: process_access
+    product: windows
 modified: 2022/08/09
 references:
 - https://medium.com/falconforce/falconfriday-direct-system-calls-and-cobalt-strike-bofs-0xff14-741fa8e1bdd6
@@ -56,3 +55,4 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1106
+

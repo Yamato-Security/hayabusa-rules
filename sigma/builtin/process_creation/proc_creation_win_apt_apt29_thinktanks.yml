@@ -1,32 +1,31 @@
-
 title: APT29
 ruletype: Sigma
 author: Florian Roth
 date: 2018/12/04
 description: This method detects a suspicious PowerShell command line combination
-  as used by APT29 in a campaign against U.S. think tanks.
+    as used by APT29 in a campaign against U.S. think tanks.
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    CommandLine: '*-noni*'
-  SELECTION_4:
-    CommandLine: '*-ep*'
-  SELECTION_5:
-    CommandLine: '*bypass*'
-  SELECTION_6:
-    CommandLine: '*$*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*-noni*'
+    SELECTION_4:
+        CommandLine: '*-ep*'
+    SELECTION_5:
+        CommandLine: '*bypass*'
+    SELECTION_6:
+        CommandLine: '*$*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: 033fe7d6-66d1-4240-ac6b-28908009c71f
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/11/27
 references:
 - https://www.microsoft.com/security/blog/2018/12/03/analysis-of-cyberattack-on-u-s-think-tanks-non-profits-public-sector-by-unidentified-attackers/
@@ -36,3 +35,4 @@ tags:
 - attack.execution
 - attack.g0016
 - attack.t1059.001
+

@@ -1,48 +1,41 @@
-
 title: Dism Remove Online Package
 ruletype: Sigma
 author: frack113
 date: 2022/01/16
 description: Deployment Image Servicing and Management tool. DISM is used to enumerate,
-  install, uninstall, configure, and update features and packages in Windows images
+    install, uninstall, configure, and update features and packages in Windows images
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_10:
-    CommandLine: '*/Disable-Feature*'
-  SELECTION_11:
-    CommandLine: '*/FeatureName:*'
-  SELECTION_12:
-    CommandLine: '*/Remove*'
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\DismHost.exe'
-  SELECTION_4:
-    ParentCommandLine: '*/online*'
-  SELECTION_5:
-    ParentCommandLine: '*/Disable-Feature*'
-  SELECTION_6:
-    ParentCommandLine: '*/FeatureName:*'
-  SELECTION_7:
-    ParentCommandLine: '*/Remove*'
-  SELECTION_8:
-    NewProcessName: '*\Dism.exe'
-  SELECTION_9:
-    CommandLine: '*/online*'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9 and
-    SELECTION_10 and SELECTION_11 and SELECTION_12)))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\DismHost.exe'
+    SELECTION_4:
+        ParentCommandLine: '*/Online*'
+    SELECTION_5:
+        ParentCommandLine: '*/Disable-Feature*'
+    SELECTION_6:
+        NewProcessName: '*\Dism.exe'
+    SELECTION_7:
+        CommandLine: '*/Online*'
+    SELECTION_8:
+        CommandLine: '*/Disable-Feature*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Legitimate script
 id: 43e32da2-fdd0-4156-90de-50dfd62636f9
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
+modified: 2022/08/26
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md#atomic-test-26---disable-windows-defender-with-dism
+- https://www.trendmicro.com/en_us/research/22/h/ransomware-actor-abuses-genshin-impact-anti-cheat-driver-to-kill-antivirus.html
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1562.001
+

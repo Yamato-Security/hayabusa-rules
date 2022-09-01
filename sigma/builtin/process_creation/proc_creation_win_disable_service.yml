@@ -1,45 +1,44 @@
-
 title: Sc Or Set-Service Cmdlet Execution to Disable Services
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/08/01
 description: Detects when attackers use "sc.exe" or the powershell "Set-Service" cmdlet
-  to change the startup type of a service to "disabled"
+    to change the startup type of a service to "disabled"
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_10:
-    CommandLine:
-    - '*Disabled*'
-    - '*Manual*'
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\sc.exe'
-  SELECTION_4:
-    OriginalFileName: sc.exe
-  SELECTION_5:
-    CommandLine: '* config *'
-  SELECTION_6:
-    CommandLine: '*start*'
-  SELECTION_7:
-    CommandLine:
-    - '*disabled*'
-    - '*demand*'
-  SELECTION_8:
-    CommandLine: '*Set-Service*'
-  SELECTION_9:
-    CommandLine: '*-StartupType*'
-  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-    (SELECTION_5 and SELECTION_6 and SELECTION_7)) or (SELECTION_8 and SELECTION_9
-    and SELECTION_10)))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine:
+        - '*Disabled*'
+        - '*Manual*'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\sc.exe'
+    SELECTION_4:
+        OriginalFileName: sc.exe
+    SELECTION_5:
+        CommandLine: '* config *'
+    SELECTION_6:
+        CommandLine: '*start*'
+    SELECTION_7:
+        CommandLine:
+        - '*disabled*'
+        - '*demand*'
+    SELECTION_8:
+        CommandLine: '*Set-Service*'
+    SELECTION_9:
+        CommandLine: '*-StartupType*'
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7)) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10)))
 falsepositives:
 - Administrators settings a service to disable via script or cli for testing purposes
 id: 85c312b7-f44d-4a51-a024-d671c40b49fc
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://www.virustotal.com/gui/file/38283b775552da8981452941ea74191aa0d203edd3f61fb2dee7b0aea3514955
 status: experimental
@@ -47,3 +46,4 @@ tags:
 - attack.execution
 - attack.defense_evasion
 - attack.t1562.001
+

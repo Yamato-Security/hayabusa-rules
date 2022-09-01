@@ -1,31 +1,30 @@
-
 title: Recon Information for Export with PowerShell
 ruletype: Sigma
 author: frack113
 date: 2021/07/30
 description: Once established within a system or network, an adversary may use automated
-  techniques for collecting internal data
+    techniques for collecting internal data
 detection:
-  SELECTION_1:
-    EventID: 4104
-  SELECTION_2:
-    Channel: Microsoft-Windows-PowerShell/Operational
-  SELECTION_3:
-    ScriptBlockText:
-    - '*Get-Service *'
-    - '*Get-ChildItem *'
-    - '*Get-Process *'
-  SELECTION_4:
-    ScriptBlockText: '*> $env:TEMP\\*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText:
+        - '*Get-Service *'
+        - '*Get-ChildItem *'
+        - '*Get-Process *'
+    SELECTION_4:
+        ScriptBlockText: '*> $env:TEMP\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: a9723fcc-881c-424c-8709-fd61442ab3c3
 level: medium
 logsource:
-  category: ps_script
-  definition: Script block logging must be enabled
-  product: windows
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
 modified: 2021/12/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1119/T1119.md
@@ -33,3 +32,4 @@ status: experimental
 tags:
 - attack.collection
 - attack.t1119
+

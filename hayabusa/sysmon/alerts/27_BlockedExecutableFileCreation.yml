@@ -1,0 +1,28 @@
+author: Zach Mathis
+date: 2022/09/01
+modified: 2022/09/01
+
+title: Blocked Exe File Creation
+details: 'Rule: %RuleName% | Path: %TargetFilename% | Process: %Image% | User: %User% | PID: %ProcessId% | PGUID: %ProcessGuid%'
+description: 'Blocks .exe files from being written based on various conditions.'
+
+id: bb35ca48-8e4a-445b-bc6d-0a994a0e9310
+level: medium
+status: test
+logsource:
+    product: windows
+    service: sysmon
+    definition: Requires Sysmon 14+ (Released 2022/08/16)
+detection:
+    selection_basic:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 27
+    condition: selection_basic
+falsepositives:
+tags:
+    - sysmon
+references:
+    - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+ruletype: Hayabusa
+
+sample-evtx: 

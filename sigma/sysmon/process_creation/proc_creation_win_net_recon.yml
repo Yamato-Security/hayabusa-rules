@@ -1,0 +1,62 @@
+title: Suspicious Reconnaissance Activity Using Net
+ruletype: Sigma
+analysis:
+    recommendation: Check if the user that executed the commands is suspicious (e.g.
+        service accounts, LOCAL_SYSTEM)
+author: Florian Roth, omkar72, @svch0st, Nasreddine Bencherchali
+date: 2019/01/16
+description: Detects suspicious reconnaissance command line activity on Windows systems
+    using Net.EXE
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\net.exe'
+        - '*\net1.exe'
+    SELECTION_4:
+        OriginalFileName:
+        - net.exe
+        - net1.exe
+    SELECTION_5:
+        CommandLine:
+        - '* group *'
+        - '* localgroup *'
+    SELECTION_6:
+        CommandLine:
+        - '*domain admins*'
+        - '* administrators*'
+        - '* administrateurs*'
+        - '*enterprise admins*'
+        - '*Exchange Trusted Subsystem*'
+        - '* /do*'
+    SELECTION_7:
+        CommandLine: '* accounts *'
+    SELECTION_8:
+        CommandLine: '* /do*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+falsepositives:
+- Inventory tool runs
+- Administrative activity
+fields:
+- CommandLine
+- ParentCommandLine
+id: d95de845-b83c-4a9a-8a6a-4fc802ebf6c0
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/08/22
+references:
+- https://redcanary.com/blog/how-one-hospital-thwarted-a-ryuk-ransomware-outbreak/
+- https://thedfirreport.com/2020/10/18/ryuk-in-5-hours/
+- https://research.nccgroup.com/2022/08/19/back-in-black-unlocking-a-lockbit-3-0-ransomware-attack/
+status: experimental
+tags:
+- attack.discovery
+- attack.t1087.001
+- attack.t1087.002
+

@@ -1,32 +1,31 @@
-
 title: Lolbins Process Creation with WmiPrvse
 ruletype: Sigma
 author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule)
 date: 2021/08/23
 description: This rule will monitor LOLBin process creations by wmiprvse. Add more
-  LOLBins to rule logic if needed.
+    LOLBins to rule logic if needed.
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName:
-    - '*\regsvr32.exe'
-    - '*\rundll32.exe'
-    - '*\msiexec.exe'
-    - '*\mshta.exe'
-    - '*\verclsid.exe'
-  SELECTION_4:
-    ParentProcessName: '*\wbem\WmiPrvSE.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\regsvr32.exe'
+        - '*\rundll32.exe'
+        - '*\msiexec.exe'
+        - '*\mshta.exe'
+        - '*\verclsid.exe'
+    SELECTION_4:
+        ParentProcessName: '*\wbem\WmiPrvSE.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/11
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
@@ -38,3 +37,4 @@ tags:
 - attack.t1218.010
 - attack.execution
 - attack.defense_evasion
+

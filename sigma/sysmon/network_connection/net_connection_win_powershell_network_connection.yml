@@ -1,58 +1,57 @@
-
 title: PowerShell Network Connections
 ruletype: Sigma
 author: Florian Roth
 date: 2017/03/13
 description: Detects a Powershell process that opens network connections - check for
-  suspicious target ports and target systems - adjust to your environment (e.g. extend
-  filters with company's ip range')
+    suspicious target ports and target systems - adjust to your environment (e.g.
+    extend filters with company's ip range')
 detection:
-  SELECTION_1:
-    EventID: 3
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image:
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-  SELECTION_4:
-    Initiated: 'true'
-  SELECTION_5:
-    DestinationIsIpv6: 'false'
-  SELECTION_6:
-    DestinationIp:
-    - 10.*
-    - 192.168.*
-    - 172.16.*
-    - 172.17.*
-    - 172.18.*
-    - 172.19.*
-    - 172.20.*
-    - 172.21.*
-    - 172.22.*
-    - 172.23.*
-    - 172.24.*
-    - 172.25.*
-    - 172.26.*
-    - 172.27.*
-    - 172.28.*
-    - 172.29.*
-    - 172.30.*
-    - 172.31.*
-    - 127.0.0.1*
-  SELECTION_7:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not (SELECTION_6 and SELECTION_7))
+    SELECTION_1:
+        EventID: 3
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        Initiated: 'true'
+    SELECTION_5:
+        DestinationIsIpv6: 'false'
+    SELECTION_6:
+        DestinationIp:
+        - 10.*
+        - 192.168.*
+        - 172.16.*
+        - 172.17.*
+        - 172.18.*
+        - 172.19.*
+        - 172.20.*
+        - 172.21.*
+        - 172.22.*
+        - 172.23.*
+        - 172.24.*
+        - 172.25.*
+        - 172.26.*
+        - 172.27.*
+        - 172.28.*
+        - 172.29.*
+        - 172.30.*
+        - 172.31.*
+        - 127.0.0.1*
+    SELECTION_7:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
 falsepositives:
 - Administrative scripts
 id: 1f21ec3f-810d-4b0e-8045-322202e22b4b
 level: low
 logsource:
-  category: network_connection
-  product: windows
+    category: network_connection
+    product: windows
 modified: 2022/07/14
 references:
 - https://www.youtube.com/watch?v=DLtJTxMWZ2o
@@ -60,3 +59,4 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1059.001
+

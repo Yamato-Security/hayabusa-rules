@@ -1,54 +1,53 @@
-
 title: LSASS Access from Non System Account
 ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/06/20
 description: Detects potential mimikatz-like tools accessing LSASS from non system
-  account
+    account
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    EventID: 4663
-  SELECTION_3:
-    EventID: 4656
-  SELECTION_4:
-    AccessMask:
-    - '0x40'
-    - '0x1400'
-    - '0x100000'
-    - '0x1410'
-    - '0x1010'
-    - '0x1438'
-    - '0x143a'
-    - '0x1418'
-    - '0x1f0fff'
-    - '0x1f1fff'
-    - '0x1f2fff'
-    - '0x1f3fff'
-    - '40'
-    - '1400'
-    - '1000'
-    - '100000'
-    - '1410'
-    - '1010'
-    - '1438'
-    - 143a
-    - '1418'
-    - 1f0fff
-    - 1f1fff
-    - 1f2fff
-    - 1f3fff
-  SELECTION_5:
-    ObjectType: Process
-  SELECTION_6:
-    ObjectName: '*\lsass.exe'
-  SELECTION_7:
-    SubjectUserName: '*$'
-  SELECTION_8:
-    ProcessName: C:\Program Files*
-  condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5
-    and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8)))
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 4663
+    SELECTION_3:
+        EventID: 4656
+    SELECTION_4:
+        AccessMask:
+        - '0x40'
+        - '0x1400'
+        - '0x100000'
+        - '0x1410'
+        - '0x1010'
+        - '0x1438'
+        - '0x143a'
+        - '0x1418'
+        - '0x1f0fff'
+        - '0x1f1fff'
+        - '0x1f2fff'
+        - '0x1f3fff'
+        - '40'
+        - '1400'
+        - '1000'
+        - '100000'
+        - '1410'
+        - '1010'
+        - '1438'
+        - 143a
+        - '1418'
+        - 1f0fff
+        - 1f1fff
+        - 1f2fff
+        - 1f3fff
+    SELECTION_5:
+        ObjectType: Process
+    SELECTION_6:
+        ObjectName: '*\lsass.exe'
+    SELECTION_7:
+        SubjectUserName: '*$'
+    SELECTION_8:
+        ProcessName: C:\Program Files*
+    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Unknown
 fields:
@@ -59,8 +58,8 @@ fields:
 id: 962fe167-e48d-4fd6-9974-11e5b9a5d6d1
 level: high
 logsource:
-  product: windows
-  service: security
+    product: windows
+    service: security
 modified: 2021/11/22
 references:
 - https://threathunterplaybook.com/notebooks/windows/06_credential_access/WIN-170105221010.html
@@ -68,3 +67,4 @@ status: experimental
 tags:
 - attack.credential_access
 - attack.t1003.001
+

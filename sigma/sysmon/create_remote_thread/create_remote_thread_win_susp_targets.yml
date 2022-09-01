@@ -1,33 +1,32 @@
-
 title: Remote Thread Creation in Suspicious Targets
 ruletype: Sigma
 author: Florian Roth
 date: 2022/03/16
 description: Detects a remote thread creation in suspicious target images
 detection:
-  SELECTION_1:
-    EventID: 8
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetImage:
-    - '*\mspaint.exe'
-    - '*\calc.exe'
-    - '*\notepad.exe'
-    - '*\sethc.exe'
-    - '*\write.exe'
-    - '*\wordpad.exe'
-    - '*\explorer.exe'
-  SELECTION_4:
-    StartFunction: EtwpNotificationThread
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_1:
+        EventID: 8
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetImage:
+        - '*\mspaint.exe'
+        - '*\calc.exe'
+        - '*\notepad.exe'
+        - '*\sethc.exe'
+        - '*\write.exe'
+        - '*\wordpad.exe'
+        - '*\explorer.exe'
+    SELECTION_4:
+        StartFunction: EtwpNotificationThread
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
 id: a1a144b7-5c9b-4853-a559-2172be8d4a03
 level: high
 logsource:
-  category: create_remote_thread
-  product: windows
+    category: create_remote_thread
+    product: windows
 modified: 2022/08/17
 references:
 - https://blog.redbluepurple.io/offensive-research/bypassing-injection-detection
@@ -36,3 +35,4 @@ tags:
 - attack.defense_evasion
 - attack.privilege_escalation
 - attack.t1055.003
+

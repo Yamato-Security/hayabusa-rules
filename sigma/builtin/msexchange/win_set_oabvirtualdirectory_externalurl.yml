@@ -1,29 +1,28 @@
-
 title: Exchange Set OabVirtualDirectory ExternalUrl Property
 ruletype: Sigma
 author: Jose Rodriguez @Cyb3rPandaH
 date: 2021/03/15
 description: Rule to detect an adversary setting OabVirtualDirectory External URL
-  property to a script in Exchange Management log
+    property to a script in Exchange Management log
 detection:
-  SELECTION_1:
-    Channel: MSExchange Management
-  SELECTION_2:
-  - Set-OabVirtualDirectory
-  SELECTION_3:
-  - ExternalUrl
-  SELECTION_4:
-  - Page_Load
-  SELECTION_5:
-  - script
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        Channel: MSExchange Management
+    SELECTION_2:
+    - Set-OabVirtualDirectory
+    SELECTION_3:
+    - ExternalUrl
+    SELECTION_4:
+    - Page_Load
+    SELECTION_5:
+    - script
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 9db37458-4df2-46a5-95ab-307e7f29e675
 level: high
 logsource:
-  product: windows
-  service: msexchange-management
+    product: windows
+    service: msexchange-management
 modified: 2021/11/15
 references:
 - https://twitter.com/OTR_Community/status/1371053369071132675
@@ -31,3 +30,4 @@ status: experimental
 tags:
 - attack.persistence
 - attack.t1505.003
+

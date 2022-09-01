@@ -1,38 +1,37 @@
-
 title: Microsoft Office Add-In Loading
 ruletype: Sigma
 author: NVISO
 date: 2020/05/11
 description: Detects add-ins that load when Microsoft Word or Excel starts (.wll/.xll
-  are simply .dll fit for Word or Excel).
+    are simply .dll fit for Word or Excel).
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*\Microsoft\Word\Startup\\*'
-  SELECTION_4:
-    TargetFilename: '*.wll'
-  SELECTION_5:
-    TargetFilename: '*\Microsoft\Excel\Startup\\*'
-  SELECTION_6:
-    TargetFilename: '*.xll'
-  SELECTION_7:
-    TargetFilename: '*\Microsoft\Addins\\*'
-  SELECTION_8:
-    TargetFilename:
-    - '*.xlam'
-    - '*.xla'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-    (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*\Microsoft\Word\Startup\\*'
+    SELECTION_4:
+        TargetFilename: '*.wll'
+    SELECTION_5:
+        TargetFilename: '*\Microsoft\Excel\Startup\\*'
+    SELECTION_6:
+        TargetFilename: '*.xll'
+    SELECTION_7:
+        TargetFilename: '*\Microsoft\Addins\\*'
+    SELECTION_8:
+        TargetFilename:
+        - '*.xlam'
+        - '*.xla'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Legitimate add-ins
 id: 8e1cb247-6cf6-42fa-b440-3f27d57e9936
 level: high
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2021/11/27
 references:
 - Internal Research
@@ -40,3 +39,4 @@ status: test
 tags:
 - attack.persistence
 - attack.t1137.006
+

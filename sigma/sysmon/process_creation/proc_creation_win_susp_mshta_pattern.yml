@@ -1,52 +1,51 @@
-
 title: Suspicious MSHTA Process Patterns
 ruletype: Sigma
 author: Florian Roth
 date: 2021/07/17
 description: Detects suspicious mshta process patterns
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_10:
-    CommandLine:
-    - '*mshta.exe'
-    - '*mshta'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\mshta.exe'
-  SELECTION_4:
-    ParentImage:
-    - '*\cmd.exe'
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-  SELECTION_5:
-    CommandLine:
-    - '*\AppData\Local*'
-    - '*C:\Windows\Temp*'
-    - '*C:\Users\Public*'
-  SELECTION_6:
-    Image: '*\mshta.exe'
-  SELECTION_7:
-    Image:
-    - '*C:\Windows\System32*'
-    - '*C:\Windows\SysWOW64*'
-  SELECTION_8:
-    Image: '*\mshta.exe'
-  SELECTION_9:
-    CommandLine:
-    - '*.htm*'
-    - '*.hta*'
-  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and (SELECTION_4 or
-    SELECTION_5)) or (SELECTION_6 and  not (SELECTION_7))) or (SELECTION_8 and  not
-    (SELECTION_9 and SELECTION_10))))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine:
+        - '*mshta.exe'
+        - '*mshta'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\mshta.exe'
+    SELECTION_4:
+        ParentImage:
+        - '*\cmd.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_5:
+        CommandLine:
+        - '*\AppData\Local*'
+        - '*C:\Windows\Temp*'
+        - '*C:\Users\Public*'
+    SELECTION_6:
+        Image: '*\mshta.exe'
+    SELECTION_7:
+        Image:
+        - '*C:\Windows\System32*'
+        - '*C:\Windows\SysWOW64*'
+    SELECTION_8:
+        Image: '*\mshta.exe'
+    SELECTION_9:
+        CommandLine:
+        - '*.htm*'
+        - '*.hta*'
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and (SELECTION_4
+        or SELECTION_5)) or (SELECTION_6 and  not (SELECTION_7))) or (SELECTION_8
+        and  not (SELECTION_9 and SELECTION_10))))
 falsepositives:
 - Unknown
 id: e32f92d1-523e-49c3-9374-bdb13b46a3ba
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://en.wikipedia.org/wiki/HTML_Application
@@ -56,3 +55,4 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1106
+

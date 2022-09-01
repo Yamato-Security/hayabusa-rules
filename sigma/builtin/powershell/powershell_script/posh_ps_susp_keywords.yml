@@ -1,36 +1,35 @@
-
 title: Suspicious PowerShell Keywords
 ruletype: Sigma
 author: Florian Roth, Perez Diego (@darkquassar)
 date: 2019/02/11
 description: Detects keywords that could indicate the use of some PowerShell exploitation
-  framework
+    framework
 detection:
-  SELECTION_1:
-    EventID: 4104
-  SELECTION_2:
-    Channel: Microsoft-Windows-PowerShell/Operational
-  SELECTION_3:
-    ScriptBlockText:
-    - '*System.Reflection.Assembly.Load($*'
-    - '*[System.Reflection.Assembly]::Load($*'
-    - '*[Reflection.Assembly]::Load($*'
-    - '*System.Reflection.AssemblyName*'
-    - '*Reflection.Emit.AssemblyBuilderAccess*'
-    - '*Runtime.InteropServices.DllImportAttribute*'
-    - '*SuspendThread*'
-    - '*rundll32*'
-    - '*Invoke-WMIMethod*'
-    - '*http://127.0.0.1*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText:
+        - '*System.Reflection.Assembly.Load($*'
+        - '*[System.Reflection.Assembly]::Load($*'
+        - '*[Reflection.Assembly]::Load($*'
+        - '*System.Reflection.AssemblyName*'
+        - '*Reflection.Emit.AssemblyBuilderAccess*'
+        - '*Runtime.InteropServices.DllImportAttribute*'
+        - '*SuspendThread*'
+        - '*rundll32*'
+        - '*Invoke-WMIMethod*'
+        - '*http://127.0.0.1*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 1f49f2ab-26bc-48b3-96cc-dcffbc93eadf
 level: high
 logsource:
-  category: ps_script
-  definition: Script block logging must be enabled for 4104
-  product: windows
+    category: ps_script
+    definition: Script block logging must be enabled for 4104
+    product: windows
 modified: 2021/10/16
 references:
 - https://posts.specterops.io/entering-a-covenant-net-command-and-control-e11038bcf462
@@ -41,3 +40,4 @@ status: experimental
 tags:
 - attack.execution
 - attack.t1059.001
+

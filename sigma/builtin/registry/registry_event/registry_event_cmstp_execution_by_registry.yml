@@ -1,22 +1,21 @@
-
 title: CMSTP Execution Registry Event
 ruletype: Sigma
 author: Nik Seetharaman
 date: 2018/07/16
 description: Detects various indicators of Microsoft Connection Manager Profile Installer
-  execution
+    execution
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - New registry value created
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    TargetObject: '*\cmmgr32.exe*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - New registry value created
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        TargetObject: '*\cmmgr32.exe*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate CMSTP use (unlikely in modern enterprise environments)
 fields:
@@ -26,8 +25,8 @@ fields:
 id: b6d235fc-1d38-4b12-adbe-325f06728f37
 level: high
 logsource:
-  category: registry_event
-  product: windows
+    category: registry_event
+    product: windows
 modified: 2020/12/23
 references:
 - https://web.archive.org/web/20190720093911/http://www.endurant.io/cmstp/detecting-cmstp-enabled-code-execution-and-uac-bypass-with-sysmon/
@@ -38,3 +37,4 @@ tags:
 - attack.t1218.003
 - attack.g0069
 - car.2019-04-001
+

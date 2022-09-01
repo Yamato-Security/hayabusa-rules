@@ -1,34 +1,33 @@
-
 title: Defrag Deactivation
 ruletype: Sigma
 author: Florian Roth, Bartlomiej Czyz (@bczyz1)
 date: 2019/03/04
 description: Detects the deactivation and disabling of the Scheduled defragmentation
-  task as seen by Slingshot APT group
+    task as seen by Slingshot APT group
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\schtasks.exe'
-  SELECTION_4:
-    CommandLine:
-    - '*/delete*'
-    - '*/change*'
-  SELECTION_5:
-    CommandLine: '*/TN*'
-  SELECTION_6:
-    CommandLine: '*\Microsoft\Windows\Defrag\ScheduledDefrag*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\schtasks.exe'
+    SELECTION_4:
+        CommandLine:
+        - '*/delete*'
+        - '*/change*'
+    SELECTION_5:
+        CommandLine: '*/TN*'
+    SELECTION_6:
+        CommandLine: '*\Microsoft\Windows\Defrag\ScheduledDefrag*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: 958d81aa-8566-4cea-a565-59ccd4df27b0
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/09/19
 references:
 - https://securelist.com/apt-slingshot/84312/
@@ -37,3 +36,4 @@ tags:
 - attack.persistence
 - attack.t1053.005
 - attack.s0111
+

@@ -1,48 +1,47 @@
-
 title: Microsoft Office Product Spawning Windows Shell
 ruletype: Sigma
 author: Michael Haag, Florian Roth, Markus Neis, Elastic, FPT.EagleEye Team
 date: 2018/04/06
 description: Detects a Windows command and scripting interpreter executable started
-  from Microsoft Word, Excel, Powerpoint, Publisher and Visio
+    from Microsoft Word, Excel, Powerpoint, Publisher and Visio
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    ParentProcessName:
-    - '*\WINWORD.EXE'
-    - '*\EXCEL.EXE'
-    - '*\POWERPNT.exe'
-    - '*\MSPUB.exe'
-    - '*\VISIO.exe'
-    - '*\MSACCESS.EXE'
-    - '*\EQNEDT32.EXE'
-  SELECTION_4:
-    NewProcessName:
-    - '*\cmd.exe'
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-    - '*\wscript.exe'
-    - '*\cscript.exe'
-    - '*\sh.exe'
-    - '*\bash.exe'
-    - '*\scrcons.exe'
-    - '*\schtasks.exe'
-    - '*\regsvr32.exe'
-    - '*\hh.exe'
-    - '*\wmic.exe'
-    - '*\mshta.exe'
-    - '*\rundll32.exe'
-    - '*\msiexec.exe'
-    - '*\forfiles.exe'
-    - '*\scriptrunner.exe'
-    - '*\mftrace.exe'
-    - '*\AppVLP.exe'
-    - '*\svchost.exe'
-    - '*\msbuild.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName:
+        - '*\WINWORD.EXE'
+        - '*\EXCEL.EXE'
+        - '*\POWERPNT.exe'
+        - '*\MSPUB.exe'
+        - '*\VISIO.exe'
+        - '*\MSACCESS.EXE'
+        - '*\EQNEDT32.EXE'
+    SELECTION_4:
+        NewProcessName:
+        - '*\cmd.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+        - '*\sh.exe'
+        - '*\bash.exe'
+        - '*\scrcons.exe'
+        - '*\schtasks.exe'
+        - '*\regsvr32.exe'
+        - '*\hh.exe'
+        - '*\wmic.exe'
+        - '*\mshta.exe'
+        - '*\rundll32.exe'
+        - '*\msiexec.exe'
+        - '*\forfiles.exe'
+        - '*\scriptrunner.exe'
+        - '*\mftrace.exe'
+        - '*\AppVLP.exe'
+        - '*\svchost.exe'
+        - '*\msbuild.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 fields:
@@ -51,8 +50,8 @@ fields:
 id: 438025f9-5856-4663-83f7-52f878a70a50
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://www.hybrid-analysis.com/sample/465aabe132ccb949e75b8ab9c5bda36d80cf2fd503d52b8bad54e295f28bbc21?environmentId=100
@@ -61,3 +60,4 @@ status: test
 tags:
 - attack.execution
 - attack.t1204.002
+

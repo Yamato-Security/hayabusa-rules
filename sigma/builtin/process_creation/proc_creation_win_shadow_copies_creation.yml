@@ -1,33 +1,32 @@
-
 title: Shadow Copies Creation Using Operating Systems Utilities
 ruletype: Sigma
 author: Teymur Kheirkhabarov, Daniil Yugoslavskiy, oscd.community
 date: 2019/10/22
 description: Shadow Copies creation using operating systems utilities, possible credential
-  access
+    access
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName:
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-    - '*\wmic.exe'
-    - '*\vssadmin.exe'
-  SELECTION_4:
-    CommandLine: '*shadow*'
-  SELECTION_5:
-    CommandLine: '*create*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\wmic.exe'
+        - '*\vssadmin.exe'
+    SELECTION_4:
+        CommandLine: '*shadow*'
+    SELECTION_5:
+        CommandLine: '*create*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate administrator working with shadow copies, access for backup purposes
 id: b17ea6f7-6e90-447e-a799-e6c0a493d6ce
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/14
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
@@ -38,3 +37,4 @@ tags:
 - attack.t1003
 - attack.t1003.002
 - attack.t1003.003
+

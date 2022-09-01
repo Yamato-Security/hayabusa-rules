@@ -1,35 +1,35 @@
-
 title: Add Debugger Entry To DbgManagedDebugger For Persistence
 ruletype: Sigma
 author: frack113
 date: 2022/08/07
 description: Detects when an attacker adds a new "Debugger" value to the "DbgManagedDebugger"
-  key in order to achieve persistence which will get invoked when an application crashes
+    key in order to achieve persistence which will get invoked when an application
+    crashes
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: SetValue
-  SELECTION_5:
-    TargetObject: '*\Microsoft\.NETFramework\DbgManagedDebugger'
-  SELECTION_6:
-    NewValue: '"C:\Windows\system32\vsjitdebugger.exe" PID %d APPDOM %d EXTEXT "%s"
-      EVTHDL %d'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5)
-    and  not (SELECTION_6))
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\Microsoft\.NETFramework\DbgManagedDebugger'
+    SELECTION_6:
+        NewValue: '"C:\Windows\system32\vsjitdebugger.exe" PID %d APPDOM %d EXTEXT
+            "%s" EVTHDL %d'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6))
 falsepositives:
 - Legitimate use of the key to setup a debugger. Which is often the case on developers
-  machines
+    machines
 id: 9827ae57-3802-418f-994b-d5ecf5cd974b
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://www.hexacorn.com/blog/2013/09/19/beyond-good-ol-run-key-part-4/
 - https://github.com/last-byte/PersistenceSniper
@@ -37,3 +37,4 @@ status: experimental
 tags:
 - attack.persistence
 - attack.t1574
+

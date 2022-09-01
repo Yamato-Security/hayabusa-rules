@@ -1,30 +1,29 @@
-
 title: Bypass UAC Using SilentCleanup Task
 ruletype: Sigma
 author: frack113
 date: 2022/01/06
 description: There is an auto-elevated task called SilentCleanup located in %windir%\system32\cleanmgr.exe
-  This can be abused to elevate any file with Administrator privileges without prompting
-  UAC
+    This can be abused to elevate any file with Administrator privileges without prompting
+    UAC
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetObject: '*\Environment\windir'
-  SELECTION_4:
-    Details: '*&REM*'
-  SELECTION_5:
-    EventType: SetValue
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetObject: '*\Environment\windir'
+    SELECTION_4:
+        Details: '*&REM*'
+    SELECTION_5:
+        EventType: SetValue
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 724ea201-6514-4f38-9739-e5973c34f49a
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/03/26
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1548.002/T1548.002.md#atomic-test-9---bypass-uac-using-silentcleanup-task
@@ -34,3 +33,4 @@ tags:
 - attack.privilege_escalation
 - attack.defense_evasion
 - attack.t1548.002
+

@@ -1,26 +1,25 @@
-
 title: Python Py2Exe Image Load
 ruletype: Sigma
 author: Patrick St. John, OTR (Open Threat Research)
 date: 2020/05/03
 description: Detects the image load of Python Core indicative of a Python script bundled
-  with Py2Exe.
+    with Py2Exe.
 detection:
-  SELECTION_1:
-    EventID: 7
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Description: Python Core
-  SELECTION_4:
-    Image:
-    - '*Python*'
-  SELECTION_5:
-    Image:
-    - C:\Program Files\\*
-    - C:\Program Files (x86)\\*
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-    or SELECTION_5))
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Description: Python Core
+    SELECTION_4:
+        Image:
+        - '*Python*'
+    SELECTION_5:
+        Image:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
+        or SELECTION_5))
 falsepositives:
 - Legit Py2Exe Binaries
 fields:
@@ -28,8 +27,8 @@ fields:
 id: cbb56d62-4060-40f7-9466-d8aaf3123f83
 level: medium
 logsource:
-  category: image_load
-  product: windows
+    category: image_load
+    product: windows
 modified: 2021/12/05
 references:
 - https://www.py2exe.org/
@@ -38,3 +37,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1027.002
+

@@ -1,34 +1,33 @@
-
 title: CVE-2021-40444 Process Pattern
 ruletype: Sigma
 author: '@neonprimetime, Florian Roth'
 date: 2021/09/08
 description: Detects a suspicious process pattern found in CVE-2021-40444 exploitation
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\control.exe'
-  SELECTION_4:
-    ParentImage:
-    - '*\winword.exe'
-    - '*\powerpnt.exe'
-    - '*\excel.exe'
-  SELECTION_5:
-    CommandLine:
-    - '*\control.exe input.dll'
-    - '*\control.exe" input.dll'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\control.exe'
+    SELECTION_4:
+        ParentImage:
+        - '*\winword.exe'
+        - '*\powerpnt.exe'
+        - '*\excel.exe'
+    SELECTION_5:
+        CommandLine:
+        - '*\control.exe input.dll'
+        - '*\control.exe" input.dll'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Unknown
 id: 894397c6-da03-425c-a589-3d09e7d1f750
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/03/03
 references:
 - https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-40444
@@ -38,3 +37,4 @@ status: test
 tags:
 - attack.execution
 - attack.t1059
+

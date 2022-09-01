@@ -1,54 +1,55 @@
-
 title: Scheduled TaskCache Change by Uncommon Program
 ruletype: Sigma
 author: Syed Hasan (@syedhasan009)
 date: 2021/06/18
 description: Monitor the creation of a new key under 'TaskCache' when a new scheduled
-  task is registered by a process that is not svchost.exe, which is suspicious
+    task is registered by a process that is not svchost.exe, which is suspicious
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_10:
-    NewProcessName: C:\Windows\Microsoft.NET\Framework\\*
-  SELECTION_11:
-    NewProcessName: '*\ngen.exe'
-  SELECTION_12:
-    TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{B66B135D-DA06-4FC4-95F8-7458E1D10129}*'
-  SELECTION_13:
-    NewProcessName:
-    - C:\Program Files\Microsoft Office\root\Integration\Integrator.exe
-    - C:\Program Files (x86)\Microsoft Office\root\Integration\Integrator.exe
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: SetValue
-  SELECTION_5:
-    TargetObject: '*SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\\*'
-  SELECTION_6:
-    TargetObject:
-    - '*Microsoft\Windows\UpdateOrchestrator*'
-    - '*Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTask\Index*'
-    - '*Microsoft\Windows\Flighting\OneSettings\RefreshCache\Index*'
-  SELECTION_7:
-    NewProcessName: C:\Windows\\*
-  SELECTION_8:
-    NewProcessName: '*\TiWorker.exe'
-  SELECTION_9:
-    NewProcessName: C:\WINDOWS\system32\svchost.exe
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and SELECTION_5)
-    and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9) or (SELECTION_10
-    and SELECTION_11 and SELECTION_12) or (SELECTION_13)))
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_10:
+        NewProcessName: C:\Windows\Microsoft.NET\Framework\\*
+    SELECTION_11:
+        NewProcessName: '*\ngen.exe'
+    SELECTION_12:
+        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{B66B135D-DA06-4FC4-95F8-7458E1D10129}*'
+    SELECTION_13:
+        NewProcessName:
+        - C:\Program Files\Microsoft Office\root\Integration\Integrator.exe
+        - C:\Program Files (x86)\Microsoft Office\root\Integration\Integrator.exe
+    SELECTION_14:
+        NewProcessName: C:\Windows\System32\msiexec.exe
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\\*'
+    SELECTION_6:
+        TargetObject:
+        - '*Microsoft\Windows\UpdateOrchestrator*'
+        - '*Microsoft\Windows\SoftwareProtectionPlatform\SvcRestartTask\Index*'
+        - '*Microsoft\Windows\Flighting\OneSettings\RefreshCache\Index*'
+    SELECTION_7:
+        NewProcessName: C:\Windows\\*
+    SELECTION_8:
+        NewProcessName: '*\TiWorker.exe'
+    SELECTION_9:
+        NewProcessName: C:\WINDOWS\system32\svchost.exe
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9)
+        or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13) or (SELECTION_14)))
 falsepositives:
 - Unknown
 id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
 level: high
 logsource:
-  category: registry_set
-  product: windows
-modified: 2022/08/11
+    category: registry_set
+    product: windows
+modified: 2022/08/24
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://labs.f-secure.com/blog/scheduled-task-tampering/
@@ -57,3 +58,4 @@ tags:
 - attack.persistence
 - attack.t1053
 - attack.t1053.005
+

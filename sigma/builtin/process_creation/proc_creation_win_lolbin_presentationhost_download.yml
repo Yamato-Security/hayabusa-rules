@@ -1,0 +1,37 @@
+title: Download Arbitrary Files Via PresentationHost.exe
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/19
+description: Detects usage of "PresentationHost" which is a utility that runs ".xbap"
+    (Browser Applications) files to download arbitrary files
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\presentationhost.exe'
+    SELECTION_4:
+        OriginalFileName: PresentationHost.exe
+    SELECTION_5:
+        CommandLine:
+        - '*http://*'
+        - '*https://*'
+        - '*ftp://*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: b124ddf4-778d-418e-907f-6dd3fc0d31cd
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/LOLBAS-Project/LOLBAS/pull/239/files
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1218
+

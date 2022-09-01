@@ -1,28 +1,27 @@
-
 title: CrackMapExec PowerShell Obfuscation
 ruletype: Sigma
 author: Thomas Patzke
 date: 2020/05/22
 description: The CrachMapExec pentesting framework implements a PowerShell obfuscation
-  with some static strings detected by this rule.
+    with some static strings detected by this rule.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '*powershell.exe*'
-    - '*pwsh.exe*'
-  SELECTION_4:
-    CommandLine:
-    - '*join*split*'
-    - "*( $ShellId[1]+$ShellId[13]+'x')*"
-    - '*( $PSHome[*]+$PSHOME[*]+*'
-    - "*( $env:Public[13]+$env:Public[5]+'x')*"
-    - "*( $env:ComSpec[4,*,25]-Join'')*"
-    - "*[1,3]+'x'-Join'')*"
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '*powershell.exe*'
+        - '*pwsh.exe*'
+    SELECTION_4:
+        CommandLine:
+        - '*join*split*'
+        - '*( $ShellId[1]+$ShellId[13]+''x'')*'
+        - '*( $PSHome[*]+$PSHOME[*]+*'
+        - '*( $env:Public[13]+$env:Public[5]+''x'')*'
+        - '*( $env:ComSpec[4,*,25]-Join'''')*'
+        - '*[1,3]+''x''-Join'''')*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 fields:
@@ -32,8 +31,8 @@ fields:
 id: 6f8b3439-a203-45dc-a88b-abf57ea15ccf
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/11/27
 references:
 - https://github.com/byt3bl33d3r/CrackMapExec
@@ -44,3 +43,4 @@ tags:
 - attack.t1059.001
 - attack.defense_evasion
 - attack.t1027.005
+

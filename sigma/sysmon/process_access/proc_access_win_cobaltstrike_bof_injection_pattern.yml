@@ -1,29 +1,28 @@
-
 title: CobaltStrike BOF Injection Pattern
 ruletype: Sigma
 author: Christian Burkard
 date: 2021/08/04
 description: Detects a typical pattern of a CobaltStrike BOF which inject into other
-  processes
+    processes
 detection:
-  SELECTION_1:
-    EventID: 10
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CallTrace|re: ^C:\\\\Windows\\\\SYSTEM32\\\\ntdll\\.dll\+[a-z0-9]{4,6}\|C:\\\\Windows\\\\System32\\\\KERNELBASE\\.dll\+[a-z0-9]{4,6}\|UNKNOWN\([A-Z0-9]{16}\)$
-  SELECTION_4:
-    GrantedAccess:
-    - '0x1028'
-    - '0x1fffff'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 10
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CallTrace|re: ^C:\\\\Windows\\\\SYSTEM32\\\\ntdll\\.dll\+[a-z0-9]{4,6}\|C:\\\\Windows\\\\System32\\\\KERNELBASE\\.dll\+[a-z0-9]{4,6}\|UNKNOWN\([A-Z0-9]{16}\)$
+    SELECTION_4:
+        GrantedAccess:
+        - '0x1028'
+        - '0x1fffff'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 09706624-b7f6-455d-9d02-adee024cee1d
 level: high
 logsource:
-  category: process_access
-  product: windows
+    category: process_access
+    product: windows
 references:
 - https://github.com/boku7/injectAmsiBypass
 - https://github.com/boku7/spawn
@@ -33,3 +32,4 @@ tags:
 - attack.t1106
 - attack.defense_evasion
 - attack.t1562.001
+

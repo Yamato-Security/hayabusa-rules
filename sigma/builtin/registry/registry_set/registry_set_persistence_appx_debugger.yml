@@ -1,38 +1,37 @@
-
 title: Windows Registry Persistence DebugPath
 ruletype: Sigma
 author: frack113
 date: 2022/07/27
 description: Detects potential persistence using Appx DebugPath
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: SetValue
-  SELECTION_5:
-    TargetObject: '*Classes\ActivatableClasses\Package\Microsoft.*'
-  SELECTION_6:
-    TargetObject: '*\DebugPath'
-  SELECTION_7:
-    EventType: SetValue
-  SELECTION_8:
-    TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\PackagedAppXDebug\Microsoft.*'
-  SELECTION_9:
-    TargetObject: '*\(Default)'
-  condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
-    SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*Classes\ActivatableClasses\Package\Microsoft.*'
+    SELECTION_6:
+        TargetObject: '*\DebugPath'
+    SELECTION_7:
+        EventType: SetValue
+    SELECTION_8:
+        TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\PackagedAppXDebug\Microsoft.*'
+    SELECTION_9:
+        TargetObject: '*\(Default)'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Unknown
 id: df4dc653-1029-47ba-8231-3c44238cc0ae
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://oddvar.moe/2018/09/06/persistence-using-universal-windows-platform-apps-appx/
 - https://github.com/rootm0s/WinPwnage
@@ -40,3 +39,4 @@ status: experimental
 tags:
 - attack.persistence
 - attack.t1546.015
+

@@ -1,30 +1,29 @@
-
 title: Suspicious PFX File Creation
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2020/05/02
 description: A general detection for processes creating PFX files. This could be an
-  indicator of an adversary exporting a local certificate to a PFX file.
+    indicator of an adversary exporting a local certificate to a PFX file.
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*.pfx'
-  SELECTION_4:
-    TargetFilename: '*\Templates\Windows\Windows_TemporaryKey.pfx*'
-  SELECTION_5:
-    TargetFilename: '*\CMake\\*'
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-    and SELECTION_5)))
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*.pfx'
+    SELECTION_4:
+        TargetFilename: '*\Templates\Windows\Windows_TemporaryKey.pfx*'
+    SELECTION_5:
+        TargetFilename: '*\CMake\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        and SELECTION_5)))
 falsepositives:
 - System administrators managing certififcates.
 id: dca1b3e8-e043-4ec8-85d7-867f334b5724
 level: medium
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/07/07
 references:
 - https://github.com/OTRF/detection-hackathon-apt29/issues/14
@@ -33,3 +32,4 @@ status: test
 tags:
 - attack.credential_access
 - attack.t1552.004
+

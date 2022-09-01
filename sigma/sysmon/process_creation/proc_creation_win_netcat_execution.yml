@@ -1,36 +1,35 @@
-
 title: Ncat Execution
 ruletype: Sigma
 author: frack113, Florian Roth
 date: 2021/07/21
 description: Adversaries may use a non-application layer protocol for communication
-  between host and C2 server or among infected hosts within a network
+    between host and C2 server or among infected hosts within a network
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image:
-    - '*\ncat.exe'
-    - '*\netcat.exe'
-  SELECTION_4:
-    CommandLine:
-    - '* -lvp *'
-    - '* -lvnp*'
-    - '* -l -v -p *'
-    - '* -lv -p *'
-    - '* -l --proxy-type http *'
-    - '* --exec cmd.exe *'
-    - '* -vnl --exec *'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\ncat.exe'
+        - '*\netcat.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* -lvp *'
+        - '* -lvnp*'
+        - '* -l -v -p *'
+        - '* -lv -p *'
+        - '* -l --proxy-type http *'
+        - '* --exec cmd.exe *'
+        - '* -vnl --exec *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Legitimate ncat use
 id: e31033fc-33f0-4020-9a16-faf9b31cbf08
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/07/11
 references:
 - https://nmap.org/ncat/
@@ -39,3 +38,4 @@ status: experimental
 tags:
 - attack.command_and_control
 - attack.t1095
+

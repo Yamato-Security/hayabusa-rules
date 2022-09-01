@@ -1,41 +1,40 @@
-
 title: Suspicious Outbound SMTP Connections
 ruletype: Sigma
 author: frack113
 date: 2022/01/07
 description: |
-  Adversaries may steal data by exfiltrating it over an un-encrypted network protocol other than that of the existing command and control channel.
-  The data may also be sent to an alternate network location from the main command and control server.
+    Adversaries may steal data by exfiltrating it over an un-encrypted network protocol other than that of the existing command and control channel.
+    The data may also be sent to an alternate network location from the main command and control server.
 detection:
-  SELECTION_1:
-    EventID: 3
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    DestinationPort: 25
-  SELECTION_4:
-    DestinationPort: 587
-  SELECTION_5:
-    DestinationPort: 465
-  SELECTION_6:
-    DestinationPort: 2525
-  SELECTION_7:
-    Initiated: 'true'
-  SELECTION_8:
-    Image:
-    - '*\thunderbird.exe'
-    - '*\outlook.exe'
-  SELECTION_9:
-    Image: C:\Program Files\Microsoft\Exchange Server\\*
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or SELECTION_5
-    or SELECTION_6) and SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9)))
+    SELECTION_1:
+        EventID: 3
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        DestinationPort: 25
+    SELECTION_4:
+        DestinationPort: 587
+    SELECTION_5:
+        DestinationPort: 465
+    SELECTION_6:
+        DestinationPort: 2525
+    SELECTION_7:
+        Initiated: 'true'
+    SELECTION_8:
+        Image:
+        - '*\thunderbird.exe'
+        - '*\outlook.exe'
+    SELECTION_9:
+        Image: C:\Program Files\Microsoft\Exchange Server\\*
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or
+        SELECTION_5 or SELECTION_6) and SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9)))
 falsepositives:
 - Other SMTP tools
 id: 9976fa64-2804-423c-8a5b-646ade840773
 level: medium
 logsource:
-  category: network_connection
-  product: windows
+    category: network_connection
+    product: windows
 modified: 2022/02/16
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048.003/T1048.003.md#atomic-test-5---exfiltration-over-alternative-protocol---smtp
@@ -44,3 +43,4 @@ status: experimental
 tags:
 - attack.exfiltration
 - attack.t1048.003
+

@@ -1,27 +1,27 @@
-
 title: Suspicious Curl File Upload
 ruletype: Sigma
 author: Florian Roth
 date: 2020/07/03
 description: Detects a suspicious curl process start the adds a file to a web request
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\curl.exe'
-  SELECTION_4:
-    Product: The curl executable
-  SELECTION_5:
-    CommandLine:
-    - '* -F *'
-    - '* --form *'
-    - '* -T *'
-    - '* --upload-file *'
-    - '* -d *'
-    - '* --data *'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\curl.exe'
+    SELECTION_4:
+        Product: The curl executable
+    SELECTION_5:
+        CommandLine:
+        - '* -F *'
+        - '* --form *'
+        - '* -T *'
+        - '* --upload-file *'
+        - '* -d *'
+        - '* --data *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Scripts created by developers and admins
 fields:
@@ -30,8 +30,8 @@ fields:
 id: 00bca14a-df4e-4649-9054-3f2aa676bc04
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/01/22
 references:
 - https://twitter.com/d1r4c/status/1279042657508081664
@@ -43,3 +43,4 @@ tags:
 - attack.exfiltration
 - attack.t1567
 - attack.t1105
+

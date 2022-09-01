@@ -1,27 +1,26 @@
-
 title: DNS HybridConnectionManager Service Bus
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2021/04/12
 description: Detects Azure Hybrid Connection Manager services querying the Azure service
-  bus service
+    bus service
 detection:
-  SELECTION_1:
-    EventID: 22
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    QueryName: '*servicebus.windows.net*'
-  SELECTION_4:
-    Image: '*HybridConnectionManager*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 22
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        QueryName: '*servicebus.windows.net*'
+    SELECTION_4:
+        Image: '*HybridConnectionManager*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Legitimate use of Azure Hybrid Connection Manager and the Azure Service Bus service
 id: 7bd3902d-8b8b-4dd4-838a-c6862d40150d
 level: high
 logsource:
-  category: dns_query
-  product: windows
+    category: dns_query
+    product: windows
 modified: 2021/06/10
 references:
 - https://twitter.com/Cyb3rWard0g/status/1381642789369286662
@@ -29,3 +28,4 @@ status: experimental
 tags:
 - attack.persistence
 - attack.t1554
+

@@ -1,21 +1,20 @@
-
 title: Dllhost Process With No CommandLine
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/06/27
 description: Detects a "dllhost" spawning with no commandline arguments which is a
-  very rare thing to happen and could indicate process injection activity or malware
-  mimicking similar system processes
+    very rare thing to happen and could indicate process injection activity or malware
+    mimicking similar system processes
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*dllhost.exe'
-  SELECTION_4:
-    Image: '*\dllhost.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*dllhost.exe'
+    SELECTION_4:
+        Image: '*\dllhost.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unlikely
 fields:
@@ -24,8 +23,8 @@ fields:
 id: e7888eb1-13b0-4616-bd99-4bc0c2b054b9
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://redcanary.com/blog/child-processes/
 - https://nasbench.medium.com/what-is-the-dllhost-exe-process-actually-running-ef9fe4c19c08
@@ -33,3 +32,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1055
+

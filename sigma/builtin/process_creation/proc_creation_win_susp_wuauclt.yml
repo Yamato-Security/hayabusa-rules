@@ -1,37 +1,36 @@
-
 title: Windows Update Client LOLBIN
 ruletype: Sigma
 author: FPT.EagleEye Team
 date: 2020/10/17
 description: Detects code execution via the Windows Update client (wuauclt)
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    CommandLine: '*/UpdateDeploymentProvider*'
-  SELECTION_4:
-    CommandLine: '*/RunHandlerComServer*'
-  SELECTION_5:
-    CommandLine: '*.dll*'
-  SELECTION_6:
-    NewProcessName: '*\wuauclt.exe'
-  SELECTION_7:
-    OriginalFileName: wuauclt.exe
-  SELECTION_8:
-    CommandLine:
-    - '* /ClassId *'
-    - '* wuaueng.dll *'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5) and (SELECTION_6 or SELECTION_7)) and  not (SELECTION_8))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*/UpdateDeploymentProvider*'
+    SELECTION_4:
+        CommandLine: '*/RunHandlerComServer*'
+    SELECTION_5:
+        CommandLine: '*.dll*'
+    SELECTION_6:
+        NewProcessName: '*\wuauclt.exe'
+    SELECTION_7:
+        OriginalFileName: wuauclt.exe
+    SELECTION_8:
+        CommandLine:
+        - '* /ClassId *'
+        - '* wuaueng.dll *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and (SELECTION_6 or SELECTION_7)) and  not (SELECTION_8))
 falsepositives:
 - Unknown
 id: d7825193-b70a-48a4-b992-8b5b3015cc11
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/05/13
 references:
 - https://dtm.uk/wuauclt/
@@ -41,3 +40,4 @@ tags:
 - attack.execution
 - attack.t1105
 - attack.t1218
+

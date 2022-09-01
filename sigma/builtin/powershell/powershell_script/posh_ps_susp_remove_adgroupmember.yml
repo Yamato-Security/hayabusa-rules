@@ -1,34 +1,34 @@
-
 title: Remove Account From Domain Admin Group
 ruletype: Sigma
 author: frack113
 date: 2021/12/26
 description: |
-  Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users.
-  Accounts may be deleted, locked, or manipulated (ex: changed credentials) to remove access to accounts.
+    Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users.
+    Accounts may be deleted, locked, or manipulated (ex: changed credentials) to remove access to accounts.
 detection:
-  SELECTION_1:
-    EventID: 4104
-  SELECTION_2:
-    Channel: Microsoft-Windows-PowerShell/Operational
-  SELECTION_3:
-    ScriptBlockText: '*Remove-ADGroupMember*'
-  SELECTION_4:
-    ScriptBlockText: '*-Identity *'
-  SELECTION_5:
-    ScriptBlockText: '*-Members *'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText: '*Remove-ADGroupMember*'
+    SELECTION_4:
+        ScriptBlockText: '*-Identity *'
+    SELECTION_5:
+        ScriptBlockText: '*-Members *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 48a45d45-8112-416b-8a67-46e03a4b2107
 level: medium
 logsource:
-  category: ps_script
-  definition: Script block logging must be enabled
-  product: windows
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1531/T1531.md#atomic-test-3---remove-account-from-domain-admin-group
 status: experimental
 tags:
 - attack.impact
 - attack.t1531
+

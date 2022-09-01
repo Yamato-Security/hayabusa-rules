@@ -1,69 +1,69 @@
-
 title: RDP Sensitive Settings Changed
 ruletype: Sigma
 author: Samir Bousseaden, David ANDRE, Roberto Rodriguez @Cyb3rWard0g, Nasreddine
-  Bencherchali
+    Bencherchali
 date: 2022/08/06
 description: Detects tampering to RDP Terminal Service/Server sensitive settings.
-  Such as allowing unauthorized users access to a system via the 'fAllowUnsolicited'
-  or enabling RDP via 'fDenyTSConnections'...etc
+    Such as allowing unauthorized users access to a system via the 'fAllowUnsolicited'
+    or enabling RDP via 'fDenyTSConnections'...etc
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_10:
-    Details: DWORD (0x00000000)
-  SELECTION_11:
-    TargetObject:
-    - '*\fAllowUnsolicited'
-    - '*\fAllowUnsolicitedFullControl'
-  SELECTION_12:
-    Details: DWORD (0x00000001)
-  SELECTION_13:
-    EventType: SetValue
-  SELECTION_14:
-    TargetObject:
-    - '*\services\TermService\Parameters\ServiceDll*'
-    - '*\Control\Terminal Server\WinStations\RDP-Tcp\InitialProgram*'
-    - '*\Control\Terminal Server\InitialProgram*'
-    - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\InitialProgram*'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject:
-    - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\\*'
-    - '*\Control\Terminal Server\\*'
-  SELECTION_5:
-    TargetObject: '*\Shadow'
-  SELECTION_6:
-    Details:
-    - DWORD (0x00000001)
-    - DWORD (0x00000002)
-    - DWORD (0x00000003)
-    - DWORD (0x00000004)
-  SELECTION_7:
-    EventType: SetValue
-  SELECTION_8:
-    TargetObject:
-    - '*\Control\Terminal Server\\*'
-    - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\\*'
-  SELECTION_9:
-    TargetObject:
-    - '*\fDenyTSConnections'
-    - '*\fSingleSessionPerUser'
-    - '*\UserAuthentication'
-  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4 and
-    SELECTION_5 and SELECTION_6) or ((SELECTION_7 and SELECTION_8) and ((SELECTION_9
-    and SELECTION_10) or (SELECTION_11 and SELECTION_12)))) or (SELECTION_13 and SELECTION_14)))
+    SELECTION_1:
+        EventID: 13
+    SELECTION_10:
+        Details: DWORD (0x00000000)
+    SELECTION_11:
+        TargetObject:
+        - '*\fAllowUnsolicited'
+        - '*\fAllowUnsolicitedFullControl'
+    SELECTION_12:
+        Details: DWORD (0x00000001)
+    SELECTION_13:
+        EventType: SetValue
+    SELECTION_14:
+        TargetObject:
+        - '*\services\TermService\Parameters\ServiceDll*'
+        - '*\Control\Terminal Server\WinStations\RDP-Tcp\InitialProgram*'
+        - '*\Control\Terminal Server\InitialProgram*'
+        - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\InitialProgram*'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject:
+        - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\\*'
+        - '*\Control\Terminal Server\\*'
+    SELECTION_5:
+        TargetObject: '*\Shadow'
+    SELECTION_6:
+        Details:
+        - DWORD (0x00000001)
+        - DWORD (0x00000002)
+        - DWORD (0x00000003)
+        - DWORD (0x00000004)
+    SELECTION_7:
+        EventType: SetValue
+    SELECTION_8:
+        TargetObject:
+        - '*\Control\Terminal Server\\*'
+        - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\\*'
+    SELECTION_9:
+        TargetObject:
+        - '*\fDenyTSConnections'
+        - '*\fSingleSessionPerUser'
+        - '*\UserAuthentication'
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or ((SELECTION_7 and SELECTION_8) and ((SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12)))) or (SELECTION_13 and
+        SELECTION_14)))
 falsepositives:
 - Some of the keys mentioned here could be modified by an administrator while setting
-  group policy (it should be investigated either way)
+    group policy (it should be investigated either way)
 id: 3f6b7b62-61aa-45db-96bd-9c31b36b653c
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://blog.menasec.net/2019/02/threat-hunting-rdp-hijacking-via.html
 - http://woshub.com/rds-shadow-how-to-connect-to-a-user-session-in-windows-server-2012-r2/
@@ -73,12 +73,13 @@ references:
 - http://etutorials.org/Microsoft+Products/microsoft+windows+server+2003+terminal+services/Chapter+6+Registry/Registry+Keys+for+Terminal+Services/
 - https://admx.help/HKLM/SOFTWARE/Policies/Microsoft/Windows%20NT/Terminal%20Services
 related:
-- id: 171b67e1-74b4-460e-8d55-b331f3e32d67
-  type: obsoletes
-- id: 41904ebe-d56c-4904-b9ad-7a77bdf154b3
-  type: obsoletes
+-   id: 171b67e1-74b4-460e-8d55-b331f3e32d67
+    type: obsoletes
+-   id: 41904ebe-d56c-4904-b9ad-7a77bdf154b3
+    type: obsoletes
 status: test
 tags:
 - attack.defense_evasion
 - attack.persistence
 - attack.t1112
+

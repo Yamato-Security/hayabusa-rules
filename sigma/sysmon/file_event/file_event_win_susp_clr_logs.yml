@@ -1,39 +1,38 @@
-
 title: Suspicious CLR Logs Creation
 ruletype: Sigma
 author: omkar72, oscd.community, Wojciech Lesicki
 date: 2020/10/12
 description: Detects suspicious .NET assembly executions. Could detect using Cobalt
-  Strike's command execute-assembly.
+    Strike's command execute-assembly.
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*\AppData\Local\Microsoft\CLR*'
-  SELECTION_4:
-    TargetFilename: '*\UsageLogs\\*'
-  SELECTION_5:
-    TargetFilename:
-    - '*mshta*'
-    - '*cscript*'
-    - '*wscript*'
-    - '*regsvr32*'
-    - '*wmic*'
-    - '*rundll32*'
-    - '*svchost*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*\AppData\Local\Microsoft\CLR*'
+    SELECTION_4:
+        TargetFilename: '*\UsageLogs\\*'
+    SELECTION_5:
+        TargetFilename:
+        - '*mshta*'
+        - '*cscript*'
+        - '*wscript*'
+        - '*regsvr32*'
+        - '*wmic*'
+        - '*rundll32*'
+        - '*svchost*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Rundll32.exe with zzzzInvokeManagedCustomActionOutOfProc in command line and msiexec.exe
-  as parent process - https://twitter.com/SBousseaden/status/1388064061087260675
+    as parent process - https://twitter.com/SBousseaden/status/1388064061087260675
 id: e4b63079-6198-405c-abd7-3fe8b0ce3263
 level: high
 logsource:
-  category: file_event
-  definition: Check your sysmon configuration for monitoring UsageLogs folder. In
-    SwiftOnSecurity configuration we have that thanks @SBousseaden
-  product: windows
+    category: file_event
+    definition: Check your sysmon configuration for monitoring UsageLogs folder. In
+        SwiftOnSecurity configuration we have that thanks @SBousseaden
+    product: windows
 modified: 2022/06/24
 references:
 - https://blog.menasec.net/2019/07/interesting-difr-traces-of-net-clr.html
@@ -45,3 +44,4 @@ tags:
 - attack.defense_evasion
 - attack.t1059.001
 - attack.t1218
+

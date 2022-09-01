@@ -1,18 +1,17 @@
-
 title: Rundll32 Without Parameters
 ruletype: Sigma
 author: Bartlomiej Czyz, Relativity
 date: 2021/01/31
 description: Detects rundll32 execution without parameters as observed when running
-  Metasploit windows/smb/psexec exploit module
+    Metasploit windows/smb/psexec exploit module
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: rundll32.exe
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: rundll32.exe
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 fields:
@@ -24,8 +23,8 @@ fields:
 id: 5bb68627-3198-40ca-b458-49f973db8752
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://bczyz1.github.io/2021/01/30/psexec.html
 status: experimental
@@ -35,3 +34,4 @@ tags:
 - attack.t1570
 - attack.execution
 - attack.t1569.002
+

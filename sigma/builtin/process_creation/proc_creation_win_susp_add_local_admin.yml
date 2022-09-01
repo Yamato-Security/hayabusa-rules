@@ -1,30 +1,30 @@
-
 title: Add User to Local Administrators
 ruletype: Sigma
 author: Florian Roth
 date: 2022/08/12
 description: Detects suspicious command line that adds an account to the local administrators
-  group
+    group
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    CommandLine: '*localgroup administrators *'
-  SELECTION_4:
-    CommandLine: '* /add*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*localgroup administrators *'
+    SELECTION_4:
+        CommandLine: '* /add*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Administrative activity
 id: ad720b90-25ad-43ff-9b5e-5c841facc8e5
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://blog.talosintelligence.com/2022/08/recent-cyber-attack.html?m=1
 status: experimental
 tags:
 - attack.persistence
 - attack.t1098
+

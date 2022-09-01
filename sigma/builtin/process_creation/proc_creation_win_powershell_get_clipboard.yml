@@ -1,32 +1,32 @@
-
 title: PowerShell Get-Clipboard Cmdlet Via CLI
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2020/05/02
 description: Detects usage of the 'Get-Clipboard' cmdlet via CLI
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    CommandLine: '*Get-Clipboard*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*Get-Clipboard*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: b9aeac14-2ffd-4ad3-b967-1354a4e628c3
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/10/16
 references:
 - https://github.com/OTRF/detection-hackathon-apt29/issues/16
 - https://threathunterplaybook.com/evals/apt29/detections/7.A.2_F4609F7E-C4DB-4327-91D4-59A58C962A02.html
 related:
-- id: 4cbd4f12-2e22-43e3-882f-bff3247ffb78
-  type: derived
+-   id: 4cbd4f12-2e22-43e3-882f-bff3247ffb78
+    type: derived
 status: experimental
 tags:
 - attack.collection
 - attack.t1115
+

@@ -1,32 +1,31 @@
-
 title: Imports Registry Key From an ADS
 ruletype: Sigma
 author: Oddvar Moe, Sander Wiebing, oscd.community
 date: 2020/10/12
 description: Detects the import of a alternate datastream to the registry with regedit.exe.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\regedit.exe'
-  SELECTION_4:
-    CommandLine:
-    - '* /i *'
-    - '*.reg*'
-  SELECTION_5:
-    CommandLine|re: :[^ \\\\]
-  SELECTION_6:
-    CommandLine:
-    - '* /e *'
-    - '* /a *'
-    - '* /c *'
-    - '* -e *'
-    - '* -a *'
-    - '* -c *'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not (SELECTION_6))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\regedit.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* /i *'
+        - '*.reg*'
+    SELECTION_5:
+        CommandLine|re: :[^ \\\\]
+    SELECTION_6:
+        CommandLine:
+        - '* /e *'
+        - '* /a *'
+        - '* /c *'
+        - '* -e *'
+        - '* -a *'
+        - '* -c *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6))
 falsepositives:
 - Unknown
 fields:
@@ -35,8 +34,8 @@ fields:
 id: 0b80ade5-6997-4b1d-99a1-71701778ea61
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/11/27
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Regedit/
@@ -45,3 +44,4 @@ status: test
 tags:
 - attack.t1112
 - attack.defense_evasion
+

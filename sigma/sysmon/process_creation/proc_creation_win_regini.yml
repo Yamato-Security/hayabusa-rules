@@ -1,23 +1,22 @@
-
 title: Modifies the Registry From a File
 ruletype: Sigma
 author: Eli Salem, Sander Wiebing, oscd.community
 date: 2020/10/08
 description: Detects the execution of regini.exe which can be used to modify registry
-  keys, the changes are imported from one or more text files.
+    keys, the changes are imported from one or more text files.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\regini.exe'
-  SELECTION_4:
-    OriginalFileName: REGINI.EXE
-  SELECTION_5:
-    CommandLine|re: :[^ \\\\]
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\regini.exe'
+    SELECTION_4:
+        OriginalFileName: REGINI.EXE
+    SELECTION_5:
+        CommandLine|re: :[^ \\\\]
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Legitimate modification of keys
 fields:
@@ -26,8 +25,8 @@ fields:
 id: 5f60740a-f57b-4e76-82a1-15b6ff2cb134
 level: low
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/05/09
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Regini/
@@ -37,3 +36,4 @@ status: experimental
 tags:
 - attack.t1112
 - attack.defense_evasion
+

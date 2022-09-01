@@ -1,37 +1,37 @@
-
 title: Use of Mftrace.exe
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/06/09
 description: The "Trace log generation tool for Media Foundation Tools" (Mftrace.exe)
-  can be used to execute arbitrary binaries
+    can be used to execute arbitrary binaries
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\mftrace.exe'
-  SELECTION_4:
-    OriginalFileName: mftrace.exe
-  SELECTION_5:
-    CommandLine: '*.exe *'
-  SELECTION_6:
-    CommandLine: '*.exe'
-  SELECTION_7:
-    ParentProcessName: '*\mftrace.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-    (SELECTION_5 and SELECTION_6)) or SELECTION_7))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\mftrace.exe'
+    SELECTION_4:
+        OriginalFileName: mftrace.exe
+    SELECTION_5:
+        CommandLine: '*.exe *'
+    SELECTION_6:
+        CommandLine: '*.exe'
+    SELECTION_7:
+        ParentProcessName: '*\mftrace.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6)) or SELECTION_7))
 falsepositives:
 - Legitimate use for tracing purposes
 id: 3d48c9d3-1aa6-418d-98d3-8fd3c01a564e
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Mftrace/
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1127
+

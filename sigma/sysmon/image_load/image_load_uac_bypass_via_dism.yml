@@ -1,29 +1,28 @@
-
 title: UAC Bypass With Fake DLL
 ruletype: Sigma
 author: oscd.community, Dmitry Uchakin
 date: 2020/10/06
 description: Attempts to load dismcore.dll after dropping it
 detection:
-  SELECTION_1:
-    EventID: 7
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\dism.exe'
-  SELECTION_4:
-    ImageLoaded: '*\dismcore.dll'
-  SELECTION_5:
-    ImageLoaded: C:\Windows\System32\Dism\dismcore.dll
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\dism.exe'
+    SELECTION_4:
+        ImageLoaded: '*\dismcore.dll'
+    SELECTION_5:
+        ImageLoaded: C:\Windows\System32\Dism\dismcore.dll
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Actions of a legitimate telnet client
 id: a5ea83a7-05a5-44c1-be2e-addccbbd8c03
 level: high
 logsource:
-  category: image_load
-  product: windows
+    category: image_load
+    product: windows
 modified: 2021/11/23
 references:
 - https://steemit.com/utopian-io/@ah101/uac-bypassing-utility
@@ -34,3 +33,4 @@ tags:
 - attack.privilege_escalation
 - attack.t1548.002
 - attack.t1574.002
+

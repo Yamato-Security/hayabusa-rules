@@ -1,25 +1,24 @@
-
 title: Advanced IP Scanner
 ruletype: Sigma
 author: '@ROxPinTeddy'
 date: 2020/05/12
 description: Detects the use of Advanced IP Scanner. Seems to be a popular tool for
-  ransomware groups.
+    ransomware groups.
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename: '*\AppData\Local\Temp\Advanced IP Scanner 2*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*\AppData\Local\Temp\Advanced IP Scanner 2*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate administrative use
 id: fed85bf9-e075-4280-9159-fbe8a023d6fa
 level: medium
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2021/09/11
 references:
 - https://news.sophos.com/en-us/2019/12/09/snatch-ransomware-reboots-pcs-into-safe-mode-to-bypass-protection/
@@ -28,9 +27,10 @@ references:
 - https://assets.documentcloud.org/documents/20444693/fbi-pin-egregor-ransomware-bc-01062021.pdf
 - https://thedfirreport.com/2021/01/18/all-that-for-a-coinminer
 related:
-- id: bef37fa2-f205-4a7b-b484-0759bfd5f86f
-  type: derived
+-   id: bef37fa2-f205-4a7b-b484-0759bfd5f86f
+    type: derived
 status: experimental
 tags:
 - attack.discovery
 - attack.t1046
+

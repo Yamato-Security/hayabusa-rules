@@ -1,29 +1,28 @@
-
 title: Suspicious Certreq Command to Download
 ruletype: Sigma
 author: Christian Burkard
 date: 2021/11/24
 description: Detects a suspicious certreq execution taken from the LOLBAS examples,
-  which can be abused to download (small) files
+    which can be abused to download (small) files
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\certreq.exe'
-  SELECTION_4:
-    OriginalFileName: CertReq.exe
-  SELECTION_5:
-    CommandLine: '* -Post *'
-  SELECTION_6:
-    CommandLine: '* -config *'
-  SELECTION_7:
-    CommandLine: '* http*'
-  SELECTION_8:
-    CommandLine: '* C:\windows\win.ini *'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and (SELECTION_5
-    and SELECTION_6 and SELECTION_7 and SELECTION_8))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\certreq.exe'
+    SELECTION_4:
+        OriginalFileName: CertReq.exe
+    SELECTION_5:
+        CommandLine: '* -Post *'
+    SELECTION_6:
+        CommandLine: '* -config *'
+    SELECTION_7:
+        CommandLine: '* http*'
+    SELECTION_8:
+        CommandLine: '* C:\windows\win.ini *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8))
 falsepositives:
 - Unlikely
 fields:
@@ -32,8 +31,8 @@ fields:
 id: 4480827a-9799-4232-b2c4-ccc6c4e9e12b
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/06/13
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Certreq/
@@ -41,3 +40,4 @@ status: experimental
 tags:
 - attack.command_and_control
 - attack.t1105
+

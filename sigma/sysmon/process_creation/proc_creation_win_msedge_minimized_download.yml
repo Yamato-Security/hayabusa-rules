@@ -1,32 +1,32 @@
-
 title: Suspicious Minimized MSEdge Start
 ruletype: Sigma
 author: Florian Roth
 date: 2022/01/11
 description: Detects the suspicious minimized start of MsEdge browser, which can be
-  used to download files from the Internet
+    used to download files from the Internet
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*start /min msedge*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*start /min msedge*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Software that uses MsEdge to download components in the background (see ParentImage,
-  ParentCommandLine)
+    ParentCommandLine)
 fields:
 - CommandLine
 - ParentCommandLine
 id: 94771a71-ba41-4b6e-a757-b531372eaab6
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://twitter.com/mrd0x/status/1478234484881436672?s=12
 status: experimental
 tags:
 - attack.command_and_control
 - attack.t1105
+

@@ -1,19 +1,18 @@
-
 title: Mshta JavaScript Execution
 ruletype: Sigma
 author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
 date: 2019/10/24
 description: Identifies suspicious mshta.exe commands.
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    Image: '*\mshta.exe'
-  SELECTION_4:
-    CommandLine: '*javascript*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\mshta.exe'
+    SELECTION_4:
+        CommandLine: '*javascript*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 fields:
@@ -23,8 +22,8 @@ fields:
 id: 67f113fa-e23d-4271-befa-30113b3e08b1
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/11/27
 references:
 - https://eqllib.readthedocs.io/en/latest/analytics/6bc283c4-21f2-4aed-a05c-a9a3ffa95dd4.html
@@ -33,3 +32,4 @@ status: test
 tags:
 - attack.defense_evasion
 - attack.t1218.005
+

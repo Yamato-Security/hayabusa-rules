@@ -1,29 +1,28 @@
-
 title: Change the Fax Dll
 ruletype: Sigma
 author: frack113
 date: 2022/07/17
-description: Detect possible persistance using Fax DLL load when service restart
+description: Detect possible persistence using Fax DLL load when service restart
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetObject: '*\Software\Microsoft\Fax\Device Providers\\*'
-  SELECTION_4:
-    TargetObject: '*\ImageName*'
-  SELECTION_5:
-    details: '%systemroot%\system32\fxst30.dll'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-    (SELECTION_5))
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetObject: '*\Software\Microsoft\Fax\Device Providers\\*'
+    SELECTION_4:
+        TargetObject: '*\ImageName*'
+    SELECTION_5:
+        details: '%systemroot%\system32\fxst30.dll'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Unknown
 id: 9e3357ba-09d4-4fbd-a7c5-ad6386314513
 level: high
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://twitter.com/dottor_morte/status/1544652325570191361
 - https://raw.githubusercontent.com/RiccardoAncarani/talks/master/F-Secure/unorthodox-lateral-movement.pdf
@@ -31,3 +30,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1112
+

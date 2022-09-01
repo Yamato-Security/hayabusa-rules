@@ -1,25 +1,24 @@
-
 title: Suspicious RASdial Activity
 ruletype: Sigma
 author: juju4
 date: 2019/01/16
 description: Detects suspicious process related to rasdial.exe
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*rasdial.exe'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*rasdial.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
-  environment
+    environment
 id: 6bba49bf-7f8c-47d6-a1bb-6b4dece4640e
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2021/11/27
 references:
 - https://twitter.com/subTee/status/891298217907830785
@@ -28,3 +27,4 @@ tags:
 - attack.defense_evasion
 - attack.execution
 - attack.t1059
+

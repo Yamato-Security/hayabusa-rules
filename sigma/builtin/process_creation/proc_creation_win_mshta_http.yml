@@ -1,30 +1,34 @@
-
 title: Mshta Remotely Hosted HTA File Execution
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/08/08
 description: Detects execution of the "mshta" utility with an argument containing
-  the "http" keyword, which could indicate that an attacker is executing a remotely
-  hosted malicious hta file
+    the "http" keyword, which could indicate that an attacker is executing a remotely
+    hosted malicious hta file
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\mshta.exe'
-  SELECTION_4:
-    OriginalFileName: MSHTA.EXE
-  SELECTION_5:
-    CommandLine: '*http*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\mshta.exe'
+    SELECTION_4:
+        OriginalFileName: MSHTA.EXE
+    SELECTION_5:
+        CommandLine:
+        - '*http://*'
+        - '*https://*'
+        - '*ftp://*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unknown
 id: b98d0db6-511d-45de-ad02-e82a98729620
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
+modified: 2022/08/19
 references:
 - https://www.trendmicro.com/en_us/research/22/e/avoslocker-ransomware-variant-abuses-driver-file-to-disable-anti-Virus-scans-log4shell.html
 status: experimental
@@ -32,3 +36,4 @@ tags:
 - attack.defense_evasion
 - attack.execution
 - attack.t1218.005
+

@@ -1,44 +1,43 @@
-
 title: Internet Explorer Autorun Keys Modification
 ruletype: Sigma
 author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
-  oscd.community, Tim Shelton, frack113 (split)
+    oscd.community, Tim Shelton, frack113 (split)
 date: 2019/10/25
 description: Detects modification of autostart extensibility point (ASEP) in registry.
 detection:
-  SELECTION_1:
-    EventID: 13
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    EventType: SetValue
-  SELECTION_4:
-    TargetObject:
-    - '*\Software\Wow6432Node\Microsoft\Internet Explorer*'
-    - '*\Software\Microsoft\Internet Explorer*'
-  SELECTION_5:
-    TargetObject:
-    - '*\Toolbar*'
-    - '*\Extensions*'
-    - '*\Explorer Bars*'
-  SELECTION_6:
-    Details: (Empty)
-  SELECTION_7:
-    TargetObject:
-    - '*\Extensions\{2670000A-7350-4f3c-8081-5663EE0C6C49}*'
-    - '*\Extensions\{31D09BA0-12F5-4CCE-BE8A-2923E76605DA}*'
-    - '*\Extensions\{789FE86F-6FC4-46A1-9849-EDE0DB0C95CA}*'
-    - '*\Extensions\{A95fe080-8f5d-11d2-a20b-00aa003c157a}*'
-  SELECTION_8:
-    TargetObject:
-    - '*\Toolbar\ShellBrowser\ITBar7Layout'
-    - '*\Toolbar\ShowDiscussionButton'
-    - '*\Toolbar\Locked'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5)
-    and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject:
+        - '*\Software\Wow6432Node\Microsoft\Internet Explorer*'
+        - '*\Software\Microsoft\Internet Explorer*'
+    SELECTION_5:
+        TargetObject:
+        - '*\Toolbar*'
+        - '*\Extensions*'
+        - '*\Explorer Bars*'
+    SELECTION_6:
+        Details: (Empty)
+    SELECTION_7:
+        TargetObject:
+        - '*\Extensions\{2670000A-7350-4f3c-8081-5663EE0C6C49}*'
+        - '*\Extensions\{31D09BA0-12F5-4CCE-BE8A-2923E76605DA}*'
+        - '*\Extensions\{789FE86F-6FC4-46A1-9849-EDE0DB0C95CA}*'
+        - '*\Extensions\{A95fe080-8f5d-11d2-a20b-00aa003c157a}*'
+    SELECTION_8:
+        TargetObject:
+        - '*\Toolbar\ShellBrowser\ITBar7Layout'
+        - '*\Toolbar\ShowDiscussionButton'
+        - '*\Toolbar\Locked'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
-  keys for legitimate reason
+    keys for legitimate reason
 - Legitimate administrator sets up autorun keys for legitimate reason
 fields:
 - SecurityID
@@ -48,17 +47,18 @@ fields:
 id: a80f662f-022f-4429-9b8c-b1a41aaa6688
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 modified: 2022/03/26
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
 - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
 related:
-- id: 17f878b8-9968-4578-b814-c4217fc5768c
-  type: derived
+-   id: 17f878b8-9968-4578-b814-c4217fc5768c
+    type: derived
 status: experimental
 tags:
 - attack.persistence
 - attack.t1547.001
+

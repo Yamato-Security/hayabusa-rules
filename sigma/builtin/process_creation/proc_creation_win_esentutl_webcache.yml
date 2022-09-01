@@ -1,32 +1,31 @@
-
 title: Esentutl Steals Browser Information
 ruletype: Sigma
 author: frack113
 date: 2022/02/13
 description: One way Qbot steals sensitive information is by extracting browser data
-  from Internet Explorer and Microsoft Edge by using the built-in utility esentutl.exe
+    from Internet Explorer and Microsoft Edge by using the built-in utility esentutl.exe
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName: '*\esentutl.exe'
-  SELECTION_4:
-    OriginalFileName: esentutl.exe
-  SELECTION_5:
-    CommandLine: '*/r *'
-  SELECTION_6:
-    CommandLine: '*\Windows\WebCache*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and (SELECTION_5
-    and SELECTION_6))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\esentutl.exe'
+    SELECTION_4:
+        OriginalFileName: esentutl.exe
+    SELECTION_5:
+        CommandLine: '*/r *'
+    SELECTION_6:
+        CommandLine: '*\Windows\WebCache*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
 - Legitimate use
 id: 6a69f62d-ce75-4b57-8dce-6351eb55b362
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/05/12
 references:
 - https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/
@@ -35,3 +34,4 @@ status: experimental
 tags:
 - attack.collection
 - attack.t1005
+

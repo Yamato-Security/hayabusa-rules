@@ -1,30 +1,29 @@
-
 title: Suspicious Set Value of MSDT in Registry (CVE-2022-30190)
 ruletype: Sigma
 author: Sittikorn S
 date: 2020/05/31
 description: Detects set value ms-msdt MSProtocol URI scheme in Registry that could
-  be an attempt to exploit CVE-2022-30190.
+    be an attempt to exploit CVE-2022-30190.
 detection:
-  SELECTION_1:
-    EventID: 4657
-  SELECTION_2:
-    OperationType:
-    - Existing registry value modified
-  SELECTION_3:
-    Channel: Security
-  SELECTION_4:
-    EventType: SetValue
-  SELECTION_5:
-    TargetObject: HKCR\ms-msdt\\*
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: HKCR\ms-msdt\\*
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 2d9403d5-7927-46b7-8216-37ab7c9ec5e3
 level: medium
 logsource:
-  category: registry_set
-  product: windows
+    category: registry_set
+    product: windows
 references:
 - https://msrc.microsoft.com/update-guide/vulnerability/CVE-2022-30190
 - https://msrc-blog.microsoft.com/2022/05/30/guidance-for-cve-2022-30190-microsoft-support-diagnostic-tool-vulnerability/
@@ -32,3 +31,4 @@ status: experimental
 tags:
 - attack.defense_evasion
 - attack.t1221
+

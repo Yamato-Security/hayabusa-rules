@@ -1,22 +1,21 @@
-
 title: Suspicious Rejected SMB Guest Logon From IP
 ruletype: Sigma
 author: Florian Roth, KevTheHermit, fuzzyf10w
 date: 2021/06/30
 description: Detect Attempt PrintNightmare (CVE-2021-1675) Remote code execution in
-  Windows Spooler Service
+    Windows Spooler Service
 detection:
-  SELECTION_1:
-    Channel: Microsoft-Windows-SmbClient/Security
-  SELECTION_2:
-    EventID: 31017
-  SELECTION_3:
-    Description: '*Rejected an insecure guest logon*'
-  SELECTION_4:
-    UserName: ''
-  SELECTION_5:
-    ServerName: \1*
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_1:
+        Channel: Microsoft-Windows-SmbClient/Security
+    SELECTION_2:
+        EventID: 31017
+    SELECTION_3:
+        Description: '*Rejected an insecure guest logon*'
+    SELECTION_4:
+        UserName: ''
+    SELECTION_5:
+        ServerName: \1*
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Account fallback reasons (after failed login with specific account)
 fields:
@@ -25,8 +24,8 @@ fields:
 id: 71886b70-d7b4-4dbf-acce-87d2ca135262
 level: medium
 logsource:
-  product: windows
-  service: smbclient-security
+    product: windows
+    service: smbclient-security
 modified: 2021/07/05
 references:
 - https://twitter.com/KevTheHermit/status/1410203844064301056
@@ -36,3 +35,4 @@ status: experimental
 tags:
 - attack.credential_access
 - attack.t1110.001
+

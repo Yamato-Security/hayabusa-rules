@@ -1,0 +1,45 @@
+title: New Network Provider - Registry
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/23
+description: Detects when an attacker tries to add a new network provider in order
+    to dump clear text credentials, similar to how the NPPSpy tool does it
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\System\CurrentControlSet\Services\\*'
+    SELECTION_6:
+        TargetObject: '*\NetworkProvider*'
+    SELECTION_7:
+        TargetObject:
+        - '*\System\CurrentControlSet\Services\WebClient\NetworkProvider*'
+        - '*\System\CurrentControlSet\Services\LanmanWorkstation\NetworkProvider*'
+        - '*\System\CurrentControlSet\Services\RDPNP\NetworkProvider*'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
+falsepositives:
+- Other legitimate network providers used and not filtred in this rule
+id: 0442defa-b4a2-41c9-ae2c-ea7042fc4701
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://docs.microsoft.com/en-us/troubleshoot/windows-client/deployment/network-provider-settings-removed-in-place-upgrade
+- https://github.com/gtworek/PSBits/tree/master/PasswordStealing/NPPSpy
+related:
+-   id: baef1ec6-2ca9-47a3-97cc-4cf2bda10b77
+    type: similar
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003
+

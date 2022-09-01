@@ -1,75 +1,75 @@
-
 title: Possible Exfiltration Of Data Via CLI
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/08/02
 description: Detects the use of various cli utility related to web request exfiltrating
-  data
+    data
 detection:
-  SELECTION_1:
-    EventID: 4688
-  SELECTION_10:
-    CommandLine: '*--ur*'
-  SELECTION_11:
-    CommandLine:
-    - '* -d *'
-    - '* --data *'
-  SELECTION_12:
-    CommandLine:
-    - '*ToBase64String*'
-    - '*whoami*'
-    - '*nltest*'
-    - '*ifconfig*'
-    - '*hostname*'
-    - '*net view*'
-    - '*qprocess*'
-    - '*netstat*'
-    - '*systeminfo*'
-    - '*tasklist*'
-    - '*sc query*'
-  SELECTION_13:
-    CommandLine: '*type *'
-  SELECTION_14:
-    CommandLine: '* > *'
-  SELECTION_15:
-    CommandLine: '* C:\\*'
-  SELECTION_2:
-    Channel: Security
-  SELECTION_3:
-    NewProcessName:
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-    - '*\cmd.exe'
-  SELECTION_4:
-    CommandLine:
-    - '*Invoke-WebRequest*'
-    - '*iwr *'
-    - '*wget *'
-    - '*curl *'
-  SELECTION_5:
-    CommandLine: '* -ur*'
-  SELECTION_6:
-    CommandLine: '* -me*'
-  SELECTION_7:
-    CommandLine: '* -b*'
-  SELECTION_8:
-    CommandLine: '* POST *'
-  SELECTION_9:
-    NewProcessName: '*\curl.exe'
-  condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-    SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9 and
-    SELECTION_10 and SELECTION_11)) and (SELECTION_12 or (SELECTION_13 and SELECTION_14
-    and SELECTION_15)))
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine: '*--ur*'
+    SELECTION_11:
+        CommandLine:
+        - '* -d *'
+        - '* --data *'
+    SELECTION_12:
+        CommandLine:
+        - '*ToBase64String*'
+        - '*whoami*'
+        - '*nltest*'
+        - '*ifconfig*'
+        - '*hostname*'
+        - '*net view*'
+        - '*qprocess*'
+        - '*netstat*'
+        - '*systeminfo*'
+        - '*tasklist*'
+        - '*sc query*'
+    SELECTION_13:
+        CommandLine: '*type *'
+    SELECTION_14:
+        CommandLine: '* > *'
+    SELECTION_15:
+        CommandLine: '* C:\\*'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\cmd.exe'
+    SELECTION_4:
+        CommandLine:
+        - '*Invoke-WebRequest*'
+        - '*iwr *'
+        - '*wget *'
+        - '*curl *'
+    SELECTION_5:
+        CommandLine: '* -ur*'
+    SELECTION_6:
+        CommandLine: '* -me*'
+    SELECTION_7:
+        CommandLine: '* -b*'
+    SELECTION_8:
+        CommandLine: '* POST *'
+    SELECTION_9:
+        NewProcessName: '*\curl.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11)) and (SELECTION_12 or (SELECTION_13 and
+        SELECTION_14 and SELECTION_15)))
 falsepositives:
 - Unlikely
 id: 7d1aaf3d-4304-425c-b7c3-162055e0b3ab
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool/
 status: experimental
 tags:
 - attack.execution
 - attack.t1059.001
+

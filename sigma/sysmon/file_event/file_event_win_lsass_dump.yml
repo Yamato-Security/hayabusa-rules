@@ -1,49 +1,48 @@
-
 title: LSASS Process Memory Dump Files
 ruletype: Sigma
 author: Florian Roth
 date: 2021/11/15
 description: Detects file names used by different memory dumping tools to create a
-  memory dump of the LSASS process memory, which contains user credentials
+    memory dump of the LSASS process memory, which contains user credentials
 detection:
-  SELECTION_1:
-    EventID: 11
-  SELECTION_10:
-    TargetFilename: '*.dmp'
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    TargetFilename:
-    - '*\lsass.dmp'
-    - '*\lsass.zip'
-    - '*\lsass.rar'
-    - '*\Temp\dumpert.dmp'
-    - '*\Andrew.dmp'
-    - '*\Coredump.dmp'
-  SELECTION_4:
-    TargetFilename:
-    - '*\lsass_2*'
-    - '*\lsassdump*'
-    - '*\lsassdmp*'
-  SELECTION_5:
-    TargetFilename: '*\lsass*'
-  SELECTION_6:
-    TargetFilename: '*.dmp*'
-  SELECTION_7:
-    TargetFilename: '*SQLDmpr*'
-  SELECTION_8:
-    TargetFilename: '*.mdmp'
-  SELECTION_9:
-    TargetFilename: nanodump*
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
-    and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9 and SELECTION_10)))
+    SELECTION_1:
+        EventID: 11
+    SELECTION_10:
+        TargetFilename: '*.dmp'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename:
+        - '*\lsass.dmp'
+        - '*\lsass.zip'
+        - '*\lsass.rar'
+        - '*\Temp\dumpert.dmp'
+        - '*\Andrew.dmp'
+        - '*\Coredump.dmp'
+    SELECTION_4:
+        TargetFilename:
+        - '*\lsass_2*'
+        - '*\lsassdump*'
+        - '*\lsassdmp*'
+    SELECTION_5:
+        TargetFilename: '*\lsass*'
+    SELECTION_6:
+        TargetFilename: '*.dmp*'
+    SELECTION_7:
+        TargetFilename: '*SQLDmpr*'
+    SELECTION_8:
+        TargetFilename: '*.mdmp'
+    SELECTION_9:
+        TargetFilename: nanodump*
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
+        and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9 and SELECTION_10)))
 falsepositives:
 - Unknown
 id: a5a2d357-1ab8-4675-a967-ef9990a59391
 level: high
 logsource:
-  category: file_event
-  product: windows
+    category: file_event
+    product: windows
 modified: 2022/06/27
 references:
 - https://www.google.com/search?q=procdump+lsass
@@ -52,9 +51,10 @@ references:
 - https://www.whiteoaksecurity.com/blog/attacks-defenses-dumping-lsass-no-mimikatz/
 - https://github.com/helpsystems/nanodump
 related:
-- id: db2110f3-479d-42a6-94fb-d35bc1e46492
-  type: obsoletes
+-   id: db2110f3-479d-42a6-94fb-d35bc1e46492
+    type: obsoletes
 status: experimental
 tags:
 - attack.credential_access
 - attack.t1003.001
+

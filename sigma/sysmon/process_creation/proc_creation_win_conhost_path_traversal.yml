@@ -1,30 +1,30 @@
-
 title: Conhost.exe CommandLine Path Traversal
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/06/14
 description: detects the usage of path traversal in conhost.exe indicating possible
-  command/argument confusion/hijacking
+    command/argument confusion/hijacking
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentCommandLine: '*conhost*'
-  SELECTION_4:
-    CommandLine: '*/../../*'
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentCommandLine: '*conhost*'
+    SELECTION_4:
+        CommandLine: '*/../../*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unlikely
 id: ee5e119b-1f75-4b34-add8-3be976961e39
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://pentestlab.blog/2020/07/06/indirect-command-execution/
 status: experimental
 tags:
 - attack.execution
 - attack.t1059.003
+

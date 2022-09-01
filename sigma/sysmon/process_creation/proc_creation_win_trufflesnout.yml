@@ -1,0 +1,30 @@
+title: Launch TruffleSnout Executable
+ruletype: Sigma
+author: frack113
+date: 2022/08/20
+description: Detect use of TruffleSnout.exe
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        OriginalFileName: TruffleSnout.exe
+    SELECTION_4:
+        Image: '*\TruffleSnout.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+falsepositives:
+- Legitimate use
+id: 69ca006d-b9a9-47f5-80ff-ecd4d25d481a
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1482/T1482.md
+- https://github.com/dsnezhkov/TruffleSnout
+status: experimental
+tags:
+- attack.discovery
+- attack.t1482
+

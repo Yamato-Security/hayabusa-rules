@@ -1,38 +1,37 @@
-
 title: Suspicious Powershell No File or Command
 ruletype: Sigma
 author: pH-T, Florian Roth
 date: 2022/04/08
 description: Detects suspicious powershell execution that ends with a common flag
-  instead of a command or a filename to execute (could be a sign of implicit execution
-  that uses files in WindowsApps directory)
+    instead of a command or a filename to execute (could be a sign of implicit execution
+    that uses files in WindowsApps directory)
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine:
-    - '* -windowstyle hidden"'
-    - '* -windowstyle hidden'
-    - "* -windowstyle hidden'"
-    - '* -w hidden"'
-    - '* -w hidden'
-    - "* -w hidden'"
-    - '* -ep bypass"'
-    - '* -ep bypass'
-    - "* -ep bypass'"
-    - '* -noni"'
-    - '* -noni'
-    - "* -noni'"
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '* -windowstyle hidden"'
+        - '* -windowstyle hidden'
+        - '* -windowstyle hidden'''
+        - '* -w hidden"'
+        - '* -w hidden'
+        - '* -w hidden'''
+        - '* -ep bypass"'
+        - '* -ep bypass'
+        - '* -ep bypass'''
+        - '* -noni"'
+        - '* -noni'
+        - '* -noni'''
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: b66474aa-bd92-4333-a16c-298155b120df
 level: high
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 references:
 - https://blog.malwarebytes.com/threat-intelligence/2022/04/colibri-loader-combines-task-scheduler-and-powershell-in-clever-persistence-technique/
 status: experimental
@@ -41,3 +40,4 @@ tags:
 - attack.persistence
 - attack.t1053.005
 - attack.t1059.001
+

@@ -1,36 +1,35 @@
-
 title: Suspicious Extrac32 Execution
 ruletype: Sigma
 author: frack113
 date: 2021/11/26
 description: Download or Copy file with Extrac32
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    CommandLine: '*extrac32.exe*'
-  SELECTION_4:
-    Image: '*\extrac32.exe'
-  SELECTION_5:
-    OriginalFileName: extrac32.exe
-  SELECTION_6:
-    CommandLine: '*.cab*'
-  SELECTION_7:
-    CommandLine:
-    - '*/C*'
-    - '*/Y*'
-    - '* \\\\\*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
-    and SELECTION_6 and SELECTION_7)
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*extrac32.exe*'
+    SELECTION_4:
+        Image: '*\extrac32.exe'
+    SELECTION_5:
+        OriginalFileName: extrac32.exe
+    SELECTION_6:
+        CommandLine: '*.cab*'
+    SELECTION_7:
+        CommandLine:
+        - '*/C*'
+        - '*/Y*'
+        - '* \\\\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: aa8e035d-7be4-48d3-a944-102aec04400d
 level: medium
 logsource:
-  category: process_creation
-  product: windows
+    category: process_creation
+    product: windows
 modified: 2022/08/13
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Extrac32/
@@ -38,3 +37,4 @@ status: experimental
 tags:
 - attack.command_and_control
 - attack.t1105
+

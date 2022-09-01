@@ -1,29 +1,28 @@
-
 title: VSSAudit Security Event Source Registration
 ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)
 date: 2020/10/20
 description: Detects the registration of the security event source VSSAudit. It would
-  usually trigger when volume shadow copy operations happen.
+    usually trigger when volume shadow copy operations happen.
 detection:
-  SELECTION_1:
-    Channel: Security
-  SELECTION_2:
-    Provider_Name: Microsoft-Windows-Security-Auditing
-  SELECTION_3:
-    AuditSourceName: VSSAudit
-  SELECTION_4:
-    EventID: 4904
-  SELECTION_5:
-    EventID: 4905
-  condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and (SELECTION_4 or SELECTION_5))
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        Provider_Name: Microsoft-Windows-Security-Auditing
+    SELECTION_3:
+        AuditSourceName: VSSAudit
+    SELECTION_4:
+        EventID: 4904
+    SELECTION_5:
+        EventID: 4905
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and (SELECTION_4 or SELECTION_5))
 falsepositives:
 - Legitimate use of VSSVC. Maybe backup operations. It would usually be done by C:\Windows\System32\VSSVC.exe.
 id: e9faba72-4974-4ab2-a4c5-46e25ad59e9b
 level: informational
 logsource:
-  product: windows
-  service: security
+    product: windows
+    service: security
 modified: 2022/04/28
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md#atomic-test-3---esentutlexe-sam-copy
@@ -31,3 +30,4 @@ status: experimental
 tags:
 - attack.credential_access
 - attack.t1003.002
+

@@ -1,31 +1,30 @@
-
 title: Accessing WinAPI in PowerShell. Code Injection
 ruletype: Sigma
 author: Nikita Nazarov, oscd.community
 date: 2020/10/06
 description: Detects the creation of a remote thread from a Powershell process to
-  another process
+    another process
 detection:
-  SELECTION_1:
-    EventID: 8
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    SourceImage:
-    - '*\powershell.exe'
-    - '*\pwsh.exe'
-  SELECTION_4:
-    SourceParentImage: C:\Windows\System32\CompatTelRunner.exe
-  condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
+    SELECTION_1:
+        EventID: 8
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        SourceImage:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        SourceParentImage: C:\Windows\System32\CompatTelRunner.exe
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
 falsepositives:
 - Unknown
 id: eeb2e3dc-c1f4-40dd-9bd5-149ee465ad50
 level: high
 logsource:
-  category: create_remote_thread
-  definition: Note that you have to configure logging for CreateRemoteThread in Symson
-    config
-  product: windows
+    category: create_remote_thread
+    definition: Note that you have to configure logging for CreateRemoteThread in
+        Symson config
+    product: windows
 modified: 2022/08/12
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
@@ -33,3 +32,4 @@ status: test
 tags:
 - attack.execution
 - attack.t1059.001
+

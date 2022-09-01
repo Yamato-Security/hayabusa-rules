@@ -1,45 +1,44 @@
-
 title: Suspicious Child Process Created as System
 ruletype: Sigma
 author: Teymur Kheirkhabarov, Roberto Rodriguez (@Cyb3rWard0g), Open Threat Research
-  (OTR)
+    (OTR)
 date: 2019/10/26
 description: Detection of child processes spawned with SYSTEM privileges by parents
-  with LOCAL SERVICE or NETWORK SERVICE accounts
+    with LOCAL SERVICE or NETWORK SERVICE accounts
 detection:
-  SELECTION_1:
-    EventID: 1
-  SELECTION_2:
-    Channel: Microsoft-Windows-Sysmon/Operational
-  SELECTION_3:
-    ParentUser:
-    - NT AUTHORITY\NETWORK SERVICE
-    - NT AUTHORITY\LOCAL SERVICE
-    - AUTORITE NT\
-  SELECTION_4:
-    User:
-    - '*AUTHORI*'
-    - '*AUTORI*'
-  SELECTION_5:
-    User:
-    - '*\SYSTEM'
-    - '*\СИСТЕМА'
-  SELECTION_6:
-    IntegrityLevel: System
-  SELECTION_7:
-    Image: '*\rundll32.exe'
-  SELECTION_8:
-    CommandLine: '*DavSetCookie*'
-  condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and SELECTION_5
-    and SELECTION_6) and  not (SELECTION_7 and SELECTION_8))
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentUser:
+        - NT AUTHORITY\NETWORK SERVICE
+        - NT AUTHORITY\LOCAL SERVICE
+        - AUTORITE NT\
+    SELECTION_4:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_5:
+        User:
+        - '*\SYSTEM'
+        - "*\\\u0421\u0418\u0421\u0422\u0415\u041C\u0410"
+    SELECTION_6:
+        IntegrityLevel: System
+    SELECTION_7:
+        Image: '*\rundll32.exe'
+    SELECTION_8:
+        CommandLine: '*DavSetCookie*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not (SELECTION_7 and SELECTION_8))
 falsepositives:
 - Unknown
 id: 590a5f4c-6c8c-4f10-8307-89afe9453a9d
 level: high
 logsource:
-  category: process_creation
-  definition: ParentUser field needs sysmon >= 13.30
-  product: windows
+    category: process_creation
+    definition: ParentUser field needs sysmon >= 13.30
+    product: windows
 modified: 2021/11/27
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
@@ -50,3 +49,4 @@ status: test
 tags:
 - attack.privilege_escalation
 - attack.t1134.002
+
