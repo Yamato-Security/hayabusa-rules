@@ -1,10 +1,12 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2022/06/21
+modified: 2022/09/04
 
-title: PwSh Scriptblock Log
+title: PwSh Scriptblock
 details: 'ScriptBlock: %ScriptBlockText%'
-description: Powershell Scriptblock Logging
+description: |
+    Powershell Scriptblock Logging. Windows 10+ will flag suspicious PwSh as level 3 (warning) so 
+    I am filtering out these events as they are being created with the "Potentially Malicious PwSh" rule.
 
 id: 0f3b1343-65a5-4879-b512-9d61b0e4e3ba
 level: informational
@@ -17,7 +19,9 @@ detection:
     selection_basic:
         Channel: Microsoft-Windows-PowerShell/Operational
         EventID: 4104
-    condition: selection_basic
+    filter_level_warning:
+        Level: 3
+    condition: selection_basic and not filter_level_warning
 falsepositives:
     - normal system usage
 tags:
