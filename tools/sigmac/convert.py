@@ -88,7 +88,7 @@ class Logconverter():
             file_path = os.path.join(rules_dir, file)
             if os.path.isdir(file_path):
                 convert_datas.extend(self.create_rule_list(file_path))
-            elif file.endswith(".yml") and not file in EXCLUDE_RULE_FILE:
+            elif file.endswith(".yml"):
                 convert_datas.extend(self.create_convert_command(file_path, file))
         return convert_datas
 
@@ -202,8 +202,6 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--output",
                         help="Export directory. Default: ./hayabusa_rules",
                         default="./hayabusa_rules")
-    parser.add_argument("--exclude-rule-list",
-                        help="Specify a exclude-rule-list.txt file")
     parser.add_argument("--debug", help="Debug mode.",
                     action="store_true")
     parser.add_argument("--verbose", help="Show more information",
@@ -236,14 +234,5 @@ if __name__ == "__main__":
         if not os.path.isdir(RULES_DIR):
             logger.error(args.rule_path + " does not exist.")
             sys.exit(1)
-
-    # SET EXCLUDE RULEs
-    if args.exclude_rule_list:
-        try:
-            with open(args.exclude_rule_list, 'r') as f:
-                for line in f:
-                    EXCLUDE_RULE_FILE.add(line.strip())
-        except Exception as e:
-            logger.error("Failed to read exclude_rule_list file: " + e)
 
     main()
