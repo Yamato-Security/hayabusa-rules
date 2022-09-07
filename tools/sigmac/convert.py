@@ -17,6 +17,7 @@ EXPORT_DIR_NAME = "./hayabusa_rules"
 RULES_DIR = "./rules/windows"
 CPU = None
 IGNORE_CONFIGS = ["windows-services.yml", "powershell.yml"]
+SUPPRESSION = False
 
 FORMAT = ('[%(levelname)-8s] %(message)s')
 logging.basicConfig(format = FORMAT, level=logging.WARNING)
@@ -165,6 +166,11 @@ def sigma_executer(data: ConvertData):
         logger.info(data.file_name + " were converted.")
         stderr = proc.stderr.read().decode("utf-8")
         if len(stderr) > 0:
+            if SUPPRESSION and "An unsupported feature is required for this Sigma rule" in stderr:
+                # Suppress Option
+                # Do not display warning when converting rules that Hayabusa does not support
+                logger.info("Unsupported feature is required for Hayabusa rule. (" + data.file_name + ")")
+                return 1
             logger.warning('Conversion of "' + data.file_name + '" failed.\n'
                            'command: ' + str(data.sigma_command) + '\n'
                            + stderr)
@@ -199,6 +205,9 @@ if __name__ == "__main__":
                     action="store_true")
     parser.add_argument("--verbose", help="Show more information",
                     action="store_true")
+    parser.add_argument("-s", "--suppression",
+                    help="Suppresses errors when converting rules that Hayabusa does not support.",
+                    action="store_true")
     args = parser.parse_args()
 
     files = os.listdir(SIGMAC_DIR)
@@ -217,6 +226,8 @@ if __name__ == "__main__":
     EXPORT_DIR_NAME = args.output
     CPU = args.cpu
     RULES_DIR = os.path.join(SIGMA_DIR, "rules/windows")
+    if args.suppression:
+        SUPPRESSION = True
     if args.rule_path:
         RULES_DIR = args.rule_path
         if not os.path.isdir(RULES_DIR):
