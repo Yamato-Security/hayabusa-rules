@@ -17,7 +17,7 @@ EXPORT_DIR_NAME = "./hayabusa_rules"
 RULES_DIR = "./rules/windows"
 CPU = None
 IGNORE_CONFIGS = {"windows-services.yml", "powershell.yml"}
-EXCLUDE_RULE_FILE = set()
+EXCLUDE_CATEGORY = {"file_rename"}
 SUPPRESSION = False
 
 FORMAT = ('[%(levelname)-8s] %(message)s')
@@ -108,6 +108,9 @@ class Logconverter():
                 logger.warning(rule_path + " has no log category description.")
 
         logger.debug("target: " + file_name)
+        if category in EXCLUDE_CATEGORY:
+            logger.info(file_name + " has CATEGORY hayabusa couldn't use.")
+            return convert_datas
         if category in self.config_map:
             configs = copy.deepcopy(self.config_map[category])
         else:
