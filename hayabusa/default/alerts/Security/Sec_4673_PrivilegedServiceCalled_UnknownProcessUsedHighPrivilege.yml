@@ -3,7 +3,7 @@ date: 2020/11/08
 modified: 2022/05/21
 
 title: Process Ran With High Privilege
-details: 'Process: %ProcessName% | User: %SubjectUserName% | LID: %SubjectLogonId%'
+details: 'Process: %ProcessName% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%'
 description: |
     Malware may generate a 4673 event (A privileged service was called) when dumping hashes or wiping disk. 
     For example, mimikatz will generate 4 logs using SeTcbPrivilege (Act as part of the OS.) 

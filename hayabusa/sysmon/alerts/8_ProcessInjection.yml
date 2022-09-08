@@ -2,8 +2,8 @@ author: Zach Mathis
 date: 2022/03/05
 modified: 2022/09/01
 
-title: Process Injection
-details: 'Rule: %RuleName% | Src Process: %SourceImage% | Tgt Process: %TargetImage% | Src PID: %SourceProcessId% | Src PGUID: %SourceProcessGuid% | Tgt PID: %TargetProcessId% | Tgt PGUID: %TargetProcessGuid%'
+title: Proc Injection
+details: 'Rule: %RuleName% ¦ SrcProc: %SourceImage% ¦ TgtProc: %TargetImage% ¦ SrcPID: %SourceProcessId% ¦ SrcPGUID: %SourceProcessGuid% ¦ TgtPID: %TargetProcessId% ¦ TgtPGUID: %TargetProcessGuid%'
 description: |
     The CreateRemoteThread (Process Injection) event detects when a process creates a thread in another process. 
     This technique is used by malware to inject code and hide in other processes. 
