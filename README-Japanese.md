@@ -68,7 +68,7 @@ modified: 2022/04/17
 
 #アラートセクション
 title: Possible Timestomping
-details: 'Path: %TargetFilename% | Process: %Image% | CreationTime: %CreationUtcTime% | PreviousTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
+details: 'Path: %TargetFilename% ¦ Process: %Image% ¦ CreationTime: %CreationUtcTime% ¦ PreviousTime: %PreviousCreationUtcTime% ¦ PID: %PID% ¦ PGUID: %ProcessGuid%'
 description: |
     The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
     This event helps tracking the real creation time of a file. 
@@ -151,7 +151,7 @@ sample-evtx: |
 > ## アラートセクション
 
 - **title [必須]**: ルールファイルのタイトル。これは表示されるアラートの名前にもなるので、簡潔であるほどよいです。(85文字以下でなければなりません。)
-- **details** [オプション]: 表示されるアラートの詳細です。Windowsイベントログの中で解析に有効なフィールドがあれば出力してください。フィールドは `" | "` で区切られます。フィールドのプレースホルダは `%` で囲まれ (例: `%MemberName%`) 、`rules/config_eventkey_alias.txt` で定義する必要があります。(以下で説明します)
+- **details** [オプション]: 表示されるアラートの詳細です。Windowsイベントログの中で解析に有効なフィールドがあれば出力してください。フィールドは `" ¦ "` で区切られます。フィールドのプレースホルダは `%` で囲まれ (例: `%MemberName%`) 、`rules/config_eventkey_alias.txt` で定義する必要があります。(以下で説明します)
 - **description** [オプション]: ルールの説明。これは表示されないので、長く詳細に記述することができます。
 
 > ## ルールセクション

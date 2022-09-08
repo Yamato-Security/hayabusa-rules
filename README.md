@@ -69,7 +69,7 @@ modified: 2022/04/17
 
 #Alert section
 title: Possible Timestomping
-details: 'Path: %TargetFilename% | Process: %Image% | User: %User% | CreationTime: %CreationUtcTime% | PreviousTime: %PreviousCreationUtcTime% | PID: %PID% | PGUID: %ProcessGuid%'
+details: 'Path: %TargetFilename% ¦ Process: %Image% ¦ User: %User% ¦ CreationTime: %CreationUtcTime% ¦ PreviousTime: %PreviousCreationUtcTime% ¦ PID: %PID% ¦ PGUID: %ProcessGuid%'
 description: |
     The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
     This event helps tracking the real creation time of a file. 
@@ -152,7 +152,7 @@ sample-evtx: |
 > ## Alert section
 
 - **title [required]**: Rule file title. This will also be the name of the alert that gets displayed so the briefer the better. (Should not be longer than 85 characters.)
-- **details** [optional]: The details of the alert that gets displayed. Please output any fields in the Windows event log that are useful for analysis. Fields are seperated by `" | "`. Field placeholders are enclosed with a `%` (Example: `%MemberName%`) and need to be defined in `rules/config/eventkey_alias.txt`. (Explained below.)
+- **details** [optional]: The details of the alert that gets displayed. Please output any fields in the Windows event log that are useful for analysis. Fields are seperated by `" ¦ "`. Field placeholders are enclosed with a `%` (Example: `%MemberName%`) and need to be defined in `rules/config/eventkey_alias.txt`. (Explained below.)
 - **description** [optional]: A description of the rule. This does not get displayed so you can make this long and detailed.
 
 > ## Rule section
