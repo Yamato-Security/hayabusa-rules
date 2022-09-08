@@ -3,7 +3,7 @@ date: 2022/04/17
 modified: 2022/09/01
 
 title: LOLBIN Renamed
-details: '%RuleName% | Cmd: %CommandLine% | Process: %Image% | OriginalFileName: %OriginalFileName% | User: %User% | Parent Cmd: %ParentCommandLine% | LID: %LogonId% | PID: %ProcessId% | PGUID: %ProcessGuid% | Hash: %Hashes%'
+details: 'Rule: %RuleName% ¦ Cmd: %CommandLine% ¦ Proc: %Image% ¦ OrigFileName: %OriginalFileName% ¦ User: %User% ¦ ParentCmd: %ParentCommandLine% ¦ LID: %LogonId% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ Hash: %Hashes%'
 description: This is to detect when a LOLBIN (default Windows binary) was renamed in order to hide its execution. OringalFileName is the original filename in the PE header. From my tests, false positives should be low so I rated this as high.
 
 id: dc5700ef-3688-44c9-b719-8e1a632ff3dd

@@ -2,8 +2,8 @@ author: Zach Mathis
 date: 2022/03/23
 modified: 2022/09/01
 
-title: Process Tampering
-details: 'Rule: %RuleName% | Process: %Image% | Type: %Type% | User: %User% | PID: %ProcessId% | PGUID: %ProcessGuid%'
+title: Proc Tampering
+details: 'Rule: %RuleName% ¦ Proc: %Image% ¦ Type: %Type% ¦ User: %User% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%'
 description: |
     Detects process hollowing or process herpaderping techniques which would normally not be visible in Task Manager.
     Process hollowing is when malware launches a legitimate process in a suspended state and replaces legitimate code in the process with malicious code. 
