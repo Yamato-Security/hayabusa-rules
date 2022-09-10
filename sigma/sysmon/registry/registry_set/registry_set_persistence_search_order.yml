@@ -7,51 +7,57 @@ detection:
     SELECTION_1:
         EventID: 13
     SELECTION_10:
-        Details: '*\AppData\Roaming\Dropbox\\*'
+        Details: '*\Microsoft.Teams.AddinLoader.dll*'
     SELECTION_11:
-        Details: '*\DropboxExt64.*.dll*'
+        Details: '*\AppData\Roaming\Dropbox\\*'
     SELECTION_12:
-        Details: '*TmopIEPlg.dll'
+        Details: '*\DropboxExt64.*.dll*'
     SELECTION_13:
+        Details: '*TmopIEPlg.dll'
+    SELECTION_14:
         Image:
         - C:\WINDOWS\system32\wuauclt.exe
         - C:\WINDOWS\system32\svchost.exe
-    SELECTION_14:
+    SELECTION_15:
         Image:
         - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
         - C:\Program Files\Windows Defender\\*
-    SELECTION_15:
-        Image: '*\MsMpEng.exe'
     SELECTION_16:
-        Details: '*\FileRepository\nvmdi.inf*'
+        Image: '*\MsMpEng.exe'
     SELECTION_17:
-        Image: '*\MicrosoftEdgeUpdateComRegisterShell64.exe'
+        Details: '*\FileRepository\nvmdi.inf*'
     SELECTION_18:
-        Image: C:\WINDOWS\SYSTEM32\dxdiag.exe
+        Image: '*\MicrosoftEdgeUpdateComRegisterShell64.exe'
     SELECTION_19:
-        Details:
-        - C:\Windows\pyshellext.amd64.dll
-        - C:\Windows\pyshellext.dll
+        Image: C:\WINDOWS\SYSTEM32\dxdiag.exe
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_20:
         Details:
+        - C:\Windows\pyshellext.amd64.dll
+        - C:\Windows\pyshellext.dll
+    SELECTION_21:
+        Details:
         - C:\Windows\system32\dnssdX.dll
         - C:\Windows\SysWOW64\dnssdX.dll
-    SELECTION_21:
-        Details: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
     SELECTION_22:
+        Details: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
+    SELECTION_23:
         Details:
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
-    SELECTION_23:
-        Details: C:\ProgramData\Microsoft\\*
     SELECTION_24:
-        Details: '*C:\WINDOWS\system32\GamingServicesProxy.dll*'
+        Details: C:\ProgramData\Microsoft\\*
     SELECTION_25:
-        Image: C:\Windows\System32\poqexec.exe
+        Details: '*C:\WINDOWS\system32\GamingServicesProxy.dll*'
     SELECTION_26:
+        Image: C:\Windows\System32\poqexec.exe
+    SELECTION_27:
         Details: '*C:\Windows\System32\Autopilot.dll*'
+    SELECTION_28:
+        Image: C:\Windows\system32\SecurityHealthService.exe
+    SELECTION_29:
+        Details: '*C:\Windows\System32\SecurityHealth*'
     SELECTION_3:
         EventType: SetValue
     SELECTION_4:
@@ -71,15 +77,16 @@ detection:
         - '*\FileSyncShell64.dll*'
         - '*\FileSyncApi64.dll*'
     SELECTION_8:
-        Details: '*\AppData\Local\Microsoft\TeamsMeetingAddin\\*'
+        Image: C:\WINDOWS\system32\SecurityHealthService.exe
     SELECTION_9:
-        Details: '*\Microsoft.Teams.AddinLoader.dll*'
+        Details: '*\AppData\Local\Microsoft\TeamsMeetingAddin\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8 and
-        SELECTION_9) or (SELECTION_10 and SELECTION_11) or (SELECTION_12) or (SELECTION_13)
-        or (SELECTION_14 and SELECTION_15) or (SELECTION_16) or (SELECTION_17) or
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8) or
+        (SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13)
+        or (SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17) or
         (SELECTION_18) or (SELECTION_19) or (SELECTION_20) or (SELECTION_21) or (SELECTION_22)
-        or (SELECTION_23) or (SELECTION_24) or (SELECTION_25 and SELECTION_26)))
+        or (SELECTION_23) or (SELECTION_24) or (SELECTION_25) or (SELECTION_26 and
+        SELECTION_27) or (SELECTION_28 and SELECTION_29)))
 falsepositives:
 - Some installed utilities (i.e. OneDrive) may serve new COM objects at user-level
 id: a0ff33d8-79e4-4cef-b4f3-9dc4133ccd12
@@ -87,7 +94,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/08/10
+modified: 2022/09/02
 references:
 - https://www.cyberbit.com/blog/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
 - https://attack.mitre.org/techniques/T1546/015/

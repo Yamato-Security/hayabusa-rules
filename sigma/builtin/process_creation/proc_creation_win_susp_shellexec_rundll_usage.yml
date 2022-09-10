@@ -1,0 +1,33 @@
+title: Suspicious Usage Of ShellExec_rundll
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/01
+description: Detects suspicious usage of the ShellExec_rundll function to launch other
+    commands as seen in the the raspberry-robin attack
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*,ShellExec_rundll*'
+    SELECTION_4:
+        CommandLine:
+        - '*regsvr32*'
+        - '*C:\Users\Public\\*'
+        - '*odbcconf*'
+        - '*\Desktop\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: d87bd452-6da1-456e-8155-7dc988157b7d
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://redcanary.com/blog/raspberry-robin/
+status: experimental
+tags:
+- attack.defense_evasion
+

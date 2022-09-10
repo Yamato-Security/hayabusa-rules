@@ -1,6 +1,6 @@
 title: Suspicious Outbound RDP Connections
 ruletype: Sigma
-author: Markus Neis - Swisscom
+author: Markus Neis
 date: 2019/05/15
 description: Detects Non-Standard Tools Connecting to TCP port 3389 indicating possible
     lateral movement
@@ -40,7 +40,9 @@ detection:
         - '*\Ranger\SentinelRanger.exe'
         - '*\Avast\AvastSvc.exe'
     SELECTION_6:
-        Image: C:\Program Files\SplunkUniversalForwarder\bin\\*
+        Image:
+        - C:\Program Files\SplunkUniversalForwarder\bin\\*
+        - C:\Program Files\Mozilla Firefox\firefox.exe*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         (SELECTION_5 or SELECTION_6))
 falsepositives:
@@ -51,7 +53,7 @@ level: high
 logsource:
     category: network_connection
     product: windows
-modified: 2022/06/20
+modified: 2022/09/02
 references:
 - https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708
 status: test

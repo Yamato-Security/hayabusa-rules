@@ -1,0 +1,34 @@
+title: NTLM Coercion Via Certutil.exe
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/01
+description: Detects possible NTLM coercion via certutil using the 'syncwithWU' flag
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\certutil.exe'
+    SELECTION_4:
+        OriginalFileName: CertUtil.exe
+    SELECTION_5:
+        CommandLine: '* -syncwithWU *'
+    SELECTION_6:
+        CommandLine: '* \\\\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
+falsepositives:
+- Unknown
+id: 6c6d9280-e6d0-4b9d-80ac-254701b64916
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/LOLBAS-Project/LOLBAS/issues/243
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218
+

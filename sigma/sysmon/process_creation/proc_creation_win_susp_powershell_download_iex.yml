@@ -2,7 +2,8 @@ title: PowerShell Web Download and Execution
 ruletype: Sigma
 author: Florian Roth
 date: 2022/03/24
-description: Detects suspicious ways to download files or content using PowerShell
+description: Detects suspicious ways to download files or content and execute them
+    using PowerShell
 detection:
     SELECTION_1:
         EventID: 1
@@ -12,6 +13,7 @@ detection:
         CommandLine:
         - '*.DownloadString(*'
         - '*.DownloadFile(*'
+        - '*Invoke-WebRequest *'
     SELECTION_4:
         CommandLine:
         - '*IEX(*'
@@ -19,7 +21,7 @@ detection:
         - '*I`EX*'
         - '*IE`X*'
         - '*I`E`X*'
-        - '* | IEX*'
+        - '*| IEX*'
         - '*|IEX *'
         - '*Invoke-Execution*'
         - '*;iex $*'
@@ -31,9 +33,11 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/02
 references:
 - https://github.com/VirtualAlllocEx/Payload-Download-Cradles/blob/88e8eca34464a547c90d9140d70e9866dcbc6a12/Download-Cradles.cmd
 status: experimental
 tags:
-- attack.t1546.013
+- attack.execution
+- attack.t1059
 

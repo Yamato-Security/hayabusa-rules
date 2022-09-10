@@ -28,12 +28,13 @@ detection:
         SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
         and SELECTION_10)))
 falsepositives:
-- Legitimate administrative use
+- Legitimate administrative use (Should be investigated either way)
 id: f44800ac-38ec-471f-936e-3fa7d9c53100
-level: medium
+level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/02
 references:
 - https://github.com/3CORESec/MAL-CL/tree/master/Descriptors/Other/CleanWipe
 status: experimental

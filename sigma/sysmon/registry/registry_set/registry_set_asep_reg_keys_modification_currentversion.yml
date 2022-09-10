@@ -60,7 +60,9 @@ detection:
         - '{C973DA94-CBDF-4E77-81D1-E5B794FBD146}'
         - '{51EF1569-67EE-4AD6-9646-E726C3FFC8A2}'
     SELECTION_29:
-        Details: C:\Windows\system32\cmd.exe /q /c rmdir /s /q "C:\Users\\*
+        Details:
+        - C:\Windows\system32\cmd.exe /q /c rmdir /s /q "C:\Users\\*
+        - C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\\*
     SELECTION_3:
         EventType: SetValue
     SELECTION_30:
@@ -161,7 +163,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/08/23
+modified: 2022/09/06
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

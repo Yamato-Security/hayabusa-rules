@@ -94,6 +94,9 @@ detection:
         - 09D278F9DE118EF09163C6140255C690
         - 03866661686829d806989e2fc5a72606
         - e57401fbdadcd4571ff385ab82bd5d6d
+        - 84B763C45C0E4A3E7CA5548C710DB4EE
+        - 19584675d94829987952432e018d5056
+        - 330768a4f172e10acb6287b87289d83b
     SELECTION_4:
         Hashes:
         - '*IMPHASH=BCCA3C247B619DCD13C8CDFF5F123932*'
@@ -179,6 +182,9 @@ detection:
         - '*IMPHASH=09D278F9DE118EF09163C6140255C690*'
         - '*IMPHASH=03866661686829d806989e2fc5a72606*'
         - '*IMPHASH=e57401fbdadcd4571ff385ab82bd5d6d*'
+        - '*IMPHASH=84B763C45C0E4A3E7CA5548C710DB4EE*'
+        - '*IMPHASH=19584675D94829987952432E018D5056*'
+        - '*IMPHASH=330768A4F172E10ACB6287B87289D83B*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Legitimate use of one of these tools
@@ -187,7 +193,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/20
+modified: 2022/09/07
 references:
 - Internal Research
 status: experimental

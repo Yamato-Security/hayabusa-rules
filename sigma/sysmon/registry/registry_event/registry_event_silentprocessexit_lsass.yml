@@ -1,9 +1,9 @@
-title: SilentProcessExit Monitor Registrytion for LSASS
+title: SilentProcessExit Monitor Registration for LSASS
 ruletype: Sigma
 author: Florian Roth
 date: 2021/02/26
 description: Detects changes to the Registry in which a monitor program gets registered
-    to dump process memory of the lsass.exe process memory
+    to dump the memory of the lsass.exe process
 detection:
     SELECTION_1:
         EventID: 12
@@ -17,15 +17,19 @@ detection:
         TargetObject: '*Microsoft\Windows NT\CurrentVersion\SilentProcessExit\lsass.exe*'
     condition: ((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4 and SELECTION_5)
 falsepositives:
-- Unknown
+- Unlikely
 id: 55e29995-75e7-451a-bef0-6225e2f13597
 level: critical
 logsource:
     category: registry_event
     product: windows
+modified: 2022/09/07
 references:
 - https://www.deepinstinct.com/2021/02/16/lsass-memory-dumps-are-stealthier-than-ever-before-part-2/
 - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
+related:
+-   id: 1f24c7c1-0b71-4e4e-8a6d-f863c9d8aa4a
+    type: similar
 status: experimental
 tags:
 - attack.credential_access

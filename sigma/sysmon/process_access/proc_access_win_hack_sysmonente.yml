@@ -1,0 +1,43 @@
+title: SysmonEnte Usage
+ruletype: Sigma
+author: Florian Roth
+date: 2022/09/07
+description: Detects the use of SysmonEnte, a tool to attack the integrity of Sysmon
+detection:
+    SELECTION_1:
+        EventID: 10
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetImage: C:\Windows\Sysmon64.exe
+    SELECTION_4:
+        GrantedAccess: '0x1400'
+    SELECTION_5:
+        SourceImage:
+        - C:\Program Files*
+        - C:\Windows\System32\\*
+    SELECTION_6:
+        SourceImage: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+    SELECTION_7:
+        SourceImage: '*\MsMpEng.exe'
+    SELECTION_8:
+        CallTrace: Ente
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4)
+        and  not ((SELECTION_5) or (SELECTION_6 and SELECTION_7))) or SELECTION_8))
+falsepositives:
+- Unknown
+id: d29ada0f-af45-4f27-8f32-f7b77c3dbc4e
+level: high
+logsource:
+    category: process_access
+    product: windows
+modified: 2022/09/09
+references:
+- https://codewhitesec.blogspot.com/2022/09/attacks-on-sysmon-revisited-sysmonente.html
+- https://github.com/codewhitesec/SysmonEnte/
+- https://github.com/codewhitesec/SysmonEnte/blob/main/screens/1.png
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.002
+

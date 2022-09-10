@@ -1,0 +1,43 @@
+title: Suspicious Net Use Command Combo
+ruletype: Sigma
+author: pH-T
+date: 2022/09/01
+description: Detects net use command combo which executes files from WebDAV server;
+    seen in malicious LNK files
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\cmd.exe*'
+    SELECTION_4:
+        CommandLine: '* net use http*'
+    SELECTION_5:
+        CommandLine: '*& start /b *'
+    SELECTION_6:
+        CommandLine: '*\DavWWWRoot\\*'
+    SELECTION_7:
+        CommandLine:
+        - '*.exe *'
+        - '*.dll *'
+        - '*.bat *'
+        - '*.vbs *'
+        - '*.ps1 *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Unknown
+id: f0507c0f-a3a2-40f5-acc6-7f543c334993
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/ShadowChasing1/status/1552595370961944576
+- https://www.virustotal.com/gui/file/a63376ee1dba76361df73338928e528ca5b20171ea74c24581605366dcaa0104/behavior
+status: experimental
+tags:
+- attack.execution
+- attack.t1059.001
+

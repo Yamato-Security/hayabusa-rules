@@ -19,9 +19,13 @@ detection:
         - '*\AppData\Local\Temp\\*'
         - '*C:\PerfLogs\\*'
     SELECTION_5:
-        ImageLoaded: '*\Program Files*'
+        Image: '*\msiexec.exe'
+    SELECTION_6:
+        ImageLoaded:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
+        (SELECTION_5 or SELECTION_6))
 falsepositives:
 - Unknown
 id: 9e9a9002-56c4-40fd-9eff-e4b09bfa5f6c
@@ -29,7 +33,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/08/10
+modified: 2022/09/03
 references:
 - https://github.com/hackerhouse-opensource/iscsicpl_bypassUAC (Idea)
 status: experimental

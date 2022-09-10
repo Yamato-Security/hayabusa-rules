@@ -19,7 +19,7 @@ detection:
         - '*\net.exe'
         - '*\net1.exe'
     SELECTION_5:
-        CommandLine: '*stop*'
+        CommandLine: '* stop *'
     SELECTION_6:
         CommandLine: sc  stop KSCWebConsoleMessageQueue
     SELECTION_7:
@@ -46,7 +46,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/22
+modified: 2022/09/01
 status: experimental
 tags:
 - attack.impact
