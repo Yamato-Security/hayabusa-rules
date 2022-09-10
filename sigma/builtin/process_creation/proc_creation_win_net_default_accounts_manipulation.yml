@@ -1,0 +1,69 @@
+title: Suspicious Manipulation Of Default Accounts
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/01
+description: Detects suspicious manipulations of default accounts such as 'administrator'
+    and 'guest'. For example 'enable' or 'disable' accounts or change the password...etc
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\net.exe'
+        - '*\net1.exe'
+    SELECTION_4:
+        CommandLine: '* user *'
+    SELECTION_5:
+        CommandLine:
+        - "* J\xE4rjestelm\xE4nvalvoja *"
+        - '* Rendszergazda *'
+        - "* \u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\
+            \u0440 *"
+        - '* Administrateur *'
+        - '* Administrador *'
+        - "* Administrat\xF6r *"
+        - '* Administrator *'
+        - '* guest *'
+        - "* \"J\xE4rjestelm\xE4nvalvoja\" *"
+        - '* "Rendszergazda" *'
+        - "* \"\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\
+            \u0440\" *"
+        - '* "Administrateur" *'
+        - '* "Administrador" *'
+        - "* \"Administrat\xF6r\" *"
+        - '* "Administrator" *'
+        - '* "guest" *'
+        - "* 'J\xE4rjestelm\xE4nvalvoja' *"
+        - '* ''Rendszergazda'' *'
+        - "* '\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\
+            \u0440' *"
+        - '* ''Administrateur'' *'
+        - '* ''Administrador'' *'
+        - "* 'Administrat\xF6r' *"
+        - '* ''Administrator'' *'
+        - '* ''guest'' *'
+    SELECTION_6:
+        CommandLine: '*guest*'
+    SELECTION_7:
+        CommandLine: '*/active no*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
+falsepositives:
+- Some fasle positives could occure with the admin or guest account. It depends on
+    the scripts being used by the admins in your env. If you experience a lot of FP
+    you could reduce the level to medium
+id: 5b768e71-86f2-4879-b448-81061cbae951
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.trellix.com/en-sg/about/newsroom/stories/threat-labs/lockergoga-ransomware-family-used-in-targeted-attacks.html
+- https://redacted.com/blog/bianlian-ransomware-gang-gives-it-a-go/
+status: experimental
+tags:
+- attack.collection
+- attack.t1560.001
+

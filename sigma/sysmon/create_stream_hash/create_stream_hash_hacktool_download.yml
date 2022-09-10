@@ -2,6 +2,7 @@ title: Hacktool Download
 ruletype: Sigma
 author: Florian Roth
 date: 2022/08/24
+definition: 'Requirements: Sysmon config with Imphash logging activated'
 description: Detects the creation of a file on disk that has an imphash of a well-known
     hack tool
 detection:
@@ -76,6 +77,27 @@ detection:
         - 2a1bc4913cd5ecb0434df07cb675b798
         - 11083e75553baae21dc89ce8f9a195e4
         - a23d29c9e566f2fa8ffbb79267f5df80
+        - 4a07f944a83e8a7c2525efa35dd30e2f
+        - 767637c23bb42cd5d7397cf58b0be688
+        - 14c4e4c72ba075e9069ee67f39188ad8
+        - 3c782813d4afce07bbfc5a9772acdbdc
+        - 7d010c6bb6a3726f327f7e239166d127
+        - 89159ba4dd04e4ce5559f132a9964eb3
+        - 6f33f4a5fc42b8cec7314947bd13f30f
+        - 5834ed4291bdeb928270428ebbaf7604
+        - 5a8a8a43f25485e7ee1b201edcbc7a38
+        - dc7d30b90b2d8abf664fbed2b1b59894
+        - 41923ea1f824fe63ea5beb84db7a3e74
+        - 3de09703c8e79ed2ca3f01074719906b
+        - a53a02b997935fd8eedcb5f7abab9b9f
+        - e96a73c7bf33a464c510ede582318bf2
+        - 32089b8851bbf8bc2d014e9f37288c83
+        - 09D278F9DE118EF09163C6140255C690
+        - 03866661686829d806989e2fc5a72606
+        - e57401fbdadcd4571ff385ab82bd5d6d
+        - 84B763C45C0E4A3E7CA5548C710DB4EE
+        - 19584675d94829987952432e018d5056
+        - 330768a4f172e10acb6287b87289d83b
     SELECTION_4:
         Hashes:
         - '*IMPHASH=BCCA3C247B619DCD13C8CDFF5F123932*'
@@ -143,6 +165,27 @@ detection:
         - '*IMPHASH=2A1BC4913CD5ECB0434DF07CB675B798*'
         - '*IMPHASH=11083E75553BAAE21DC89CE8F9A195E4*'
         - '*IMPHASH=A23D29C9E566F2FA8FFBB79267F5DF80*'
+        - '*IMPHASH=4A07F944A83E8A7C2525EFA35DD30E2F*'
+        - '*IMPHASH=767637C23BB42CD5D7397CF58B0BE688*'
+        - '*IMPHASH=14C4E4C72BA075E9069EE67F39188AD8*'
+        - '*IMPHASH=3C782813D4AFCE07BBFC5A9772ACDBDC*'
+        - '*IMPHASH=7D010C6BB6A3726F327F7E239166D127*'
+        - '*IMPHASH=89159BA4DD04E4CE5559F132A9964EB3*'
+        - '*IMPHASH=6F33F4A5FC42B8CEC7314947BD13F30F*'
+        - '*IMPHASH=5834ED4291BDEB928270428EBBAF7604*'
+        - '*IMPHASH=5A8A8A43F25485E7EE1B201EDCBC7A38*'
+        - '*IMPHASH=DC7D30B90B2D8ABF664FBED2B1B59894*'
+        - '*IMPHASH=41923EA1F824FE63EA5BEB84DB7A3E74*'
+        - '*IMPHASH=3DE09703C8E79ED2CA3F01074719906B*'
+        - '*IMPHASH=A53A02B997935FD8EEDCB5F7ABAB9B9F*'
+        - '*IMPHASH=E96A73C7BF33A464C510EDE582318BF2*'
+        - '*IMPHASH=32089B8851BBF8BC2D014E9F37288C83*'
+        - '*IMPHASH=09D278F9DE118EF09163C6140255C690*'
+        - '*IMPHASH=03866661686829d806989e2fc5a72606*'
+        - '*IMPHASH=e57401fbdadcd4571ff385ab82bd5d6d*'
+        - '*IMPHASH=84B763C45C0E4A3E7CA5548C710DB4EE*'
+        - '*IMPHASH=19584675D94829987952432E018D5056*'
+        - '*IMPHASH=330768A4F172E10ACB6287B87289D83B*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Unknown
@@ -153,8 +196,8 @@ id: 19b041f6-e583-40dc-b842-d6fa8011493f
 level: high
 logsource:
     category: create_stream_hash
-    definition: 'Requirements: Sysmon config with Imphash logging activated'
     product: windows
+modified: 2022/09/07
 references:
 - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=90015
 status: experimental

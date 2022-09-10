@@ -73,7 +73,9 @@ detection:
     SELECTION_3:
         Channel: Security
     SELECTION_30:
-        NewValue: C:\Windows\system32\cmd.exe /q /c rmdir /s /q "C:\Users\\*
+        NewValue:
+        - C:\Windows\system32\cmd.exe /q /c rmdir /s /q "C:\Users\\*
+        - C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\\*
     SELECTION_31:
         NewValue: '*\AppData\Local\Microsoft\OneDrive\\*'
     SELECTION_32:
@@ -164,7 +166,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/08/23
+modified: 2022/09/06
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

@@ -1,0 +1,34 @@
+title: SharpEvtMute EvtMuteHook Load
+ruletype: Sigma
+author: Florian Roth
+date: 2022/09/07
+description: Detects the use of SharpEvtHook, a tool to tamper with Windows event
+    logs
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\SharpEvtMute.exe'
+    SELECTION_4:
+        Description: SharpEvtMute
+    SELECTION_5:
+        CommandLine:
+        - '*--Filter "rule *'
+        - '*--Encoded --Filter \"*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+falsepositives:
+- Unknown
+id: bedfc8ad-d1c7-4e37-a20e-e2b0dbee759c
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/bats3c/EvtMute
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.002
+

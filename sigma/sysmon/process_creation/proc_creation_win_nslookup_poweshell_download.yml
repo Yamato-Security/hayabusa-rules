@@ -1,0 +1,40 @@
+title: Nslookup PowerShell Download
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/05
+description: Detects usage of powershell in conjunction with nslookup as a mean of
+    download.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*powershell .*'
+    SELECTION_4:
+        CommandLine: '*nslookup*'
+    SELECTION_5:
+        CommandLine: '* -q=txt *'
+    SELECTION_6:
+        ParentImage: '*\powershell.exe'
+    SELECTION_7:
+        Image: '*\nslookup.exe*'
+    SELECTION_8:
+        CommandLine:
+        - '* -q=txt *'
+        - '* -querytype=txt *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
+falsepositives:
+- Unlikely
+id: 1b3b01c7-84e9-4072-86e5-fc285a41ff23
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/Alh4zr3d/status/1566489367232651264
+status: experimental
+tags:
+- attack.defense_evasion
+

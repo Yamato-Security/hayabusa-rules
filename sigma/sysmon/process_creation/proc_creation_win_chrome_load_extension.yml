@@ -2,8 +2,9 @@ title: Powershell ChromeLoader Browser Hijacker
 ruletype: Sigma
 author: Aedan Russell, frack113 (sigma)
 date: 2022/06/19
-description: Detects PowerShell spawning chrome.exe containing load-extension and
-    AppData\Local in the process command line
+description: Detects PowerShell process spawning a 'chrome.exe' process with the 'load-extension'
+    flag to start a new chrome instance with custom extensions, as seen being used
+    in 'ChromeLoader'
 detection:
     SELECTION_1:
         EventID: 1

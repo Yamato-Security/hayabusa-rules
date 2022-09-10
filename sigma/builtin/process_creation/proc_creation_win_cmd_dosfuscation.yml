@@ -2,7 +2,7 @@ title: Suspicious Dosfuscation Character in Commandline
 ruletype: Sigma
 author: frack113
 date: 2022/02/15
-description: Possible Payload Obfuscation
+description: Detects possible payload obfuscation via the commandline
 detection:
     SELECTION_1:
         EventID: 4688
@@ -24,6 +24,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/02
 references:
 - https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf
 status: experimental

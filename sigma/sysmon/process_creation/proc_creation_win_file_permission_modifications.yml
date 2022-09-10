@@ -7,7 +7,9 @@ detection:
     SELECTION_1:
         EventID: 1
     SELECTION_10:
-        CommandLine: '*\AppData\Local\Programs\Microsoft VS Code*'
+        Image: '*\AppData\Local\Programs\Microsoft VS Code*'
+    SELECTION_11:
+        Image: '*\Microsoft VS Code\Code.exe'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -33,7 +35,7 @@ detection:
         CommandLine: '*S-1-5-19:F*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
         (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8 and
-        SELECTION_9) or (SELECTION_10)))
+        SELECTION_9) or (SELECTION_10 or SELECTION_11)))
 falsepositives:
 - Users interacting with the files on their own (unlikely unless privileged users).
 - Dynatrace app
@@ -46,7 +48,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/01
+modified: 2022/09/03
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.001/T1222.001.md
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh750728(v=ws.11)

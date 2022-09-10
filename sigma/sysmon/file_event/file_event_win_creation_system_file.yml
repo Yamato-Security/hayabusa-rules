@@ -36,10 +36,8 @@ detection:
         - '*\explorer.exe'
         - '*\taskhost.exe'
         - '*\Taskmgr.exe'
-        - '*\taskmgr.exe'
         - '*\sihost.exe'
         - '*\RuntimeBroker.exe'
-        - '*\runtimebroker.exe'
         - '*\smartscreen.exe'
         - '*\dllhost.exe'
         - '*\audiodg.exe'
@@ -47,10 +45,7 @@ detection:
     SELECTION_4:
         TargetFilename:
         - C:\Windows\System32\\*
-        - C:\Windows\system32\\*
-        - C:\Windows\SysWow64\\*
         - C:\Windows\SysWOW64\\*
-        - C:\Windows\winsxs\\*
         - C:\Windows\WinSxS\\*
         - \SystemRoot\System32\\*
     SELECTION_5:
@@ -69,7 +64,9 @@ detection:
         and SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
         or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13)))
 falsepositives:
-- System processes copied outside the default folder
+- System processes copied outside their default folders for testing purposes
+- Third party software naming their software with the same names as the processes
+    mentioned here
 fields:
 - Image
 id: d5866ddf-ce8f-4aea-b28e-d96485a20d3d
@@ -77,7 +74,7 @@ level: high
 logsource:
     category: file_event
     product: windows
-modified: 2022/07/27
+modified: 2022/09/07
 status: test
 tags:
 - attack.defense_evasion

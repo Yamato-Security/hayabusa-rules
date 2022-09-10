@@ -2,7 +2,7 @@ title: GlobalFlags Registry Persistence Mechanisms
 ruletype: Sigma
 author: Karneades, Jonhnathan Ribeiro
 date: 2018/04/11
-description: Detects persistence using GlobalFlags in image file executiobn options
+description: Detects persistence using GlobalFlags in image file execution options
 detection:
     SELECTION_1:
         EventID: 4657
@@ -14,7 +14,7 @@ detection:
     SELECTION_3:
         Channel: Security
     SELECTION_4:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion*'
+        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\\*'
     SELECTION_5:
         TargetObject: '*\Image File Execution Options\\*'
     SELECTION_6:
@@ -35,7 +35,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
+modified: 2022/09/07
 references:
 - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
 status: test

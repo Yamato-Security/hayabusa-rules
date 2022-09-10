@@ -13,25 +13,25 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        CommandLine: '*\regasm.exe'
+        CommandLine: '*regasm.exe'
     SELECTION_11:
         NewProcessName: '*\regsvr32.exe'
     SELECTION_12:
-        CommandLine: '*\regsvr32.exe'
+        CommandLine: '*regsvr32.exe'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
         NewProcessName: '*\WerFault.exe'
     SELECTION_4:
-        CommandLine: '*\WerFault.exe'
+        CommandLine: '*WerFault.exe'
     SELECTION_5:
         NewProcessName: '*\rundll32.exe'
     SELECTION_6:
-        CommandLine: '*\rundll32.exe'
+        CommandLine: '*rundll32.exe'
     SELECTION_7:
         NewProcessName: '*\regsvcs.exe'
     SELECTION_8:
-        CommandLine: '*\regsvcs.exe'
+        CommandLine: '*regsvcs.exe'
     SELECTION_9:
         NewProcessName: '*\regasm.exe'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
@@ -47,7 +47,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/09/01
+modified: 2022/09/07
 references:
 - https://blog.malwarebytes.com/malwarebytes-news/2020/10/kraken-attack-abuses-wer-service/
 - https://www.cobaltstrike.com/help-opsec

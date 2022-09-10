@@ -88,6 +88,10 @@ detection:
         CommandLine: '*http*'
     SELECTION_47:
         CommandLine: '*shell32.dll,Control_RunDLL desk.cpl,screensaver,@screensaver*'
+    SELECTION_48:
+        ParentProcessName: C:\Windows\System32\control.exe
+    SELECTION_49:
+        ParentCommandLine: '*.cpl*'
     SELECTION_5:
         CommandLine: '*url.dll*'
     SELECTION_6:
@@ -108,7 +112,7 @@ detection:
         or (SELECTION_33 and SELECTION_34) or (SELECTION_35 and SELECTION_36) or (SELECTION_37
         and SELECTION_38) or (SELECTION_39 and SELECTION_40) or (SELECTION_41 and
         SELECTION_42 and SELECTION_43) or (SELECTION_44 and SELECTION_45 and SELECTION_46))
-        and  not (SELECTION_47))
+        and  not ((SELECTION_47) or (SELECTION_48 and SELECTION_49)))
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
     environment
@@ -117,7 +121,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/19
+modified: 2022/08/30
 references:
 - http://www.hexacorn.com/blog/2017/05/01/running-programs-via-proxy-jumping-on-a-edr-bypass-trampoline/
 - https://twitter.com/Hexacorn/status/885258886428725250

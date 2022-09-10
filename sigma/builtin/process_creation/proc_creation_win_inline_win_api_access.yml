@@ -1,0 +1,77 @@
+title: Accessing WinAPI Via CommandLine
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/06
+description: Detects the use of WinAPI Functions via the commandline as seen used
+    by threat actors via the tool winapiexec
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '* WaitForSingleObject *'
+        - '* QueueUserApc *'
+        - '* RtlCreateUserThread *'
+        - '* OpenProcess *'
+        - '* VirtualAlloc *'
+        - '* VirtualFree *'
+        - '* WriteProcessMemory *'
+        - '* CreateUserThread *'
+        - '* CloseHandle *'
+        - '* GetDelegateForFunctionPointer *'
+        - '* CreateThread *'
+        - '* memcpy *'
+        - '* LoadLibrary *'
+        - '* GetModuleHandle *'
+        - '* GetProcAddress *'
+        - '* VirtualProtect *'
+        - '* FreeLibrary *'
+        - '* ReadProcessMemory *'
+        - '* CreateRemoteThread *'
+        - '* AdjustTokenPrivileges *'
+        - '* WriteInt32 *'
+        - '* OpenThreadToken *'
+        - '* PtrToString *'
+        - '* FreeHGlobal *'
+        - '* ZeroFreeGlobalAllocUnicode *'
+        - '* OpenProcessToken *'
+        - '* GetTokenInformation *'
+        - '* SetThreadToken *'
+        - '* ImpersonateLoggedOnUser *'
+        - '* RevertToSelf *'
+        - '* GetLogonSessionData *'
+        - '* CreateProcessWithToken *'
+        - '* DuplicateTokenEx *'
+        - '* OpenWindowStation *'
+        - '* OpenDesktop *'
+        - '* MiniDumpWriteDump *'
+        - '* AddSecurityPackage *'
+        - '* EnumerateSecurityPackages *'
+        - '* GetProcessHandle *'
+        - '* DangerousGetHandle *'
+        - '* kernel32 *'
+        - '* Advapi32 *'
+        - '* msvcrt *'
+        - '* ntdll *'
+        - '* user32 *'
+        - '* secur32 *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unknown
+id: ba3f5c1b-6272-4119-9dbd-0bc8d21c2702
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/m417z/status/1566674631788007425
+related:
+-   id: 03d83090-8cba-44a0-b02f-0b756a050306
+    type: derived
+status: experimental
+tags:
+- attack.execution
+- attack.t1106
+

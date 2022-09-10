@@ -2,8 +2,8 @@ title: Browser Started with Remote Debugging
 ruletype: Sigma
 author: pH-T
 date: 2022/07/27
-description: Detects starting browser with remote debugging flag, may be used for
-    browser injection attacks
+description: Detects browsers starting with the '--remote-debugging' flag. Which is
+    a technique often used to perform browser injection attacks
 detection:
     SELECTION_1:
         EventID: 1
