@@ -12,7 +12,7 @@ detection:
     SELECTION_3:
         EventType: SetValue
     SELECTION_4:
-        TargetObject: HKLM\SOFTWARE\Policies\Microsoft\Windows\ScriptedDiagnostics\TurnOffCheck
+        TargetObject: '*\Policies\Microsoft\Windows\ScriptedDiagnostics\TurnOffCheck'
     SELECTION_5:
         Details: DWORD (0x00000001)
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
@@ -23,6 +23,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
+modified: 2022/09/09
 references:
 - https://twitter.com/wdormann/status/1537075968568877057?s=20&t=0lr18OAnmAGoGpma6grLUw
 status: experimental

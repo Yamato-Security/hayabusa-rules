@@ -1,0 +1,37 @@
+title: UAC Bypass via ICMLuaUtil
+ruletype: Sigma
+author: Florian Roth
+date: 2022/09/13
+description: Detects the pattern of UAC Bypass using ICMLuaUtil Elevated COM interface
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\dllhost.exe'
+    SELECTION_4:
+        ParentCommandLine:
+        - /Processid:{3E5FC7F9-9A51-4367-9063-A120244FBEC7}
+        - /Processid:{D2E7041B-2927-42FB-8E9F-7CE93B6DC937}
+    SELECTION_5:
+        Image: '*\WerFault.exe'
+    SELECTION_6:
+        OriginalFileName: WerFault.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5 or SELECTION_6))
+falsepositives:
+- Unknown
+id: 49f2f17b-b4c8-4172-a68b-d5bf95d05130
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/uac-bypass-via-icmluautil-elevated-com-interface.html
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.privilege_escalation
+- attack.t1548.002
+

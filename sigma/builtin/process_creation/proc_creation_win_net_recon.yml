@@ -27,11 +27,13 @@ detection:
     SELECTION_6:
         CommandLine:
         - '*domain admins*'
-        - '* administrators*'
-        - '* administrateurs*'
+        - '* administrator*'
+        - '* administrateur*'
         - '*enterprise admins*'
         - '*Exchange Trusted Subsystem*'
         - '*Remote Desktop Users*'
+        - "*Utilisateurs du Bureau \xE0 distance*"
+        - '*Usuarios de escritorio remoto*'
         - '* /do*'
     SELECTION_7:
         CommandLine: '* accounts *'
@@ -50,7 +52,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/02
+modified: 2022/09/09
 references:
 - https://redcanary.com/blog/how-one-hospital-thwarted-a-ryuk-ransomware-outbreak/
 - https://thedfirreport.com/2020/10/18/ryuk-in-5-hours/

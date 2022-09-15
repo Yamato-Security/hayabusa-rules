@@ -13,8 +13,8 @@ detection:
         EventType: Setvalue
     SELECTION_4:
         TargetObject:
-        - HKLM\SOFTWARE\Policies\Microsoft\Windows NT\SystemRestore*
-        - HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore*
+        - '*\Policies\Microsoft\Windows NT\SystemRestore*'
+        - '*\Microsoft\Windows NT\CurrentVersion\SystemRestore*'
     SELECTION_5:
         TargetObject:
         - '*DisableConfig'
@@ -30,7 +30,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/06/26
+modified: 2022/09/09
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-9---disable-system-restore-through-registry
 status: experimental

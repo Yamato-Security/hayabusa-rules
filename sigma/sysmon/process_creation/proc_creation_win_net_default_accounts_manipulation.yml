@@ -26,6 +26,7 @@ detection:
         - "* Administrat\xF6r *"
         - '* Administrator *'
         - '* guest *'
+        - '* DefaultAccount *'
         - "* \"J\xE4rjestelm\xE4nvalvoja\" *"
         - '* "Rendszergazda" *'
         - "* \"\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\
@@ -35,6 +36,7 @@ detection:
         - "* \"Administrat\xF6r\" *"
         - '* "Administrator" *'
         - '* "guest" *'
+        - '* "DefaultAccount" *'
         - "* 'J\xE4rjestelm\xE4nvalvoja' *"
         - '* ''Rendszergazda'' *'
         - "* '\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\
@@ -44,6 +46,7 @@ detection:
         - "* 'Administrat\xF6r' *"
         - '* ''Administrator'' *'
         - '* ''guest'' *'
+        - '* ''DefaultAccount'' *'
     SELECTION_6:
         CommandLine: '*guest*'
     SELECTION_7:
@@ -59,9 +62,11 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/09
 references:
 - https://www.trellix.com/en-sg/about/newsroom/stories/threat-labs/lockergoga-ransomware-family-used-in-targeted-attacks.html
 - https://redacted.com/blog/bianlian-ransomware-gang-gives-it-a-go/
+- https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/
 status: experimental
 tags:
 - attack.collection

@@ -24,9 +24,7 @@ detection:
     SELECTION_4:
         Image: '*\certutil.exe'
     SELECTION_5:
-        CommandLine:
-        - '*URL*'
-        - '*ping*'
+        CommandLine: '*ping*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
         SELECTION_5)))
 falsepositives:
@@ -40,7 +38,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/04
+modified: 2022/09/12
 references:
 - https://twitter.com/JohnLaTwC/status/835149808817991680
 - https://blogs.technet.microsoft.com/pki/2006/11/30/basic-crl-checking-with-certutil/

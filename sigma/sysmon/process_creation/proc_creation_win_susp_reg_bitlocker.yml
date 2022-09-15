@@ -2,7 +2,8 @@ title: Suspicious Reg Add BitLocker
 ruletype: Sigma
 author: frack113
 date: 2021/11/15
-description: Suspicious add key for BitLocker
+description: Detects suspicious addition to BitLocker related registry keys via the
+    reg.exe utility
 detection:
     SELECTION_1:
         EventID: 1
@@ -31,13 +32,13 @@ detection:
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
         and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
-- Unknown
+- Unlikely
 id: 0e0255bf-2548-47b8-9582-c0955c9283f5
-level: medium
+level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/05
+modified: 2022/09/09
 references:
 - https://thedfirreport.com/2021/11/15/exchange-exploit-leads-to-domain-wide-ransomware/
 status: experimental

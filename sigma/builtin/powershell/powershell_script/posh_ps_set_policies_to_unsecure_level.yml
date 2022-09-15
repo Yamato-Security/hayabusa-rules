@@ -22,6 +22,7 @@ detection:
         ScriptBlockText:
         - '*(New-Object System.Net.WebClient).DownloadString(''https://community.chocolatey.org/install.ps1'')*'
         - '*(New-Object System.Net.WebClient).DownloadString(''https://chocolatey.org/install.ps1'')*'
+        - '*\AppData\Roaming\Code\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         (SELECTION_5 or SELECTION_6))
 falsepositives:
@@ -32,7 +33,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
-modified: 2022/02/23
+modified: 2022/09/10
 references:
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.1
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1

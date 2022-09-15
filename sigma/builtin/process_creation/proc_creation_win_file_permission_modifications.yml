@@ -7,9 +7,9 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        NewProcessName: '*\AppData\Local\Programs\Microsoft VS Code*'
+        CommandLine: '*\AppData\Local\Programs\Microsoft VS Code*'
     SELECTION_11:
-        NewProcessName: '*\Microsoft VS Code\Code.exe'
+        ParentProcessName: '*\Microsoft VS Code\Code.exe'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -48,7 +48,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/03
+modified: 2022/09/13
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.001/T1222.001.md
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh750728(v=ws.11)

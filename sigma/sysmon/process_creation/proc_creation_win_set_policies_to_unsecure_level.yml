@@ -18,7 +18,13 @@ detection:
         - '*Unrestricted*'
         - '*bypass*'
         - '*RemoteSigned*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_5:
+        CommandLine:
+        - '*C:\Program Files*'
+        - '*C:\ProgramData*'
+        - '*\AppData\Roaming\Code\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Administrator script
 id: 87e3c4e8-a6a8-4ad9-bb4f-46e7ff99a180
@@ -26,7 +32,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/02/23
+modified: 2022/09/10
 references:
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.1
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1

@@ -13,6 +13,10 @@ detection:
         TargetObject:
         - '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-FileInfoMinifilter*'
         - '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-ASN1\\*'
+    SELECTION_12:
+        Image: ''
+    SELECTION_13:
+        Image|re: ^$
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -31,7 +35,7 @@ detection:
         Image: '*\TiWorker.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
         SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11)))
+        or (SELECTION_10 and SELECTION_11) or ((SELECTION_12 or SELECTION_13))))
 falsepositives:
 - Legitimate administrators disabling specific event log for troubleshooting
 id: 2f78da12-f7c7-430b-8b19-a28f269b77a3
@@ -39,7 +43,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/08/26
+modified: 2022/09/08
 references:
 - https://twitter.com/WhichbufferArda/status/1543900539280293889
 - https://github.com/DebugPrivilege/CPP/blob/c39d365617dbfbcb01fffad200d52b6239b2918c/Windows%20Defender/RestoreDefenderConfig.cpp

@@ -21,6 +21,7 @@ detection:
         ParentImage:
         - '*\WebEx\WebexHost.exe'
         - '*\thor\thor64.exe'
+        - '*\veam.backup.shell.exe'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
         or SELECTION_5))
 falsepositives:
@@ -31,7 +32,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/12
+modified: 2022/09/12
 references:
 - https://www.acunetix.com/blog/articles/windows-short-8-3-filenames-web-security-problem/
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc959352(v=technet.10)?redirectedfrom=MSDN

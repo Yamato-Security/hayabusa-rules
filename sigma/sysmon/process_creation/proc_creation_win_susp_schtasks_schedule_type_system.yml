@@ -1,0 +1,47 @@
+title: Suspicious Schtasks Schedule Type With High Privileges
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/31
+description: Detects scheduled task creations or modification to be run with high
+    privileges on a suspicious schedule type
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\schtasks.exe'
+    SELECTION_4:
+        OriginalFileName: schtasks.exe
+    SELECTION_5:
+        CommandLine:
+        - '* ONLOGON *'
+        - '* ONSTART *'
+        - '* ONCE *'
+        - '* ONIDLE *'
+    SELECTION_6:
+        CommandLine:
+        - '*NT AUT*'
+        - '* SYSTEM*'
+        - '*HIGHEST*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
+falsepositives:
+- Some installers were seen using this method of creation unfortunately. Filter them
+    in your environment
+id: 7a02e22e-b885-4404-b38b-1ddc7e65258a
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks-change
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks-create
+related:
+-   id: 24c8392b-aa3c-46b7-a545-43f71657fe98
+    type: similar
+status: experimental
+tags:
+- attack.execution
+- attack.t1053.005
+
