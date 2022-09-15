@@ -2,9 +2,8 @@ title: Disable Important Scheduled Task
 ruletype: Sigma
 author: frack113, Nasreddine Bencherchali
 date: 2021/12/26
-description: Adversaries may stop services or processes in order to conduct Data Destruction
-    or Data Encrypted for Impact on the data stores of services like Exchange, SQL
-    Server...etc.
+description: Detects when adversaries stop services or processes by disabling their
+    respective schdueled tasks in order to conduct data destructive activities
 detection:
     SELECTION_1:
         EventID: 4688
@@ -20,13 +19,13 @@ detection:
         CommandLine: '*/disable*'
     SELECTION_7:
         CommandLine:
-        - '*Microsoft\Windows\SystemRestore\SR*'
-        - '*Microsoft\Windows\Windows Defender\\*'
-        - '*Microsoft\Windows\BitLocker*'
-        - '*Microsoft\Windows\WindowsBackup\\*'
-        - '*Microsoft\Windows\WindowsUpdate\\*'
-        - '*Microsoft\Windows\UpdateOrchestrator\\*'
-        - '*Windows\ExploitGuard*'
+        - '*\Windows\SystemRestore\SR*'
+        - '*\Windows\Windows Defender\\*'
+        - '*\Windows\BitLocker*'
+        - '*\Windows\WindowsBackup\\*'
+        - '*\Windows\WindowsUpdate\\*'
+        - '*\Windows\UpdateOrchestrator\\*'
+        - '*\Windows\ExploitGuard*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
         and SELECTION_6 and SELECTION_7)
 falsepositives:

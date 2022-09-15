@@ -1,0 +1,34 @@
+title: Wevtutil Recon
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/09
+description: Detects usage of the wevtutil utility to perform reconnaissance
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\wevtutil.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* qe *'
+        - '* query-events *'
+    SELECTION_5:
+        CommandLine:
+        - '*Microsoft-Windows-TerminalServices-LocalSessionManager/Operational*'
+        - '*Microsoft-Windows-Terminal-Services-RemoteConnectionManager/Operational*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Legitmate usage of the utility by administrators to query the event log
+id: beaa66d6-aa1b-4e3c-80f5-e0145369bfaf
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
+status: experimental
+tags:
+- attack.discovery
+

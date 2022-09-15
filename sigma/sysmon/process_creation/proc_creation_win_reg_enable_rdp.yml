@@ -20,6 +20,7 @@ detection:
         - '*TSAdvertise*'
         - '*AllowTSConnections*'
         - '*fSingleSessionPerUser*'
+        - '*fDenyTSConnections*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -27,7 +28,7 @@ detection:
     SELECTION_4:
         CommandLine: '* add *'
     SELECTION_5:
-        CommandLine: '*\SYSTEM\CurrentControlSet\Control\Terminal Server*'
+        CommandLine: '*\CurrentControlSet\Control\Terminal Server*'
     SELECTION_6:
         CommandLine: '*REG_DWORD*'
     SELECTION_7:
@@ -46,7 +47,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/06
+modified: 2022/09/09
 references:
 - https://thedfirreport.com/2022/02/21/qbot-and-zerologon-lead-to-full-domain-compromise/
 status: experimental

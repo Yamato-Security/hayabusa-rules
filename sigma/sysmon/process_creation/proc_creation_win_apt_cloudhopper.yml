@@ -2,14 +2,16 @@ title: WMIExec VBS Script
 ruletype: Sigma
 author: Florian Roth
 date: 2017/04/07
-description: Detects suspicious file execution by wscript and cscript
+description: Detects wmiexec vbs version execution by wscript or cscript
 detection:
     SELECTION_1:
         EventID: 1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Image: '*\cscript.exe'
+        Image:
+        - '*\cscript.exe'
+        - '*\wscript.exe'
     SELECTION_4:
         CommandLine: '*.vbs*'
     SELECTION_5:
@@ -25,9 +27,9 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/09/08
 references:
-- https://www.pwc.co.uk/cyber-security/pdf/cloud-hopper-annex-b-final.pdf
+- https://web.archive.org/web/20180725233601/https://www.pwc.co.uk/cyber-security/pdf/cloud-hopper-annex-b-final.pdf
 status: test
 tags:
 - attack.execution

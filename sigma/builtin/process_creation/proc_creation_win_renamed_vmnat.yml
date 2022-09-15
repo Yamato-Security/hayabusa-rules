@@ -1,0 +1,35 @@
+title: Renamed or Portable Vmnat.exe
+ruletype: Sigma
+author: elhoim
+date: 2022/09/09
+description: Detects renamed vmnat.exe or portable version that can be used for DLL
+    side-loading
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        OriginalFileName: vmnat.exe
+    SELECTION_4:
+        NewProcessName: '*vmnat.exe'
+    SELECTION_5:
+        NewProcessName:
+        - C:\Program Files (x86)\VMware\VMware Workstation\vmnat.exe
+        - C:\Windows\SysWOW64\vmnat.exe
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5)))
+falsepositives:
+- Unknown
+id: 7b4f794b-590a-4ad4-ba18-7964a2832205
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/malmoeb/status/1525901219247845376
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1574.002
+

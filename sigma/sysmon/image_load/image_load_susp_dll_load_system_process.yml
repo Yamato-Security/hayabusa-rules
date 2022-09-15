@@ -14,7 +14,6 @@ detection:
     SELECTION_4:
         ImageLoaded:
         - '*\Users\Public\\*'
-        - '*\Desktop\\*'
         - '*\Downloads\\*'
         - '*\AppData\Local\Temp\\*'
         - '*C:\PerfLogs\\*'
@@ -33,7 +32,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/09/03
+modified: 2022/09/10
 references:
 - https://github.com/hackerhouse-opensource/iscsicpl_bypassUAC (Idea)
 status: experimental

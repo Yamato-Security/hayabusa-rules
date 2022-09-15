@@ -410,15 +410,11 @@ detection:
     SELECTION_5:
         ImageLoaded: C:\Windows\SystemTemp\\*
     SELECTION_6:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    SELECTION_7:
         ImageLoaded: C:\Program Files\Common Files\microsoft shared\ClickToRun\AppVPolicy.dll
-    SELECTION_8:
+    SELECTION_7:
         Image: C:\Program Files\Common Files\microsoft shared\ClickToRun\OfficeClickToRun.exe
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+        or (SELECTION_5) or (SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLLs mentioned in this
     rule
@@ -427,7 +423,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2022/08/24
+modified: 2022/09/11
 references:
 - https://hijacklibs.net/
 - https://blog.cyble.com/2022/07/21/qakbot-resurfaces-with-new-playbook/

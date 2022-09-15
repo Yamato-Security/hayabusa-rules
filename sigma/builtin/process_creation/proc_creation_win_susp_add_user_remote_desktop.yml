@@ -10,15 +10,20 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine: '*net *'
+        CommandLine: '*localgroup *'
     SELECTION_4:
-        CommandLine: '*localgroup*'
+        CommandLine: '* /add*'
     SELECTION_5:
-        CommandLine: '*Remote Desktop Users*'
+        CommandLine: '*Add-LocalGroupMember *'
     SELECTION_6:
-        CommandLine: '*/add*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+        CommandLine: '* -Group *'
+    SELECTION_7:
+        CommandLine:
+        - '*Remote Desktop Users*'
+        - "*Utilisateurs du Bureau \xE0 distance*"
+        - '*Usuarios de escritorio remoto*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)) and SELECTION_7)
 falsepositives:
 - Administrative activity
 fields:
@@ -29,13 +34,17 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/09
 references:
 - https://www.microsoft.com/security/blog/2021/11/16/evolving-trends-in-iranian-threat-actor-activity-mstic-presentation-at-cyberwarcon-2021/
+related:
+-   id: ad720b90-25ad-43ff-9b5e-5c841facc8e5
+    type: similar
 status: experimental
 tags:
 - attack.persistence
+- attack.lateral_movement
 - attack.t1133
 - attack.t1136.001
-- attack.lateral_movement
 - attack.t1021.001
 

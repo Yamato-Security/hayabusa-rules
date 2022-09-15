@@ -1,0 +1,45 @@
+title: Node.exe Process Abuse
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/09
+description: Detects the execution node.exe which is shipped with multiple softwares
+    such as VMware, Adobe...etc. In order to execute arbitrary code. For example to
+    establish reverse shell as seen in Log4j attacks...etc
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\node.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* -e *'
+        - '* --eval *'
+    SELECTION_5:
+        CommandLine: '*.exec(*'
+    SELECTION_6:
+        CommandLine: '*net.socket*'
+    SELECTION_7:
+        CommandLine: '*.connect*'
+    SELECTION_8:
+        CommandLine: '*child_process*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7 and SELECTION_8)
+falsepositives:
+- Unlikely
+id: 6640f31c-01ad-49b5-beb5-83498a5cd8bd
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
+- https://www.sprocketsecurity.com/resources/crossing-the-log4j-horizon-a-vulnerability-with-no-return
+- https://www.rapid7.com/blog/post/2022/01/18/active-exploitation-of-vmware-horizon-servers/
+- https://nodejs.org/api/cli.html
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1127
+
