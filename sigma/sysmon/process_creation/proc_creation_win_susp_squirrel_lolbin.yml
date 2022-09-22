@@ -11,6 +11,11 @@ detection:
     SELECTION_11:
         CommandLine: '*C:\Users\\*'
     SELECTION_12:
+        CommandLine: '*\AppData\Local\GitHubDesktop\Update.exe --processStartAndWait
+            GitHubDesktop.exe*'
+    SELECTION_13:
+        CommandLine: '*C:\Users\\*'
+    SELECTION_14:
         CommandLine: '*\AppData\Local\Microsoft\Teams\Update.exe" --processStart "Teams.exe"*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -33,7 +38,7 @@ detection:
         CommandLine: '*C:\Users\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
         SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 or SELECTION_9
-        and SELECTION_10 or SELECTION_11 and SELECTION_12)))
+        and SELECTION_10 or SELECTION_11 and SELECTION_12 or SELECTION_13 and SELECTION_14)))
 falsepositives:
 - 1Clipboard
 - Beaker Browser
@@ -72,7 +77,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/23
+modified: 2022/09/20
 references:
 - http://www.hexacorn.com/blog/2019/03/30/sqirrel-packages-manager-as-a-lolbin-a-k-a-many-electron-apps-are-lolbins-by-default/
 - http://www.hexacorn.com/blog/2018/08/16/squirrel-as-a-lolbin/

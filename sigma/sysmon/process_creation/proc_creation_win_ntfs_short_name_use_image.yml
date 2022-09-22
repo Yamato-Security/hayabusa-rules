@@ -33,7 +33,11 @@ detection:
         ParentImage:
         - '*\WebEx\WebexHost.exe'
         - '*\thor\thor64.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+        - '*-installer.exe'
+    SELECTION_5:
+        Image: '*\vcredi*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
+        or SELECTION_5))
 falsepositives:
 - Unknown
 id: 3ef5605c-9eb9-47b0-9a71-b727e6aa5c3b
@@ -41,7 +45,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/12
+modified: 2022/09/18
 references:
 - https://www.acunetix.com/blog/articles/windows-short-8-3-filenames-web-security-problem/
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc959352(v=technet.10)?redirectedfrom=MSDN

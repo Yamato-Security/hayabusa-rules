@@ -7,13 +7,29 @@ description: Adversaries may attempt to get a listing of services running on rem
 detection:
     SELECTION_1:
         EventID: 3
+    SELECTION_10:
+        DestinationIp: 127.0.0.1
+    SELECTION_11:
+        SourceIp: 127.0.0.1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         Initiated: 'true'
     SELECTION_4:
         Image: '*python*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_5:
+        ParentImage: C:\ProgramData\Anaconda3\Scripts\conda.exe
+    SELECTION_6:
+        CommandLine: '*C:\ProgramData\Anaconda3\Scripts\conda-script.py*'
+    SELECTION_7:
+        CommandLine: '*update*'
+    SELECTION_8:
+        ParentImage: C:\ProgramData\Anaconda3\python.exe
+    SELECTION_9:
+        CommandLine: '*C:\ProgramData\Anaconda3\Scripts\jupyter-notebook-script.py*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Legitimate python script
 id: bef0bc5a-b9ae-425d-85c6-7b2d705980c6
@@ -21,7 +37,7 @@ level: medium
 logsource:
     category: network_connection
     product: windows
-modified: 2022/08/12
+modified: 2022/09/20
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1046/T1046.md#atomic-test-4---port-scan-using-python
 - https://pypi.org/project/scapy/

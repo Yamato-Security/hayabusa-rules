@@ -17,7 +17,12 @@ detection:
         - C:\Windows\\*
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_5:
+        Image: '*\AppData\Local\JetBrains\Toolbox\bin\7z.exe'
+    SELECTION_6:
+        TargetFilename: '*\JetBrains\apps\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Operations performed through Windows SCCM or equivalent
 - Read only access list authority
@@ -26,7 +31,7 @@ level: medium
 logsource:
     category: file_event
     product: windows
-modified: 2021/12/03
+modified: 2022/09/20
 references:
 - https://isc.sans.edu/forums/diary/Desktopini+as+a+postexploitation+tool/25912/
 status: test

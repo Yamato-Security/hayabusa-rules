@@ -11,8 +11,7 @@ detection:
         NewValue:
         - '*\Microsoft.NET\Primary Interop Assemblies\Microsoft.mshtml.dll*'
         - '*<\Microsoft.mshtml,fileVersion=*'
-        - '*FL_Microsoft_mshtml_dll_____X86.*'
-        - '*Microsoft_mshtml_dll_1_____X86.*'
+        - '*_mshtml_dll_*'
         - '*<\Microsoft.mshtml,culture=*'
     SELECTION_2:
         OperationType:
@@ -25,13 +24,12 @@ detection:
         TargetObject: '*Software\Microsoft\Windows\CurrentVersion*'
     SELECTION_6:
         NewValue:
-        - '*vbscript*'
-        - '*jscript*'
-        - '*mshtml*'
+        - '*vbscript:*'
+        - '*jscript:*'
+        - '*mshtml,*'
         - '*RunHTMLApplication*'
         - '*Execute(*'
         - '*CreateObject*'
-        - '*RegRead*'
         - '*window.close*'
     SELECTION_7:
         TargetObject: '*Software\Microsoft\Windows\CurrentVersion\Run*'
@@ -49,7 +47,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
+modified: 2022/09/19
 references:
 - https://www.microsoft.com/security/blog/2021/03/04/goldmax-goldfinder-sibot-analyzing-nobelium-malware/
 status: experimental

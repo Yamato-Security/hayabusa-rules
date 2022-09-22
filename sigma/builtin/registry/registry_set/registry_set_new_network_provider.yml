@@ -23,8 +23,10 @@ detection:
         - '*\System\CurrentControlSet\Services\WebClient\NetworkProvider*'
         - '*\System\CurrentControlSet\Services\LanmanWorkstation\NetworkProvider*'
         - '*\System\CurrentControlSet\Services\RDPNP\NetworkProvider*'
+    SELECTION_8:
+        NewProcessName: C:\Windows\System32\poqexec.exe
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Other legitimate network providers used and not filtred in this rule
 id: 0442defa-b4a2-41c9-ae2c-ea7042fc4701
@@ -32,6 +34,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
+modified: 2022/09/18
 references:
 - https://docs.microsoft.com/en-us/troubleshoot/windows-client/deployment/network-provider-settings-removed-in-place-upgrade
 - https://github.com/gtworek/PSBits/tree/master/PasswordStealing/NPPSpy

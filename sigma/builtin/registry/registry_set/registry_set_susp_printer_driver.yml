@@ -22,8 +22,12 @@ detection:
         NewValue: (Empty)
     SELECTION_8:
         TargetObject: '*\CutePDF Writer v4.0\\*'
+    SELECTION_9:
+        TargetObject:
+        - '*\VNC Printer (PS)\\*'
+        - '*\VNC Printer (UD)\\*'
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8)))
+        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9)))
 falsepositives:
 - Alerts on legitimate printer drivers that do not set any more details in the Manufacturer
     value
@@ -32,7 +36,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
+modified: 2022/09/21
 references:
 - https://twitter.com/SBousseaden/status/1410545674773467140
 status: test

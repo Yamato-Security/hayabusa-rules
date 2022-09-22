@@ -1,0 +1,33 @@
+title: Suspicious File Event With Teams Objects
+ruletype: Sigma
+author: '@SerkinValery'
+date: 2022/09/16
+description: Detects an access to authentication tokens and accounts of Microsoft
+    Teams desktop application.
+detection:
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename:
+        - '*\Microsoft\Teams\Cookies*'
+        - '*\Microsoft\Teams\Local Storage\leveldb*'
+    SELECTION_4:
+        Image: '*\Microsoft\Teams\current\Teams.exe*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: 6902955a-01b7-432c-b32a-6f5f81d8f624
+level: high
+logsource:
+    category: file_event
+    product: windows
+references:
+- https://www.bleepingcomputer.com/news/security/microsoft-teams-stores-auth-tokens-as-cleartext-in-windows-linux-macs/
+- https://www.vectra.ai/blogpost/undermining-microsoft-teams-security-by-mining-tokens
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1528
+

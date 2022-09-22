@@ -8,11 +8,14 @@ detection:
     SELECTION_1:
         EventID: 4657
     SELECTION_10:
-        NewProcessName: C:\Windows\Microsoft.NET\Framework\\*
+        NewProcessName: C:\Windows\Microsoft.NET\Framework*
     SELECTION_11:
         NewProcessName: '*\ngen.exe'
     SELECTION_12:
-        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{B66B135D-DA06-4FC4-95F8-7458E1D10129}*'
+        TargetObject:
+        - '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{B66B135D-DA06-4FC4-95F8-7458E1D10129}*'
+        - '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\Windows\.NET
+            Framework\.NET Framework NGEN*'
     SELECTION_13:
         NewProcessName:
         - C:\Program Files\Microsoft Office\root\Integration\Integrator.exe
@@ -49,7 +52,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/08/24
+modified: 2022/09/16
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://labs.f-secure.com/blog/scheduled-task-tampering/

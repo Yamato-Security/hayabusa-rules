@@ -32,6 +32,7 @@ detection:
         - '*\Windows\Temp\\*'
         - '*\AppData\Local\\*'
         - '*%temp%*'
+        - '*%tmp%*'
         - '*%ProgramData%*'
         - '*%appdata%*'
         - '*%comspec%*'
@@ -48,7 +49,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/24
+modified: 2022/09/13
 references:
 - https://thedfirreport.com/2020/10/08/ryuks-return/
 - https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/ransomware-hive-conti-avoslocker

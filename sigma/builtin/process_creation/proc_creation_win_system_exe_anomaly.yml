@@ -66,7 +66,9 @@ detection:
     SELECTION_5:
         NewProcessName: '*\SystemRoot\System32\\*'
     SELECTION_6:
-        NewProcessName: C:\Windows\explorer.exe
+        NewProcessName:
+        - C:\Windows\explorer.exe
+        - C:\Program Files\PowerShell\7\pwsh.exe
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
         or SELECTION_5 or SELECTION_6))
 falsepositives:
@@ -80,7 +82,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/07
+modified: 2022/09/20
 references:
 - https://twitter.com/GelosSnake/status/934900723426439170
 status: experimental

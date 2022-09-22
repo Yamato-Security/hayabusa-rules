@@ -19,6 +19,7 @@ detection:
         - '*%AppData%*'
         - '*%LocalAppData%*'
         - '*%Temp%*'
+        - '*%tmp%*'
         - '*\AppData\\*'
         - '*\Temp\\*'
         - '*\Users\Public\\*'
@@ -31,6 +32,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/13
 references:
 - https://www.group-ib.com/resources/threat-research/red-curl-2.html
 status: experimental

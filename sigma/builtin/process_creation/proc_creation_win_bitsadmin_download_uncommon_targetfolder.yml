@@ -19,6 +19,7 @@ detection:
         CommandLine:
         - '*C:\Windows\Temp\\*'
         - '*%temp%*'
+        - '*%tmp%*'
         - '*C:\ProgramData\\*'
         - '*%ProgramData%*'
         - '*\AppData\Local\\*'
@@ -34,6 +35,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/13
 references:
 - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
 - https://isc.sans.edu/diary/22264

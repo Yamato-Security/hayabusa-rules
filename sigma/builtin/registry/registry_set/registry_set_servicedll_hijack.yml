@@ -9,6 +9,8 @@ detection:
         EventID: 4657
     SELECTION_10:
         NewValue: '%%systemroot%%\system32\ntdsa.dll'
+    SELECTION_11:
+        NewProcessName: C:\Windows\System32\poqexec.exe
     SELECTION_2:
         OperationType:
         - Existing registry value modified
@@ -28,7 +30,7 @@ detection:
         TargetObject: '*\CurrentControlSet\Services\NTDS\Parameters\ServiceDll'
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
         SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10)))
+        and SELECTION_10) or (SELECTION_11)))
 falsepositives:
 - Administrative scripts
 - Installation of a service
@@ -37,7 +39,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/08/10
+modified: 2022/09/20
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md#atomic-test-4---tinyturla-backdoor-service-w64time
 - https://www.hexacorn.com/blog/2013/09/19/beyond-good-ol-run-key-part-4/

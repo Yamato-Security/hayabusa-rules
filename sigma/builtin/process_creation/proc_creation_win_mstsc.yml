@@ -9,6 +9,10 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
+        CommandLine: '* /g*'
+    SELECTION_11:
+        CommandLine: '* /u*'
+    SELECTION_12:
         CommandLine: '* /p*'
     SELECTION_2:
         Channel: Security
@@ -19,24 +23,25 @@ detection:
     SELECTION_5:
         CommandLine: '* /v:*'
     SELECTION_6:
-        NewProcessName: '*\cmdkey.exe'
+        ParentProcessName: C:\Windows\System32\lxss\wslhost.exe
     SELECTION_7:
-        OriginalFileName: cmdkey.exe
+        CommandLine: '*C:\ProgramData\Microsoft\WSL\wslg.rdp*'
     SELECTION_8:
-        CommandLine: '* /g*'
+        NewProcessName: '*\cmdkey.exe'
     SELECTION_9:
-        CommandLine: '* /u*'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) or ((SELECTION_6 or SELECTION_7) and (SELECTION_8 and SELECTION_9
-        and SELECTION_10))))
+        OriginalFileName: cmdkey.exe
+    condition: ((SELECTION_1 and SELECTION_2) and ((((SELECTION_3 or SELECTION_4)
+        and SELECTION_5) and  not ((SELECTION_6 and SELECTION_7))) or ((SELECTION_8
+        or SELECTION_9) and (SELECTION_10 and SELECTION_11 and SELECTION_12))))
 falsepositives:
-- Unknown
+- WSL (Windows Sub System For Linux)
+- Other currently unknown software
 id: 954f0af7-62dd-418f-b3df-a84bc2c7a774
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/12
+modified: 2022/09/21
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.001/T1021.001.md#t1021001---remote-desktop-protocol
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/mstsc

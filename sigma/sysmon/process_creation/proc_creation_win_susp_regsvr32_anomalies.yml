@@ -62,6 +62,8 @@ detection:
         CommandLine: '*\Program Files\Box\Box\Temp\\*'
     SELECTION_3:
         Image: '*\regsvr32.exe'
+    SELECTION_30:
+        CommandLine: '*/s C:\Windows\System32\RpcProxy\RpcProxy.dll'
     SELECTION_4:
         CommandLine: '*\Temp\\*'
     SELECTION_5:
@@ -83,7 +85,7 @@ detection:
         and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18) or (SELECTION_19
         and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23 and
         SELECTION_24) or (SELECTION_25 and SELECTION_26)) and  not ((SELECTION_27)
-        or (SELECTION_28 and SELECTION_29)))
+        or (SELECTION_28 and SELECTION_29) or (SELECTION_30)))
 falsepositives:
 - Unknown
 fields:
@@ -94,7 +96,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/20
+modified: 2022/09/21
 references:
 - https://subt0x10.blogspot.de/2017/04/bypass-application-whitelisting-script.html
 - https://app.any.run/tasks/34221348-072d-4b70-93f3-aa71f6ebecad/

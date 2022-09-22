@@ -28,6 +28,7 @@ detection:
         - '*\Desktop\\*'
         - '*\Downloads\\*'
         - '*%temp%*'
+        - '*%tmp%*'
         - '*iex*'
         - '*Invoke-*'
         - '*rundll32*'
@@ -49,6 +50,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
+modified: 2022/09/13
 references:
 - https://www.hexacorn.com/blog/2013/01/19/beyond-good-ol-run-key-part-3/
 - https://docs.microsoft.com/en-us/windows/win32/shell/app-registration?redirectedfrom=MSDN

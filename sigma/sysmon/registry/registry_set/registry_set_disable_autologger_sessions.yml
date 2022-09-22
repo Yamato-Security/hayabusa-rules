@@ -23,8 +23,10 @@ detection:
         - '*\Start'
     SELECTION_7:
         Details: DWORD (0x00000000)
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
+    SELECTION_8:
+        Image: C:\Windows\system32\wevtutil.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8)))
 falsepositives:
 - Unknown
 id: f37b4bce-49d0-4087-9f5b-58bffda77316
@@ -32,6 +34,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
+modified: 2022/09/18
 references:
 - https://twitter.com/MichalKoczwara/status/1553634816016498688
 - https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/

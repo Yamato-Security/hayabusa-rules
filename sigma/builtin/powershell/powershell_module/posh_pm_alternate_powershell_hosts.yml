@@ -19,8 +19,12 @@ detection:
         ContextInfo: '*C:\Windows\system32\dsac.exe*'
     SELECTION_7:
         ContextInfo: '*C:\Windows\system32\wsmprovhost.exe -Embedding*'
+    SELECTION_8:
+        Payload:
+        - '*Update-Help*'
+        - '*Failed to update Help for the module*'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Programs using PowerShell directly without invocation of a dedicated interpreter
 - MSP Detection Searcher
@@ -31,9 +35,9 @@ logsource:
     category: ps_module
     definition: PowerShell Module Logging must be enabled
     product: windows
-modified: 2022/04/21
+modified: 2022/09/20
 references:
-- https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190815181010.html
+- https://threathunterplaybook.com/hunts/windows/190610-PwshAlternateHosts/notebook.html
 status: test
 tags:
 - attack.execution

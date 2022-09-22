@@ -1,0 +1,40 @@
+title: Enable-WindowsOptionalFeature Command PowerShell
+ruletype: Sigma
+author: frack113
+date: 2022/09/10
+description: |
+    Detect built in PowerShell cmdlet Enable-WindowsOptionalFeature, Deployment Image Servicing and Management tool.
+    Similar to DISM.exe, this cmdlet is used to enumerate, install, uninstall, configure, and update features and packages in Windows images
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText: '*Enable-WindowsOptionalFeature*'
+    SELECTION_4:
+        ScriptBlockText: '*-Online*'
+    SELECTION_5:
+        ScriptBlockText: '*-FeatureName*'
+    SELECTION_6:
+        ScriptBlockText:
+        - '*TelnetServer*'
+        - '*Internet-Explorer-Optional-amd64*'
+        - '*TFTP*'
+        - '*SMB1Protocol*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: 55c925c1-7195-426b-a136-a9396800e29b
+level: medium
+logsource:
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
+references:
+- https://docs.microsoft.com/en-us/powershell/module/dism/enable-windowsoptionalfeature?view=windowsserver2022-ps
+status: experimental
+tags:
+- attack.defense_evasion
+

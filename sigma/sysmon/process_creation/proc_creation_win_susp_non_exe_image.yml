@@ -74,6 +74,7 @@ detection:
         Image:
         - Registry
         - MemCompression
+        - vmmem
     SELECTION_6:
         Image:
         - '-'
@@ -100,7 +101,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/20
+modified: 2022/09/20
 references:
 - https://pentestlaboratories.com/2021/12/08/process-ghosting/
 status: experimental

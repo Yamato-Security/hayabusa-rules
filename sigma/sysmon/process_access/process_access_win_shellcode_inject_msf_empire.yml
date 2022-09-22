@@ -6,6 +6,12 @@ description: Detects shellcode injection by Metasploit's migrate and Empire's ps
 detection:
     SELECTION_1:
         EventID: 10
+    SELECTION_10:
+        TargetImage: C:\Windows\Explorer.EXE
+    SELECTION_11:
+        GrantedAccess: 2047999
+    SELECTION_12:
+        CallTrace: C:\Windows\System32\ntdll.dll*
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -14,7 +20,23 @@ detection:
         - '0x1f3fff'
     SELECTION_4:
         CallTrace: '*UNKNOWN*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_5:
+        SourceImage:
+        - C:\Program Files\Dell\\*
+        - C:\Program Files (x86)\Dell\\*
+    SELECTION_6:
+        TargetImage:
+        - C:\Program Files\Dell\\*
+        - C:\Program Files (x86)\Dell\\*
+    SELECTION_7:
+        GrantedAccess: 2047999
+    SELECTION_8:
+        CallTrace: C:\Windows\System32\ntdll.dll*
+    SELECTION_9:
+        SourceImage: C:\Program Files (x86)\Dell\UpdateService\ServiceShell.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11 and SELECTION_12)))
 falsepositives:
 - Empire's csharp_exe payload uses 0x1f3fff for process enumeration as well
 id: 250ae82f-736e-4844-a68b-0b5e8cc887da
@@ -22,6 +44,7 @@ level: high
 logsource:
     category: process_access
     product: windows
+modified: 2022/09/21
 status: experimental
 tags:
 - attack.defense_evasion

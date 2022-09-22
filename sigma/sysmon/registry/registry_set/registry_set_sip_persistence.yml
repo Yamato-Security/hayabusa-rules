@@ -25,8 +25,14 @@ detection:
         Details:
         - WINTRUST.DLL
         - mso.dll
+    SELECTION_7:
+        Image: C:\Windows\System32\poqexec.exe
+    SELECTION_8:
+        TargetObject: '*\CryptSIPDll*'
+    SELECTION_9:
+        Details: C:\Windows\System32\PsfSip.dll
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6))
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Legitimate SIP being registered by the OS or different software.
 id: 5a2b21ee-6aaa-4234-ac9d-59a59edf90a1
@@ -34,6 +40,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
+modified: 2022/09/21
 references:
 - https://persistence-info.github.io/Data/codesigning.html
 - https://github.com/gtworek/PSBits/tree/master/SIP

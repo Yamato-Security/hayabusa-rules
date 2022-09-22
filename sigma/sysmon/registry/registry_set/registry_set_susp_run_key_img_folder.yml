@@ -24,6 +24,8 @@ detection:
         - '*C:\Users\Default\\*'
         - '*C:\Users\Desktop\\*'
         - '*\AppData\Local\Temp\\*'
+        - '*%temp%\\*'
+        - '*%tmp%\\*'
     SELECTION_6:
         Details:
         - '%Public%\\*'
@@ -40,7 +42,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
+modified: 2022/09/13
 references:
 - https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html
 status: experimental
