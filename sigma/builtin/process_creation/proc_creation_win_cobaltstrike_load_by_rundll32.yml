@@ -10,14 +10,21 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine: '*rundll32.exe*'
+        NewProcessName: '*\rundll32.exe'
     SELECTION_4:
-        CommandLine: '*.dll*'
+        OriginalFileName: RUNDLL32.EXE
     SELECTION_5:
+        CommandLine:
+        - '*rundll32.exe*'
+        - '*rundll32 *'
+    SELECTION_6:
+        CommandLine: '*.dll*'
+    SELECTION_7:
         CommandLine:
         - '* StartW'
         - '*,StartW'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and (SELECTION_6 and SELECTION_7))
 falsepositives:
 - Unknown
 id: ae9c6a7c-9521-42a6-915e-5aaa8689d529
@@ -25,7 +32,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/03/04
+modified: 2022/09/16
 references:
 - https://www.cobaltstrike.com/help-windows-executable
 - https://redcanary.com/threat-detection-report/

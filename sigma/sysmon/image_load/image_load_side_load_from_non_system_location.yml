@@ -407,14 +407,17 @@ detection:
         - C:\Windows\SysWOW64\\*
         - C:\Windows\WinSxS\\*
         - C:\Windows\SoftwareDistribution\\*
+        - C:\Windows\SystemTemp\\*
     SELECTION_5:
-        ImageLoaded: C:\Windows\SystemTemp\\*
-    SELECTION_6:
         ImageLoaded: C:\Program Files\Common Files\microsoft shared\ClickToRun\AppVPolicy.dll
-    SELECTION_7:
+    SELECTION_6:
         Image: C:\Program Files\Common Files\microsoft shared\ClickToRun\OfficeClickToRun.exe
+    SELECTION_7:
+        Image: C:\Windows\System32\backgroundTaskHost.exe
+    SELECTION_8:
+        ImageLoaded: C:\Program Files\WindowsApps\DellInc.DellSupportAssistforPCs*
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6 and SELECTION_7)))
+        or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLLs mentioned in this
     rule

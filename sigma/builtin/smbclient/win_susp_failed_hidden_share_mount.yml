@@ -1,0 +1,33 @@
+title: Failed Mounting of Hidden Share
+ruletype: Sigma
+author: Fabian Franz
+date: 2022/08/30
+description: Detects repeated failed (outgoing) attempts to mount a hidden share
+detection:
+    SELECTION_1:
+        Channel: Microsoft-Windows-SmbClient/Security
+    SELECTION_2:
+        EventID: 31010
+    SELECTION_3:
+        ShareName: '*$'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3) | count() > 10
+    timeframe: 1m
+falsepositives:
+- Legitimate administrative activity
+- Faulty scripts
+fields:
+- ShareName
+id: 1c3be8c5-6171-41d3-b792-cab6f717fcdb
+level: medium
+logsource:
+    product: windows
+    service: smbclient-security
+modified: 2022/08/30
+references:
+- https://twitter.com/moti_b/status/1032645458634653697
+- https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Cyber-Security/SiSyPHuS/AP10/Logging_Configuration_Guideline.pdf?__blob=publicationFile&v=5
+status: experimental
+tags:
+- attack.t1021.002
+- attack.lateral_movement
+

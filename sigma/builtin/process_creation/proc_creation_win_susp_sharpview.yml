@@ -12,6 +12,8 @@ detection:
     SELECTION_3:
         OriginalFileName: SharpView.exe
     SELECTION_4:
+        NewProcessName: '*\SharpView.exe'
+    SELECTION_5:
         Commandline:
         - '*Get-DomainGPOUserLocalGroupMapping*'
         - '*Find-GPOLocation*'
@@ -139,7 +141,8 @@ detection:
         - '*Get-DomainPolicy*'
         - '*Get-DomainGPOLocalGroup*'
         - '*Get-NetGPOGroup*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+        - '*Invoke-Sharefinder*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unknown
 id: b2317cfa-4a47-4ead-b3ff-297438c0bc2d
@@ -147,6 +150,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/13
 references:
 - https://github.com/tevora-threat/SharpView/
 - https://github.com/PowerShellMafia/PowerSploit/blob/dev/Recon/PowerView.ps1

@@ -35,7 +35,6 @@ detection:
         - '*\wscript.exe'
         - '*\cscript.exe'
         - '*\mshta.exe'
-        - '*\schtasks.exe'
         - '*\dnx.exe'
         - '*\regsvcs.exe'
         - '*\sc.exe'
@@ -71,7 +70,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/08/09
+modified: 2022/09/15
 references:
 - https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump
 - https://www.pinvoke.net/default.aspx/dbghelp/MiniDumpWriteDump.html

@@ -12,9 +12,9 @@ detection:
         ShareName: \\\\\*\\IPC$
     SELECTION_4:
         RelativeTargetName:
-        - '*RemCom_stdint*'
-        - '*RemCom_stdoutt*'
-        - '*RemCom_stderrt*'
+        - '*RemCom_stdin*'
+        - '*RemCom_stdout*'
+        - '*RemCom_stderr*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
@@ -25,7 +25,7 @@ logsource:
         File Share" must be configured for Success/Failure
     product: windows
     service: security
-modified: 2022/08/11
+modified: 2022/09/22
 references:
 - https://blog.menasec.net/2019/02/threat-hunting-3-detecting-psexec.html
 status: test

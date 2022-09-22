@@ -14,9 +14,9 @@ detection:
         NewProcessName: '*\wevtutil.exe'
     SELECTION_4:
         CommandLine:
-        - '*clear-log*'
+        - '*clear-log *'
         - '* cl *'
-        - '*set-log*'
+        - '*set-log *'
         - '* sl *'
     SELECTION_5:
         NewProcessName:
@@ -24,9 +24,10 @@ detection:
         - '*\pwsh.exe'
     SELECTION_6:
         CommandLine:
-        - '*Clear-EventLog*'
-        - '*Remove-EventLog*'
-        - '*Limit-EventLog*'
+        - '*Clear-EventLog *'
+        - '*Remove-EventLog *'
+        - '*Limit-EventLog *'
+        - '*Clear-WinEvent *'
     SELECTION_7:
         NewProcessName: '*\wmic.exe'
     SELECTION_8:
@@ -41,7 +42,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/09/12
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.001/T1070.001.md
 - https://eqllib.readthedocs.io/en/latest/analytics/5b223758-07d6-4100-9e11-238cfdd0fe97.html

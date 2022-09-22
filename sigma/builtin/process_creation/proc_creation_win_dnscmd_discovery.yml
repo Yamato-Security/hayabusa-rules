@@ -17,6 +17,7 @@ detection:
         CommandLine:
         - '*/enumrecords*'
         - '*/enumzones*'
+        - '*/ZonePrint*'
         - '*/info*'
     SELECTION_5:
         CommandLine: '*/config*'
@@ -31,6 +32,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/14
 references:
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dnscmd
 - https://docs.microsoft.com/en-us/azure/dns/dns-zones-records

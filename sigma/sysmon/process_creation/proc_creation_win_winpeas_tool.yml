@@ -1,0 +1,49 @@
+title: Detect Execution of winPEAS
+ruletype: Sigma
+author: Georg Lauenstein
+date: 2022/09/19
+description: WinPEAS is a script that search for possible paths to escalate privileges
+    on Windows hosts. The checks are explained on book.hacktricks.xyz
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\winPEASany.exe'
+        - '*\winPEASany_ofs.exe'
+        - '*\winPEASx64.exe'
+        - '*\winPEASx64_ofs.exe'
+        - '*\winPEASx86.exe'
+        - '*\winPEASx86_ofs.exe'
+    SELECTION_4:
+        OriginalFileName: winPEAS.exe
+    SELECTION_5:
+        CommandLine:
+        - '*serviceinfo'
+        - '*applicationsinfo'
+        - '*windowscreds'
+        - '*browserinfo '
+        - '*fileanalysis'
+    SELECTION_6:
+        CommandLine: '*.exe browserinfo *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6))
+falsepositives:
+- Other programs that use the same command line flags
+id: 98b53e78-ebaf-46f8-be06-421aafd176d9
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/carlospolop/PEASS-ng
+- https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation
+status: experimental
+tags:
+- attack.privilege_escalation
+- attack.t1082
+- attack.t1087
+- attack.t1046
+

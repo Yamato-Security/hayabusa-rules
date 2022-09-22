@@ -11,6 +11,10 @@ detection:
         CommandLine: '*\AppData\Local\Packages\Microsoft.WindowsTerminal_*'
     SELECTION_11:
         CommandLine: '*\LocalState\settings.json*'
+    SELECTION_12:
+        CommandLine: '*C:\Program Files\Microsoft Visual Studio\\*'
+    SELECTION_13:
+        CommandLine: '*\Common7\Tools\VsDevCmd.bat*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -46,7 +50,7 @@ detection:
         CommandLine: '*Enter-VsDevShell*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and (SELECTION_4 or
         SELECTION_5 or SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11)))
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13)))
 falsepositives:
 - Other legitimate "Windows Terminal" profiles
 id: 8de89e52-f6e1-4b5b-afd1-41ecfa300d48

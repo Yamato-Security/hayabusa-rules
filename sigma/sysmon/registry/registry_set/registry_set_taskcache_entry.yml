@@ -10,7 +10,10 @@ detection:
     SELECTION_10:
         Image: '*\ngen.exe'
     SELECTION_11:
-        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{B66B135D-DA06-4FC4-95F8-7458E1D10129}*'
+        TargetObject:
+        - '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{B66B135D-DA06-4FC4-95F8-7458E1D10129}*'
+        - '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\Windows\.NET
+            Framework\.NET Framework NGEN*'
     SELECTION_12:
         Image:
         - C:\Program Files\Microsoft Office\root\Integration\Integrator.exe
@@ -35,7 +38,7 @@ detection:
     SELECTION_8:
         Image: C:\WINDOWS\system32\svchost.exe
     SELECTION_9:
-        Image: C:\Windows\Microsoft.NET\Framework\\*
+        Image: C:\Windows\Microsoft.NET\Framework*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9
         and SELECTION_10 and SELECTION_11) or (SELECTION_12) or (SELECTION_13)))
@@ -46,7 +49,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/08/24
+modified: 2022/09/16
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://labs.f-secure.com/blog/scheduled-task-tampering/

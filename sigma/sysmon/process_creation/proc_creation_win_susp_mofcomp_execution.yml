@@ -27,6 +27,7 @@ detection:
         - '*\Users\Public\\*'
         - '*\WINDOWS\Temp\\*'
         - '*%temp%*'
+        - '*%tmp%*'
         - '*%appdata%*'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
         SELECTION_5))
@@ -37,7 +38,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/09/13
 references:
 - https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
 - https://github.com/The-DFIR-Report/Sigma-Rules/blob/75260568a7ffe61b2458ca05f6f25914efb44337/win_mofcomp_execution.yml

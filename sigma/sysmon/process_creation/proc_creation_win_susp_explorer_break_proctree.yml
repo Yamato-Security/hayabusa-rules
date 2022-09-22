@@ -1,6 +1,6 @@
 title: Explorer Process Tree Break
 ruletype: Sigma
-author: Florian Roth, Nasreddine Bencherchali
+author: Florian Roth, Nasreddine Bencherchali, @gott_cyber
 date: 2019/06/29
 description: Detects a command line process that uses explorer.exe to launch arbitrary
     commands or binaries, which is similar to cmd.exe /c, only it breaks the process
@@ -12,7 +12,12 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         CommandLine: '*/factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_4:
+        CommandLine: '*explorer.exe*'
+    SELECTION_5:
+        CommandLine: '* /root,*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5)))
 falsepositives:
 - Unknown how many legitimate software products use that method
 id: 949f1ffb-6e85-4f00-ae1e-c3c5b190d605
@@ -20,7 +25,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/14
+modified: 2022/09/20
 references:
 - https://twitter.com/CyberRaiju/status/1273597319322058752
 - https://twitter.com/bohops/status/1276357235954909188?s=12

@@ -17,6 +17,7 @@ detection:
         CommandLine:
         - '*C:\Users\\*'
         - '*%temp%*'
+        - '*%tmp%*'
         - '*%appdata%*'
         - '*\AppData\Local\Temp\\*'
         - '*C:\Windows\Temp\\*'
@@ -29,6 +30,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/13
 references:
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/reg-import
 related:

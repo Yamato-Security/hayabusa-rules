@@ -1,0 +1,46 @@
+title: Suspicious Usage Of Active Directory Diagnostic Tool (ntdsutil.exe)
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/14
+description: Detects execution of ntdsutil.exe to perform different actions such as
+    restoring snapshots...etc.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\ntdsutil.exe'
+    SELECTION_4:
+        OriginalFileName: ntdsutil.exe
+    SELECTION_5:
+        CommandLine: '*snapshot*'
+    SELECTION_6:
+        CommandLine: '*mount *'
+    SELECTION_7:
+        CommandLine: '*ac*'
+    SELECTION_8:
+        CommandLine: '* i*'
+    SELECTION_9:
+        CommandLine: '* ntds*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
+falsepositives:
+- Legitimate usage to restore snapshots
+- Legitimate admin activity
+id: a58353df-af43-4753-bad0-cd83ef35eef5
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc731620(v=ws.11)
+- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/espionage-asia-governments
+related:
+-   id: 2afafd61-6aae-4df4-baed-139fa1f4c345
+    type: derived
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.003
+

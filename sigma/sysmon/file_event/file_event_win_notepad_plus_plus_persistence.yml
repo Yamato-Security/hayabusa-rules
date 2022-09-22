@@ -21,7 +21,9 @@ detection:
     SELECTION_7:
         Image: '*\AppData\Local\Temp\\*'
     SELECTION_8:
-        Image: '*\target.exe'
+        Image:
+        - '*\target.exe'
+        - '*Installer.x64.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
@@ -32,7 +34,7 @@ level: medium
 logsource:
     category: file_event
     product: windows
-modified: 2022/06/21
+modified: 2022/09/20
 references:
 - https://pentestlab.blog/2022/02/14/persistence-notepad-plugins/
 status: experimental

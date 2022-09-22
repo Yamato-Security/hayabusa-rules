@@ -31,6 +31,7 @@ detection:
         - '*\Temp\\*'
         - '*%AppData%*'
         - '*%Temp%*'
+        - '*%tmp%*'
         - '*%Public%*'
         - '*\Desktop\\*'
         - '*C:\Windows\\*'
@@ -43,6 +44,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/13
 references:
 - https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool/
 related:

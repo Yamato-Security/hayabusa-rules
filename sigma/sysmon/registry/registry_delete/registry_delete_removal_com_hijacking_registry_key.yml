@@ -8,7 +8,21 @@ detection:
     SELECTION_1:
         EventID: 12
     SELECTION_10:
-        TargetObject: HKCR\Dropbox.*
+        TargetObject: '*\Dropbox.*'
+    SELECTION_11:
+        Image: '*\AppData\Local\Temp\Wireshark_uninstaller.exe'
+    SELECTION_12:
+        TargetObject: '*\wireshark-capture-file\\*'
+    SELECTION_13:
+        Image:
+        - C:\Program Files\Opera\\*
+        - C:\Program Files (x86)\Opera\\*
+    SELECTION_14:
+        Image: '*\installer.exe'
+    SELECTION_15:
+        Image: '*peazip*'
+    SELECTION_16:
+        TargetObject: '*\PeaZip.*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -29,7 +43,8 @@ detection:
         Image: '*\Dropbox.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9
-        and SELECTION_10)))
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
+        SELECTION_14) or (SELECTION_15 and SELECTION_16)))
 falsepositives:
 - Unknown
 id: 96f697b0-b499-4e5d-9908-a67bec11cdb6
@@ -37,7 +52,7 @@ level: medium
 logsource:
     category: registry_delete
     product: windows
-modified: 2022/03/26
+modified: 2022/09/21
 references:
 - https://github.com/OTRF/detection-hackathon-apt29/issues/7
 - https://threathunterplaybook.com/evals/apt29/detections/3.C.1_22A46621-7A92-48C1-81BF-B3937EB4FDC3.html

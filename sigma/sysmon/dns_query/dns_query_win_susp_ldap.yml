@@ -1,8 +1,8 @@
-title: Suspicious Ldap Domain Access
+title: Suspicious LDAP Domain Access
 ruletype: Sigma
 author: frack113
 date: 2022/08/20
-description: Detect suspicious ldap request from non Windows application
+description: Detect suspicious LDAP request from non-Windows application
 detection:
     SELECTION_1:
         EventID: 22
@@ -13,13 +13,18 @@ detection:
     SELECTION_4:
         Image: C:\Windows\\*
     SELECTION_5:
-        Image: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+        Image:
+        - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+        - C:\Program Files\Windows Defender\MsMpEng.exe*
+        - C:\Program Files (x86)\Windows Defender\MsMpEng.exe*
     SELECTION_6:
         Image: '*\MsMpEng.exe'
     SELECTION_7:
         Image: <unknown process>
+    SELECTION_8:
+        Image: C:\WindowsAzure\GuestAgent*
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5 and SELECTION_6) or (SELECTION_7)))
+        or (SELECTION_5 and SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Programs that also lookup the observed domain
 id: a21bcd7e-38ec-49ad-b69a-9ea17e69509e
@@ -27,7 +32,7 @@ level: medium
 logsource:
     category: dns_query
     product: windows
-modified: 2022/09/08
+modified: 2022/09/21
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1482/T1482.md
 status: experimental

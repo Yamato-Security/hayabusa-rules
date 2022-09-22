@@ -79,36 +79,46 @@ detection:
     SELECTION_31:
         NewValue: '*\AppData\Local\Microsoft\OneDrive\\*'
     SELECTION_32:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\{c60fd5ac-367d-4e3a-a975-f157502ac30a}'
+        TargetObject: '*\Microsoft\Windows\CurrentVersion\RunOnce\{*'
     SELECTION_33:
-        NewValue: '*\AppData\Local\Package Cache\{c60fd5ac-367d-4e3a-a975-f157502ac30a}\python*'
+        NewValue: '*\AppData\Local\Package Cache\{*'
     SELECTION_34:
-        NewValue: '*.exe" /burn.runonce'
+        NewValue: '*}\python-*'
     SELECTION_35:
+        NewValue: '*.exe" /burn.runonce'
+    SELECTION_36:
         NewProcessName:
         - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
         - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
-    SELECTION_36:
-        NewProcessName: '*\OfficeClickToRun.exe'
     SELECTION_37:
-        NewProcessName: C:\Program Files\Windows Defender\MsMpEng.exe
+        NewProcessName: '*\OfficeClickToRun.exe'
     SELECTION_38:
-        NewProcessName: '*\Microsoft\Teams\current\Teams.exe'
+        NewProcessName: C:\Program Files\Windows Defender\MsMpEng.exe
     SELECTION_39:
-        NewValue: '*\Microsoft\Teams\Update.exe --processStart *'
+        NewProcessName: '*\Microsoft\Teams\current\Teams.exe'
     SELECTION_4:
         EventType: SetValue
     SELECTION_40:
-        NewProcessName: C:\Windows\system32\userinit.exe
+        NewValue: '*\Microsoft\Teams\Update.exe --processStart *'
     SELECTION_41:
-        NewValue: ctfmon.exe /n
+        NewProcessName: C:\Windows\system32\userinit.exe
     SELECTION_42:
-        NewProcessName: C:\Program Files\AVG\Antivirus\Setup\\*
+        NewValue: ctfmon.exe /n
     SELECTION_43:
+        NewProcessName: C:\Program Files\AVG\Antivirus\Setup\\*
+    SELECTION_44:
         NewValue:
         - '"C:\Program Files\AVG\Antivirus\AvLaunch.exe" /gui'
         - '"C:\Program Files (x86)\AVG\Antivirus\AvLaunch.exe" /gui'
         - '{472083B0-C522-11CF-8763-00608CC02F24}'
+    SELECTION_45:
+        NewProcessName:
+        - '*\aurora-agent-64.exe'
+        - '*\aurora-agent.exe'
+    SELECTION_46:
+        TargetObject: '*\Microsoft\Windows\CurrentVersion\Run\aurora-dashboard'
+    SELECTION_47:
+        NewValue: C:\Program Files\Aurora-Agent\tools\aurora-dashboard.exe
     SELECTION_5:
         TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion*'
     SELECTION_6:
@@ -149,9 +159,10 @@ detection:
         and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23 and
         SELECTION_24) or (SELECTION_25 and SELECTION_26 and SELECTION_27) or (SELECTION_28
         and SELECTION_29) or (SELECTION_30 and SELECTION_31) or (SELECTION_32 and
-        SELECTION_33 and SELECTION_34) or (SELECTION_35 and SELECTION_36) or (SELECTION_37)
-        or (SELECTION_38 and SELECTION_39) or (SELECTION_40 and SELECTION_41) or (SELECTION_42
-        and SELECTION_43)))
+        SELECTION_33 and SELECTION_34 and SELECTION_35) or (SELECTION_36 and SELECTION_37)
+        or (SELECTION_38) or (SELECTION_39 and SELECTION_40) or (SELECTION_41 and
+        SELECTION_42) or (SELECTION_43 and SELECTION_44) or (SELECTION_45 and SELECTION_46
+        and SELECTION_47)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
     keys for legitimate reason
@@ -166,7 +177,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/06
+modified: 2022/09/21
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

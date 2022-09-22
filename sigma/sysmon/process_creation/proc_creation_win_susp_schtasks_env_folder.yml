@@ -31,7 +31,9 @@ detection:
         - '*C:\Windows\Temp*'
         - '*C:\Perflogs*'
     SELECTION_8:
-        CommandLine: '*update_task.xml*'
+        CommandLine:
+        - '*update_task.xml*'
+        - '*/Create /TN TVInstallRestore /TR*'
     SELECTION_9:
         ParentCommandLine: '*unattended.ini*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
@@ -46,7 +48,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/28
+modified: 2022/09/18
 references:
 - https://www.welivesecurity.com/2022/01/18/donot-go-do-not-respawn/
 - https://www.joesandbox.com/analysis/514608/0/html#324415FF7D8324231381BAD48A052F85DF04
