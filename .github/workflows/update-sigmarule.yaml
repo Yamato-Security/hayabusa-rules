@@ -70,8 +70,11 @@ jobs:
           echo "::set-output name=git_new::${git_new//$'\n'/'%0A'}"
           echo "::set-output name=git_mod::${git_mod//$'\n'/'%0A'}"
           echo "::set-output name=git_del::${git_del//$'\n'/'%0A'}"
-          is_rule_changed=$(git status | grep "aa.sh")
+          is_rule_changed=$(git status | grep "nothing to commit,")
           if [ "${is_rule_changed}" ]; then
+            echo "change_exist=false" >> $GITHUBls_ENV
+          else
+            echo "change_exist=false" >> $GITHUB_ENV
           	echo "<details><summary>New files</summary>" >> ../changed_rule.logs
           	echo ${{ steps.create-text.outputs.git_new }} >> ../changed_rule.logs
           	echo "</details>" >> ../changed_rule.logs
@@ -80,9 +83,7 @@ jobs:
           	echo "</details>" >> ../changed_rule.logs
           	echo "<details><summary>Deleted files</summary>" >> ../changed_rule.logs
           	echo ${{ steps.create-text.outputs.git_del }} >> ../changed_rule.logs
-          	echo "</details>" >> ../changed_rule.logs
-          else
-            echo "change_exist=false" >> $GITHUB_ENV
+          	echo "</details>" >> ../changed_rule.logs            
           fi
           popd
 
