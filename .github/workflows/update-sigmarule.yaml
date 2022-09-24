@@ -102,13 +102,11 @@ jobs:
           assignees: itiB
           reviewers: itiB
 
-      - name: Enable Pull Request Automerge
+      - name: merge PR
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge ${{ steps.cpr.outputs.pull-request-url }} --merge
 
       - name: upload change log
         if: env.change_exist == 'true'
