@@ -18,6 +18,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: hayabusa-rules
+          ref: main
 
       - name: clone sigmac
         uses: actions/checkout@v2
@@ -47,15 +48,15 @@ jobs:
           pip install -r requirements.txt
           rm requirements.txt
 
-      # - name: Update sigma rules
-      #   run: |
-      #     pushd sigma-repo
-      #     python3 convert.py --suppression
-      #     popd
-      #     rm -rf hayabusa-rules/sigma/
-      #     mkdir hayabusa-rules/sigma/
-      #     cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
-      #     rm -rf sigma-repo
+      - name: Update sigma rules
+        run: |
+          pushd sigma-repo
+          python3 convert.py --suppression
+          popd
+          rm -rf hayabusa-rules/sigma/
+          mkdir hayabusa-rules/sigma/
+          cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
+          rm -rf sigma-repo
 
       - name: Create Text
         id: create-text
@@ -85,37 +86,29 @@ jobs:
           fi
           popd
 
-      - name: testtrue
-        if: ${{ env.change_exist == 'true' }}
-        run: |
-          touch hajime_yes.txt
+      - name: Create Pull Request
+        if: env.change_exist == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          path: hayabusa-rules
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Sigma Rule Update (${{ env.action_date }})
+          branch: rules/auto-sigma-update
+          delete-branch: true
+          title: '[Auto] Sigma Update report'
+          body: |
+            ${{ env.action_date }} Update report
+          assignees: itiB
+          reviewers: itiB
 
-      - name: testfalse
-        if: ${{ env.change_exist == 'false' }}
-        run: |
-          touch hajime_no.txt
-
-      # - name: Create Pull Request
-      #   if: env.change_exist == 'true'
-      #   id: cpr
-      #   uses: peter-evans/create-pull-request@v4
-      #   with:
-      #     path: hayabusa-rules
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     commit-message: Sigma Rule Update (${{ env.action_date }})
-      #     branch: rules/auto-sigma-update
-      #     delete-branch: true
-      #     title: '[Auto] Sigma Update report'
-      #     body: |
-      #       ${{ env.action_date }} Update report
-      #     assignees: itiB
-      #     reviewers: itiB
-
-      # - name: merge PR
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   env:
-      #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   run: gh pr merge ${{ steps.cpr.outputs.pull-request-url }} --merge
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
 
       - name: upload change log
         if: env.change_exist == 'true'
