@@ -82,21 +82,21 @@ jobs:
           fi
           popd
 
-      # - name: Create Pull Request
-      #   if: env.change_exist == 'true'
-      #   id: cpr
-      #   uses: peter-evans/create-pull-request@v4
-      #   with:
-      #     path: hayabusa-rules
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     commit-message: Sigma Rule Update (${{ env.action_date }})
-      #     branch: rules/auto-sigma-update
-      #     delete-branch: true
-      #     title: '[Auto] Sigma Update report'
-      #     body: |
-      #       ${{ env.action_date }} Update report
-      #     assignees: itiB
-      #     reviewers: itiB
+      - name: Create Pull Request
+        if: env.change_exist == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v4
+        with:
+          path: hayabusa-rules
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Sigma Rule Update (${{ env.action_date }})
+          branch: rules/auto-sigma-update
+          delete-branch: true
+          title: '[Auto] Sigma Update report'
+          body: |
+            ${{ env.action_date }} Update report
+          assignees: itiB
+          reviewers: itiB
 
       # - name: Enable Pull Request Automerge
       #   if: steps.cpr.outputs.pull-request-operation == 'created'
