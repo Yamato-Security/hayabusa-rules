@@ -6,6 +6,7 @@ name: Pipline for update Sigma rule
 on:
   ## This workflow is exected once a day.
   ## And I add workflow_dispatch so that you can execute this workflow from GitHub UI. 
+  push:
   workflow_dispatch:
   schedule:
     - cron: '0 20 * * *' 
@@ -47,15 +48,14 @@ jobs:
           pip install -r requirements.txt
           rm requirements.txt
 
-      # - name: Update sigma rules
-      #   run: |
-      #     pushd sigma-repo
-      #     python3 convert.py --suppression
-      #     popd
-      #     rm -rf hayabusa-rules/sigma/
-      #     mkdir hayabusa-rules/sigma/
-      #     cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
-      #     rm -rf sigma-repo
+      - name: Update sigma rules
+        run: |
+          pushd sigma-repo
+          python3 convert.py --suppression
+          popd
+          rm -rf hayabusa-rules/sigma/
+          mkdir hayabusa-rules/sigma/
+          cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
 
       - name: Create Text
         id: create-text
