@@ -29,7 +29,7 @@ jobs:
           fetch-depth: 0 # DEBUG: option for use checkout in next Step
 
       - name: Debug for current update in Sigma.
-        run: # checkout before https://github.com/SigmaHQ/sigma/commit/ad6ddf5896d2032293e56d76a1e1821e9c6ae7b2
+        run: | # checkout before https://github.com/SigmaHQ/sigma/commit/ad6ddf5896d2032293e56d76a1e1821e9c6ae7b2
           pushd sigma-repo
           git checkout b9c7b79847edc40c1d87ea0b338f97be808ea829
           popd
