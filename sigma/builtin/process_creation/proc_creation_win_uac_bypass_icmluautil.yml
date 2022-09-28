@@ -9,11 +9,11 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        NewProcessName: '*\dllhost.exe'
+        ParentProcessName: '*\dllhost.exe'
     SELECTION_4:
         ParentCommandLine:
-        - /Processid:{3E5FC7F9-9A51-4367-9063-A120244FBEC7}
-        - /Processid:{D2E7041B-2927-42FB-8E9F-7CE93B6DC937}
+        - '*/Processid:{3E5FC7F9-9A51-4367-9063-A120244FBEC7}*'
+        - '*/Processid:{D2E7041B-2927-42FB-8E9F-7CE93B6DC937}*'
     SELECTION_5:
         NewProcessName: '*\WerFault.exe'
     SELECTION_6:
@@ -27,6 +27,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/27
 references:
 - https://www.elastic.co/guide/en/security/current/uac-bypass-via-icmluautil-elevated-com-interface.html
 status: experimental

@@ -1,0 +1,49 @@
+title: SharPersist Usage
+ruletype: Sigma
+author: Florian Roth
+date: 2022/09/15
+description: Detects the execution of the hacktool SharPersist - used to deploy various
+    different kinds of persistence mechanisms
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine: '* -t schtask -c *'
+    SELECTION_11:
+        CommandLine: '* -m add*'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\SharPersist.exe'
+    SELECTION_4:
+        Product: SharPersist
+    SELECTION_5:
+        CommandLine:
+        - '* -t schtask -c *'
+        - '* -t startupfolder -c *'
+    SELECTION_6:
+        CommandLine: '* -t reg -c *'
+    SELECTION_7:
+        CommandLine: '* -m add*'
+    SELECTION_8:
+        CommandLine: '* -t service -c *'
+    SELECTION_9:
+        CommandLine: '* -m add*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9) or (SELECTION_10
+        and SELECTION_11)))
+falsepositives:
+- Unknown
+id: 26488ad0-f9fd-4536-876f-52fea846a2e4
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.mandiant.com/resources/blog/sharpersist-windows-persistence-toolkit
+- https://github.com/mandiant/SharPersist
+status: experimental
+tags:
+- attack.persistence
+- attack.t1053
+

@@ -6,22 +6,25 @@ description: Detects suspicious application installed by looking at the added sh
     to the app resolver cache
 detection:
     SELECTION_1:
-        EventID: 28115
+        Channel: Microsoft-Windows-Shell-Core/Operational
     SELECTION_2:
+        EventID: 28115
+    SELECTION_3:
         Name:
         - '*Zenmap*'
         - '*AnyDesk*'
         - '*wireshark*'
         - '*openvpn*'
-    SELECTION_3:
-        EventID: 28115
     SELECTION_4:
+        EventID: 28115
+    SELECTION_5:
         AppID:
         - '*zenmap.exe*'
         - '*prokzult ad*'
         - '*wireshark*'
         - '*openvpn*'
-    condition: ((SELECTION_1 and SELECTION_2) or (SELECTION_3 and SELECTION_4))
+    condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and
+        SELECTION_5)))
 falsepositives:
 - Packages or applications being legitimately used by users or administrators
 id: 83c161b6-ca67-4f33-8ad0-644a0737cf07

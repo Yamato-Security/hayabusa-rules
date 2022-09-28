@@ -11,26 +11,22 @@ detection:
     SELECTION_3:
         NewProcessName: '*\SharpChisel.exe'
     SELECTION_4:
-        CommandLine:
-        - '*exe client *'
-        - '*exe server *'
-    SELECTION_5:
-        CommandLine:
-        - '* --socks5*'
-        - '* --reverse*'
-        - '* r:*'
-        - '*:127.0.0.1:*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+        Product: SharpChisel
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
-- Some flalse positives may occure with other tools with similar commandlines
+- Some false positives may occure with other tools with similar commandlines
 id: cf93e05e-d798-4d9e-b522-b0248dc61eaf
-level: medium
+level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/13
 references:
 - https://github.com/shantanu561993/SharpChisel
 - https://www.sentinelone.com/labs/wading-through-muddy-waters-recent-activity-of-an-iranian-state-sponsored-threat-actor/
+related:
+-   id: 8b0e12da-d3c3-49db-bb4f-256703f380e5
+    type: similar
 status: experimental
 tags:
 - attack.command_and_control
