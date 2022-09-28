@@ -7,22 +7,24 @@ description: Detects Code Integrity (CI) engine blocking Microsoft Defender's pr
     arbitrary DLL
 detection:
     SELECTION_1:
-        EventID: 11
+        Provider_Name: Microsoft-Windows-Security-Mitigations
     SELECTION_2:
-        EventID: 12
+        EventID: 11
     SELECTION_3:
+        EventID: 12
+    SELECTION_4:
         ProcessPath:
         - '*\MpCmdRun.exe'
         - '*\NisSrv.exe'
-    condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
 falsepositives:
 - Unknown
 id: 0b0ea3cc-99c8-4730-9c53-45deee2a4c86
 level: high
 logsource:
-    category: security-mitigations
     product: windows
-modified: 2022/08/05
+    service: security-mitigations
+modified: 2022/09/28
 references:
 - https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool
 status: experimental

@@ -1,8 +1,8 @@
-title: An Application Is Uninstalled
+title: Application Uninstalled
 ruletype: Sigma
 author: frack113
 date: 2022/01/28
-description: An application has been removed. Check if it is critical
+description: An application has been removed. Check if it is critical.
 detection:
     SELECTION_1:
         Channel: Application
@@ -20,6 +20,7 @@ level: low
 logsource:
     product: windows
     service: application
+modified: 2022/09/17
 status: experimental
 tags:
 - attack.impact

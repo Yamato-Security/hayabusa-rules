@@ -14,13 +14,12 @@ detection:
     SELECTION_4:
         Image: '*\SharpView.exe'
     SELECTION_5:
-        Commandline:
+        CommandLine:
         - '*Get-DomainGPOUserLocalGroupMapping*'
         - '*Find-GPOLocation*'
         - '*Get-DomainGPOComputerLocalGroupMapping*'
         - '*Find-GPOComputerAdmin*'
         - '*Get-DomainObjectAcl*'
-        - '*Get-ObjectAcl*'
         - '*Add-DomainObjectAcl*'
         - '*Add-ObjectAcl*'
         - '*Remove-DomainObjectAcl*'
@@ -32,7 +31,6 @@ detection:
         - '*Get-WMIProcess*'
         - '*Get-NetProcess*'
         - '*Get-WMIRegProxy*'
-        - '*Get-Proxy*'
         - '*Get-WMIRegLastLoggedOn*'
         - '*Get-LastLoggedOn*'
         - '*Get-WMIRegCachedRDPConnection*'
@@ -64,8 +62,6 @@ detection:
         - '*Find-InterestingFile*'
         - '*Find-InterestingDomainShareFile*'
         - '*Find-DomainObjectPropertyOutlier*'
-        - '*TestMethod*'
-        - '*Get-Domain*'
         - '*Get-NetDomain*'
         - '*Get-DomainComputer*'
         - '*Get-NetComputer*'
@@ -79,13 +75,9 @@ detection:
         - '*Get-DomainUser*'
         - '*Get-NetUser*'
         - '*Get-DomainGroup*'
-        - '*Get-NetGroup*'
         - '*Get-DomainDFSShare*'
         - '*Get-DFSshare*'
         - '*Get-DomainDNSRecord*'
-        - '*Get-DNSRecord*'
-        - '*Get-DomainDNSZone*'
-        - '*Get-DNSZone*'
         - '*Get-DomainForeignGroupMember*'
         - '*Find-ForeignGroup*'
         - '*Get-DomainForeignUser*'
@@ -99,7 +91,6 @@ detection:
         - '*Get-DomainOU*'
         - '*Get-NetOU*'
         - '*Get-DomainSID*'
-        - '*Get-Forest*'
         - '*Get-NetForest*'
         - '*Get-ForestTrust*'
         - '*Get-NetForestTrust*'
@@ -116,25 +107,18 @@ detection:
         - '*Get-ForestGlobalCatalog*'
         - '*Get-NetForestCatalog*'
         - '*Get-DomainUserEvent*'
-        - '*Get-UserEvent*'
         - '*Get-DomainGUIDMap*'
-        - '*Get-GUIDMap*'
         - '*Resolve-IPAddress*'
-        - '*Get-IPAddress*'
         - '*ConvertTo-SID*'
         - '*Invoke-UserImpersonation*'
-        - '*Invoke-RevertToSelf*'
         - '*Get-DomainSPNTicket*'
         - '*Request-SPNTicket*'
         - '*Get-NetComputerSiteName*'
-        - '*Get-SiteName*'
         - '*Get-DomainGPO*'
         - '*Get-NetGPO*'
         - '*Set-DomainObject*'
-        - '*Set-ADObject*'
         - '*Add-RemoteConnection*'
         - '*Remove-RemoteConnection*'
-        - '*Get-IniContent*'
         - '*Get-GptTmpl*'
         - '*Get-GroupsXML*'
         - '*Get-DomainPolicyData*'
@@ -150,7 +134,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/13
+modified: 2022/09/27
 references:
 - https://github.com/tevora-threat/SharpView/
 - https://github.com/PowerShellMafia/PowerSploit/blob/dev/Recon/PowerView.ps1

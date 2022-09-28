@@ -14,7 +14,7 @@ detection:
         - '*\Microsoft\Teams\Cookies*'
         - '*\Microsoft\Teams\Local Storage\leveldb*'
     SELECTION_4:
-        Image: '*\Microsoft\Teams\current\Teams.exe*'
+        Image: '*\Microsoft\Teams\current\Teams.exe'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
@@ -23,6 +23,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/09/27
 references:
 - https://www.bleepingcomputer.com/news/security/microsoft-teams-stores-auth-tokens-as-cleartext-in-windows-linux-macs/
 - https://www.vectra.ai/blogpost/undermining-microsoft-teams-security-by-mining-tokens
