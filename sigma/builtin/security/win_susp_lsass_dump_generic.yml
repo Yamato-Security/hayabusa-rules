@@ -14,7 +14,9 @@ detection:
     SELECTION_12:
         ProcessName: C:\Windows\System32\taskhostw.exe
     SELECTION_13:
-        AccessMask: '0x10'
+        AccessMask:
+        - '0x10'
+        - '0x1410'
     SELECTION_2:
         EventID: 4656
     SELECTION_3:
@@ -67,6 +69,7 @@ detection:
         - C:\Windows\SysWow64\\*
         - C:\Windows\SysNative\\*
         - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
         - C:\Windows\Temp\asgard2-agent\\*
         - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
     condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or
@@ -86,7 +89,7 @@ level: high
 logsource:
     product: windows
     service: security
-modified: 2022/09/18
+modified: 2022/09/27
 references:
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment

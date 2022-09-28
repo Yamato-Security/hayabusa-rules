@@ -6,10 +6,12 @@ description: Detects Code Integrity (CI) engine blocking processes from loading 
     DLLs residing in suspicious locations
 detection:
     SELECTION_1:
-        EventID: 11
+        Provider_Name: Microsoft-Windows-Security-Mitigations
     SELECTION_2:
-        EventID: 12
+        EventID: 11
     SELECTION_3:
+        EventID: 12
+    SELECTION_4:
         ImageName:
         - '*\Users\Public\\*'
         - '*\PerfLogs\\*'
@@ -17,15 +19,15 @@ detection:
         - '*\Downloads\\*'
         - '*\AppData\Local\Temp\\*'
         - '*C:\Windows\TEMP\\*'
-    condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3)
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
 falsepositives:
 - Unknown
 id: 8289bf8c-4aca-4f5a-9db3-dc3d7afe5c10
 level: high
 logsource:
-    category: security-mitigations
     product: windows
-modified: 2022/08/05
+    service: security-mitigations
+modified: 2022/09/28
 references:
 - https://github.com/nasbench/EVTX-ETW-Resources/blob/45fd5be71a51aa518b1b36d4e1f36af498084e27/ETWEventsList/CSV/Windows11/21H2/W11_21H2_Pro_20220719_22000.795/Providers/Microsoft-Windows-Security-Mitigations.csv
 status: experimental

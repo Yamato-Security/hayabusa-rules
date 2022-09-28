@@ -6,10 +6,12 @@ description: Detects loading of diagcab packages from a remote path, as seen in 
     vulnerability
 detection:
     SELECTION_1:
-        EventID: 101
+        Channel: Microsoft-Windows-Diagnosis-Scripted/Operational
     SELECTION_2:
+        EventID: 101
+    SELECTION_3:
         PackagePath: '*\\\\\*'
-    condition: (SELECTION_1 and SELECTION_2)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate package hosted on a known and authorized remote location
 id: 50cb47b8-2c33-4b23-a2e9-4600657d9746

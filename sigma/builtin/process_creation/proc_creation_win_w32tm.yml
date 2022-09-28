@@ -1,0 +1,42 @@
+title: Use of W32tm as Timer
+ruletype: Sigma
+author: frack113
+date: 2022/09/25
+description: When configured with suitable command line arguments, w32tm can act as
+    a delay mechanism
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\w32tm.exe'
+    SELECTION_4:
+        OriginalFileName: w32time.dll
+    SELECTION_5:
+        CommandLine: '*/stripchart*'
+    SELECTION_6:
+        CommandLine: '*/computer:*'
+    SELECTION_7:
+        CommandLine: '*/period:*'
+    SELECTION_8:
+        CommandLine: '*/dataonly*'
+    SELECTION_9:
+        CommandLine: '*/samples:*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9))
+falsepositives:
+- Legitimate use
+id: 6da2c9f5-7c53-401b-aacb-92c040ce1215
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/d0dad62dbcae9c60c519368e82c196a3db577055/atomics/T1124/T1124.md
+- https://blogs.blackberry.com/en/2022/05/dirty-deeds-done-dirt-cheap-russian-rat-offers-backdoor-bargains
+status: experimental
+tags:
+- attack.discovery
+- attack.t1124
+

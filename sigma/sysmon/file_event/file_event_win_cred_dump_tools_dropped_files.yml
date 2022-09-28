@@ -37,6 +37,7 @@ detection:
         - '*\servpw64.exe'
         - '*\pwdump.exe'
         - '*\procdump64.exe'
+        - '*\Dumpy.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Legitimate Administrator using tool for password recovery
@@ -45,7 +46,7 @@ level: high
 logsource:
     category: file_event
     product: windows
-modified: 2022/01/11
+modified: 2022/09/21
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 status: test

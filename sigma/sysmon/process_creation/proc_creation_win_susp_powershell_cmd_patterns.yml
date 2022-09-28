@@ -28,7 +28,12 @@ detection:
         - '* IAB*'
         - '* PAA*'
         - '* aQBlAHgA*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_6:
+        ParentImage:
+        - '*C:\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\\*'
+        - '*\gc_worker.exe*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6))
 falsepositives:
 - Other tools that work with encoded scripts in the command line instead of script
     files
@@ -37,7 +42,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/09/26
 references:
 - https://app.any.run/tasks/b9040c63-c140-479b-ad59-f1bb56ce7a97/
 status: experimental

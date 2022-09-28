@@ -7,6 +7,8 @@ description: Detects a suspicious process creation as SYSTEM user (suspicious pr
 detection:
     SELECTION_1:
         EventID: 1
+    SELECTION_10:
+        ParentImage: C:\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\\*
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -72,7 +74,7 @@ detection:
         ParentCommandLine: '*\DismFoDInstall.cmd*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and
         (SELECTION_5 or SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8 and
-        SELECTION_9)))
+        SELECTION_9) or (SELECTION_10)))
 falsepositives:
 - Administrative activity
 - Scripts and administrative tools used in the monitored environment
@@ -82,7 +84,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/04/27
+modified: 2022/09/27
 references:
 - Internal Research
 - https://tools.thehacker.recipes/mimikatz/modules

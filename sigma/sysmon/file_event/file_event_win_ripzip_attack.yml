@@ -14,9 +14,9 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        TargetFileName: '*\Microsoft\Windows\Start Menu\Programs\Startup*'
+        TargetFilename: '*\Microsoft\Windows\Start Menu\Programs\Startup*'
     SELECTION_4:
-        TargetFileName: '*.lnk.{0AFACED1-E828-11D1-9187-B532F1E9575D}*'
+        TargetFilename: '*.lnk.{0AFACED1-E828-11D1-9187-B532F1E9575D}*'
     SELECTION_5:
         Image: '*\explorer.exe'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)

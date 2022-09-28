@@ -16,8 +16,8 @@ detection:
         NewProcessName: '*\explorer.exe'
     SELECTION_6:
         ImageFileName: explorer.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not (SELECTION_4))
-        and  not (SELECTION_5 or SELECTION_6))
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5 or SELECTION_6)))
 falsepositives:
 - Administrative scripts
 fields:
@@ -28,7 +28,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2021/06/29
+modified: 2021/09/28
 references:
 - https://twitter.com/SBousseaden/status/1139811587760562176
 status: experimental
