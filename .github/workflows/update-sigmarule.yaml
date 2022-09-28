@@ -6,14 +6,13 @@ name: Pipline for update Sigma rule
 on:
   ## This workflow is exected once a day.
   ## And I add workflow_dispatch so that you can execute this workflow from GitHub UI. 
-  push:
   workflow_dispatch:
   schedule:
     - cron: '0 20 * * *' 
 
 jobs:
   updateSigmaRule:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: clone hayabusa rule repo
         uses: actions/checkout@v2
@@ -26,13 +25,6 @@ jobs:
           repository: SigmaHQ/sigma
           path: sigma-repo # It is necessary to specify the path because hayabusa-rules repository have the folder which has the same name.
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing in local machine by act(Local GitHub Action Runner).We have to specify the github token explicitly.
-          fetch-depth: 0 # DEBUG: option for use checkout in next Step
-
-      - name: Debug for current update in Sigma.
-        run: | # checkout before https://github.com/SigmaHQ/sigma/commit/ad6ddf5896d2032293e56d76a1e1821e9c6ae7b2
-          pushd sigma-repo
-          git checkout b9c7b79847edc40c1d87ea0b338f97be808ea829
-          popd
 
       - name: set Hayabusa backend for sigmac
         run: |
@@ -42,7 +34,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.10'
           token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: download requirements.txt with curl 
@@ -105,13 +97,13 @@ jobs:
           assignees: itiB
           reviewers: itiB
 
-      # - name: Enable Pull Request Automerge
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   uses: peter-evans/enable-pull-request-automerge@v1
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-      #     merge-method: squash
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
 
       - name: upload change log
         if: env.change_exist == 'true'
