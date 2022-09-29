@@ -1,5 +1,5 @@
 ### if you want to execte GitHub Action in your local machine please use following commnad.(Please install act if not)
-### act workflow_dispatch -s GITHUB_TOKEN=(your private access token) -P ubuntu-latest=nektos/act-environments-ubuntu:18.04 --reuse
+### act workflow_dispatch -s GITHUB_TOKEN=(your private access token) -P ubuntu-latest=nektos/act-environments-ubuntu:18.04 --artifact-server-path /tmp/act-artifacts
 
 name: Pipline for update Sigma rule
 
@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: clone hayabusa rule repo
         uses: actions/checkout@v2
+        with:
+          path: hayabusa-rules
 
       - name: clone sigmac
         uses: actions/checkout@v2
@@ -26,13 +28,13 @@ jobs:
 
       - name: set Hayabusa backend for sigmac
         run: |
-          cp tools/sigmac/convert.py sigma-repo/convert.py
-          cp tools/sigmac/hayabusa.py sigma-repo/tools/sigma/backends/hayabusa.py
+          cp hayabusa-rules/tools/sigmac/convert.py sigma-repo/convert.py
+          cp hayabusa-rules/tools/sigmac/hayabusa.py sigma-repo/tools/sigma/backends/hayabusa.py
       
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: '3.10'
           token: '${{ secrets.GITHUB_TOKEN }}'
 
       - name: download requirements.txt with curl 
@@ -50,32 +52,41 @@ jobs:
           pushd sigma-repo
           python3 convert.py --suppression
           popd
-          rm -rf sigma
-          mkdir sigma
-          cp -r sigma-repo/hayabusa_rules/* sigma/
-          rm -rf sigma-repo
+          rm -rf hayabusa-rules/sigma/
+          mkdir hayabusa-rules/sigma/
+          cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
 
       - name: Create Text
         id: create-text
-        continue-on-error: true
         run: |
+          pushd hayabusa-rules
           echo "action_date=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
           echo "change_exist=true" >> $GITHUB_ENV
-          git_new=$(git status -s | grep "??" | sed "s/?? /- /g")
-          git_mod=$(git status | grep "modified:" | sed -e "s/\s*modified:\s*/- /g")
-          git_del=$(git status | grep "deleted:"  | sed -e "s/\s*deleted:\s*/- /g")
-          echo "::set-output name=git_new::${git_new//$'\n'/'%0A'}"
-          echo "::set-output name=git_mod::${git_mod//$'\n'/'%0A'}"
-          echo "::set-output name=git_del::${git_del//$'\n'/'%0A'}"
-          if [[ "$(git status)" =~ "nothing to commit," ]]; then
-            echo "change_exist=false" >> $GITHUBls_ENV
+          git_new=$(git diff --name-status --diff-filter=AC)
+          git_mod=$(git diff --name-status --diff-filter=MR)
+          git_del=$(git diff --name-status --diff-filter=D)
+          is_rule_changed=$(git status)
+          if [ "${is_rule_changed}" =~ nothing\sto\scommit ]; then
+            echo "change_exist=false" >> $GITHUB_ENV
+          else
+          	echo "<details><summary>New files</summary>" >> ../changed_rule.logs
+          	echo "${git_new}" >> ../changed_rule.logs
+          	echo "</details>" >> ../changed_rule.logs
+          	echo "<details><summary>Modified files</summary>" >> ../changed_rule.logs
+          	echo "${git_mod}" >> ../changed_rule.logs
+          	echo "</details>" >> ../changed_rule.logs
+          	echo "<details><summary>Deleted files</summary>" >> ../changed_rule.logs
+          	echo "${git_del}" >> ../changed_rule.logs
+          	echo "</details>" >> ../changed_rule.logs
           fi
+          popd
 
       - name: Create Pull Request
         if: env.change_exist == 'true'
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
+          path: hayabusa-rules
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Sigma Rule Update (${{ env.action_date }})
           branch: rules/auto-sigma-update
@@ -83,24 +94,6 @@ jobs:
           title: '[Auto] Sigma Update report'
           body: |
             ${{ env.action_date }} Update report
-
-            <details><summary>New files</summary>
-
-            ${{ steps.create-text.outputs.git_new }}
-
-            </details>
-
-            <details><summary>Modified files</summary>
-
-            ${{ steps.create-text.outputs.git_mod }}
-
-            </details>
-
-            <details><summary>Deleted files</summary>
-
-            ${{ steps.create-text.outputs.git_del }}
-
-            </details>
           assignees: itiB
           reviewers: itiB
 
@@ -111,3 +104,11 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
+
+      - name: upload change log
+        if: env.change_exist == 'true'
+        uses: actions/upload-artifact@v2
+        with:
+          name: changed_rule_log
+          path: ${{ github.workspace }}/changed_rule.logs
+          retention-days: 30

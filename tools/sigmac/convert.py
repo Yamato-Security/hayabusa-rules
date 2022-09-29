@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import argparse
 import copy
 import logging
@@ -6,7 +8,6 @@ import shutil
 import subprocess
 import sys
 from multiprocessing.pool import ThreadPool
-from typing import Dict, List, Set
 
 import ruamel.yaml
 
@@ -52,7 +53,7 @@ class Logconverter():
     rule_count = 0
 
     def __init__(self, sigma_dir: str, rules_dir: str, config_dir: str):
-        self.config_map: Dict[str, Set[str]] = dict()
+        self.config_map: dict[str, set[str]] = dict()
 
         self.sigma_dir = sigma_dir
         self.rules_dir = rules_dir
@@ -82,7 +83,7 @@ class Logconverter():
         failed = sum(result)
         print(str(len(result) - failed) + " rules where converted! (failed: " + str(failed) + ")")
 
-    def create_rule_list(self, rules_dir) -> List[ConvertData]:
+    def create_rule_list(self, rules_dir) -> list[ConvertData]:
         convert_datas = list()
         for file in os.listdir(rules_dir):
             file_path = os.path.join(rules_dir, file)
@@ -92,8 +93,8 @@ class Logconverter():
                 convert_datas.extend(self.create_convert_command(file_path, file))
         return convert_datas
 
-    def create_convert_command(self, rule_path: str, file_name: str) -> List[ConvertData]:
-        convert_datas: List[ConvertData] = list()
+    def create_convert_command(self, rule_path: str, file_name: str) -> list[ConvertData]:
+        convert_datas: list[ConvertData] = list()
         sysmon_related = False
         category = None
 
