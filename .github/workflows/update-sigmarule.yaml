@@ -47,18 +47,14 @@ jobs:
           pip install -r requirements.txt
           rm requirements.txt
 
-      # - name: Update sigma rules
-      #   run: |
-      #     pushd sigma-repo
-      #     python3 convert.py --suppression
-      #     popd
-      #     rm -rf hayabusa-rules/sigma/
-      #     mkdir hayabusa-rules/sigma/
-      #     cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
-
       - name: Update sigma rules
         run: |
-          rm -r hayabusa-rules/sigma/sysmon/create_remote_thread
+          pushd sigma-repo
+          python3 convert.py --suppression
+          popd
+          rm -rf hayabusa-rules/sigma/
+          mkdir hayabusa-rules/sigma/
+          cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
 
       - name: Create Text
         id: create-text
@@ -95,19 +91,19 @@ jobs:
           commit-message: Sigma Rule Update (${{ env.action_date }})
           branch: rules/auto-sigma-update
           delete-branch: true
-          title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If the PR which have the same name have already existed, this github action library will not create new pull request but it will update the PR that have the same name. Therefore I add the date to the pull request's title.
+          title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If the PR with the same name have already existed, this github action library will not create new pull request but it will update the PR with the same name. Therefore I add the date to the pull request's title not to update existed PR.
           body: |
             ${{ env.action_date }} Update report
           assignees: itiB
           reviewers: itiB
 
-      # - name: Enable Pull Request Automerge
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   uses: peter-evans/enable-pull-request-automerge@v1
-      #   with:
-      #     token: ${{ secrets.GITHUB_TOKEN }}
-      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-      #     merge-method: squash
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
 
       - name: upload change log
         if: env.change_exist == 'true'
