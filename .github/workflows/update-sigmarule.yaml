@@ -60,7 +60,7 @@ jobs:
         id: create-text
         run: |
           pushd hayabusa-rules
-          echo "action_date=$(date '+%Y-%m-%d')" >> $GITHUB_ENV
+          echo "action_date=$(date '+%Y-%m-%d  %H:%M:%S')" >> $GITHUB_ENV
           echo "change_exist=true" >> $GITHUB_ENV
           git_new=$(git diff --name-status --diff-filter=AC)
           git_mod=$(git diff --name-status --diff-filter=MR)
@@ -91,7 +91,7 @@ jobs:
           commit-message: Sigma Rule Update (${{ env.action_date }})
           branch: rules/auto-sigma-update
           delete-branch: true
-          title: '[Auto] Sigma Update report'
+          title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If the PR with the same name have already existed, this github action library will not create new pull request but it will update the PR with the same name. Therefore I add the date to the pull request's title not to update existed PR.
           body: |
             ${{ env.action_date }} Update report
           assignees: itiB
