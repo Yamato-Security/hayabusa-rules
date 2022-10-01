@@ -1,0 +1,506 @@
+Channel,EventID,EventTitle
+Microsoft-Windows-Sysmon/Operational,1,Process Creation.
+Microsoft-Windows-Sysmon/Operational,2,File Creation Timestamp Changed. (Possible Timestomping)
+Microsoft-Windows-Sysmon/Operational,3,Network Connection.
+Microsoft-Windows-Sysmon/Operational,4,Sysmon Service State Changed.
+Microsoft-Windows-Sysmon/Operational,5,Process Terminated.
+Microsoft-Windows-Sysmon/Operational,6,Driver Loaded.
+Microsoft-Windows-Sysmon/Operational,7,Image Loaded.
+Microsoft-Windows-Sysmon/Operational,8,Remote Thread Created. (Possible Code Injection)
+Microsoft-Windows-Sysmon/Operational,9,Raw Access Read.
+Microsoft-Windows-Sysmon/Operational,10,Process Access.
+Microsoft-Windows-Sysmon/Operational,11,File Creation or Overwrite.
+Microsoft-Windows-Sysmon/Operational,12,Registry Object Created/Deletion.
+Microsoft-Windows-Sysmon/Operational,13,Registry Value Set.
+Microsoft-Windows-Sysmon/Operational,14,Registry Key or Value Rename.
+Microsoft-Windows-Sysmon/Operational,15,Alternate Data Stream Created.
+Microsoft-Windows-Sysmon/Operational,16,Sysmon Service Configuration Changed.
+Microsoft-Windows-Sysmon/Operational,17,Named Pipe Created.
+Microsoft-Windows-Sysmon/Operational,18,Named Pipe Connection.
+Microsoft-Windows-Sysmon/Operational,19,WmiEventFilter Activity.
+Microsoft-Windows-Sysmon/Operational,20,WmiEventConsumer Activity.
+Microsoft-Windows-Sysmon/Operational,21,WmiEventConsumerToFilter Activity.
+Microsoft-Windows-Sysmon/Operational,22,DNS Query.
+Microsoft-Windows-Sysmon/Operational,23,Deleted File Archived.
+Microsoft-Windows-Sysmon/Operational,24,Clipboard Changed.
+Microsoft-Windows-Sysmon/Operational,25,Process Tampering. (Possible Process Hollowing or Herpaderping)
+Microsoft-Windows-Sysmon/Operational,26,File Deleted.
+Microsoft-Windows-Sysmon/Operational,27,Executable File Write Blocked.
+Microsoft-Windows-Sysmon/Operational,255,Sysmon Error.
+Microsoft-Windows-PowerShell/Operational,4103,Module logging. Executing Pipeline.
+Microsoft-Windows-PowerShell/Operational,4104,Script Block Logging.
+Microsoft-Windows-PowerShell/Operational,4105,CommandStart - Started
+Microsoft-Windows-PowerShell/Operational,4106,CommandStart - Stoppeed
+Security,1100,The event logging service has shut down
+Security,1101,Audit events have been dropped by the transport.
+Security,1102,The audit log was cleared
+Security,1104,The security Log is now full
+Security,1105,Event log automatic backup
+Security,1108,The event logging service encountered an error 
+Security,4608,Windows is starting up
+Security,4609,Windows is shutting down
+Security,4610,An authentication package has been loaded by the Local Security Authority
+Security,4611,A trusted logon process has been registered with the Local Security Authority
+Security,4612,"Internal resources allocated for the queuing of audit messages have been exhausted, leading to the loss of some audits."
+Security,4614,A notification package has been loaded by the Security Account Manager.
+Security,4615,Invalid use of LPC port
+Security,4616,The system time was changed.
+Security,4618,A monitored security event pattern has occurred
+Security,4621,Administrator recovered system from CrashOnAuditFail
+Security,4622,A security package has been loaded by the Local Security Authority.
+Security,4624,Logon Success
+Security,4625,Logon Failure
+Security,4634,Account Logoff
+Security,4646,IKE DoS-prevention mode started
+Security,4647,User initiated logoff
+Security,4648,Explicit Logon
+Security,4649,A replay attack was detected
+Security,4650,An IPsec Main Mode security association was established
+Security,4651,An IPsec Main Mode security association was established
+Security,4652,An IPsec Main Mode negotiation failed
+Security,4653,An IPsec Main Mode negotiation failed
+Security,4654,An IPsec Quick Mode negotiation failed
+Security,4655,An IPsec Main Mode security association ended
+Security,4656,A handle to an object was requested
+Security,4657,A registry value was modified
+Security,4658,The handle to an object was closed
+Security,4659,A handle to an object was requested with intent to delete
+Security,4660,An object was deleted
+Security,4661,A handle to an object was requested
+Security,4662,An operation was performed on an object
+Security,4663,An attempt was made to access an object
+Security,4664,An attempt was made to create a hard link
+Security,4665,An attempt was made to create an application client context.
+Security,4666,An application attempted an operation
+Security,4667,An application client context was deleted
+Security,4668,An application was initialized
+Security,4670,Permissions on an object were changed
+Security,4671,An application attempted to access a blocked ordinal through the TBS
+Security,4672,Admin Logon
+Security,4673,A privileged service was called
+Security,4674,An operation was attempted on a privileged object
+Security,4675,SIDs were filtered
+Security,4685,The state of a transaction has changed
+Security,4688,Process Creation.
+Security,4689,A process has exited
+Security,4690,An attempt was made to duplicate a handle to an object
+Security,4691,Indirect access to an object was requested
+Security,4692,Backup of data protection master key was attempted
+Security,4693,Recovery of data protection master key was attempted
+Security,4694,Protection of auditable protected data was attempted
+Security,4695,Unprotection of auditable protected data was attempted
+Security,4696,A primary token was assigned to process
+Security,4697,A service was installed in the system
+Security,4698,A scheduled task was created
+Security,4699,A scheduled task was deleted
+Security,4700,A scheduled task was enabled
+Security,4701,A scheduled task was disabled
+Security,4702,A scheduled task was updated
+Security,4704,A user right was assigned
+Security,4705,A user right was removed
+Security,4706,A new trust was created to a domain
+Security,4707,A trust to a domain was removed
+Security,4709,IPsec Services was started
+Security,4710,IPsec Services was disabled
+Security,4711,PAStore Engine
+Security,4712,IPsec Services encountered a potentially serious failure
+Security,4713,Kerberos policy was changed
+Security,4714,Encrypted data recovery policy was changed
+Security,4715,The audit policy (SACL) on an object was changed
+Security,4716,Trusted domain information was modified
+Security,4717,System security access was granted to an account
+Security,4718,System security access was removed from an account
+Security,4719,System audit policy was changed
+Security,4720,A user account was created
+Security,4722,A user account was enabled
+Security,4723,An attempt was made to change an account's password
+Security,4724,An attempt was made to reset an accounts password
+Security,4725,A user account was disabled
+Security,4726,A user account was deleted
+Security,4727,A security-enabled global group was created
+Security,4728,A member was added to a security-enabled global group
+Security,4729,A member was removed from a security-enabled global group
+Security,4730,A security-enabled global group was deleted
+Security,4731,A security-enabled local group was created
+Security,4732,A member was added to a security-enabled local group
+Security,4733,A member was removed from a security-enabled local group
+Security,4734,A security-enabled local group was deleted
+Security,4735,A security-enabled local group was changed
+Security,4737,A security-enabled global group was changed
+Security,4738,A user account was changed
+Security,4739,Domain Policy was changed
+Security,4740,A user account was locked out
+Security,4741,A computer account was created
+Security,4742,A computer account was changed
+Security,4743,A computer account was deleted
+Security,4744,A security-disabled local group was created
+Security,4745,A security-disabled local group was changed
+Security,4746,A member was added to a security-disabled local group
+Security,4747,A member was removed from a security-disabled local group
+Security,4748,A security-disabled local group was deleted
+Security,4749,A security-disabled global group was created
+Security,4750,A security-disabled global group was changed
+Security,4751,A member was added to a security-disabled global group
+Security,4752,A member was removed from a security-disabled global group
+Security,4753,A security-disabled global group was deleted
+Security,4754,A security-enabled universal group was created
+Security,4755,A security-enabled universal group was changed
+Security,4756,A member was added to a security-enabled universal group
+Security,4757,A member was removed from a security-enabled universal group
+Security,4758,A security-enabled universal group was deleted
+Security,4759,A security-disabled universal group was created
+Security,4760,A security-disabled universal group was changed
+Security,4761,A member was added to a security-disabled universal group
+Security,4762,A member was removed from a security-disabled universal group
+Security,4763,A security-disabled universal group was deleted
+Security,4764,A groups type was changed
+Security,4765,SID History was added to an account
+Security,4766,An attempt to add SID History to an account failed
+Security,4767,A user account was unlocked
+Security,4768,A Kerberos authentication ticket (TGT) was requested
+Security,4769,A Kerberos service ticket was requested
+Security,4770,A Kerberos service ticket was renewed
+Security,4771,Kerberos pre-authentication failed
+Security,4772,A Kerberos authentication ticket request failed
+Security,4773,A Kerberos service ticket request failed
+Security,4774,An account was mapped for logon
+Security,4775,An account could not be mapped for logon
+Security,4776,The domain controller attempted to validate the credentials for an account
+Security,4777,The domain controller failed to validate the credentials for an account
+Security,4778,A session was reconnected to a Window Station
+Security,4779,A session was disconnected from a Window Station
+Security,4780,The ACL was set on accounts which are members of administrators groups
+Security,4781,The name of an account was changed
+Security,4782,The password hash an account was accessed
+Security,4783,A basic application group was created
+Security,4784,A basic application group was changed
+Security,4785,A member was added to a basic application group
+Security,4786,A member was removed from a basic application group
+Security,4787,A non-member was added to a basic application group
+Security,4788,A non-member was removed from a basic application group..
+Security,4789,A basic application group was deleted
+Security,4790,An LDAP query group was created
+Security,4791,A basic application group was changed
+Security,4792,An LDAP query group was deleted
+Security,4793,The Password Policy Checking API was called
+Security,4794,An attempt was made to set the Directory Services Restore Mode administrator password
+Security,4800,The workstation was locked
+Security,4801,The workstation was unlocked
+Security,4802,The screen saver was invoked
+Security,4803,The screen saver was dismissed
+Security,4816,RPC detected an integrity violation while decrypting an incoming message
+Security,4817,Auditing settings on object were changed.
+Security,4864,A namespace collision was detected
+Security,4865,A trusted forest information entry was added
+Security,4866,A trusted forest information entry was removed
+Security,4867,A trusted forest information entry was modified
+Security,4868,The certificate manager denied a pending certificate request
+Security,4869,Certificate Services received a resubmitted certificate request
+Security,4870,Certificate Services revoked a certificate
+Security,4871,Certificate Services received a request to publish the certificate revocation list (CRL)
+Security,4872,Certificate Services published the certificate revocation list (CRL)
+Security,4873,A certificate request extension changed
+Security,4874,One or more certificate request attributes changed.
+Security,4875,Certificate Services received a request to shut down
+Security,4876,Certificate Services backup started
+Security,4877,Certificate Services backup completed
+Security,4878,Certificate Services restore started
+Security,4879,Certificate Services restore completed
+Security,4880,Certificate Services started
+Security,4881,Certificate Services stopped
+Security,4882,The security permissions for Certificate Services changed
+Security,4883,Certificate Services retrieved an archived key
+Security,4884,Certificate Services imported a certificate into its database
+Security,4885,The audit filter for Certificate Services changed
+Security,4886,Certificate Services received a certificate request
+Security,4887,Certificate Services approved a certificate request and issued a certificate
+Security,4888,Certificate Services denied a certificate request
+Security,4889,Certificate Services set the status of a certificate request to pending
+Security,4890,The certificate manager settings for Certificate Services changed.
+Security,4891,A configuration entry changed in Certificate Services
+Security,4892,A property of Certificate Services changed
+Security,4893,Certificate Services archived a key
+Security,4894,Certificate Services imported and archived a key
+Security,4895,Certificate Services published the CA certificate to Active Directory Domain Services
+Security,4896,One or more rows have been deleted from the certificate database
+Security,4897,Role separation enabled
+Security,4898,Certificate Services loaded a template
+Security,4899,A Certificate Services template was updated
+Security,4900,Certificate Services template security was updated
+Security,4902,The Per-user audit policy table was created
+Security,4904,An attempt was made to register a security event source
+Security,4905,An attempt was made to unregister a security event source
+Security,4906,The CrashOnAuditFail value has changed
+Security,4907,Auditing settings on object were changed
+Security,4908,Special Groups Logon table modified
+Security,4909,The local policy settings for the TBS were changed
+Security,4910,The group policy settings for the TBS were changed
+Security,4912,Per User Audit Policy was changed
+Security,4928,An Active Directory replica source naming context was established
+Security,4929,An Active Directory replica source naming context was removed
+Security,4930,An Active Directory replica source naming context was modified
+Security,4931,An Active Directory replica destination naming context was modified
+Security,4932,Synchronization of a replica of an Active Directory naming context has begun
+Security,4933,Synchronization of a replica of an Active Directory naming context has ended
+Security,4934,Attributes of an Active Directory object were replicated
+Security,4935,Replication failure begins
+Security,4936,Replication failure ends
+Security,4937,A lingering object was removed from a replica
+Security,4944,The following policy was active when the Windows Firewall started
+Security,4945,A rule was listed when the Windows Firewall started
+Security,4946,A change has been made to Windows Firewall exception list. A rule was added
+Security,4947,A change has been made to Windows Firewall exception list. A rule was modified
+Security,4948,A change has been made to Windows Firewall exception list. A rule was deleted
+Security,4949,Windows Firewall settings were restored to the default values
+Security,4950,A Windows Firewall setting has changed
+Security,4951,A rule has been ignored because its major version number was not recognized by Windows Firewall
+Security,4952,Parts of a rule have been ignored because its minor version number was not recognized by Windows Firewall
+Security,4953,A rule has been ignored by Windows Firewall because it could not parse the rule
+Security,4954,Windows Firewall Group Policy settings has changed. The new settings have been applied
+Security,4956,Windows Firewall has changed the active profile
+Security,4957,Windows Firewall did not apply the following rule
+Security,4958,Windows Firewall did not apply the following rule because the rule referred to items not configured on this computer
+Security,4960,IPsec dropped an inbound packet that failed an integrity check
+Security,4961,IPsec dropped an inbound packet that failed a replay check
+Security,4962,IPsec dropped an inbound packet that failed a replay check
+Security,4963,IPsec dropped an inbound clear text packet that should have been secured
+Security,4964,Special groups have been assigned to a new logon
+Security,4965,IPsec received a packet from a remote computer with an incorrect Security Parameter Index (SPI).
+Security,4976,"During Main Mode negotiation, IPsec received an invalid negotiation packet."
+Security,4977,"During Quick Mode negotiation, IPsec received an invalid negotiation packet."
+Security,4978,"During Extended Mode negotiation, IPsec received an invalid negotiation packet."
+Security,4979,IPsec Main Mode and Extended Mode security associations were established
+Security,4980,IPsec Main Mode and Extended Mode security associations were established
+Security,4981,IPsec Main Mode and Extended Mode security associations were established
+Security,4982,IPsec Main Mode and Extended Mode security associations were established
+Security,4983,An IPsec Extended Mode negotiation failed
+Security,4984,An IPsec Extended Mode negotiation failed
+Security,4985,The state of a transaction has changed
+Security,5024,The Windows Firewall Service has started successfully
+Security,5025,The Windows Firewall Service has been stopped
+Security,5027,The Windows Firewall Service was unable to retrieve the security policy from the local storage
+Security,5028,The Windows Firewall Service was unable to parse the new security policy.
+Security,5029,The Windows Firewall Service failed to initialize the driver
+Security,5030,The Windows Firewall Service failed to start
+Security,5031,The Windows Firewall Service blocked an application from accepting incoming connections on the network.
+Security,5032,Windows Firewall was unable to notify the user that it blocked an application from accepting incoming connections on the network
+Security,5033,The Windows Firewall Driver has started successfully
+Security,5034,The Windows Firewall Driver has been stopped
+Security,5035,The Windows Firewall Driver failed to start
+Security,5037,The Windows Firewall Driver detected critical runtime error. Terminating
+Security,5038,Code integrity determined that the image hash of a file is not valid
+Security,5039,A registry key was virtualized.
+Security,5040,A change has been made to IPsec settings. An Authentication Set was added.
+Security,5041,A change has been made to IPsec settings. An Authentication Set was modified
+Security,5042,A change has been made to IPsec settings. An Authentication Set was deleted
+Security,5043,A change has been made to IPsec settings. A Connection Security Rule was added
+Security,5044,A change has been made to IPsec settings. A Connection Security Rule was modified
+Security,5045,A change has been made to IPsec settings. A Connection Security Rule was deleted
+Security,5046,A change has been made to IPsec settings. A Crypto Set was added
+Security,5047,A change has been made to IPsec settings. A Crypto Set was modified
+Security,5048,A change has been made to IPsec settings. A Crypto Set was deleted
+Security,5049,An IPsec Security Association was deleted
+Security,5050,An attempt to programmatically disable the Windows Firewall using a call to INetFwProfile
+Security,5051,A file was virtualized
+Security,5056,A cryptographic self test was performed
+Security,5057,A cryptographic primitive operation failed
+Security,5058,Key file operation
+Security,5059,Key migration operation
+Security,5060,Verification operation failed
+Security,5061,Cryptographic operation
+Security,5062,A kernel-mode cryptographic self test was performed
+Security,5063,A cryptographic provider operation was attempted
+Security,5064,A cryptographic context operation was attempted
+Security,5065,A cryptographic context modification was attempted
+Security,5066,A cryptographic function operation was attempted
+Security,5067,A cryptographic function modification was attempted
+Security,5068,A cryptographic function provider operation was attempted
+Security,5069,A cryptographic function property operation was attempted
+Security,5070,A cryptographic function property operation was attempted
+Security,5120,OCSP Responder Service Started
+Security,5121,OCSP Responder Service Stopped
+Security,5122,A Configuration entry changed in the OCSP Responder Service
+Security,5123,A configuration entry changed in the OCSP Responder Service
+Security,5124,A security setting was updated on OCSP Responder Service
+Security,5125,A request was submitted to OCSP Responder Service
+Security,5126,Signing Certificate was automatically updated by the OCSP Responder Service
+Security,5127,The OCSP Revocation Provider successfully updated the revocation information
+Security,5136,A directory service object was modified
+Security,5137,A directory service object was created
+Security,5138,A directory service object was undeleted
+Security,5139,A directory service object was moved
+Security,5140,A network share object was accessed
+Security,5141,A directory service object was deleted
+Security,5142,A network share object was added.
+Security,5143,A network share object was modified
+Security,5144,A network share object was deleted.
+Security,5145,A network share object was checked to see whether client can be granted desired access
+Security,5148,The Windows Filtering Platform has detected a DoS attack and entered a defensive mode; packets associated with this attack will be discarded.
+Security,5149,The DoS attack has subsided and normal processing is being resumed.
+Security,5150,The Windows Filtering Platform has blocked a packet.
+Security,5151,A more restrictive Windows Filtering Platform filter has blocked a packet.
+Security,5152,The Windows Filtering Platform blocked a packet
+Security,5153,A more restrictive Windows Filtering Platform filter has blocked a packet
+Security,5154,The Windows Filtering Platform has permitted an application or service to listen on a port for incoming connections
+Security,5155,The Windows Filtering Platform has blocked an application or service from listening on a port for incoming connections
+Security,5156,The Windows Filtering Platform has allowed a connection
+Security,5157,The Windows Filtering Platform has blocked a connection
+Security,5158,The Windows Filtering Platform has permitted a bind to a local port
+Security,5159,The Windows Filtering Platform has blocked a bind to a local port
+Security,5168,Spn check for SMB/SMB2 fails.
+Security,5376,Credential Manager credentials were backed up
+Security,5377,Credential Manager credentials were restored from a backup
+Security,5378,The requested credentials delegation was disallowed by policy
+Security,5440,The following callout was present when the Windows Filtering Platform Base Filtering Engine started
+Security,5441,The following filter was present when the Windows Filtering Platform Base Filtering Engine started
+Security,5442,The following provider was present when the Windows Filtering Platform Base Filtering Engine started
+Security,5443,The following provider context was present when the Windows Filtering Platform Base Filtering Engine started
+Security,5444,The following sub-layer was present when the Windows Filtering Platform Base Filtering Engine started
+Security,5446,A Windows Filtering Platform callout has been changed
+Security,5447,A Windows Filtering Platform filter has been changed
+Security,5448,A Windows Filtering Platform provider has been changed
+Security,5449,A Windows Filtering Platform provider context has been changed
+Security,5450,A Windows Filtering Platform sub-layer has been changed
+Security,5451,An IPsec Quick Mode security association was established
+Security,5452,An IPsec Quick Mode security association ended
+Security,5453,An IPsec negotiation with a remote computer failed because the IKE and AuthIP IPsec Keying Modules (IKEEXT) service is not started
+Security,5456,PAStore Engine applied Active Directory storage IPsec policy on the computer
+Security,5457,PAStore Engine failed to apply Active Directory storage IPsec policy on the computer
+Security,5458,PAStore Engine applied locally cached copy of Active Directory storage IPsec policy on the computer
+Security,5459,PAStore Engine failed to apply locally cached copy of Active Directory storage IPsec policy on the computer
+Security,5460,PAStore Engine applied local registry storage IPsec policy on the computer
+Security,5461,PAStore Engine failed to apply local registry storage IPsec policy on the computer
+Security,5462,PAStore Engine failed to apply some rules of the active IPsec policy on the computer
+Security,5463,PAStore Engine polled for changes to the active IPsec policy and detected no changes
+Security,5464,"PAStore Engine polled for changes to the active IPsec policy, detected changes, and applied them to IPsec Services"
+Security,5465,PAStore Engine received a control for forced reloading of IPsec policy and processed the control successfully
+Security,5466,"PAStore Engine polled for changes to the Active Directory IPsec policy, determined that Active Directory cannot be reached, and will use the cached copy of the Active Directory IPsec policy instead"
+Security,5467,"PAStore Engine polled for changes to the Active Directory IPsec policy, determined that Active Directory can be reached, and found no changes to the policy"
+Security,5468,"PAStore Engine polled for changes to the Active Directory IPsec policy, determined that Active Directory can be reached, found changes to the policy, and applied those changes"
+Security,5471,PAStore Engine loaded local storage IPsec policy on the computer
+Security,5472,PAStore Engine failed to load local storage IPsec policy on the computer
+Security,5473,PAStore Engine loaded directory storage IPsec policy on the computer
+Security,5474,PAStore Engine failed to load directory storage IPsec policy on the computer
+Security,5477,PAStore Engine failed to add quick mode filter
+Security,5478,IPsec Services has started successfully
+Security,5479,IPsec Services has been shut down successfully
+Security,5480,IPsec Services failed to get the complete list of network interfaces on the computer
+Security,5483,IPsec Services failed to initialize RPC server. IPsec Services could not be started
+Security,5484,IPsec Services has experienced a critical failure and has been shut down
+Security,5485,IPsec Services failed to process some IPsec filters on a plug-and-play event for network interfaces
+Security,6144,Security policy in the group policy objects has been applied successfully
+Security,6145,One or more errors occured while processing security policy in the group policy objects
+Security,6272,Network Policy Server granted access to a user
+Security,6273,Network Policy Server denied access to a user
+Security,6274,Network Policy Server discarded the request for a user
+Security,6275,Network Policy Server discarded the accounting request for a user
+Security,6276,Network Policy Server quarantined a user
+Security,6277,Network Policy Server granted access to a user but put it on probation because the host did not meet the defined health policy
+Security,6278,Network Policy Server granted full access to a user because the host met the defined health policy
+Security,6279,Network Policy Server locked the user account due to repeated failed authentication attempts
+Security,6280,Network Policy Server unlocked the user account
+Security,6281,Code Integrity determined that the page hashes of an image file are not valid... 
+Security,6400,BranchCache: Received an incorrectly formatted response while discovering availability of content.
+Security,6401,BranchCache: Received invalid data from a peer. Data discarded.
+Security,6402,BranchCache: The message to the hosted cache offering it data is incorrectly formatted.
+Security,6403,BranchCache: The hosted cache sent an incorrectly formatted response to the client.
+Security,6404,BranchCache: Hosted cache could not be authenticated using the provisioned SSL certificate.
+Security,6405,BranchCache: %2 instance(s) of event id %1 occurred.
+Security,6406,%1 registered to Windows Firewall to control filtering for the following: %2
+Security,6407,1% (no more info in MSDN)
+Security,6408,Registered product %1 failed and Windows Firewall is now controlling the filtering for %2
+Security,6410,Code integrity determined that a file does not meet the security requirements to load into a process.
+System,1001,BSOD
+System,104,Event Log was Cleared
+System,1127,Group Policy: Generic Internal Error
+System,1129,Group Policy: Group Policy Application Failed due to Connectivity
+System,1125,Group Policy: Internal Error
+System,27,KDC Encryption Type Configuration
+System,16,Kerberos Key Integrity
+System,6,New Kernel Filter Driver
+System,1022,New MSI File Installed
+System,1033,New MSI File Installed
+System,7045,New Windows Service
+System,7023,The %1 service terminated with the following error: %2
+System,7035,The %1 service was successfully sent a %2 control.
+System,7036,The service entered the running/stopped state
+System,7030,"The service is marked as an interactive service. However, the system is configured to not allow interactive services. This service may not function properly."
+System,7040,The start type of the %1 service was changed from %2 to %3.
+System,7022,Windows Service Fail or Crash
+System,7023,Windows Service Fail or Crash
+System,7024,Windows Service Fail or Crash
+System,7026,Windows Service Fail or Crash
+System,7031,Windows Service Fail or Crash
+System,7032,Windows Service Fail or Crash
+System,7034,Windows Service Fail or Crash
+System,19,Windows Update Installed
+Microsoft-Windows-WinRM/Operational,6,Creating WSMan Session (on Client)
+Microsoft-Windows-WinRM/Operational,169,Creating WSMan Session (on Server)
+Microsoft-Windows-WinRM/Operational,81,Processing client request for operation CreateShell
+Microsoft-Windows-WinRM/Operational,82,Entering the plugin for operation CreateShell with a ResourceURI
+Microsoft-Windows-WinRM/Operational,134,Sending response for operation CreateShell
+Microsoft-Windows-AppLocker/EXE and DLL,8003,AppLocker Block Error
+Microsoft-Windows-AppLocker/EXE and DLL,8004,AppLocker Block Warning
+Microsoft-Windows-AppLocker/MSI and Script,8005,AppLocker permitted the execution of a PowerShell script
+Microsoft-Windows-AppLocker/MSI and Script,8006,AppLocker Warning Error
+Microsoft-Windows-AppLocker/MSI and Script,8007,AppLocker Warning
+Microsoft-Windows-WindowsUpdateClient/Operational,20,Windows Update Failed
+Microsoft-Windows-WindowsUpdateClient/Operational,24,Windows Update Failed
+Microsoft-Windows-WindowsUpdateClient/Operational,25,Windows Update Failed
+Microsoft-Windows-WindowsUpdateClient/Operational,31,Windows Update Failed
+Microsoft-Windows-WindowsUpdateClient/Operational,34,Windows Update Failed
+Microsoft-Windows-WindowsUpdateClient/Operational,35,Windows Update Failed
+Setup,1009,Hotpatching Failed
+Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2004,Firewall Rule Add
+Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2005,Firewall Rule Change
+Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2006,Firewall Rule Deleted
+Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2033,Firewall Rule Deleted
+Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,2009,Firewall Failed to load Group Policy
+Microsoft-Windows-Application-Experience/Program-Inventory,903,New Application Installation
+Microsoft-Windows-Application-Experience/Program-Inventory,904,New Application Installation
+Microsoft-Windows-Application-Experience/Program-Inventory,905,Updated Application
+Microsoft-Windows-Application-Experience/Program-Inventory,906,Updated Application
+Microsoft-Windows-Application-Experience/Program-Inventory,907,Removed Application
+Microsoft-Windows-Application-Experience/Program-Inventory,908,Removed Application
+Microsoft-Windows-Application-Experience/Program-Inventory,800,Summary of Software Activities
+Setup,2,Update Packages Installed
+Microsoft-Windows-CodeIntegrity/Operational,3001,Code Integrity Check Warning
+Microsoft-Windows-CodeIntegrity/Operational,3002,Code Integrity Check Warning
+Microsoft-Windows-CodeIntegrity/Operational,3003,Code Integrity Check Warning
+Microsoft-Windows-CodeIntegrity/Operational,3004,Code Integrity Check Warning
+Microsoft-Windows-CodeIntegrity/Operational,3010,Code Integrity Check Warning
+Microsoft-Windows-CodeIntegrity/Operational,3023,Code Integrity Check Warning
+Microsoft-Windows-Windows Defender/Operational,1005,Scan Failed
+Microsoft-Windows-Windows Defender/Operational,1006,Detected Malware
+Microsoft-Windows-Windows Defender/Operational,1008,Action on Malware Failed
+Microsoft-Windows-Windows Defender/Operational,1010,Failed to remove item from quarantine
+Microsoft-Windows-Windows Defender/Operational,2001,Failed to update signatures
+Microsoft-Windows-Windows Defender/Operational,2003,Failed to update engine
+Microsoft-Windows-Windows Defender/Operational,2004,Reverting to last known good set of signatures
+Microsoft-Windows-Windows Defender/Operational,3002,Real-Time Protection failed
+Microsoft-Windows-Windows Defender/Operational,5008,Unexpected Error
+Microsoft-Windows-NetworkProfile/Operational,10000,Network Connection and Disconnection Status (Wired and Wireless)
+Microsoft-Windows-NetworkProfile/Operational,10001,Network Connection and Disconnection Status (Wired and Wireless)
+Microsoft-Windows-WLAN-AutoConfig/Operational,8000,Starting a Wireless Connection
+Microsoft-Windows-WLAN-AutoConfig/Operational,8011,Starting a Wireless Connection
+Microsoft-Windows-WLAN-AutoConfig/Operational,8001,Successfully connected to Wireless connection
+Microsoft-Windows-WLAN-AutoConfig/Operational,8003,Disconnected from Wireless connection
+Microsoft-Windows-WLAN-AutoConfig/Operational,11000,Wireless Association Status
+Microsoft-Windows-WLAN-AutoConfig/Operational,11001,Wireless Association Status
+Microsoft-Windows-WLAN-AutoConfig/Operational,11002,Wireless Association Status
+Microsoft-Windows-WLAN-AutoConfig/Operational,11004,"Wireless Security Started, Stopped, Successful, or Failed"
+Microsoft-Windows-WLAN-AutoConfig/Operational,11005,"Wireless Security Started, Stopped, Successful, or Failed"
+Microsoft-Windows-WLAN-AutoConfig/Operational,11010,"Wireless Security Started, Stopped, Successful, or Failed"
+Microsoft-Windows-WLAN-AutoConfig/Operational,11006,"Wireless Security Started, Stopped, Successful, or Failed"
+Microsoft-Windows-WLAN-AutoConfig/Operational,8002,Wireless Connection Failed
+Microsoft-Windows-WLAN-AutoConfig/Operational,12011,Wireless Authentication Started and Failed
+Microsoft-Windows-WLAN-AutoConfig/Operational,12012,Wireless Authentication Started and Failed
+Microsoft-Windows-WLAN-AutoConfig/Operational,12013,Wireless Authentication Started and Failed
+Microsfot-Windows-USB-USBHUB3-Analytic,43,New Device Information
+Microsoft-Windows-Kernel-PnP/Device Configuration,400,New Mass Storage Installation
+Microsoft-Windows-Kernel-PnP/Device Configuration,410,New Mass Storage Installation
+Microsoft-Windows-TerminalServices-LocalSessionManager/Operational,21,Shell start notification received
+Microsoft-Windows-TerminalServices-LocalSessionManager/Operational,23,Session logoff succeeded
+Microsoft-Windows-TerminalServices-LocalSessionManager/Operational,24,Session has been disconnected
+Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational,1149,User authentication succeeded
+Microsoft-Windows-TaskScheduler/Operational,106,A task has been scheduled
