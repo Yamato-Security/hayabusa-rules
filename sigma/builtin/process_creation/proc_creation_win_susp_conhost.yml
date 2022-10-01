@@ -13,7 +13,12 @@ detection:
         ParentProcessName: '*\conhost.exe'
     SELECTION_4:
         Provider_Name: SystemTraceProvider-Process
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_5:
+        NewProcessName: '*\git.exe'
+    SELECTION_6:
+        ParentCommandLine: '* show *'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Unlikely, conhost is a child less process
 fields:
@@ -25,7 +30,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2021/12/17
+modified: 2022/09/29
 references:
 - http://www.hexacorn.com/blog/2020/05/25/how-to-con-your-host/
 status: experimental

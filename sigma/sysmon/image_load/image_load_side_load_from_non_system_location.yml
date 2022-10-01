@@ -8,6 +8,10 @@ description: Detects DLL sideloading of DLLs usually located in system locations
 detection:
     SELECTION_1:
         EventID: 7
+    SELECTION_10:
+        Image: C:\Windows\System32\cleanmgr.exe
+    SELECTION_11:
+        ImageLoaded: '*\ssshim.dll'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -415,11 +419,14 @@ detection:
     SELECTION_7:
         ImageLoaded: C:\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\\*
     SELECTION_8:
-        Image: C:\Windows\System32\backgroundTaskHost.exe
+        Image:
+        - C:\Program Files\WindowsApps\DellInc.DellSupportAssistforPCs*
+        - C:\Windows\System32\backgroundTaskHost.exe*
     SELECTION_9:
         ImageLoaded: C:\Program Files\WindowsApps\DellInc.DellSupportAssistforPCs*
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5 and SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)))
+        or (SELECTION_5 and SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLLs mentioned in this
     rule
@@ -428,7 +435,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2022/09/27
+modified: 2022/09/29
 references:
 - https://hijacklibs.net/
 - https://blog.cyble.com/2022/07/21/qakbot-resurfaces-with-new-playbook/

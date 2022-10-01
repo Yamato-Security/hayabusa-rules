@@ -7,6 +7,8 @@ description: Detects potential mimikatz-like tools accessing LSASS from non syst
 detection:
     SELECTION_1:
         Channel: Security
+    SELECTION_10:
+        AccessMask: '0x1410'
     SELECTION_2:
         EventID: 4663
     SELECTION_3:
@@ -46,8 +48,11 @@ detection:
         SubjectUserName: '*$'
     SELECTION_8:
         ProcessName: C:\Program Files*
+    SELECTION_9:
+        ProcessName: C:\Windows\System32\wbem\WmiPrvSE.exe
     condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8)))
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9
+        and SELECTION_10)))
 falsepositives:
 - Unknown
 fields:
@@ -60,7 +65,7 @@ level: high
 logsource:
     product: windows
     service: security
-modified: 2021/11/22
+modified: 2022/09/28
 references:
 - https://threathunterplaybook.com/notebooks/windows/06_credential_access/WIN-170105221010.html
 status: experimental

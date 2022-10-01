@@ -12,11 +12,9 @@ detection:
     SELECTION_11:
         ProcessName: C:\Windows\CCM\CcmExec.exe
     SELECTION_12:
-        ProcessName: C:\Windows\System32\taskhostw.exe
-    SELECTION_13:
-        AccessMask:
-        - '0x10'
-        - '0x1410'
+        ProcessName:
+        - C:\Windows\System32\taskhostw.exe
+        - C:\Windows\System32\msiexec.exe
     SELECTION_2:
         EventID: 4656
     SELECTION_3:
@@ -74,7 +72,7 @@ detection:
         - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
     condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4) or
         (SELECTION_5 and SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8 and
-        SELECTION_9) or (SELECTION_10) or (SELECTION_11) or (SELECTION_12 and SELECTION_13)))
+        SELECTION_9) or (SELECTION_10) or (SELECTION_11) or (SELECTION_12)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason; update the whitelist
     with it
@@ -89,7 +87,7 @@ level: high
 logsource:
     product: windows
     service: security
-modified: 2022/09/27
+modified: 2022/09/28
 references:
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment

@@ -10,16 +10,10 @@ detection:
     SELECTION_1:
         EventID: 13
     SELECTION_10:
-        Details: DWORD (0x00000000)
-    SELECTION_11:
-        TargetObject:
-        - '*\fAllowUnsolicited'
-        - '*\fAllowUnsolicitedFullControl'
-    SELECTION_12:
         Details: DWORD (0x00000001)
-    SELECTION_13:
+    SELECTION_11:
         EventType: SetValue
-    SELECTION_14:
+    SELECTION_12:
         TargetObject:
         - '*\services\TermService\Parameters\ServiceDll*'
         - '*\Control\Terminal Server\WinStations\RDP-Tcp\InitialProgram*'
@@ -49,13 +43,11 @@ detection:
         - '*SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\\*'
     SELECTION_9:
         TargetObject:
-        - '*\fDenyTSConnections'
-        - '*\fSingleSessionPerUser'
-        - '*\UserAuthentication'
+        - '*\fAllowUnsolicited'
+        - '*\fAllowUnsolicitedFullControl'
     condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) or ((SELECTION_7 and SELECTION_8) and ((SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12)))) or (SELECTION_13 and
-        SELECTION_14)))
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9
+        and SELECTION_10)) or (SELECTION_11 and SELECTION_12)))
 falsepositives:
 - Some of the keys mentioned here could be modified by an administrator while setting
     group policy (it should be investigated either way)
@@ -64,6 +56,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
+modified: 2022/09/29
 references:
 - https://blog.menasec.net/2019/02/threat-hunting-rdp-hijacking-via.html
 - http://woshub.com/rds-shadow-how-to-connect-to-a-user-session-in-windows-server-2012-r2/
@@ -77,6 +70,8 @@ related:
     type: obsoletes
 -   id: 41904ebe-d56c-4904-b9ad-7a77bdf154b3
     type: obsoletes
+-   id: a2863fbc-d5cb-48d5-83fb-d976d4b1743b
+    type: similar
 status: test
 tags:
 - attack.defense_evasion
