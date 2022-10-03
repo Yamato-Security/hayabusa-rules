@@ -19,8 +19,10 @@ detection:
         TargetObject: '*Classes\CLSID\\*'
     SELECTION_7:
         TargetObject: '*\TreatAs*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
+    SELECTION_8:
+        NewProcessName: C:\WINDOWS\system32\svchost.exe
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8)))
 falsepositives:
 - Maybe some system utilities in rare cases use linking keys for backward compatibility
 id: 9b0f8a61-91b2-464f-aceb-0527e0a45020
@@ -28,7 +30,7 @@ level: medium
 logsource:
     category: registry_add
     product: windows
-modified: 2022/03/26
+modified: 2022/09/29
 references:
 - https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/
 status: experimental

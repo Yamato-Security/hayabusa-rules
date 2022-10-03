@@ -1,4 +1,4 @@
-title: Possible DC Shadow
+title: Possible DC Shadow Attack
 ruletype: Sigma
 author: Ilyas Ochkov, oscd.community, Chakib Gzenayi (@Chak092), Hosni Mribah
 date: 2019/10/25
@@ -19,13 +19,13 @@ detection:
     condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and
         SELECTION_5 and SELECTION_6)))
 falsepositives:
-- Exclude known DCs
+- Valid on domain controllers; exclude known DCs
 id: 32e19d25-4aed-4860-a55a-be99cb0bf7ed
-level: high
+level: medium
 logsource:
     product: windows
     service: security
-modified: 2021/07/06
+modified: 2022/09/29
 references:
 - https://github.com/Neo23x0/sigma/blob/ec5bb710499caae6667c7f7311ca9e92c03b9039/rules/windows/builtin/win_dcsync.yml
 - https://twitter.com/gentilkiwi/status/1003236624925413376

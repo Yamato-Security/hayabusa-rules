@@ -117,6 +117,10 @@ detection:
         - 0x1f3fff*
     SELECTION_40:
         GrantedAccess: '0x1410'
+    SELECTION_41:
+        CallTrace:
+        - '*|c:\program files\windows defender\mprtp.dll*'
+        - '*|c:\program files\windows defender\MpClient.dll*'
     SELECTION_5:
         SourceImage:
         - C:\WINDOWS\system32\taskmgr.exe
@@ -137,7 +141,7 @@ detection:
         SELECTION_24) or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28)
         or (SELECTION_29 and SELECTION_30) or (SELECTION_31 and SELECTION_32) or (SELECTION_33
         and SELECTION_34) or (SELECTION_35 and SELECTION_36) or (SELECTION_37 and
-        SELECTION_38) or (SELECTION_39 and SELECTION_40)))
+        SELECTION_38) or (SELECTION_39 and SELECTION_40) or (SELECTION_41)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason; please add more
     filters
@@ -150,7 +154,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/09/13
+modified: 2022/09/29
 references:
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html

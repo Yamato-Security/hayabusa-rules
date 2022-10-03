@@ -21,8 +21,10 @@ detection:
         NewProcessName: '*\OfficeClickToRun.exe'
     SELECTION_8:
         NewProcessName: C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+    SELECTION_9:
+        NewProcessName: C:\WINDOWS\system32\svchost.exe
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7) or (SELECTION_8)))
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9)))
 falsepositives:
 - Legitimate use
 id: dc5c24af-6995-49b2-86eb-a9ff62199e82

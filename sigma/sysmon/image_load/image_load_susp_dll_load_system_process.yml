@@ -23,8 +23,12 @@ detection:
         ImageLoaded:
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
+    SELECTION_7:
+        Image: C:\Windows\System32\cleanmgr.exe
+    SELECTION_8:
+        ImageLoaded: '*\ssshim.dll'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5 or SELECTION_6))
+        ((SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: 9e9a9002-56c4-40fd-9eff-e4b09bfa5f6c
@@ -32,7 +36,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/09/10
+modified: 2022/09/29
 references:
 - https://github.com/hackerhouse-opensource/iscsicpl_bypassUAC (Idea)
 status: experimental
