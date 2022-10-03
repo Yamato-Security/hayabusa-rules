@@ -94,8 +94,6 @@ jobs:
           title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If the PR with the same name have already existed, this github action library will not create new pull request but it will update the PR with the same name. Therefore I add the date to the pull request's title not to update existed PR.
           body: |
             ${{ env.action_date }} Update report
-          assignees: itiB
-          reviewers: itiB
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
