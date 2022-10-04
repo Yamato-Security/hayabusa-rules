@@ -92,6 +92,7 @@ jobs:
           branch: rules/auto-sigma-update
           delete-branch: true
           title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If the PR with the same name have already existed, this github action library will not create new pull request but it will update the PR with the same name. Therefore I add the date to the pull request's title not to update existed PR.
+          branch-suffix: timestamp ### I use this field in order to avoid name duplication. If the pull request which is related to the same branch exists, the pull request is not newly created but is updated. So the next step will be skipped due to its if-field
           body: |
             ${{ env.action_date }} Update report
 
