@@ -16,18 +16,22 @@ detection:
         - '*.getgo.com'
         - '*.logmein.com'
         - '*.ammyy.com'
+        - '*.netsupportsoftware.com'
+        - '*remoteutilities.com'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- Unknown
+- FP may be caused in legitimate usage of the softwares mentioned above
 id: 4d07b1f4-cb00-4470-b9f8-b0191d48ff52
 level: medium
 logsource:
     category: dns_query
     product: windows
+modified: 2022/09/19
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-4---gotoassist-files-detected-test-on-windows
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-3---logmein-files-detected-test-on-windows
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-6---ammyy-admin-software-execution
+- https://redcanary.com/blog/misbehaving-rats/
 related:
 -   id: 71ba22cb-8a01-42e2-a6dd-5bf9b547498f
     type: obsoletes

@@ -1,0 +1,40 @@
+title: Execution of NetSupport RAT From Unusual Location
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/19
+description: Detects execution of client32.exe (NetSupport RAT) from an unsual location
+    (outisde of 'C:\Program Files')
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\client32.exe'
+    SELECTION_4:
+        Product: '*NetSupport Remote Control*'
+    SELECTION_5:
+        OriginalFileName: '*client32.exe*'
+    SELECTION_6:
+        Imphash: a9d50692e95b79723f3e76fcf70d023e
+    SELECTION_7:
+        Hashes: '*IMPHASH=a9d50692e95b79723f3e76fcf70d023e*'
+    SELECTION_8:
+        NewProcessName:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6 or SELECTION_7) and  not (SELECTION_8))
+falsepositives:
+- Unknown
+id: 37e8d358-6408-4853-82f4-98333fca7014
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://redcanary.com/blog/misbehaving-rats/
+status: experimental
+tags:
+- attack.defense_evasion
+

@@ -3,9 +3,9 @@ ruletype: Sigma
 author: Florian Roth
 date: 2022/06/07
 description: Detects cases in which an ISO files is opend within an archiver like
-    7Zip or Winrar, which is open a signa of phishing as threat actors put small ISO
-    files in archives as email attachments to bypass certain filters and protective
-    measures (mark of web)
+    7Zip or Winrar, which is a sign of phishing as threat actors put small ISO files
+    in archives as email attachments to bypass certain filters and protective measures
+    (mark of web)
 detection:
     SELECTION_1:
         EventID: 4688

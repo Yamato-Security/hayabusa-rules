@@ -1,0 +1,44 @@
+title: Chopper Webshell Process Pattern
+ruletype: Sigma
+author: Florian Roth (rule), MSTI (query)
+date: 2022/10/01
+description: Detects patterns found in process executions cause by China Chopper like
+    tiny (ASPX) webshells
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\w3wp.exe'
+    SELECTION_4:
+        ParentImage: '*\w3wp.exe'
+    SELECTION_5:
+        CommandLine:
+        - '*&ipconfig&echo*'
+        - '*&quser&echo*'
+        - '*&whoami&echo*'
+        - '*&c:&echo*'
+        - '*&cd&echo*'
+        - '*&dir&echo*'
+        - '*&echo [E]*'
+        - '*&echo [S]*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: fa3c117a-bc0d-416e-a31b-0c0e80653efb
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.microsoft.com/security/blog/2022/09/30/analyzing-attacks-using-the-exchange-vulnerabilities-cve-2022-41040-and-cve-2022-41082/
+status: experimental
+tags:
+- attack.persistence
+- attack.t1505.003
+- attack.t1018
+- attack.t1033
+- attack.t1087
+

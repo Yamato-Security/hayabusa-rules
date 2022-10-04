@@ -18,8 +18,10 @@ detection:
         Image: '*\OfficeClickToRun.exe'
     SELECTION_7:
         Image: C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+    SELECTION_8:
+        Image: C:\WINDOWS\system32\svchost.exe
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 and SELECTION_6) or (SELECTION_7)))
+        ((SELECTION_5 and SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Legitimate use
 id: dc5c24af-6995-49b2-86eb-a9ff62199e82

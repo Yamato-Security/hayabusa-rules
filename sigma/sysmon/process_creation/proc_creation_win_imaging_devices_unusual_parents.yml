@@ -1,10 +1,10 @@
-title: Wab/Wabmig Unusual Parent Or Child Processes
+title: ImagingDevices Unusual Parent Or Child Processes
 ruletype: Sigma
 author: Nasreddine Bencherchali
-date: 2022/08/12
-description: Detects unusual parent or children of the wab.exe (Windows Contacts)
-    and Wabmig.exe (Microsoft Address Book Import Tool) processes as seen being used
-    with bumblebee activity
+date: 2022/09/27
+description: Detects unusual parent or children of the ImagingDevices.exe (Windows
+    Contacts) and Wabmig.exe (Microsoft Address Book Import Tool) processes as seen
+    being used with bumblebee activity
 detection:
     SELECTION_1:
         EventID: 1
@@ -16,26 +16,19 @@ detection:
         - '*\svchost.exe'
         - '*\dllhost.exe'
     SELECTION_4:
-        Image:
-        - '*\wab.exe'
-        - '*\wabmig.exe'
+        Image: '*\ImagingDevices.exe'
     SELECTION_5:
-        ParentImage:
-        - '*\wab.exe'
-        - '*\wabmig.exe'
+        ParentImage: '*\ImagingDevices.exe'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
         SELECTION_5))
 falsepositives:
 - Unknown
-id: 63d1ccc0-2a43-4f4b-9289-361b308991ff
+id: f11f2808-adb4-46c0-802a-8660db50fa99
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/27
 references:
-- https://thedfirreport.com/2022/08/08/bumblebee-roasts-its-way-to-domain-admin/
-- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/bumblebee-loader-cybercrime
 - https://thedfirreport.com/2022/09/26/bumblebee-round-two/
 status: experimental
 tags:
