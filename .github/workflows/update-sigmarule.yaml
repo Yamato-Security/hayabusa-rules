@@ -49,12 +49,7 @@ jobs:
 
       - name: Update sigma rules
         run: |
-          pushd sigma-repo
-          python3 convert.py --suppression
-          popd
-          rm -rf hayabusa-rules/sigma/
-          mkdir hayabusa-rules/sigma/
-          cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
+          cp hayabusa-rules/sigma/builtin/application/win_audit_cve.yml hayabusa-rules/sigma/builtin/applocker/copiedwin_audit_cve.yml
 
       - name: Create Text
         id: create-text
@@ -97,11 +92,8 @@ jobs:
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
+        run: |
+          echo hajime
 
       - name: upload change log
         if: env.change_exist == 'true'
