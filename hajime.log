@@ -1,0 +1,11 @@
+[Pipline for update Sigma rule/updateSigmaRule] 🚀  Start image=nektos/act-environments-ubuntu:18.04
+[Pipline for update Sigma rule/updateSigmaRule]   🐳  docker pull image=nektos/act-environments-ubuntu:18.04 platform= username= forcePull=false
+[Pipline for update Sigma rule/updateSigmaRule]   🐳  docker create image=nektos/act-environments-ubuntu:18.04 platform= entrypoint=["/usr/bin/tail" "-f" "/dev/null"] cmd=[]
+[Pipline for update Sigma rule/updateSigmaRule]   🐳  docker run image=nektos/act-environments-ubuntu:18.04 platform= entrypoint=["/usr/bin/tail" "-f" "/dev/null"] cmd=[]
+[Pipline for update Sigma rule/updateSigmaRule]   ☁  git clone 'https://github.com/actions/checkout' # ref=v2
+[Pipline for update Sigma rule/updateSigmaRule]   ☁  git clone 'https://github.com/actions/setup-python' # ref=v4
+[Pipline for update Sigma rule/updateSigmaRule]   ☁  git clone 'https://github.com/wei/curl' # ref=master
+[Pipline for update Sigma rule/updateSigmaRule]   ☁  git clone 'https://github.com/peter-evans/create-pull-request' # ref=v4
+[Pipline for update Sigma rule/updateSigmaRule]   ☁  git clone 'https://github.com/actions/upload-artifact' # ref=v2
+[Pipline for update Sigma rule/updateSigmaRule] ⭐ Run Main clone hayabusa rule repo
+[Pipline for update Sigma rule/updateSigmaRule]   🐳  docker cp src=C:\Users\takai\dev\git\hayabusa-rules\. dst=/mnt/c/Users/takai/dev/git/hayabusa-rules/hayabusa-rules
