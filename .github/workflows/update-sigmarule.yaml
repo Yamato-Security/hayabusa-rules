@@ -49,7 +49,7 @@ jobs:
 
       - name: Update sigma rules
         run: |
-          cp hayabusa-rules/sigma/builtin/application/win_audit_cve.yml hayabusa-rules/sigma/builtin/applocker/copiedwin_audit_cve.yml
+          cp hayabusa-rules/sigma/builtin/application/win_audit_cve.yml hayabusa-rules/sigma/builtin/applocker/copied22win_audit_cve.yml
 
       - name: Create Text
         id: create-text
@@ -87,6 +87,7 @@ jobs:
           branch: rules/auto-sigma-update
           delete-branch: true
           title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If the PR with the same name have already existed, this github action library will not create new pull request but it will update the PR with the same name. Therefore I add the date to the pull request's title not to update existed PR.
+          branch-suffix: timestamp ### 
           body: |
             ${{ env.action_date }} Update report
 
