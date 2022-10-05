@@ -34,6 +34,9 @@ detection:
         - 172.31.*
         - 127.*
         - 20.*
+        - 51.103.*
+        - 51.104.*
+        - 51.105.*
     SELECTION_6:
         CommandLine:
         - '*PcaSvc.dll,PcaPatchSdbTask*'
@@ -51,7 +54,7 @@ level: medium
 logsource:
     category: network_connection
     product: windows
-modified: 2022/04/29
+modified: 2022/10/04
 references:
 - https://www.hybrid-analysis.com/sample/759fb4c0091a78c5ee035715afe3084686a8493f39014aea72dae36869de9ff6?environmentId=100
 status: test
