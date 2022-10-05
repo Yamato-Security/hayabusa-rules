@@ -1,11 +1,11 @@
-### if you want to execte GitHub Action in your local machine please use following commnad.(Please install act if not)
+### If you want to execute GitHub Actions on your local machine, please use following commnad. (Please install act if needed.)
 ### act workflow_dispatch -s GITHUB_TOKEN=(your private access token) -P ubuntu-latest=nektos/act-environments-ubuntu:18.04 --artifact-server-path /tmp/act-artifacts
 
-name: Pipline for update Sigma rule
+name: Pipeline to update Sigma rules
 
 on:
   ## This workflow is exected once a day.
-  ## And I add workflow_dispatch so that you can execute this workflow from GitHub UI. 
+  ## workflow_dispatch is added so that you can execute this workflow from the GitHub UI. 
   workflow_dispatch:
   schedule:
     - cron: '0 20 * * *' 
@@ -14,19 +14,19 @@ jobs:
   updateSigmaRule:
     runs-on: ubuntu-latest
     steps:
-      - name: clone hayabusa rule repo
+      - name: Clone hayabusa rule repo
         uses: actions/checkout@v2
         with:
           path: hayabusa-rules
 
-      - name: clone sigmac
+      - name: Clone sigmac
         uses: actions/checkout@v2
         with:
           repository: SigmaHQ/sigma
-          path: sigma-repo # It is necessary to specify the path because hayabusa-rules repository have the folder which has the same name.
-          token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing in local machine by act(Local GitHub Action Runner).We have to specify the github token explicitly.
+          path: sigma-repo # It is necessary to specify the path because the hayabusa-rules repository has a folder with the same name.
+          token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing act(Local GitHub Action Runner) on a local machine. We have to specify the github token explicitly.
 
-      - name: set Hayabusa backend for sigmac
+      - name: Set Hayabusa backend for sigmac
         run: |
           cp hayabusa-rules/tools/sigmac/convert.py sigma-repo/convert.py
           cp hayabusa-rules/tools/sigmac/hayabusa.py sigma-repo/tools/sigma/backends/hayabusa.py
@@ -37,17 +37,17 @@ jobs:
           python-version: '3.10'
           token: '${{ secrets.GITHUB_TOKEN }}'
 
-      - name: download requirements.txt with curl 
+      - name: Download requirements.txt with curl 
         uses: wei/curl@master
         with:
           args: https://raw.githubusercontent.com/Yamato-Security/hayabusa-rules/main/tools/sigmac/requirements.txt > requirements.txt 
 
-      - name: setup Python for use script
+      - name: Setup python for use script
         run: |
           pip install -r requirements.txt
           rm requirements.txt
 
-      - name: Update sigma rules
+      - name: Update Sigma Rules
         run: |
           pushd sigma-repo
           python3 convert.py --suppression
@@ -91,8 +91,8 @@ jobs:
           commit-message: Sigma Rule Update (${{ env.action_date }})
           branch: rules/auto-sigma-update
           delete-branch: true
-          title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If the PR with the same name have already existed, this github action library will not create new pull request but it will update the PR with the same name. Therefore I add the date to the pull request's title not to update existed PR.
-          branch-suffix: timestamp ### I use this field in order to avoid name duplication. If the pull request which is related to the same branch exists, the pull request is not newly created but is updated. So the next step will be skipped due to its if-field
+          title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If a PR with the same name already exists, this github action library will not create a new pull request but instead will update the PR with the same name. Therefore I added the date to the pull request's title so it doesn't update the existing PR.
+          branch-suffix: timestamp ### I use this field in order to avoid name duplication. If a pull request related to the same branch exists, the pull request is not newly created but is updated. So the next step will be skipped due to its if field.
           body: |
             ${{ env.action_date }} Update report
 
@@ -104,7 +104,15 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
-      - name: upload change log
+      - name: Approve Pull Request
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{github.repository}}/pulls/${{github.event.number}}/reviews \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          -d '{"event":"APPROVE"}'
+
+      - name: Upload Change Log
         if: env.change_exist == 'true'
         uses: actions/upload-artifact@v2
         with:
