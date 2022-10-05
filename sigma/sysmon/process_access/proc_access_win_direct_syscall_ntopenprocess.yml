@@ -51,6 +51,8 @@ detection:
         Provider_Name: Microsoft-Windows-Kernel-Audit-API-Calls
     SELECTION_3:
         CallTrace: UNKNOWN*
+    SELECTION_30:
+        TargetImage: '*\Evernote\Evernote.exe'
     SELECTION_4:
         TargetImage: C:\Program Files\Cylance\Desktop\CylanceUI.exe
     SELECTION_5:
@@ -69,7 +71,7 @@ detection:
         SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)
         or (SELECTION_19 and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23
         and SELECTION_24) or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and
-        SELECTION_28) or (SELECTION_29)))
+        SELECTION_28) or (SELECTION_29) or (SELECTION_30)))
 falsepositives:
 - Unknown
 id: 3f3f3506-1895-401b-9cc3-e86b16e630d0
@@ -77,7 +79,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/09/20
+modified: 2022/10/05
 references:
 - https://medium.com/falconforce/falconfriday-direct-system-calls-and-cobalt-strike-bofs-0xff14-741fa8e1bdd6
 status: experimental
