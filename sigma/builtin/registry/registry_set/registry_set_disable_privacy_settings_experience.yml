@@ -1,0 +1,35 @@
+title: Disable Privacy Settings Experience in Registry
+ruletype: Sigma
+author: frack113
+date: 2022/10/02
+description: Detects registry modifications that disable Privacy Settings Experience
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*\SOFTWARE\Policies\Microsoft\Windows\OOBE\DisablePrivacyExperience'
+    SELECTION_6:
+        NewValue: DWORD (0x00000000)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Legitimate admin script
+id: 0372e1f9-0fd2-40f7-be1b-a7b2b848fa7b
+level: medium
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/9e5b12c4912c07562aec7500447b11fa3e17e254/atomics/T1562.001/T1562.001.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+
