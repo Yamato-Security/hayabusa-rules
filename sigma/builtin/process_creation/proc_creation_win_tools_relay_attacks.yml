@@ -31,7 +31,12 @@ detection:
         - '*cme smb *'
         - '* /ntlm:NTLMhash *'
         - '*Invoke-PetitPotam*'
+        - '*.exe -t * -p *'
     SELECTION_5:
+        CommandLine: '*.exe -c "{*'
+    SELECTION_6:
+        CommandLine: '*}" -z'
+    SELECTION_7:
         NewProcessName:
         - '*HotPotatoes6*'
         - '*HotPotatoes 6*'
@@ -39,8 +44,8 @@ detection:
         - '*HotPotatoes 7*'
         - '*HotPotatoes Help*'
         - '*HotPotatoes Tutorial*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-        ((SELECTION_5)))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
+        and SELECTION_6)) and  not ((SELECTION_7)))
 falsepositives:
 - Legitimate files with these rare hacktool names
 id: 5589ab4f-a767-433c-961d-c91f3f704db1
@@ -48,7 +53,7 @@ level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2022/03/03
+modified: 2022/10/06
 references:
 - https://attack.mitre.org/techniques/T1557/001/
 - https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/

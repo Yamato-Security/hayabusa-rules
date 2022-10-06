@@ -1,0 +1,38 @@
+title: Modify User Shell Folders Startup Value
+ruletype: Sigma
+author: frack113
+date: 2022/10/01
+description: Detect modification of the startup key to a path where a payload could
+    be stored to be launched during startup
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: SetValue
+    SELECTION_5:
+        TargetObject: '*SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell
+            Folders*'
+    SELECTION_6:
+        TargetObject: '*Startup'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: 9c226817-8dc9-46c2-a58d-66655aafd7dc
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/9e5b12c4912c07562aec7500447b11fa3e17e254/atomics/T1547.001/T1547.001.md
+status: experimental
+tags:
+- attack.persistence
+- attack.privilege_escalation
+- attack.t1547.001
+

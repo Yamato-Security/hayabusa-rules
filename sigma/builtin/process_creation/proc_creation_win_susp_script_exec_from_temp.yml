@@ -1,6 +1,6 @@
 title: Suspicious Script Execution From Temp Folder
 ruletype: Sigma
-author: Florian Roth, Max Altgelt
+author: Florian Roth, Max Altgelt, Tim Shelton
 date: 2021/07/14
 description: Detects a suspicious script executions from temporary folder
 detection:
@@ -30,6 +30,7 @@ detection:
         - '*Out-File*'
         - '*ConvertTo-Json*'
         - '*-WindowStyle hidden -Verb runAs*'
+        - '*\Windows\system32\config\systemprofile\AppData\Local\Temp\Amazon\EC2-Windows\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         (SELECTION_5))
 falsepositives:
@@ -39,7 +40,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/10/05
 references:
 - https://www.microsoft.com/security/blog/2021/07/13/microsoft-discovers-threat-actor-targeting-solarwinds-serv-u-software-with-0-day-exploit/
 status: experimental
