@@ -9,7 +9,7 @@ detection:
     SELECTION_1:
         Channel: System
     SELECTION_2:
-        EventID: '7045'
+        EventID: 7045
     SELECTION_3:
         ServiceName: KrbSCM
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
@@ -20,11 +20,11 @@ level: high
 logsource:
     product: windows
     service: system
+modified: 2022/10/05
 references:
 - https://github.com/Dec0ne/KrbRelayUp
 status: experimental
 tags:
 - attack.privilege_escalation
 - attack.t1543
-updated: 2022/05/16
 

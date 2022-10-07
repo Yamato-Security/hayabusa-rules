@@ -1,16 +1,16 @@
-title: Certutil Initiated Connection
+title: HH.EXE Network Connections
 ruletype: Sigma
-author: frack113, Florian Roth
-date: 2022/09/02
-description: Detects a network connection intitiated by the certutil.exe tool. Attackers
-    can abuse `certutil.exe` to download malware or offensive security tools.
+author: Nasreddine Bencherchali
+date: 2022/10/05
+description: Detects network connections made by the "hh.exe" process, which could
+    indicate the execution/download of remotely hosted .chm files
 detection:
     SELECTION_1:
         EventID: 3
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Image: '*\certutil.exe'
+        Image: '*\hh.exe'
     SELECTION_4:
         Initiated: 'true'
     SELECTION_5:
@@ -24,17 +24,20 @@ detection:
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and (SELECTION_5
         or SELECTION_6 or SELECTION_7 or SELECTION_8))
 falsepositives:
-- Legitimate certutil network connection
-id: 0dba975d-a193-4ed1-a067-424df57570d1
-level: high
+- Unknown
+id: 468a8cea-2920-4909-a593-0cbe1d96674a
+level: medium
 logsource:
     category: network_connection
     product: windows
-modified: 2022/10/04
 references:
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/certutil
+- https://www.splunk.com/en_us/blog/security/follina-for-protocol-handlers.html
+- https://github.com/redcanaryco/atomic-red-team/blob/1cf4dd51f83dcb0ebe6ade902d6157ad2dbc6ac8/atomics/T1218.001/T1218.001.md
+related:
+-   id: f57c58b3-ee69-4ef5-9041-455bf39aaa89
+    type: derived
 status: experimental
 tags:
-- attack.command_and_control
-- attack.t1105
+- attack.defense_evasion
+- attack.t1218.001
 

@@ -14,15 +14,15 @@ detection:
     SELECTION_3:
         SubjectUserSid: S-1-0-0
     SELECTION_4:
-        LogonType: '3'
+        LogonType: 3
     SELECTION_5:
         LogonProcessName: NtLmSsp
     SELECTION_6:
-        KeyLength: '0'
+        KeyLength: 0
     SELECTION_7:
         EventID: 4624
     SELECTION_8:
-        LogonType: '9'
+        LogonType: 9
     SELECTION_9:
         LogonProcessName: seclogo
     condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3 and SELECTION_4 and
@@ -37,6 +37,7 @@ logsource:
         would trigger event ID 4624
     product: windows
     service: security
+modified: 2022/10/05
 references:
 - https://github.com/iadgov/Event-Forwarding-Guidance/tree/master/Events
 - https://blog.binarydefense.com/reliably-detecting-pass-the-hash-through-event-log-analysis

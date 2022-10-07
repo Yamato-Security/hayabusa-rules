@@ -7,6 +7,12 @@ description: Detects the conhost execution as parent process. Can be used to eva
 detection:
     SELECTION_1:
         EventID: 1
+    SELECTION_10:
+        Image: C:\Windows\System32\conhost.exe
+    SELECTION_11:
+        ParentCommandLine: \??\C:\WINDOWS\system32\conhost.exe 0x4
+    SELECTION_12:
+        Image: C:\Windows\System32\conhost.exe
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -16,9 +22,20 @@ detection:
     SELECTION_5:
         Image: '*\git.exe'
     SELECTION_6:
-        ParentCommandLine: '* show *'
+        ParentCommandLine:
+        - '* show --textconv *'
+        - '* cat-file -s *'
+    SELECTION_7:
+        ParentCommandLine: '*C:\WINDOWS\system32\conhost.exe 0x4*'
+    SELECTION_8:
+        CommandLine:
+        - '* show --textconv *'
+        - '* cat-file -s *'
+    SELECTION_9:
+        ParentCommandLine: '* cat-file -s *'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5 and SELECTION_6)))
+        or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12)))
 falsepositives:
 - Unlikely, conhost is a child less process
 fields:
@@ -30,7 +47,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/29
+modified: 2022/10/07
 references:
 - http://www.hexacorn.com/blog/2020/05/25/how-to-con-your-host/
 status: experimental

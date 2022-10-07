@@ -1,0 +1,30 @@
+title: HH.exe Remote CHM File Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/09/29
+description: Detects usage of hh.exe to execute/download remotely hosted .chm files.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\hh.exe'
+    SELECTION_4:
+        CommandLine: '* http*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: f57c58b3-ee69-4ef5-9041-455bf39aaa89
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.splunk.com/en_us/blog/security/follina-for-protocol-handlers.html
+- https://github.com/redcanaryco/atomic-red-team/blob/1cf4dd51f83dcb0ebe6ade902d6157ad2dbc6ac8/atomics/T1218.001/T1218.001.md
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218.001
+

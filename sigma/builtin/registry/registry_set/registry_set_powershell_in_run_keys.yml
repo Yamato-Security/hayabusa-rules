@@ -24,18 +24,20 @@ detection:
         - '*.DownloadFile(*'
         - '*.DownloadString(*'
         - '* -w hidden *'
+        - '*-windowstyle hidden*'
         - '* -nop *'
         - '* -encodedcommand *'
+        - '*-ExecutionPolicy Bypass*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
         and SELECTION_6)
 falsepositives:
-- Legitimate admin script
+- Legitimate admin or third party scripts
 id: 8d85cf08-bf97-4260-ba49-986a2a65129c
 level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
+modified: 2022/10/06
 references:
 - https://github.com/frack113/atomic-red-team/blob/a9051c38de8a5320b31c7039efcbd3b56cf2d65a/atomics/T1547.001/T1547.001.md#atomic-test-9---systembc-malware-as-a-service-registry
 status: experimental

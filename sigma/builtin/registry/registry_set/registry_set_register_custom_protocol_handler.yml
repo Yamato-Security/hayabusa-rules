@@ -1,0 +1,40 @@
+title: Newly Registered Protocol Handler
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/05/30
+description: Detects when a new custom protocole handler is registered
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        TargetObject: HKCR\\*
+    SELECTION_5:
+        NewValue: URL:*
+    SELECTION_6:
+        NewValue: URL:ms-*
+    SELECTION_7:
+        NewProcessName:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)*
+        - C:\Windows\\*
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5) and  not ((SELECTION_6 or SELECTION_7)))
+falsepositives:
+- Legitimate applications registering a new custom protocol handler
+id: fdbf0b9d-0182-4c43-893b-a1eaab92d085
+level: medium
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://ladydebug.com/blog/2019/06/21/custom-protocol-handler-cph/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1112
+

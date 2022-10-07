@@ -7,6 +7,10 @@ description: Detection well-known mimikatz command line arguments
 detection:
     SELECTION_1:
         EventID: 4688
+    SELECTION_10:
+        CommandLine: '*/d /s /c *'
+    SELECTION_11:
+        CommandLine: '*checkfilenameiocs --ioc-path *'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -44,8 +48,11 @@ detection:
         CommandLine: '*::*'
     SELECTION_8:
         CommandLine: '*function Convert-GuidToCompressedGuid*'
+    SELECTION_9:
+        ParentProcessName: '*\AppData\Local\Programs\Microsoft VS Code\Code.exe'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)) or (SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8)))
+        SELECTION_5)) or (SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8) or
+        (SELECTION_9 and SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Legitimate Administrator using tool for password recovery
 id: a642964e-bead-4bed-8910-1bb4d63e3b4d
@@ -53,7 +60,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/02/07
+modified: 2022/10/07
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 - https://tools.thehacker.recipes/mimikatz/modules

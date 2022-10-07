@@ -8,12 +8,8 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        ParentCommandLine: '*--quiet --gui*'
-    SELECTION_11:
-        NewProcessName: C:\Program Files\Git\mingw64\bin\curl.exe
-    SELECTION_12:
         CommandLine: '*--silent --show-error --output *'
-    SELECTION_13:
+    SELECTION_11:
         CommandLine: '*gfw-httpget-*'
     SELECTION_2:
         Channel: Security
@@ -48,10 +44,10 @@ detection:
     SELECTION_8:
         ParentProcessName: C:\Program Files\Git\usr\bin\sh.exe
     SELECTION_9:
-        ParentCommandLine: '*git-update-git-for-windows*'
+        NewProcessName: C:\Program Files\Git\mingw64\bin\curl.exe
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
         (SELECTION_5 or SELECTION_6 or SELECTION_7)) and  not ((SELECTION_8 and SELECTION_9
-        and SELECTION_10 and SELECTION_11 and SELECTION_12 and SELECTION_13)))
+        and SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Unknown
 fields:
@@ -62,7 +58,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/20
+modified: 2022/09/29
 references:
 - https://twitter.com/max_mal_/status/1542461200797163522
 - https://web.archive.org/web/20200128160046/https://twitter.com/reegun21/status/1222093798009790464
