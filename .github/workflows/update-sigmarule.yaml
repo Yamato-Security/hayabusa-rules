@@ -49,7 +49,12 @@ jobs:
 
       - name: Update Sigma Rules
         run: |
-          cp hayabusa-rules/sigma/builtin/application/win_audit_cve.yml hayabusa-rules/sigma/builtin/applocker
+          pushd sigma-repo
+          python3 convert.py --suppression
+          popd
+          rm -rf hayabusa-rules/sigma/
+          mkdir hayabusa-rules/sigma/
+          cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
 
       - name: Create Text
         id: create-text
@@ -93,12 +98,10 @@ jobs:
 
       - name: Approve Pull Request
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        run: |
-          curl --request POST \
-          --url https://api.github.com/repos/${{github.repository}}/pulls/${{steps.cpr.outputs.pull-request-number}}/reviews \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          --header 'content-type: application/json' \
-          -d '{"event":"APPROVE"}'
+        uses: juliangruber/approve-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ steps.cpr.outputs.pull-request-number }}
 
       - name: Upload Change Log
         if: env.change_exist == 'true'
