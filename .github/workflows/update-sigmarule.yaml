@@ -105,12 +105,11 @@ jobs:
           merge-method: squash
 
       - name: Approve Pull Request
-        run: |
-          curl --request POST \
-          --url https://api.github.com/repos/${{github.repository}}/pulls/${{github.event.number}}/reviews \
-          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
-          --header 'content-type: application/json' \
-          -d '{"event":"APPROVE"}'
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: juliangruber/approve-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ steps.cpr.outputs.pull-request-number }}
 
       - name: Upload Change Log
         if: env.change_exist == 'true'
