@@ -91,20 +91,14 @@ jobs:
           body: |
             ${{ env.action_date }} Update report
 
-      - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-          merge-method: squash
-
       - name: Approve Pull Request
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: juliangruber/approve-pull-request-action@v1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          curl --request POST \
+          --url https://api.github.com/repos/${{github.repository}}/pulls/${{steps.cpr.outputs.pull-request-number}}/reviews \
+          --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+          --header 'content-type: application/json' \
+          -d '{"event":"APPROVE"}'
 
       - name: Upload Change Log
         if: env.change_exist == 'true'
