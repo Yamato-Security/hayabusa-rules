@@ -20,8 +20,10 @@ detection:
     SELECTION_14:
         Image: '*\powershell_ise.exe'
     SELECTION_15:
-        Image: '*\svchost.exe'
+        Image: C:\$WINDOWS.~BT\Sources\\*
     SELECTION_16:
+        Image: '*\svchost.exe'
+    SELECTION_17:
         CommandLine|re: ^$
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -57,7 +59,7 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) or
         (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8) or
         (SELECTION_9 and SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13)
-        or (SELECTION_14))) and  not ((SELECTION_15 and SELECTION_16)))
+        or (SELECTION_14) or (SELECTION_15))) and  not ((SELECTION_16 and SELECTION_17)))
 falsepositives:
 - Unknown
 id: ad1f4bb9-8dfb-4765-adb6-2a7cfb6c0f94
@@ -65,7 +67,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2022/09/18
+modified: 2022/10/07
 references:
 - https://twitter.com/chadtilbury/status/1275851297770610688
 - https://bohops.com/2020/05/12/ws-management-com-another-approach-for-winrm-lateral-movement/

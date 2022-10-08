@@ -10,25 +10,29 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
+        NewProcessName: '*\loader.exe'
+    SELECTION_4:
+        CommandLine: '*--pid:*'
+    SELECTION_5:
         Imphash:
         - 38d9e015591bbfd4929e0d0f47fa0055
         - 0e2216679ca6e1094d63322e3412d650
-    SELECTION_4:
+    SELECTION_6:
         Hashes:
         - IMPHASH=38D9E015591BBFD4929E0D0F47FA0055
         - IMPHASH=0E2216679CA6E1094D63322E3412D650
-    SELECTION_5:
-        CommandLine: '*--pid:*'
-    SELECTION_6:
-        CommandLine: '*--outfile:*'
     SELECTION_7:
+        CommandLine: '*--pid:*'
+    SELECTION_8:
+        CommandLine: '*--outfile:*'
+    SELECTION_9:
         CommandLine:
         - '*.dmp*'
         - '*lsass*'
         - '*.obf*'
         - '*dump*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) or
-        (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Unknown
 id: ca621ba5-54ab-4035-9942-d378e6fcde3c
@@ -36,6 +40,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/10/05
 references:
 - https://github.com/codewhitesec/HandleKatz
 status: experimental

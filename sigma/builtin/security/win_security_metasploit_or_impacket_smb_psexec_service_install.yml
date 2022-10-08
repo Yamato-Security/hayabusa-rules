@@ -14,7 +14,7 @@ detection:
     SELECTION_4:
         ServiceName|re: (^[a-zA-Z]{4}$)|(^[a-zA-Z]{8}$)|(^[a-zA-Z]{16}$)
     SELECTION_5:
-        ServiceStartType: '3'
+        ServiceStartType: 3
     SELECTION_6:
         ServiceType: '0x10'
     SELECTION_7:
@@ -35,7 +35,7 @@ level: high
 logsource:
     product: windows
     service: security
-modified: 2021/07/23
+modified: 2022/10/05
 references:
 - https://bczyz1.github.io/2021/01/30/psexec.html
 related:

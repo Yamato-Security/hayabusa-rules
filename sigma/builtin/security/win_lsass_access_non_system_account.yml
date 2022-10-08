@@ -8,51 +8,79 @@ detection:
     SELECTION_1:
         Channel: Security
     SELECTION_10:
-        AccessMask: '0x1410'
+        AccessMask: '0x143a'
+    SELECTION_11:
+        AccessMask: '0x1418'
+    SELECTION_12:
+        AccessMask: '0x1f0fff'
+    SELECTION_13:
+        AccessMask: '0x1f1fff'
+    SELECTION_14:
+        AccessMask: '0x1f2fff'
+    SELECTION_15:
+        AccessMask: '0x1f3fff'
+    SELECTION_16:
+        AccessMask: 40
+    SELECTION_17:
+        AccessMask: 1400
+    SELECTION_18:
+        AccessMask: 1000
+    SELECTION_19:
+        AccessMask: 100000
     SELECTION_2:
         EventID: 4663
+    SELECTION_20:
+        AccessMask: 1410
+    SELECTION_21:
+        AccessMask: 1010
+    SELECTION_22:
+        AccessMask: 1438
+    SELECTION_23:
+        AccessMask: 143a
+    SELECTION_24:
+        AccessMask: 1418
+    SELECTION_25:
+        AccessMask: 1f0fff
+    SELECTION_26:
+        AccessMask: 1f1fff
+    SELECTION_27:
+        AccessMask: 1f2fff
+    SELECTION_28:
+        AccessMask: 1f3fff
+    SELECTION_29:
+        ObjectType: Process
     SELECTION_3:
         EventID: 4656
-    SELECTION_4:
-        AccessMask:
-        - '0x40'
-        - '0x1400'
-        - '0x100000'
-        - '0x1410'
-        - '0x1010'
-        - '0x1438'
-        - '0x143a'
-        - '0x1418'
-        - '0x1f0fff'
-        - '0x1f1fff'
-        - '0x1f2fff'
-        - '0x1f3fff'
-        - '40'
-        - '1400'
-        - '1000'
-        - '100000'
-        - '1410'
-        - '1010'
-        - '1438'
-        - 143a
-        - '1418'
-        - 1f0fff
-        - 1f1fff
-        - 1f2fff
-        - 1f3fff
-    SELECTION_5:
-        ObjectType: Process
-    SELECTION_6:
+    SELECTION_30:
         ObjectName: '*\lsass.exe'
-    SELECTION_7:
+    SELECTION_31:
         SubjectUserName: '*$'
-    SELECTION_8:
+    SELECTION_32:
         ProcessName: C:\Program Files*
-    SELECTION_9:
+    SELECTION_33:
         ProcessName: C:\Windows\System32\wbem\WmiPrvSE.exe
-    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9
-        and SELECTION_10)))
+    SELECTION_34:
+        AccessMask: '0x1410'
+    SELECTION_4:
+        AccessMask: '0x40'
+    SELECTION_5:
+        AccessMask: '0x1400'
+    SELECTION_6:
+        AccessMask: '0x100000'
+    SELECTION_7:
+        AccessMask: '0x1410'
+    SELECTION_8:
+        AccessMask: '0x1010'
+    SELECTION_9:
+        AccessMask: '0x1438'
+    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and (SELECTION_4 or
+        SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8 or SELECTION_9 or
+        SELECTION_10 or SELECTION_11 or SELECTION_12 or SELECTION_13 or SELECTION_14
+        or SELECTION_15 or SELECTION_16 or SELECTION_17 or SELECTION_18 or SELECTION_19
+        or SELECTION_20 or SELECTION_21 or SELECTION_22 or SELECTION_23 or SELECTION_24
+        or SELECTION_25 or SELECTION_26 or SELECTION_27 or SELECTION_28) and SELECTION_29
+        and SELECTION_30) and  not ((SELECTION_31) or (SELECTION_32) or (SELECTION_33
+        and SELECTION_34)))
 falsepositives:
 - Unknown
 fields:

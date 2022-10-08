@@ -11,7 +11,7 @@ detection:
     SELECTION_3:
         Image: '*\notepad.exe'
     SELECTION_4:
-        DestinationPort: '9100'
+        DestinationPort: 9100
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
@@ -20,7 +20,7 @@ level: high
 logsource:
     category: network_connection
     product: windows
-modified: 2021/11/27
+modified: 2022/10/05
 references:
 - https://www.sans.org/cyber-security-summit/archives/file/summit-archive-1492186586.pdf
 - https://blog.cobaltstrike.com/2013/08/08/why-is-notepad-exe-connecting-to-the-internet/
