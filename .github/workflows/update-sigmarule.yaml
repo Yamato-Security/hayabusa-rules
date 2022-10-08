@@ -49,12 +49,7 @@ jobs:
 
       - name: Update Sigma Rules
         run: |
-          pushd sigma-repo
-          python3 convert.py --suppression
-          popd
-          rm -rf hayabusa-rules/sigma/
-          mkdir hayabusa-rules/sigma/
-          cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
+          cp hayabusa-rules/sigma/builtin/application/win_audit_cve.yml hayabusa-rules/sigma/builtin/applocker
 
       - name: Create Text
         id: create-text
