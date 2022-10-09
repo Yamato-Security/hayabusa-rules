@@ -19,6 +19,7 @@ detection:
         - C:\Windows\SysWow64\\*
         - C:\Windows\winsxs\\*
         - C:\Windows\WinSxS\\*
+        - C:\$WINDOWS.~BT\NewOS\\*
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - The installation of new screen savers.
@@ -27,6 +28,7 @@ level: medium
 logsource:
     category: file_event
     product: windows
+modified: 2022/10/07
 references:
 - https://lolbas-project.github.io/lolbas/Libraries/Desk/
 status: experimental

@@ -11,8 +11,11 @@ detection:
     SELECTION_3:
         Image: '*\SyncAppvPublishingServer.exe'
     SELECTION_4:
+        OriginalFileName: syncappvpublishingserver.exe
+    SELECTION_5:
         CommandLine: '*"n; *'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - App-V clients
 fields:
@@ -25,7 +28,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2021/09/12
+modified: 2022/10/04
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md
 - https://lolbas-project.github.io/lolbas/Binaries/Syncappvpublishingserver/

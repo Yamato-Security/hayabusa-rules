@@ -57,6 +57,10 @@ detection:
         SourceImage: '*\xampp-control.exe'
     SELECTION_25:
         GrantedAccess: '0x410'
+    SELECTION_26:
+        SourceImage: '*\SteamLibrary\steamapps\\*'
+    SELECTION_27:
+        GrantedAccess: '0x410'
     SELECTION_3:
         TargetImage: '*\lsass.exe'
     SELECTION_4:
@@ -88,7 +92,7 @@ detection:
         or (SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
         SELECTION_14) or (SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18)
         or (SELECTION_19) or (SELECTION_20) or (SELECTION_21 and SELECTION_22 and
-        SELECTION_23) or (SELECTION_24 and SELECTION_25)))
+        SELECTION_23) or (SELECTION_24 and SELECTION_25) or (SELECTION_26 and SELECTION_27)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason
 fields:
@@ -100,7 +104,7 @@ level: medium
 logsource:
     category: process_access
     product: windows
-modified: 2022/09/20
+modified: 2022/10/07
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

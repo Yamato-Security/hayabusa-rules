@@ -13,7 +13,10 @@ detection:
         TargetFilename: '*\Microsoft\Windows\Start Menu\Programs\StartUp*'
     SELECTION_4:
         Image: C:\Windows\System32\wuauclt.exe
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_5:
+        TargetFilename: C:\$WINDOWS.~BT\NewOS\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
+        or SELECTION_5))
 falsepositives:
 - An FP could be caused by legitimate application writing shortcuts for example. This
     folder should always be inspected to make sure that all the files in there are
@@ -23,7 +26,7 @@ level: medium
 logsource:
     category: file_event
     product: windows
-modified: 2022/08/22
+modified: 2022/10/07
 references:
 - https://github.com/OTRF/detection-hackathon-apt29/issues/12
 - https://threathunterplaybook.com/evals/apt29/detections/5.B.1_611FCA99-97D0-4873-9E51-1C1BA2DBB40D.html
