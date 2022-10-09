@@ -71,11 +71,12 @@ logsource:
     definition: Requires Microsoft-Windows-LDAP-Client/Debug ETW logging
     product: windows
     service: ldap_debug
+modified: 2022/10/09
 references:
 - https://techcommunity.microsoft.com/t5/microsoft-defender-for-endpoint/hunting-for-reconnaissance-activities-using-ldap-search-filters/ba-p/824726
 - https://github.com/PowerShellMafia/PowerSploit/blob/d943001a7defb5e0d1657085a77a0e78609be58f/Recon/PowerView.ps1
 - https://github.com/BloodHoundAD/SharpHound3/blob/7d96b991b1887ff50349ce59c80980bc0d95c86a/SharpHound3/LdapBuilder.cs
-status: experimental
+status: test
 tags:
 - attack.discovery
 - attack.t1069.002
