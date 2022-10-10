@@ -1,0 +1,46 @@
+title: IOX Tunneling Tool
+ruletype: Sigma
+author: Florian Roth
+date: 2022/10/08
+description: Detects the use of IOX - a tool for port forwarding and intranet proxy
+    purposes
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\iox.exe'
+    SELECTION_4:
+        CommandLine:
+        - '*.exe fwd -l *'
+        - '*.exe fwd -r *'
+        - '*.exe proxy -l *'
+        - '*.exe proxy -r *'
+    SELECTION_5:
+        Hashes:
+        - '*MD5=9DB2D314DD3F704A02051EF5EA210993*'
+        - '*SHA1=039130337E28A6623ECF9A0A3DA7D92C5964D8DD*'
+        - '*SHA256=C6CF82919B809967D9D90EA73772A8AA1C1EB3BC59252D977500F64F1A0D6731*'
+    SELECTION_6:
+        md5: 9db2d314dd3f704a02051ef5ea210993
+    SELECTION_7:
+        sha1: 039130337e28a6623ecf9a0a3da7d92c5964d8dd
+    SELECTION_8:
+        sha256: c6cf82919b809967d9d90ea73772a8aa1c1eb3bc59252d977500f64f1a0d6731
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6 or SELECTION_7 or SELECTION_8))
+falsepositives:
+- Legitimate use
+id: d7654f02-e04b-4934-9838-65c46f187ebc
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/EddieIvan01/iox
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1090
+
