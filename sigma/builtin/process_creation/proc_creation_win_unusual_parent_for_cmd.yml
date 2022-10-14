@@ -1,0 +1,53 @@
+title: Unusual Parent Process for cmd.exe
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/21
+description: Detects suspicious parent process for cmd.exe
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\cmd.exe'
+    SELECTION_4:
+        ParentProcessName:
+        - '*\lsass.exe'
+        - '*\csrss.exe'
+        - '*\epad.exe'
+        - '*\regsvr32.exe'
+        - '*\dllhost.exe'
+        - '*\LogonUI.exe'
+        - '*\wergmgr.exe'
+        - '*\spoolsv.exe'
+        - '*\jucheck.exe'
+        - '*\jusched.exe'
+        - '*\ctfmon.exe'
+        - '*\taskhostw.exe'
+        - '*\GoogleUpdate.exe'
+        - '*\sppsvc.exe'
+        - '*\sihost.exe'
+        - '*\slui.exe'
+        - '*\SIHClient.exe'
+        - '*\SearchIndexer.exe'
+        - '*\SearchProtocolHost.exe'
+        - '*\FlashPlayerUpdateService.exe'
+        - '*\WerFault.exe'
+        - '*\WUDFHost.exe'
+        - '*\unsecapp.exe'
+        - '*\wlanext.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 4b991083-3d0e-44ce-8fc4-b254025d8d4b
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/unusual-parent-process-for-cmd.exe.html
+status: experimental
+tags:
+- attack.execution
+- attack.t1059
+

@@ -1,0 +1,36 @@
+title: Execution via MSSQL Xp_cmdshell Stored Procedure
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/28
+description: Detects execution via MSSQL xp_cmdshell stored procedure. Malicious users
+    may attempt to elevate their privileges by using xp_cmdshell, which is disabled
+    by default.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\cmd.exe'
+    SELECTION_4:
+        ParentProcessName: '*\sqlservr.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 344482e4-a477-436c-aa70-7536d18a48c7
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/execution-via-mssql-xp_cmdshell-stored-procedure.html
+related:
+-   id: d08dd86f-681e-4a00-a92c-1db218754417
+    type: derived
+-   id: 7f103213-a04e-4d59-8261-213dddf22314
+    type: derived
+status: experimental
+tags:
+- attack.execution
+- attack.t1059
+

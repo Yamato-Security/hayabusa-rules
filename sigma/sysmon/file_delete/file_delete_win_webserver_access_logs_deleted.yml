@@ -1,0 +1,33 @@
+title: WebServer Access Logs Deleted
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/16
+description: Detects the deletion of WebServer access logs which may indicate an attempt
+    to destroy forensic evidence
+detection:
+    SELECTION_1:
+        EventID: 23
+    SELECTION_2:
+        EventID: 26
+    SELECTION_3:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_4:
+        FileName: C:\inetpub\logs\LogFiles\\*
+    SELECTION_5:
+        FileName: '*.log'
+    condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- During uninstallation of the IIS service
+- During log rotation
+id: 3eb8c339-a765-48cc-a150-4364c04652bf
+level: medium
+logsource:
+    category: file_delete
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/webserver-access-logs-deleted.html
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1070
+

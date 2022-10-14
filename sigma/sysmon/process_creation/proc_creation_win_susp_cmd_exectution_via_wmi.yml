@@ -1,0 +1,37 @@
+title: Suspicious Cmd Execution via WMI
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/27
+description: Detects suspicious command execution (cmd) via Windows Management Instrumentation
+    (WMI) on a remote host. This could be indicative of adversary lateral movement.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\cmd.exe'
+    SELECTION_4:
+        ParentImage: '*\WmiPrvSE.exe'
+    SELECTION_5:
+        CommandLine: '*\\\\127.0.0.1\\\*'
+    SELECTION_6:
+        CommandLine:
+        - '*2>&1*'
+        - '*1>*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: e31f89f7-36fb-4697-8ab6-48823708353b
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/suspicious-cmd-execution-via-wmi.html
+status: experimental
+tags:
+- attack.execution
+- attack.t1047
+

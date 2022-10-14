@@ -1,0 +1,31 @@
+title: Unusual Child Porcess of dns.exe
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/27
+description: Detects an unexpected process spawning from dns.exe which may indicate
+    activity related to remote code execution or other forms of exploitation as seen
+    in CVE-2020-1350 (SigRed)
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\dns.exe'
+    SELECTION_4:
+        Image: '*\conhost.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: a4e3d776-f12e-42c2-8510-9e6ed1f43ec3
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/unusual-child-process-of-dns.exe.html
+status: experimental
+tags:
+- attack.initial_access
+- attack.t1133
+

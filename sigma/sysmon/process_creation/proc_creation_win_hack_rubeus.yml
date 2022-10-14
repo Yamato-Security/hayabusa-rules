@@ -14,6 +14,8 @@ detection:
     SELECTION_4:
         OriginalFileName: Rubeus.exe
     SELECTION_5:
+        Description: Rubeus
+    SELECTION_6:
         CommandLine:
         - '* asreproast *'
         - '* dump /service:krbtgt *'
@@ -27,7 +29,8 @@ detection:
         - '* s4u /user:*'
         - '* s4u /ticket:*'
         - '* hash /password:*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6))
 falsepositives:
 - Unlikely
 id: 7ec2c172-dceb-4c10-92c9-87c1881b7e18
@@ -35,7 +38,7 @@ level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/20
+modified: 2022/10/11
 references:
 - https://www.harmj0y.net/blog/redteaming/from-kekeo-to-rubeus/
 - https://m0chan.github.io/2019/07/31/How-To-Attack-Kerberos-101.html

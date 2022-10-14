@@ -23,17 +23,20 @@ detection:
         - '*\WebEx\WebexHost.exe'
         - '*\thor\thor64.exe'
         - '*\veam.backup.shell.exe'
+        - '*\winget.exe'
+    SELECTION_6:
+        ParentImage: '*\AppData\Local\Temp\WinGet\\*'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-        or SELECTION_5))
+        or SELECTION_5 or SELECTION_6))
 falsepositives:
 - Applications could use this notation occasionally which might generate some false
-    positives. In that case Investigate the parent and child process.
+    positives. In that case investigate the parent and child process.
 id: 349d891d-fef0-4fe4-bc53-eee623a15969
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/20
+modified: 2022/10/11
 references:
 - https://www.acunetix.com/blog/articles/windows-short-8-3-filenames-web-security-problem/
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc959352(v=technet.10)?redirectedfrom=MSDN

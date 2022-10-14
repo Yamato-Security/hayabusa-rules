@@ -3,7 +3,7 @@ ruletype: Sigma
 author: Timur Zinniatullin, oscd.community
 date: 2019/10/21
 description: Adversaries may interact with the Windows Registry to gather information
-    about the system, configuration, and installed software.
+    about credentials, the system, configuration, and installed software.
 detection:
     SELECTION_1:
         EventID: 4688
@@ -38,7 +38,6 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/04
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1012/T1012.md
 status: test

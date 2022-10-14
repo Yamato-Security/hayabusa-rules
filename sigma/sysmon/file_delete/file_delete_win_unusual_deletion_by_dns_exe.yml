@@ -1,0 +1,34 @@
+title: Unusual File Deletion by dns.exe
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/27
+description: Detects an unexpected file being deleted by dns.exe which my indicate
+    activity related to remote code execution or other forms of exploitation as seen
+    in CVE-2020-1350 (SigRed)
+detection:
+    SELECTION_1:
+        EventID: 23
+    SELECTION_2:
+        EventID: 26
+    SELECTION_3:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_4:
+        Image: '*\dns.exe'
+    SELECTION_5:
+        TargetFilename: '*\dns.log'
+    condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and SELECTION_4 and  not
+        (SELECTION_5))
+falsepositives:
+- Unknown
+id: 8f0b1fb1-9bd4-4e74-8cdf-a8de4d2adfd0
+level: high
+logsource:
+    category: file_delete
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/unusual-file-modification-by-dns.exe.html
+status: experimental
+tags:
+- attack.initial_access
+- attack.t1133
+
