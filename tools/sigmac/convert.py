@@ -167,9 +167,9 @@ def sigma_executer(data: ConvertData):
     proc = subprocess.Popen(data.sigma_command,
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
-        proc.wait(60)
+        outs, errs = proc.communicate(timeout=60)
         logger.info(data.file_name + " were converted.")
-        stderr = proc.stderr.read().decode("utf-8")
+        stderr = errs.decode("utf-8")
         if len(stderr) > 0:
             if SUPPRESSION and "An unsupported feature is required for this Sigma rule" in stderr:
                 # Suppress Option
@@ -181,7 +181,7 @@ def sigma_executer(data: ConvertData):
                            + stderr)
             return 1
         with open(data.output_path, mode="w") as f:
-            f.write(proc.stdout.read().decode("utf-8"))
+            f.write(outs.decode("utf-8"))
     except subprocess.TimeoutExpired:
         logger.error("Timeout Expired, failed to convert " + data.output_path
                     + "\n" + "Command: " + data.sigma_command)
