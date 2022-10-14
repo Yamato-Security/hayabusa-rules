@@ -1,0 +1,31 @@
+title: MSSQL Extended Stored Procedure Backdoor Maggie
+ruletype: Sigma
+author: Denis Szadkowski, DIRT / DCSO CyTec
+date: 2022/10/09
+description: This rule detects the execution of the extended storage procedure backdoor
+    named Maggie in the context of Microsoft SQL server
+detection:
+    SELECTION_1:
+        Channel: Application
+    SELECTION_2:
+        Provider_Name: MSSQLSERVER
+    SELECTION_3:
+        EventID: 8128
+    SELECTION_4:
+        Message: '*maggie*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate extended stored procedures named maggie
+id: 711ab2fe-c9ba-4746-8840-5228a58c3cb8
+level: high
+logsource:
+    product: windows
+    service: application
+modified: 2022/10/09
+references:
+- https://medium.com/@DCSO_CyTec/mssql-meet-maggie-898773df3b01
+status: experimental
+tags:
+- attack.persistence
+- attack.t1546
+

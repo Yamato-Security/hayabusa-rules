@@ -1,0 +1,41 @@
+title: Windows Defender Exclusions Added via Powershell
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/16
+description: Detects modifications to the Windows Defender configuration settings
+    using PowerShell to add exclusions
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_3:
+        ScriptBlockText:
+        - '* -ExclusionPath *'
+        - '* -ExclusionExtension *'
+        - '* -ExclusionProcess *'
+        - '* -ExclusionIpAddress *'
+    SELECTION_4:
+        ScriptBlockText:
+        - '*Add-MpPreference *'
+        - '*Set-MpPreference *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: c1344fa2-323b-4d2e-9176-84b4d4821c88
+level: medium
+logsource:
+    category: ps_script
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/windows-defender-exclusions-added-via-powershell.html
+related:
+-   id: 17769c90-230e-488b-a463-e05c08e9d48f
+    type: similar
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562
+- attack.execution
+- attack.t1059
+

@@ -1,0 +1,31 @@
+title: Unusual File Modification by dns.exe
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/27
+description: Detects an unexpected file being modified by dns.exe which my indicate
+    activity related to remote code execution or other forms of exploitation as seen
+    in CVE-2020-1350 (SigRed)
+detection:
+    SELECTION_1:
+        EventID: 2
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\dns.exe'
+    SELECTION_4:
+        TargetFilename: '*\dns.log'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: 9f383dc0-fdeb-4d56-acbc-9f9f4f8f20f3
+level: high
+logsource:
+    category: file_change
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/unusual-file-modification-by-dns.exe.html
+status: experimental
+tags:
+- attack.initial_access
+- attack.t1133
+

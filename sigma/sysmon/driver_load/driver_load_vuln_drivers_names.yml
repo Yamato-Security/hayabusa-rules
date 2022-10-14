@@ -112,32 +112,65 @@ detection:
         - '*\superbmc.sys'
         - '*\semav6msr.sys'
         - '*\piddrv64.sys'
-        - '*BS_I2cIo.sys'
-        - '*rtkio.sys'
-        - '*AMDRyzenMasterDriver.sys'
-        - '*LHA.sys'
-        - '*kEvP64.sys'
-        - '*BSMI.sys'
-        - '*TmComm.sys'
-        - '*cpuz.sys'
-        - '*ElbyCDIO.sys'
-        - '*iQVW64.SYS'
-        - '*vmdrv.sys'
-        - '*HpPortIox64.sys'
-        - '*AMDPowerProfiler.sys'
-        - '*CorsairLLAccess64.sys'
-        - '*RTCore64.sys'
-        - '*libnicm.sys'
-        - '*procexp.Sys'
-        - '*viragt.sys'
-        - '*viragt64.sys'
-        - '*AsrDrv106.sys'
-        - '*zamguard64.sys'
-        - '*zam64.sys'
-        - '*fidpcidrv64.sys'
-        - '*MsIo32.sys'
-        - '*winio64.sys'
-        - '*DirectIo64.sys'
+        - '*\BS_I2cIo.sys'
+        - '*\rtkio.sys'
+        - '*\AMDRyzenMasterDriver.sys'
+        - '*\LHA.sys'
+        - '*\kEvP64.sys'
+        - '*\BSMI.sys'
+        - '*\TmComm.sys'
+        - '*\cpuz.sys'
+        - '*\iQVW64.SYS'
+        - '*\vmdrv.sys'
+        - '*\HpPortIox64.sys'
+        - '*\AMDPowerProfiler.sys'
+        - '*\CorsairLLAccess64.sys'
+        - '*\RTCore64.sys'
+        - '*\libnicm.sys'
+        - '*\procexp.Sys'
+        - '*\viragt.sys'
+        - '*\viragt64.sys'
+        - '*\AsrDrv106.sys'
+        - '*\zamguard64.sys'
+        - '*\zam64.sys'
+        - '*\fidpcidrv64.sys'
+        - '*\MsIo32.sys'
+        - '*\winio64.sys'
+        - '*\capcom.sys'
+        - '*\IOMap64.sys'
+        - '*\ATSZIO64.sys'
+        - '*\aswVmm.sys'
+        - '*\FairplayKD.sys'
+        - '*\pgldqpoc.sys'
+        - '*\iqvw64e.sys'
+        - '*\Monitor_win10_x64.sys'
+        - '*\srvnetbus.sys'
+        - '*\Mslo64.sys'
+        - '*\pcdsrvc_x64.pkms'
+        - '*\krpocesshacker.sys'
+        - '*\HWiNFO64A.sys'
+        - '*\rzpnk.sys'
+        - '*\magdrvamd64.sys'
+        - '*\driver7-x64.sys'
+        - '*\driver7-x86-withoutdbg.sys'
+        - '*\driver7-x86.sys'
+        - '*\gmer.sys'
+        - '*\PCADRVX64.sys'
+        - '*\ActiveHealth.sys'
+        - '*\CAM_V3.sys'
+        - '*\GameFire.sys'
+        - '*\OpenHardwareMonitor.sys'
+        - '*\OpenHardwareMonitorLib.sys'
+        - '*\OpenHardwareMonitorReport.sys'
+        - '*\SmartDashboard.sys'
+        - '*\SystemGauge.sys'
+        - '*\SystemGaugeX7.sys'
+        - '*\VideoNovaServerControllerService.sys'
+        - '*\ellp_service.sys'
+        - '*\hardwareproviders.sys'
+        - '*\ohm.sys'
+        - '*\sensorsview32_64.sys'
+        - '*\touchpointanalyticsclient.sys'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Some false positives may occure if one of the vulnerable driver names mentioned
@@ -150,6 +183,7 @@ level: medium
 logsource:
     category: driver_load
     product: windows
+modified: 2022/10/10
 references:
 - https://github.com/eclypsium/Screwed-Drivers/blob/master/DRIVERS.md
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-driver-block-rules
@@ -159,6 +193,9 @@ references:
 - https://github.com/namazso/physmem_drivers
 - https://github.com/stong/CVE-2020-15368
 - https://github.com/CaledoniaProject/drivers-binaries
+- https://github.com/Chigusa0w0/AsusDriversPrivEscala
+- https://www.welivesecurity.com/2022/01/11/signed-kernel-drivers-unguarded-gateway-windows-core/
+- https://eclypsium.com/2019/11/12/mother-of-all-drivers/
 related:
 -   id: 7aaaf4b8-e47c-4295-92ee-6ed40a6f60c8
     type: derived

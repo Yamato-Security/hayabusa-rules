@@ -18,17 +18,22 @@ detection:
         - '*\PerfLogs\\*'
         - '*\Desktop\\*'
         - '*\Downloads\\*'
-        - '*\AppData\Local\Temp\\*'
         - '*C:\Windows\TEMP\\*'
         - '*\\\\\*'
-    condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+    SELECTION_6:
+        Data: '*\AppData\Local\Temp\WinGet\\*'
+    SELECTION_7:
+        Data: '*C:\Windows\TEMP\UpdHealthTools.msi*'
+    condition: (SELECTION_1 and (SELECTION_2 and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7)))
 falsepositives:
-- Some false positives may occure depending on the environnement
+- Some false positives may occur depending on the environnement
 id: c7c8aa1c-5aff-408e-828b-998e3620b341
 level: high
 logsource:
     product: windows
     service: application
+modified: 2022/10/12
 references:
 - https://www.trendmicro.com/en_us/research/22/h/ransomware-actor-abuses-genshin-impact-anti-cheat-driver-to-kill-antivirus.html
 status: experimental

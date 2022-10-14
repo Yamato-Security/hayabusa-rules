@@ -1,0 +1,60 @@
+title: PCHunter Usage
+ruletype: Sigma
+author: Florian Roth, Nasreddine Bencherchali
+date: 2022/10/10
+description: Detects suspicious use of PCHunter, a tool like Process Hacker to view
+    and manipulate processes, kernel options and other low level stuff
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        imphash:
+        - 444d210cea1ff8112f256a4997eed7ff
+        - 0479f44df47cfa2ef1ccc4416a538663
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\PCHunter64.exe'
+        - '*\PCHunter32.exe'
+    SELECTION_4:
+        OriginalFileName: PCHunter.exe
+    SELECTION_5:
+        Description: Epoolsoft Windows Information View Tools
+    SELECTION_6:
+        Hashes:
+        - '*SHA1=5F1CBC3D99558307BC1250D084FA968521482025*'
+        - '*MD5=987B65CD9B9F4E9A1AFD8F8B48CF64A7*'
+        - '*SHA256=2B214BDDAAB130C274DE6204AF6DBA5AEEC7433DA99AA950022FA306421A6D32*'
+        - '*IMPHASH=444D210CEA1FF8112F256A4997EED7FF*'
+        - '*SHA1=3FB89787CB97D902780DA080545584D97FB1C2EB*'
+        - '*MD5=228DD0C2E6287547E26FFBD973A40F14*'
+        - '*SHA256=55F041BF4E78E9BFA6D4EE68BE40E496CE3A1353E1CA4306598589E19802522C*'
+        - '*IMPHASH=0479F44DF47CFA2EF1CCC4416A538663*'
+    SELECTION_7:
+        md5:
+        - 228dd0c2e6287547e26ffbd973a40f14
+        - 987b65cd9b9f4e9a1afd8f8b48cf64a7
+    SELECTION_8:
+        sha1:
+        - 5f1cbc3d99558307bc1250d084fa968521482025
+        - 3fb89787cb97d902780da080545584d97fb1c2eb
+    SELECTION_9:
+        sha256:
+        - 2b214bddaab130c274de6204af6dba5aeec7433da99aa950022fa306421a6d32
+        - 55f041bf4e78e9bfa6d4ee68be40e496ce3a1353e1ca4306598589e19802522c
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6 or SELECTION_7 or SELECTION_8 or SELECTION_9 or SELECTION_10))
+falsepositives:
+- Unlikely
+id: fca949cc-79ca-446e-8064-01aa7e52ece5
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- http://www.xuetr.com/
+- https://www.crowdstrike.com/blog/falcon-overwatch-report-finds-increase-in-ecrime/
+- https://www.hexacorn.com/blog/2018/04/20/kernel-hacking-tool-you-might-have-never-heard-of-xuetr-pchunter/
+status: experimental
+

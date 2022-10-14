@@ -10,23 +10,25 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
+        Image: '*\certutil.exe'
+    SELECTION_4:
+        OriginalFileName: CertUtil.exe
+    SELECTION_5:
         CommandLine:
         - '* -decode *'
         - '* -decodehex *'
         - '* -urlcache *'
         - '* -verifyctl *'
         - '* -encode *'
+        - '* -exportPFX *'
         - '* /decode *'
         - '* /decodehex *'
         - '* /urlcache *'
         - '* /verifyctl *'
         - '* /encode *'
-    SELECTION_4:
-        Image: '*\certutil.exe'
-    SELECTION_5:
-        CommandLine: '*ping*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)))
+        - '* /exportPFX *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
     environment
@@ -38,7 +40,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/12
+modified: 2022/10/12
 references:
 - https://twitter.com/JohnLaTwC/status/835149808817991680
 - https://blogs.technet.microsoft.com/pki/2006/11/30/basic-crl-checking-with-certutil/

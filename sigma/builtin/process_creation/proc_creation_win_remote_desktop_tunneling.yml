@@ -1,0 +1,36 @@
+title: Potential Remote Desktop Tunneling
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/27
+description: Detects potential use of an SSH utility to establish RDP over a reverse
+    SSH Tunnel. This can be used by attackers to enable routing of network packets
+    that would otherwise not reach their intended destination.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*:3389*'
+    SELECTION_4:
+        CommandLine:
+        - '* -L *'
+        - '* -P *'
+        - '* -R *'
+        - '* -pw *'
+        - '* -ssh *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 8a3038e8-9c9d-46f8-b184-66234a160f6f
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/potential-remote-desktop-tunneling-detected.html
+status: experimental
+tags:
+- attack.lateral_movement
+- attack.t1021
+

@@ -1,0 +1,33 @@
+title: UAC Bypass via Windows Firewall Snap-In Hijack
+ruletype: Sigma
+author: Tim Rauch
+date: 2022/09/27
+description: Detects attempts to bypass User Account Control (UAC) by hijacking the
+    Microsoft Management Console (MMC) Windows Firewall snap-in
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\mmc.exe'
+    SELECTION_4:
+        ParentCommandLine: '*WF.msc*'
+    SELECTION_5:
+        Image: '*\WerFault.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5))
+falsepositives:
+- Unknown
+id: e52cb31c-10ed-4aea-bcb7-593c9f4a315b
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.elastic.co/guide/en/security/current/uac-bypass-via-windows-firewall-snap-in-hijack.html#uac-bypass-via-windows-firewall-snap-in-hijack
+status: experimental
+tags:
+- attack.privilege_escalation
+- attack.t1548
+

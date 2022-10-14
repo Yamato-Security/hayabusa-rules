@@ -11,7 +11,10 @@ detection:
     SELECTION_3:
         ParentProcessName: '*\eventvwr.exe'
     SELECTION_4:
-        NewProcessName: '*\mmc.exe'
+        NewProcessName:
+        - '*\mmc.exe'
+        - '*:\Windows\SysWOW64\WerFault.exe'
+        - '*:\Windows\System32\WerFault.exe'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown

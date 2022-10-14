@@ -7,6 +7,10 @@ description: Detects when a system process (ie located in system32, syswow64...e
 detection:
     SELECTION_1:
         EventID: 7
+    SELECTION_10:
+        Image: '*\mscorsvw.exe'
+    SELECTION_11:
+        ImageLoaded: '*\AppData\Local\Temp\\*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -27,8 +31,11 @@ detection:
         Image: C:\Windows\System32\cleanmgr.exe
     SELECTION_8:
         ImageLoaded: '*\ssshim.dll'
+    SELECTION_9:
+        Image: C:\Windows\Microsoft.NET\Framework\v*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+        ((SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Unknown
 id: 9e9a9002-56c4-40fd-9eff-e4b09bfa5f6c
@@ -36,7 +43,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/09/29
+modified: 2022/10/12
 references:
 - https://github.com/hackerhouse-opensource/iscsicpl_bypassUAC (Idea)
 status: experimental
