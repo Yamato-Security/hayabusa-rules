@@ -1,0 +1,33 @@
+title: Suspicious Plink Port Forwarding
+ruletype: Sigma
+author: Florian Roth
+date: 2021/01/19
+description: Detects suspicious Plink tunnel port forwarding to a local port
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Description: Command-line SSH, Telnet, and Rlogin client
+    SELECTION_4:
+        CommandLine: '* -R *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Administrative activity using a remote port forwarding to a local port
+id: 48a61b29-389f-4032-b317-b30de6b95314
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/10/09
+references:
+- https://www.real-sec.com/2019/04/bypassing-network-restrictions-through-rdp-tunneling/
+- https://medium.com/@informationsecurity/remote-ssh-tunneling-with-plink-exe-7831072b3d7d
+status: test
+tags:
+- attack.command_and_control
+- attack.t1572
+- attack.lateral_movement
+- attack.t1021.001
+
