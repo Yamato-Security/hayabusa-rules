@@ -1,0 +1,41 @@
+title: Suspicious Recon Activity Using Findstr Keywords
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/08/12
+description: Detects usage of findstr with the "EVERYONE" keyword. This is often used
+    in combination with icacls to look for misconfigured files or folders permissions
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\findstr.exe'
+    SELECTION_4:
+        OriginalFileName: FINDSTR.EXE
+    SELECTION_5:
+        CommandLine:
+        - '*"Everyone"*'
+        - '*''Everyone''*'
+    SELECTION_6:
+        CommandLine: '*icacls *'
+    SELECTION_7:
+        CommandLine: '*findstr *'
+    SELECTION_8:
+        CommandLine: '*Everyone*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
+falsepositives:
+- Unknown
+id: 47e4bab7-c626-47dc-967b-255608c9a920
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1552.006
+
