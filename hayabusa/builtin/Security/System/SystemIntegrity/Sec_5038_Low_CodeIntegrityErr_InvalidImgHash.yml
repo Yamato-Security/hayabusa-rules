@@ -1,8 +1,8 @@
 author: Zach Mathis
 date: 2022/03/05
-modified:  2022/05/21
+modified: 2022/10/14
 
-title: Code Integrity Proble_Possible Modification
+title: Code Integrity Error_Invalid Image Hash
 details: 'Path: %param1%'
 description: Detects when hashes are not correct or a file does not meet Windows' security requirements.
 
@@ -16,10 +16,7 @@ logsource:
 detection:
     selection:
         Channel: Security
-        EventID: 
-            - 5038  # Image hash of a file is not valid. 
-            - 6281  # Page hashes of an image file are not valid
-            - 6410  # File does not meet the security requirements to load into a process.
+        EventID: 5038
     condition: selection
 falsepositives:
     - most likely not malicious
@@ -28,7 +25,5 @@ tags:
     - attack.defense_evasion
 references:
     - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-5038
-    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-6281
-    - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-6410
 sample-evtx: 
 ruletype: Hayabusa
