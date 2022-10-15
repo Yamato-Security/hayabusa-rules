@@ -20,6 +20,10 @@ detection:
         - C:\Program Files (x86)\Microsoft Office\root\Integration\Integrator.exe
     SELECTION_13:
         Image: C:\Windows\System32\msiexec.exe
+    SELECTION_14:
+        Image:
+        - C:\Program Files (x86)\Dropbox\Update\DropboxUpdate.exe
+        - C:\Program Files\Dropbox\Update\DropboxUpdate.exe
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -41,7 +45,8 @@ detection:
         Image: C:\Windows\Microsoft.NET\Framework*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9
-        and SELECTION_10 and SELECTION_11) or (SELECTION_12) or (SELECTION_13)))
+        and SELECTION_10 and SELECTION_11) or (SELECTION_12) or (SELECTION_13) or
+        (SELECTION_14)))
 falsepositives:
 - Unknown
 id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
@@ -49,7 +54,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/16
+modified: 2022/10/14
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://labs.f-secure.com/blog/scheduled-task-tampering/

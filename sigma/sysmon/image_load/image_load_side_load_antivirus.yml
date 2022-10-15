@@ -9,6 +9,11 @@ detection:
         EventID: 7
     SELECTION_10:
         ImageLoaded:
+        - '*\ashldres.dll'
+        - '*\lockdown.dll'
+        - '*\vsodscpl.dll'
+    SELECTION_11:
+        ImageLoaded:
         - C:\Program Files\McAfee\\*
         - C:\Program Files (x86)\McAfee\\*
     SELECTION_2:
@@ -20,23 +25,22 @@ detection:
         - C:\Program Files\Bitdefender Antivirus Free\\*
         - C:\Program Files (x86)\Bitdefender Antivirus Free\\*
     SELECTION_5:
-        ImageLoaded: C:\Program Files\Dell\SARemediation\plugin\log.dll
+        Image: C:\Program Files\Dell\SARemediation\audit\TelemetryUtility.exe
     SELECTION_6:
-        ImageLoaded: C:\Program Files\Canon\MyPrinter\\*
+        ImageLoaded:
+        - C:\Program Files\Dell\SARemediation\plugin\log.dll
+        - C:\Program Files\Dell\SARemediation\audit\log.dll
     SELECTION_7:
-        ImageLoaded: '*\qrt.dll'
+        ImageLoaded: C:\Program Files\Canon\MyPrinter\\*
     SELECTION_8:
+        ImageLoaded: '*\qrt.dll'
+    SELECTION_9:
         ImageLoaded:
         - C:\Program Files\F-Secure\Anti-Virus\\*
         - C:\Program Files (x86)\F-Secure\Anti-Virus\\*
-    SELECTION_9:
-        ImageLoaded:
-        - '*\ashldres.dll'
-        - '*\lockdown.dll'
-        - '*\vsodscpl.dll'
     condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5 or SELECTION_6))) or (SELECTION_7 and  not (SELECTION_8)))
-        or (SELECTION_9 and  not (SELECTION_10))))
+        or (SELECTION_5 and SELECTION_6) or (SELECTION_7))) or (SELECTION_8 and  not
+        (SELECTION_9))) or (SELECTION_10 and  not (SELECTION_11))))
 falsepositives:
 - Applications that load the same dlls mentioned in the detection section. Investigate
     them and filter them out if a lot FPs are caused.
@@ -49,7 +53,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2022/09/21
+modified: 2022/10/13
 references:
 - https://hijacklibs.net/
 status: experimental

@@ -17,20 +17,20 @@ detection:
         OriginalFileName: FINDSTR.EXE
     SELECTION_6:
         CommandLine:
-        - '*/v*'
-        - '*-v*'
+        - '* /v *'
+        - '* -v *'
     SELECTION_7:
         CommandLine:
-        - '*/l*'
-        - '*-l*'
+        - '* /l *'
+        - '* -l *'
     SELECTION_8:
         CommandLine:
-        - '*/s*'
-        - '*-s*'
+        - '* /s *'
+        - '* -s *'
     SELECTION_9:
         CommandLine:
-        - '*/i*'
-        - '*-i*'
+        - '* /i *'
+        - '* -i *'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
         and ((SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)))
 falsepositives:
@@ -40,7 +40,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/20
+modified: 2022/10/11
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Findstr/
 - https://oddvar.moe/2018/04/11/putting-data-in-alternate-data-streams-and-how-to-execute-it-part-2/
