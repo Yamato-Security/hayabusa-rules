@@ -2,7 +2,7 @@ title: Suspicious Plink Usage RDP Tunneling
 ruletype: Sigma
 author: Florian Roth
 date: 2022/08/04
-description: Execution of well known tools for data exfiltration and tunneling
+description: Execution of plink to perform data exfiltration and tunneling
 detection:
     SELECTION_1:
         EventID: 4688
