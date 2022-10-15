@@ -1,0 +1,27 @@
+title: User Logoff Event
+ruletype: Sigma
+author: frack113
+date: 2022/10/14
+description: Detects a user log-off activity. Could be used for example to correlate
+    information during forensic investigations
+detection:
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 4634
+    SELECTION_3:
+        EventID: 4647
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+falsepositives:
+- Unknown
+id: 0badd08f-c6a3-4630-90d3-6875cca440be
+level: informational
+logsource:
+    product: windows
+    service: security
+references:
+- https://github.com/Yamato-Security/EnableWindowsLogSettings/blob/7f6d755d45ac7cc9fc35b0cbf498e6aa4ef19def/ConfiguringSecurityLogAuditPolicies.md
+- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4634
+- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4647
+status: experimental
+
