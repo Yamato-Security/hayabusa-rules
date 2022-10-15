@@ -1,6 +1,6 @@
 <div align="center">
  <p>
-    <img alt="Hayabusa Logo" src="https://github.com/Yamato-Security/hayabusa/blob/main/logo.png" width="80%">
+    <img alt="Hayabusa Logo" src="https://github.com/Yamato-Security/hayabusa/blob/main/logo.png" width="60%">
  </p>
  [ <b>English</b> ] | [<a href="README-Japanese.md">日本語</a>]
 </div>
