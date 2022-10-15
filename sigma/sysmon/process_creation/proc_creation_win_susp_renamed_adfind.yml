@@ -11,19 +11,40 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
+        CommandLine:
+        - '*domainlist*'
+        - '*trustdmp*'
+        - '*dcmodes*'
+        - '*adinfo*'
+        - '* dclist *'
+        - '*computer_pwdnotreqd*'
+        - '*objectcategory=*'
+        - '*-subnets -f*'
+        - '*name="Domain Admins"*'
+        - '*-sc u:*'
+        - '*domainncs*'
+        - '*dompol*'
+        - '* oudmp *'
+        - '*subnetdmp*'
+        - '*gpodmp*'
+        - '*fspdmp*'
+        - '*users_noexpire*'
+        - '*computers_active*'
+        - '*computers_pwdnotreqd*'
+    SELECTION_4:
         Imphash:
         - bca5675746d13a1f246e2da3c2217492
         - 53e117a96057eaf19c41380d0e87f1c2
-    SELECTION_4:
+    SELECTION_5:
         Hashes:
         - '*IMPHASH=BCA5675746D13A1F246E2DA3C2217492*'
         - '*IMPHASH=53E117A96057EAF19C41380D0E87F1C2*'
-    SELECTION_5:
-        Image: '*\AdFind.exe'
     SELECTION_6:
+        Image: '*\AdFind.exe'
+    SELECTION_7:
         OriginalFileName: AdFind.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-        (SELECTION_5 and SELECTION_6))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and  not (SELECTION_6 and SELECTION_7))
 falsepositives:
 - Unknown
 id: df55196f-f105-44d3-a675-e9dfb6cc2f2b
@@ -31,6 +52,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/10/13
 references:
 - https://www.joeware.net/freetools/tools/adfind/
 - https://thedfirreport.com/2020/05/08/adfind-recon/
