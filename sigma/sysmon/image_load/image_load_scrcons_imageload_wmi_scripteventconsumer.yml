@@ -19,13 +19,15 @@ detection:
         - '*\scrrun.dll'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- Unknown
+- Legitimate event consumers
+- Dell computers on some versions register an event consumer that is known to cause
+    false positives when brightness is changed by the corresponding keyboard button
 id: b439f47d-ef52-4b29-9a2f-57d8a96cb6b8
-level: high
+level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2021/11/27
+modified: 2022/10/11
 references:
 - https://twitter.com/HunterPlaybook/status/1301207718355759107
 - https://www.mdsec.co.uk/2020/09/i-like-to-move-it-windows-lateral-movement-part-1-wmi-event-subscription/

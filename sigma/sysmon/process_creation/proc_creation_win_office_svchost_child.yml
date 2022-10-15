@@ -1,0 +1,41 @@
+title: Svchost Spawning Office Application
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/10/13
+description: Detects svchost process spawning an instance of an office application.
+    This happens when the initial word application create an instance of one of the
+    office COM objects such as 'Word.Application', 'Excel.Application'...etc. This
+    can be used by malicious actor to create a malicious office document with macros
+    on the fly. (See vba2clr project in reference)
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*\svchost.exe'
+    SELECTION_4:
+        Image:
+        - '*\winword.exe'
+        - '*\excel.exe'
+        - '*\powerpnt.exe'
+        - '*\msaccess.exe'
+        - '*\mspub.exe'
+        - '*\eqnedt32.exe'
+        - '*\visio.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate usage of office automation via scripting
+id: 9bdaf1e9-fdef-443b-8081-4341b74a7e28
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://learn.microsoft.com/en-us/previous-versions/office/troubleshoot/office-developer/automate-word-create-file-using-visual-basic
+- https://github.com/med0x2e/vba2clr
+status: experimental
+tags:
+- attack.execution
+- attack.defense_evasion
+
