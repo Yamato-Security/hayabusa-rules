@@ -193,6 +193,7 @@ sample-evtx: |
 - `Addr` -> Address
 - `Auth` -> Authentication
 - `Cli` -> Client
+- `Chan` -> Channel
 - `Cmd` -> Command
 - `Cnt` -> Count
 - `Comp` -> Computer
@@ -227,6 +228,7 @@ sample-evtx: |
 - `Term` -> Termination/Terminated
 - `Tkt` -> Ticket
 - `Tgt` -> Target
+- `Unkwn` -> Unknown
 - `Usr` -> User
 - `Op` -> Operation
 - `Perm` -> Permament

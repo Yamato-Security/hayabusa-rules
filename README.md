@@ -194,6 +194,7 @@ The following abbreviations are used in rules in order to make the output as con
 - `Addr` -> Address
 - `Auth` -> Authentication
 - `Cli` -> Client
+- `Chan` -> Channel
 - `Cmd` -> Command
 - `Cnt` -> Count
 - `Comp` -> Computer
@@ -228,6 +229,7 @@ The following abbreviations are used in rules in order to make the output as con
 - `Term` -> Termination/Terminated
 - `Tkt` -> Ticket
 - `Tgt` -> Target
+- `Unkwn` -> Unknown
 - `Usr` -> User
 - `Op` -> Operation
 - `Perm` -> Permament
