@@ -1,6 +1,6 @@
 <div align="center">
  <p>
-    <img alt="Hayabusa Logo" src="https://github.com/Yamato-Security/hayabusa/blob/main/logo.png" width="50%">
+    <img alt="Hayabusa Logo" src="https://github.com/Yamato-Security/hayabusa/blob/main/logo.png" width="80%">
  </p>
   [<a href="README.md">English</a>] | [<b>日本語</b>]
 </div>
@@ -194,23 +194,42 @@ sample-evtx: |
 - `Auth` -> Authentication
 - `Cli` -> Client
 - `Cmd` -> Command
+- `Cnt` -> Count
 - `Comp` -> Computer
-- `Conn` -> Connection
+- `Conn` -> Connection/Connected
+- `Crit` -> Critical
+- `Disconn` -> Disconnection/Disconnected
 - `Dir` -> Directory
 - `Dst` -> Destination
+- `EID` -> Event ID
+- `Err` -> Error
 - `Exec` -> Execution
+- `FW` -> Firewall
 - `Grp` -> Group
 - `LID` -> Logon ID
+- `Kbr` -> Kerberos
+- `Med` -> Medium
 - `Net` -> Network
 - `Obj` -> Object
+- `Op` -> Operational/Operation
 - `Proto` -> Protocol
+- `PW` -> Password
+- `Reconn` -> Reconnection
+- `Req` -> Request
+- `Rsp` -> Response
+- `Sess` -> Session
 - `Sig` -> Signature
 - `Susp` -> Suspicious
 - `Src` -> Source
 - `Svc` -> Service
 - `Svr` -> Server
+- `Temp` -> Temporary
+- `Term` -> Termination/Terminated
+- `Tkt` -> Ticket
 - `Tgt` -> Target
+- `Usr` -> User
 - `Op` -> Operation
+- `Perm` -> Permament
 - `Pkg` -> Package
 - `Priv` -> Privilege
 - `Proc` -> Process
