@@ -19,7 +19,6 @@ detection:
         - '*\smss.exe'
         - '*\winlogon.exe'
         - '*\explorer.exe'
-        - '*\dllhost.exe'
         - '*\rundll32.exe'
         - '*\regsvr32.exe'
         - '*\userinit.exe'
@@ -41,6 +40,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/10/14
 references:
 - https://www.elastic.co/guide/en/security/current/conhost-spawned-by-suspicious-parent-process.html
 status: experimental
