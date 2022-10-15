@@ -184,7 +184,7 @@ def sigma_executer(data: ConvertData):
             f.write(outs.decode("utf-8"))
     except subprocess.TimeoutExpired:
         logger.error("Timeout Expired, failed to convert " + data.output_path
-                    + "\n" + "Command: " + data.sigma_command)
+                    + "\n" + "Command: " + str(data.sigma_command))
         proc.kill()
         return 1
     except Exception as err:
