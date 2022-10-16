@@ -106,11 +106,11 @@ jobs:
           
       - name: Auto approve
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: juliangruber/approve-pull-request-action@v1
+        uses: nicklegan/github-repo-self-approve-action@v1.0.0
         with:
-          app_id: ${{ secrets.SIGMA_RULE_UPDATER_APP_ID }}
-          private_key: ${{ secrets.SIGMA_RULE_UPDATER_SECRET }}
-          number: ${{ steps.cpr.outputs.pull-request-number }}
+          appid: ${{ secrets.SIGMA_RULE_UPDATER_APP_ID }}
+          privatekey: ${{ secrets.SIGMA_RULE_UPDATER_SECRET }}
+          installationid: ${{ secrets.SIGMA_RULE_UPDATER_INSTALLATION_ID }}
 
       - name: upload change log
         if: env.change_exist == 'true'
