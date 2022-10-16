@@ -1,10 +1,10 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2022/05/21
+modified: 2022/10/16
 
-title: NTLM Logon To Local Account
+title: NTLM Authentication
 details: 'User: %TargetUserName% ¦ Comp: %Workstation% ¦ Status: %Status%'
-description: Prints logon information. 
+description: Logged when NTLM authentication is used usually for local accounts but NTLM can also be used with domain accounts. The original event title says it is only generated on domain controllers but that is not true. This also gets logged on clients.
 
 id: 4fbe94b0-577a-4f77-9b13-250e27d440fa
 level: informational
