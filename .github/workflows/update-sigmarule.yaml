@@ -109,7 +109,7 @@ jobs:
         uses: nicklegan/github-repo-self-approve-action@v1.0.0
         with:
           appid: ${{ secrets.SIGMA_RULE_UPDATER_APP_ID }}
-          privatekey: ${{ secrets.SIGMA_RULE_UPDATER_SECRET }}
+          privatekey: ${{ secrets.SIGMA_RULE_UPDATER_PRIVATE_KEY }}
           installationid: ${{ secrets.SIGMA_RULE_UPDATER_INSTALLATION_ID }}
 
       - name: upload change log
