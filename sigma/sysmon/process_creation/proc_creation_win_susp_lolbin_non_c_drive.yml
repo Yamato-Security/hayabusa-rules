@@ -1,0 +1,48 @@
+title: Wscript Execution from Non C Drive
+ruletype: Sigma
+author: Aaron Herman
+date: 2022/10/01
+description: Detects Wscript or Cscript executing from a drive other than C. This
+    has been observed with Qakbot executing from within a mounted ISO file.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+    SELECTION_4:
+        CommandLine:
+        - '*.js*'
+        - '*.vbs*'
+        - '*.vbe*'
+    SELECTION_5:
+        CommandLine: '*:\\*'
+    SELECTION_6:
+        CommandLine:
+        - '* C:\\\*'
+        - '* ''C:\\*'
+        - '* "C:\\\*'
+    SELECTION_7:
+        CommandLine: '*%*'
+    SELECTION_8:
+        CommandLine: '* \\\\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
+falsepositives:
+- Legitimate applications installed on other partitions such as "D:"
+id: 5b80cf53-3a46-4adc-960b-05ec19348d74
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/pr0xylife/Qakbot/blob/main/Qakbot_BB_30.09.2022.txt
+- https://app.any.run/tasks/4985c746-601e-401a-9ccf-ae350ac2e887/
+status: experimental
+tags:
+- attack.execution
+- attack.t1059
+

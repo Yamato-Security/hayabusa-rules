@@ -1,0 +1,38 @@
+title: Suspicious SSH Usage RDP Tunneling
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/10/12
+description: Execution of ssh.exe to perform data exfiltration and tunneling through
+    RDP
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\ssh.exe'
+    SELECTION_4:
+        CommandLine: '*:127.0.0.1:3389*'
+    SELECTION_5:
+        NewProcessName: '*\ssh.exe'
+    SELECTION_6:
+        CommandLine: '*:3389*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)))
+falsepositives:
+- Administrative activity
+id: f7d7ebd5-a016-46e2-9c54-f9932f2d386d
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
+related:
+-   id: f38ce0b9-5e97-4b47-a211-7dc8d8b871da
+    type: similar
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1572
+
