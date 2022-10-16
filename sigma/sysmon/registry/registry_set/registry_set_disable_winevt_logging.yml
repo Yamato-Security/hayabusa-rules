@@ -2,7 +2,7 @@ title: Disable Winevt Event Logging Via Registry
 ruletype: Sigma
 author: frack113, Nasreddine Bencherchali
 date: 2022/07/04
-description: Detects tempering with the "Enabled" registry key in order to disable
+description: Detects tampering with the "Enabled" registry key in order to disable
     windows logging of a windows event channel
 detection:
     SELECTION_1:
@@ -16,8 +16,12 @@ detection:
         - '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Kernel-AppCompat\\*'
         - '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Runtime\Error\\*'
     SELECTION_12:
-        Image: ''
+        Image: C:\Windows\servicing\TrustedInstaller.exe
     SELECTION_13:
+        TargetObject: '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Compat-Appraiser*'
+    SELECTION_14:
+        Image: ''
+    SELECTION_15:
         Image|re: ^$
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -37,7 +41,8 @@ detection:
         Image: '*\TiWorker.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
         SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or ((SELECTION_12 or SELECTION_13))))
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or ((SELECTION_14
+        or SELECTION_15))))
 falsepositives:
 - Legitimate administrators disabling specific event log for troubleshooting
 id: 2f78da12-f7c7-430b-8b19-a28f269b77a3
@@ -45,7 +50,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/20
+modified: 2022/10/11
 references:
 - https://twitter.com/WhichbufferArda/status/1543900539280293889
 - https://github.com/DebugPrivilege/CPP/blob/c39d365617dbfbcb01fffad200d52b6239b2918c/Windows%20Defender/RestoreDefenderConfig.cpp
