@@ -1,0 +1,57 @@
+title: Silence.EDA Detection
+ruletype: Sigma
+author: Alina Stepchenkova, Group-IB, oscd.community
+date: 2019/11/01
+description: Detects Silence EmpireDNSAgent as described in the Group-IP report
+detection:
+    SELECTION_1:
+        Channel: Microsoft-Windows-PowerShell/Operational
+    SELECTION_10:
+        ScriptBlockText: '*New-RandomDNSField*'
+    SELECTION_11:
+        ScriptBlockText: '*[Convert]::ToString($SYNOptions, 16)*'
+    SELECTION_12:
+        ScriptBlockText: '*$Session.Dead = $True*'
+    SELECTION_13:
+        ScriptBlockText: '*$Session["Driver"] -eq*'
+    SELECTION_2:
+        ScriptBlockText: '*System.Diagnostics.Process*'
+    SELECTION_3:
+        ScriptBlockText: '*Stop-Computer*'
+    SELECTION_4:
+        ScriptBlockText: '*Restart-Computer*'
+    SELECTION_5:
+        ScriptBlockText: '*Exception in execution*'
+    SELECTION_6:
+        ScriptBlockText: '*$cmdargs*'
+    SELECTION_7:
+        ScriptBlockText: '*Close-Dnscat2Tunnel*'
+    SELECTION_8:
+        ScriptBlockText: '*set type=$LookupType`nserver*'
+    SELECTION_9:
+        ScriptBlockText: '*$Command | nslookup 2>&1 | Out-String*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10
+        and SELECTION_11 and SELECTION_12 and SELECTION_13)
+falsepositives:
+- Unknown
+id: 3ceb2083-a27f-449a-be33-14ec1b7cc973
+level: critical
+logsource:
+    product: windows
+    service: powershell
+modified: 2022/10/05
+references:
+- https://www.group-ib.com/resources/threat-research/silence_2.0.going_global.pdf
+status: test
+tags:
+- attack.execution
+- attack.t1059.001
+- attack.command_and_control
+- attack.t1071.004
+- attack.t1572
+- attack.impact
+- attack.t1529
+- attack.g0091
+- attack.s0363
+

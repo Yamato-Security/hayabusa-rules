@@ -1,0 +1,44 @@
+title: Suspicious WERMGR Process Patterns
+ruletype: Sigma
+author: Florian Roth
+date: 2022/10/14
+description: Detects suspicious Windows Error Reporting manager (wermgr.exe) process
+    patterns - suspicious parents / children, execution folders, command lines etc.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\wermgr.exe'
+    SELECTION_4:
+        Image:
+        - '*C:\Windows\System32\\*'
+        - '*C:\Windows\SysWOW64\\*'
+    SELECTION_5:
+        ParentImage: '*\wermgr.exe'
+    SELECTION_6:
+        Image:
+        - '*\nslookup.exe'
+        - '*\ipconfig.exe'
+        - '*\net.exe'
+        - '*\net1.exe'
+        - '*\whoami.exe'
+        - '*\netstat.exe'
+        - '*\systeminfo.exe'
+        - '*\cmd.exe'
+        - '*\powershell.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and  not (SELECTION_4))
+        or (SELECTION_5 and SELECTION_6)))
+falsepositives:
+- Unknown
+id: CBEC226F-63D9-4ECA-9F52-DFB6652F24DF
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.trendmicro.com/en_us/research/22/j/black-basta-infiltrates-networks-via-qakbot-brute-ratel-and-coba.html
+- https://www.echotrail.io/insights/search/wermgr.exe
+status: experimental
+
