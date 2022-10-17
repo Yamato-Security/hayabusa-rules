@@ -15,12 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: clone hayabusa rule repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           path: hayabusa-rules
 
       - name: clone sigmac
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: SigmaHQ/sigma
           path: sigma-repo # It is necessary to specify the path because hayabusa-rules repository have the folder which has the same name.
@@ -98,7 +98,7 @@ jobs:
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: peter-evans/enable-pull-request-automerge@v1
+        uses: peter-evans/enable-pull-request-automerge@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
@@ -106,7 +106,7 @@ jobs:
 
       - name: upload change log
         if: env.change_exist == 'true'
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: changed_rule_log
           path: ${{ github.workspace }}/changed_rule.logs
