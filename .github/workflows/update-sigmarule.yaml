@@ -89,8 +89,8 @@ jobs:
           APP_ID: ${{ secrets.SIGMA_RULE_UPDATER_APP_ID }}
 
       - name: Get App Installation Token
-        #run: |
-        #  echo "This token is masked: ${TOKEN}"
+        run: |
+          echo "This token is masked: ${TOKEN}"
         env: 
           TOKEN: ${{ steps.get_token.outputs.app_token }}
 
