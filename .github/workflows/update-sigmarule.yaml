@@ -81,13 +81,26 @@ jobs:
           fi
           popd
 
+      - name: Get token
+        id: get_token
+        uses: machine-learning-apps/actions-app-token@master
+        with:
+          APP_PEM: ${{ secrets.SIGMA_RULE_UPDATER_B64_PKEY }}
+          APP_ID: ${{ secrets.SIGMA_RULE_UPDATER_APP_ID }}
+
+      - name: Get App Installation Token
+        #run: |
+        #  echo "This token is masked: ${TOKEN}"
+        env: 
+          TOKEN: ${{ steps.get_token.outputs.app_token }}
+
       - name: Create Pull Request
         if: env.change_exist == 'true'
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
           path: hayabusa-rules
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${TOKEN}
           commit-message: Sigma Rule Update (${{ env.action_date }})
           branch: rules/auto-sigma-update
           delete-branch: true
@@ -100,18 +113,10 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation == 'created'
         uses: peter-evans/enable-pull-request-automerge@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${TOKEN}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
-          
-      - name: Auto approve
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: nicklegan/github-repo-self-approve-action@v1.0.0
-        with:
-          appid: ${{ secrets.SIGMA_RULE_UPDATER_APP_ID }}
-          privatekey: ${{ secrets.SIGMA_RULE_UPDATER_PRIVATE_KEY }}
-          installationid: ${{ secrets.SIGMA_RULE_UPDATER_INSTALLATION_ID }}
-
+        
       - name: upload change log
         if: env.change_exist == 'true'
         uses: actions/upload-artifact@v2
