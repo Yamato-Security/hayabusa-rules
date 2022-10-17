@@ -235,7 +235,6 @@ The following abbreviations are used in rules in order to make the output as con
 - `Tgt` -> Target
 - `Unkwn` -> Unknown
 - `Usr` -> User
-- `Op` -> Operation
 - `Perm` -> Permament
 - `Pkg` -> Package
 - `Priv` -> Privilege
