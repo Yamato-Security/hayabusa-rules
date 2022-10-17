@@ -234,7 +234,6 @@ sample-evtx: |
 - `Tgt` -> Target
 - `Unkwn` -> Unknown
 - `Usr` -> User
-- `Op` -> Operation
 - `Perm` -> Permament
 - `Pkg` -> Package
 - `Priv` -> Privilege
