@@ -2,9 +2,9 @@ author: Zach Mathis
 date: 2020/11/08
 modified: 2022/06/21
 
-title: 'Logon (Type 12 CachedRemoteInteractive) *Credentials in memory*'
+title: 'Logon (Type 12 CachedRemoteInteractive) *Creds in memory*'
 details: 'User: %TargetUserName% ¦ Comp: %WorkstationName% ¦ IP-Addr: %IpAddress% ¦ LID: %TargetLogonId%'
-description: Prints logon information. 
+description: Type 12 logons can be dangerous as the credentials (plaintext or hashed passwords) are stored in memory (lsass process) and can be stolen by tools like mimikatz.
 
 id: f4b46dd3-63d6-4c75-a54c-9f6bd095cd6f
 level: informational

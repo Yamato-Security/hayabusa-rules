@@ -1,10 +1,10 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2022/06/21
+modified: 2022/10/17
 
-title: 'Logon (Type 10 RemoteInteractive (RDP)) *Credentials in memory*'
+title: 'Logon (Type 10 RemoteInteractive (RDP)) *Creds in memory*'
 details: 'User: %TargetUserName% ¦ Comp: %WorkstationName% ¦ IP-Addr: %IpAddress% ¦ LID: %TargetLogonId%'
-description: Prints logon information. 
+description: Type 9 logons can be dangerous as the credentials (plaintext or hashed passwords) are stored in memory (lsass process) and can be stolen by tools like mimikatz.
 
 id: a4e05f05-ff88-48b9-8524-a88c1c32fe19
 level: informational

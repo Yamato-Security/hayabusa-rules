@@ -2,7 +2,7 @@ author: Zach Mathis
 date: 2022/03/05
 modified: 2022/09/01
 
-title: Proc Injection_Sysmon Alert
+title: Proc Injection (Sysmon Alert)
 details: 'Rule: %RuleName% ¦ SrcProc: %SourceImage% ¦ TgtProc: %TargetImage% ¦ SrcPID: %SourceProcessId% ¦ SrcPGUID: %SourceProcessGuid% ¦ TgtPID: %TargetProcessId% ¦ TgtPGUID: %TargetProcessGuid%'
 description: |
     The CreateRemoteThread (Process Injection) event detects when a process creates a thread in another process. 

@@ -199,17 +199,21 @@ The following abbreviations are used in rules in order to make the output as con
 - `Cnt` -> Count
 - `Comp` -> Computer
 - `Conn` -> Connection/Connected
+- `Creds` -> Credentials
 - `Crit` -> Critical
 - `Disconn` -> Disconnection/Disconnected
 - `Dir` -> Directory
+- `Drv` -> Driver
 - `Dst` -> Destination
 - `EID` -> Event ID
 - `Err` -> Error
 - `Exec` -> Execution
 - `FW` -> Firewall
 - `Grp` -> Group
-- `LID` -> Logon ID
+- `Img` -> Image
+- `Inj` -> Injection
 - `Kbr` -> Kerberos
+- `LID` -> Logon ID
 - `Med` -> Medium
 - `Net` -> Network
 - `Obj` -> Object

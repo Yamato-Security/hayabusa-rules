@@ -2,7 +2,7 @@ author: Zach Mathis
 date: 2022/03/05
 modified: 2022/09/01
 
-title: Proc Access_Sysmon Alert
+title: Proc Access (Sysmon Alert)
 details: 'Rule: %RuleName% ¦ SrcProc: %SourceImage% ¦ TgtProc: %TargetImage% ¦ SrcUser: %SourceUser% ¦ TgtUser: %TargetUser% ¦ Access: %GrantedAccess% ¦ SrcPID: %SourceProcessId% ¦ SrcPGUID: %SourceProcessGUID% ¦ TgtPID: %TargetProcessId% ¦ TgtPGUID: %TargetProcessGUID%'
 description: |
     The process accessed event reports when a process opens another process, an operation that is often followed by information queries or reading and writing the address space of the target process. 
