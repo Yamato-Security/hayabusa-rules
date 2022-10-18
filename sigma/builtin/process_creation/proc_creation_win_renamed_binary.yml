@@ -34,6 +34,7 @@ detection:
         - net.exe
         - net1.exe
         - netsh.exe
+        - InstallUtil.exe
     SELECTION_4:
         NewProcessName:
         - '*\cmd.exe'
@@ -58,6 +59,7 @@ detection:
         - '*\net.exe'
         - '*\net1.exe'
         - '*\netsh.exe'
+        - '*\InstallUtil.exe'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Custom applications use renamed binaries adding slight change to binary name. Typically
@@ -69,7 +71,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/10/17
 references:
 - https://attack.mitre.org/techniques/T1036/
 - https://mgreen27.github.io/posts/2019/05/12/BinaryRename.html
