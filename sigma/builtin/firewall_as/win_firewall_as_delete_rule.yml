@@ -16,14 +16,18 @@ detection:
         ModifyingApplication:
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
-    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and  not (SELECTION_4
-        or SELECTION_5))
+    SELECTION_6:
+        ModifyingApplication: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+    SELECTION_7:
+        ModifyingApplication: '*\MsMpEng.exe'
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and  not ((SELECTION_4
+        or SELECTION_5) or (SELECTION_6 and SELECTION_7)))
 id: c187c075-bb3e-4c62-b4fa-beae0ffc211f
 level: medium
 logsource:
     product: windows
     service: firewall-as
-modified: 2022/02/22
+modified: 2022/10/18
 references:
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 status: experimental
