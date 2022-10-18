@@ -9,9 +9,18 @@
 
 こちらは、[hayabusa](https://github.com/Yamato-Security/hayabusa)の検知ルールのレポジトリです。
 
+# 関連プロジェクト
+
+* [EnableWindowsLogSettings](https://github.com/Yamato-Security/EnableWindowsLogSettings) - Sigmaベースの脅威ハンティングと、Windowsイベントログのファストフォレンジックタイムライン生成ツール。
+* [Hayabusa](https://github.com/Yamato-Security/hayabusa/blob/main/README-Japanese.md) - Windowsイベントログを正しく設定するためのドキュメンテーションとスクリプト。
+* [Hayabusa Sample EVTXs](https://github.com/Yamato-Security/hayabusa-sample-evtx) - Hayabusa/Sigma検出ルールをテストするためのサンプルevtxファイル。
+* [Takajo](https://github.com/Yamato-Security/takajo/blob/main/README-Japanese.md) - Hayabusa結果の解析ツール。
+* [WELA (Windows Event Log Analyzer)](https://github.com/Yamato-Security/WELA/blob/main/README-Japanese.md) - PowerShellで書かれたWindowsイベントログの解析ツール。
+
 # 目次
 
 - [Hayabusa-Rulesについて](#hayabusa-rulesについて)
+- [関連プロジェクト](#関連プロジェクト)
 - [目次](#目次)
 - [ルールファイル作成について](#ルールファイル作成について)
   - [ルールファイル形式](#ルールファイル形式)
@@ -207,6 +216,7 @@ sample-evtx: |
 - `EID` -> Event ID
 - `Err` -> Error
 - `Exec` -> Execution
+- `FP` -> False Positive
 - `FW` -> Firewall
 - `Grp` -> Group
 - `Img` -> Image
