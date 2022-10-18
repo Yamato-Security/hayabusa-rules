@@ -1,11 +1,11 @@
-### if you want to execte GitHub Action in your local machine please use following commnad.(Please install act if not)
+### If you want to execte GitHub Actions on your local machine please use following commnad. (Please install act if needed.)
 ### act workflow_dispatch -s GITHUB_TOKEN=(your private access token) -P ubuntu-latest=nektos/act-environments-ubuntu:18.04 --artifact-server-path /tmp/act-artifacts
 
-name: Pipline for update Sigma rule
+name: Pipeline for sigma rule updates
 
 on:
-  ## This workflow is exected once a day.
-  ## And I add workflow_dispatch so that you can execute this workflow from GitHub UI. 
+  ## This workflow is executed once a day.
+  ## I added workflow_dispatch so that you can execute this workflow from the GitHub UI. 
   workflow_dispatch:
   schedule:
     - cron: '0 20 * * *' 
@@ -23,8 +23,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: SigmaHQ/sigma
-          path: sigma-repo # It is necessary to specify the path because hayabusa-rules repository have the folder which has the same name.
-          token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing in local machine by act(Local GitHub Action Runner).We have to specify the github token explicitly.
+          path: sigma-repo # It is necessary to specify the path because the hayabusa-rules repository has a folder with the same name.
+          token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
       - name: set Hayabusa backend for sigmac
         run: |
@@ -91,13 +91,13 @@ jobs:
           commit-message: Sigma Rule Update (${{ env.action_date }})
           branch: rules/auto-sigma-update
           delete-branch: true
-          title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If the PR with the same name have already existed, this github action library will not create new pull request but it will update the PR with the same name. Therefore I add the date to the pull request's title not to update existed PR.
+          title: '[Auto] Sigma Update report(${{ env.action_date }})' ### If a PR with the same name already exists, this github action library will not create a new pull request but it will update the PR with the same name. Therefore I added the date to the pull request's title so it creates a new PR.
           branch-suffix: timestamp ### I use this field in order to avoid name duplication. If the pull request which is related to the same branch exists, the pull request is not newly created but is updated. So the next step will be skipped due to its if-field
           body: |
             ${{ env.action_date }} Update report
 
       - name: Enable Pull Request Automerge
-        if: steps.cpr.outputs.pull-request-operation == 'created'
+        if: steps.cpr.outputs.pull-request-operation == 'created' # This only runs if there were sigma rules updates and a new PR was created.
         uses: peter-evans/enable-pull-request-automerge@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
