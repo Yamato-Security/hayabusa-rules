@@ -5,7 +5,9 @@ date: 2019/11/01
 description: Detects Silence EmpireDNSAgent as described in the Group-IP report
 detection:
     SELECTION_1:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_10:
         ScriptBlockText: '*New-RandomDNSField*'
     SELECTION_11:

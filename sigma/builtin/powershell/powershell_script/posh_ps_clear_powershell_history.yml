@@ -9,7 +9,9 @@ detection:
     SELECTION_10:
         ScriptBlockText: '*(Get-PSReadlineOption).HistorySavePath*'
     SELECTION_2:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_3:
         ScriptBlockText: '*Set-PSReadlineOption*'
     SELECTION_4:

@@ -27,7 +27,9 @@ detection:
     SELECTION_19:
         ScriptBlockText: '*-Enc*'
     SELECTION_2:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_20:
         ScriptBlockText: '*powershell*'
     SELECTION_21:

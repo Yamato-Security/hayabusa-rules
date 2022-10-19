@@ -24,10 +24,13 @@ detection:
         - '*\thor\thor64.exe'
         - '*\veam.backup.shell.exe'
         - '*\winget.exe'
+        - '*\Everything\Everything.exe'
     SELECTION_6:
         ParentProcessName: '*\AppData\Local\Temp\WinGet\\*'
+    SELECTION_7:
+        CommandLine: '*\appdata\local\webex\webex64\meetings\wbxreport.exe*'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-        or SELECTION_5 or SELECTION_6))
+        or SELECTION_5 or SELECTION_6 or SELECTION_7))
 falsepositives:
 - Applications could use this notation occasionally which might generate some false
     positives. In that case investigate the parent and child process.
@@ -36,7 +39,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/11
+modified: 2022/10/19
 references:
 - https://www.acunetix.com/blog/articles/windows-short-8-3-filenames-web-security-problem/
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc959352(v=technet.10)?redirectedfrom=MSDN

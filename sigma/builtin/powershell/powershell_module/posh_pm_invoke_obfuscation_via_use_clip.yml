@@ -7,7 +7,9 @@ detection:
     SELECTION_1:
         EventID: 4103
     SELECTION_2:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_3:
         Payload|re: (?i).*?echo.*clip.*&&.*(Clipboard|i`?n`?v`?o`?k`?e`?).*
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)

@@ -16,7 +16,9 @@ detection:
     SELECTION_12:
         ContextInfo: '*DoesNotRequirePreAuth*'
     SELECTION_2:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_3:
         Payload: '*get-ADPrincipalGroupMembership*'
     SELECTION_4:
