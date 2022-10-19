@@ -27,7 +27,9 @@ detection:
     SELECTION_19:
         ContextInfo: '*-Enc*'
     SELECTION_2:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_20:
         ContextInfo: '*powershell*'
     SELECTION_21:

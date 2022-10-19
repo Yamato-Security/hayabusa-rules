@@ -8,7 +8,9 @@ detection:
     SELECTION_1:
         EventID: 4103
     SELECTION_2:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_3:
         ContextInfo: '*Invoke-ATHRemoteFXvGPUDisablementCommand *'
     SELECTION_4:
