@@ -12,32 +12,40 @@ detection:
     SELECTION_11:
         SourceImage: '*.tmp\DropboxUpdate.exe'
     SELECTION_12:
-        GrantedAccess: '0x410'
+        GrantedAccess:
+        - '0x410'
+        - '0x1410'
     SELECTION_13:
-        SourceImage: C:\Windows\Temp\asgard2-agent\\*
+        SourceImage: '*\AppData\Local\Temp\\*'
     SELECTION_14:
+        SourceImage: '*.tmp\DropboxUpdate.exe'
+    SELECTION_15:
+        GrantedAccess: '0x1410'
+    SELECTION_16:
+        SourceImage: C:\Windows\Temp\asgard2-agent\\*
+    SELECTION_17:
         SourceImage:
         - '*\thor64.exe'
         - '*\thor.exe'
-    SELECTION_15:
+    SELECTION_18:
         GrantedAccess:
         - '0x1fffff'
         - '0x1010'
-    SELECTION_16:
-        SourceImage: '*\AppData\Local\Temp\\*'
-    SELECTION_17:
-        SourceImage: '*\vs_bootstrapper_*'
-    SELECTION_18:
-        GrantedAccess: '0x1410'
     SELECTION_19:
-        SourceImage: C:\Program Files (x86)\Google\Temp\\*
+        SourceImage: '*\AppData\Local\Temp\\*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_20:
-        SourceImage: '*.tmp\GoogleUpdate.exe'
+        SourceImage: '*\vs_bootstrapper_*'
     SELECTION_21:
-        GrantedAccess: '0x410'
+        GrantedAccess: '0x1410'
     SELECTION_22:
+        SourceImage: C:\Program Files (x86)\Google\Temp\\*
+    SELECTION_23:
+        SourceImage: '*.tmp\GoogleUpdate.exe'
+    SELECTION_24:
+        GrantedAccess: '0x410'
+    SELECTION_25:
         SourceImage:
         - C:\Program Files (x86)\\*
         - C:\Program Files\\*
@@ -97,7 +105,8 @@ detection:
         SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
         or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
         and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19
-        and SELECTION_20 and SELECTION_21) or (SELECTION_22)))
+        and SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24)
+        or (SELECTION_25)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason
 fields:
@@ -109,7 +118,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/10/05
+modified: 2022/10/20
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

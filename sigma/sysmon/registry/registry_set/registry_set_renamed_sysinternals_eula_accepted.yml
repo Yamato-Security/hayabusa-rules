@@ -2,8 +2,8 @@ title: Usage of Renamed Sysinternals Tools - RegistrySet
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/08/24
-description: Detects the of the "accepteula" key related to sysinternals tools being
-    set from non sysinternals tools
+description: Detects non-sysinternals tools setting the "accepteula" key which normally
+    is set on sysinternals tool execution
 detection:
     SELECTION_1:
         EventID: 13
