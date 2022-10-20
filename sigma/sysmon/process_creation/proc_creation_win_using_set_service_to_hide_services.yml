@@ -1,0 +1,48 @@
+title: Abuse of Service Permissions to Hide Services Via Set-Service
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/10/17
+description: Detects usage of the "Set-Service" powershell cmdlet to configure a new
+    SecurityDescriptor that allows a service to be hidden from other utilities such
+    as "sc.exe", "Get-Service"...etc. (Works only in powershell 7)
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\pwsh.exe'
+    SELECTION_4:
+        OriginalFileName: pwsh.dll
+    SELECTION_5:
+        CommandLine: '*Set-Service *'
+    SELECTION_6:
+        CommandLine: '*DCLCWPDTSD*'
+    SELECTION_7:
+        CommandLine:
+        - '*-SecurityDescriptorSddl *'
+        - '*-sd *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6) and SELECTION_7)
+falsepositives:
+- Rare intended use of hidden services
+id: 514e4c3a-c77d-4cde-a00f-046425e2301e
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/Alh4zr3d/status/1580925761996828672
+- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-service?view=powershell-7.2
+related:
+-   id: a537cfc3-4297-4789-92b5-345bfd845ad0
+    type: derived
+-   id: 953945c5-22fe-4a92-9f8a-a9edc1e522da
+    type: similar
+status: experimental
+tags:
+- attack.persistence
+- attack.defense_evasion
+- attack.privilege_escalation
+- attack.t1574.011
+

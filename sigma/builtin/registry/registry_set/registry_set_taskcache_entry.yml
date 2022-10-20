@@ -26,6 +26,11 @@ detection:
         NewProcessName:
         - C:\Program Files (x86)\Dropbox\Update\DropboxUpdate.exe
         - C:\Program Files\Dropbox\Update\DropboxUpdate.exe
+    SELECTION_16:
+        NewProcessName: C:\Windows\explorer.exe
+    SELECTION_17:
+        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\Windows\PLA\Server
+            Manager Performance Monitor\\*'
     SELECTION_2:
         OperationType:
         - Existing registry value modified
@@ -49,7 +54,7 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
         SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9)
         or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13) or (SELECTION_14)
-        or (SELECTION_15)))
+        or (SELECTION_15) or (SELECTION_16 and SELECTION_17)))
 falsepositives:
 - Unknown
 id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
@@ -57,7 +62,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/10/14
+modified: 2022/10/20
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://labs.f-secure.com/blog/scheduled-task-tampering/

@@ -23,9 +23,17 @@ falsepositives:
 id: 32e19d25-4aed-4860-a55a-be99cb0bf7ed
 level: medium
 logsource:
+    definition: The "Audit Directory Service Changes" logging policy must be configured
+        in order to receive events. Audit events are generated only for objects with
+        configured system access control lists (SACLs). Audit events are generated
+        only for objects with configured system access control lists (SACLs) and only
+        when accessed in a manner that matches their SACL settings. This policy covers
+        the following events ids - 5136, 5137, 5138, 5139, 5141. Note that the default
+        policy does not cover User objects. For that a custom AuditRule need to be
+        setup (See https://github.com/OTRF/Set-AuditRule)
     product: windows
     service: security
-modified: 2022/09/29
+modified: 2022/10/17
 references:
 - https://github.com/Neo23x0/sigma/blob/ec5bb710499caae6667c7f7311ca9e92c03b9039/rules/windows/builtin/win_dcsync.yml
 - https://twitter.com/gentilkiwi/status/1003236624925413376
