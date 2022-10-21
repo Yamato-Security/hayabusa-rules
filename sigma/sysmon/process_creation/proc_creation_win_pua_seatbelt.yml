@@ -1,0 +1,61 @@
+title: Seatbelt PUA Tool
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/10/18
+description: Detects the execution of the PUA/Recon tool Seatbelt via PE information
+    of command line parameters
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\Seatbelt.exe'
+    SELECTION_4:
+        OriginalFileName: Seatbelt.exe
+    SELECTION_5:
+        Description: Seatbelt
+    SELECTION_6:
+        CommandLine:
+        - '* DpapiMasterKeys*'
+        - '* InterestingProcesses*'
+        - '* InterestingFiles*'
+        - '* CertificateThumbprints*'
+        - '* ChromiumBookmarks*'
+        - '* ChromiumHistory*'
+        - '* ChromiumPresence*'
+        - '* CloudCredentials*'
+        - '* CredEnum*'
+        - '* CredGuard*'
+        - '* FirefoxHistory*'
+        - '* ProcessCreationEvents*'
+    SELECTION_7:
+        CommandLine:
+        - '* -group=misc*'
+        - '* -group=remote*'
+        - '* -group=chromium*'
+        - '* -group=slack*'
+        - '* -group=system*'
+        - '* -group=user*'
+        - '* -group=all*'
+    SELECTION_8:
+        CommandLine: '* -outputfile=*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or
+        SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+falsepositives:
+- Unlikely
+id: 38646daa-e78f-4ace-9de0-55547b2d30da
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/GhostPack/Seatbelt
+- https://www.bluetangle.dev/2022/08/fastening-seatbelt-on-threat-hunting.html
+status: experimental
+tags:
+- attack.discovery
+- attack.t1526
+- attack.t1087
+- attack.t1083
+

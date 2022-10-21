@@ -1,0 +1,32 @@
+title: SafetyKatz Hack Tool
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/10/20
+description: Detects the execution of the hacktool SafetyKatz via PE information and
+    default Image name
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\SafetyKatz.exe'
+    SELECTION_4:
+        OriginalFileName: SafetyKatz.exe
+    SELECTION_5:
+        Description: SafetyKatz
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+falsepositives:
+- Unlikely
+id: b1876533-4ed5-4a83-90f3-b8645840a413
+level: critical
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/GhostPack/SafetyKatz
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.001
+

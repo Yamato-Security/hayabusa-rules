@@ -29,7 +29,7 @@ detection:
     SELECTION_7:
         NewValue: DWORD (0x00000001)
     SELECTION_8:
-        Targetobject:
+        TargetObject:
         - '*\CleanupString*'
         - '*\PreCleanupString*'
     SELECTION_9:
@@ -53,6 +53,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
+modified: 2022/10/21
 references:
 - https://persistence-info.github.io/Data/diskcleanuphandler.html
 - https://www.hexacorn.com/blog/2018/09/02/beyond-good-ol-run-key-part-86/

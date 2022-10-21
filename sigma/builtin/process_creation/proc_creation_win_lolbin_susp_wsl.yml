@@ -19,11 +19,17 @@ detection:
         - '* --exec *'
         - '* --system *'
         - '* /mnt/c*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
+    SELECTION_6:
+        ParentProcessName: '*\cmd.exe'
+    SELECTION_7:
+        CommandLine: '* -d *'
+    SELECTION_8:
+        CommandLine: '* -e kill *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Automation and orchestration scripts may use this method execute scripts etc
-- Legitimate use by Windows
+- Legitimate use by Windows to kill processes opened via WSL (example VsCode WSL server)
 id: dec44ca7-61ad-493c-bfd7-8819c5faa09b
 level: medium
 logsource:

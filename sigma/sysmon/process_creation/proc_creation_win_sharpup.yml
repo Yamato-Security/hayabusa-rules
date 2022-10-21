@@ -20,6 +20,7 @@ detection:
         - '*ModifiableServiceBinaries*'
         - '*ModifiableScheduledTask*'
         - '*DomainGPPPassword*'
+        - '*CachedGPPPassword*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unknown
@@ -28,6 +29,7 @@ level: critical
 logsource:
     category: process_creation
     product: windows
+modified: 2022/10/18
 references:
 - https://github.com/GhostPack/SharpUp
 status: experimental

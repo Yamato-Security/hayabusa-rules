@@ -15,13 +15,18 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
-        ParentImage: '*\Windows\Installer\\*'
+        OriginalFileName:
+        - Cmd.Exe
+        - PowerShell.EXE
+        - pwsh.dll
     SELECTION_5:
-        ParentImage: '*msi*'
+        ParentImage: '*\Windows\Installer\\*'
     SELECTION_6:
+        ParentImage: '*msi*'
+    SELECTION_7:
         ParentImage: '*tmp'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7))
 falsepositives:
 - Unknown
 fields:
@@ -32,7 +37,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/10/20
 references:
 - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-50-638.jpg
 status: test

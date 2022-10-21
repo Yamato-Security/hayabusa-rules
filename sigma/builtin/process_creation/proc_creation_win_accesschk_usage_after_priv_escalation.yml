@@ -15,15 +15,19 @@ detection:
     SELECTION_4:
         Description: '*Reports effective permissions*'
     SELECTION_5:
-        NewProcessName: '*\accesschk.exe'
+        NewProcessName:
+        - '*\accesschk.exe'
+        - '*\accesschk64.exe'
     SELECTION_6:
+        OriginalFileName: accesschk.exe
+    SELECTION_7:
         CommandLine:
         - '*uwcqv *'
         - '*kwsu *'
         - '*qwsu *'
         - '*uwdqs *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6) and SELECTION_7)
 falsepositives:
 - System administrator Usage
 fields:
@@ -36,7 +40,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/20
+modified: 2022/10/20
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment?slide=43
 - https://www.youtube.com/watch?v=JGs-aKf2OtU&ab_channel=OFFZONEMOSCOW
