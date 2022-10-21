@@ -12,18 +12,20 @@ detection:
     SELECTION_3:
         Image: '*\sc.exe'
     SELECTION_4:
-        CommandLine: '*sdset*'
+        OriginalFileName: sc.exe
     SELECTION_5:
-        CommandLine: '*D;;*'
+        CommandLine: '*sdset*'
     SELECTION_6:
+        CommandLine: '*D;;*'
+    SELECTION_7:
         CommandLine:
         - '*;;;IU*'
         - '*;;;SU*'
         - '*;;;BA*'
         - '*;;;SY*'
         - '*;;;WD*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7))
 falsepositives:
 - Unknown
 id: 99cf1e02-00fb-4c0d-8375-563f978dfd37
@@ -31,7 +33,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/10/18
 references:
 - https://www.sans.org/blog/red-team-tactics-hiding-windows-services/
 - https://docs.microsoft.com/pt-br/windows/win32/secauthz/sid-strings

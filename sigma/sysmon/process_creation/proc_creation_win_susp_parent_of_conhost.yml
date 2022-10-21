@@ -25,7 +25,6 @@ detection:
         - '*\wininit.exe'
         - '*\spoolsv.exe'
         - '*\wermgr.exe'
-        - '*\csrss.exe'
         - '*\ctfmon.exe'
     SELECTION_5:
         ParentCommandLine:
@@ -41,7 +40,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/20
+modified: 2022/10/21
 references:
 - https://www.elastic.co/guide/en/security/current/conhost-spawned-by-suspicious-parent-process.html
 status: experimental

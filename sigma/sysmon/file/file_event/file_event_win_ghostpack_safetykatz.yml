@@ -1,8 +1,8 @@
-title: Detection of SafetyKatz
+title: SafetyKatz Default Dump Filename
 ruletype: Sigma
 author: Markus Neis
 date: 2018/07/24
-description: Detects possible SafetyKatz Behaviour
+description: Detects default lsass dump filename from SafetyKatz
 detection:
     SELECTION_1:
         EventID: 11
@@ -12,7 +12,7 @@ detection:
         TargetFilename: '*\Temp\debug.bin'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- Unknown
+- Rare legitimate files with similar filename structure
 id: e074832a-eada-4fd7-94a1-10642b130e16
 level: high
 logsource:
@@ -21,6 +21,7 @@ logsource:
 modified: 2021/11/27
 references:
 - https://github.com/GhostPack/SafetyKatz
+- https://github.com/GhostPack/SafetyKatz/blob/715b311f76eb3a4c8d00a1bd29c6cd1899e450b7/SafetyKatz/Program.cs#L63
 status: test
 tags:
 - attack.credential_access

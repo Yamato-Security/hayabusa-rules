@@ -12,6 +12,16 @@ detection:
         GrantedAccess: 2047999
     SELECTION_12:
         CallTrace: C:\Windows\System32\ntdll.dll*
+    SELECTION_13:
+        SourceImage:
+        - C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\PerfWatson2.exe
+        - C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\PerfWatson2.exe
+    SELECTION_14:
+        TargetImage:
+        - C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.exe
+        - C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.exe
+    SELECTION_15:
+        CallTrace: C:\Windows\System32\ntdll.dll*
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -36,7 +46,8 @@ detection:
         SourceImage: C:\Program Files (x86)\Dell\UpdateService\ServiceShell.exe
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10 and SELECTION_11 and SELECTION_12)))
+        and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
+        and SELECTION_15)))
 falsepositives:
 - Empire's csharp_exe payload uses 0x1f3fff for process enumeration as well
 id: 250ae82f-736e-4844-a68b-0b5e8cc887da
@@ -44,7 +55,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/09/21
+modified: 2022/10/20
 status: experimental
 tags:
 - attack.defense_evasion

@@ -25,10 +25,10 @@ detection:
         - '*\msedgewebview2.exe'
         - '*\OneDrive.exe'
     SELECTION_5:
-        CommandLine: '*C:\Windows\system32\BackgroundTaskHost.exe*'
-    SELECTION_6:
         Image:
         - C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
+    SELECTION_6:
+        Image|re: ^$
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
         or SELECTION_5 or SELECTION_6))
 falsepositives:
@@ -38,7 +38,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/10/18
+modified: 2022/10/21
 references:
 - https://posts.specterops.io/requesting-azure-ad-request-tokens-on-azure-ad-joined-machines-for-browser-sso-2b0409caad30
 status: test

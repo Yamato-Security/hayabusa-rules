@@ -19,6 +19,7 @@ detection:
         CommandLine:
         - '* asreproast *'
         - '* dump /service:krbtgt *'
+        - '* dump /luid:0x*'
         - '* kerberoast *'
         - '* createnetonly /program:*'
         - '* ptt /ticket:*'
@@ -29,6 +30,8 @@ detection:
         - '* s4u /user:*'
         - '* s4u /ticket:*'
         - '* hash /password:*'
+        - '* golden /aes256:*'
+        - '* silver /user:*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
         or SELECTION_6))
 falsepositives:
@@ -42,6 +45,7 @@ modified: 2022/10/11
 references:
 - https://www.harmj0y.net/blog/redteaming/from-kekeo-to-rubeus/
 - https://m0chan.github.io/2019/07/31/How-To-Attack-Kerberos-101.html
+- https://github.com/GhostPack/Rubeus
 status: stable
 tags:
 - attack.credential_access
