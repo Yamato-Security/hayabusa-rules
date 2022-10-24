@@ -1,0 +1,61 @@
+title: Creation Of a Suspicious ADS File Outside a Browser Download
+ruletype: Sigma
+author: frack113
+date: 2022/10/22
+description: Detects the creation of a suspicious ADS (Alternate Data Stream) file
+    by software other than browsers
+detection:
+    SELECTION_1:
+        EventID: 15
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Contents: '[ZoneTransfer]  ZoneId=3*'
+    SELECTION_4:
+        TargetFilename: '*:Zone.Identifier'
+    SELECTION_5:
+        TargetFilename:
+        - '*.exe*'
+        - '*.scr*'
+        - '*.bat*'
+        - '*.cmd*'
+        - '*.docx*'
+        - '*.hta*'
+        - '*.jse*'
+        - '*.lnk*'
+        - '*.pptx*'
+        - '*.ps*'
+        - '*.reg*'
+        - '*.sct*'
+        - '*.vb*'
+        - '*.wsc*'
+        - '*.wsf*'
+        - '*.xlsx*'
+    SELECTION_6:
+        Image:
+        - '*\brave.exe'
+        - '*\chrome.exe'
+        - '*\chromium.exe'
+        - '*\firefox.exe'
+        - '*\msedge.exe'
+        - '*\opera.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6))
+falsepositives:
+- Other legitimate browsers not currently included in the filter (please add them)
+- Legitimate downloads via scripting or command-line tools (Investigate to determine
+    if it's legitimate)
+fields:
+- TargetFilename
+- Image
+id: 573df571-a223-43bc-846e-3f98da481eca
+level: medium
+logsource:
+    category: create_stream_hash
+    product: windows
+references:
+- https://www.bleepingcomputer.com/news/security/exploited-windows-zero-day-lets-javascript-files-bypass-security-warnings/
+status: experimental
+tags:
+- attack.defense_evasion
+
