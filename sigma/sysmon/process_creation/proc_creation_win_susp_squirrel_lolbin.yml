@@ -7,16 +7,25 @@ detection:
     SELECTION_1:
         EventID: 1
     SELECTION_10:
-        CommandLine: '*\AppData\Local\GitHubDesktop\Update.exe --createShortcut GitHubDesktop.exe*'
+        CommandLine: '*C:\Users\\*'
     SELECTION_11:
-        CommandLine: '*C:\Users\\*'
+        CommandLine: '*\AppData\Local\GitHubDesktop\Update.exe*'
     SELECTION_12:
-        CommandLine: '*\AppData\Local\GitHubDesktop\Update.exe --processStartAndWait
-            GitHubDesktop.exe*'
+        CommandLine: '*GitHubDesktop.exe*'
     SELECTION_13:
-        CommandLine: '*C:\Users\\*'
+        CommandLine:
+        - '*--createShortcut*'
+        - '*--processStartAndWait*'
     SELECTION_14:
-        CommandLine: '*\AppData\Local\Microsoft\Teams\Update.exe" --processStart "Teams.exe"*'
+        CommandLine: '*C:\Users\\*'
+    SELECTION_15:
+        CommandLine: '*\AppData\Local\Microsoft\Teams\Update.exe*'
+    SELECTION_16:
+        CommandLine: '*Teams.exe*'
+    SELECTION_17:
+        CommandLine:
+        - '*--processStart*'
+        - '*--createShortcut*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -33,12 +42,13 @@ detection:
     SELECTION_7:
         CommandLine: '*\AppData\Local\Discord\Update.exe*'
     SELECTION_8:
-        CommandLine: '* --processStart Discord.exe*'
+        CommandLine: '* --processStart*'
     SELECTION_9:
-        CommandLine: '*C:\Users\\*'
+        CommandLine: '*Discord.exe*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 or SELECTION_9
-        and SELECTION_10 or SELECTION_11 and SELECTION_12 or SELECTION_13 and SELECTION_14)))
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14
+        and SELECTION_15 and SELECTION_16 and SELECTION_17)))
 falsepositives:
 - 1Clipboard
 - Beaker Browser
@@ -77,7 +87,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/20
+modified: 2022/10/25
 references:
 - http://www.hexacorn.com/blog/2019/03/30/sqirrel-packages-manager-as-a-lolbin-a-k-a-many-electron-apps-are-lolbins-by-default/
 - http://www.hexacorn.com/blog/2018/08/16/squirrel-as-a-lolbin/

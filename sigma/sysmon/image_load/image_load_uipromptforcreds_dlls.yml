@@ -13,6 +13,10 @@ detection:
         Image: '*\AppData\Local\Microsoft\OneDrive\\*'
     SELECTION_12:
         Image: C:\Windows\regedit.exe
+    SELECTION_13:
+        Provider_Name: Microsoft-Windows-Kernel-Process
+    SELECTION_14:
+        CommandLine: '*C:\Program Files\WindowsApps\SpotifyAB.SpotifyMusic_*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -46,7 +50,8 @@ detection:
         - '*\AppData\Local\Microsoft\Teams\current\Teams.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
         ((SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or (SELECTION_12)))
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12) or (SELECTION_13 and
+        SELECTION_14)))
 falsepositives:
 - Other legitimate processes loading those DLLs in your environment.
 id: 9ae01559-cf7e-4f8e-8e14-4c290a1b4784
@@ -54,7 +59,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2022/10/07
+modified: 2022/10/24
 references:
 - https://securitydatasets.com/notebooks/small/windows/06_credential_access/SDWIN-201020013208.html
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1056.002/T1056.002.md#atomic-test-2---powershell---prompt-user-for-password

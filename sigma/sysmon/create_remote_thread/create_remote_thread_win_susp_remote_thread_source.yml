@@ -2,11 +2,10 @@ title: Suspicious Remote Thread Source
 ruletype: Sigma
 author: Perez Diego (@darkquassar), oscd.community
 date: 2019/10/27
-description: Offensive tradecraft is switching away from using APIs like "CreateRemoteThread",
-    however, this is still largely observed in the wild. This rule aims to detect
-    suspicious processes (those we would not expect to behave in this way like word.exe
-    or outlook.exe) creating remote threads on other processes. It is a generalistic
-    rule, but it should have a low FP ratio due to the selected range of processes.
+description: |
+    Offensive tradecraft is switching away from using APIs like "CreateRemoteThread", however, this is still largely observed in the wild.
+    This rule aims to detect suspicious processes (those we would not expect to behave in this way like word.exe or outlook.exe) creating remote threads on other processes.
+    It is a generalistic rule, but it should have a low FP ratio due to the selected range of processes.
 detection:
     SELECTION_1:
         EventID: 8
