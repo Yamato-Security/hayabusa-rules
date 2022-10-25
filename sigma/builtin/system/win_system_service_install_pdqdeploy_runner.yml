@@ -2,9 +2,9 @@ title: New PDQDeploy Service - Client Side
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/22
-description: Detects PDQDeploy service installation on the target system. When a package
-    is deployed via PDQDeploy it installs a remote service on the target machine with
-    the name "PDQDeployRunner-X" where "X" is an integer starting from 1
+description: |
+    Detects PDQDeploy service installation on the target system.
+    When a package is deployed via PDQDeploy it installs a remote service on the target machine with the name "PDQDeployRunner-X" where "X" is an integer starting from 1
 detection:
     SELECTION_1:
         Channel: System

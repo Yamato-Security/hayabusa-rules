@@ -2,7 +2,6 @@ title: Hacktool Download
 ruletype: Sigma
 author: Florian Roth
 date: 2022/08/24
-definition: 'Requirements: Sysmon config with Imphash logging activated'
 description: Detects the creation of a file on disk that has an imphash of a well-known
     hack tool
 detection:
@@ -198,6 +197,7 @@ id: 19b041f6-e583-40dc-b842-d6fa8011493f
 level: high
 logsource:
     category: create_stream_hash
+    definition: Requirements Sysmon config with Imphash logging activated
     product: windows
 modified: 2022/09/07
 references:
