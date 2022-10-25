@@ -1,6 +1,6 @@
 author: Yusuke Matsui, Yamato Security
 date: 2020/11/08
-modified: 2022/05/21
+modified: 2022/10/25
 
 title: Possible Kerberoasting
 details: 'User: %TargetUserName% ¦ Svc: %ServiceName% ¦ IP-Addr: %IpAddress% ¦ Status: %Status% ¦ PreAuthType: %PreAuthType%'
@@ -15,9 +15,8 @@ logsource:
 detection:
     selection:
         Channel: Security
-        EventID: 4768
+        EventID: 4769
         TicketEncryptionType: '0x17' #RC4-HMAC
-        PreAuthType: 2 #Standard password authentication
     condition: selection
 falsepositives:
     - legacy application
