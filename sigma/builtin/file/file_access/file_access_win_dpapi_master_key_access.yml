@@ -2,9 +2,9 @@ title: Suspicious Access To Windows DPAPI Master Keys
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/10/17
-description: Detects suspicious processes based on name and location that access the
-    Windows Data Protection API Master keys. Which can be a sign of credential stealing.
-    Example case would be usage of mimikatz "dpapi::masterkey" function
+description: |
+    Detects suspicious processes based on name and location that access the Windows Data Protection API Master keys.
+    Which can be a sign of credential stealing. Example case would be usage of mimikatz "dpapi::masterkey" function
 detection:
     SELECTION_1:
         FileName:

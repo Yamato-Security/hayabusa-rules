@@ -1,7 +1,7 @@
 title: System DLL Sideloading From Non System Locations
 ruletype: Sigma
 author: Nasreddine Bencherchali, Wietze Beukema (project and research), Chris Spehn
-    (research WFH Dridex)
+    (research WFH Dridex), XForceIR (SideLoadHunter Project)
 date: 2022/08/14
 description: Detects DLL sideloading of DLLs usually located in system locations (System32,
     SysWOW64...)
@@ -407,6 +407,26 @@ detection:
         - '*\winsync.dll'
         - '*\wscapi.dll'
         - '*\wsmsvc.dll'
+        - '*\FxsCompose.dll'
+        - '*\WfsR.dll'
+        - '*\rpchttp.dll'
+        - '*\storageusage.dll'
+        - '*\amsi.dll'
+        - '*\PrintIsolationProxy.dll'
+        - '*\msdtcVSp1res.dll'
+        - '*\rdpendp.dll'
+        - '*\dxilconv.dll'
+        - '*\utcutil.dll'
+        - '*\appraiser.dll'
+        - '*\dsound.dll'
+        - '*\DispBroker.dll'
+        - '*\FXSRESM.DLL'
+        - '*\cryptnet.dll'
+        - '*\COMRES.DLL'
+        - '*\igdumdim64.dll'
+        - '*\igd10iumd64.dll'
+        - '*\igd12umd64.dll'
+        - '*\igdusc64.dll'
     SELECTION_4:
         ImageLoaded:
         - C:\Windows\System32\\*
@@ -437,11 +457,12 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2022/10/07
+modified: 2022/10/25
 references:
 - https://hijacklibs.net/
 - https://blog.cyble.com/2022/07/21/qakbot-resurfaces-with-new-playbook/
 - https://blog.cyble.com/2022/07/27/targeted-attacks-being-carried-out-via-dll-sideloading/
+- https://github.com/XForceIR/SideLoadHunter/blob/cc7ef2e5d8908279b0c4cee4e8b6f85f7b8eed52/SideLoads/README.md
 status: experimental
 tags:
 - attack.defense_evasion

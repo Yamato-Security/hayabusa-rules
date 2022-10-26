@@ -2,10 +2,9 @@ title: Suspicious PROCEXP152.sys File Created In TMP
 ruletype: Sigma
 author: xknow (@xknow_infosec), xorxes (@xor_xes)
 date: 2019/04/08
-description: Detects the creation of the PROCEXP152.sys file in the application-data
-    local temporary folder. This driver is used by Sysinternals Process Explorer but
-    also by KDU (https://github.com/hfiref0x/KDU) or Ghost-In-The-Logs (https://github.com/bats3c/Ghost-In-The-Logs),
-    which uses KDU.
+description: |
+    Detects the creation of the PROCEXP152.sys file in the application-data local temporary folder.
+    This driver is used by Sysinternals Process Explorer but also by KDU (https://github.com/hfiref0x/KDU) or Ghost-In-The-Logs (https://github.com/bats3c/Ghost-In-The-Logs), which uses KDU.
 detection:
     SELECTION_1:
         EventID: 11

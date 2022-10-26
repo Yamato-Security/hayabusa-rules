@@ -3,9 +3,9 @@ ruletype: Sigma
 author: Bhabesh Raj
 date: 2021/03/03
 description: "Detects possible successful exploitation for vulnerability described\
-    \ in CVE-2021-26858 by looking for | creation of non-standard files on disk by\
-    \ Exchange Server\u2019s Unified Messaging service | which could indicate dropping\
-    \ web shells or other malicious content"
+    \ in CVE-2021-26858 by looking for \ncreation of non-standard files on disk by\
+    \ Exchange Server\u2019s Unified Messaging service\nwhich could indicate dropping\
+    \ web shells or other malicious content\n"
 detection:
     SELECTION_1:
         EventID: 11

@@ -1,0 +1,83 @@
+title: Code Integrity Attempted DLL Load
+ruletype: Sigma
+author: Florian Roth, Nasreddine Bencherchali (update)
+date: 2022/01/20
+description: Detects attempted DLL load events that didn't meet signing level requirements
+detection:
+    SELECTION_1:
+        Channel: Microsoft-Windows-CodeIntegrity/Operational
+    SELECTION_10:
+        ProcessNameBuffer: '*\MsMpEng.exe'
+    SELECTION_11:
+        RequestedPolicy: 7
+    SELECTION_12:
+        ValidatedPolicy: 1
+    SELECTION_13:
+        FileNameBuffer: '*\Windows\System32\nvspcap64.dll'
+    SELECTION_14:
+        ProcessNameBuffer: '*\AppData\Local\Keybase\Gui\Keybase.exe'
+    SELECTION_15:
+        RequestedPolicy: 8
+    SELECTION_16:
+        ValidatedPolicy: 1
+    SELECTION_17:
+        FileNameBuffer: '*\Program Files\Bonjour\mdnsNSP.dll'
+    SELECTION_18:
+        ProcessNameBuffer:
+        - '*\Windows\System32\svchost.exe'
+        - '*\Windows\System32\SIHClient.exe'
+    SELECTION_19:
+        RequestedPolicy: 8
+    SELECTION_2:
+        EventID: 3033
+    SELECTION_20:
+        RequestedPolicy: 12
+    SELECTION_21:
+        ValidatedPolicy: 1
+    SELECTION_22:
+        FileNameBuffer: '*\Microsoft Office\root\vfs\ProgramFilesCommonX64\Microsoft
+            Shared\OFFICE*'
+    SELECTION_23:
+        FileNameBuffer: '*\MSOXMLMF.DLL'
+    SELECTION_24:
+        ProcessNameBuffer: '*\ProgramData\Microsoft\Windows Defender\Platform\\*'
+    SELECTION_25:
+        ProcessNameBuffer: '*\MsMpEng.exe'
+    SELECTION_26:
+        RequestedPolicy: 7
+    SELECTION_27:
+        ValidatedPolicy: 1
+    SELECTION_3:
+        FileNameBuffer: '*\Program Files\DTrace\dtrace.dll'
+    SELECTION_4:
+        ProcessNameBuffer: '*\Windows\System32\svchost.exe'
+    SELECTION_5:
+        RequestedPolicy: 12
+    SELECTION_6:
+        ValidatedPolicy: 1
+    SELECTION_7:
+        FileNameBuffer: '*\Windows\System32\DriverStore\FileRepository\\*'
+    SELECTION_8:
+        FileNameBuffer: '*\igd10iumd64.dll'
+    SELECTION_9:
+        ProcessNameBuffer: '*\ProgramData\Microsoft\Windows Defender\Platform\\*'
+    condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3 and SELECTION_4
+        and SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9
+        and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
+        and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and (SELECTION_19
+        or SELECTION_20) and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24
+        and SELECTION_25 and SELECTION_26 and SELECTION_27)))
+falsepositives:
+- Unknown
+id: f8931561-97f5-4c46-907f-0a4a592e47a7
+level: high
+logsource:
+    product: windows
+    service: codeintegrity-operational
+modified: 2022/10/25
+references:
+- https://twitter.com/SBousseaden/status/1483810148602814466
+status: experimental
+tags:
+- attack.execution
+

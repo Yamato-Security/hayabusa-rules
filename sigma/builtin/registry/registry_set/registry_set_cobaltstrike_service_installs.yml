@@ -2,12 +2,10 @@ title: CobaltStrike Service Installations in Registry
 ruletype: Sigma
 author: Wojciech Lesicki
 date: 2021/06/29
-description: Detects known malicious service installs that appear in cases in which
-    a Cobalt Strike beacon elevates privileges or lateral movement. We can also catch
-    this by system log 7045 (https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/win_cobaltstrike_service_installs.yml)
-    In some SIEM you can catch those events also in HKLM\System\ControlSet001\Services
-    or HKLM\System\ControlSet002\Services, however, this rule is based on a regular
-    sysmon's events.
+description: |
+    Detects known malicious service installs that appear in cases in which a Cobalt Strike beacon elevates privileges or lateral movement.
+    We can also catch this by system log 7045 (https://github.com/SigmaHQ/sigma/blob/master/rules/windows/builtin/win_cobaltstrike_service_installs.yml)
+    In some SIEM you can catch those events also in HKLM\System\ControlSet001\Services or HKLM\System\ControlSet002\Services, however, this rule is based on a regular sysmon's events.
 detection:
     SELECTION_1:
         EventID: 4657

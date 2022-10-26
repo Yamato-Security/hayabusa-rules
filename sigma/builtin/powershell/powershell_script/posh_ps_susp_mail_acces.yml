@@ -2,9 +2,9 @@ title: Powershell Local Email Collection
 ruletype: Sigma
 author: frack113
 date: 2021/07/21
-description: Adversaries may target user email on local systems to collect sensitive
-    information. Files containing email data can be acquired from a users local system,
-    such as Outlook storage or cache files.
+description: |
+    Adversaries may target user email on local systems to collect sensitive information.
+    Files containing email data can be acquired from a users local system, such as Outlook storage or cache files.
 detection:
     SELECTION_1:
         EventID: 4104
