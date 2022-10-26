@@ -1,0 +1,53 @@
+title: Suspicious Service DACL Modification Via Set-Service Cmdlet - PS
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/10/24
+description: Detects usage of the "Set-Service" powershell cmdlet to configure a new
+    SecurityDescriptor that allows a service to be hidden from other utilities such
+    as "sc.exe", "Get-Service"...etc. (Works only in powershell 7)
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
+    SELECTION_3:
+        ScriptBlockText:
+        - '*-SecurityDescriptorSddl *'
+        - '*-sd *'
+    SELECTION_4:
+        ScriptBlockText: '*Set-Service *'
+    SELECTION_5:
+        ScriptBlockText: '*D;;*'
+    SELECTION_6:
+        ScriptBlockText:
+        - '*;;;IU*'
+        - '*;;;SU*'
+        - '*;;;BA*'
+        - '*;;;SY*'
+        - '*;;;WD*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Rare intended use of hidden services
+- Rare FP could occure due to the non linearity of the ScriptBlockText log
+id: 22d80745-6f2c-46da-826b-77adaededd74
+level: high
+logsource:
+    category: ps_script
+    definition: Script block logging must be enabled
+    product: windows
+references:
+- https://twitter.com/Alh4zr3d/status/1580925761996828672
+- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-service?view=powershell-7.2
+related:
+-   id: a95b9b42-1308-4735-a1af-abb1c5e6f5ac
+    type: similar
+status: experimental
+tags:
+- attack.persistence
+- attack.defense_evasion
+- attack.privilege_escalation
+- attack.t1574.011
+

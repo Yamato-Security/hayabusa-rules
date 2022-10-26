@@ -2,10 +2,10 @@ title: DNS-over-HTTPS Enabled by Registry
 ruletype: Sigma
 author: Austin Songer
 date: 2021/07/22
-description: Detects when a user enables DNS-over-HTTPS. This can be used to hide
-    internet activity or be used to hide the process of exfiltrating data. With this
-    enabled organization will lose visibility into data such as query type, response
-    and originating IP that are used to determine bad actors.
+description: |
+    Detects when a user enables DNS-over-HTTPS.
+    This can be used to hide internet activity or be used to hide the process of exfiltrating data.
+    With this enabled organization will lose visibility into data such as query type, response and originating IP that are used to determine bad actors.
 detection:
     SELECTION_1:
         EventID: 4657

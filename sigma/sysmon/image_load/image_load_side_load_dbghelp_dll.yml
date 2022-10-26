@@ -1,0 +1,59 @@
+title: DLL Sideloading Of DBGHELP.DLL
+ruletype: Sigma
+author: Nasreddine Bencherchali, Wietze Beukema (project and research)
+date: 2022/10/25
+description: Detects DLL sideloading of "dbghelp.dll"
+detection:
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ImageLoaded: '*\dbghelp.dll'
+    SELECTION_4:
+        ImageLoaded:
+        - C:\Program Files (x86)\Microsoft Analysis Services\AS OLEDB\110\dbghelp.dll
+        - C:\Program Files\Microsoft Analysis Services\AS OLEDB\110\dbghelp.dll
+        - C:\Program Files\Common Files\microsoft shared\DW\DBGHELP.DLL
+        - C:\Program Files\Dell\DTP\InstrumentationSubAgent\dbghelp.dll
+        - C:\Program Files\DTrace\dbghelp.dll
+    SELECTION_5:
+        ImageLoaded:
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
+        - C:\Windows\WinSxS\\*
+        - C:\Windows\SoftwareDistribution\\*
+        - C:\Windows\SystemTemp\\*
+        - C:\Program Files (x86)\Microsoft Visual Studio\\*
+        - C:\Program Files\Microsoft Visual Studio\\*
+        - C:\Program Files (x86)\Windows Kits\10\\*
+        - C:\Program Files\dotnet\sdk\\*
+        - C:\Program Files\Microsoft Office\Office*
+        - C:\Program Files\Microsoft Office\Root\Office*
+        - C:\Program Files\WindowsApps\Microsoft.WinDbg_*
+    SELECTION_6:
+        ImageLoaded:
+        - '*\Epic Games\Launcher\Engine\Binaries\ThirdParty\DbgHelp\dbghelp.dll'
+        - '*\Epic Games\MagicLegends\x86\dbghelp.dll'
+        - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\amd64\dbghelp.dll'
+        - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\i386\dbghelp.dll'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        or SELECTION_5 or SELECTION_6)))
+falsepositives:
+- Legitimate applications loading their own versions of the DLL mentioned in this
+    rule
+id: 6414b5cd-b19d-447e-bb5e-9f03940b5784
+level: medium
+logsource:
+    category: image_load
+    product: windows
+references:
+- https://hijacklibs.net/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.persistence
+- attack.privilege_escalation
+- attack.t1574.001
+- attack.t1574.002
+

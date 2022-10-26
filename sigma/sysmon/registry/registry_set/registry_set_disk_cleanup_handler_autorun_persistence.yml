@@ -4,14 +4,14 @@ author: Nasreddine Bencherchali
 date: 2022/07/21
 description: "Detects when an attacker modifies values of the Disk Cleanup Handler\
     \ in the registry to achieve persistence via autorun.\nThe disk cleanup manager\
-    \ is part of the operating system. It displays the dialog box [\u2026] The user\
+    \ is part of the operating system.\nIt displays the dialog box [\u2026] The user\
     \ has the option of enabling or disabling individual handlers by selecting or\
-    \ clearing their check box in the disk cleanup manager's UI. Although Windows\
+    \ clearing their check box in the disk cleanup manager's UI.\nAlthough Windows\
     \ comes with a number of disk cleanup handlers, they aren't designed to handle\
-    \ files produced by other applications. Instead, the disk cleanup manager is designed\
-    \ to be flexible and extensible by enabling any developer to implement and register\
-    \ their own disk cleanup handler. Any developer can extend the available disk\
-    \ cleanup services by implementing and registering a disk cleanup handler.\n"
+    \ files produced by other applications.\nInstead, the disk cleanup manager is\
+    \ designed to be flexible and extensible by enabling any developer to implement\
+    \ and register their own disk cleanup handler.\nAny developer can extend the available\
+    \ disk cleanup services by implementing and registering a disk cleanup handler.\n"
 detection:
     SELECTION_1:
         EventID: 13

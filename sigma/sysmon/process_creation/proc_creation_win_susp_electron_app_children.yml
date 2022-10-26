@@ -1,0 +1,43 @@
+title: Suspicious Electron Application Child Processes
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/10/21
+description: Detects suspicious child processes of electron apps (teams, discord,
+    slack...). This could be a potential sign of ".asar" file tampering (See reference
+    section for more information)
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage:
+        - '*\Teams.exe'
+        - '*\slack.exe'
+        - '*\discord.exe'
+    SELECTION_4:
+        Image:
+        - '*\cmd.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\cscript.exe'
+        - '*\wscript.exe'
+        - '*\mshta.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+- ParentCommandLine
+id: f26eb764-fd89-464b-85e2-dc4a8e6e77b8
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://taggart-tech.com/quasar-electron/
+- https://github.com/mttaggart/quasar
+status: experimental
+tags:
+- attack.execution
+

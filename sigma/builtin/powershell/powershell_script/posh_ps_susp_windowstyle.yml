@@ -2,9 +2,9 @@ title: Suspicious PowerShell WindowStyle Option
 ruletype: Sigma
 author: frack113
 date: 2021/10/20
-description: Adversaries may use hidden windows to conceal malicious activity from
-    the plain sight of users. In some cases, windows that would typically be displayed
-    when an application carries out an operation can be hidden
+description: |
+    Adversaries may use hidden windows to conceal malicious activity from the plain sight of users.
+    In some cases, windows that would typically be displayed when an application carries out an operation can be hidden
 detection:
     SELECTION_1:
         EventID: 4104

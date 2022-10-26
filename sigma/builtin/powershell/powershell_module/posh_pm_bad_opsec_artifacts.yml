@@ -2,10 +2,10 @@ title: Bad Opsec Powershell Code Artifacts
 ruletype: Sigma
 author: ok @securonix invrep_de, oscd.community
 date: 2020/10/09
-description: Focuses on trivial artifacts observed in variants of prevalent offensive
-    ps1 payloads, including Cobalt Strike Beacon, PoshC2, Powerview, Letmein, Empire,
-    Powersploit, and other attack payloads that often undergo minimal changes by attackers
-    due to bad opsec.
+description: "focuses on trivial artifacts observed in variants of prevalent offensive\
+    \ ps1 payloads, including\nCobalt Strike Beacon, PoshC2, Powerview, Letmein, Empire,\
+    \ Powersploit, and other attack payloads \nthat often undergo minimal changes\
+    \ by attackers due to bad opsec.\n"
 detection:
     SELECTION_1:
         EventID: 4103

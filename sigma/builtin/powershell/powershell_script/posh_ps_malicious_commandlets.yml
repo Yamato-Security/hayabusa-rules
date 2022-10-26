@@ -185,6 +185,7 @@ detection:
         - '*Invoke-Zerologon*'
         - '*Get-USBKeystrokes*'
         - '*Start-WebcamRecorder*'
+        - '*Invoke-OfficeScrape*'
     SELECTION_4:
         ScriptBlockText:
         - '*Get-SystemDriveInfo*'
@@ -202,12 +203,13 @@ logsource:
     category: ps_script
     definition: Script Block Logging must be enabled
     product: windows
-modified: 2022/06/22
+modified: 2022/10/25
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries
 - https://github.com/BC-SECURITY/Invoke-ZeroLogon/blob/111d17c7fec486d9bb23387e2e828b09a26075e4/Invoke-ZeroLogon.ps1
 - https://github.com/xorrior/RandomPS-Scripts/blob/848c919bfce4e2d67b626cbcf4404341cfe3d3b6/Get-DXWebcamVideo.ps1
+- https://github.com/rvrsh3ll/Misc-Powershell-Scripts/blob/6f23bb41f9675d7e2d32bacccff75e931ae00554/OfficeMemScraper.ps1
 status: experimental
 tags:
 - attack.execution

@@ -22,7 +22,9 @@ detection:
     SELECTION_15:
         GrantedAccess: '0x1410'
     SELECTION_16:
-        SourceImage: C:\Windows\Temp\asgard2-agent\\*
+        SourceImage:
+        - C:\Windows\Temp\asgard2-agent\\*
+        - C:\Windows\Temp\asgard2-agent-sc\\*
     SELECTION_17:
         SourceImage:
         - '*\thor64.exe'
@@ -121,7 +123,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/10/25
+modified: 2022/10/26
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

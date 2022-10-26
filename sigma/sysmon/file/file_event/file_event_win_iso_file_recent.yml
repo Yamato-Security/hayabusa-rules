@@ -2,9 +2,9 @@ title: ISO or Image Mount Indicator in Recent Files
 ruletype: Sigma
 author: Florian Roth
 date: 2022/02/11
-description: Detects the creation of recent element file that points to an .ISO, .IMG,
-    .VHD or .VHDX file as often used in phishing attacks. This can be a false positive
-    on server systems but on workstations users should rarely mount .iso or .img files.
+description: |
+    Detects the creation of recent element file that points to an .ISO, .IMG, .VHD or .VHDX file as often used in phishing attacks.
+    This can be a false positive on server systems but on workstations users should rarely mount .iso or .img files.
 detection:
     SELECTION_1:
         EventID: 11

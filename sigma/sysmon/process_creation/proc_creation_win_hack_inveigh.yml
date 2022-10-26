@@ -1,0 +1,43 @@
+title: Inveigh Hack Tool
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/10/24
+description: Detects the use of Inveigh a cross-platform .NET IPv4/IPv6 machine-in-the-middle
+    tool
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\Inveigh.exe'
+    SELECTION_4:
+        OriginalFileName:
+        - \Inveigh.exe
+        - \Inveigh.dll
+    SELECTION_5:
+        Description: Inveigh
+    SELECTION_6:
+        CommandLine:
+        - '* -SpooferIP*'
+        - '* -ReplyToIPs *'
+        - '* -ReplyToDomains *'
+        - '* -ReplyToMACs *'
+        - '* -SnifferIP*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6))
+falsepositives:
+- Very unlikely
+id: b99a1518-1ad5-4f65-bc95-1ffff97a8fd0
+level: critical
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/Kevin-Robertson/Inveigh
+- https://thedfirreport.com/2020/11/23/pysa-mespinoza-ransomware/
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.001
+
