@@ -21,8 +21,10 @@ detection:
         NewProcessName: '*\{*'
     SELECTION_7:
         NewProcessName: '*}\\*'
+    SELECTION_8:
+        NewProcessName|re: ^$
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Some FP is expected with some installers
 id: 90b63c33-2b97-4631-a011-ceb0f47b77c3
@@ -30,6 +32,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/10/26
 references:
 - https://twitter.com/Kostastsale/status/1565257924204986369
 status: experimental
