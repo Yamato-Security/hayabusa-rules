@@ -1,6 +1,6 @@
 title: Code Integrity Attempted DLL Load
 ruletype: Sigma
-author: Florian Roth, Nasreddine Bencherchali (update)
+author: Florian Roth, Nasreddine Bencherchali
 date: 2022/01/20
 description: Detects attempted DLL load events that didn't meet signing level requirements
 detection:
@@ -15,7 +15,9 @@ detection:
     SELECTION_13:
         FileNameBuffer: '*\Windows\System32\nvspcap64.dll'
     SELECTION_14:
-        ProcessNameBuffer: '*\AppData\Local\Keybase\Gui\Keybase.exe'
+        ProcessNameBuffer:
+        - '*\AppData\Local\Keybase\Gui\Keybase.exe'
+        - '*\Microsoft\Teams\stage\Teams.exe'
     SELECTION_15:
         RequestedPolicy: 8
     SELECTION_16:
@@ -47,8 +49,36 @@ detection:
         RequestedPolicy: 7
     SELECTION_27:
         ValidatedPolicy: 1
+    SELECTION_28:
+        FileNameBuffer: '*\Windows\System32\nvspcap64.dll'
+    SELECTION_29:
+        ProcessNameBuffer: '*\AppData\Local\slack\app-*'
     SELECTION_3:
         FileNameBuffer: '*\Program Files\DTrace\dtrace.dll'
+    SELECTION_30:
+        ProcessNameBuffer: '*\slack.exe'
+    SELECTION_31:
+        RequestedPolicy: 8
+    SELECTION_32:
+        ValidatedPolicy: 1
+    SELECTION_33:
+        FileNameBuffer:
+        - '*\Mozilla Firefox\mozavcodec.dll'
+        - '*\Mozilla Firefox\mozavutil.dll'
+    SELECTION_34:
+        ProcessNameBuffer: '*\Mozilla Firefox\firefox.exe'
+    SELECTION_35:
+        RequestedPolicy: 8
+    SELECTION_36:
+        FileNameBuffer:
+        - '*\Program Files\Avast Software\Avast\aswAMSI.dll'
+        - '*\Program Files (x86)\Avast Software\Avast\aswAMSI.dll'
+    SELECTION_37:
+        ProcessNameBuffer: '*\Windows\System32\SIHClient.exe'
+    SELECTION_38:
+        RequestedPolicy: 12
+    SELECTION_39:
+        ValidatedPolicy: 1
     SELECTION_4:
         ProcessNameBuffer: '*\Windows\System32\svchost.exe'
     SELECTION_5:
@@ -66,7 +96,9 @@ detection:
         and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
         and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and (SELECTION_19
         or SELECTION_20) and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24
-        and SELECTION_25 and SELECTION_26 and SELECTION_27)))
+        and SELECTION_25 and SELECTION_26 and SELECTION_27) or (SELECTION_28 and SELECTION_29
+        and SELECTION_30 and SELECTION_31 and SELECTION_32) or (SELECTION_33 and SELECTION_34
+        and SELECTION_35) or (SELECTION_36 and SELECTION_37 and SELECTION_38 and SELECTION_39)))
 falsepositives:
 - Unknown
 id: f8931561-97f5-4c46-907f-0a4a592e47a7
@@ -74,7 +106,7 @@ level: high
 logsource:
     product: windows
     service: codeintegrity-operational
-modified: 2022/10/25
+modified: 2022/10/27
 references:
 - https://twitter.com/SBousseaden/status/1483810148602814466
 status: experimental

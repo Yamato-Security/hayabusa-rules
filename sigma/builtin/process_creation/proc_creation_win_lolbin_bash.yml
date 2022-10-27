@@ -17,8 +17,10 @@ detection:
         - '*C:\Program Files\Git\post-install.bat*'
         - '*C:\Program Files (x86)\Git\post-install.bat*'
         - '*echo /etc/post-install/*.post*'
+    SELECTION_6:
+        CommandLine: '*echo /etc/post-install/*.post*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5)))
+        ((SELECTION_5 or SELECTION_6)))
 falsepositives:
 - Unknown
 id: 5edc2273-c26f-406c-83f3-f4d948e740dd
@@ -26,7 +28,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/11
+modified: 2022/10/26
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Bash/
 status: experimental
