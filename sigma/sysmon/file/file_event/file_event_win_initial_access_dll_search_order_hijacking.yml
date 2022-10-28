@@ -1,0 +1,73 @@
+title: Potential Initial Access via DLL Search Order Hijacking
+ruletype: Sigma
+author: Tim Rauch (rule), Elastic (idea)
+date: 2022/10/21
+description: Detects attempts to create a DLL file to a known desktop application
+    dependencies folder such as Slack, Teams or OneDrive and by an unusual process.
+    This may indicate an attempt to load a malicious module via DLL search order hijacking.
+detection:
+    SELECTION_1:
+        EventID: 11
+    SELECTION_10:
+        TargetFilename: '*\AppData\\*'
+    SELECTION_11:
+        TargetFilename: '*\Microsoft\OneDrive\\*'
+    SELECTION_12:
+        TargetFilename: '*\api-ms-win-core-*'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\winword.exe'
+        - '*\excel.exe'
+        - '*\powerpnt.exe'
+        - '*\MSACCESS.EXE'
+        - '*\MSPUB.EXE'
+        - '*\fltldr.exe'
+        - '*\cmd.exe'
+        - '*\certutil.exe'
+        - '*\mshta.exe'
+        - '*\cscript.exe'
+        - '*\wscript.exe'
+        - '*\curl.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        TargetFilename: '*.dll'
+    SELECTION_5:
+        TargetFilename: '*\Users\\*'
+    SELECTION_6:
+        TargetFilename: '*\AppData\\*'
+    SELECTION_7:
+        TargetFilename:
+        - '*\Microsoft\OneDrive\\*'
+        - '*\Microsoft OneDrive\\*'
+        - '*\Microsoft\Teams\\*'
+        - '*\Local\slack\app-*'
+        - '*\Local\Programs\Microsoft VS Code\\*'
+    SELECTION_8:
+        Image: '*\cmd.exe'
+    SELECTION_9:
+        TargetFilename: '*\Users\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not (SELECTION_8 and SELECTION_9
+        and SELECTION_10 and SELECTION_11 and SELECTION_12))
+falsepositives:
+- Unknown
+id: dbbd9f66-2ed3-4ca2-98a4-6ea985dd1a1c
+level: medium
+logsource:
+    category: file_event
+    product: windows
+references:
+- https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-5d46dd4ac6866b4337ec126be8cee0e115467b3e8703794ba6f6df6432c806bc
+- https://posts.specterops.io/automating-dll-hijack-discovery-81c4295904b0
+status: experimental
+tags:
+- attack.t1566
+- attack.t1566.001
+- attack.initial_access
+- attack.t1574
+- attack.t1574.001
+- attack.defense_evasion
+

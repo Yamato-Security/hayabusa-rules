@@ -2,9 +2,9 @@ title: Fsutil Suspicious Invocation
 ruletype: Sigma
 author: Ecco, E.M. Anhaus, oscd.community
 date: 2019/09/26
-description: Detects suspicious parameters of fsutil (deleting USN journal, configuring
-    it with small size, etc). Might be used by ransomwares during the attack (seen
-    by NotPetya and others).
+description: |
+    Detects suspicious parameters of fsutil (deleting USN journal, configuring it with small size, etc).
+    Might be used by ransomwares during the attack (seen by NotPetya and others).
 detection:
     SELECTION_1:
         EventID: 1
