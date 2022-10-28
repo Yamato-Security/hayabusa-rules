@@ -2,10 +2,9 @@ title: Suspicious NT Resource Kit Auditpol Usage
 ruletype: Sigma
 author: Nasreddine Bencherchali @nas_bench
 date: 2021/12/18
-description: Threat actors can use an older version of the auditpol binary available
-    inside the NT resource kit to change audit policy configuration to impair detection
-    capability. This can be carried out by selectively disabling/removing certain
-    audit policies as well as restoring a custom policy owned by the threat actor.
+description: |
+    Threat actors can use an older version of the auditpol binary available inside the NT resource kit to change audit policy configuration to impair detection capability.
+    This can be carried out by selectively disabling/removing certain audit policies as well as restoring a custom policy owned by the threat actor.
 detection:
     SELECTION_1:
         EventID: 4688

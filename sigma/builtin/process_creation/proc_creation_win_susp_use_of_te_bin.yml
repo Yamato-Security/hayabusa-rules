@@ -2,10 +2,9 @@ title: Malicious Windows Script Components File Execution by TAEF Detection
 ruletype: Sigma
 author: Agro (@agro_sev) oscd.community
 date: 2020/10/13
-description: Windows Test Authoring and Execution Framework (TAEF) framework allows
-    you to run automation by executing tests files written on different languages
-    (C, C#, Microsoft COM Scripting interfaces). Adversaries may execute malicious
-    code (such as WSC file with VBScript, dll and so on) directly by running te.exe
+description: |
+    Windows Test Authoring and Execution Framework (TAEF) framework allows you to run automation by executing tests files written on different languages (C, C#, Microsoft COM Scripting interfaces
+    Adversaries may execute malicious code (such as WSC file with VBScript, dll and so on) directly by running te.exe
 detection:
     SELECTION_1:
         EventID: 4688

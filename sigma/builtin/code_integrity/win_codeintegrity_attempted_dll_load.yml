@@ -74,7 +74,9 @@ detection:
         - '*\Program Files\Avast Software\Avast\aswAMSI.dll'
         - '*\Program Files (x86)\Avast Software\Avast\aswAMSI.dll'
     SELECTION_37:
-        ProcessNameBuffer: '*\Windows\System32\SIHClient.exe'
+        ProcessNameBuffer:
+        - '*\Windows\System32\SIHClient.exe'
+        - '*\Windows\System32\svchost.exe'
     SELECTION_38:
         RequestedPolicy: 12
     SELECTION_39:
@@ -106,7 +108,7 @@ level: high
 logsource:
     product: windows
     service: codeintegrity-operational
-modified: 2022/10/27
+modified: 2022/10/28
 references:
 - https://twitter.com/SBousseaden/status/1483810148602814466
 status: experimental

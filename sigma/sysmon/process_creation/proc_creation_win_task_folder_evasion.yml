@@ -2,10 +2,10 @@ title: Tasks Folder Evasion
 ruletype: Sigma
 author: Sreeman
 date: 2020/01/13
-description: The Tasks folder in system32 and syswow64 are globally writable paths.
-    Adversaries can take advantage of this and load or influence any script hosts
-    or ANY .NET Application in Tasks to load and execute a custom assembly into cscript,
-    wscript, regsvr32, mshta, eventvwr
+description: "The Tasks folder in system32 and syswow64 are globally writable paths.\n\
+    Adversaries can take advantage of this and load or influence any script hosts\
+    \ or ANY .NET Application \nin Tasks to load and execute a custom assembly into\
+    \ cscript, wscript, regsvr32, mshta, eventvwr\n"
 detection:
     SELECTION_1:
         EventID: 1

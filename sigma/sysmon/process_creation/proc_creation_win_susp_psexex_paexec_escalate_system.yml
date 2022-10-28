@@ -1,6 +1,6 @@
 title: PsExec/PAExec Escalation to LOCAL SYSTEM
 ruletype: Sigma
-author: Florian Roth
+author: Florian Roth, Nasreddine Bencherchali
 date: 2021/11/23
 description: Detects suspicious flags used by PsExec and PAExec to escalate a command
     line to LOCAL_SYSTEM rights
@@ -10,11 +10,41 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        CommandLine: '* -s cmd.exe'
+        CommandLine:
+        - '* -s cmd*'
+        - '* /s cmd*'
+        - '* -s -i cmd*'
+        - '* /s /i cmd*'
+        - '* /s -i cmd*'
+        - '* -s /i cmd*'
+        - '* -i -s cmd*'
+        - '* /i /s cmd*'
+        - '* -i /s cmd*'
+        - '* /i -s cmd*'
+        - '* -s pwsh*'
+        - '* /s pwsh*'
+        - '* -s -i pwsh*'
+        - '* /s /i pwsh*'
+        - '* /s -i pwsh*'
+        - '* -s /i pwsh*'
+        - '* -i -s pwsh*'
+        - '* /i /s pwsh*'
+        - '* -i /s pwsh*'
+        - '* /i -s pwsh*'
+        - '* -s powershell*'
+        - '* /s powershell*'
+        - '* -s -i powershell*'
+        - '* /s /i powershell*'
+        - '* /s -i powershell*'
+        - '* -s /i powershell*'
+        - '* -i -s powershell*'
+        - '* /i /s powershell*'
+        - '* -i /s powershell*'
+        - '* /i -s powershell*'
     SELECTION_4:
         CommandLine:
-        - '*PsExec*'
-        - '*PAExec*'
+        - '*psexec*'
+        - '*paexec*'
         - '*accepteula*'
         - '*cmd /c *'
         - '*cmd /k *'
@@ -27,11 +57,14 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/24
+modified: 2022/10/26
 references:
 - https://docs.microsoft.com/en-us/sysinternals/downloads/psexec
 - https://www.poweradmin.com/paexec/
 - https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html
+related:
+-   id: 207b0396-3689-42d9-8399-4222658efc99
+    type: similar
 status: experimental
 tags:
 - attack.resource_development

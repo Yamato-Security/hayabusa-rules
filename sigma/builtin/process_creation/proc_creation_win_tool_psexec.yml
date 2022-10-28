@@ -2,8 +2,7 @@ title: PsExec Tool Execution
 ruletype: Sigma
 author: Thomas Patzke
 date: 2017/06/12
-description: Detects PsExec service installation and execution events (service and
-    Sysmon)
+description: Detects PsExec service execution via default service image name
 detection:
     SELECTION_1:
         EventID: 4688

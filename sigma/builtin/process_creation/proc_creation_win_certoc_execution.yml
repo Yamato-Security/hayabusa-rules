@@ -14,11 +14,11 @@ detection:
     SELECTION_4:
         OriginalFileName: CertOC.exe
     SELECTION_5:
-        CommandLine: '*-LoadDLL*'
-    SELECTION_6:
-        CommandLine: '*.dll*'
+        CommandLine:
+        - '* -LoadDLL *'
+        - '* /LoadDLL *'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6))
+        SELECTION_5)
 falsepositives:
 - Unknown
 fields:
@@ -29,9 +29,11 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/05/16
+modified: 2022/10/24
 references:
 - https://twitter.com/sblmsrsn/status/1445758411803480072?s=20
+- https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-fe98e74189873d6df72a15df2eaa0315c59ba9cdaca93ecd68afc4ea09194ef2
+- https://lolbas-project.github.io/lolbas/Binaries/Certoc/
 status: experimental
 tags:
 - attack.defense_evasion

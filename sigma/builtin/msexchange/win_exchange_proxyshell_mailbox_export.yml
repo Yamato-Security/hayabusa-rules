@@ -10,20 +10,15 @@ detection:
         Channel: MSExchange Management
     SELECTION_2:
     - New-MailboxExportRequest
-    SELECTION_3:
     - ' -Mailbox '
-    SELECTION_4:
-    - -FilePath "\\\\localhost\\C$
-    - -FilePath "\\\\127.0.0.1\\C$
+    SELECTION_3:
+    - -FilePath "\\\\
     - .aspx
-    SELECTION_5:
+    SELECTION_4:
     - New-ManagementRoleAssignment
-    SELECTION_6:
     - ' -Role "Mailbox Import Export"'
-    SELECTION_7:
     - ' -User '
-    condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3) and (SELECTION_4))
-        or (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+    condition: (SELECTION_1 and (((SELECTION_2) and (SELECTION_3)) or (SELECTION_4)))
 falsepositives:
 - Unlikely
 id: 516376b4-05cd-4122-bae0-ad7641c38d48
@@ -31,7 +26,7 @@ level: critical
 logsource:
     product: windows
     service: msexchange-management
-modified: 2022/02/01
+modified: 2022/10/26
 references:
 - https://blog.orange.tw/2021/08/proxylogon-a-new-attack-surface-on-ms-exchange-part-1.html
 status: experimental

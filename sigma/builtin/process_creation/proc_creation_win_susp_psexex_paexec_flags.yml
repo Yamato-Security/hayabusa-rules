@@ -1,6 +1,6 @@
 title: PsExec/PAExec Flags
 ruletype: Sigma
-author: Florian Roth
+author: Florian Roth, Nasreddine Bencherchali
 date: 2021/05/22
 description: Detects suspicious flags used by PsExec and PAExec but no usual program
     name in command line
@@ -11,8 +11,36 @@ detection:
         Channel: Security
     SELECTION_3:
         CommandLine:
-        - '* -s cmd.exe'
-        - '* -s -i cmd.exe'
+        - '* -s cmd*'
+        - '* /s cmd*'
+        - '* -s -i cmd*'
+        - '* /s /i cmd*'
+        - '* /s -i cmd*'
+        - '* -s /i cmd*'
+        - '* -i -s cmd*'
+        - '* /i /s cmd*'
+        - '* -i /s cmd*'
+        - '* /i -s cmd*'
+        - '* -s pwsh*'
+        - '* /s pwsh*'
+        - '* -s -i pwsh*'
+        - '* /s /i pwsh*'
+        - '* /s -i pwsh*'
+        - '* -s /i pwsh*'
+        - '* -i -s pwsh*'
+        - '* /i /s pwsh*'
+        - '* -i /s pwsh*'
+        - '* /i -s pwsh*'
+        - '* -s powershell*'
+        - '* /s powershell*'
+        - '* -s -i powershell*'
+        - '* /s /i powershell*'
+        - '* /s -i powershell*'
+        - '* -s /i powershell*'
+        - '* -i -s powershell*'
+        - '* /i /s powershell*'
+        - '* -i /s powershell*'
+        - '* /i -s powershell*'
     SELECTION_4:
         CommandLine: '*accepteula*'
     SELECTION_5:
@@ -41,6 +69,9 @@ references:
 - https://docs.microsoft.com/en-us/sysinternals/downloads/psexec
 - https://www.poweradmin.com/paexec/
 - https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html
+related:
+-   id: 8834e2f7-6b4b-4f09-8906-d2276470ee23
+    type: similar
 status: experimental
 tags:
 - attack.resource_development

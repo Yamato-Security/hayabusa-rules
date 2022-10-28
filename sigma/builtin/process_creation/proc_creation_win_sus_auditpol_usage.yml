@@ -2,10 +2,9 @@ title: Suspicious Auditpol Usage
 ruletype: Sigma
 author: Janantha Marasinghe (https://github.com/blueteam0ps)
 date: 2021/02/02
-description: Threat actors can use auditpol binary to change audit policy configuration
-    to impair detection capability. This can be carried out by selectively disabling/removing
-    certain audit policies as well as restoring a custom policy owned by the threat
-    actor.
+description: |
+    Threat actors can use auditpol binary to change audit policy configuration to impair detection capability.
+    This can be carried out by selectively disabling/removing certain audit policies as well as restoring a custom policy owned by the threat actor.
 detection:
     SELECTION_1:
         EventID: 4688

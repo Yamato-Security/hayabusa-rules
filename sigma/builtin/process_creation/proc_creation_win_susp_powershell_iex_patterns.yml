@@ -13,15 +13,27 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
-        CommandLine: '*-'' | iex;'' -'' | iex '' -'' | iex}'' -'' | IEX;'' -'' | IEX
-            ;'' -'' | IEX -Error'' -'' | IEX (new'' -'' | IEX (New'' -'');IEX ''*'
+        CommandLine:
+        - '* | iex;*'
+        - '* | iex *'
+        - '* | iex}*'
+        - '* | IEX;*'
+        - '* | IEX ;*'
+        - '* | IEX -Error*'
+        - '* | IEX (new*'
+        - '* | IEX (New*'
+        - '*);IEX *'
     SELECTION_5:
         CommandLine:
         - '*::FromBase64String*'
         - '*.GetString([System.Convert]::*'
     SELECTION_6:
-        CommandLine: '*-'')|iex;$'' -'')|IEX;$'' -'');iex($'' -'');iex $'' -'' | IEX
-            | ''*'
+        CommandLine:
+        - '*)|iex;$*'
+        - '*)|IEX;$*'
+        - '*);iex($*'
+        - '*);iex $*'
+        - '* | IEX | *'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
         SELECTION_5) or SELECTION_6))
 falsepositives:
@@ -31,7 +43,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/03/28
+modified: 2022/10/28
 references:
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-expression?view=powershell-7.2
 status: experimental

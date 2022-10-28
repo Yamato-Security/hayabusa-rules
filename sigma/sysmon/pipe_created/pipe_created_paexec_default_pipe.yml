@@ -1,9 +1,8 @@
-title: PsExec Default Named Pipe
+title: PAExec Default Named Pipe
 ruletype: Sigma
-author: Thomas Patzke
-date: 2017/06/12
-description: Detects PsExec service installation and execution events (service and
-    Sysmon)
+author: Nasreddine Bencherchali
+date: 2022/10/26
+description: Detects PAExec default named pipe
 detection:
     SELECTION_1:
         EventID: 17
@@ -12,20 +11,12 @@ detection:
     SELECTION_3:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_4:
-        PipeName: \PSEXESVC
+        PipeName: \PAExec*
     condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
-fields:
-- EventID
-- CommandLine
-- ParentCommandLine
-- ServiceName
-- ServiceFileName
-- TargetFilename
-- PipeName
-id: f3f3a972-f982-40ad-b63c-bca6afdfad7c
-level: low
+id: f6451de4-df0a-41fa-8d72-b39f54a08db5
+level: medium
 logsource:
     category: pipe_created
     definition: Note that you have to configure logging for Named Pipe Events in Sysmon
@@ -35,16 +26,10 @@ logsource:
         https://github.com/olafhartong/sysmon-modular. How to test detection? You
         can check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575
     product: windows
-modified: 2022/10/09
 references:
-- https://www.jpcert.or.jp/english/pub/sr/ir_research.html
-- https://jpcertcc.github.io/ToolAnalysisResultSheet
-related:
--   id: 42c575ea-e41e-41f1-b248-8093c3e82a28
-    type: derived
+- https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries/blob/efa17a600b43c897b4b7463cc8541daa1987eeb4/Command%20and%20Control/C2-NamedPipe.md
 status: test
 tags:
 - attack.execution
 - attack.t1569.002
-- attack.s0029
 
