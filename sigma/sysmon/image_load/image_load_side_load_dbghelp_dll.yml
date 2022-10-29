@@ -12,33 +12,21 @@ detection:
         ImageLoaded: '*\dbghelp.dll'
     SELECTION_4:
         ImageLoaded:
-        - C:\Program Files (x86)\Microsoft Analysis Services\AS OLEDB\110\dbghelp.dll
-        - C:\Program Files\Microsoft Analysis Services\AS OLEDB\110\dbghelp.dll
-        - C:\Program Files\Common Files\microsoft shared\DW\DBGHELP.DLL
-        - C:\Program Files\Dell\DTP\InstrumentationSubAgent\dbghelp.dll
-        - C:\Program Files\DTrace\dbghelp.dll
-    SELECTION_5:
-        ImageLoaded:
         - C:\Windows\System32\\*
         - C:\Windows\SysWOW64\\*
         - C:\Windows\WinSxS\\*
         - C:\Windows\SoftwareDistribution\\*
         - C:\Windows\SystemTemp\\*
-        - C:\Program Files (x86)\Microsoft Visual Studio\\*
-        - C:\Program Files\Microsoft Visual Studio\\*
-        - C:\Program Files (x86)\Windows Kits\10\\*
-        - C:\Program Files\dotnet\sdk\\*
-        - C:\Program Files\Microsoft Office\Office*
-        - C:\Program Files\Microsoft Office\Root\Office*
-        - C:\Program Files\WindowsApps\Microsoft.WinDbg_*
-    SELECTION_6:
+        - C:\Program Files (x86)\\*
+        - C:\Program Files\\*
+    SELECTION_5:
         ImageLoaded:
         - '*\Epic Games\Launcher\Engine\Binaries\ThirdParty\DbgHelp\dbghelp.dll'
         - '*\Epic Games\MagicLegends\x86\dbghelp.dll'
         - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\amd64\dbghelp.dll'
         - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\i386\dbghelp.dll'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5 or SELECTION_6)))
+        or SELECTION_5)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLL mentioned in this
     rule
@@ -47,6 +35,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
+modified: 2022/10/28
 references:
 - https://hijacklibs.net/
 status: experimental

@@ -2,7 +2,7 @@ title: Suspicious MsiExec Directory
 ruletype: Sigma
 author: Florian Roth
 date: 2019/11/14
-description: Detects suspicious msiexec process starts in an uncommon directory
+description: Detects execution of msiexec from an uncommon directory
 detection:
     SELECTION_1:
         EventID: 1

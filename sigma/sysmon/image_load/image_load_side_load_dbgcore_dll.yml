@@ -6,12 +6,6 @@ description: Detects DLL sideloading of "dbgcore.dll"
 detection:
     SELECTION_1:
         EventID: 7
-    SELECTION_10:
-        ImageLoaded:
-        - C:\Program Files\Microsoft Office\Office*
-        - C:\Program Files\Microsoft Office\Root\Office*
-        - C:\Program Files (x86)\Microsoft Office\Office*
-        - C:\Program Files (x86)\Microsoft Office\Root\Office*
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -23,21 +17,12 @@ detection:
         - C:\Windows\WinSxS\\*
         - C:\Windows\SoftwareDistribution\\*
         - C:\Windows\SystemTemp\\*
+        - C:\Program Files (x86)\\*
+        - C:\Program Files\\*
     SELECTION_5:
-        ImageLoaded:
-        - C:\Program Files (x86)\Microsoft Visual Studio\\*
-        - C:\Program Files\Microsoft Visual Studio\\*
-    SELECTION_6:
-        ImageLoaded: C:\Program Files (x86)\Windows Kits\10\Debuggers\\*
-    SELECTION_7:
-        ImageLoaded: C:\Program Files\WindowsApps\Microsoft.WinDbg_*
-    SELECTION_8:
         ImageLoaded: '*\Steam\bin\cef\cef.win7x64\dbgcore.dll'
-    SELECTION_9:
-        ImageLoaded: C:\Program Files\Dell\DTP\InstrumentationSubAgent\dbgcore.dll
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9)
-        or (SELECTION_10)))
+        or (SELECTION_5)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLL mentioned in this
     rule
@@ -46,6 +31,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
+modified: 2022/10/28
 references:
 - https://hijacklibs.net/
 status: experimental

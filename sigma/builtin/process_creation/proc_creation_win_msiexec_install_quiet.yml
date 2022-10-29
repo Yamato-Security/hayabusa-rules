@@ -13,28 +13,37 @@ detection:
     SELECTION_3:
         NewProcessName: '*\msiexec.exe'
     SELECTION_4:
-        CommandLine:
-        - '* /i*'
-        - '* -i*'
-        - '* /package*'
-        - '* -package*'
-        - '* /a*'
-        - '* -a*'
-        - '* /j*'
-        - '* -j*'
+        OriginalFileName: msiexec.exe
     SELECTION_5:
         CommandLine:
-        - '* /q*'
-        - '* -q*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+        - '*/i*'
+        - '*-i*'
+        - '*/package*'
+        - '*-package*'
+        - '*/a*'
+        - '*-a*'
+        - '*/j*'
+        - '*-j*'
+    SELECTION_6:
+        CommandLine:
+        - '*/q*'
+        - '*-q*'
+    SELECTION_7:
+        ParentProcessName: C:\Users\\*
+    SELECTION_8:
+        ParentProcessName: '*\AppData\Local\Temp\\*'
+    SELECTION_9:
+        ParentProcessName: C:\Windows\Temp\\*
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8) or (SELECTION_9)))
 falsepositives:
 - Legitimate script
 id: 79a87aa6-e4bd-42fc-a5bb-5e6fbdcd62f5
-level: low
+level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/23
+modified: 2022/10/28
 references:
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md
