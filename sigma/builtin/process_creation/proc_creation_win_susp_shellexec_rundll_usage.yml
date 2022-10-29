@@ -1,8 +1,8 @@
-title: Suspicious Usage Of ShellExec_rundll
+title: Suspicious Usage Of ShellExec_RundDLL
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/09/01
-description: Detects suspicious usage of the ShellExec_rundll function to launch other
+description: Detects suspicious usage of the ShellExec_RunDLL function to launch other
     commands as seen in the the raspberry-robin attack
 detection:
     SELECTION_1:
@@ -10,23 +10,26 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine: '*,ShellExec_rundll*'
+        CommandLine: '*ShellExec_RunDLL*'
     SELECTION_4:
         CommandLine:
         - '*regsvr32*'
-        - '*C:\Users\Public\\*'
+        - '*msiexec*'
+        - '*\Users\Public\\*'
         - '*odbcconf*'
         - '*\Desktop\\*'
+        - '*\Temp\\*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: d87bd452-6da1-456e-8155-7dc988157b7d
-level: medium
+level: high
 logsource:
     category: process_creation
     product: windows
 references:
 - https://redcanary.com/blog/raspberry-robin/
+- https://www.microsoft.com/en-us/security/blog/2022/10/27/raspberry-robin-worm-part-of-larger-ecosystem-facilitating-pre-ransomware-activity/
 status: experimental
 tags:
 - attack.defense_evasion

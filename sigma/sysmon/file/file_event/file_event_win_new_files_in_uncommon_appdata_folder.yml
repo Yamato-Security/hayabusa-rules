@@ -16,6 +16,7 @@ detection:
     SELECTION_4:
         TargetFilename:
         - '*.exe'
+        - '*.dll'
         - '*.bat'
         - '*.vbe'
         - '*.vbs'
@@ -23,6 +24,11 @@ detection:
         - '*.iso'
         - '*.lnk'
         - '*.cmd'
+        - '*.ps1'
+        - '*.psm1'
+        - '*.hta'
+        - '*.cpl'
+        - '*.scr'
     SELECTION_5:
         TargetFilename:
         - '*\AppData\Local\\*'
@@ -37,6 +43,7 @@ level: high
 logsource:
     category: file_event
     product: windows
+modified: 2022/10/28
 references:
 - Internal Research
 status: experimental
