@@ -24,7 +24,6 @@ detection:
         - '*\userinit.exe'
         - '*\wininit.exe'
         - '*\spoolsv.exe'
-        - '*\wermgr.exe'
         - '*\ctfmon.exe'
     SELECTION_5:
         ParentCommandLine:
@@ -33,6 +32,7 @@ detection:
         - '*-k netsvcs -p -s NetSetupSvc*'
         - '*-k LocalSystemNetworkRestricted -p -s NgcSvc*'
         - '*-k wsappx -p -s ClipSVC*'
+        - '*-k netsvcs -p -s wlidsvc*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         (SELECTION_5))
 falsepositives:
@@ -42,7 +42,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/28
+modified: 2022/10/31
 references:
 - https://www.elastic.co/guide/en/security/current/conhost-spawned-by-suspicious-parent-process.html
 status: experimental
