@@ -1,4 +1,4 @@
-title: Suspicious Usage Of ShellExec_RundDLL
+title: Suspicious Usage Of ShellExec_RunDLL
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/09/01
@@ -27,6 +27,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/10/31
 references:
 - https://redcanary.com/blog/raspberry-robin/
 - https://www.microsoft.com/en-us/security/blog/2022/10/27/raspberry-robin-worm-part-of-larger-ecosystem-facilitating-pre-ransomware-activity/

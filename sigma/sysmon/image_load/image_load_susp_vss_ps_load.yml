@@ -28,6 +28,7 @@ detection:
         - '*\rundll32.exe'
         - '*\inetsrv\iissetup.exe'
         - '*\inetsrv\appcmd.exe'
+        - '*\WmiPrvSE.exe'
     SELECTION_5:
         Image: '*c:\windows\\*'
     SELECTION_6:
@@ -43,7 +44,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/07/27
+modified: 2022/10/31
 references:
 - 1bd85e1caa1415ebdc8852c91e37bbb7
 - https://twitter.com/am0nsec/status/1412232114980982787
