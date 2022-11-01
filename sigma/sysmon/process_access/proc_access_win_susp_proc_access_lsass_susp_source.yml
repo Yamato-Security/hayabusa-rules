@@ -16,46 +16,56 @@ detection:
         - '0x410'
         - '0x1410'
     SELECTION_13:
-        SourceImage: '*\AppData\Local\Temp\\*'
+        SourceImage: C:\Users\\*
     SELECTION_14:
-        SourceImage: '*.tmp\DropboxUpdate.exe'
+        SourceImage: '*\AppData\Local\Temp\\*'
     SELECTION_15:
-        GrantedAccess: '0x1410'
+        SourceImage: '*.tmp\DropboxUpdate.exe'
     SELECTION_16:
+        GrantedAccess: '0x1410'
+    SELECTION_17:
         SourceImage:
         - C:\Windows\Temp\asgard2-agent\\*
         - C:\Windows\Temp\asgard2-agent-sc\\*
-    SELECTION_17:
+    SELECTION_18:
         SourceImage:
         - '*\thor64.exe'
         - '*\thor.exe'
         - '*\aurora-agent-64.exe'
         - '*\aurora-agent.exe'
-    SELECTION_18:
+    SELECTION_19:
         GrantedAccess:
         - '0x1fffff'
         - '0x1010'
         - '0x101010'
-    SELECTION_19:
-        SourceImage: '*\AppData\Local\Temp\\*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_20:
-        SourceImage: '*\vs_bootstrapper_*'
+        SourceImage: C:\Users\\*
     SELECTION_21:
-        GrantedAccess: '0x1410'
+        SourceImage: '*\AppData\Local\Temp\\*'
     SELECTION_22:
-        SourceImage: C:\Program Files (x86)\Google\Temp\\*
+        SourceImage: '*\vs_bootstrapper_*'
     SELECTION_23:
-        SourceImage: '*.tmp\GoogleUpdate.exe'
+        GrantedAccess: '0x1410'
     SELECTION_24:
-        GrantedAccess: '0x410'
+        SourceImage: C:\Program Files (x86)\Google\Temp\\*
     SELECTION_25:
+        SourceImage: '*.tmp\GoogleUpdate.exe'
+    SELECTION_26:
+        GrantedAccess: '0x410'
+    SELECTION_27:
         SourceImage:
         - C:\Program Files (x86)\\*
         - C:\Program Files\\*
+    SELECTION_28:
+        SourceImage: C:\Users\\*
+    SELECTION_29:
+        SourceImage: '*\AppData\Local\Keybase\keybase.exe'
     SELECTION_3:
         TargetImage: '*\lsass.exe'
+    SELECTION_30:
+        GrantedAccess: '0x1fffff'
     SELECTION_4:
         GrantedAccess:
         - '*10'
@@ -92,7 +102,7 @@ detection:
         - '*\AppData\\*'
         - '*\Temporary*'
     SELECTION_6:
-        SourceImage: '*C:\Users\\*'
+        SourceImage: C:\Users\\*
     SELECTION_7:
         SourceImage: '*\AppData\Local\\*'
     SELECTION_8:
@@ -109,9 +119,10 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
         SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
         or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19
-        and SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24)
-        or (SELECTION_25)))
+        and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19)
+        or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
+        and SELECTION_25 and SELECTION_26) or (SELECTION_27) or (SELECTION_28 and
+        SELECTION_29 and SELECTION_30)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason
 fields:
@@ -123,7 +134,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/10/26
+modified: 2022/11/01
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

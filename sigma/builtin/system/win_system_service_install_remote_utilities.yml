@@ -1,0 +1,33 @@
+title: Remote Utilities Host Service Install
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/10/31
+description: Detects Remote Utilities Host service installation on the target system.
+detection:
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7045
+    SELECTION_4:
+        ImagePath: '*\rutserv.exe*'
+    SELECTION_5:
+        ImagePath: '*-service*'
+    SELECTION_6:
+        ServiceName: Remote Utilities - Host
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
+        SELECTION_5) or SELECTION_6))
+falsepositives:
+- Legitimate use of the tool
+id: 85cce894-dd8b-4427-a958-5cc47a4dc9b9
+level: medium
+logsource:
+    product: windows
+    service: system
+references:
+- https://www.remoteutilities.com/support/kb/host-service-won-t-start/
+status: experimental
+tags:
+- attack.persistence
+

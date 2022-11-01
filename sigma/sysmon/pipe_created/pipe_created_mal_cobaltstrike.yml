@@ -17,13 +17,11 @@ detection:
     SELECTION_6:
         PipeName: \postex_*
     SELECTION_7:
-        PipeName: \postex_ssh_*
-    SELECTION_8:
         PipeName: \status_*
-    SELECTION_9:
+    SELECTION_8:
         PipeName: \msagent_*
     condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and ((SELECTION_4 and
-        SELECTION_5) or SELECTION_6 or SELECTION_7 or SELECTION_8 or SELECTION_9))
+        SELECTION_5) or SELECTION_6 or SELECTION_7 or SELECTION_8))
 falsepositives:
 - Unknown
 id: d5601f8c-b26f-4ab0-9035-69e11a8d4ad2
@@ -38,7 +36,7 @@ logsource:
         can always use Cobalt Strike, but also you can check powershell script from
         this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575
     product: windows
-modified: 2022/10/09
+modified: 2022/10/31
 references:
 - https://twitter.com/d4rksystem/status/1357010969264873472
 - https://labs.f-secure.com/blog/detecting-cobalt-strike-default-modules-via-named-pipe-analysis/

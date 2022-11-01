@@ -56,8 +56,16 @@ detection:
         NewProcessName: '*\VC_redist.x64.exe'
     SELECTION_28:
         NewValue: '*}\VC_redist.x64.exe" /burn.runonce'
+    SELECTION_29:
+        NewProcessName:
+        - C:\ProgramData\Package Cache*
+        - C:\Windows\Temp\\*
     SELECTION_3:
         Channel: Security
+    SELECTION_30:
+        NewProcessName: '*\winsdksetup.exe'
+    SELECTION_31:
+        NewValue: '*\winsdksetup.exe" /burn.runonce'
     SELECTION_4:
         EventType: SetValue
     SELECTION_5:
@@ -86,7 +94,8 @@ detection:
         or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14
         or SELECTION_15 or SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19)
         or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
-        and SELECTION_25) or (SELECTION_26) or (SELECTION_27 and SELECTION_28)))
+        and SELECTION_25) or (SELECTION_26) or (SELECTION_27 and SELECTION_28) or
+        (SELECTION_29 and SELECTION_30 and SELECTION_31)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
     keys for legitimate reason
@@ -101,7 +110,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/21
+modified: 2022/11/01
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

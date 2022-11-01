@@ -1,11 +1,11 @@
-title: Credentials Dumping Tools Accessing LSASS Memory
+title: Credential Dumping Tools Accessing LSASS Memory
 ruletype: Sigma
 author: Florian Roth, Roberto Rodriguez, Dimitrios Slamaris, Mark Russinovich, Thomas
     Patzke, Teymur Kheirkhabarov, Sherif Eldeeb, James Dickenson, Aleksey Potapov,
     oscd.community (update)
 date: 2017/02/16
-description: Detects process access LSASS memory which is typical for credentials
-    dumping tools
+description: Detects processes requesting access to LSASS memory via suspicious access
+    masks. This is typical for credentials dumping tools
 detection:
     SELECTION_1:
         EventID: 10
@@ -135,10 +135,16 @@ detection:
         SourceImage: '*.tmp\DropboxUpdate.exe'
     SELECTION_47:
         GrantedAccess: '0x1410'
+    SELECTION_48:
+        SourceImage: C:\Program Files\Microsoft Visual Studio\\*
+    SELECTION_49:
+        SourceImage: '*\MSBuild\Current\Bin\MSBuild.exe'
     SELECTION_5:
         SourceImage:
         - C:\WINDOWS\system32\taskmgr.exe
         - C:\Windows\System32\perfmon.exe
+    SELECTION_50:
+        GrantedAccess: '0x1F3FFF'
     SELECTION_6:
         SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
     SELECTION_7:
@@ -156,7 +162,8 @@ detection:
         or (SELECTION_29 and SELECTION_30) or (SELECTION_31 and SELECTION_32) or (SELECTION_33
         and SELECTION_34) or (SELECTION_35 and SELECTION_36) or (SELECTION_37 and
         SELECTION_38) or (SELECTION_39 and SELECTION_40) or (SELECTION_41) or (SELECTION_42
-        and SELECTION_43 and SELECTION_44) or (SELECTION_45 and SELECTION_46 and SELECTION_47)))
+        and SELECTION_43 and SELECTION_44) or (SELECTION_45 and SELECTION_46 and SELECTION_47)
+        or (SELECTION_48 and SELECTION_49 and SELECTION_50)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason; please add more
     filters
@@ -169,7 +176,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/10/20
+modified: 2022/11/01
 references:
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html

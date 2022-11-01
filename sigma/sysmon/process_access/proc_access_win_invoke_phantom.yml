@@ -15,7 +15,16 @@ detection:
         GrantedAccess: '0x1F3FFF'
     SELECTION_5:
         CallTrace: '*UNKNOWN*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_6:
+        SourceImage: C:\Program Files\Microsoft Visual Studio\\*
+    SELECTION_7:
+        SourceImage: '*\MSBuild\Current\Bin\MSBuild.exe'
+    SELECTION_8:
+        CallTrace:
+        - '*Microsoft.Build.ni.dll*'
+        - '*System.ni.dll*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: 166e9c50-8cd9-44af-815d-d1f0c0e90dde
@@ -23,7 +32,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2021/10/21
+modified: 2022/11/01
 references:
 - https://github.com/hlldz/Invoke-Phant0m
 - https://twitter.com/timbmsft/status/900724491076214784
