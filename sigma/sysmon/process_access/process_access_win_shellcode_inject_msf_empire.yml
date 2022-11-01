@@ -22,6 +22,12 @@ detection:
         - C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.exe
     SELECTION_15:
         CallTrace: C:\Windows\System32\ntdll.dll*
+    SELECTION_16:
+        SourceImage: C:\Program Files\Microsoft Visual Studio\\*
+    SELECTION_17:
+        SourceImage: '*\MSBuild\Current\Bin\MSBuild.exe'
+    SELECTION_18:
+        TargetImage: C:\Program Files\Dell\DellDataVault\DDVDataCollector.exe
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -47,7 +53,7 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
         and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
-        and SELECTION_15)))
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18)))
 falsepositives:
 - Empire's csharp_exe payload uses 0x1f3fff for process enumeration as well
 id: 250ae82f-736e-4844-a68b-0b5e8cc887da
@@ -55,7 +61,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/10/27
+modified: 2022/11/01
 status: experimental
 tags:
 - attack.defense_evasion
