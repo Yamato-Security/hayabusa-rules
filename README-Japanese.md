@@ -221,7 +221,7 @@ sample-evtx: |
 - `Grp` -> Group
 - `Img` -> Image
 - `Inj` -> Injection
-- `Kbr` -> Kerberos
+- `Krb` -> Kerberos
 - `LID` -> Logon ID
 - `Med` -> Medium
 - `Net` -> Network
