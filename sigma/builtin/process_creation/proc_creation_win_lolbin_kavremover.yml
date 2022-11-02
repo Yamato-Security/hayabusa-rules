@@ -1,0 +1,33 @@
+title: Kavremover Dropped Binary LOLBIN Usage
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/11/01
+description: Detects the execution of a signed binary dropped by Kaspersky Lab Products
+    Remover (kavremover) which can be abused as a LOLBIN to execute arbitrary commands
+    and binaries.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '* run run-cmd *'
+    SELECTION_4:
+        ParentProcessName:
+        - '*\kavremover.exe'
+        - '*\cleanapi.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: d047726b-c71c-4048-a99b-2e2f50dc107d
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://nasbench.medium.com/lolbined-using-kaspersky-endpoint-security-kes-installer-to-execute-arbitrary-commands-1c999f1b7fea
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1127
+
