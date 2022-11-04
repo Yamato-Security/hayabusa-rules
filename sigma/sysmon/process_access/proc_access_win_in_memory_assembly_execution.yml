@@ -50,7 +50,6 @@ detection:
         - C:\Windows\System32\WindowsPowerShell\\*
     SELECTION_14:
         SourceImage:
-        - C:\Users\\*\AppData\Local\Programs\Microsoft VS Code\Code.exe
         - C:\WINDOWS\system32\taskhostw.exe
         - C:\WINDOWS\system32\ctfmon.exe
         - C:\WINDOWS\system32\NhNotifSys.exe
@@ -85,8 +84,26 @@ detection:
         SourceImage: C:\Windows\system32\OpenWith.exe
     SELECTION_25:
         TargetImage: C:\Windows\Explorer.EXE
+    SELECTION_26:
+        SourceImage: C:\Users\\*
+    SELECTION_27:
+        SourceImage: '*\AppData\Local\Microsoft\Teams\current\Teams.exe'
+    SELECTION_28:
+        TargetImage:
+        - '*:\Windows\Explorer.EXE'
+        - '*\AppData\Local\Microsoft\Teams\Update.exe'
+        - '*\AppData\Local\Microsoft\Teams\current\Teams.exe'
+        - '*\MsMpEng.exe'
+    SELECTION_29:
+        SourceImage: C:\Windows\System32\WWAHost.exe
     SELECTION_3:
         CallTrace: '*C:\WINDOWS\SYSTEM32\ntdll.dll+*'
+    SELECTION_30:
+        TargetImage: C:\Windows\System32\svchost.exe
+    SELECTION_31:
+        SourceImage: C:\WINDOWS\system32\sppsvc.exe
+    SELECTION_32:
+        TargetImage: C:\WINDOWS\system32\SppExtComObj.exe
     SELECTION_4:
         CallTrace: '*|C:\WINDOWS\System32\KERNELBASE.dll+*'
     SELECTION_5:
@@ -99,12 +116,14 @@ detection:
         CallTrace: '*)|UNKNOWN(*'
     SELECTION_9:
         CallTrace: '*)'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9))
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)
         or (SELECTION_10 and SELECTION_11)) and  not ((SELECTION_12 or SELECTION_13
         or SELECTION_14 or SELECTION_15 or SELECTION_16 or SELECTION_17) or (SELECTION_18
         and SELECTION_19) or (SELECTION_20 and SELECTION_21) or (SELECTION_22 and
-        SELECTION_23) or (SELECTION_24 and SELECTION_25)))
+        SELECTION_23) or (SELECTION_24 and SELECTION_25) or (SELECTION_26 and SELECTION_27
+        and SELECTION_28) or (SELECTION_29 and SELECTION_30) or (SELECTION_31 and
+        SELECTION_32)))
 falsepositives:
 - SysInternals Process Explorer
 fields:
@@ -118,7 +137,7 @@ level: low
 logsource:
     category: process_access
     product: windows
-modified: 2022/03/16
+modified: 2022/11/02
 references:
 - https://azure.microsoft.com/en-ca/blog/detecting-in-memory-attacks-with-sysmon-and-azure-security-center/
 status: experimental
