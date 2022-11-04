@@ -15,7 +15,14 @@ detection:
         ScriptBlockText:
         - '*Get-WmiObject*'
         - '*gwmi*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_4:
+        Path: '*\CL_Utility.ps1'
+    SELECTION_5:
+        ScriptBlockText: '*function Get-FreeSpace*'
+    SELECTION_6:
+        ScriptBlockText: '*SELECT * FROM Win32_LogicalDisk WHERE MediaType=12*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        and SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Legitimate PowerShell scripts
 id: 0332a266-b584-47b4-933d-a00b103e1b37
@@ -24,6 +31,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
+modified: 2022/11/02
 references:
 - https://attack.mitre.org/datasources/DS0005/
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject?view=powershell-5.1&viewFallbackFrom=powershell-7

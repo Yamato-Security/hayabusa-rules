@@ -18,6 +18,16 @@ detection:
         Image: C:\ProgramData\Microsoft\Windows Defender\\*
     SELECTION_13:
         TargetFilename: '*\Microsoft\WindowsApps\\*'
+    SELECTION_14:
+        Image: C:\Users\\*
+    SELECTION_15:
+        Image: '*\AppData\Local\Microsoft\Teams\Update.exe'
+    SELECTION_16:
+        TargetFilename: C:\Users\\*
+    SELECTION_17:
+        TargetFilename:
+        - '*\AppData\Local\Microsoft\Teams\stage\Teams.exe'
+        - '*\AppData\Local\Microsoft\Teams\stage\Squirrel.exe'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -42,7 +52,8 @@ detection:
         Image: '*\TiWorker.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 or SELECTION_11) or (SELECTION_12) or (SELECTION_13)))
+        or (SELECTION_10 or SELECTION_11) or (SELECTION_12) or (SELECTION_13) or (SELECTION_14
+        and SELECTION_15 and SELECTION_16 and SELECTION_17)))
 falsepositives:
 - Software installers
 - Update utilities
@@ -51,7 +62,7 @@ level: low
 logsource:
     category: file_event
     product: windows
-modified: 2022/07/27
+modified: 2022/11/02
 references:
 - Malware Sandbox
 status: experimental
