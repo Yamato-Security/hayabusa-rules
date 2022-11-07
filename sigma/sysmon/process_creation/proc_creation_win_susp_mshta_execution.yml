@@ -21,7 +21,6 @@ detection:
         - '*.doc*'
         - '*.zip*'
         - '*.dll*'
-        - '*.exe*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
@@ -31,7 +30,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/12/01
+modified: 2022/11/07
 references:
 - http://blog.sevagas.com/?Hacking-around-HTA-files
 - https://0x00sec.org/t/clientside-exploitation-in-2018-how-pentesting-has-changed/7356

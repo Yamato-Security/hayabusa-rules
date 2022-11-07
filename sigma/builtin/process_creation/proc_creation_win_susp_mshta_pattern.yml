@@ -6,10 +6,6 @@ description: Detects suspicious mshta process patterns
 detection:
     SELECTION_1:
         EventID: 4688
-    SELECTION_10:
-        CommandLine:
-        - '*mshta.exe'
-        - '*mshta'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -28,17 +24,19 @@ detection:
         NewProcessName: '*\mshta.exe'
     SELECTION_7:
         NewProcessName:
-        - '*C:\Windows\System32*'
-        - '*C:\Windows\SysWOW64*'
+        - C:\Windows\System32*
+        - C:\Windows\SysWOW64*
     SELECTION_8:
-        NewProcessName: '*\mshta.exe'
-    SELECTION_9:
         CommandLine:
         - '*.htm*'
         - '*.hta*'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and (SELECTION_4
-        or SELECTION_5)) or (SELECTION_6 and  not (SELECTION_7))) or (SELECTION_8
-        and  not (SELECTION_9 and SELECTION_10))))
+    SELECTION_9:
+        CommandLine:
+        - '*mshta.exe'
+        - '*mshta'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and (SELECTION_4 or
+        SELECTION_5)) or (SELECTION_6 and  not ((SELECTION_7) or (SELECTION_8 and
+        SELECTION_9)))))
 falsepositives:
 - Unknown
 id: e32f92d1-523e-49c3-9374-bdb13b46a3ba
@@ -46,7 +44,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/11/07
 references:
 - https://en.wikipedia.org/wiki/HTML_Application
 - https://www.echotrail.io/insights/search/mshta.exe
