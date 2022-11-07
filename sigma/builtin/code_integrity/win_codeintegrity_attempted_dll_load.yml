@@ -77,7 +77,9 @@ detection:
     SELECTION_36:
         ValidatedPolicy: 1
     SELECTION_37:
-        FileNameBuffer: '*\stdole.dll'
+        FileNameBuffer:
+        - '*\stdole.dll'
+        - '*\msdatasrc.dll'
     SELECTION_38:
         ProcessNameBuffer: '*\mscorsvw.exe'
     SELECTION_39:
@@ -114,7 +116,7 @@ level: high
 logsource:
     product: windows
     service: codeintegrity-operational
-modified: 2022/10/31
+modified: 2022/11/07
 references:
 - https://twitter.com/SBousseaden/status/1483810148602814466
 status: experimental

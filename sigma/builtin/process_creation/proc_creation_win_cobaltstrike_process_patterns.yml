@@ -16,13 +16,6 @@ detection:
         - '*cmd.exe /C echo*'
         - '* > \\\\.\\pipe*'
     SELECTION_12:
-        CommandLine: '*conhost.exe 0xffffffff -ForceV1*'
-    SELECTION_13:
-        ParentCommandLine:
-        - '*/C whoami*'
-        - '*cmd.exe /C echo*'
-        - '* > \\\\.\\pipe*'
-    SELECTION_14:
         ParentCommandLine:
         - '*C:\Program Files (x86)\Internet Download Manager\IDMMsgHost.exe*'
         - '*chrome-extension://*'
@@ -45,10 +38,9 @@ detection:
         ParentProcessName: '*\runonce.exe'
     SELECTION_9:
         ParentCommandLine: '*\runonce.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11)) and ((SELECTION_12 and SELECTION_13) and  not
-        (SELECTION_14)))
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4)
+        or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9))
+        or ((SELECTION_10 and SELECTION_11) and  not (SELECTION_12))))
 falsepositives:
 - Other programs that cause these patterns (please report)
 id: f35c5d71-b489-4e22-a115-f003df287317
@@ -56,7 +48,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/20
+modified: 2022/11/07
 references:
 - https://hausec.com/2021/07/26/cobalt-strike-and-tradecraft/
 - https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/

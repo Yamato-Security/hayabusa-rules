@@ -18,8 +18,8 @@ detection:
         - C:\Windows\System32\\*
         - C:\Windows\SysWOW64\\*
         - C:\Windows\WinSxS\\*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-        (SELECTION_5))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and  not
+        (SELECTION_5))))
 falsepositives:
 - Unknown
 id: 737e618a-a410-49b5-bec3-9e55ff7fbc15
@@ -27,7 +27,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/04
+modified: 2022/11/07
 references:
 - https://twitter.com/ItsReallyNick/status/1094080242686312448
 status: test
