@@ -7,29 +7,47 @@ detection:
     SELECTION_1:
         EventID: 11
     SELECTION_10:
+        TargetFilename: '*\WindowsUpdateBox.exe*'
+    SELECTION_11:
+        Image: C:\WINDOWS\SoftwareDistribution\Download\\*
+    SELECTION_12:
+        Image: '*\WindowsUpdateBox.Exe'
+    SELECTION_13:
+        TargetFilename: C:\$WINDOWS.~BT\Sources\\*
+    SELECTION_14:
+        Image: C:\Windows\WinSxS\\*
+    SELECTION_15:
+        Image: '*\TiWorker.exe'
+    SELECTION_16:
         Image:
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
-    SELECTION_11:
+    SELECTION_17:
         TargetFilename:
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
-    SELECTION_12:
+    SELECTION_18:
         Image: C:\ProgramData\Microsoft\Windows Defender\\*
-    SELECTION_13:
+    SELECTION_19:
         TargetFilename: '*\Microsoft\WindowsApps\\*'
-    SELECTION_14:
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
         Image: C:\Users\\*
-    SELECTION_15:
+    SELECTION_21:
         Image: '*\AppData\Local\Microsoft\Teams\Update.exe'
-    SELECTION_16:
+    SELECTION_22:
         TargetFilename: C:\Users\\*
-    SELECTION_17:
+    SELECTION_23:
         TargetFilename:
         - '*\AppData\Local\Microsoft\Teams\stage\Teams.exe'
         - '*\AppData\Local\Microsoft\Teams\stage\Squirrel.exe'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_24:
+        Image: C:\Windows\Microsoft.NET\Framework\\*
+    SELECTION_25:
+        Image: '*\mscorsvw.exe'
+    SELECTION_26:
+        TargetFilename: C:\Windows\assembly\NativeImages_*
     SELECTION_3:
         Image: '*.exe'
     SELECTION_4:
@@ -45,15 +63,17 @@ detection:
     SELECTION_6:
         Image: C:\WINDOWS\system32\svchost.exe
     SELECTION_7:
-        TargetFilename: C:\Windows\SoftwareDistribution\Download\Install\\*
+        TargetFilename: C:\Windows\SoftwareDistribution\Download\\*
     SELECTION_8:
-        Image: C:\Windows\WinSxS\\*
+        Image: C:\Windows\system32\svchost.exe
     SELECTION_9:
-        Image: '*\TiWorker.exe'
+        TargetFilename: '*:\WUDownloadCache\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 or SELECTION_11) or (SELECTION_12) or (SELECTION_13) or (SELECTION_14
-        and SELECTION_15 and SELECTION_16 and SELECTION_17)))
+        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14
+        and SELECTION_15) or (SELECTION_16 or SELECTION_17) or (SELECTION_18) or (SELECTION_19)
+        or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
+        and SELECTION_25 and SELECTION_26)))
 falsepositives:
 - Software installers
 - Update utilities
@@ -62,7 +82,7 @@ level: low
 logsource:
     category: file_event
     product: windows
-modified: 2022/11/02
+modified: 2022/11/08
 references:
 - Malware Sandbox
 status: experimental

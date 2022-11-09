@@ -15,7 +15,10 @@ detection:
         ParentImage:
         - '*\explorer.exe'
         - '*\CompatTelRunner.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    SELECTION_5:
+        ParentImage: C:\$WINDOWS.~BT\Sources\SetupHost.exe
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        or SELECTION_5)))
 falsepositives:
 - Legitimate programs executing PowerShell scripts
 id: f4bbd493-b796-416e-bbf2-121235348529
@@ -23,7 +26,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2022/11/08
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190410151110.html
 status: test

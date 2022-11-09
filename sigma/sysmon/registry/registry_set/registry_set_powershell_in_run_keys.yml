@@ -25,6 +25,8 @@ detection:
         - '* -nop *'
         - '* -encodedcommand *'
         - '*-ExecutionPolicy Bypass*'
+        - '*Invoke-Expression*'
+        - '*IEX (*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate admin or third party scripts
@@ -33,9 +35,10 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/10/06
+modified: 2022/11/09
 references:
 - https://github.com/frack113/atomic-red-team/blob/a9051c38de8a5320b31c7039efcbd3b56cf2d65a/atomics/T1547.001/T1547.001.md#atomic-test-9---systembc-malware-as-a-service-registry
+- https://www.trendmicro.com/en_us/research/22/j/lv-ransomware-exploits-proxyshell-in-attack.html
 status: experimental
 tags:
 - attack.persistence
