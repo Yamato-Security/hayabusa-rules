@@ -1,0 +1,46 @@
+title: Suspicious Ping And Del Combination
+ruletype: Sigma
+author: Ilya Krestinichev
+date: 2022/11/03
+description: Detects a method often used by ransomware. Which combines the "ping"
+    to wait a couple of seconds and then "del" to delete the file in question. Its
+    used to hide the file responsible for the initial infection for example
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '* -n *'
+        - '* /n *'
+    SELECTION_4:
+        CommandLine: '*Nul*'
+    SELECTION_5:
+    - ' /f '
+    - ' -f '
+    - ' /q '
+    - ' -q '
+    SELECTION_6:
+        CommandLine: '*ping*'
+    SELECTION_7:
+        CommandLine: '*del *'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and SELECTION_4 and
+        (SELECTION_5) and (SELECTION_6 and SELECTION_7))
+falsepositives:
+- False positive could occur in admin scripts that execute inline
+id: 54786ddc-5b8a-11ed-9b6a-0242ac120002
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://blog.sygnia.co/kaseya-ransomware-supply-chain-attack
+- https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2022/06/23093553/Common-TTPs-of-the-modern-ransomware_low-res.pdf
+- https://www.acronis.com/en-us/blog/posts/lockbit-ransomware/
+- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/blackbyte-exbyte-ransomware
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1070.004
+

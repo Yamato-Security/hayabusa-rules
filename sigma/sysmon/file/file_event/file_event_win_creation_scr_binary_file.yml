@@ -16,7 +16,12 @@ detection:
         Image:
         - '*\Kindle.exe'
         - '*\Bin\ccSvcHst.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
+    SELECTION_5:
+        Image: '*\TiWorker.exe'
+    SELECTION_6:
+        TargetFilename: '*\uwfservicingscr.scr'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Unknown
 id: 97aa2e88-555c-450d-85a6-229bcd87efb8
@@ -24,7 +29,7 @@ level: medium
 logsource:
     category: file_event
     product: windows
-modified: 2022/01/10
+modified: 2022/11/08
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.002/T1546.002.md
 status: experimental

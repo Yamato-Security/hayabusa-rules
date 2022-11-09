@@ -26,8 +26,14 @@ detection:
         Image: C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost*
     SELECTION_18:
         Image: '*\StartMenuExperienceHost.exe'
+    SELECTION_19:
+        Image: C:\$WINDOWS.~BT\Sources\SetupHost.exe
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        Image: C:\Windows\SoftwareDistribution\Download*
+    SELECTION_21:
+        Image: '*\WindowsUpdateBox.exe'
     SELECTION_3:
         Device: '*floppy*'
     SELECTION_4:
@@ -56,7 +62,8 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4)
         or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9
         and SELECTION_10) or (SELECTION_11) or (SELECTION_12 and SELECTION_13 and
-        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)))
+        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)
+        or (SELECTION_19) or (SELECTION_20 and SELECTION_21)))
 falsepositives:
 - Legitimate Administrator using tool for raw access or ongoing forensic investigation
 fields:
@@ -69,7 +76,7 @@ level: low
 logsource:
     category: raw_access_thread
     product: windows
-modified: 2022/03/15
+modified: 2022/11/08
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 status: test

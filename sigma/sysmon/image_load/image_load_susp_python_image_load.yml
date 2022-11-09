@@ -20,11 +20,9 @@ detection:
         - C:\Program Files (x86)\\*
         - C:\ProgramData\Anaconda3\\*
     SELECTION_6:
-        Provider_Name: Microsoft-Windows-Kernel-Process
-    SELECTION_7:
         Image|re: ^$
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5) or (SELECTION_6 and SELECTION_7)))
+        or SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - Legitimate Py2Exe Binaries
 - Known false positive caused with Python Anaconda
@@ -35,7 +33,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2022/09/21
+modified: 2022/11/08
 references:
 - https://www.py2exe.org/
 - https://unit42.paloaltonetworks.com/unit-42-technical-analysis-seaduke/

@@ -20,7 +20,9 @@ detection:
     SELECTION_15:
         CommandLine: '*shadowstorage*'
     SELECTION_16:
-        CommandLine: '*unbounded*'
+        CommandLine:
+        - '*unbounded*'
+        - '*/MaxSize=*'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -63,7 +65,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/11/03
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 - https://blog.talosintelligence.com/2017/05/wannacry.html
@@ -73,6 +75,7 @@ references:
 - https://github.com/Neo23x0/Raccine#the-process
 - https://github.com/Neo23x0/Raccine/blob/20a569fa21625086433dcce8bb2765d0ea08dcb6/yara/gen_ransomware_command_lines.yar
 - https://redcanary.com/blog/intelligence-insights-october-2021/
+- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/blackbyte-exbyte-ransomware
 status: stable
 tags:
 - attack.defense_evasion

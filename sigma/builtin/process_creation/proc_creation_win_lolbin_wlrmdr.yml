@@ -8,6 +8,8 @@ detection:
         EventID: 4688
     SELECTION_10:
         ParentProcessName: C:\Windows\System32\winlogon.exe
+    SELECTION_11:
+        ParentProcessName: '-'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -26,7 +28,7 @@ detection:
         CommandLine: '*-u *'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
         SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
-        and  not (SELECTION_10))
+        and  not ((SELECTION_10) or (SELECTION_11)))
 falsepositives:
 - Unknown
 id: 9cfc00b6-bfb7-49ce-9781-ef78503154bb
@@ -34,7 +36,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/02
+modified: 2022/11/09
 references:
 - https://twitter.com/0gtweet/status/1493963591745220608?s=20&t=xUg9DsZhJy1q9bPTUWgeIQ
 status: experimental
