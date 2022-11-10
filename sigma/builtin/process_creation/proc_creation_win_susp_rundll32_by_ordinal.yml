@@ -6,12 +6,6 @@ description: Detects suspicious calls of DLLs in rundll32.dll exports by ordinal
 detection:
     SELECTION_1:
         EventID: 4688
-    SELECTION_10:
-        CommandLine:
-        - '*\FileTracker32.dll,#1*'
-        - '*\FileTracker32.dll",#1*'
-        - '*\FileTracker64.dll,#1*'
-        - '*\FileTracker64.dll",#1*'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -27,14 +21,15 @@ detection:
     SELECTION_6:
         CommandLine: '*#141*'
     SELECTION_7:
-        CommandLine: '*EDGEHTML.dll*'
-    SELECTION_8:
-        CommandLine: '*#141*'
-    SELECTION_9:
         ParentProcessName: '*\Msbuild\Current\Bin\Tracker.exe'
+    SELECTION_8:
+        CommandLine:
+        - '*\FileTracker32.dll,#1*'
+        - '*\FileTracker32.dll",#1*'
+        - '*\FileTracker64.dll,#1*'
+        - '*\FileTracker64.dll",#1*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10)))
+        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
     environment
@@ -44,7 +39,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/31
+modified: 2022/11/10
 references:
 - https://techtalk.pcmatic.com/2017/11/30/running-dll-files-malware-analysis/
 - https://github.com/Neo23x0/DLLRunner
