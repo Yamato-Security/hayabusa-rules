@@ -31,8 +31,8 @@ detection:
         MD5:
         - c996d7971c49252c582171d9380360f2
         - d2fd132ab7bbc6bbb87a84f026fa0244
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
-        and SELECTION_6 and SELECTION_7)))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6 or SELECTION_7))
 falsepositives:
 - Legitimate BIOS driver updates (should be rare)
 id: 21b23707-60d6-41bb-96e3-0f0481b0fed9
@@ -40,7 +40,7 @@ level: high
 logsource:
     category: driver_load
     product: windows
-modified: 2022/07/27
+modified: 2022/11/10
 references:
 - https://labs.sentinelone.com/cve-2021-21551-hundreds-of-millions-of-dell-computers-at-risk-due-to-multiple-bios-driver-privilege-escalation-flaws/
 status: experimental

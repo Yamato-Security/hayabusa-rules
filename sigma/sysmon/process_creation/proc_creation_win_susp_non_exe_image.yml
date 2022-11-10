@@ -69,7 +69,7 @@ detection:
     SELECTION_30:
         Image: '*\LZMA_EXE'
     SELECTION_31:
-        ParentImage: C:\Windows\Temp\
+        ParentImage: C:\Windows\Temp\\*
     SELECTION_32:
         Image: C:\Windows\Temp\Helper\\*
     SELECTION_33:
@@ -110,7 +110,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/14
+modified: 2022/11/10
 references:
 - https://pentestlaboratories.com/2021/12/08/process-ghosting/
 status: experimental
