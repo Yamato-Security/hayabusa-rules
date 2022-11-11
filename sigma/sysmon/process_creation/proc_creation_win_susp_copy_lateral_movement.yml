@@ -1,38 +1,49 @@
 title: Copy from Admin Share
 ruletype: Sigma
 author: Florian Roth, oscd.community, Teymur Kheirkhabarov @HeirhabarovT, Zach Stanford
-    @svch0st
+    @svch0st, Nasreddine Bencherchali
 date: 2019/12/30
-description: Detects a suspicious copy command to or from an Admin share
+description: Detects a suspicious copy command to or from an Admin share or remote
 detection:
     SELECTION_1:
         EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\robocopy.exe'
-        - '*\xcopy.exe'
-    SELECTION_4:
-        Image: '*\cmd.exe'
-    SELECTION_5:
-        CommandLine: '*copy*'
-    SELECTION_6:
-        Image: '*\powershell*'
-    SELECTION_7:
+    SELECTION_10:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_11:
         CommandLine:
         - '*copy-item*'
         - '*copy*'
         - '*cpi *'
         - '* cp *'
         - '*move*'
+        - '*move-item*'
+        - '* mi *'
         - '* mv *'
-    SELECTION_8:
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
         CommandLine: '*\\\\\*'
-    SELECTION_9:
+    SELECTION_4:
         CommandLine: '*$*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7)) and (SELECTION_8 and SELECTION_9))
+    SELECTION_5:
+        Image:
+        - '*\robocopy.exe'
+        - '*\xcopy.exe'
+    SELECTION_6:
+        Image: '*\cmd.exe'
+    SELECTION_7:
+        OriginalFileName: Cmd.Exe
+    SELECTION_8:
+        CommandLine: '*copy*'
+    SELECTION_9:
+        Image:
+        - '*\powershell.exe*'
+        - '*\pwsh.exe*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
+        ((SELECTION_5 or ((SELECTION_6 or SELECTION_7) and SELECTION_8)) or ((SELECTION_9
+        or SELECTION_10) and SELECTION_11)))
 falsepositives:
 - Administrative scripts
 fields:
@@ -43,11 +54,12 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/11
+modified: 2022/11/09
 references:
 - https://twitter.com/SBousseaden/status/1211636381086339073
 - https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
 - https://www.elastic.co/guide/en/security/current/remote-file-copy-to-a-hidden-share.html
+- https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/
 status: test
 tags:
 - attack.lateral_movement

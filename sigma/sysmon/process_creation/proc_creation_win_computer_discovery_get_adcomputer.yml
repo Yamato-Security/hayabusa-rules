@@ -1,16 +1,16 @@
-title: User Discovery And Export Via Get-ADUser Cmdlet
+title: Computer Discovery And Export Via Get-ADComputer Cmdlet
 ruletype: Sigma
 author: Nasreddine Bencherchali
-date: 2022/09/09
-description: Detects usage of the Get-ADUser cmdlet to collect user information and
-    output it to a file
+date: 2022/11/10
+description: Detects usage of the Get-ADComputer cmdlet to collect computer information
+    and output it to a file
 detection:
     SELECTION_1:
-        EventID: 4688
+        EventID: 1
     SELECTION_2:
-        Channel: Security
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        NewProcessName:
+        Image:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
@@ -18,7 +18,7 @@ detection:
         - PowerShell.EXE
         - pwsh.dll
     SELECTION_5:
-        CommandLine: '*Get-ADUser *'
+        CommandLine: '*Get-ADComputer *'
     SELECTION_6:
         CommandLine: '* -Filter \*'
     SELECTION_7:
@@ -32,12 +32,11 @@ detection:
 falsepositives:
 - Legitimate admin scripts may use the same technique, it's better to exclude specific
     computers or users who execute these commands or scripts often
-id: c2993223-6da8-4b1a-88ee-668b8bf315e9
+id: 435e10e4-992a-4281-96f3-38b11106adde
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/10
 references:
 - http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
 - https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/

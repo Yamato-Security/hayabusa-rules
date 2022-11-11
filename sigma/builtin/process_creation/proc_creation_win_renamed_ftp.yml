@@ -1,0 +1,36 @@
+title: Renamed FTP.EXE Binary Execution
+ruletype: Sigma
+author: Victor Sergeev, oscd.community
+date: 2020/10/09
+description: Detects execution of renamed ftp.exe binary based on OriginalFileName
+    field
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        OriginalFileName: ftp.exe
+    SELECTION_4:
+        NewProcessName: '*\ftp.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+- ParentImage
+id: 277a4393-446c-449a-b0ed-7fdc7795244c
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/11/10
+references:
+- https://lolbas-project.github.io/lolbas/Binaries/Ftp/
+status: test
+tags:
+- attack.execution
+- attack.t1059
+- attack.defense_evasion
+- attack.t1202
+

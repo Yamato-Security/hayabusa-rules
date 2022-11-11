@@ -18,8 +18,10 @@ detection:
         - '*\Users\Public\\*'
         - '*\Windows\Temp\\*'
         - '*\Perflogs\\*'
+        - '*C:\ProgramData\\*'
         - '*\\\\.\\pipe*'
         - '*\ADMIN$\\*'
+        - '*C:\Temp\\*'
         - '*.downloadstring(*'
         - '*.downloadfile(*'
     SELECTION_5:
@@ -35,8 +37,10 @@ detection:
         - '* aQBlAHgA*'
     SELECTION_7:
         ImagePath: C:\WINDOWS\TEMP\thor10-remote\thor64.exe*
+    SELECTION_8:
+        ImagePath: C:\ProgramData\Microsoft\Windows Defender\Definition Updates\\*
     condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) and (SELECTION_4 or
-        (SELECTION_5 and SELECTION_6))) and  not ((SELECTION_7)))
+        (SELECTION_5 and SELECTION_6))) and  not ((SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Unknown
 id: 1d61f71d-59d2-479e-9562-4ff5f4ead16b
@@ -44,7 +48,7 @@ level: high
 logsource:
     product: windows
     service: system
-modified: 2022/05/02
+modified: 2022/11/10
 status: experimental
 tags:
 - attack.persistence

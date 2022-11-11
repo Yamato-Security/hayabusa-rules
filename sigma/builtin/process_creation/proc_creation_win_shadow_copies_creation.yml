@@ -16,10 +16,17 @@ detection:
         - '*\wmic.exe'
         - '*\vssadmin.exe'
     SELECTION_4:
-        CommandLine: '*shadow*'
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+        - wmic.exe
+        - VSSADMIN.EXE
     SELECTION_5:
+        CommandLine: '*shadow*'
+    SELECTION_6:
         CommandLine: '*create*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
 - Legitimate administrator working with shadow copies, access for backup purposes
 id: b17ea6f7-6e90-447e-a799-e6c0a493d6ce
@@ -27,7 +34,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/11/10
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 - https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/tutorial-for-ntds-goodness-vssadmin-wmis-ntdsdit-system/
