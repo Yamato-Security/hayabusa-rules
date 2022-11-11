@@ -7,14 +7,15 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        CommandLine: '*\AppData\Local\Programs\Microsoft VS Code*'
+        CommandLine: '*S-1-5-19:F*'
     SELECTION_11:
+        CommandLine: '*\AppData\Local\Programs\Microsoft VS Code*'
+    SELECTION_12:
         ParentProcessName: '*\Microsoft VS Code\Code.exe'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
         NewProcessName:
-        - '*\takeown.exe'
         - '*\cacls.exe'
         - '*\icacls.exe'
         - '*\net.exe'
@@ -26,16 +27,16 @@ detection:
     SELECTION_6:
         CommandLine: '*-r*'
     SELECTION_7:
+        NewProcessName: '*\takeown.exe'
+    SELECTION_8:
         CommandLine: '*ICACLS C:\ProgramData\dynatrace\gateway\config\connectivity.history
             /reset'
-    SELECTION_8:
+    SELECTION_9:
         CommandLine: '*ICACLS C:\ProgramData\dynatrace\gateway\config\config.properties
             /grant :r *'
-    SELECTION_9:
-        CommandLine: '*S-1-5-19:F*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8 and
-        SELECTION_9) or (SELECTION_10 or SELECTION_11)))
+        (SELECTION_5 and SELECTION_6) or SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11 or SELECTION_12)))
 falsepositives:
 - Users interacting with the files on their own (unlikely unless privileged users).
 - Dynatrace app
@@ -48,7 +49,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/13
+modified: 2022/11/10
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.001/T1222.001.md
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh750728(v=ws.11)

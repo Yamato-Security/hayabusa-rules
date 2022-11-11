@@ -1,0 +1,33 @@
+title: Use Of The SFTP.EXE Binary As A LOLBIN
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/11/10
+description: Detects the usage of the "sftp.exe" binary as a LOLBIN by abusing the
+    "-D" flag
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\sftp.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* -D ..*'
+        - '* -D C:\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: a85ffc3a-e8fd-4040-93bf-78aff284d801
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/LOLBAS-Project/LOLBAS/pull/264
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1218
+

@@ -1,0 +1,25 @@
+title: Block Load Of Revoked Driver
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/11/10
+description: Detects blocked load attempts of revoked drivers
+detection:
+    SELECTION_1:
+        Channel: Microsoft-Windows-CodeIntegrity/Operational
+    SELECTION_2:
+        EventID: 3023
+    condition: (SELECTION_1 and SELECTION_2)
+falsepositives:
+- Unknown
+id: 9b72b82d-f1c5-4632-b589-187159bc6ec1
+level: high
+logsource:
+    product: windows
+    service: codeintegrity-operational
+references:
+- https://twitter.com/wdormann/status/1590434950335320065
+status: experimental
+tags:
+- attack.privilege_escalation
+- attack.t1543
+
