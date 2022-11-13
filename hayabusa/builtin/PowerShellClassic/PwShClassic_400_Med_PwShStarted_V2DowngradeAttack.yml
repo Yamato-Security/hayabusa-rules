@@ -3,7 +3,7 @@ date: 2020/11/08
 modified: 2022/05/21
 
 title: PwSh 2.0 Downgrade Attack
-details: 'EventData: %EventData%'
+details: 'Data: %Data%'
 description: An attacker may have started Powershell 2.0 to evade detection.
 
 id: bc082394-73e6-4d00-a9af-e7b524ef5085
@@ -16,7 +16,7 @@ detection:
     selection:
         Channel: Microsoft-Windows-PowerShell/Operational
         EventID: 400
-        EventData|re: '[\s\S]*EngineVersion=2\.0[\s\S]*'
+        Data|re: '[\s\S]*EngineVersion=2\.0[\s\S]*'
     condition: selection
 falsepositives:
     - legacy application
