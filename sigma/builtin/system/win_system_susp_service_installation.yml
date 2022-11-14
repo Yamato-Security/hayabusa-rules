@@ -18,7 +18,6 @@ detection:
         - '*\Users\Public\\*'
         - '*\Windows\Temp\\*'
         - '*\Perflogs\\*'
-        - '*C:\ProgramData\\*'
         - '*\\\\.\\pipe*'
         - '*\ADMIN$\\*'
         - '*C:\Temp\\*'
@@ -48,7 +47,7 @@ level: high
 logsource:
     product: windows
     service: system
-modified: 2022/11/10
+modified: 2022/11/14
 status: experimental
 tags:
 - attack.persistence
