@@ -21,7 +21,9 @@ detection:
     SELECTION_6:
         CommandLine: '*#141*'
     SELECTION_7:
-        ParentImage: '*\Msbuild\Current\Bin\Tracker.exe'
+        ParentImage:
+        - '*\Msbuild\Current\Bin\\*'
+        - '*\Tracker.exe*'
     SELECTION_8:
         CommandLine:
         - '*\FileTracker32.dll,#1*'
@@ -39,7 +41,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/10
+modified: 2022/11/13
 references:
 - https://techtalk.pcmatic.com/2017/11/30/running-dll-files-malware-analysis/
 - https://github.com/Neo23x0/DLLRunner
