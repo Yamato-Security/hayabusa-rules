@@ -23,7 +23,12 @@ detection:
         - '*\cscript.exe'
         - '*\wscript.exe'
         - '*\mshta.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_5:
+        ParentImage: '*\Discord.exe'
+    SELECTION_6:
+        CommandLine: '*\NVSMI\nvidia-smi.exe*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
 - Unknown
 fields:
@@ -34,6 +39,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/11/09
 references:
 - https://taggart-tech.com/quasar-electron/
 - https://github.com/mttaggart/quasar

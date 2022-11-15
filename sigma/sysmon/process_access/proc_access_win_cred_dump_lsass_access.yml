@@ -145,6 +145,8 @@ detection:
         - C:\Windows\System32\perfmon.exe
     SELECTION_50:
         GrantedAccess: '0x1F3FFF'
+    SELECTION_51:
+        SourceImage: '*\SteamLibrary\steamapps\\*'
     SELECTION_6:
         SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
     SELECTION_7:
@@ -163,7 +165,7 @@ detection:
         and SELECTION_34) or (SELECTION_35 and SELECTION_36) or (SELECTION_37 and
         SELECTION_38) or (SELECTION_39 and SELECTION_40) or (SELECTION_41) or (SELECTION_42
         and SELECTION_43 and SELECTION_44) or (SELECTION_45 and SELECTION_46 and SELECTION_47)
-        or (SELECTION_48 and SELECTION_49 and SELECTION_50)))
+        or (SELECTION_48 and SELECTION_49 and SELECTION_50) or (SELECTION_51)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason; please add more
     filters
@@ -176,7 +178,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/11/01
+modified: 2022/11/13
 references:
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
