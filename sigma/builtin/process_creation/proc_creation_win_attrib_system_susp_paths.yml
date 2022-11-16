@@ -14,8 +14,10 @@ detection:
     SELECTION_3:
         NewProcessName: '*\attrib.exe'
     SELECTION_4:
-        CommandLine: '* +s*'
+        OriginalFileName: ATTRIB.EXE
     SELECTION_5:
+        CommandLine: '* +s*'
+    SELECTION_6:
         CommandLine:
         - '* %*'
         - '*\Users\Public\\*'
@@ -23,19 +25,19 @@ detection:
         - '*\ProgramData\\*'
         - '*\Downloads\\*'
         - '*\Windows\Temp\\*'
-    SELECTION_6:
+    SELECTION_7:
         CommandLine:
         - '*.bat*'
         - '*.ps1*'
         - '*.vbe*'
         - '*.vbs*'
         - '*.exe*'
-    SELECTION_7:
-        CommandLine: '*\Windows\TEMP\\*'
     SELECTION_8:
+        CommandLine: '*\Windows\TEMP\\*'
+    SELECTION_9:
         CommandLine: '*.exe*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not (SELECTION_7 and SELECTION_8))
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not (SELECTION_8 and SELECTION_9))
 falsepositives:
 - Unknown
 id: efec536f-72e8-4656-8960-5e85d091345b
@@ -43,6 +45,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/11/11
 references:
 - https://app.any.run/tasks/c28cabc8-a19f-40f3-a78b-cae506a5c0d4
 - https://app.any.run/tasks/cfc8870b-ccd7-4210-88cf-a8087476a6d0

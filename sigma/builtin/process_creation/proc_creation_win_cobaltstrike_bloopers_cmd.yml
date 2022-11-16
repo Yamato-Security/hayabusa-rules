@@ -10,10 +10,14 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
+        OriginalFileName: Cmd.Exe
+    SELECTION_4:
+        NewProcessName: '*\cmd.exe'
+    SELECTION_5:
         CommandLine:
         - cmd.exe*
         - c:\windows\system32\cmd.exe*
-    SELECTION_4:
+    SELECTION_6:
         CommandLine:
         - '*psinject*'
         - '*spawnas*'
@@ -24,16 +28,15 @@ detection:
         - '*logonpasswords*'
         - '*execute-assembly*'
         - '*getsystem*'
-    SELECTION_5:
-        NewProcessName: '*\cmd.exe'
-    SELECTION_6:
-        ParentProcessName: '*\AppData\Local\Programs\Microsoft VS Code\Code.exe'
     SELECTION_7:
-        CommandLine: '*/d /s /c *'
+        ParentProcessName: '*\AppData\Local\Programs\Microsoft VS Code\Code.exe'
     SELECTION_8:
+        CommandLine: '*/d /s /c *'
+    SELECTION_9:
         CommandLine: '*checkfilenameiocs --ioc-path *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8)))
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and
+        SELECTION_9)))
 falsepositives:
 - Unknown
 fields:
@@ -43,7 +46,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/07
+modified: 2022/11/11
 references:
 - https://hstechdocs.helpsystems.com/manuals/cobaltstrike/current/userguide/content/cobalt-4-5-user-guide.pdf
 - https://thedfirreport.com/2021/10/04/bazarloader-and-the-conti-leaks/

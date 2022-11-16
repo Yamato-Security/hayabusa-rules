@@ -11,17 +11,19 @@ detection:
     SELECTION_3:
         NewProcessName: '*\attrib.exe'
     SELECTION_4:
-        CommandLine: '* +h *'
+        OriginalFileName: ATTRIB.EXE
     SELECTION_5:
-        CommandLine: '*\desktop.ini *'
+        CommandLine: '* +h *'
     SELECTION_6:
-        ParentProcessName: '*\cmd.exe'
+        CommandLine: '*\desktop.ini *'
     SELECTION_7:
-        CommandLine: +R +H +S +A \\*.cui
+        ParentProcessName: '*\cmd.exe'
     SELECTION_8:
-        ParentCommandLine: C:\WINDOWS\system32\\*.bat
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 or (SELECTION_6 and SELECTION_7 and SELECTION_8))))
+        CommandLine: +R +H +S +A \\\*.cui
+    SELECTION_9:
+        ParentCommandLine: C:\\WINDOWS\\system32\\\*.bat
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - IgfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of cmd.exe
     and igfxCUIService.exe is the parent of the cmd.exe)
@@ -35,7 +37,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/11/11
 status: test
 tags:
 - attack.defense_evasion
