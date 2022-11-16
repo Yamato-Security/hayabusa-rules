@@ -11,11 +11,13 @@ detection:
     SELECTION_3:
         Image: '*\bitsadmin.exe'
     SELECTION_4:
+        OriginalFileName: bitsadmin.exe
+    SELECTION_5:
         CommandLine:
         - '* /transfer *'
         - '* /create *'
         - '* /addfile *'
-    SELECTION_5:
+    SELECTION_6:
         CommandLine:
         - '*C:\Windows\Temp\\*'
         - '*%temp%*'
@@ -24,7 +26,8 @@ detection:
         - '*%ProgramData%*'
         - '*\AppData\Local\\*'
         - '*%AppData%*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
 falsepositives:
 - Unknown
 fields:
@@ -35,7 +38,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/13
+modified: 2022/11/11
 references:
 - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
 - https://isc.sans.edu/diary/22264

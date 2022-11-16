@@ -1,6 +1,6 @@
 title: Advanced Port Scanner
 ruletype: Sigma
-author: Nasreddine Bencherchali @nas_bench
+author: Nasreddine Bencherchali
 date: 2021/12/18
 description: Detects the use of Advanced Port Scanner.
 detection:
@@ -11,11 +11,15 @@ detection:
     SELECTION_3:
         Image: '*\advanced_port_scanner*'
     SELECTION_4:
-        CommandLine: '*/portable*'
+        OriginalFileName: '*advanced_port_scanner*'
     SELECTION_5:
+        Description: '*Advanced Port Scanner*'
+    SELECTION_6:
+        CommandLine: '*/portable*'
+    SELECTION_7:
         CommandLine: '*/lng*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)))
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or
+        SELECTION_5) or (SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Legitimate administrative use
 - Tools with similar commandline (very rare)
@@ -24,6 +28,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/11/11
 references:
 - https://github.com/3CORESec/MAL-CL/tree/master/Descriptors/Other/Advanced%20Port%20Scanner
 status: experimental

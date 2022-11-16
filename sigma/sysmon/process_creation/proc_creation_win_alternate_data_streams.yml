@@ -2,8 +2,8 @@ title: Execute From Alternate Data Streams
 ruletype: Sigma
 author: frack113
 date: 2021/09/01
-description: Adversaries may use NTFS file attributes to hide their malicious data
-    in order to evade detection
+description: Detects execution from an Alternate Data Stream (ADS). Adversaries may
+    use NTFS file attributes to hide their malicious data in order to evade detection
 detection:
     SELECTION_1:
         EventID: 1
