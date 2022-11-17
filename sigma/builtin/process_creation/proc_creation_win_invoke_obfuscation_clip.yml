@@ -9,8 +9,19 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine|re: .*cmd.{0,5}(?:/c|/r).+clip(?:\.exe)?.{0,4}&&.+clipboard]::\(\s\\"\{\d\}.+\-f.+"
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+        CommandLine: '*cmd*'
+    SELECTION_4:
+        CommandLine: '*&&*'
+    SELECTION_5:
+        CommandLine: '*clipboard]::*'
+    SELECTION_6:
+        CommandLine: '*-f*'
+    SELECTION_7:
+        CommandLine:
+        - '*/c*'
+        - '*/r*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: b222df08-0e07-11eb-adc1-0242ac120002
@@ -18,7 +29,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/11/17
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: test
