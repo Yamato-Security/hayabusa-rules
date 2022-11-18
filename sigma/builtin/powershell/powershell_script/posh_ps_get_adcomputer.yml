@@ -1,8 +1,9 @@
-title: Suspicious Enumerate Active Directory Computers with Get-AdComputer
+title: Active Directory Computers Enumeration with Get-AdComputer
 ruletype: Sigma
 author: frack113
 date: 2022/03/17
-description: utilize Get-AdComputer to enumerate Computers within Active Directory.
+description: Detects usage of the "Get-AdComputer" to enumerate Computers within Active
+    Directory.
 detection:
     SELECTION_1:
         EventID: 4104
@@ -23,6 +24,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
+modified: 2022/11/18
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md
 status: experimental

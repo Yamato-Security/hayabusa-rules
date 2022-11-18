@@ -27,6 +27,7 @@ detection:
         - ipv4bot.whatismyipaddress.com
         - freegeoip.app
         - ifconfig.me
+        - ipwho.is
     SELECTION_4:
         Image:
         - '*\Google\Chrome\Application\chrome.exe'
@@ -48,7 +49,7 @@ level: medium
 logsource:
     category: dns_query
     product: windows
-modified: 2022/10/31
+modified: 2022/11/18
 references:
 - https://www.binarydefense.com/analysis-of-hancitor-when-boring-begets-beacon
 - https://twitter.com/neonprimetime/status/1436376497980428318

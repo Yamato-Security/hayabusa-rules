@@ -9,8 +9,17 @@ detection:
     SELECTION_2:
         EventID: 4697
     SELECTION_3:
-        ServiceFileName|re: .*cmd.{0,5}(?:/c|/r)(?:\s|)"set\s[a-zA-Z]{3,6}.*(?:\{\d\}){1,}\\"\s+?\-f(?:.*\)){1,}.*"
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+        ServiceFileName: '*cmd*'
+    SELECTION_4:
+        ServiceFileName: '*"set*'
+    SELECTION_5:
+        ServiceFileName: '*-f*'
+    SELECTION_6:
+        ServiceFileName:
+        - '*/c*'
+        - '*/r*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: dcf2db1f-f091-425b-a821-c05875b8925a
@@ -20,7 +29,7 @@ logsource:
         to log the EID 4697
     product: windows
     service: security
-modified: 2021/12/02
+modified: 2022/11/17
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 related:
