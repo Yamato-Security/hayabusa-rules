@@ -1,50 +1,42 @@
-title: Computer Discovery And Export Via Get-ADComputer Cmdlet
+title: Computer Discovery And Export Via Get-ADComputer Cmdlet - PowerShell
 ruletype: Sigma
 author: Nasreddine Bencherchali
-date: 2022/11/10
+date: 2022/11/17
 description: Detects usage of the Get-ADComputer cmdlet to collect computer information
     and output it to a file
 detection:
     SELECTION_1:
-        EventID: 1
+        EventID: 4104
     SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
+        ScriptBlockText: '*Get-ADComputer *'
     SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
+        ScriptBlockText: '* -Filter \*'
     SELECTION_5:
-        CommandLine: '*Get-ADComputer *'
-    SELECTION_6:
-        CommandLine: '* -Filter \*'
-    SELECTION_7:
-        CommandLine:
-        - '* > *'
+        ScriptBlockText:
         - '* | Select *'
         - '*Out-File*'
         - '*Set-Content*'
         - '*Add-Content*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate admin scripts may use the same technique, it's better to exclude specific
     computers or users who execute these commands or scripts often
-id: 435e10e4-992a-4281-96f3-38b11106adde
+id: db885529-903f-4c5d-9864-28fe199e6370
 level: medium
 logsource:
-    category: process_creation
+    category: ps_script
+    definition: Script block logging must be enabled
     product: windows
-modified: 2022/11/17
 references:
 - http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
 - https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/
 - https://www.cisa.gov/uscert/sites/default/files/publications/aa22-320a_joint_csa_iranian_government-sponsored_apt_actors_compromise_federal%20network_deploy_crypto%20miner_credential_harvester.pdf
 related:
--   id: db885529-903f-4c5d-9864-28fe199e6370
+-   id: 435e10e4-992a-4281-96f3-38b11106adde
     type: similar
 status: experimental
 tags:

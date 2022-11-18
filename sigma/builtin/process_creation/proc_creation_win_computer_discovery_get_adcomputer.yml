@@ -24,11 +24,12 @@ detection:
     SELECTION_7:
         CommandLine:
         - '* > *'
+        - '* | Select *'
         - '*Out-File*'
         - '*Set-Content*'
         - '*Add-Content*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6) and SELECTION_7)
+        (SELECTION_5 and SELECTION_6 and SELECTION_7))
 falsepositives:
 - Legitimate admin scripts may use the same technique, it's better to exclude specific
     computers or users who execute these commands or scripts often
@@ -37,9 +38,14 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/11/17
 references:
 - http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
 - https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/
+- https://www.cisa.gov/uscert/sites/default/files/publications/aa22-320a_joint_csa_iranian_government-sponsored_apt_actors_compromise_federal%20network_deploy_crypto%20miner_credential_harvester.pdf
+related:
+-   id: db885529-903f-4c5d-9864-28fe199e6370
+    type: similar
 status: experimental
 tags:
 - attack.discovery
