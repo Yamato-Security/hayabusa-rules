@@ -42,6 +42,7 @@ detection:
         - '*DownloadString(*'
         - '* /c *'
         - '* /k *'
+        - '* /r *'
     SELECTION_7:
         CommandLine: '*Import-Module*'
     SELECTION_8:
@@ -58,7 +59,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/27
+modified: 2022/11/18
 references:
 - https://persistence-info.github.io/Data/windowsterminalprofile.html
 - https://twitter.com/nas_bench/status/1550836225652686848

@@ -18,7 +18,10 @@ detection:
     SELECTION_5:
         ParentProcessName: '*\7zFM.exe'
     SELECTION_6:
-        CommandLine: '* /c *'
+        CommandLine:
+        - '* /c *'
+        - '* /k *'
+        - '* /r *'
     SELECTION_7:
         CommandLine|re: ^$
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
@@ -30,7 +33,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2022/11/18
 references:
 - https://github.com/kagancapar/CVE-2022-29072
 - https://twitter.com/kagancapar/status/1515219358234161153

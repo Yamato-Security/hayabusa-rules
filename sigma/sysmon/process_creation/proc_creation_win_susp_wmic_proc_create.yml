@@ -22,6 +22,10 @@ detection:
         - '*regsvr32*'
         - '*cmd.exe /c *'
         - '*cmd.exe /k *'
+        - '*cmd.exe /r *'
+        - '*cmd /c *'
+        - '*cmd /k *'
+        - '*cmd /r *'
         - '*powershell*'
         - '*pwsh*'
         - '*certutil*'
@@ -49,7 +53,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/13
+modified: 2022/11/18
 references:
 - https://thedfirreport.com/2020/10/08/ryuks-return/
 - https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/ransomware-hive-conti-avoslocker

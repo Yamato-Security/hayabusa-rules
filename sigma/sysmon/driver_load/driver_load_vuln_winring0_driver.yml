@@ -19,7 +19,7 @@ detection:
     SELECTION_4:
         Hashes: '*IMPHASH=D41FA95D4642DC981F10DE36F4DC8CD7*'
     SELECTION_5:
-        IMPHASH: d41fa95d4642dc981f10de36f4dc8cd7
+        Imphash: d41fa95d4642dc981f10de36f4dc8cd7
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unknown
@@ -28,7 +28,7 @@ level: high
 logsource:
     category: driver_load
     product: windows
-modified: 2022/10/03
+modified: 2022/11/19
 references:
 - https://github.com/xmrig/xmrig/tree/master/bin/WinRing0
 - https://www.rapid7.com/blog/post/2021/12/13/driver-based-attacks-past-and-present/
