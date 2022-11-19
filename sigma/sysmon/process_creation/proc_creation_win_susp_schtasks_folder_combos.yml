@@ -12,20 +12,25 @@ detection:
     SELECTION_3:
         Image: '*\schtasks.exe'
     SELECTION_4:
-        CommandLine: '* /create *'
+        OriginalFileName: schtasks.exe
     SELECTION_5:
+        CommandLine: '* /create *'
+    SELECTION_6:
         CommandLine:
         - '*powershell*'
+        - '*pwsh*'
         - '*cmd /c *'
         - '*cmd /k *'
+        - '*cmd /r *'
         - '*cmd.exe /c *'
         - '*cmd.exe /k *'
-    SELECTION_6:
+        - '*cmd.exe /r *'
+    SELECTION_7:
         CommandLine:
         - '*C:\ProgramData\\*'
         - '*%ProgramData%*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: 8a8379b8-780b-4dbf-b1e9-31c8d112fefb
@@ -33,7 +38,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/24
+modified: 2022/11/18
 references:
 - https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/lazarus-dream-job-chemical
 status: experimental
