@@ -1,4 +1,4 @@
-title: Suspicious Get Local Groups Information
+title: Suspicious Get Local Groups Information - PowerShell
 ruletype: Sigma
 author: frack113
 date: 2021/12/12
@@ -31,6 +31,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
+modified: 2022/11/25
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.001/T1069.001.md
 status: experimental
