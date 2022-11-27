@@ -1,11 +1,11 @@
-title: RDP Sensitive Settings Changed
+title: RDP Sensitive Settings Changed to Zero
 ruletype: Sigma
 author: Samir Bousseaden, David ANDRE, Roberto Rodriguez @Cyb3rWard0g, Nasreddine
     Bencherchali
 date: 2022/09/29
-description: Detects tampering to RDP Terminal Service/Server sensitive settings.
-    Such as allowing unauthorized users access to a system via the 'fAllowUnsolicited'
-    or enabling RDP via 'fDenyTSConnections'...etc
+description: |
+    Detects tampering to RDP Terminal Service/Server sensitive settings.
+    Such as allowing unauthorized users access to a system via the 'fAllowUnsolicited' or enabling RDP via 'fDenyTSConnections'...etc
 detection:
     SELECTION_1:
         EventID: 13
@@ -27,6 +27,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
+modified: 2022/11/26
 references:
 - https://blog.menasec.net/2019/02/threat-hunting-rdp-hijacking-via.html
 - http://woshub.com/rds-shadow-how-to-connect-to-a-user-session-in-windows-server-2012-r2/
