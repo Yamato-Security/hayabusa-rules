@@ -11,7 +11,7 @@ detection:
         - Microsoft-Windows-PowerShell/Operational
         - PowerShellCore/Operational
     SELECTION_3:
-        ScriptBlockText|re: (?i).*&&set.*(\{\d\}){2,}\\"\s+?\-f.*&&.*cmd.*/c
+        ScriptBlockText|re: (?i).*&&set.*(\{\d\}){2,}\\\"\s+?\-f.*&&.*cmd.*\/c
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown

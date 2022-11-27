@@ -7,34 +7,44 @@ description: Detects reg command lines that disable certain important features o
 detection:
     SELECTION_1:
         EventID: 1
+    SELECTION_10:
+        CommandLine: '* /d 1*'
+    SELECTION_11:
+        CommandLine: '*Notification_Suppress*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         Image: '*\reg.exe'
     SELECTION_4:
+        OriginalFileName: reg.exe
+    SELECTION_5:
         CommandLine:
         - '*SOFTWARE\Microsoft\Windows Defender\\*'
         - '*SOFTWARE\Policies\Microsoft\Windows Defender\\*'
-    SELECTION_5:
-        CommandLine: '* add *'
     SELECTION_6:
-        CommandLine: '* /d 0*'
+        CommandLine: '* add *'
     SELECTION_7:
+        CommandLine: '* /d 0*'
+    SELECTION_8:
         CommandLine:
         - '*Real-Time Protection*'
         - '*TamperProtection*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
+    SELECTION_9:
+        CommandLine: '* add *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) and ((SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11)))
 falsepositives:
-- Legitimate use
+- Rare legitimate use by administrators to test software (should always be investigated)
 id: 452bce90-6fb0-43cc-97a5-affc283139b3
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/05
+modified: 2022/11/18
 references:
 - https://thedfirreport.com/2022/03/21/apt35-automates-initial-access-using-proxyshell/
+- https://github.com/swagkarna/Defeat-Defender-V1.2.0
 status: experimental
 tags:
 - attack.defense_evasion

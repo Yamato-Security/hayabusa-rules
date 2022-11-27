@@ -9,7 +9,9 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        TargetFilename: '*\AppData\Local\Microsoft\Event Viewer\RecentViews*'
+        TargetFilename:
+        - '*\Microsoft\Event Viewer\RecentViews'
+        - '*\Microsoft\EventV~1\RecentViews'
     SELECTION_4:
         Image:
         - C:\Windows\System32\\*
@@ -22,10 +24,11 @@ level: high
 logsource:
     category: file_event
     product: windows
-modified: 2022/04/27
+modified: 2022/11/22
 references:
 - https://twitter.com/orange_8361/status/1518970259868626944?s=20&t=RFXqZjtA7tWM3HxqEH78Aw
 - https://twitter.com/splinter_code/status/1519075134296006662?s=12&t=DLUXH86WtcmG_AZ5gY3C6g
+- https://lolbas-project.github.io/lolbas/Binaries/Eventvwr/#execute
 status: experimental
 tags:
 - attack.defense_evasion

@@ -11,7 +11,7 @@ detection:
         - Microsoft-Windows-PowerShell/Operational
         - PowerShellCore/Operational
     SELECTION_3:
-        Payload|re: (?i).*(set).*&&\s?set.*(environment|invoke|\$\{?input).*&&.*"
+        Payload|re: (?i).*(set).*&&\s?set.*(environment|invoke|\${?input).*&&.*"
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown

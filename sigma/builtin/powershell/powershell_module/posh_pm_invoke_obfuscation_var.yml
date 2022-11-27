@@ -11,7 +11,7 @@ detection:
         - Microsoft-Windows-PowerShell/Operational
         - PowerShellCore/Operational
     SELECTION_3:
-        Payload|re: .*cmd.{0,5}(?:/c|/r)(?:\s|)"set\s[a-zA-Z]{3,6}.*(?:\{\d\}){1,}\\"\s+?\-f(?:.*\)){1,}.*"
+        Payload|re: .*cmd.{0,5}(?:\/c|\/r)(?:\s|)\"set\s[a-zA-Z]{3,6}.*(?:\{\d\}){1,}\\\"\s+?\-f(?:.*\)){1,}.*\"
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
