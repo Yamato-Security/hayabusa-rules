@@ -17,6 +17,8 @@ jobs:
       - name: clone hayabusa rule repo
         uses: actions/checkout@v3
         with:
+          repository: Yamato-Security/hayabusa-rules
+          ref: v2
           path: hayabusa-rules
 
       - name: clone sigmac
