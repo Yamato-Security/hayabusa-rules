@@ -22,7 +22,7 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_15:
-        CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*
+        CommandLine|re: .*{.*{.*{.*{.*{.*
     SELECTION_16:
         CommandLine:
         - '*new EventSource("Microsoft.Windows.Sense.Client.Management"*'
@@ -46,7 +46,7 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_8:
-        CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*
+        CommandLine|re: .*{.*{.*{.*{.*{.*
     SELECTION_9:
         NewProcessName:
         - '*\powershell.exe'

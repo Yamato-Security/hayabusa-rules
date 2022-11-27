@@ -1,4 +1,4 @@
-title: Powershell Used To Disable Windows Defender AV Security Monitoring
+title: Disable Windows Defender AV Security Monitoring
 ruletype: Sigma
 author: ok @securonix invrep-de, oscd.community, frack113
 date: 2020/10/12
@@ -7,8 +7,14 @@ detection:
     SELECTION_1:
         EventID: 1
     SELECTION_10:
-        CommandLine: '*WinDefend*'
+        CommandLine: '*delete*'
     SELECTION_11:
+        CommandLine: '*WinDefend*'
+    SELECTION_12:
+        CommandLine: '*config*'
+    SELECTION_13:
+        CommandLine: '*WinDefend*'
+    SELECTION_14:
         CommandLine: '*start=disabled*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -17,22 +23,24 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_5:
         CommandLine:
         - '*-DisableBehaviorMonitoring $true*'
         - '*-DisableRuntimeMonitoring $true*'
-    SELECTION_5:
-        CommandLine: '*sc*'
     SELECTION_6:
-        CommandLine: '*stop*'
+        Image: '*\sc.exe'
     SELECTION_7:
-        CommandLine: '*WinDefend*'
+        OriginalFileName: sc.exe
     SELECTION_8:
-        CommandLine: '*sc*'
+        CommandLine: '*stop*'
     SELECTION_9:
-        CommandLine: '*config*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10 and SELECTION_11)))
+        CommandLine: '*WinDefend*'
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) or ((SELECTION_6 or SELECTION_7) and ((SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14)))))
 falsepositives:
 - Minimal, for some older versions of dev tools, such as pycharm, developers were
     known to sometimes disable Windows Defender to improve performance, but this generally
@@ -42,7 +50,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/11/18
 references:
 - https://research.nccgroup.com/2020/06/23/wastedlocker-a-new-ransomware-variant-developed-by-the-evil-corp-group/
 - https://rvsec0n.wordpress.com/2020/01/24/malwares-that-bypass-windows-defender/

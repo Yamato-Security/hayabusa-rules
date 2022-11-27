@@ -94,6 +94,13 @@ detection:
         ParentCommandLine: '*.cpl*'
     SELECTION_5:
         CommandLine: '*url.dll*'
+    SELECTION_50:
+        ParentProcessName: C:\Windows\System32\control.exe
+    SELECTION_51:
+        CommandLine: '"C:\Windows\system32\rundll32.exe" Shell32.dll,Control_RunDLL
+            "C:\Windows\System32\\*'
+    SELECTION_52:
+        CommandLine: '*.cpl",'
     SELECTION_6:
         CommandLine: '*OpenURL*'
     SELECTION_7:
@@ -112,7 +119,8 @@ detection:
         or (SELECTION_33 and SELECTION_34) or (SELECTION_35 and SELECTION_36) or (SELECTION_37
         and SELECTION_38) or (SELECTION_39 and SELECTION_40) or (SELECTION_41 and
         SELECTION_42 and SELECTION_43) or (SELECTION_44 and SELECTION_45 and SELECTION_46))
-        and  not ((SELECTION_47) or (SELECTION_48 and SELECTION_49)))
+        and  not ((SELECTION_47) or (SELECTION_48 and SELECTION_49) or (SELECTION_50
+        and SELECTION_51 and SELECTION_52)))
 falsepositives:
 - False positives depend on scripts and administrative tools used in the monitored
     environment
@@ -121,7 +129,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/30
+modified: 2022/11/22
 references:
 - http://www.hexacorn.com/blog/2017/05/01/running-programs-via-proxy-jumping-on-a-edr-bypass-trampoline/
 - https://twitter.com/Hexacorn/status/885258886428725250
