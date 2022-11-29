@@ -14,10 +14,7 @@ detection:
     SELECTION_4:
         TargetFilename:
         - C:\Windows\System32\\*
-        - C:\Windows\system32\\*
         - C:\Windows\SysWOW64\\*
-        - C:\Windows\SysWow64\\*
-        - C:\Windows\winsxs\\*
         - C:\Windows\WinSxS\\*
         - C:\$WINDOWS.~BT\NewOS\\*
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
@@ -28,7 +25,7 @@ level: medium
 logsource:
     category: file_event
     product: windows
-modified: 2022/10/07
+modified: 2022/11/28
 references:
 - https://lolbas-project.github.io/lolbas/Libraries/Desk/
 status: experimental
