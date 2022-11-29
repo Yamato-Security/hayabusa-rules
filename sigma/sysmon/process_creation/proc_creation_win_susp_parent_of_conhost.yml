@@ -24,7 +24,6 @@ detection:
         - '*\userinit.exe'
         - '*\wininit.exe'
         - '*\spoolsv.exe'
-        - '*\ctfmon.exe'
     SELECTION_5:
         ParentCommandLine:
         - '*-k apphost -s AppHostSvc*'
@@ -32,6 +31,7 @@ detection:
         - '*-k LocalSystemNetworkRestricted -p -s NgcSvc*'
         - '*-k netsvcs -p -s NetSetupSvc*'
         - '*-k netsvcs -p -s wlidsvc*'
+        - '*-k NetworkService -p -s DoSvc*'
         - '*-k wsappx -p -s AppXSvc*'
         - '*-k wsappx -p -s ClipSVC*'
         - '*C:\Program Files (x86)\Dropbox\Client\\*'
@@ -45,7 +45,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/23
+modified: 2022/11/29
 references:
 - https://www.elastic.co/guide/en/security/current/conhost-spawned-by-suspicious-parent-process.html
 status: experimental

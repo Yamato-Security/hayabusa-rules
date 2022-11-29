@@ -18,7 +18,7 @@ detection:
         CommandLine:
         - '*samss*'
         - '*audioendpointbuilder*'
-        - '*unistoresvc_?????*'
+        - '*unistoresvc_*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unlikely
@@ -27,7 +27,7 @@ level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/11/29
 references:
 - https://research.checkpoint.com/ryuk-ransomware-targeted-campaign-break/
 status: stable
