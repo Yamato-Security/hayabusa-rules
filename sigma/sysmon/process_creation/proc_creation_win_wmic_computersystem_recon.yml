@@ -1,4 +1,4 @@
-title: Suspicious Get Local Groups Information with WMIC
+title: Suspicious Get ComputerSystem Information with WMIC
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/09/08
@@ -26,6 +26,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/11/29
 references:
 - https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/
 status: experimental
