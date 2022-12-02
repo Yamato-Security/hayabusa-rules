@@ -1,4 +1,4 @@
-title: Suspicious WebDav Client Execution
+title: Suspicious NTLM Authentication on the Printer Spooler Service
 ruletype: Sigma
 author: Elastic (idea), Tobias Michalski
 date: 2022/05/04
@@ -29,6 +29,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/02
 references:
 - https://twitter.com/med0x2e/status/1520402518685200384
 - https://github.com/elastic/detection-rules/blob/dd224fb3f81d0b4bf8593c5f02a029d647ba2b2d/rules/windows/credential_access_relay_ntlm_auth_via_http_spoolss.toml
