@@ -16,7 +16,7 @@ detection:
     selection:
         Channel: 'Windows PowerShell'
         EventID: 400
-        EventData|contains: 'EngineVersion=2'
+        Data|contains: 'EngineVersion=2'
     condition: selection
 falsepositives:
     - legacy applications

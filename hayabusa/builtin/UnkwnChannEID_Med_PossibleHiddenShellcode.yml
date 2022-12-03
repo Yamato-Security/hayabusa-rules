@@ -14,7 +14,7 @@ logsource:
     description: 
 detection:
     selection:
-        EventData|re: '^[A-Fa-f0-9]{50,}$'
+        Data|re: '^[A-Fa-f0-9]{50,}$'
     condition: selection
 falsepositives:
     - legitimate hex strings in event logs
