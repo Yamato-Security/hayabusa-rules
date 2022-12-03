@@ -26,6 +26,9 @@ detection:
         - '*storage.googleapis.com*'
         - '*anonfiles.com*'
         - '*send.exploit.in*'
+        - '*privatlab.net*'
+        - '*privatlab.com*'
+        - '*sendspace.com*'
     SELECTION_4:
         TargetFilename:
         - '*.ps1:Zone*'
@@ -42,8 +45,10 @@ logsource:
     category: create_stream_hash
     definition: 'Requirements: Sysmon config with Imphash logging activated'
     product: windows
+modified: 2022/12/02
 references:
 - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=90015
+- https://www.cisa.gov/uscert/ncas/alerts/aa22-321a
 status: experimental
 tags:
 - attack.defense_evasion

@@ -1,0 +1,44 @@
+title: Wsudo Suspicious Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/12/02
+description: Detects usage of wsudo (Windows Sudo Utility). Which is a tool that let
+    the user execute programs with different permissions (System, Trusted Installer,
+    Administrator...etc)
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\wsudo.exe'
+    SELECTION_4:
+        OriginalFileName: wsudo.exe
+    SELECTION_5:
+        Description: Windows sudo utility
+    SELECTION_6:
+        ParentImage: '*\wsudo-bridge.exe'
+    SELECTION_7:
+        CommandLine:
+        - '*-u System*'
+        - '*-uSystem*'
+        - '*-u TrustedInstaller*'
+        - '*-uTrustedInstaller*'
+        - '* --ti *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6 or SELECTION_7))
+falsepositives:
+- Unknown
+id: bdeeabc9-ff2a-4a51-be59-bb253aac7891
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/M2Team/Privexec/
+status: experimental
+tags:
+- attack.execution
+- attack.privilege_escalation
+- attack.t1059
+

@@ -17,6 +17,10 @@ detection:
         - '*\Perflogs\\*'
         - '*\ADMIN$\\*'
         - '*\Temp\\*'
+    SELECTION_13:
+        NewProcessName: '*\Common Files\\*'
+    SELECTION_14:
+        NewProcessName: '*\Temp\\*'
     SELECTION_2:
         OperationType:
         - Existing registry value modified
@@ -43,7 +47,8 @@ detection:
         EventType: SetValue
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
         SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10 and SELECTION_11 and SELECTION_12)))
+        and SELECTION_10 and SELECTION_11 and SELECTION_12)) and  not ((SELECTION_13
+        and SELECTION_14)))
 falsepositives:
 - Unknown
 id: a07f0359-4c90-4dc4-a681-8ffea40b4f47
@@ -51,6 +56,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
+modified: 2022/12/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
 related:

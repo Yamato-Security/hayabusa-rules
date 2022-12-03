@@ -1,0 +1,41 @@
+title: Gpg4Win Decrypt Files From Suspicious Locations
+ruletype: Sigma
+author: Nasreddine Bencherchali, X__Junior
+date: 2022/11/30
+description: Detects usage of the Gpg4win to decrypt files located in suspicious locations
+    from CLI
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\gpg2.exe'
+    SELECTION_4:
+        Product: GNU Privacy Guard (GnuPG)
+    SELECTION_5:
+        Company: g10 Code GmbH
+    SELECTION_6:
+        CommandLine: '*-passphrase*'
+    SELECTION_7:
+        CommandLine:
+        - '*\AppData\Roaming\\*'
+        - '*C:\Perflogs\\*'
+        - '*C:\Windows\Temp\\*'
+        - '*C:\temp*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Legitimate use
+id: e1e0b7d7-e10b-4ee4-ac49-a4bda05d320d
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://blogs.vmware.com/security/2022/11/batloader-the-evasive-downloader-malware.html
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1219
+

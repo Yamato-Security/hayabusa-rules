@@ -8,8 +8,14 @@ detection:
     SELECTION_1:
         EventID: 7
     SELECTION_10:
-        Image: '*\mscorsvw.exe'
+        Image: C:\Windows\System32\cleanmgr.exe
     SELECTION_11:
+        ImageLoaded: '*\ssshim.dll'
+    SELECTION_12:
+        Image: C:\Windows\Microsoft.NET\Framework\v*
+    SELECTION_13:
+        Image: '*\mscorsvw.exe'
+    SELECTION_14:
         ImageLoaded: '*\AppData\Local\Temp\\*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -28,14 +34,16 @@ detection:
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
     SELECTION_7:
-        Image: C:\Windows\System32\cleanmgr.exe
+        Image:
+        - C:\Windows\SysWOW64\rundll32.exe
+        - C:\Windows\System32\rundll32.exe
     SELECTION_8:
-        ImageLoaded: '*\ssshim.dll'
+        CommandLine: '*\AppData\Local\Temp\\*'
     SELECTION_9:
-        Image: C:\Windows\Microsoft.NET\Framework\v*
+        CommandLine: '*\setup.exe*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10 and SELECTION_11)))
+        ((SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14)))
 falsepositives:
 - Unknown
 id: 9e9a9002-56c4-40fd-9eff-e4b09bfa5f6c
@@ -43,7 +51,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/10/12
+modified: 2022/12/02
 references:
 - https://github.com/hackerhouse-opensource/iscsicpl_bypassUAC (Idea)
 status: experimental
