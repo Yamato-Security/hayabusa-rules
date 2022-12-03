@@ -172,6 +172,10 @@ detection:
         - '*\ohm.sys'
         - '*\sensorsview32_64.sys'
         - '*\touchpointanalyticsclient.sys'
+        - '*\CQg5Jf.sys'
+        - '*\HCdRDh.sys'
+        - '*\NcDgDn.sys'
+        - '*\vLTZ19.sys'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Some false positives may occure if one of the vulnerable driver names mentioned
@@ -184,7 +188,7 @@ level: medium
 logsource:
     category: driver_load
     product: windows
-modified: 2022/10/17
+modified: 2022/11/29
 references:
 - https://github.com/eclypsium/Screwed-Drivers/blob/master/DRIVERS.md
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-driver-block-rules

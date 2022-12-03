@@ -1,0 +1,36 @@
+title: PowerTool Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/11/29
+description: Detects the execution of the tool PowerTool which has the ability to
+    kill a process, delete its process file, unload drivers, and delete the driver
+    files
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\PowerTool.exe'
+        - '*\PowerTool64.exe'
+    SELECTION_4:
+        OriginalFileName: PowerTool.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+falsepositives:
+- Unlikely
+id: a34f79a3-8e5f-4cc3-b765-de00695452c2
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/
+- https://www.trendmicro.com/en_us/research/22/i/play-ransomware-s-attack-playbook-unmasks-it-as-another-hive-aff.html
+- https://twitter.com/gbti_sa/status/1249653895900602375?lang=en
+- https://www.softpedia.com/get/Antivirus/Removal-Tools/ithurricane-PowerTool.shtml
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+

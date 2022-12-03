@@ -16,11 +16,17 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine: '*cmd.exe /c *'
-    SELECTION_4:
         CommandLine: '*tasklist /fi *'
-    SELECTION_5:
+    SELECTION_4:
         CommandLine: '*Imagename eq lsass.exe*'
+    SELECTION_5:
+        CommandLine:
+        - '*cmd.exe /c *'
+        - '*cmd.exe /r *'
+        - '*cmd.exe /k *'
+        - '*cmd /c *'
+        - '*cmd /r *'
+        - '*cmd /k *'
     SELECTION_6:
         User:
         - '*AUTHORI*'
@@ -41,7 +47,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/05/27
+modified: 2022/11/18
 references:
 - https://mpgn.gitbook.io/crackmapexec/smb-protocol/obtaining-credentials/dump-lsass
 status: experimental

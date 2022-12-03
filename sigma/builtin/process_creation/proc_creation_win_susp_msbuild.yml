@@ -1,0 +1,38 @@
+title: Suspicious Msbuild Execution By Uncommon Parent Process
+ruletype: Sigma
+author: frack113
+date: 2022/11/17
+description: Detects suspicious execution of 'Msbuild.exe' by a uncommon parent process
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\MSBuild.exe'
+    SELECTION_4:
+        OriginalFileName: MSBuild.exe
+    SELECTION_5:
+        ParentProcessName:
+        - '*\devenv.exe'
+        - '*\cmd.exe'
+        - '*\msbuild.exe'
+        - '*\python.exe'
+        - '*\explorer.exe'
+        - '*\nuget.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
+        (SELECTION_5))
+falsepositives:
+- Unknown
+id: 33be4333-2c6b-44f4-ae28-102cdbde0a31
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://app.any.run/tasks/abdf586e-df0c-4d39-89a7-06bf24913401/
+- https://www.echotrail.io/insights/search/msbuild.exe
+status: experimental
+tags:
+- attack.defense_evasion
+

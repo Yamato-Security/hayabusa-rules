@@ -1,4 +1,4 @@
-title: Disable of ETW Trace
+title: Disable of ETW Trace - Powershell
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/06/28
@@ -26,6 +26,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
+modified: 2022/11/25
 references:
 - https://medium.com/palantir/tampering-with-windows-event-tracing-background-offense-and-defense-4be7ac62ac63
 related:

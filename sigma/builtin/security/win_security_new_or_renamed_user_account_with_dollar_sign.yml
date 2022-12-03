@@ -9,22 +9,26 @@ detection:
     SELECTION_2:
         EventID: 4720
     SELECTION_3:
-        EventID: 4781
-    SELECTION_4:
         SamAccountName: '*$*'
-    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
+    SELECTION_4:
+        EventID: 4781
+    SELECTION_5:
+        NewTargetUserName: '*$*'
+    condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and
+        SELECTION_5)))
 falsepositives:
 - Unknown
 fields:
 - EventID
 - SamAccountName
 - SubjectUserName
+- NewTargetUserName
 id: cfeed607-6aa4-4bbd-9627-b637deb723c8
 level: high
 logsource:
     product: windows
     service: security
-modified: 2022/10/09
+modified: 2022/11/22
 status: test
 tags:
 - attack.defense_evasion

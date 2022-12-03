@@ -1,4 +1,4 @@
-title: Invoke-Obfuscation STDIN+ Launcher
+title: Invoke-Obfuscation STDIN+ Launcher - System
 ruletype: Sigma
 author: Jonathan Cheong, oscd.community
 date: 2020/10/15
@@ -11,8 +11,21 @@ detection:
     SELECTION_3:
         EventID: 7045
     SELECTION_4:
-        ImagePath|re: .*cmd.{0,5}(?:/c|/r).+powershell.+(?:\$\{?input\}?|noexit).+"
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+        ImagePath: '*cmd*'
+    SELECTION_5:
+        ImagePath: '*powershell*'
+    SELECTION_6:
+        ImagePath:
+        - '*/c*'
+        - '*/r*'
+    SELECTION_7:
+        ImagePath: '*noexit*'
+    SELECTION_8:
+        ImagePath: '*input*'
+    SELECTION_9:
+        ImagePath: '*$*'
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6) and (SELECTION_7 or (SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Unknown
 id: 72862bf2-0eb1-11eb-adc1-0242ac120002
@@ -20,7 +33,7 @@ level: high
 logsource:
     product: windows
     service: system
-modified: 2021/11/30
+modified: 2022/11/29
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: experimental

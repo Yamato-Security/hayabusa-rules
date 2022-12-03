@@ -18,6 +18,9 @@ detection:
         - '*cmd.exe/k*'
         - '*\cmd/k*'
         - '*"cmd/k*'
+        - '*cmd.exe/r*'
+        - '*\cmd/r*'
+        - '*"cmd/r*'
     SELECTION_4:
         CommandLine:
         - '*/cwhoami*'
@@ -36,12 +39,16 @@ detection:
         - '*cmd /c*'
         - '*cmd.exe /k*'
         - '*cmd /k*'
+        - '*cmd.exe /r*'
+        - '*cmd /r*'
     SELECTION_6:
         CommandLine:
         - '*cmd.exe /c *'
         - '*cmd /c *'
         - '*cmd.exe /k *'
         - '*cmd /k *'
+        - '*cmd.exe /r *'
+        - '*cmd /r *'
     SELECTION_7:
         CommandLine: '*AppData\Local\Programs\Microsoft VS Code\resources\app\node_modules*'
     SELECTION_8:
@@ -57,7 +64,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/31
+modified: 2022/11/18
 references:
 - https://twitter.com/cyb3rops/status/1562072617552678912
 - https://ss64.com/nt/cmd.html

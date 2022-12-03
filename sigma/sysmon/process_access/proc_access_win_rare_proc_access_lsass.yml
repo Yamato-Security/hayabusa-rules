@@ -62,7 +62,9 @@ detection:
     SELECTION_26:
         SourceImage: '*\SteamLibrary\steamapps\\*'
     SELECTION_27:
-        GrantedAccess: '0x410'
+        GrantedAccess:
+        - '0x410'
+        - '0x10'
     SELECTION_3:
         TargetImage: '*\lsass.exe'
     SELECTION_4:
@@ -106,7 +108,7 @@ level: medium
 logsource:
     category: process_access
     product: windows
-modified: 2022/10/25
+modified: 2022/11/13
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

@@ -7,8 +7,10 @@ detection:
     SELECTION_1:
         Channel: Microsoft-Windows-LDAP-Client/Debug
     SELECTION_2:
-        EventID: 30
+        Provider_Name: Microsoft-Windows-LDAP-Client/Debug
     SELECTION_3:
+        EventID: 30
+    SELECTION_4:
         SearchFilter:
         - '*(groupType:1.2.840.113556.1.4.803:=2147483648)*'
         - '*(groupType:1.2.840.113556.1.4.803:=2147483656)*'
@@ -39,15 +41,15 @@ detection:
         - '*(primaryGroupID=515)*'
         - '*(primaryGroupID=512)*'
         - '*Domain Admins*'
-    SELECTION_4:
-        EventID: 30
     SELECTION_5:
+        EventID: 30
+    SELECTION_6:
         SearchFilter:
         - '*(domainSid=*)*'
         - '*(objectSid=*)*'
-    SELECTION_6:
-        EventID: 30
     SELECTION_7:
+        EventID: 30
+    SELECTION_8:
         SearchFilter:
         - '*(userAccountControl:1.2.840.113556.1.4.803:=4194304)*'
         - '*(userAccountControl:1.2.840.113556.1.4.803:=2097152)*'
@@ -63,8 +65,8 @@ detection:
         - '*(accountExpires=0)*'
         - '*(adminCount=1)*'
         - '*ms-MCS-AdmPwd*'
-    condition: (SELECTION_1 and (((SELECTION_2 and SELECTION_3) and  not (SELECTION_4
-        and SELECTION_5)) or (SELECTION_6 and SELECTION_7)))
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4)
+        and  not (SELECTION_5 and SELECTION_6)) or (SELECTION_7 and SELECTION_8)))
 id: 31d68132-4038-47c7-8f8e-635a39a7c174
 level: medium
 logsource:

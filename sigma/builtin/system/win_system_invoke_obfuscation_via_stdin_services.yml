@@ -1,4 +1,4 @@
-title: Invoke-Obfuscation Via Stdin
+title: Invoke-Obfuscation Via Stdin - System
 ruletype: Sigma
 author: Nikita Nazarov, oscd.community
 date: 2020/10/12
@@ -11,8 +11,16 @@ detection:
     SELECTION_3:
         EventID: 7045
     SELECTION_4:
-        ImagePath|re: (?i).*(set).*&&\s?set.*(environment|invoke|\$\{?input).*&&.*"
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+        ImagePath: '*set*'
+    SELECTION_5:
+        ImagePath: '*&&*'
+    SELECTION_6:
+        ImagePath:
+        - '*environment*'
+        - '*invoke*'
+        - '*input*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: 487c7524-f892-4054-b263-8a0ace63fc25
@@ -20,7 +28,7 @@ level: high
 logsource:
     product: windows
     service: system
-modified: 2021/11/30
+modified: 2022/11/29
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: experimental

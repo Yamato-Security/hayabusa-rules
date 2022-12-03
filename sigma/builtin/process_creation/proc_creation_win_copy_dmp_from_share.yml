@@ -10,13 +10,16 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine: '* /c *'
-    SELECTION_4:
         CommandLine: '*.dmp*'
-    SELECTION_5:
+    SELECTION_4:
         CommandLine: '*copy *'
-    SELECTION_6:
+    SELECTION_5:
         CommandLine: '* \\\\\*'
+    SELECTION_6:
+        CommandLine:
+        - '* /c *'
+        - '* /r *'
+        - '* /k *'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
         and SELECTION_6)
 falsepositives:
@@ -26,6 +29,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/11/18
 references:
 - https://thedfirreport.com/2022/09/26/bumblebee-round-two/
 status: experimental

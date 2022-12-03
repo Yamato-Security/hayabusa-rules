@@ -12,13 +12,18 @@ detection:
     SELECTION_3:
         ParentCommandLine: '*cmd*'
     SELECTION_4:
-        ParentCommandLine: '*/c*'
+        ParentProcessName: '*\cmd.exe'
     SELECTION_5:
-        CommandLine: '*/../../*'
+        ParentCommandLine:
+        - '*/c*'
+        - '*/k*'
+        - '*/r*'
     SELECTION_6:
+        CommandLine: '*/../../*'
+    SELECTION_7:
         CommandLine: '*\Tasktop\keycloak\bin\/../../jre\bin\java*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6)))
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7)))
 falsepositives:
 - (not much) some benign Java tools may product false-positive commandlines for loading
     libraries
@@ -27,7 +32,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/03/17
+modified: 2022/11/18
 references:
 - https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-path-traversal-in-cmd-exe/
 - https://twitter.com/Oddvarmoe/status/1270633613449723905

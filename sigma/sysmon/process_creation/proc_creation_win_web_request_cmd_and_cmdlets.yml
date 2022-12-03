@@ -1,14 +1,14 @@
-title: Windows Suspicious Use Of Web Request in CommandLine
+title: Usage Of Web Request Commands And Cmdlets
 ruletype: Sigma
 author: James Pemberton / @4A616D6573
 date: 2019/10/24
-description: Detects the use of various web request with commandline tools or Windows
-    PowerShell command,methods (including aliases)
+description: Detects the use of various web request commands with commandline tools
+    and Windows PowerShell cmdlets (including aliases)
 detection:
     SELECTION_1:
-        EventID: 4688
+        EventID: 1
     SELECTION_2:
-        Channel: Security
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         CommandLine:
         - '*Invoke-WebRequest*'
@@ -25,10 +25,15 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2022/11/21
 references:
 - https://4sysops.com/archives/use-powershell-to-download-a-file-with-http-https-and-ftp/
 - https://blog.jourdant.me/post/3-ways-to-download-files-with-powershell
+related:
+-   id: 1139d2e2-84b1-4226-b445-354492eba8ba
+    type: similar
+-   id: f67dbfce-93bc-440d-86ad-a95ae8858c90
+    type: obsoletes
 status: test
 tags:
 - attack.execution

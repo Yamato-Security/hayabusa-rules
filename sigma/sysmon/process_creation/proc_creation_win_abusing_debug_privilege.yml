@@ -19,20 +19,25 @@ detection:
         - '*\spoolsv.exe'
         - '*\searchindexer.exe'
     SELECTION_4:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_5:
         Image:
         - '*\powershell.exe'
         - '*\pwsh.exe'
         - '*\cmd.exe'
-    SELECTION_5:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
     SELECTION_6:
-        CommandLine: '* route *'
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+        - Cmd.Exe
     SELECTION_7:
+        CommandLine: '* route *'
+    SELECTION_8:
         CommandLine: '* ADD *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and
+        (SELECTION_5 or SELECTION_6)) and  not (SELECTION_7 and SELECTION_8))
 falsepositives:
 - Unknown
 fields:
@@ -45,7 +50,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/11/11
 references:
 - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-74-638.jpg
 status: test

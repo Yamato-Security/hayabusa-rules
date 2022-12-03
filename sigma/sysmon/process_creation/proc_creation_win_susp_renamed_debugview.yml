@@ -9,9 +9,7 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Product:
-        - Sysinternals DebugView
-        - Sysinternals Debugview
+        Product: Sysinternals DebugView
     SELECTION_4:
         OriginalFileName: Dbgview.exe
     SELECTION_5:
@@ -25,7 +23,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/11/29
 references:
 - https://www.epicturla.com/blog/sysinturla
 status: test

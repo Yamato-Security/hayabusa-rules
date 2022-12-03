@@ -1,4 +1,4 @@
-title: Abusing Windows Telemetry For Persistence
+title: Abusing Windows Telemetry For Persistence - Registry
 ruletype: Sigma
 author: Sreeman
 date: 2020/09/29
@@ -47,7 +47,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
+modified: 2022/11/25
 references:
 - https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/
 status: experimental

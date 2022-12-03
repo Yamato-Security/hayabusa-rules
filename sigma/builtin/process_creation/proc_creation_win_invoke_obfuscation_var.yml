@@ -9,8 +9,17 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine|re: .*cmd.{0,5}(?:/c|/r)(?:\s|)"set\s[a-zA-Z]{3,6}.*(?:\{\d\}){1,}\\"\s+?\-f(?:.*\)){1,}.*"
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+        CommandLine: '*cmd*'
+    SELECTION_4:
+        CommandLine: '*"set*'
+    SELECTION_5:
+        CommandLine: '*-f*'
+    SELECTION_6:
+        CommandLine:
+        - '*/c*'
+        - '*/r*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: 27aec9c9-dbb0-4939-8422-1742242471d0
@@ -18,7 +27,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/11/17
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: test

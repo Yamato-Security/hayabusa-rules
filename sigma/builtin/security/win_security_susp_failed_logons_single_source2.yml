@@ -1,4 +1,4 @@
-title: Failed Logins with Different Accounts from Single Source System
+title: Failed NTLM Logins with Different Accounts from Single Source System
 ruletype: Sigma
 author: Florian Roth
 date: 2017/01/10
@@ -26,7 +26,7 @@ level: medium
 logsource:
     product: windows
     service: security
-modified: 2022/10/09
+modified: 2022/11/26
 related:
 -   id: e98374a6-e2d9-4076-9b5c-11bdb2569995
     type: derived

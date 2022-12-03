@@ -1,4 +1,4 @@
-title: Abusable Invoke-ATHRemoteFXvGPUDisablementCommand
+title: Abusable Invoke-ATHRemoteFXvGPUDisablementCommand - PowerShell
 ruletype: Sigma
 author: frack113
 date: 2021/07/13
@@ -29,7 +29,7 @@ logsource:
     definition: fields have to be extract from event
     product: windows
     service: powershell-classic
-modified: 2022/10/09
+modified: 2022/12/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md
 - https://github.com/redcanaryco/AtomicTestHarnesses/blob/7e1e4da116801e3d6fcc6bedb207064577e40572/TestHarnesses/T1218_SignedBinaryProxyExecution/InvokeRemoteFXvGPUDisablementCommand.ps1

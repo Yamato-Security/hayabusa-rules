@@ -1,0 +1,32 @@
+title: Remote Credential Dump
+ruletype: Sigma
+author: SecurityAura
+date: 2022/11/16
+description: Detects default filenames output from the execution of CrackMapExec and
+    Impacket-secretsdump against an endpoint.
+detection:
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\svchost.exe'
+    SELECTION_4:
+        TargetFilename|re: \\Windows\\System32\\[a-zA-Z0-9]{8}\.tmp$
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 6e2a900a-ced9-4e4a-a9c2-13e706f9518a
+level: high
+logsource:
+    category: file_event
+    product: windows
+modified: 2022/11/29
+references:
+- https://github.com/Porchetta-Industries/CrackMapExec
+- https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003
+

@@ -1,4 +1,4 @@
-title: Regsvr32 Network Activity
+title: Regsvr32 Network Activity - DNS
 ruletype: Sigma
 author: Dmitriy Lifanov, oscd.community
 date: 2019/10/25
@@ -24,7 +24,7 @@ level: high
 logsource:
     category: dns_query
     product: windows
-modified: 2022/10/09
+modified: 2022/11/28
 references:
 - https://pentestlab.blog/2017/05/11/applocker-bypass-regsvr32/
 - https://oddvar.moe/2017/12/13/applocker-case-study-how-insecure-is-it-really-part-1/

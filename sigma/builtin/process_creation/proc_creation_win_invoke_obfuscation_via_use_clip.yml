@@ -9,8 +9,23 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine|re: (?i).*?echo.*clip.*&&.*(Clipboard|i`?n`?v`?o`?k`?e`?).*
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+        CommandLine: '*echo*'
+    SELECTION_4:
+        CommandLine: '*clip*'
+    SELECTION_5:
+        CommandLine: '*&&*'
+    SELECTION_6:
+        CommandLine:
+        - '*clipboard*'
+        - '*invoke*'
+        - '*i`*'
+        - '*n`*'
+        - '*v`*'
+        - '*o`*'
+        - '*k`*'
+        - '*e`*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
 falsepositives:
 - Unknown
 id: e1561947-b4e3-4a74-9bdd-83baed21bdb5
@@ -18,7 +33,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/11/16
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: test
