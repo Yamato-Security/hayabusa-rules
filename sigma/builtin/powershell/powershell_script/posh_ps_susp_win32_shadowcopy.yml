@@ -1,4 +1,4 @@
-title: Delete Volume Shadow Copies via WMI with PowerShell
+title: Delete Volume Shadow Copies via WMI with PowerShell - PS Script
 ruletype: Sigma
 author: frack113
 date: 2021/12/26
@@ -26,6 +26,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
+modified: 2022/12/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-5---windows---delete-volume-shadow-copies-via-wmi-with-powershell
 status: test

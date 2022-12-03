@@ -1,4 +1,4 @@
-title: Detected Windows Software Discovery
+title: Detected Windows Software Discovery - PowerShell
 ruletype: Sigma
 author: Nikita Nazarov, oscd.community
 date: 2020/10/16
@@ -30,7 +30,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
-modified: 2021/11/12
+modified: 2022/12/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518/T1518.md
 - https://github.com/harleyQu1nn/AggressorScripts

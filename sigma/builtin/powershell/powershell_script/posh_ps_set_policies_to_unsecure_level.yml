@@ -1,4 +1,4 @@
-title: Change PowerShell Policies to an Insecure Level
+title: Change PowerShell Policies to an Insecure Level - PowerShell
 ruletype: Sigma
 author: frack113
 date: 2021/10/20
@@ -35,7 +35,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
-modified: 2022/09/10
+modified: 2022/12/02
 references:
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.1
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1
