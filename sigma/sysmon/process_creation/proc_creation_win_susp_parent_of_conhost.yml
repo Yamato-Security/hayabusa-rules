@@ -28,7 +28,9 @@ detection:
         ParentCommandLine:
         - '*-k apphost -s AppHostSvc*'
         - '*-k imgsvc*'
+        - '*-k localService -p -s RemoteRegistry*'
         - '*-k LocalSystemNetworkRestricted -p -s NgcSvc*'
+        - '*-k NetSvcs -p -s NcaSvc*'
         - '*-k netsvcs -p -s NetSetupSvc*'
         - '*-k netsvcs -p -s wlidsvc*'
         - '*-k NetworkService -p -s DoSvc*'
@@ -45,7 +47,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/29
+modified: 2022/12/02
 references:
 - https://www.elastic.co/guide/en/security/current/conhost-spawned-by-suspicious-parent-process.html
 status: experimental

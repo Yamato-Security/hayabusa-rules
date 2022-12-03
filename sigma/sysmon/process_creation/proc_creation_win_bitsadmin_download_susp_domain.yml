@@ -34,6 +34,9 @@ detection:
         - '*anonfiles.com*'
         - '*send.exploit.in*'
         - '*transfer.sh*'
+        - '*privatlab.net*'
+        - '*privatlab.com*'
+        - '*sendspace.com*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5 and SELECTION_6)
 falsepositives:
@@ -46,12 +49,13 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2022/12/02
 references:
 - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
 - https://isc.sans.edu/diary/22264
 - https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/
 - https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/ransomware-hive-conti-avoslocker
+- https://www.cisa.gov/uscert/ncas/alerts/aa22-321a
 status: experimental
 tags:
 - attack.defense_evasion
