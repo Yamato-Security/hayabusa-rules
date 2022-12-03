@@ -2,15 +2,15 @@ title: Raspberry Robin Dot Ending File
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/10/28
-description: Detects commandline containing reference to files ending with a ".".
-    This scheme has been seen used by raspberry-robin
+description: Detects commandline containing reference to files ending with a "." This
+    scheme has been seen used by raspberry-robin
 detection:
     SELECTION_1:
         EventID: 1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        CommandLine|re: \.[a-zA-Z0-9]{1,6}\.[ |"|']{0,1}
+        CommandLine|re: \.[a-zA-Z0-9]{1,6}\.[ |"|']{1}
     SELECTION_4:
         CommandLine|re: \.[a-zA-Z0-9]{1,6}\.[a-zA-Z0-9]{1}
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
@@ -21,6 +21,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/11/28
 references:
 - https://www.microsoft.com/en-us/security/blog/2022/10/27/raspberry-robin-worm-part-of-larger-ecosystem-facilitating-pre-ransomware-activity/
 status: experimental
