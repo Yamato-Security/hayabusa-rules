@@ -1,0 +1,36 @@
+title: SysmonEOP Hack Tool
+ruletype: Sigma
+author: Florian Roth
+date: 2022/12/04
+description: Detects the execution of the PoC that can be used to exploit Sysmon CVE-2022-41120
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\SysmonEOP.exe'
+    SELECTION_4:
+        Hashes:
+        - IMPHASH=22F4089EB8ABA31E1BB162C6D9BF72E5
+        - IMPHASH=5123FA4C4384D431CD0D893EEB49BBEC
+    SELECTION_5:
+        Imphash:
+        - 22f4089eb8aba31e1bb162c6d9bf72e5
+        - 5123fa4c4384d431cd0d893eeb49bbec
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+falsepositives:
+- Unlikely
+id: 8a7e90c5-fe6e-45dc-889e-057fe4378bd9
+level: critical
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/Wh04m1001/SysmonEoP
+status: experimental
+tags:
+- cve.2022.41120
+- attack.t1068
+- attack.privilege_escalation
+
