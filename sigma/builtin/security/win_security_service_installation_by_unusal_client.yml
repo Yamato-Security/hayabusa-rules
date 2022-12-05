@@ -8,9 +8,9 @@ detection:
     SELECTION_1:
         EventID: 4697
     SELECTION_2:
-        ClientProcessId: '0'
+        ClientProcessId: 0
     SELECTION_3:
-        ParentProcessId: '0'
+        ParentProcessId: 0
     condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
 falsepositives:
 - Unknown
@@ -21,6 +21,7 @@ logsource:
     definition: The 'System Security Extension' audit subcategory need to be enabled
         to log the EID 4697
     product: windows
+modified: 2022/12/04
 references:
 - https://www.elastic.co/guide/en/security/current/windows-service-installed-via-an-unusual-client.html
 - https://twitter.com/SBousseaden/status/1490608838701166596

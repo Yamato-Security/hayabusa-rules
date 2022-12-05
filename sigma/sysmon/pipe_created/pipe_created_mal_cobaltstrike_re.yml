@@ -48,7 +48,7 @@ detection:
     SELECTION_8:
         PipeName|re: \\\\SearchTextHarvester[0-9a-f]{2}
     SELECTION_9:
-        PipeName|re: \\\\mypipe\-(?:f|h)[0-9a-f]{2}
+        PipeName|re: \\\\mypipe-(?:f|h)[0-9a-f]{2}
     condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and (SELECTION_4 or
         SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8 or SELECTION_9 or
         SELECTION_10 or SELECTION_11 or SELECTION_12 or SELECTION_13 or SELECTION_14
@@ -69,7 +69,7 @@ logsource:
         How to test detection? You can always use Cobalt Strike, but also you can
         check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575
     product: windows
-modified: 2022/10/09
+modified: 2022/12/03
 references:
 - https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575
 - https://gist.github.com/MHaggis/6c600e524045a6d49c35291a21e10752
