@@ -7,6 +7,10 @@ description: Detects when attackers or tools disable Windows Defender functional
 detection:
     SELECTION_1:
         EventID: 4657
+    SELECTION_10:
+        NewProcessName: '*C:\ProgramData\Microsoft\Windows Defender\platform\\*'
+    SELECTION_11:
+        NewProcessName: '*\MsMpEng.exe*'
     SELECTION_2:
         OperationType:
         - Existing registry value modified
@@ -36,8 +40,9 @@ detection:
         - '*\MpEngine\MpEnablePus'
     SELECTION_9:
         NewValue: DWORD (0x00000000)
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
         SELECTION_5) and ((SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)))
+        and  not ((SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Administrator actions
 id: 0eb46774-f1ab-4a74-8238-1155855f2263
@@ -45,6 +50,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
+modified: 2022/12/05
 references:
 - https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/
 - https://gist.github.com/anadr/7465a9fde63d41341136949f14c21105
