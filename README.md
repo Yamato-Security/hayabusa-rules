@@ -458,14 +458,14 @@ If you want to print out just the first `Data` field data, you can specify `%Dat
 
 ## Pipes
 
-A pipe can be used with eventkeys as shown below for matching strings. All of the conditions we have described so far use exact matches, but by using pipes, you can describe more flexible detection rules. In the following example, if the value of `Data` matches the regular expression `[\s\S]*EngineVersion=2\.0[\s\S]*`, it will match the condition.
+A pipe can be used with eventkeys as shown below for matching strings. All of the conditions we have described so far use exact matches, but by using pipes, you can describe more flexible detection rules. In the following example, if a value of `Data` contains the string  `EngineVersion=2`, it will match the condition.
 
 ```yaml
 detection:
     selection:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel: 'Windows PowerShell'
         EventID: 400
-        Data|re: '[\s\S]*EngineVersion=2\.0[\s\S]*'
+        Data|contains: 'EngineVersion=2'
     condition: selection
 ```
 

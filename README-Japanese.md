@@ -459,14 +459,14 @@ detection:
 
 ## パイプ
 
-イベントキーにはパイプを指定することができます。ここまで説明した書き方では完全一致しか表現できませんでしたが、パイプを使うことでより柔軟な検知ルールを記載できるようになります。以下の例では、`Data`の値が正規表現 `[\s\S]*EngineVersion=2.0[\s\S]*` に当てはまる場合、条件にマッチすることになります。
+イベントキーにはパイプを指定することができます。ここまで説明した書き方では完全一致しか表現できませんでしたが、パイプを使うことでより柔軟な検知ルールを記載できるようになります。以下の例では、ある`Data`フィールドの値に`EngineVersion=2`という文字列が入っている場合、条件にマッチすることになります。
 
 ```yaml
 detection:
     selection:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel: 'Windows PowerShell'
         EventID: 400
-        Data|re: '[\s\S]*EngineVersion=2\.0[\s\S]*'
+        Data|contains: 'EngineVersion=2'
     condition: selection
 ```
 
