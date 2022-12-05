@@ -434,7 +434,7 @@ Some of the tags nested in `EventData` do not have a `Name` attribute.
 </Event>
 ```
 
-To detect an event log like the one above, you can specify an eventkey named `EventData`.
+To detect an event log like the one above, you can specify an eventkey named `Data`.
 In this case, the condition will match as long as any one of the nested `Data` tags equals `None`.
 
 ```yaml
@@ -442,7 +442,7 @@ detection:
     selection:
         Channel: Security
         EventID: 5379
-        EventData: None
+        Data: None
     condition: selection
 ```
 
@@ -458,14 +458,14 @@ If you want to print out just the first `Data` field data, you can specify `%Dat
 
 ## Pipes
 
-A pipe can be used with eventkeys as shown below for matching strings. All of the conditions we have described so far use exact matches, but by using pipes, you can describe more flexible detection rules. In the following example, if the value of `EventData` matches the regular expression `[\s\S]*EngineVersion=2\.0[\s\S]*`, it will match the condition.
+A pipe can be used with eventkeys as shown below for matching strings. All of the conditions we have described so far use exact matches, but by using pipes, you can describe more flexible detection rules. In the following example, if the value of `Data` matches the regular expression `[\s\S]*EngineVersion=2\.0[\s\S]*`, it will match the condition.
 
 ```yaml
 detection:
     selection:
         Channel: Microsoft-Windows-PowerShell/Operational
         EventID: 400
-        EventData|re: '[\s\S]*EngineVersion=2\.0[\s\S]*'
+        Data|re: '[\s\S]*EngineVersion=2\.0[\s\S]*'
     condition: selection
 ```
 
