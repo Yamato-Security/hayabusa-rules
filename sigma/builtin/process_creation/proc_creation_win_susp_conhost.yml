@@ -15,8 +15,8 @@ detection:
         NewProcessName: C:\Windows\System32\conhost.exe
     SELECTION_13:
         ParentCommandLine:
-        - \??\C:\WINDOWS\system32\conhost.exe 0x4
-        - \??\C:\WINDOWS\system32\conhost.exe 0xffffffff -ForceV1
+        - \\\?\?\\C:\\WINDOWS\\system32\\conhost.exe 0x4
+        - \\\?\?\\C:\\WINDOWS\\system32\\conhost.exe 0xffffffff -ForceV1
     SELECTION_14:
         NewProcessName: C:\Windows\System32\conhost.exe
     SELECTION_15:
@@ -60,7 +60,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/08
+modified: 2022/12/06
 references:
 - http://www.hexacorn.com/blog/2020/05/25/how-to-con-your-host/
 status: experimental

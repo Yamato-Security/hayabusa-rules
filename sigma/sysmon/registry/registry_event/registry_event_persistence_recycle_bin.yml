@@ -15,11 +15,11 @@ detection:
     SELECTION_5:
         EventType: RenameKey
     SELECTION_6:
-        NewName: HKCR\CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\open
+        NewName: '*\CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\open*'
     SELECTION_7:
         EventType: SetValue
     SELECTION_8:
-        TargetObject: HKCR\CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\open\command\(Default)
+        TargetObject: '*\CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\open\command\(Default)*'
     condition: (((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4) and
         ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
@@ -29,8 +29,11 @@ level: high
 logsource:
     category: registry_event
     product: windows
+modified: 2022/12/06
 references:
 - https://github.com/vxunderground/VXUG-Papers/blob/751edb8d50f95bd7baa730adf2c6c3bb1b034276/The%20Persistence%20Series/Persistence%20via%20Recycle%20Bin/Persistence_via_Recycle_Bin.pdf
+- https://persistence-info.github.io/Data/recyclebin.html
+- https://www.hexacorn.com/blog/2018/05/28/beyond-good-ol-run-key-part-78-2/
 status: experimental
 tags:
 - attack.persistence
