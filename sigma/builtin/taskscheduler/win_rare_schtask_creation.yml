@@ -20,6 +20,8 @@ falsepositives:
 id: b20f6158-9438-41be-83da-a5a16ac90c2b
 level: low
 logsource:
+    definition: the "Microsoft-Windows-TaskScheduler/Operational" is disabled by default
+        and should be enabled in order for this detection to work
     product: windows
     service: taskscheduler
 modified: 2021/12/28
