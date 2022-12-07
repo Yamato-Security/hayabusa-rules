@@ -1,0 +1,58 @@
+author: Zach Mathis
+date: 2022/12/07
+modified: 2022/12/07
+
+title: RDS Logon
+details: 'User: %UserDataParam1% ¦ Domain: %UserDataParam2% ¦ SrcIP: %UserDataParam3%'
+description: 'Logon for RDS (Remote Desktop Services). Formerly known as Terminal Services. Similar to RDP.'
+
+id: e91c514e-08c5-4c42-96d7-ab1f5668a2f7
+level: informational
+status: stable
+logsource:
+    product: windows
+detection:
+    selection:
+        Channel: 'Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational'
+        EventID: 1149
+    condition: selection
+falsepositives:
+    - administrator
+tags:
+    - RDP
+    - attack.lateral_movement
+references:
+ruletype: Hayabusa
+
+sample-message: |
+    Remote Desktop Services: User authentication succeeded:
+
+    User: 
+    Domain: 
+    Source Network Address: 122.6.150.75
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft-Windows-TerminalServices-RemoteConnectionManager" Guid="{c76baa63-ae81-421c-b425-340b4b24157f}" /> 
+            <EventID>1149</EventID> 
+            <Version>0</Version> 
+            <Level>4</Level> 
+            <Task>0</Task> 
+            <Opcode>0</Opcode> 
+            <Keywords>0x1000000000000000</Keywords> 
+            <TimeCreated SystemTime="2022-11-23T01:56:00.348568100Z" /> 
+            <EventRecordID>4875995</EventRecordID> 
+            <Correlation /> 
+            <Execution ProcessID="2204" ThreadID="1464" /> 
+            <Channel>Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational</Channel> 
+            <Computer>WIN-QQ5OQGMLMPS</Computer> 
+            <Security UserID="S-1-5-20" /> 
+        </System>
+        <UserData>
+            <EventXML xmlns:auto-ns2="http://schemas.microsoft.com/win/2004/08/events" xmlns="Event_NS">
+                <Param1 /> 
+                <Param2 /> 
+                <Param3>122.6.150.75</Param3> 
+            </EventXML>
+        </UserData>
+    </Event>

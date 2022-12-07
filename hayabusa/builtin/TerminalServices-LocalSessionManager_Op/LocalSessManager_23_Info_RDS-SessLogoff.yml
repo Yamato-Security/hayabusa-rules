@@ -1,0 +1,56 @@
+author: Zach Mathis
+date: 2022/12/07
+modified: 2022/12/07
+
+title: RDS Sess Logoff
+details: 'User: %UserDataUser% ¦ SessID: %UserDataSessionID%'
+description:
+
+id: e14a729f-f4f8-427b-a238-dfbde9c1614b
+level: informational
+status: stable
+logsource:
+    product: windows
+detection:
+    selection:
+        Channel: 'Microsoft-Windows-TerminalServices-LocalSessionManager/Operational'
+        EventID: 23
+    condition: selection
+falsepositives:
+    - administrator
+tags:
+    - RDP
+    - attack.lateral_movement
+references:
+ruletype: Hayabusa
+
+sample-message: |
+    Remote Desktop Services: Session logoff succeeded:
+
+    User: WIN-QW3OXGRISMS\User
+    Session ID: 2
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft-Windows-TerminalServices-LocalSessionManager" Guid="{5d896912-022d-40aa-a3a8-4fa5515c76d7}" /> 
+            <EventID>23</EventID> 
+            <Version>0</Version> 
+            <Level>4</Level> 
+            <Task>0</Task> 
+            <Opcode>0</Opcode> 
+            <Keywords>0x1000000000000000</Keywords> 
+            <TimeCreated SystemTime="2022-11-23T14:00:20.822451500Z" /> 
+            <EventRecordID>3314</EventRecordID> 
+            <Correlation /> 
+            <Execution ProcessID="704" ThreadID="486252" /> 
+            <Channel>Microsoft-Windows-TerminalServices-LocalSessionManager/Operational</Channel> 
+            <Computer>WIN-QW3OXGRISMS</Computer> 
+            <Security UserID="S-1-5-18" /> 
+        </System>
+        <UserData>
+            <EventXML xmlns:auto-ns3="http://schemas.microsoft.com/win/2004/08/events" xmlns="Event_NS">
+                <User>WIN-QW3OXGRISMS\User</User> 
+                <SessionID>2</SessionID> 
+            </EventXML>
+        </UserData>
+    </Event>
