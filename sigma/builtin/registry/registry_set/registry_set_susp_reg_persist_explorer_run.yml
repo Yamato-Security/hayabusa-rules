@@ -25,8 +25,7 @@ detection:
         - C:\Users\Public\\*
         - C:\Users\Default\\*
     SELECTION_7:
-        NewValue:
-        - '*\AppData\\*'
+        NewValue: '*\AppData\\*'
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
         SELECTION_5) and (SELECTION_6 or SELECTION_7))
 falsepositives:
