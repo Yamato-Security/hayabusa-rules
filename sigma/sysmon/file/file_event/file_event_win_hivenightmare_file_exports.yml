@@ -17,8 +17,7 @@ detection:
         - '*\SAM-haxx*'
         - '*\Sam.save*'
     SELECTION_4:
-        TargetFilename:
-        - C:\windows\temp\sam
+        TargetFilename: C:\windows\temp\sam
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Files that accidentally contain these strings
