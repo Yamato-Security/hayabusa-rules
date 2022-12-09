@@ -16,11 +16,11 @@ detection:
         - '*exe server *'
     SELECTION_5:
         CommandLine:
-        - '* --socks5*'
-        - '* --reverse*'
+        - '*-socks5*'
+        - '*-reverse*'
         - '* r:*'
         - '*:127.0.0.1:*'
-        - '* --tls-skip-verify *'
+        - '*-tls-skip-verify *'
         - '*:socks*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
         SELECTION_5)))
@@ -31,9 +31,11 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/07
 references:
 - https://github.com/jpillora/chisel/
 - https://arcticwolf.com/resources/blog/lorenz-ransomware-chiseling-in/
+- https://blog.sekoia.io/lucky-mouse-incident-response-to-detection-engineering/
 related:
 -   id: cf93e05e-d798-4d9e-b522-b0248dc61eaf
     type: similar

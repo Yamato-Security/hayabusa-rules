@@ -20,7 +20,10 @@ detection:
         - '*\Windows\WindowsUpdate\\*'
         - '*\Windows\UpdateOrchestrator\\*'
         - '*\Windows\ExploitGuard*'
-    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and SELECTION_4)
+    SELECTION_5:
+        SubjectUserName: '*$'
+    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4) and  not
+        (SELECTION_5))
 falsepositives:
 - Unknown
 id: 7595ba94-cf3b-4471-aa03-4f6baa9e5fad
@@ -31,6 +34,7 @@ logsource:
         extracting the Command field from the embedded XML in the event data.
     product: windows
     service: security
+modified: 2022/12/09
 references:
 - https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4699
 - https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4701
