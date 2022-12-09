@@ -1,0 +1,39 @@
+title: Windows Defender Suspicious Configuration Changes
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/12/06
+description: Detects suspicious changes to the windows defender configuration
+detection:
+    SELECTION_1:
+        Channel: Microsoft-Windows-Windows Defender/Operational
+    SELECTION_2:
+        EventID: 5007
+    SELECTION_3:
+        NewValue:
+        - '*\Windows Defender\DisableAntiSpyware *'
+        - '*\Windows Defender\Scan\DisableRemovableDriveScanning *'
+        - '*\Windows Defender\Scan\DisableScanningMappedNetworkDrivesForFullScan *'
+        - '*\Windows Defender\SpyNet\DisableBlockAtFirstSeen *'
+        - '*\Real-Time Protection\SpyNetReporting *'
+        - '*\Real-Time Protection\SubmitSamplesConsent *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Administrator activity (must be investigated)
+id: 801bd44f-ceed-4eb6-887c-11544633c0aa
+level: high
+logsource:
+    product: windows
+    service: windefend
+references:
+- https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/troubleshoot-microsoft-defender-antivirus?view=o365-worldwide
+- https://bidouillesecurity.com/disable-windows-defender-in-powershell/#DisableAntiSpyware
+related:
+-   id: 1321dc4e-a1fe-481d-a016-52c45f0c8b4f
+    type: similar
+-   id: a3ab73f1-bd46-4319-8f06-4b20d0617886
+    type: similar
+status: stable
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+

@@ -15,7 +15,7 @@ detection:
     SELECTION_5:
         Image: '*\explorer.exe'
     SELECTION_6:
-        ImageFileName: explorer.exe
+        OriginalFileName: explorer.exe
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
         or (SELECTION_5 or SELECTION_6)))
 falsepositives:
@@ -28,7 +28,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2022/12/09
 references:
 - https://twitter.com/SBousseaden/status/1139811587760562176
 status: test

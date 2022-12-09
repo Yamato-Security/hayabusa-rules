@@ -25,6 +25,8 @@ detection:
         - '*\procexp.exe'
         - '*\procmon64.exe'
         - '*\procmon.exe'
+        - '*\handle.exe'
+        - '*\handle64.exe'
     SELECTION_7:
         NewValue: '*\WINDOWS\system32\Drivers\PROCEXP152.SYS*'
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
@@ -38,9 +40,9 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/11/22
+modified: 2022/12/07
 references:
-- https://blog.dylan.codes/evading-sysmon-and-windows-event-logging/
+- https://web.archive.org/web/20200419024230/https://blog.dylan.codes/evading-sysmon-and-windows-event-logging/
 status: test
 tags:
 - attack.t1562.001

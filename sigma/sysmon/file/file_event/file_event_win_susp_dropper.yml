@@ -48,8 +48,16 @@ detection:
         Image: '*\mscorsvw.exe'
     SELECTION_26:
         TargetFilename: C:\Windows\assembly\NativeImages_*
+    SELECTION_27:
+        Image: C:\Users\\*
+    SELECTION_28:
+        Image: '*\AppData\Local\\*'
+    SELECTION_29:
+        Image: '*\Microsoft VS Code\Code.exe'
     SELECTION_3:
         Image: '*.exe'
+    SELECTION_30:
+        TargetFilename: '*\.vscode\extensions\\*'
     SELECTION_4:
         TargetFilename: '*.exe'
     SELECTION_5:
@@ -73,16 +81,18 @@ detection:
         and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14
         and SELECTION_15) or (SELECTION_16 or SELECTION_17) or (SELECTION_18) or (SELECTION_19)
         or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
-        and SELECTION_25 and SELECTION_26)))
+        and SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28 and SELECTION_29
+        and SELECTION_30)))
 falsepositives:
 - Software installers
 - Update utilities
+- 32bit applications launching their 64bit versions
 id: 297afac9-5d02-4138-8c58-b977bac60556
 level: low
 logsource:
     category: file_event
     product: windows
-modified: 2022/11/08
+modified: 2022/12/07
 references:
 - Malware Sandbox
 status: experimental

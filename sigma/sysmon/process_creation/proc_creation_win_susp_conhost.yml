@@ -10,7 +10,9 @@ detection:
     SELECTION_10:
         Provider_Name: Microsoft-Windows-Kernel-Process
     SELECTION_11:
-        ParentCommandLine: '* cat-file -s *'
+        ParentCommandLine:
+        - '* cat-file -s *'
+        - '*show --textconv*'
     SELECTION_12:
         Image: C:\Windows\System32\conhost.exe
     SELECTION_13:
@@ -20,11 +22,11 @@ detection:
     SELECTION_14:
         Image: C:\Windows\System32\conhost.exe
     SELECTION_15:
-        ParentCommandLine: \??\C:\WINDOWS\system32\conhost.exe 0xffffffff -ForceV1
+        ParentCommandLine:
+        - \\\?\?\\C:\\WINDOWS\\system32\\conhost.exe 0xffffffff -ForceV1'
+        - \\\?\?\\C:\\WINDOWS\\system32\\conhost.exe 0x4'
     SELECTION_16:
         Image: C:\Program Files\Git\mingw64\bin\git.exe
-    SELECTION_17:
-        CommandLine: '*show --textconv :*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -48,7 +50,7 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
         or (SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
         or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14)
-        or (SELECTION_15 and SELECTION_16 and SELECTION_17)))
+        or (SELECTION_15 and SELECTION_16)))
 falsepositives:
 - Unknown
 fields:
@@ -60,7 +62,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/06
+modified: 2022/12/07
 references:
 - http://www.hexacorn.com/blog/2020/05/25/how-to-con-your-host/
 status: experimental

@@ -24,6 +24,12 @@ detection:
         - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Apple Software Update\SoftwareUpdateAdmin.dll*'
         - '*\MsiExec.exe" /Y "C:\Windows\CCM\\*'
         - '*\MsiExec.exe" /Y C:\Windows\CCM\\*'
+        - '*\MsiExec.exe" -Y "C:\Program Files\Bonjour\mdnsNSP.dll*'
+        - '*\MsiExec.exe" -Y "C:\Program Files (x86)\Bonjour\mdnsNSP.dll*'
+        - '*\MsiExec.exe" -Y "C:\Program Files (x86)\Apple Software Update\ScriptingObjectModel.dll*'
+        - '*\MsiExec.exe" -Y "C:\Program Files (x86)\Apple Software Update\SoftwareUpdateAdmin.dll*'
+        - '*\MsiExec.exe" -Y "C:\Windows\CCM\\*'
+        - '*\MsiExec.exe" -Y C:\Windows\CCM\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5)))
 falsepositives:
@@ -33,7 +39,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/23
+modified: 2022/12/08
 references:
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md
