@@ -43,7 +43,7 @@ detection:
         - '*\dbghelp.dll'
         - '*\dbgcore.dll'
     SELECTION_6:
-        Signed: 'FALSE'
+        Signed: 'false'
     SELECTION_7:
         Image: '*Visual Studio*'
     SELECTION_8:
@@ -69,7 +69,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/09/15
+modified: 2022/12/09
 references:
 - https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump
 - https://www.pinvoke.net/default.aspx/dbghelp/MiniDumpWriteDump.html

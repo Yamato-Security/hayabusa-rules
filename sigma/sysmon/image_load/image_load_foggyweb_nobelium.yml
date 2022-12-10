@@ -2,14 +2,15 @@ title: FoggyWeb Backdoor DLL Loading
 ruletype: Sigma
 author: Florian Roth
 date: 2021/09/27
-description: Detects DLL image load activity as used by FoggyWeb backdoor loader
+description: Detects DLL hijacking technique used by NOBELIUM in their FoggyWeb backdoor.
+    Which loads a malicious version of the expected "version.dll" dll
 detection:
     SELECTION_1:
         EventID: 7
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Image: C:\Windows\ADFS\version.dll
+        ImageLoaded: C:\Windows\ADFS\version.dll
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unlikely
@@ -18,7 +19,7 @@ level: critical
 logsource:
     category: image_load
     product: windows
-modified: 2022/10/09
+modified: 2022/12/09
 references:
 - https://www.microsoft.com/security/blog/2021/09/27/foggyweb-targeted-nobelium-malware-leads-to-persistent-backdoor/
 status: test

@@ -21,9 +21,11 @@ detection:
         - '*\Windows\UpdateOrchestrator\\*'
         - '*\Windows\ExploitGuard*'
     SELECTION_5:
+        Task: '*\Windows\UpdateOrchestrator\AC Power Download*'
+    SELECTION_6:
         SubjectUserName: '*$'
     condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4) and  not
-        (SELECTION_5))
+        ((SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - Unknown
 id: 7595ba94-cf3b-4471-aa03-4f6baa9e5fad

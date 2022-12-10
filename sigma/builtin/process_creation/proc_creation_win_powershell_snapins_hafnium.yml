@@ -1,9 +1,9 @@
-title: Exchange PowerShell Snap-Ins Used by HAFNIUM
+title: Exchange PowerShell Snap-Ins Usage
 ruletype: Sigma
-author: FPT.EagleEye
+author: FPT.EagleEye, Nasreddine Bencherchali
 date: 2021/03/03
 description: Detects adding and using Exchange PowerShell snap-ins to export mailbox
-    data by HAFNIUM
+    data. As seen used by HAFNIUM and APT27
 detection:
     SELECTION_1:
         EventID: 4688
@@ -14,8 +14,17 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
-        CommandLine: '*add-pssnapin microsoft.exchange.powershell.snapin*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_5:
+        CommandLine: '*Add-PSSnapin*'
+    SELECTION_6:
+        CommandLine:
+        - '*Microsoft.Exchange.Powershell.Snapin*'
+        - '*Microsoft.Exchange.Management.PowerShell.SnapIn*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
 falsepositives:
 - Unknown
 fields:
@@ -26,10 +35,11 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/12/09
 references:
 - https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/
 - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
+- https://www.intrinsec.com/apt27-analysis/
 status: experimental
 tags:
 - attack.execution

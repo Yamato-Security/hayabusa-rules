@@ -1,0 +1,33 @@
+title: ETW Logging Disabled For SCM
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/12/09
+description: Detects changes to the "TracingDisabled" key in order to disable ETW
+    logging for services.exe (SCM)
+detection:
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*Software\Microsoft\Windows NT\CurrentVersion\Tracing\SCM\Regular\TracingDisabled'
+    SELECTION_5:
+        Details: DWORD (0x00000001)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unknown
+id: 4f281b83-0200-4b34-bf35-d24687ea57c2
+level: low
+logsource:
+    category: registry_set
+    product: windows
+references:
+- http://redplait.blogspot.com/2020/07/whats-wrong-with-etw.html
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1112
+- attack.t1562
+

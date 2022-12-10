@@ -29,7 +29,7 @@ detection:
     SELECTION_6:
         CommandLine: '*/c*'
     SELECTION_7:
-        CommandLine: '*\\\\127.0.0.1\\*'
+        CommandLine: '*\\\\127.0.0.1\\\*'
     SELECTION_8:
         CommandLine: '*&1*'
     SELECTION_9:
@@ -49,7 +49,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/12/08
 references:
 - https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/wmiexec.py
 - https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/atexec.py
