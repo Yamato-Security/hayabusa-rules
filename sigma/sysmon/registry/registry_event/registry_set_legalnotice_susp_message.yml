@@ -1,0 +1,38 @@
+title: Potential Ransomware Activity Using LegalNotice Message
+ruletype: Sigma
+author: frack113
+date: 2022/12/11
+description: Detect changes to the "LegalNoticeCaption" or "LegalNoticeText" registry
+    values where the message set contains keywords often used in ransomware ransom
+    messages
+detection:
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject:
+        - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LegalNoticeCaption*'
+        - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LegalNoticeText*'
+    SELECTION_5:
+        Details:
+        - '*encrypted*'
+        - '*Unlock-Password*'
+        - '*paying*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unknown
+id: 8b9606c9-28be-4a38-b146-0e313cc232c1
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/5c1e6f1b4fafd01c8d1ece85f510160fc1275fbf/atomics/T1491.001/T1491.001.md
+status: experimental
+tags:
+- attack.impact
+- attack.t1491.001
+

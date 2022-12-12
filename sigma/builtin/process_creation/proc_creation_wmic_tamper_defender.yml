@@ -1,0 +1,34 @@
+title: WMIC Tamper Windows Defender
+ruletype: Sigma
+author: frack113
+date: 2022/12/11
+description: Detects potential tampering with Windows Defender settings such as adding
+    exclusion using wmic
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        OriginalFileName: wmic.exe
+    SELECTION_4:
+        NewProcessName: '*\WMIC.exe'
+    SELECTION_5:
+        CommandLine: '*/Namespace:\\\\root\\Microsoft\\Windows\\Defender*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: 51cbac1e-eee3-4a90-b1b7-358efb81fa0a
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/5c1e6f1b4fafd01c8d1ece85f510160fc1275fbf/atomics/T1562.001/T1562.001.md
+- https://www.bleepingcomputer.com/news/security/gootkit-malware-bypasses-windows-defender-by-setting-path-exclusions/
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1546.008
+
