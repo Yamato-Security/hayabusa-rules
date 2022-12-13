@@ -9,8 +9,6 @@ from sigma.parser.condition import SigmaAggregationParser, ConditionOR, Conditio
 from sigma.parser.modifiers.base import SigmaTypeModifier
 from sigma.parser.modifiers.type import SigmaRegularExpressionModifier
 
-SPECIAL_REGEX = re.compile("^\{(\d)+,?(\d+)?\}")
-
 
 class HayabusaBackend(SingleTextQueryBackend):
     """Base class for backends that generate one text-based expression from a Sigma rule"""
