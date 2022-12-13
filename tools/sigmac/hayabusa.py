@@ -9,8 +9,6 @@ from sigma.parser.condition import SigmaAggregationParser, ConditionOR, Conditio
 from sigma.parser.modifiers.base import SigmaTypeModifier
 from sigma.parser.modifiers.type import SigmaRegularExpressionModifier
 
-SPECIAL_REGEX = re.compile("^\{(\d)+,?(\d+)?\}")
-
 
 class HayabusaBackend(SingleTextQueryBackend):
     """Base class for backends that generate one text-based expression from a Sigma rule"""
@@ -66,8 +64,9 @@ class HayabusaBackend(SingleTextQueryBackend):
         elif isinstance(value, SigmaTypeModifier):
             return self.generateMapItemTypedNode(transformed_fieldname, value)
         elif value is None:
-            # nullは正規表現で表す。これでいいのかちょっと不安
-            return self.generateNode((transformed_fieldname+"|re", "^$"))
+            name = self.create_new_selection()
+            self.name_2_selection[name] = [(transformed_fieldname, None)]
+            return name
         else:
             raise TypeError(
                 "Backend does not support map values of type " + str(type(value)))
@@ -261,7 +260,7 @@ class HayabusaBackend(SingleTextQueryBackend):
                         ## is_keyword_list() == Falseの場合
                         parsed_yaml["detection"][key][fieldname] = value
 
-            yaml.dump(parsed_yaml, bs, indent=4, default_flow_style=False)
+            yaml.safe_dump(parsed_yaml, bs, indent=4, default_flow_style=False)
             ret = bs.getvalue()
 
         return ret
