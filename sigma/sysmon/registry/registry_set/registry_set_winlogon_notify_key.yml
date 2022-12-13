@@ -2,9 +2,13 @@ title: Winlogon Notify Key Logon Persistence
 ruletype: Sigma
 author: frack113
 date: 2021/12/30
-description: |
-    Adversaries may abuse features of Winlogon to execute DLLs and/or executables when a user logs in.
-    Winlogon.exe is a Windows component responsible for actions at logon/logoff as well as the secure attention sequence (SAS) triggered by Ctrl-Alt-Delete.
+description: 'Adversaries may abuse features of Winlogon to execute DLLs and/or executables
+    when a user logs in.
+
+    Winlogon.exe is a Windows component responsible for actions at logon/logoff as
+    well as the secure attention sequence (SAS) triggered by Ctrl-Alt-Delete.
+
+    '
 detection:
     SELECTION_1:
         EventID: 13

@@ -2,9 +2,12 @@ title: Winword LOLBIN Usage
 ruletype: Sigma
 author: Nasreddine Bencherchali, Victor Sergeev, oscd.community
 date: 2022/05/17
-description: |
-    Detects Winword process loading custmom dlls via the '/l' switch.
-    Winword can be abused as a LOLBIN to download arbitrary file or load arbitrary DLLs.
+description: 'Detects Winword process loading custmom dlls via the ''/l'' switch.
+
+    Winword can be abused as a LOLBIN to download arbitrary file or load arbitrary
+    DLLs.
+
+    '
 detection:
     SELECTION_1:
         EventID: 1

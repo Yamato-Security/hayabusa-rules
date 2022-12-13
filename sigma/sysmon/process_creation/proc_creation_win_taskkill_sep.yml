@@ -2,10 +2,17 @@ title: Taskkill Symantec Endpoint Protection
 ruletype: Sigma
 author: Ilya Krestinichev, Florian Roth
 date: 2022/09/13
-description: |
-    Detects one of the possible scenarios for disabling symantec endpoint protection.
-    Symantec Endpoint Protection antivirus software services incorrectly implement the protected service mechanism.
-    As a result, the NT AUTHORITY/SYSTEM user can execute the taskkill /im command several times ccSvcHst.exe /f, thereby killing the process belonging to the service, and thus shutting down the service.
+description: 'Detects one of the possible scenarios for disabling symantec endpoint
+    protection.
+
+    Symantec Endpoint Protection antivirus software services incorrectly implement
+    the protected service mechanism.
+
+    As a result, the NT AUTHORITY/SYSTEM user can execute the taskkill /im command
+    several times ccSvcHst.exe /f, thereby killing the process belonging to the service,
+    and thus shutting down the service.
+
+    '
 detection:
     SELECTION_1:
         EventID: 1

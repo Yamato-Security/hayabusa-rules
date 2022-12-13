@@ -2,10 +2,15 @@ title: Dynamic C Sharp Compile Artefact
 ruletype: Sigma
 author: frack113
 date: 2022/01/09
-description: |
-    When C# is compiled dynamically, a .cmdline file will be created as a part of the process.
-    Certain processes are not typically observed compiling C# code, but can do so without touching disk.
+description: 'When C# is compiled dynamically, a .cmdline file will be created as
+    a part of the process.
+
+    Certain processes are not typically observed compiling C# code, but can do so
+    without touching disk.
+
     This can be used to unpack a payload for execution
+
+    '
 detection:
     SELECTION_1:
         EventID: 11

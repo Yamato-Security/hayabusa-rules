@@ -23,7 +23,7 @@ detection:
         - C:\Program Files\Microsoft Monitoring Agent\Agent\MonitoringHost.exe
         - ''
     SELECTION_7:
-        ParentProcessName|re: ^$
+        ParentProcessName: null
     SELECTION_8:
         CommandLine:
         - '*whoami -all*'

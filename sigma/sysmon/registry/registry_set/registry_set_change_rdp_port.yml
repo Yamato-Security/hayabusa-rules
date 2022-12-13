@@ -2,10 +2,15 @@ title: Changing RDP Port to Non Standard Number
 ruletype: Sigma
 author: frack113
 date: 2022/01/01
-description: |
-    Remote desktop is a common feature in operating systems.
-    It allows a user to log into an interactive session with a system desktop graphical user interface on a remote system.
-    Microsoft refers to its implementation of the Remote Desktop Protocol (RDP) as Remote Desktop Services (RDS).
+description: 'Remote desktop is a common feature in operating systems.
+
+    It allows a user to log into an interactive session with a system desktop graphical
+    user interface on a remote system.
+
+    Microsoft refers to its implementation of the Remote Desktop Protocol (RDP) as
+    Remote Desktop Services (RDS).
+
+    '
 detection:
     SELECTION_1:
         EventID: 13

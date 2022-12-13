@@ -2,10 +2,16 @@ title: Access to Browser Login Data
 ruletype: Sigma
 author: frack113
 date: 2022/01/30
-description: |
-    Adversaries may acquire credentials from web browsers by reading files specific to the target browser.
-    Web browsers commonly save credentials such as website usernames and passwords so that they do not need to be entered manually in the future.
-    Web browsers typically store the credentials in an encrypted format within a credential store.
+description: 'Adversaries may acquire credentials from web browsers by reading files
+    specific to the target browser.
+
+    Web browsers commonly save credentials such as website usernames and passwords
+    so that they do not need to be entered manually in the future.
+
+    Web browsers typically store the credentials in an encrypted format within a credential
+    store.
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

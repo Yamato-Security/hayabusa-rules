@@ -23,7 +23,7 @@ detection:
     SELECTION_5:
         OriginalFileName: '*CtxInstall*'
     SELECTION_6:
-        OriginalFileName|re: ^$
+        OriginalFileName: null
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and  not
         ((SELECTION_5) or (SELECTION_6)))))
 falsepositives:

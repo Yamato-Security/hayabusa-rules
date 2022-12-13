@@ -2,10 +2,15 @@ title: Powershell MsXml COM Object
 ruletype: Sigma
 author: frack113, MatilJ
 date: 2022/01/19
-description: |
-    Adversaries may abuse PowerShell commands and scripts for execution.
-    PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system. (Citation: TechNet PowerShell)
-    Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code
+description: 'Adversaries may abuse PowerShell commands and scripts for execution.
+
+    PowerShell is a powerful interactive command-line interface and scripting environment
+    included in the Windows operating system. (Citation: TechNet PowerShell)
+
+    Adversaries can use PowerShell to perform a number of actions, including discovery
+    of information and execution of code
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

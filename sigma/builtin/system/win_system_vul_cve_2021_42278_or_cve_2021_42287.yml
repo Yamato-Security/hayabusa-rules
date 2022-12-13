@@ -2,10 +2,15 @@ title: Exploit SamAccountName Spoofing with Kerberos
 ruletype: Sigma
 author: frack113
 date: 2021/12/15
-description: |
-    The attacker creates a computer object using those permissions with a password known to her.
+description: 'The attacker creates a computer object using those permissions with
+    a password known to her.
+
     After that she clears the attribute ServicePrincipalName on the computer object.
-    Because she created the object (CREATOR OWNER), she gets granted additional permissions and can do many changes to the object.
+
+    Because she created the object (CREATOR OWNER), she gets granted additional permissions
+    and can do many changes to the object.
+
+    '
 detection:
     SELECTION_1:
         Channel: System

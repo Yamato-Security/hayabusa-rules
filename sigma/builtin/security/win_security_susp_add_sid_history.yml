@@ -17,7 +17,7 @@ detection:
         - '-'
         - '%%1793'
     SELECTION_6:
-        SidHistory|re: ^$
+        SidHistory: null
     condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) or ((SELECTION_4 and  not
         (SELECTION_5)) and  not (SELECTION_6))))
 falsepositives:

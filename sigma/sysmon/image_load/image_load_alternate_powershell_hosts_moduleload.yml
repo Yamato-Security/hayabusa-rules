@@ -26,7 +26,7 @@ detection:
     SELECTION_7:
         Image: C:\Program Files\PowerShell\7\pwsh.exe
     SELECTION_8:
-        Image|re: ^$
+        Image: null
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5 or SELECTION_6 or SELECTION_7) or (SELECTION_8)))
 falsepositives:

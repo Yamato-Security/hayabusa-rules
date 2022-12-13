@@ -2,10 +2,14 @@ title: Winlogon AllowMultipleTSSessions Enable
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/09/09
-description: |
-    Detects when the 'AllowMultipleTSSessions' value is enabled.
+description: 'Detects when the ''AllowMultipleTSSessions'' value is enabled.
+
     Which allows for multiple Remote Desktop connection sessions to be opened at once.
-    This is often used by attacker as a way to connect to an RDP session without disconnecting the other users
+
+    This is often used by attacker as a way to connect to an RDP session without disconnecting
+    the other users
+
+    '
 detection:
     SELECTION_1:
         EventID: 4657

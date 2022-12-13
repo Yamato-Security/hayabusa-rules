@@ -2,9 +2,12 @@ title: Powershell LocalAccount Manipulation
 ruletype: Sigma
 author: frack113
 date: 2021/12/28
-description: |
-    Adversaries may manipulate accounts to maintain access to victim systems.
-    Account manipulation may consist of any action that preserves adversary access to a compromised account, such as modifying credentials or permission groups
+description: 'Adversaries may manipulate accounts to maintain access to victim systems.
+
+    Account manipulation may consist of any action that preserves adversary access
+    to a compromised account, such as modifying credentials or permission groups
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

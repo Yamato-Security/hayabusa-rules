@@ -2,9 +2,13 @@ title: Powershell Detect Virtualization Environment
 ruletype: Sigma
 author: frack113, Duc.Le-GTSC
 date: 2021/08/03
-description: |
-    Adversaries may employ various system checks to detect and avoid virtualization and analysis environments.
-    This may include changing behaviors based on the results of checks for the presence of artifacts indicative of a virtual machine environment (VME) or sandbox
+description: 'Adversaries may employ various system checks to detect and avoid virtualization
+    and analysis environments.
+
+    This may include changing behaviors based on the results of checks for the presence
+    of artifacts indicative of a virtual machine environment (VME) or sandbox
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

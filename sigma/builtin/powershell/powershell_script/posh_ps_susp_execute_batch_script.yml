@@ -2,12 +2,22 @@ title: Powershell Execute Batch Script
 ruletype: Sigma
 author: frack113
 date: 2022/01/02
-description: |
-    Adversaries may abuse the Windows command shell for execution.
-    The Windows command shell ([cmd](https://attack.mitre.org/software/S0106)) is the primary command prompt on Windows systems.
-    The Windows command prompt can be used to control almost any aspect of a system, with various permission levels required for different subsets of commands.
-    Batch files (ex: .bat or .cmd) also provide the shell with a list of sequential commands to run, as well as normal scripting operations such as conditionals and loops.
-    Common uses of batch files include long or repetitive tasks, or the need to run the same set of commands on multiple system
+description: 'Adversaries may abuse the Windows command shell for execution.
+
+    The Windows command shell ([cmd](https://attack.mitre.org/software/S0106)) is
+    the primary command prompt on Windows systems.
+
+    The Windows command prompt can be used to control almost any aspect of a system,
+    with various permission levels required for different subsets of commands.
+
+    Batch files (ex: .bat or .cmd) also provide the shell with a list of sequential
+    commands to run, as well as normal scripting operations such as conditionals and
+    loops.
+
+    Common uses of batch files include long or repetitive tasks, or the need to run
+    the same set of commands on multiple system
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

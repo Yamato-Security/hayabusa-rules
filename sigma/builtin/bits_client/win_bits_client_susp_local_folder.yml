@@ -2,9 +2,13 @@ title: Download with BITS to Suspicious Folder
 ruletype: Sigma
 author: Florian Roth
 date: 2022/06/28
-description: |
-    Adversaries may abuse BITS jobs to persistently execute or clean up after malicious payloads.
-    Windows Background Intelligent Transfer Service (BITS) is a low-bandwidth, asynchronous file transfer mechanism exposed through [Component Object Model](https://attack.mitre.org/techniques/T1559/001)
+description: 'Adversaries may abuse BITS jobs to persistently execute or clean up
+    after malicious payloads.
+
+    Windows Background Intelligent Transfer Service (BITS) is a low-bandwidth, asynchronous
+    file transfer mechanism exposed through [Component Object Model](https://attack.mitre.org/techniques/T1559/001)
+
+    '
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-Bits-Client/Operational

@@ -2,9 +2,13 @@ title: Enable-WindowsOptionalFeature Command PowerShell
 ruletype: Sigma
 author: frack113
 date: 2022/09/10
-description: |
-    Detect built in PowerShell cmdlet Enable-WindowsOptionalFeature, Deployment Image Servicing and Management tool.
-    Similar to DISM.exe, this cmdlet is used to enumerate, install, uninstall, configure, and update features and packages in Windows images
+description: 'Detect built in PowerShell cmdlet Enable-WindowsOptionalFeature, Deployment
+    Image Servicing and Management tool.
+
+    Similar to DISM.exe, this cmdlet is used to enumerate, install, uninstall, configure,
+    and update features and packages in Windows images
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

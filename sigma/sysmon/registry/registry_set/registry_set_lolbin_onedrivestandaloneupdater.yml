@@ -2,9 +2,13 @@ title: Lolbas OneDriveStandaloneUpdater.exe Proxy Download
 ruletype: Sigma
 author: frack113
 date: 2022/05/28
-description: |
-    Detects setting a custom URL for OneDriveStandaloneUpdater.exe to download a file from the Internet without executing any
-    anomalous executables with suspicious arguments. The downloaded file will be in C:\Users\redacted\AppData\Local\Microsoft\OneDrive\StandaloneUpdaterreSignInSettingsConfig.json
+description: 'Detects setting a custom URL for OneDriveStandaloneUpdater.exe to download
+    a file from the Internet without executing any
+
+    anomalous executables with suspicious arguments. The downloaded file will be in
+    C:\Users\redacted\AppData\Local\Microsoft\OneDrive\StandaloneUpdaterreSignInSettingsConfig.json
+
+    '
 detection:
     SELECTION_1:
         EventID: 13

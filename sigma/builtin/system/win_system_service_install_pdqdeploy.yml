@@ -2,9 +2,13 @@ title: New PDQDeploy Service - Server Side
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/22
-description: |
-    Detects a PDQDeploy service installation which indicates that PDQDeploy was installed on the machines.
-    PDQDeploy can be abused by attackers to remotely install packages or execute commands on target machines
+description: 'Detects a PDQDeploy service installation which indicates that PDQDeploy
+    was installed on the machines.
+
+    PDQDeploy can be abused by attackers to remotely install packages or execute commands
+    on target machines
+
+    '
 detection:
     SELECTION_1:
         Channel: System

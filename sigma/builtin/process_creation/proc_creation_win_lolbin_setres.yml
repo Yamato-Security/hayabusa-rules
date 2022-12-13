@@ -1,0 +1,35 @@
+title: Use of Setres.exe
+ruletype: Sigma
+author: '@gott_cyber'
+date: 2022/12/11
+description: Detects the use of Setres.exe to set the screen resolution and then potentially
+    launch a file named "choice" (with any executable extension such as ".cmd" or
+    ".exe") from the current execution path
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\setres.exe'
+    SELECTION_4:
+        NewProcessName: '*\choice'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate usage of Setres
+id: 835e75bf-4bfd-47a4-b8a6-b766cac8bcb7
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://lolbas-project.github.io/lolbas/Binaries/Setres/
+- https://twitter.com/0gtweet/status/1583356502340870144
+- https://strontic.github.io/xcyclopedia/library/setres.exe-0E30E4C09637D7A128A37B59A3BC4D09.html
+- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/cc731033(v=ws.11)
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218
+- attack.t1202
+

@@ -2,9 +2,13 @@ title: Suspicious Ldifde Command Usage
 ruletype: Sigma
 author: '@gott_cyber'
 date: 2022/09/02
-description: |
-    Detects the use of Ldifde.exe with specific command line arguments to potentially load an LDIF file containing HTTP-based arguments.
-    Ldifde.exe is present, by default, on domain controllers and only requires user-level authentication to execute.
+description: 'Detects the use of Ldifde.exe with specific command line arguments to
+    potentially load an LDIF file containing HTTP-based arguments.
+
+    Ldifde.exe is present, by default, on domain controllers and only requires user-level
+    authentication to execute.
+
+    '
 detection:
     SELECTION_1:
         EventID: 1

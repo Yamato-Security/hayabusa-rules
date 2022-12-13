@@ -2,9 +2,13 @@ title: Suspicious Screensaver Binary File Creation
 ruletype: Sigma
 author: frack113
 date: 2021/12/29
-description: |
-    Adversaries may establish persistence by executing malicious content triggered by user inactivity.
-    Screensavers are programs that execute after a configurable time of user inactivity and consist of Portable Executable (PE) files with a .scr file extension
+description: 'Adversaries may establish persistence by executing malicious content
+    triggered by user inactivity.
+
+    Screensavers are programs that execute after a configurable time of user inactivity
+    and consist of Portable Executable (PE) files with a .scr file extension
+
+    '
 detection:
     SELECTION_1:
         EventID: 11

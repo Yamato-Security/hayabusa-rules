@@ -2,9 +2,13 @@ title: Replace Desktop Wallpaper by Powershell
 ruletype: Sigma
 author: frack113
 date: 2021/12/26
-description: |
-    An adversary may deface systems internal to an organization in an attempt to intimidate or mislead users.
-    This may take the form of modifications to internal websites, or directly to user systems with the replacement of the desktop wallpaper
+description: 'An adversary may deface systems internal to an organization in an attempt
+    to intimidate or mislead users.
+
+    This may take the form of modifications to internal websites, or directly to user
+    systems with the replacement of the desktop wallpaper
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104
