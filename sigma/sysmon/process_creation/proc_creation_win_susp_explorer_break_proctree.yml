@@ -2,9 +2,13 @@ title: Explorer Process Tree Break
 ruletype: Sigma
 author: Florian Roth, Nasreddine Bencherchali, @gott_cyber
 date: 2019/06/29
-description: |
-    Detects a command line process that uses explorer.exe to launch arbitrary commands or binaries,
-    which is similar to cmd.exe /c, only it breaks the process tree and makes its parent a new instance of explorer spawning from "svchost"
+description: 'Detects a command line process that uses explorer.exe to launch arbitrary
+    commands or binaries,
+
+    which is similar to cmd.exe /c, only it breaks the process tree and makes its
+    parent a new instance of explorer spawning from "svchost"
+
+    '
 detection:
     SELECTION_1:
         EventID: 1

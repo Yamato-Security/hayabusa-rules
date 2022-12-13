@@ -2,10 +2,15 @@ title: Suspicious Get-Variable.exe Creation
 ruletype: Sigma
 author: frack113
 date: 2022/04/23
-description: |
-    Get-Variable is a valid PowerShell cmdlet
+description: 'Get-Variable is a valid PowerShell cmdlet
+
     WindowsApps is by default in the path where PowerShell is executed.
-    So when the Get-Variable command is issued on PowerShell execution, the system first looks for the Get-Variable executable in the path and executes the malicious binary instead of looking for the PowerShell cmdlet.
+
+    So when the Get-Variable command is issued on PowerShell execution, the system
+    first looks for the Get-Variable executable in the path and executes the malicious
+    binary instead of looking for the PowerShell cmdlet.
+
+    '
 detection:
     SELECTION_1:
         EventID: 11

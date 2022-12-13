@@ -2,10 +2,15 @@ title: Suspicious Modification Of Scheduled Tasks
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/28
-description: |
-    Detects when an attacker tries to modify an already existing scheduled tasks to run from a suspicious location
-    Attackers can create a simple looking task in order to avoid detection on creation as it's often the most focused on
+description: 'Detects when an attacker tries to modify an already existing scheduled
+    tasks to run from a suspicious location
+
+    Attackers can create a simple looking task in order to avoid detection on creation
+    as it''s often the most focused on
+
     Instead they modify the task after creation to include their malicious payload
+
+    '
 detection:
     SELECTION_1:
         EventID: 4688

@@ -2,9 +2,13 @@ title: Remove Account From Domain Admin Group
 ruletype: Sigma
 author: frack113
 date: 2021/12/26
-description: |
-    Adversaries may interrupt availability of system and network resources by inhibiting access to accounts utilized by legitimate users.
-    Accounts may be deleted, locked, or manipulated (ex: changed credentials) to remove access to accounts.
+description: 'Adversaries may interrupt availability of system and network resources
+    by inhibiting access to accounts utilized by legitimate users.
+
+    Accounts may be deleted, locked, or manipulated (ex: changed credentials) to remove
+    access to accounts.
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

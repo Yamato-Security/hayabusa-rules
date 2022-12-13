@@ -2,10 +2,14 @@ title: Suspicious VBoxDrvInst.exe Parameters
 ruletype: Sigma
 author: Konstantin Grishchenko, oscd.community
 date: 2020/10/06
-description: |
-    Detect VBoxDrvInst.exe run with parameters allowing processing INF file.
+description: 'Detect VBoxDrvInst.exe run with parameters allowing processing INF file.
+
     This allows to create values in the registry and install drivers.
-    For example one could use this technique to obtain persistence via modifying one of Run or RunOnce registry keys
+
+    For example one could use this technique to obtain persistence via modifying one
+    of Run or RunOnce registry keys
+
+    '
 detection:
     SELECTION_1:
         EventID: 4688

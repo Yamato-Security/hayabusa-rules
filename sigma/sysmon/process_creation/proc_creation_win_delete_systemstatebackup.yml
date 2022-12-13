@@ -2,10 +2,13 @@ title: Wbadmin Delete Systemstatebackup
 ruletype: Sigma
 author: frack113
 date: 2021/12/13
-description: |
-    Deletes the Windows systemstatebackup using wbadmin.exe.
+description: 'Deletes the Windows systemstatebackup using wbadmin.exe.
+
     This technique is used by numerous ransomware families.
+
     This may only be successful on server platforms that have Windows Backup enabled.
+
+    '
 detection:
     SELECTION_1:
         EventID: 1

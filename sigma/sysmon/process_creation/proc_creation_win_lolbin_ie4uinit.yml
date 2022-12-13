@@ -18,7 +18,7 @@ detection:
         - c:\windows\system32\
         - c:\windows\sysWOW64\
     SELECTION_6:
-        CurrentDirectory|re: ^$
+        CurrentDirectory: null
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
         ((SELECTION_5) or (SELECTION_6)))
 falsepositives:

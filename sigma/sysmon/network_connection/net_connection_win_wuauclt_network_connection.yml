@@ -2,9 +2,13 @@ title: Wuauclt Network Connection
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2020/10/12
-description: |
-    Detects the use of the Windows Update Client binary (wuauclt.exe) to proxy execute code and making a network connections.
-    One could easily make the DLL spawn a new process and inject to it to proxy the network connection and bypass this rule.
+description: 'Detects the use of the Windows Update Client binary (wuauclt.exe) to
+    proxy execute code and making a network connections.
+
+    One could easily make the DLL spawn a new process and inject to it to proxy the
+    network connection and bypass this rule.
+
+    '
 detection:
     SELECTION_1:
         EventID: 3

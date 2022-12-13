@@ -2,10 +2,14 @@ title: Discovery/Execution via dnscmd.exe
 ruletype: Sigma
 author: '@gott_cyber'
 date: 2022/07/31
-description: |
-    Detects an attempt to add a potentially crafted DLL as a plug in of the DNS Service.
+description: 'Detects an attempt to add a potentially crafted DLL as a plug in of
+    the DNS Service.
+
     Detects an attempt to leverage dnscmd.exe to enumerate the DNS zones of a domain.
+
     DNS zones used to host the DNS records for a particular domain
+
+    '
 detection:
     SELECTION_1:
         EventID: 1

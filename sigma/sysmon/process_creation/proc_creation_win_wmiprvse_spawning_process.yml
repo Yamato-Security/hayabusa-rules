@@ -23,7 +23,7 @@ detection:
         - '*\WmiPrvSE.exe'
         - '*\WerFault.exe'
     SELECTION_7:
-        LogonId|re: ^$
+        LogonId: null
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not (SELECTION_4
         or SELECTION_5 or SELECTION_6)) and  not (SELECTION_7))
 falsepositives:

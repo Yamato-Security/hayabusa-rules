@@ -2,10 +2,14 @@ title: Set TimeProviders DllName
 ruletype: Sigma
 author: frack113
 date: 2022/06/19
-description: |
-    Detects processes setting a new DLL in DllName in under HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\TimeProvider.
+description: 'Detects processes setting a new DLL in DllName in under HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\TimeProvider.
+
     Adversaries may abuse time providers to execute DLLs when the system boots.
-    The Windows Time service (W32Time) enables time synchronization across and within domains.
+
+    The Windows Time service (W32Time) enables time synchronization across and within
+    domains.
+
+    '
 detection:
     SELECTION_1:
         EventID: 4657

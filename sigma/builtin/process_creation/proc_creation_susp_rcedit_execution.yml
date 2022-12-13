@@ -1,0 +1,51 @@
+title: Potential PE Metadata Tamper Using Rcedit
+ruletype: Sigma
+author: Micah Babinski
+date: 2022/12/11
+description: Detects the use of rcedit to potentially alter executable PE metadata
+    properties, which could conceal efforts to rename system utilities for defense
+    evasion.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\rcedit-x64.exe'
+        - '*\rcedit-x86.exe'
+    SELECTION_4:
+        Description: Edit resources of exe
+    SELECTION_5:
+        Product: rcedit
+    SELECTION_6:
+        CommandLine: '*--set-*'
+    SELECTION_7:
+        CommandLine:
+        - '*OriginalFileName*'
+        - '*CompanyName*'
+        - '*FileDescription*'
+        - '*ProductName*'
+        - '*ProductVersion*'
+        - '*LegalCopyright*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Legitimate use of the tool by administrators or users to update metadata of a binary
+id: 0c92f2e6-f08f-4b73-9216-ecb0ca634689
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://security.stackexchange.com/questions/210843/is-it-possible-to-change-original-filename-of-an-exe
+- https://www.virustotal.com/gui/file/02e8e8c5d430d8b768980f517b62d7792d690982b9ba0f7e04163cbc1a6e7915
+- https://github.com/electron/rcedit
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036.003
+- attack.t1036
+- attack.t1027.005
+- attack.t1027
+

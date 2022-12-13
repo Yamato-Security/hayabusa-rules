@@ -2,10 +2,15 @@ title: Malicious PE Execution by Microsoft Visual Studio Debugger
 ruletype: Sigma
 author: "Agro (@agro_sev), Ensar \u015Eamil (@sblmsrsn), oscd.community"
 date: 2020/10/14
-description: |
-    There is an option for a MS VS Just-In-Time Debugger "vsjitdebugger.exe" to launch specified executable and attach a debugger.
-    This option may be used adversaries to execute malicious code by signed verified binary.
+description: 'There is an option for a MS VS Just-In-Time Debugger "vsjitdebugger.exe"
+    to launch specified executable and attach a debugger.
+
+    This option may be used adversaries to execute malicious code by signed verified
+    binary.
+
     The debugger is installed alongside with Microsoft Visual Studio package.
+
+    '
 detection:
     SELECTION_1:
         EventID: 1

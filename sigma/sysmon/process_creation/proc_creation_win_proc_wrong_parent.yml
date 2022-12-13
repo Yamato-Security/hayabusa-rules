@@ -34,7 +34,7 @@ detection:
     SELECTION_7:
         ParentImage: '*\MsMpEng.exe'
     SELECTION_8:
-        ParentImage|re: ^$
+        ParentImage: null
     SELECTION_9:
         ParentImage: '-'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4

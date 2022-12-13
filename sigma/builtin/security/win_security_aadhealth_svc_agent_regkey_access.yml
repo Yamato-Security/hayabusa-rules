@@ -2,11 +2,19 @@ title: Azure AD Health Service Agents Registry Keys Access
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC
 date: 2021/08/26
-description: |
-    This detection uses Windows security events to detect suspicious access attempts to the registry key values and sub-keys of Azure AD Health service agents (e.g AD FS).
-    Information from AD Health service agents can be used to potentially abuse some of the features provided by those services in the cloud (e.g. Federation).
-    This detection requires an access control entry (ACE) on the system access control list (SACL) of the following securable object: HKLM:\SOFTWARE\Microsoft\ADHealthAgent.
+description: 'This detection uses Windows security events to detect suspicious access
+    attempts to the registry key values and sub-keys of Azure AD Health service agents
+    (e.g AD FS).
+
+    Information from AD Health service agents can be used to potentially abuse some
+    of the features provided by those services in the cloud (e.g. Federation).
+
+    This detection requires an access control entry (ACE) on the system access control
+    list (SACL) of the following securable object: HKLM:\SOFTWARE\Microsoft\ADHealthAgent.
+
     Make sure you set the SACL to propagate to its sub-keys.
+
+    '
 detection:
     SELECTION_1:
         Channel: Security

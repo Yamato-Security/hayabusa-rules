@@ -2,9 +2,13 @@ title: Powershell Add Name Resolution Policy Table Rule
 ruletype: Sigma
 author: Borna Talebi
 date: 2021/09/14
-description: |
-    Detects powershell scripts that adds a Name Resolution Policy Table (NRPT) rule for the specified namespace.
-    This will bypass the default DNS server and uses a specified server for answering the query.
+description: 'Detects powershell scripts that adds a Name Resolution Policy Table
+    (NRPT) rule for the specified namespace.
+
+    This will bypass the default DNS server and uses a specified server for answering
+    the query.
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

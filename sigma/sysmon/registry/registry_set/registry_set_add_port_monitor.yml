@@ -2,9 +2,13 @@ title: Add Port Monitor Persistence in Registry
 ruletype: Sigma
 author: frack113
 date: 2021/12/30
-description: |
-    Adversaries may use port monitors to run an attacker supplied DLL during system boot for persistence or privilege escalation.
-    A port monitor can be set through the AddMonitor API call to set a DLL to be loaded at startup.
+description: 'Adversaries may use port monitors to run an attacker supplied DLL during
+    system boot for persistence or privilege escalation.
+
+    A port monitor can be set through the AddMonitor API call to set a DLL to be loaded
+    at startup.
+
+    '
 detection:
     SELECTION_1:
         EventID: 13

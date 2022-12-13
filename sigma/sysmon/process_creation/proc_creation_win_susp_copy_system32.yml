@@ -3,9 +3,14 @@ ruletype: Sigma
 author: Florian Roth, Markus Neis, Tim Shelton (HAWK.IO), Nasreddine Bencherchali
     (update)
 date: 2020/07/03
-description: |
-    Detects a suspicious copy operation that tries to copy a program from a system (System32 or SysWOW64) directory to another on disk.
-    Often used to move LOLBINs such as 'certutil' or 'desktopimgdownldr' to a different location with a different name in order to bypass detections based on locations
+description: 'Detects a suspicious copy operation that tries to copy a program from
+    a system (System32 or SysWOW64) directory to another on disk.
+
+    Often used to move LOLBINs such as ''certutil'' or ''desktopimgdownldr'' to a
+    different location with a different name in order to bypass detections based on
+    locations
+
+    '
 detection:
     SELECTION_1:
         EventID: 1

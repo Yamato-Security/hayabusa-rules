@@ -2,10 +2,16 @@ title: Service Registry Permissions Weakness Check
 ruletype: Sigma
 author: frack113
 date: 2021/12/30
-description: |
-    Adversaries may execute their own malicious payloads by hijacking the Registry entries used by services.
-    Adversaries may use flaws in the permissions for registry to redirect from the originally specified executable to one that they control, in order to launch their own code at Service start.
+description: 'Adversaries may execute their own malicious payloads by hijacking the
+    Registry entries used by services.
+
+    Adversaries may use flaws in the permissions for registry to redirect from the
+    originally specified executable to one that they control, in order to launch their
+    own code at Service start.
+
     Windows stores local service configuration information in the Registry under HKLM\SYSTEM\CurrentControlSet\Services
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

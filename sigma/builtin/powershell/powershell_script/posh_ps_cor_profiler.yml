@@ -2,12 +2,21 @@ title: Registry-Free Process Scope COR_PROFILER
 ruletype: Sigma
 author: frack113
 date: 2021/12/30
-description: |
-    Adversaries may leverage the COR_PROFILER environment variable to hijack the execution flow of programs that load the .NET CLR.
-    The COR_PROFILER is a .NET Framework feature which allows developers to specify an unmanaged (or external of .NET) profiling DLL to be loaded into each .NET process that loads the Common Language Runtime (CLR).
-    These profiliers are designed to monitor, troubleshoot, and debug managed code executed by the .NET CLR.
+description: 'Adversaries may leverage the COR_PROFILER environment variable to hijack
+    the execution flow of programs that load the .NET CLR.
+
+    The COR_PROFILER is a .NET Framework feature which allows developers to specify
+    an unmanaged (or external of .NET) profiling DLL to be loaded into each .NET process
+    that loads the Common Language Runtime (CLR).
+
+    These profiliers are designed to monitor, troubleshoot, and debug managed code
+    executed by the .NET CLR.
+
     (Citation: Microsoft Profiling Mar 2017)
+
     (Citation: Microsoft COR_PROFILER Feb 2013)
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104
