@@ -38,8 +38,12 @@ detection:
         - '*https://7*'
         - '*https://8*'
         - '*https://9*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
+    SELECTION_7:
+        CommandLine:
+        - '*https://7-*'
+        - '*http://7-*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
 falsepositives:
 - Unknown
 fields:
@@ -50,11 +54,12 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2022/12/13
 references:
 - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
 - https://isc.sans.edu/diary/22264
 - https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/
+- https://blog.talosintelligence.com/breaking-the-silence-recent-truebot-activity/
 status: experimental
 tags:
 - attack.defense_evasion

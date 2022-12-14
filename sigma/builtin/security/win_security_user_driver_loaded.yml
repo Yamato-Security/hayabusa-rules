@@ -40,6 +40,7 @@ detection:
         - C:\Windows\System32\svchost.exe
         - C:\Windows\System32\wimserv.exe
         - C:\Windows\System32\RuntimeBroker.exe
+        - C:\Windows\System32\SystemSettingsBroker.exe
     SELECTION_7:
         ProcessName:
         - '*\procexp64.exe'
@@ -58,7 +59,7 @@ level: medium
 logsource:
     product: windows
     service: security
-modified: 2022/12/07
+modified: 2022/12/12
 references:
 - https://blog.dylan.codes/evading-sysmon-and-windows-event-logging/
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4673
