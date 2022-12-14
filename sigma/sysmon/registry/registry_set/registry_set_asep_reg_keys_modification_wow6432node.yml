@@ -36,9 +36,7 @@ detection:
         - '*\WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce\{e2d1ae32-dd1d-4ad7-a298-10e42e7840fc}'
         - '*\WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce\{7037b699-7382-448c-89a7-4765961d2537}'
     SELECTION_21:
-        Details:
-        - '"C:\ProgramData\Package Cache\{7037b699-7382-448c-89a7-4765961d2537}\windowsdesktop-runtime-*'
-        - '"C:\ProgramData\Package Cache\{e2d1ae32-dd1d-4ad7-a298-10e42e7840fc}\windowsdesktop-runtime-*'
+        Details: '"C:\ProgramData\Package Cache\\*'
     SELECTION_22:
         Details: '*.exe" /burn.runonce'
     SELECTION_23:
@@ -58,11 +56,14 @@ detection:
         - C:\ProgramData\Package Cache*
         - C:\Windows\Temp\\*
     SELECTION_29:
-        Image: '*\winsdksetup.exe'
+        Image:
+        - '*\winsdksetup.exe*'
+        - '*\windowsdesktop-runtime-*'
+        - '*\AspNetCoreSharedFrameworkBundle-*'
     SELECTION_3:
         EventType: SetValue
     SELECTION_30:
-        Details: '*\winsdksetup.exe" /burn.runonce'
+        Details: '* /burn.runonce'
     SELECTION_4:
         TargetObject: '*\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion*'
     SELECTION_5:
@@ -107,7 +108,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/11/01
+modified: 2022/12/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

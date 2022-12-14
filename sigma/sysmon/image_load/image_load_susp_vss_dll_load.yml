@@ -17,6 +17,7 @@ detection:
         - C:\Windows\\*
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
+        - C:\ProgramData\Package Cache\\*
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
 falsepositives:
 - Unknown
@@ -25,6 +26,7 @@ level: high
 logsource:
     category: image_load
     product: windows
+modified: 2022/12/14
 references:
 - https://github.com/ORCx41/DeleteShadowCopies
 status: experimental

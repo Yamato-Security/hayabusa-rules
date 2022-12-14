@@ -1,6 +1,6 @@
 title: Run Once Task Execution as Configured in Registry
 ruletype: Sigma
-author: Avneet Singh @v3t0_, oscd.community
+author: Avneet Singh @v3t0_, oscd.community, Christopher Peacock @SecurePeacock (updated)
 date: 2020/10/18
 description: This rule detects the execution of Run Once task as configured in the
     registry
@@ -14,9 +14,11 @@ detection:
     SELECTION_4:
         Description: Run Once Wrapper
     SELECTION_5:
-        CommandLine: '* /AlternateShellStartup*'
+        CommandLine: '*/AlternateShellStartup*'
+    SELECTION_6:
+        CommandLine: '*/r'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
+        (SELECTION_5 or SELECTION_6))
 falsepositives:
 - Unknown
 id: 198effb6-6c98-4d0c-9ea3-451fa143c45c
@@ -24,10 +26,11 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/11
+modified: 2022/12/13
 references:
 - https://twitter.com/pabraeken/status/990717080805789697
 - https://lolbas-project.github.io/lolbas/Binaries/Runonce/
+- https://twitter.com/0gtweet/status/1602644163824156672?s=20&t=kuxbUnZPltpvFPZdCrqPXA
 status: test
 tags:
 - attack.defense_evasion

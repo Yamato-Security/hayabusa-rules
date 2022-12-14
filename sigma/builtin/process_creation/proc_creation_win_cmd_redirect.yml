@@ -17,7 +17,8 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5)
 falsepositives:
-- Unknown
+- Internet Download Manager extensions use named pipes and redirection via CLI. Filter
+    it out if you use it in your environment
 id: 4f4eaa9f-5ad4-410c-a4be-bc6132b0175a
 level: low
 logsource:
