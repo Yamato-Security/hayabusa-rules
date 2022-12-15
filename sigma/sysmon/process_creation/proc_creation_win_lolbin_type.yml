@@ -1,0 +1,35 @@
+title: Potential Download/Upload Activity Using Type Command
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/12/14
+description: Detects usage of the "type" command to download/upload data from WebDAV
+    server
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*type *'
+    SELECTION_4:
+        CommandLine: '* > \\\\\*'
+    SELECTION_5:
+        CommandLine: '*type \\\\\*'
+    SELECTION_6:
+        CommandLine: '* > *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)))
+falsepositives:
+- Unknown
+id: aa0b3a82-eacc-4ec3-9150-b5a9a3e3f82f
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://mr0range.com/a-new-lolbin-using-the-windows-type-command-to-upload-download-files-81d7b6179e22
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1105
+
