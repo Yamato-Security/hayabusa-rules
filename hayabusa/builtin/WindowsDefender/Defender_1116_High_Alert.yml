@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2021/12/01
-modified: 2022/10/17
+modified: 2022/12/16
 
-title: Defender Alert (High)
-details: 'Threat: %ThreatName% ¦ Severity: %SeverityName% ¦ Type: %CategoryName% ¦ User: %DetectionUser% ¦ Path: %Path% ¦ Proc: %WindowsDefenderProcessName%'
+title: 'Defender Alert (High)'
 description: Windows defender malware detection
 
 id: 1e11c0f0-aecd-45d8-9229-da679c0265ea
@@ -16,7 +15,7 @@ detection:
     selection:
         Channel: Microsoft-Windows-Windows Defender/Operational
         EventID: 1116
-        SeverityName: High
+        SeverityName: 'High'
 falsepositives:
     - bad signature
 tags:
