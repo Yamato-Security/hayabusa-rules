@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2022/10/17
+modified: 2022/12/16
 
-title: 'Logon (Type 2 Interactive) *Creds in memory*'
-details: 'User: %TargetUserName% ¦ Comp: %WorkstationName% ¦ IP-Addr: %IpAddress% ¦ LID: %TargetLogonId%'
-description: Type 2 Interactive logons can be dangerous as the credentials (plaintext or hashed passwords) are stored in memory (lsass process) and can be stolen by tools like mimikatz.
+title: 'Logon (Interactive) *Creds in memory*'
+description: 'Type 2 Interactive logons can be dangerous as the credentials (plaintext or hashed passwords) are stored in memory (lsass process) and can be stolen by tools like mimikatz.'
 
 id: 7beb4832-f357-47a4-afd8-803d69a5c85c
 level: informational

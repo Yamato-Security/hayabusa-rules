@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2021/12/01
-modified: 2022/10/17
+modified: 2022/12/16
 
-title: Defender Alert (Low)
-details: 'Threat: %ThreatName% ¦ Severity: %SeverityName% ¦ Type: %CategoryName% ¦ User: %DetectionUser% ¦ Path: %Path% ¦ Proc: %WindowsDefenderProcessName%'
-description: Windows defender malware detection
+title: 'Defender Alert (Low)'
+description: 'Windows defender malware detection'
 
 id: 61056ed8-7be5-46e4-9015-c5f6bc8b93a1
 level: low
@@ -16,7 +15,7 @@ detection:
     selection:
         Channel: Microsoft-Windows-Windows Defender/Operational
         EventID: 1116
-        SeverityName: Low
+        SeverityName: 'Low'
 falsepositives:
     - bad signature
 tags:

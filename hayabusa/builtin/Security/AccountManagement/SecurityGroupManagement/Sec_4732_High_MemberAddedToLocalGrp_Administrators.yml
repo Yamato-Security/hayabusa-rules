@@ -1,10 +1,9 @@
-author: Eric Conrad, Zach Mathis
+author: Zach Mathis
 date: 2020/11/08
-modified: 2022/06/21
+modified: 2022/12/16
 
-title: User Added To Local Admin Grp
-details: 'SID: %MemberSid% ¦ Grp: %TargetUserName% ¦ LID: %SubjectLogonId%'
-description: A user was added to the local Administrators group. Unfortunately the user name does not get recorded in the log, only the SID, so you need to look up the username via the SID.
+title: 'User Added To Local Admin Grp'
+description: 'A user was added to the local Administrators group. Unfortunately the user name does not get recorded in the log, only the SID, so you need to look up the username via the SID.'
 
 id: 611e2e76-a28f-4255-812c-eb8836b2f5bb
 level: high
@@ -16,7 +15,7 @@ detection:
     selection:
         Channel: Security
         EventID: 4732
-        TargetUserName: Administrators
+        TargetUserName: 'Administrators'
     condition: selection
 falsepositives:
     - system administrator

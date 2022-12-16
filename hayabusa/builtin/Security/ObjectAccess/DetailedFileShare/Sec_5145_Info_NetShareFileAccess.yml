@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2021/12/16
-modified: 2022/06/21
+modified: 2022/12/16
 
 title: NetShare File Access
-details: 'User: %SubjectUserName% ¦ ShareName: %ShareName% ¦ SharePath: %ShareLocalPath% ¦ Path: %RelativeTargetName% ¦ IP-Addr: %IpAddress% ¦ LID: %SubjectLogonId%'
 description: 
 
 id: 8c6ec2b2-8dad-4996-9aba-d659afc1b919
@@ -18,10 +17,10 @@ detection:
         Channel: Security
         EventID: 5145
     filter:
-        - ShareLocalPath: ""
-        - ShareLocalPath: "null"
-        - ShareName: "\\\\*\\IPC$"
-        - RelativeTargetName: "\\"
+        - ShareLocalPath: ''
+        - ShareLocalPath: 'null'
+        - ShareName: '\\*\IPC$'
+        - RelativeTargetName: '\'
     condition: selection and not filter
 falsepositives:
     - normal system usage

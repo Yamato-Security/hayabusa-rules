@@ -1,9 +1,8 @@
 author: rukawa
 date: 2022/02/08
-modified: 2022/05/21
+modified: 2022/12/16
 
 title: Possible RDP Hijacking
-details: 'CmdLine: %CommandLine% ¦ Path: %NewProcessName% ¦ PID: %NewProcessId% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%'
 description: Detects a suspicious RDP session redirect using tscon.exe
 
 id: 6be7f3fc-8917-11ec-a8a3-0242ac120002
@@ -17,7 +16,7 @@ detection:
   selection:
     Channel: Security
     EventID: 4688
-    CommandLine: "*/dest*rdp-tcp*"
+    CommandLine: '*/dest*rdp-tcp*'
   condition: selection
 falsepositives:
   - Unknown
