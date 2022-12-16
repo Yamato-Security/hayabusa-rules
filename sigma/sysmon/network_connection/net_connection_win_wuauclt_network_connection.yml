@@ -16,7 +16,12 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         Image: '*wuauclt*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_4:
+        DestinationIp: 51.10*
+    SELECTION_5:
+        CommandLine: '*\UpdateDeploy.dll /ClassId *'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5)))
 falsepositives:
 - Legitimate use of wuauclt.exe over the network.
 id: c649a6c7-cd8c-4a78-9c04-000fc76df954
@@ -24,7 +29,7 @@ level: medium
 logsource:
     category: network_connection
     product: windows
-modified: 2021/11/27
+modified: 2022/12/15
 references:
 - https://dtm.uk/wuauclt/
 status: test
