@@ -178,8 +178,8 @@ detection:
         - '*\vLTZ19.sys'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- Some false positives may occure if one of the vulnerable driver names mentioned
-    above didn't change it's name between versions. So always make sure that the driver
+- False positives may occure if one of the vulnerable driver names mentioned above
+    didn't change it's name between versions. So always make sure that the driver
     being loaded is the legitimate one and the non vulnerable version.
 - If you experience a lot of FP you could comment the driver name or it's exact known
     legitimate location (when possible)
@@ -209,4 +209,5 @@ status: experimental
 tags:
 - attack.privilege_escalation
 - attack.t1543.003
+- attack.t1068
 
