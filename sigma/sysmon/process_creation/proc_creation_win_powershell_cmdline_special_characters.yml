@@ -51,9 +51,9 @@ detection:
         Image:
         - '*\powershell.exe'
         - '*\pwsh.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((((((SELECTION_3 and SELECTION_4)
-        or (SELECTION_5 and SELECTION_6)) or (SELECTION_7 and SELECTION_8)) or (SELECTION_9
-        and SELECTION_10)) or (SELECTION_11 and SELECTION_12)) and  not (SELECTION_13))
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4)
+        or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12)) and  not (SELECTION_13))
         and  not ((SELECTION_14 and SELECTION_15 and SELECTION_16)))
 falsepositives:
 - Unlikely
@@ -64,7 +64,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2022/12/18
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=64
 status: test
