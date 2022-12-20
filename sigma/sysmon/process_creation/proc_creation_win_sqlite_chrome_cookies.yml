@@ -1,9 +1,9 @@
-title: SQLite Firefox Cookie DB Access
+title: SQLite Chrome Cookie DB Access
 ruletype: Sigma
-author: frack113
-date: 2022/04/08
-description: Detect use of sqlite binary to query the Firefox cookies.sqlite database
-    and steal the cookie data contained within it
+author: TropChaud
+date: 2022/12/19
+description: Detect use of sqlite binary to query the Chrome Cookies database and
+    steal the cookie data contained within it
 detection:
     SELECTION_1:
         EventID: 1
@@ -16,19 +16,20 @@ detection:
         - '*\sqlite.exe'
         - '*\sqlite3.exe'
     SELECTION_5:
-        CommandLine: '*cookies.sqlite*'
+        CommandLine:
+        - '*\Google\Chrome\User Data\Default\Network\Cookies*'
+        - '*\Google\Chrome\User Data\Default\Cookies*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5)
 falsepositives:
 - Unknown
-id: 4833155a-4053-4c9c-a997-777fcea0baa7
+id: 24c77512-782b-448a-8950-eddb0785fc71
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/19
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1539/T1539.md#atomic-test-1---steal-firefox-cookies-windows
+- https://github.com/redcanaryco/atomic-red-team/blob/84d9edaaaa2c5511144521b0e4af726d1c7276ce/atomics/T1539/T1539.md#atomic-test-2---steal-chrome-cookies-windows
 status: experimental
 tags:
 - attack.credential_access
