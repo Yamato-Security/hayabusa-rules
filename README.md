@@ -478,6 +478,7 @@ String matches are case insensitive. However, they become case sensitive wheneve
 - `|re`: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/1.5.4/regex/> to know how to write correct regular expressions.)
   > Caution: Some sigma rules that use regular expressions may fail to detect due to differences in Rust's implementation of regex.
 - `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
+- `|endswithfield`: Check if target field matched the end of string. You can use `not` in the `condition` if you want to check if field the end of strings is not same.
 
 ## Wildcards
 
