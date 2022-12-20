@@ -2,8 +2,7 @@ title: Always Install Elevated MSI Spawned Cmd And Powershell
 ruletype: Sigma
 author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community
 date: 2020/10/13
-description: This rule looks for Windows Installer service (msiexec.exe) spawned command
-    line and/or powershell
+description: Detects Windows Installer service (msiexec.exe) spawning "cmd" or "powershell"
 detection:
     SELECTION_1:
         EventID: 1

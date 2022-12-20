@@ -61,6 +61,8 @@ detection:
         ProcessName: C:\Windows\System32\wbem\WmiPrvSE.exe
     SELECTION_34:
         AccessMask: '0x1410'
+    SELECTION_35:
+        ProcessName: '*\SteamLibrary\steamapps\\*'
     SELECTION_4:
         AccessMask: '0x40'
     SELECTION_5:
@@ -80,7 +82,7 @@ detection:
         or SELECTION_20 or SELECTION_21 or SELECTION_22 or SELECTION_23 or SELECTION_24
         or SELECTION_25 or SELECTION_26 or SELECTION_27 or SELECTION_28) and SELECTION_29
         and SELECTION_30) and  not ((SELECTION_31) or (SELECTION_32) or (SELECTION_33
-        and SELECTION_34)))
+        and SELECTION_34) or (SELECTION_35)))
 falsepositives:
 - Unknown
 fields:
@@ -93,7 +95,7 @@ level: high
 logsource:
     product: windows
     service: security
-modified: 2022/09/28
+modified: 2022/11/13
 references:
 - https://threathunterplaybook.com/notebooks/windows/06_credential_access/WIN-170105221010.html
 status: experimental

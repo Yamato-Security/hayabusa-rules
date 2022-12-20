@@ -1,4 +1,4 @@
-title: Root Certificate Installed
+title: Root Certificate Installed - PowerShell
 ruletype: Sigma
 author: oscd.community, @redcanary, Zach Stanford @svch0st
 date: 2020/10/10
@@ -30,7 +30,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
-modified: 2021/12/04
+modified: 2022/12/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1553.004/T1553.004.md
 status: experimental

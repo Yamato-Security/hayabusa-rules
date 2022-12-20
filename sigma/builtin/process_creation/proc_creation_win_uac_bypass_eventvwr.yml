@@ -1,0 +1,35 @@
+title: UAC Bypass Using Event Viewer RecentViews
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/11/22
+description: Detects the pattern of UAC Bypass using Event Viewer RecentViews
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '*\Event Viewer\RecentViews*'
+        - '*\EventV~1\RecentViews*'
+    SELECTION_4:
+        CommandLine: '*>*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 30fc8de7-d833-40c4-96b6-28319fbc4f6c
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/orange_8361/status/1518970259868626944
+- https://lolbas-project.github.io/lolbas/Binaries/Eventvwr/#execute
+related:
+-   id: 63e4f530-65dc-49cc-8f80-ccfa95c69d43
+    type: similar
+status: test
+tags:
+- attack.defense_evasion
+- attack.privilege_escalation
+

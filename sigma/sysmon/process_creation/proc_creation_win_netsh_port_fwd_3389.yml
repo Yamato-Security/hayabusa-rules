@@ -12,7 +12,7 @@ detection:
     SELECTION_3:
         Image: '*\netsh.exe'
     SELECTION_4:
-        CommandLine: '*i*'
+        CommandLine: '* i*'
     SELECTION_5:
         CommandLine: '* p*'
     SELECTION_6:
@@ -28,7 +28,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/01/07
+modified: 2022/11/14
 references:
 - https://www.fireeye.com/blog/threat-research/2019/01/bypassing-network-restrictions-through-rdp-tunneling.html
 status: test

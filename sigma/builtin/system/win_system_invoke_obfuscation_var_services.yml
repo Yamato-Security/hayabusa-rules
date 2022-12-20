@@ -1,4 +1,4 @@
-title: Invoke-Obfuscation VAR+ Launcher
+title: Invoke-Obfuscation VAR+ Launcher - System
 ruletype: Sigma
 author: Jonathan Cheong, oscd.community
 date: 2020/10/15
@@ -11,8 +11,17 @@ detection:
     SELECTION_3:
         EventID: 7045
     SELECTION_4:
-        ImagePath|re: .*cmd.{0,5}(?:/c|/r)(?:\s|)"set\s[a-zA-Z]{3,6}.*(?:\{\d\}){1,}\\"\s+?\-f(?:.*\)){1,}.*"
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+        ImagePath: '*cmd*'
+    SELECTION_5:
+        ImagePath: '*"set*'
+    SELECTION_6:
+        ImagePath: '*-f*'
+    SELECTION_7:
+        ImagePath:
+        - '*/c*'
+        - '*/r*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: 8ca7004b-e620-4ecb-870e-86129b5b8e75
@@ -20,7 +29,7 @@ level: high
 logsource:
     product: windows
     service: system
-modified: 2021/11/30
+modified: 2022/11/29
 references:
 - https://github.com/Neo23x0/sigma/issues/1009
 status: experimental

@@ -13,10 +13,15 @@ detection:
         - '*\cscript.exe'
         - '*\wscript.exe'
     SELECTION_4:
-        CommandLine: '*.vbs*'
+        OriginalFileName:
+        - cscript.exe
+        - wscript.exe
     SELECTION_5:
+        CommandLine: '*.vbs*'
+    SELECTION_6:
         CommandLine: '*/shell*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
 - Unlikely
 fields:
@@ -27,7 +32,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/08
+modified: 2022/11/11
 references:
 - https://web.archive.org/web/20180725233601/https://www.pwc.co.uk/cyber-security/pdf/cloud-hopper-annex-b-final.pdf
 status: test
