@@ -1,0 +1,54 @@
+title: Important Scheduled Task Deleted/Disabled
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/12/05
+description: Detects when adversaries stop services or processes by deleting or disabling
+    their respective schdueled tasks in order to conduct data destructive activities
+detection:
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 4699
+    SELECTION_3:
+        EventID: 4701
+    SELECTION_4:
+        TaskName:
+        - '*\Windows\SystemRestore\SR*'
+        - '*\Windows\Windows Defender\\*'
+        - '*\Windows\BitLocker*'
+        - '*\Windows\WindowsBackup\\*'
+        - '*\Windows\WindowsUpdate\\*'
+        - '*\Windows\UpdateOrchestrator\\*'
+        - '*\Windows\ExploitGuard*'
+    SELECTION_5:
+        Task: '*\Windows\UpdateOrchestrator\AC Power Download*'
+    SELECTION_6:
+        SubjectUserName: '*$'
+    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6)))
+falsepositives:
+- Unknown
+id: 7595ba94-cf3b-4471-aa03-4f6baa9e5fad
+level: high
+logsource:
+    definition: The Advanced Audit Policy setting Object Access > Audit Other Object
+        Access Events has to be configured to allow this detection. We also recommend
+        extracting the Command field from the embedded XML in the event data.
+    product: windows
+    service: security
+modified: 2022/12/09
+references:
+- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4699
+- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4701
+related:
+-   id: dbc1f800-0fe0-4bc0-9c66-292c2abe3f78
+    type: similar
+-   id: 9ac94dc8-9042-493c-ba45-3b5e7c86b980
+    type: similar
+status: experimental
+tags:
+- attack.execution
+- attack.privilege_escalation
+- attack.persistence
+- attack.t1053.005
+

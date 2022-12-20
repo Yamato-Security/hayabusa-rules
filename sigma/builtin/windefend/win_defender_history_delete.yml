@@ -10,24 +10,22 @@ detection:
         Channel: Microsoft-Windows-Windows Defender/Operational
     SELECTION_2:
         EventID: 1013
-    SELECTION_3:
-        EventType: 4
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
 - Deletion of Defender malware detections history for legitimate reasons
 fields:
 - EventID
 - EventType
 id: 2afe6582-e149-11ea-87d0-0242ac130003
-level: high
+level: low
 logsource:
     product: windows
     service: windefend
 modified: 2022/10/09
 references:
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/microsoft-defender-antivirus/troubleshoot-microsoft-defender-antivirus
+- https://answers.microsoft.com/en-us/protect/forum/mse-protect_scanning/microsoft-antimalware-has-removed-history-of/f15af6c9-01a9-4065-8c6c-3f2bdc7de45e
 status: test
 tags:
 - attack.defense_evasion
-- attack.t1070.001
 

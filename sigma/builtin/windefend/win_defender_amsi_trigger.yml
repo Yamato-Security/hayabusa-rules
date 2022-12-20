@@ -9,7 +9,7 @@ detection:
     SELECTION_2:
         EventID: 1116
     SELECTION_3:
-        Source_Name: AMSI
+        SourceName: AMSI
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unlikely
@@ -18,7 +18,7 @@ level: high
 logsource:
     product: windows
     service: windefend
-modified: 2021/10/13
+modified: 2022/12/07
 references:
 - https://docs.microsoft.com/en-us/windows/win32/amsi/how-amsi-helps
 status: stable

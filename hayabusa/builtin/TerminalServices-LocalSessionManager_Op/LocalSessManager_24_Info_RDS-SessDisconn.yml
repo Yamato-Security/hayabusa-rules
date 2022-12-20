@@ -1,0 +1,58 @@
+author: Zach Mathis
+date: 2022/12/07
+modified: 2022/12/07
+
+title: RDS Sess Disconnect
+details: 'User: %UserDataUser% ¦ SessID: %UserDataSessionID% ¦ SrcIP: %UserDataAddress%'
+description:
+
+id: 3fc6234f-93a5-4d48-b618-30e2c69c0a86
+level: informational
+status: stable
+logsource:
+    product: windows
+detection:
+    selection:
+        Channel: 'Microsoft-Windows-TerminalServices-LocalSessionManager/Operational'
+        EventID: 24
+    condition: selection
+falsepositives:
+    - administrator
+tags:
+    - RDP
+    - attack.lateral_movement
+references:
+ruletype: Hayabusa
+
+sample-message: |
+    Remote Desktop Services: Session has been disconnected:
+
+    User: WIN-MQ4OQGMIMRS\RikkeiUser
+    Session ID: 2
+    Source Network Address: 122.6.150.75
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft-Windows-TerminalServices-LocalSessionManager" Guid="{5d896912-022d-40aa-a3a8-4fa5515c76d7}" /> 
+            <EventID>24</EventID> 
+            <Version>0</Version> 
+            <Level>4</Level> 
+            <Task>0</Task> 
+            <Opcode>0</Opcode> 
+            <Keywords>0x1000000000000000</Keywords> 
+            <TimeCreated SystemTime="2021-01-26T10:01:50.057110900Z" /> 
+            <EventRecordID>2955</EventRecordID> 
+            <Correlation /> 
+            <Execution ProcessID="704" ThreadID="15532" /> 
+            <Channel>Microsoft-Windows-TerminalServices-LocalSessionManager/Operational</Channel> 
+            <Computer>WIN-QW3OXGRISMS</Computer> 
+            <Security UserID="S-1-5-18" /> 
+        </System>
+        <UserData>
+            <EventXML xmlns:auto-ns3="http://schemas.microsoft.com/win/2004/08/events" xmlns="Event_NS">
+                <User>WIN-QW3OXGRISMS\User</User> 
+                <SessionID>2</SessionID> 
+                <Address>122.6.150.75</Address> 
+            </EventXML>
+        </UserData>
+    </Event>

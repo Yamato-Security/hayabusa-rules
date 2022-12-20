@@ -1,10 +1,9 @@
-author: Eric Conrad, Zach Mathis
+author: Zach Mathis
 date: 2020/11/08
-modified: 2022/06/21
+modified: 2022/12/16
 
-title: User Added To Global Security Grp
-details: 'SID: %MemberSid% ¦ Grp: %TargetUserName% ¦ LID: %SubjectLogonId%'
-description: A user was added to a security-enabled global group. Global means the group can be granted access in any trusting domain but may only have members from its own domain. Subject user is the user that performed the action. Only logged on DCs.
+title: 'User Added To Global Security Grp'
+description: 'A user was added to a security-enabled global group. Global means the group can be granted access in any trusting domain but may only have members from its own domain. Subject user is the user that performed the action. Only logged on DCs.'
 
 id: 0db443ba-561c-4a04-b349-d74ce1c5fc8b
 level: medium
@@ -17,8 +16,8 @@ detection:
         Channel: Security
         EventID: 4728
     filter:
-        - SubjectUserName|endswith: $
-        - TargetUserName: None
+        - SubjectUserName|endswith: '$'
+        - TargetUserName: 'None'
     condition: selection and not filter
 falsepositives:
     - system administrator

@@ -2,11 +2,19 @@ title: PowerShell Writing Startup Shortcuts
 ruletype: Sigma
 author: Christopher Peacock '@securepeacock', SCYTHE
 date: 2021/10/24
-description: |
-    Attempts to detect PowerShell writing startup shortcuts.
-    This procedure was highlighted in Red Canary Intel Insights Oct. 2021, "We frequently observe adversaries using PowerShell to write malicious .lnk files into the startup directory to establish persistence.
-    Accordingly, this detection opportunity is likely to identify persistence mechanisms in multiple threats.
-    In the context of Yellow Cockatoo, this persistence mechanism eventually launches the command-line script that leads to the installation of a malicious DLL"
+description: 'Attempts to detect PowerShell writing startup shortcuts.
+
+    This procedure was highlighted in Red Canary Intel Insights Oct. 2021, "We frequently
+    observe adversaries using PowerShell to write malicious .lnk files into the startup
+    directory to establish persistence.
+
+    Accordingly, this detection opportunity is likely to identify persistence mechanisms
+    in multiple threats.
+
+    In the context of Yellow Cockatoo, this persistence mechanism eventually launches
+    the command-line script that leads to the installation of a malicious DLL"
+
+    '
 detection:
     SELECTION_1:
         EventID: 11

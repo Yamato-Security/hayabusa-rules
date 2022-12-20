@@ -9,13 +9,12 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Description: Java Update Scheduler
+        Description:
+        - Java Update Scheduler
+        - Java(TM) Update Scheduler
     SELECTION_4:
-        Description: Java(TM) Update Scheduler
-    SELECTION_5:
         Image: '*\jusched.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-        (SELECTION_5))
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
 id: edd8a48c-1b9f-4ba1-83aa-490338cd1ccb
@@ -23,7 +22,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/12/18
 references:
 - https://www.bitdefender.com/files/News/CaseStudies/study/262/Bitdefender-WhitePaper-An-APT-Blueprint-Gaining-New-Visibility-into-Financial-Threats-interactive.pdf
 status: test

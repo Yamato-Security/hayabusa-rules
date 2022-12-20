@@ -2,9 +2,13 @@ title: Stop Or Remove Antivirus Service
 ruletype: Sigma
 author: frack113
 date: 2021/07/07
-description: |
-    Detects usage of 'Stop-Service' or 'Remove-Service' powershell cmdlet to disable AV services.
-    Adversaries may disable security tools to avoid possible detection of their tools and activities by stopping antivirus service
+description: 'Detects usage of ''Stop-Service'' or ''Remove-Service'' powershell cmdlet
+    to disable AV services.
+
+    Adversaries may disable security tools to avoid possible detection of their tools
+    and activities by stopping antivirus service
+
+    '
 detection:
     SELECTION_1:
         EventID: 4688

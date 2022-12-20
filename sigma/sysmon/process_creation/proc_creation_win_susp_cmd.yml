@@ -1,0 +1,55 @@
+title: Suspicious Elevated System Shell
+ruletype: Sigma
+author: frack113
+date: 2022/12/05
+description: Detects when a shell program such as the windows Command Prompt or PowerShell
+    is launched with system privileges.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine: '*-ExecutionPolicy Restricted -Command Write-Host*'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\cmd.exe'
+    SELECTION_4:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+        - Cmd.Exe
+    SELECTION_5:
+        User:
+        - '*AUTHORI*'
+        - '*AUTORI*'
+    SELECTION_6:
+        LogonId: '0x3e7'
+    SELECTION_7:
+        ParentImage: C:\Windows\System32\CompatTelRunner.exe
+    SELECTION_8:
+        ParentCommandLine: '*-m:appraiser.dll -f:DoScheduledTelemetryRun*'
+    SELECTION_9:
+        OriginalFileName: PowerShell.EXE
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and
+        SELECTION_9 and SELECTION_10)))
+falsepositives:
+- Unknown
+id: 178e615d-e666-498b-9630-9ed363038101
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/12/07
+references:
+- https://github.com/Wh04m1001/SysmonEoP
+status: experimental
+tags:
+- attack.privilege_escalation
+- attack.defense_evasion
+- attack.execution
+- attack.t1059
+

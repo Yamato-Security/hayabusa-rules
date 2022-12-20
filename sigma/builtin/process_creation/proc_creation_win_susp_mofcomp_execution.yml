@@ -2,10 +2,15 @@ title: Suspicious Mofcomp Execution
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/12
-description: |
-    Detects execution of the "mofcomp" utility as a child of a suspicious shell or script running utility or by having a supsicious path in the commandline.
-    The "mofcomp" utility parses a file containing MOF statements and adds the classes and class instances defined in the file to the WMI repository.
+description: 'Detects execution of the "mofcomp" utility as a child of a suspicious
+    shell or script running utility or by having a supsicious path in the commandline.
+
+    The "mofcomp" utility parses a file containing MOF statements and adds the classes
+    and class instances defined in the file to the WMI repository.
+
     Attackers abuse this utility to install malicious MOF scripts
+
+    '
 detection:
     SELECTION_1:
         EventID: 4688

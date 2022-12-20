@@ -12,25 +12,29 @@ detection:
         Channel: Security
     SELECTION_3:
         ParentUser:
-        - NT AUTHORITY\NETWORK SERVICE
-        - NT AUTHORITY\LOCAL SERVICE
-        - AUTORITE NT\
+        - '*AUTHORI*'
+        - '*AUTORI*'
     SELECTION_4:
+        ParentUser:
+        - '*\NETWORK SERVICE'
+        - '*\LOCAL SERVICE'
+    SELECTION_5:
         User:
         - '*AUTHORI*'
         - '*AUTORI*'
-    SELECTION_5:
+    SELECTION_6:
         User:
         - '*\SYSTEM'
+        - "*\\Syst\xE8me"
         - "*\\\u0421\u0418\u0421\u0422\u0415\u041C\u0410"
-    SELECTION_6:
-        IntegrityLevel: System
     SELECTION_7:
-        NewProcessName: '*\rundll32.exe'
+        IntegrityLevel: System
     SELECTION_8:
+        NewProcessName: '*\rundll32.exe'
+    SELECTION_9:
         CommandLine: '*DavSetCookie*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not (SELECTION_7 and SELECTION_8))
+        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Unknown
 id: 590a5f4c-6c8c-4f10-8307-89afe9453a9d
@@ -39,7 +43,7 @@ logsource:
     category: process_creation
     definition: ParentUser field needs sysmon >= 13.30
     product: windows
-modified: 2021/11/27
+modified: 2022/12/15
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
 - https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/

@@ -1,0 +1,34 @@
+title: Potential DLL Sideloading Via ClassicExplorer32.dll
+ruletype: Sigma
+author: frack113
+date: 2022/12/13
+description: Detects potential DLL sideloading using ClassicExplorer32.dll from the
+    Classic Shell software
+detection:
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ImageLoaded: '*\ClassicExplorer32.dll'
+    SELECTION_4:
+        ImageLoaded: C:\Program Files\Classic Shell\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: caa02837-f659-466f-bca6-48bde2826ab4
+level: medium
+logsource:
+    category: image_load
+    product: windows
+references:
+- https://blogs.blackberry.com/en/2022/12/mustang-panda-uses-the-russian-ukrainian-war-to-attack-europe-and-asia-pacific-targets
+- https://app.any.run/tasks/6d8cabb0-dcda-44b6-8050-28d6ce281687/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.persistence
+- attack.privilege_escalation
+- attack.t1574.001
+- attack.t1574.002
+

@@ -1,0 +1,58 @@
+author: Zach Mathis
+date: 2022/12/07
+modified: 2022/12/16
+
+title: 'RDS Sess Start (Noisy)'
+details: 'User: %UserDataUser% ¦ SessID: %UserDataSessionID% ¦ SrcIP: %UserDataAddress%'
+description:
+
+id: 320e2cb0-a56a-476f-a299-79dc45644fee
+level: informational
+status: stable
+logsource:
+    product: windows
+detection:
+    selection:
+        Channel: 'Microsoft-Windows-TerminalServices-LocalSessionManager/Operational'
+        EventID: 22
+    condition: selection
+falsepositives:
+    - administrator
+tags:
+    - RDP
+    - attack.lateral_movement
+references:
+ruletype: Hayabusa
+
+sample-message: |
+    Remote Desktop Services: Shell start notification received:
+
+    User: WIN-QW3OXGRISMS\Administrator
+    Session ID: 2
+    Source Network Address: 122.6.150.75
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft-Windows-TerminalServices-LocalSessionManager" Guid="{5d896912-022d-40aa-a3a8-4fa5515c76d7}" /> 
+            <EventID>22</EventID> 
+            <Version>0</Version> 
+            <Level>4</Level> 
+            <Task>0</Task> 
+            <Opcode>0</Opcode> 
+            <Keywords>0x1000000000000000</Keywords> 
+            <TimeCreated SystemTime="2022-12-06T05:41:47.089491000Z" /> 
+            <EventRecordID>3319</EventRecordID> 
+            <Correlation /> 
+            <Execution ProcessID="692" ThreadID="2896" /> 
+            <Channel>Microsoft-Windows-TerminalServices-LocalSessionManager/Operational</Channel> 
+            <Computer>WIN-QW3OXGRISMS</Computer> 
+            <Security UserID="S-1-5-18" /> 
+        </System>
+        <UserData>
+            <EventXML xmlns:auto-ns3="http://schemas.microsoft.com/win/2004/08/events" xmlns="Event_NS">
+                <User>WIN-QW3OXGRISMS\Administrator</User> 
+                <SessionID>2</SessionID> 
+                <Address>122.6.150.75</Address> 
+            </EventXML>
+        </UserData>
+    </Event>

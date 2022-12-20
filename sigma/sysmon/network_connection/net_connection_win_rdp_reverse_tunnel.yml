@@ -16,11 +16,9 @@ detection:
     SELECTION_5:
         SourcePort: 3389
     SELECTION_6:
-        DestinationIp:
-        - 127.*
+        DestinationIp: 127.*
     SELECTION_7:
-        DestinationIp:
-        - ::1
+        DestinationIp: ::1
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
         SELECTION_5) and (SELECTION_6 or SELECTION_7))
 falsepositives:

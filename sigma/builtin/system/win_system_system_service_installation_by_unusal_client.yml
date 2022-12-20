@@ -10,7 +10,7 @@ detection:
     SELECTION_2:
         EventID: 7045
     SELECTION_3:
-        ProcessId: '0'
+        ProcessId: 0
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -19,6 +19,7 @@ level: high
 logsource:
     category: system
     product: windows
+modified: 2022/12/04
 references:
 - https://www.elastic.co/guide/en/security/current/windows-service-installed-via-an-unusual-client.html
 related:

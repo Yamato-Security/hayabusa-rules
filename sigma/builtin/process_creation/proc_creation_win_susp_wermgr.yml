@@ -10,14 +10,8 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        NewProcessName: '*\wermgr.exe'
-    SELECTION_4:
-        NewProcessName:
-        - '*C:\Windows\System32\\*'
-        - '*C:\Windows\SysWOW64\\*'
-    SELECTION_5:
         ParentProcessName: '*\wermgr.exe'
-    SELECTION_6:
+    SELECTION_4:
         NewProcessName:
         - '*\nslookup.exe'
         - '*\ipconfig.exe'
@@ -28,17 +22,25 @@ detection:
         - '*\systeminfo.exe'
         - '*\cmd.exe'
         - '*\powershell.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and  not (SELECTION_4))
-        or (SELECTION_5 and SELECTION_6)))
+    SELECTION_5:
+        NewProcessName: '*\wermgr.exe'
+    SELECTION_6:
+        NewProcessName:
+        - '*C:\Windows\System32\\*'
+        - '*C:\Windows\SysWOW64\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and  not (SELECTION_6))))
 falsepositives:
 - Unknown
-id: CBEC226F-63D9-4ECA-9F52-DFB6652F24DF
+id: 396f6630-f3ac-44e3-bfc8-1b161bc00c4e
 level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/04
 references:
 - https://www.trendmicro.com/en_us/research/22/j/black-basta-infiltrates-networks-via-qakbot-brute-ratel-and-coba.html
 - https://www.echotrail.io/insights/search/wermgr.exe
+- https://github.com/binderlabs/DirCreate2System
 status: experimental
 

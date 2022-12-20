@@ -1,8 +1,8 @@
-title: LDAP Reconnaissance / Active Directory Enumeration
+title: Potential Active Directory Reconnaissance/Enumeration Via LDAP
 ruletype: Sigma
 author: Adeem Mawani
 date: 2021/06/22
-description: Detects possible Active Directory enumeration via LDAP
+description: Detects potential Active Directory enumeration via LDAP
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-LDAP-Client/Debug
@@ -41,6 +41,8 @@ detection:
         - '*(primaryGroupID=515)*'
         - '*(primaryGroupID=512)*'
         - '*Domain Admins*'
+        - '*objectGUID=\*'
+        - '*(schemaIDGUID=\*)*'
     SELECTION_5:
         EventID: 30
     SELECTION_6:
@@ -73,11 +75,12 @@ logsource:
     definition: Requires Microsoft-Windows-LDAP-Client/Debug ETW logging
     product: windows
     service: ldap_debug
-modified: 2022/10/09
+modified: 2022/12/14
 references:
 - https://techcommunity.microsoft.com/t5/microsoft-defender-for-endpoint/hunting-for-reconnaissance-activities-using-ldap-search-filters/ba-p/824726
 - https://github.com/PowerShellMafia/PowerSploit/blob/d943001a7defb5e0d1657085a77a0e78609be58f/Recon/PowerView.ps1
 - https://github.com/BloodHoundAD/SharpHound3/blob/7d96b991b1887ff50349ce59c80980bc0d95c86a/SharpHound3/LdapBuilder.cs
+- https://medium.com/falconforce/falconfriday-detecting-active-directory-data-collection-0xff21-c22d1a57494c
 status: test
 tags:
 - attack.discovery

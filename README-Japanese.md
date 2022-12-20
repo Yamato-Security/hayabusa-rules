@@ -11,8 +11,8 @@
 
 # 関連プロジェクト
 
-* [EnableWindowsLogSettings](https://github.com/Yamato-Security/EnableWindowsLogSettings) - Sigmaベースの脅威ハンティングと、Windowsイベントログのファストフォレンジックタイムライン生成ツール。
-* [Hayabusa](https://github.com/Yamato-Security/hayabusa/blob/main/README-Japanese.md) - Windowsイベントログを正しく設定するためのドキュメンテーションとスクリプト。
+* [EnableWindowsLogSettings](https://github.com/Yamato-Security/EnableWindowsLogSettings) - Windowsイベントログを正しく設定するためのドキュメンテーションとスクリプト。
+* [Hayabusa](https://github.com/Yamato-Security/hayabusa/blob/main/README-Japanese.md) - Sigmaベースの脅威ハンティングと、Windowsイベントログのファストフォレンジックタイムライン生成ツール。
 * [Hayabusa Sample EVTXs](https://github.com/Yamato-Security/hayabusa-sample-evtx) - Hayabusa/Sigma検出ルールをテストするためのサンプルevtxファイル。
 * [Takajo](https://github.com/Yamato-Security/takajo/blob/main/README-Japanese.md) - Hayabusa結果の解析ツール。
 * [WELA (Windows Event Log Analyzer)](https://github.com/Yamato-Security/WELA/blob/main/README-Japanese.md) - PowerShellで書かれたWindowsイベントログの解析ツール。
@@ -405,7 +405,7 @@ Windowsのイベントログは、基本データ（イベントID、タイム�
 </Event>
 ```
 
-この問題に対処するため、`Data`タグの`Name`属性に指定された値をイベントキーとして利用できます。例えば、EventData の `SubjectUserName` と `SubjectDomainName` を条件として利用する場合、以下のように記述することが可能です。
+この問題に対処するため、`Data`タグの`Name`属性に指定された値をイベントキーとして利用できます。例えば、`EventData`の`SubjectUserName`と`SubjectDomainName` を条件として利用する場合、以下のように記述することが可能です。
 
 ```yaml
 detection:
@@ -419,7 +419,7 @@ detection:
 
 ### EventDataの例外的なパターン
 
-`EventData` タグにネストされたいくつかのタグは `Name` 属性を持ちません。
+`EventData`タグにネストされたいくつかのタグは`Name`属性を持ちません。
 
 ```xml
 <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
@@ -436,14 +436,14 @@ detection:
 </Event>
 ```
 
-上記のようなイベントログを検知するには、`EventData`というイベントキーを指定します。この場合、`EventData`にネストされたタグの内、`Data`フィールドが`None`になっている場合は、条件にマッチすることになります。
+上記のようなイベントログを検知するには、`Data`というイベントキーを指定します。この場合、`EventData`にネストされたタグの内、`Data`フィールドが`None`になっている場合は、条件にマッチすることになります。
 
 ```yaml
 detection:
     selection:
         Channel: Security
         EventID: 5379
-        EventData: None
+        Data: None
     condition: selection
 ```
 
@@ -459,14 +459,14 @@ detection:
 
 ## パイプ
 
-イベントキーにはパイプを指定することができます。ここまで説明した書き方では完全一致しか表現できませんでしたが、パイプを使うことでより柔軟な検知ルールを記載できるようになります。以下の例では、`EventData`の値が正規表現 `[\s\S]*EngineVersion=2.0[\s\S]*` に当てはまる場合、条件にマッチすることになります。
+イベントキーにはパイプを指定することができます。ここまで説明した書き方では完全一致しか表現できませんでしたが、パイプを使うことでより柔軟な検知ルールを記載できるようになります。以下の例では、ある`Data`フィールドの値に`EngineVersion=2`という文字列が入っている場合、条件にマッチすることになります。
 
 ```yaml
 detection:
     selection:
-        Channel: Microsoft-Windows-PowerShell/Operational
+        Channel: 'Windows PowerShell'
         EventID: 400
-        EventData|re: '[\s\S]*EngineVersion=2\.0[\s\S]*'
+        Data|contains: 'EngineVersion=2'
     condition: selection
 ```
 

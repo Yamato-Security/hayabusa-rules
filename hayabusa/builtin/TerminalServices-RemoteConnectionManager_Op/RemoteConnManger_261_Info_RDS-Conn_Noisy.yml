@@ -1,0 +1,27 @@
+author: Zach Mathis
+date: 2022/12/07
+modified: 2022/12/07
+
+title: 'RDS Connection (Noisy)'
+details: '-'
+description: 'There was a connection to the RDS service. Unfortunately there are no details in this event log.'
+
+id: 6dbed1df-f08a-47ab-9a58-999c0787d034
+level: informational
+status: stable
+logsource:
+    product: windows
+detection:
+    selection:
+        Channel: 'Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational'
+        EventID: 261
+    condition: selection
+falsepositives:
+    - administrator
+tags:
+    - RDP
+    - attack.lateral_movement
+references:
+ruletype: Hayabusa
+
+sample-message: 'Listener RDP-Tcp received a connection'

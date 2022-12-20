@@ -2,9 +2,13 @@ title: New DLL Added to AppCertDlls Registry Key
 ruletype: Sigma
 author: Ilyas Ochkov, oscd.community
 date: 2019/10/25
-description: |
-    Dynamic-link libraries (DLLs) that are specified in the AppCertDLLs value in the Registry key can be abused to obtain persistence and privilege escalation
-    by causing a malicious DLL to be loaded and run in the context of separate processes on the computer.
+description: 'Dynamic-link libraries (DLLs) that are specified in the AppCertDLLs
+    value in the Registry key can be abused to obtain persistence and privilege escalation
+
+    by causing a malicious DLL to be loaded and run in the context of separate processes
+    on the computer.
+
+    '
 detection:
     SELECTION_1:
         EventID: 12

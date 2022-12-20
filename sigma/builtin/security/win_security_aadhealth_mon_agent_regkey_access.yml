@@ -2,9 +2,14 @@ title: Azure AD Health Monitoring Agent Registry Keys Access
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), MSTIC
 date: 2021/08/26
-description: |
-    This detection uses Windows security events to detect suspicious access attempts to the registry key of Azure AD Health monitoring agent.
-    This detection requires an access control entry (ACE) on the system access control list (SACL) of the following securable object HKLM\SOFTWARE\Microsoft\Microsoft Online\Reporting\MonitoringAgent.
+description: 'This detection uses Windows security events to detect suspicious access
+    attempts to the registry key of Azure AD Health monitoring agent.
+
+    This detection requires an access control entry (ACE) on the system access control
+    list (SACL) of the following securable object HKLM\SOFTWARE\Microsoft\Microsoft
+    Online\Reporting\MonitoringAgent.
+
+    '
 detection:
     SELECTION_1:
         Channel: Security

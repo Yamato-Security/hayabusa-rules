@@ -68,30 +68,35 @@ detection:
         - '*\Program Files\Avast Software\Avast\aswAMSI.dll'
         - '*\Program Files (x86)\Avast Software\Avast\aswAMSI.dll'
     SELECTION_33:
-        ProcessNameBuffer:
-        - '*\Windows\System32\SIHClient.exe'
-        - '*\Windows\System32\svchost.exe'
-        - '*\Windows Defender\MpCmdRun.exe'
-    SELECTION_34:
         RequestedPolicy: 8
-    SELECTION_35:
+    SELECTION_34:
         RequestedPolicy: 12
-    SELECTION_36:
+    SELECTION_35:
         ValidatedPolicy: 1
-    SELECTION_37:
+    SELECTION_36:
         FileNameBuffer:
         - '*\stdole.dll'
         - '*\msdatasrc.dll'
-    SELECTION_38:
+    SELECTION_37:
         ProcessNameBuffer: '*\mscorsvw.exe'
-    SELECTION_39:
+    SELECTION_38:
         ProcessNameBuffer: '*\Windows\Microsoft.NET\\*'
+    SELECTION_39:
+        RequestedPolicy: 8
     SELECTION_4:
         ProcessNameBuffer: '*\Windows\System32\svchost.exe'
     SELECTION_40:
-        RequestedPolicy: 8
-    SELECTION_41:
         ValidatedPolicy: 2
+    SELECTION_41:
+        FileNameBuffer: '*\Program Files\Google\Drive File Stream\\*'
+    SELECTION_42:
+        FileNameBuffer: '*\crashpad_handler.exe'
+    SELECTION_43:
+        ProcessNameBuffer: '*\Windows\ImmersiveControlPanel\SystemSettings.exe'
+    SELECTION_44:
+        RequestedPolicy: 8
+    SELECTION_45:
+        ValidatedPolicy: 1
     SELECTION_5:
         RequestedPolicy: 12
     SELECTION_6:
@@ -108,17 +113,18 @@ detection:
         or (SELECTION_15 and SELECTION_16 and (SELECTION_17 or SELECTION_18) and SELECTION_19)
         or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
         and SELECTION_25 and SELECTION_26 and SELECTION_27 and SELECTION_28) or (SELECTION_29
-        and SELECTION_30 and SELECTION_31) or (SELECTION_32 and SELECTION_33 and (SELECTION_34
-        or SELECTION_35) and SELECTION_36) or (SELECTION_37 and SELECTION_38 and SELECTION_39
-        and SELECTION_40 and SELECTION_41)))
+        and SELECTION_30 and SELECTION_31) or (SELECTION_32 and (SELECTION_33 or SELECTION_34)
+        and SELECTION_35) or (SELECTION_36 and SELECTION_37 and SELECTION_38 and SELECTION_39
+        and SELECTION_40) or (SELECTION_41 and SELECTION_42 and SELECTION_43 and SELECTION_44
+        and SELECTION_45)))
 falsepositives:
-- Unknown
+- Antivirus products
 id: f8931561-97f5-4c46-907f-0a4a592e47a7
 level: high
 logsource:
     product: windows
     service: codeintegrity-operational
-modified: 2022/11/07
+modified: 2022/12/12
 references:
 - https://twitter.com/SBousseaden/status/1483810148602814466
 - https://github.com/MicrosoftDocs/windows-itpro-docs/blob/40fe118976734578f83e5e839b9c63ae7a4af82d/windows/security/threat-protection/windows-defender-application-control/event-id-explanations.md#windows-codeintegrity-operational-log

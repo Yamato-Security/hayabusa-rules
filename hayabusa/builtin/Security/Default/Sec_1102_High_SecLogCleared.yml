@@ -1,10 +1,9 @@
-author: Eric Conrad, Zach Mathis
+author: Zach Mathis
 date: 2020/11/08
-modified: 2022/05/21
+modified: 2022/12/16
 
-title: Log Cleared
-details: "User: %LogFileClearedSubjectUserName%"
-description: Somebody has cleared the Security event log.
+title: 'Log Cleared'
+description: 'A user has cleared the Security event log.'
 
 id: c2f690ac-53f8-4745-8cfe-7127dda28c74
 level: high
@@ -46,10 +45,10 @@ sample-evtx: |
         </System>
         <UserData>
             <LogFileCleared xmlns="http://manifests.microsoft.com/win/2004/08/windows/eventlog">
-            <SubjectUserSid>S-1-5-21-2977773840-2930198165-1551093962-1000</SubjectUserSid>
-            <SubjectUserName>Sec504</SubjectUserName>
-            <SubjectDomainName>SEC504STUDENT</SubjectDomainName>
-            <SubjectLogonId>0x1e3dd</SubjectLogonId>
+                <SubjectUserSid>S-1-5-21-2977773840-2930198165-1551093962-1000</SubjectUserSid>
+                <SubjectUserName>Sec504</SubjectUserName>
+                <SubjectDomainName>SEC504STUDENT</SubjectDomainName>
+                <SubjectLogonId>0x1e3dd</SubjectLogonId>
             </LogFileCleared>
         </UserData>
     </Event>

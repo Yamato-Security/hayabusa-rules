@@ -2,9 +2,13 @@ title: Suspicious Access To Windows Credential History File
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/10/17
-description: |
-    Detects suspicious processes based on name and location that access the Windows Credential History File.
-    Which can be a sign of credential stealing. Example case would be usage of mimikatz "dpapi::credhist" function
+description: 'Detects suspicious processes based on name and location that access
+    the Windows Credential History File.
+
+    Which can be a sign of credential stealing. Example case would be usage of mimikatz
+    "dpapi::credhist" function
+
+    '
 detection:
     SELECTION_1:
         FileName: '*\Microsoft\Protect\CREDHIST'

@@ -1,0 +1,37 @@
+title: Lsass Full Dump Request Via DumpType Registry Settings
+ruletype: Sigma
+author: '@pbssubhash'
+date: 2022/12/08
+description: Detects the setting of the "DumpType" registry value to "2" which stands
+    for a "Full Dump". Technique such as LSASS Shtinkering requires this value to
+    be "2" in order to dump LSASS.
+detection:
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject:
+        - '*\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\DumpType*'
+        - '*\SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\lsass.exe\DumpType*'
+    SELECTION_5:
+        Details: DWORD (0x00000002)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Legitimate application that needs to do a full dump of their process
+id: 33efc23c-6ea2-4503-8cfe-bdf82ce8f719
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://github.com/deepinstinct/Lsass-Shtinkering
+- https://learn.microsoft.com/en-us/windows/win32/wer/collecting-user-mode-dumps
+- https://media.defcon.org/DEF%20CON%2030/DEF%20CON%2030%20presentations/Asaf%20Gilboa%20-%20LSASS%20Shtinkering%20Abusing%20Windows%20Error%20Reporting%20to%20Dump%20LSASS.pdf
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1003.001
+

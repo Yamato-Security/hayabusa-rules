@@ -77,9 +77,10 @@ detection:
     SELECTION_34:
         ParentImage: '*\TBT_Dock_Firmware\GetDockVer32W.exe'
     SELECTION_4:
-        Image|re: ^$
+        Image: null
     SELECTION_5:
         Image:
+        - System
         - Registry
         - MemCompression
         - vmmem
@@ -110,7 +111,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/10
+modified: 2022/12/14
 references:
 - https://pentestlaboratories.com/2021/12/08/process-ghosting/
 status: experimental

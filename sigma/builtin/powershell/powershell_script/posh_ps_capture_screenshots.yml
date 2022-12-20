@@ -2,9 +2,13 @@ title: Windows Screen Capture with CopyFromScreen
 ruletype: Sigma
 author: frack113
 date: 2021/12/28
-description: |
-    Adversaries may attempt to take screen captures of the desktop to gather information over the course of an operation.
-    Screen capturing functionality may be included as a feature of a remote access tool used in post-compromise operations
+description: 'Adversaries may attempt to take screen captures of the desktop to gather
+    information over the course of an operation.
+
+    Screen capturing functionality may be included as a feature of a remote access
+    tool used in post-compromise operations
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

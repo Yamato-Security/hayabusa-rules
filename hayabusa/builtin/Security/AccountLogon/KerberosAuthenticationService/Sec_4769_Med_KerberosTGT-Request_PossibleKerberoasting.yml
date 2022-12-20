@@ -1,10 +1,9 @@
-author: Yusuke Matsui, Yamato Security
+author: Yusuke Matsui, Zach Mathis
 date: 2020/11/08
-modified: 2022/10/25
+modified: 2022/12/16
 
-title: Possible Kerberoasting
-details: 'User: %TargetUserName% ¦ Svc: %ServiceName% ¦ IP-Addr: %IpAddress% ¦ Status: %Status% ¦ PreAuthType: %PreAuthType%'
-description: Adversaries may abuse a valid Kerberos ticket-granting ticket (TGT) or sniff network traffic to obtain a ticket-granting service (TGS) ticket that may be vulnerable to Brute Force.
+title: 'Possible Kerberoasting (RC4 Kerberos Ticket Req)'
+description: 'Adversaries may abuse a valid Kerberos ticket-granting ticket (TGT) or sniff network traffic to obtain a ticket-granting service (TGS) ticket that may be vulnerable to Brute Force.'
 
 id: f19849e7-b5ba-404b-a731-9b624d7f6d19
 level: medium
@@ -25,5 +24,4 @@ tags:
     - attack.t1558.003
 references:
     - https://attack.mitre.org/techniques/T1558/003/
-sample-evtx: 
 ruletype: Hayabusa

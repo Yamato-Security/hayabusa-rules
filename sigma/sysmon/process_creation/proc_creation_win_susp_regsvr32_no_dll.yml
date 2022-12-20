@@ -20,7 +20,7 @@ detection:
         - '*.bav*'
         - '*.ppl*'
     SELECTION_5:
-        CommandLine|re: ^$
+        CommandLine: null
     SELECTION_6:
         CommandLine: ''
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and  not (SELECTION_4))

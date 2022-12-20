@@ -1,0 +1,39 @@
+title: Nslookup PowerShell Download Cradle
+ruletype: Sigma
+author: Sai Prashanth Pulisetti @pulisettis
+date: 2022/12/10
+description: Detects suspicious powershell download cradle using nslookup. This cradle
+    uses nslookup to extract payloads from DNS records
+detection:
+    SELECTION_1:
+        EventID: 400
+    SELECTION_2:
+        Channel: Windows PowerShell
+    SELECTION_3:
+        HostApplication: '*powershell*'
+    SELECTION_4:
+        HostApplication: '*nslookup*'
+    SELECTION_5:
+        HostApplication:
+        - '*-q=txt*'
+        - '*-querytype=txt*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unknown
+id: 999bff6d-dc15-44c9-9f5c-e1051bfc86e1
+level: medium
+logsource:
+    category: ps_classic_start
+    definition: fields have to be extract from event
+    product: windows
+modified: 2022/12/19
+references:
+- https://twitter.com/Alh4zr3d/status/1566489367232651264
+related:
+-   id: 1b3b01c7-84e9-4072-86e5-fc285a41ff23
+    type: similar
+status: experimental
+tags:
+- attack.execution
+- attack.t1059.001
+

@@ -9,8 +9,6 @@ from sigma.parser.condition import SigmaAggregationParser, ConditionOR, Conditio
 from sigma.parser.modifiers.base import SigmaTypeModifier
 from sigma.parser.modifiers.type import SigmaRegularExpressionModifier
 
-SPECIAL_REGEX = re.compile("^\{(\d)+,?(\d+)?\}")
-
 
 class HayabusaBackend(SingleTextQueryBackend):
     """Base class for backends that generate one text-based expression from a Sigma rule"""
@@ -66,8 +64,9 @@ class HayabusaBackend(SingleTextQueryBackend):
         elif isinstance(value, SigmaTypeModifier):
             return self.generateMapItemTypedNode(transformed_fieldname, value)
         elif value is None:
-            # nullは正規表現で表す。これでいいのかちょっと不安
-            return self.generateNode((transformed_fieldname+"|re", "^$"))
+            name = self.create_new_selection()
+            self.name_2_selection[name] = [(transformed_fieldname, None)]
+            return name
         else:
             raise TypeError(
                 "Backend does not support map values of type " + str(type(value)))
@@ -76,49 +75,7 @@ class HayabusaBackend(SingleTextQueryBackend):
         # `|re`オプションに対応
         if type(value) == SigmaRegularExpressionModifier:
             fieldname = fieldname + "|re"
-
-            # pythonとかの正規表現では/(スラッシュ)や"(ダブルクオート)をエスケープしてもエラーが出ないが、Rustの正規表現エンジンではスラッシュやダブルクオートをエスケープするとエラーが出てしまう
-            # そこでスラッシュやダブルクオートのエスケープは消しておく。
-            # あと、この実装は結構怪しいので、将来バージョンではこの実装を無くして、hayabusa側で使用する正規表現エンジンを普通のpythonとかで使われているやつに変えた方がいいと思う。
-            regex_value = value.value.replace('\/', '/')
-            regex_value = regex_value.replace("\\\"", "\"")
-
-            # 追加のケースとして、pythonとかの正規表現では{はエスケープ不要だが、Rustでは必要なので、それを修正するためのコード。めんどい
-            idx = 0
-            prev_regex = regex_value
-            regex_value = ""
-            while idx < len(prev_regex):
-                # 既にエスケープされているものはスキップする。
-                if prev_regex[idx:idx+2] == "\\{" or prev_regex[idx:idx+2] == "\\}":
-                    regex_value += prev_regex[idx:idx+2]
-                    idx += 2
-                    continue
-
-                ch = prev_regex[idx]
-                # エスケープ不要な}はここに来ないように、以降の処理でidxを調整している。なのでここにくる}はエスケープが必要。
-                if ch == "}":
-                    regex_value += "\\}"
-                    idx += 1
-                    continue
-
-                # {じゃない場合はそのまま足すだけ
-                if ch != "{":
-                    regex_value += ch
-                    idx += 1
-                    continue
-
-                # {の場合の処理
-                reg_match = SPECIAL_REGEX.match(prev_regex[idx:])
-                if reg_match == None:
-                    # 文字列としての{なので、エスケープ必要
-                    regex_value += "\\{"
-                    idx += 1
-                else:
-                    # これは桁数を指定する{なので、エスケープ不要で}までidxをスキップ
-                    regex_value += reg_match.group()
-                    idx += len(reg_match.group())
-
-            return self.generateNode((fieldname, regex_value))
+            return self.generateNode((fieldname, value.value))
         else:
             raise NotImplementedError(
                 "Type modifier '{}' is not supported by backend".format(value.identifier))
@@ -303,7 +260,7 @@ class HayabusaBackend(SingleTextQueryBackend):
                         ## is_keyword_list() == Falseの場合
                         parsed_yaml["detection"][key][fieldname] = value
 
-            yaml.dump(parsed_yaml, bs, indent=4, default_flow_style=False)
+            yaml.safe_dump(parsed_yaml, bs, indent=4, default_flow_style=False)
             ret = bs.getvalue()
 
         return ret

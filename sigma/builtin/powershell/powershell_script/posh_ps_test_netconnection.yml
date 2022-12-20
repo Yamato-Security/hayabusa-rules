@@ -2,9 +2,13 @@ title: Testing Usage of Uncommonly Used Port
 ruletype: Sigma
 author: frack113
 date: 2022/01/23
-description: |
-    Adversaries may communicate using a protocol and port paring that are typically not associated.
-    For example, HTTPS over port 8088(Citation: Symantec Elfin Mar 2019) or port 587(Citation: Fortinet Agent Tesla April 2018) as opposed to the traditional port 443.
+description: 'Adversaries may communicate using a protocol and port paring that are
+    typically not associated.
+
+    For example, HTTPS over port 8088(Citation: Symantec Elfin Mar 2019) or port 587(Citation:
+    Fortinet Agent Tesla April 2018) as opposed to the traditional port 443.
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

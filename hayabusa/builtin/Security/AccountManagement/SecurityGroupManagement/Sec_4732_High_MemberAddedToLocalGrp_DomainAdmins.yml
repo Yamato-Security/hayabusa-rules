@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2022/06/21
+modified: 2022/12/16
 
-title: User Added To Local Domain Admins Grp
-details: 'SID: %MemberSid% ¦ Grp: %TargetUserName% ¦ LID: %SubjectLogonId%'
-description: A user was added to the local Domain Admins group.
+title: 'User Added To Local Domain Admins Grp'
+description: 'A user was added to the local Domain Admins group.'
 
 id: bc58e432-959f-464d-812e-d60ce5d46fa1
 level: high
@@ -16,7 +15,7 @@ detection:
     selection:
         Channel: Security
         EventID: 4732
-        TargetUserName: Domain Admins
+        TargetUserName: 'Domain Admins'
     condition: selection
 falsepositives:
     - system administrator

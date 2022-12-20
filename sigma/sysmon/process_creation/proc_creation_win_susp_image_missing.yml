@@ -13,13 +13,14 @@ detection:
     SELECTION_3:
         Image: '*\\*'
     SELECTION_4:
-        Image|re: ^$
+        Image: null
     SELECTION_5:
         Image:
         - '-'
         - ''
     SELECTION_6:
         Image:
+        - System
         - Registry
         - MemCompression
         - vmmem
@@ -37,7 +38,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/20
+modified: 2022/12/14
 references:
 - https://pentestlaboratories.com/2021/12/08/process-ghosting/
 status: experimental

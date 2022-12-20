@@ -15,8 +15,7 @@ detection:
     SELECTION_5:
         CommandLine: '*/add*'
     SELECTION_6:
-        CommandLine:
-        - '*\Win64.exe*'
+        CommandLine: '*\Win64.exe*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
         SELECTION_5) or SELECTION_6))
 falsepositives:

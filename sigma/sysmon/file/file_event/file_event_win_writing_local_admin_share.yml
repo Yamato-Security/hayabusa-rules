@@ -2,9 +2,12 @@ title: Writing Local Admin Share
 ruletype: Sigma
 author: frack113
 date: 2022/01/01
-description: |
-    Aversaries may use to interact with a remote network share using Server Message Block (SMB).
+description: 'Aversaries may use to interact with a remote network share using Server
+    Message Block (SMB).
+
     This technique is used by post-exploitation frameworks.
+
+    '
 detection:
     SELECTION_1:
         EventID: 11

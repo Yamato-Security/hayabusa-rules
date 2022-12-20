@@ -2,9 +2,12 @@ title: Missing Space Characters in Command Lines
 ruletype: Sigma
 author: Florian Roth
 date: 2022/08/23
-description: |
-    Detects Windows command lines that miss a space before or after the /c flag when running a command using the cmd.exe.
+description: 'Detects Windows command lines that miss a space before or after the
+    /c flag when running a command using the cmd.exe.
+
     This could be a sign of obfuscation of a fat finger problem (typo by the developer).
+
+    '
 detection:
     SELECTION_1:
         EventID: 4688

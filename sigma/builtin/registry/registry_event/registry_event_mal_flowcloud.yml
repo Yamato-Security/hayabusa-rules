@@ -18,8 +18,7 @@ detection:
         - HKLM\HARDWARE\{A5124AF5-DF23-49bf-B0ED-A18ED3DEA027}
         - HKLM\HARDWARE\{2DB80286-1784-48b5-A751-B6ED1F490303}
     SELECTION_5:
-        TargetObject:
-        - HKLM\SYSTEM\Setup\PrintResponsor\\*
+        TargetObject: HKLM\SYSTEM\Setup\PrintResponsor\\*
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 or
         SELECTION_5))
 falsepositives:

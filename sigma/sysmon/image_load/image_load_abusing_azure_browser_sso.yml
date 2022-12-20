@@ -2,10 +2,15 @@ title: Abusing Azure Browser SSO
 ruletype: Sigma
 author: Den Iuzvyk
 date: 2020/07/15
-description: |
-    Detects abusing Azure Browser SSO by requesting OAuth 2.0 refresh tokens for an Azure-AD-authenticated Windows user (i.e. the machine is joined to Azure AD and a user logs in with their Azure AD account)
+description: 'Detects abusing Azure Browser SSO by requesting OAuth 2.0 refresh tokens
+    for an Azure-AD-authenticated Windows user (i.e. the machine is joined to Azure
+    AD and a user logs in with their Azure AD account)
+
     wanting to perform SSO authentication in the browser.
+
     An attacker can use this to authenticate to Azure AD in a browser as that user.
+
+    '
 detection:
     SELECTION_1:
         EventID: 7
@@ -24,10 +29,9 @@ detection:
         - '*\msedgewebview2.exe'
         - '*\OneDrive.exe'
     SELECTION_5:
-        Image:
-        - C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
+        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
     SELECTION_6:
-        Image|re: ^$
+        Image: null
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
         or SELECTION_5 or SELECTION_6))
 falsepositives:

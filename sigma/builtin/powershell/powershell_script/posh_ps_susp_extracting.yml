@@ -2,10 +2,16 @@ title: Extracting Information with PowerShell
 ruletype: Sigma
 author: frack113
 date: 2021/12/19
-description: |
-    Adversaries may search local file systems and remote file shares for files containing insecurely stored credentials.
-    These can be files created by users to store their own credentials, shared credential stores for a group of individuals,
-    configuration files containing passwords for a system or service, or source code/binary files containing embedded passwords.
+description: 'Adversaries may search local file systems and remote file shares for
+    files containing insecurely stored credentials.
+
+    These can be files created by users to store their own credentials, shared credential
+    stores for a group of individuals,
+
+    configuration files containing passwords for a system or service, or source code/binary
+    files containing embedded passwords.
+
+    '
 detection:
     SELECTION_1:
         EventID: 4104

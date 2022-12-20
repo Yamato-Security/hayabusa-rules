@@ -18,8 +18,7 @@ detection:
         - '*bypass*'
         - '*RemoteSigned*'
     SELECTION_5:
-        ParentImage:
-        - C:\ProgramData\chocolatey\choco.exe
+        ParentImage: C:\ProgramData\chocolatey\choco.exe
     SELECTION_6:
         ScriptBlockText:
         - '*(New-Object System.Net.WebClient).DownloadString(''https://community.chocolatey.org/install.ps1'')*'
