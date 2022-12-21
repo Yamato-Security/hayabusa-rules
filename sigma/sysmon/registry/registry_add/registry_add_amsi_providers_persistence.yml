@@ -16,7 +16,10 @@ detection:
         - '*\SOFTWARE\Microsoft\AMSI\Providers\\*'
         - '*\SOFTWARE\WOW6432Node\Microsoft\AMSI\Providers\\*'
     SELECTION_5:
-        Image: C:\Program Files*
+        Image:
+        - C:\Windows\System32\\*
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         (SELECTION_5))
 falsepositives:
@@ -26,6 +29,7 @@ level: high
 logsource:
     category: registry_add
     product: windows
+modified: 2022/12/19
 references:
 - https://persistence-info.github.io/Data/amsi.html
 - https://github.com/gtworek/PSBits/blob/8d767892f3b17eefa4d0668f5d2df78e844f01d8/FakeAMSI/FakeAMSI.c

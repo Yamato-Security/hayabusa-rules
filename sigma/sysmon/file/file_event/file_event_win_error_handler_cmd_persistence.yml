@@ -1,4 +1,4 @@
-title: Persistence Via ErrorHandler.Cmd
+title: Potential Persistence Attempt Via ErrorHandler.Cmd
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/08/09
@@ -24,6 +24,7 @@ level: medium
 logsource:
     category: file_event
     product: windows
+modified: 2022/12/19
 references:
 - https://www.hexacorn.com/blog/2022/01/16/beyond-good-ol-run-key-part-135/
 - https://github.com/last-byte/PersistenceSniper

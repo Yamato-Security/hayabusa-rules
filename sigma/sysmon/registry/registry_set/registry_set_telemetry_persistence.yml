@@ -1,8 +1,20 @@
-title: Registry Persistence Mechanism via Windows Telemetry
+title: Potential Registry Persistence Attempt Via Windows Telemetry
 ruletype: Sigma
-author: Lednyov Alexey, oscd.community
+author: Lednyov Alexey, oscd.community, Sreeman
 date: 2020/10/16
-description: Detects persistence method using windows telemetry
+description: 'Detects potential persistence behaviour using the windows telemetry
+    registry key.
+
+    Windows telemetry makes use of the binary CompatTelRunner.exe to run a variety
+    of commands and perform the actual telemetry collections.
+
+    This binary was created to be easily extensible, and to that end, it relies on
+    the registry to instruct on which commands to run.
+
+    The problem is, it will run any arbitrary command without restriction of location
+    or type.
+
+    '
 detection:
     SELECTION_1:
         EventID: 13
@@ -13,9 +25,22 @@ detection:
     SELECTION_4:
         TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\\*'
     SELECTION_5:
-        TargetObject: '*\Command*'
+        TargetObject: '*\Command'
     SELECTION_6:
-        Details: '*.exe*'
+        Details:
+        - '*.sh*'
+        - '*.exe*'
+        - '*.dll*'
+        - '*.bin*'
+        - '*.bat*'
+        - '*.cmd*'
+        - '*.js*'
+        - '*.ps*'
+        - '*.vb*'
+        - '*.jar*'
+        - '*.hta*'
+        - '*.msi*'
+        - '*.vbs*'
     SELECTION_7:
         Details:
         - '*\system32\CompatTelRunner.exe*'
@@ -25,15 +50,18 @@ detection:
 falsepositives:
 - Unknown
 id: 73a883d0-0348-4be4-a8d8-51031c2564f8
-level: critical
+level: high
 logsource:
     category: registry_set
     definition: 'Requirements: Sysmon config that monitors \SOFTWARE\Microsoft\Windows
-        NT\CurrentVersion\AppCompatFlags\TelemetryController subkey of the HKLU hives'
+        NT\CurrentVersion\AppCompatFlags\TelemetryController subkey of the HKLM hives'
     product: windows
-modified: 2022/03/26
+modified: 2022/12/19
 references:
 - https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/
+related:
+-   id: 4e8d5fd3-c959-441f-a941-f73d0cdcdca5
+    type: obsoletes
 status: test
 tags:
 - attack.persistence

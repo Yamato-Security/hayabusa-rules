@@ -29,8 +29,16 @@ detection:
         SourceImage: '*\MSBuild\Current\Bin\MSBuild.exe'
     SELECTION_18:
         TargetImage: C:\Program Files\Dell\DellDataVault\DDVDataCollector.exe
+    SELECTION_19:
+        SourceImage: C:\Windows\System32\Wbem\Wmiprvse.exe
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        TargetImage: C:\Windows\system32\lsass.exe
+    SELECTION_21:
+        CallTrace: C:\Windows\SYSTEM32\ntdll.dll*
+    SELECTION_22:
+        CallTrace: '*\System.ni.dll+*'
     SELECTION_3:
         GrantedAccess:
         - '0x147a'
@@ -54,7 +62,8 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
         and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18)))
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19
+        and SELECTION_20 and SELECTION_21 and SELECTION_22)))
 falsepositives:
 - Unknown
 id: 250ae82f-736e-4844-a68b-0b5e8cc887da
@@ -62,7 +71,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/12/15
+modified: 2022/12/20
 status: experimental
 tags:
 - attack.defense_evasion
