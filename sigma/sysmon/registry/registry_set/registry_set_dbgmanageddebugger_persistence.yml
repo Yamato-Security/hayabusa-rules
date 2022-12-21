@@ -1,9 +1,9 @@
-title: Add Debugger Entry To DbgManagedDebugger For Persistence
+title: Potential Registry Persistence Attempt Via DbgManagedDebugger
 ruletype: Sigma
 author: frack113
 date: 2022/08/07
-description: Detects when an attacker adds a new "Debugger" value to the "DbgManagedDebugger"
-    key in order to achieve persistence which will get invoked when an application
+description: Detects the addition of the "Debugger" value to the "DbgManagedDebugger"
+    key in order to achieve persistence. Which will get invoked when an application
     crashes
 detection:
     SELECTION_1:
@@ -27,6 +27,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
+modified: 2022/12/19
 references:
 - https://www.hexacorn.com/blog/2013/09/19/beyond-good-ol-run-key-part-4/
 - https://github.com/last-byte/PersistenceSniper

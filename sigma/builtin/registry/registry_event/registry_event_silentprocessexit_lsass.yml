@@ -1,4 +1,4 @@
-title: SilentProcessExit Monitor Registration for LSASS
+title: Potential Credential Dumping Via LSASS SilentProcessExit Technique
 ruletype: Sigma
 author: Florian Roth
 date: 2021/02/26
@@ -23,15 +23,15 @@ level: critical
 logsource:
     category: registry_event
     product: windows
-modified: 2022/09/07
+modified: 2022/12/19
 references:
 - https://www.deepinstinct.com/2021/02/16/lsass-memory-dumps-are-stealthier-than-ever-before-part-2/
 - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
 related:
--   id: 1f24c7c1-0b71-4e4e-8a6d-f863c9d8aa4a
+-   id: 36803969-5421-41ec-b92f-8500f79c23b0
     type: similar
 status: experimental
 tags:
 - attack.credential_access
-- attack.t1003.007
+- attack.t1003.001
 

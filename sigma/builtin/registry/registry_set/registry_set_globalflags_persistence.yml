@@ -1,13 +1,12 @@
-title: GlobalFlags Registry Persistence Mechanisms
+title: Potential GlobalFlags Registry Persistence Attempt
 ruletype: Sigma
-author: Karneades, Jonhnathan Ribeiro
+author: Karneades, Jonhnathan Ribeiro, Florian Roth
 date: 2018/04/11
-description: Detects persistence using GlobalFlags in image file execution options
+description: Detects registry persistence technique using the GlobalFlags and SilentProcessExit
+    keys
 detection:
     SELECTION_1:
         EventID: 4657
-    SELECTION_10:
-        TargetObject: '*\MonitorProcess*'
     SELECTION_2:
         OperationType:
         - Existing registry value modified
@@ -20,14 +19,13 @@ detection:
     SELECTION_6:
         TargetObject: '*\GlobalFlag*'
     SELECTION_7:
-        TargetObject: '*SilentProcessExit\\*'
+        TargetObject: '*\SilentProcessExit\\*'
     SELECTION_8:
-        TargetObject: '*\ReportingMode*'
-    SELECTION_9:
-        TargetObject: '*SilentProcessExit\\*'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and SELECTION_4 and
-        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10)))
+        TargetObject:
+        - '*\ReportingMode*'
+        - '*\MonitorProcess*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7 and SELECTION_8)
 falsepositives:
 - Unknown
 id: 36803969-5421-41ec-b92f-8500f79c23b0
@@ -35,9 +33,13 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/07
+modified: 2022/12/19
 references:
 - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
+- https://www.deepinstinct.com/2021/02/16/lsass-memory-dumps-are-stealthier-than-ever-before-part-2/
+related:
+-   id: c81fe886-cac0-4913-a511-2822d72ff505
+    type: obsoletes
 status: test
 tags:
 - attack.privilege_escalation
