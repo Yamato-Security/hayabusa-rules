@@ -2,7 +2,7 @@ title: USB Device Plugged
 ruletype: Sigma
 author: Florian Roth
 date: 2017/11/09
-description: Detects plugged USB devices
+description: Detects plugged/unplugged USB devices
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-DriverFrameworks-UserMode/Operational
@@ -18,7 +18,8 @@ falsepositives:
 id: 1a4bd6e3-4c6e-405d-a9a3-53a116e341d4
 level: low
 logsource:
-    definition: mapping Provider_Name 'Microsoft-Windows-DriverFrameworks-UserMode/Operational'
+    definition: Requires enabling and collection of the Microsoft-Windows-DriverFrameworks-UserMode/Operational
+        eventlog
     product: windows
     service: driver-framework
 modified: 2021/11/30
