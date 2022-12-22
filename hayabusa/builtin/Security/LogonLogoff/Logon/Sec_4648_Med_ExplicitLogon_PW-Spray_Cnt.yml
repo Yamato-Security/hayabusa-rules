@@ -17,7 +17,7 @@ detection:
         Channel: Security
         EventID: 4648
     filter:
-        IpAddress: "-" #Many false negatives on local events if this is not being filtered out.
+        IpAddress: '-' #Many false negatives on local events if this is not being filtered out.
     condition: selection and not filter | count(TargetUserName) by IpAddress >= 5 #It would be nice to also print the Workstation Name, etc.. but not possible at the moment.
     timeframe: 5m
 falsepositives:

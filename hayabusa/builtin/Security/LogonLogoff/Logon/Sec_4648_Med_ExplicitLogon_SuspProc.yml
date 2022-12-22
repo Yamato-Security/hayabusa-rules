@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2021/12/17
-modified: 2022/12/16
+modified: 2022/12/22
 
 title: 'Explicit Logon (Suspicious Process)'
 description: Alter on explicit credential logons with suspicous processes like powershell and wmic which are often abused by malware like Cobalt Strike.
@@ -16,20 +16,20 @@ detection:
         Channel: Security
         EventID: 4648
     selection_TargetUserIsComputerAccount:
-        TargetUserName|endswith: "$"  
-        IpAddress: "-"
+        TargetUserName|endswith: '$'
+        IpAddress: '-'
     filter_UsersAndTargetServerAreComputerAccounts:     #Filter system noise
-        SubjectUserName|endswith: "$"
-        TargetUserName|endswith: "$"
-        TargetInfo|endswith: "$"
+        SubjectUserName|endswith: '$'
+        TargetUserName|endswith: '$'
+        TargetInfo|endswith: '$'
     filter_SubjectUserIsComputerAccount:
-        SubjectUserName|endswith: "$" 
+        SubjectUserName|endswith: '$' 
     filter_SystemAccounts:
-        TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" #Filter out default Desktop Windows Manager and User Mode Driver Framework accounts
-        IpAddress: "-"                                  #Don't filter if the IP address is remote to catch attackers who created backdoor accounts that look like DWM-12, etc..
+        TargetUserName|re: '(DWM|UMFD)-([0-9]|1[0-3])$' #Filter out default Desktop Windows Manager and User Mode Driver Framework accounts
+        IpAddress: '-'                                 #Don't filter if the IP address is remote to catch attackers who created backdoor accounts that look like DWM-12, etc..
     selection_SuspiciousProcess:
-        - ProcessName|endswith: "powershell.exe"
-        - ProcessName|endswith: "WMIC.exe"
+        - ProcessName|endswith: 'powershell.exe'
+        - ProcessName|endswith: 'WMIC.exe'
     condition: selection_basic and selection_SuspiciousProcess and not (selection_TargetUserIsComputerAccount 
                and not filter_SubjectUserIsComputerAccount) and not filter_SystemAccounts and not filter_UsersAndTargetServerAreComputerAccounts
 falsepositives:
