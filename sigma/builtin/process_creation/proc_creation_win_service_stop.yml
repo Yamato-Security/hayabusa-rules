@@ -21,7 +21,9 @@ detection:
     SELECTION_5:
         CommandLine: '* stop *'
     SELECTION_6:
-        CommandLine: sc  stop KSCWebConsoleMessageQueue
+        CommandLine:
+        - sc  stop KSCWebConsoleMessageQueue
+        - sc  stop LGHUBUpdaterService
     SELECTION_7:
         User:
         - '*AUTHORI*'
@@ -46,7 +48,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/01
+modified: 2022/12/22
 status: experimental
 tags:
 - attack.impact
