@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2022/06/21
+modified: 2022/12/22
 
-title: Admin Logon
-details: 'TgtUser: %SubjectUserName% ¦ PrivList: %PrivilegeList% ¦ LID: %SubjectLogonId%'
-description: Prints logon information. 
+title: 'Admin Logon'
+description: 'Originally "Special privileges assigned to new logon". This will create a seperate LID that is used when special admin-level privileges are used.'
 
 id: fdd0b325-8b89-469c-8b0c-e5ddfe39b62e
 level: informational
@@ -17,11 +16,13 @@ detection:
         Channel: Security
         EventID: 4672
     filter:
-        - SubjectUserName: "SYSTEM"
-        - SubjectUserName: "LOCAL SERVICE"
-        - SubjectUserName: "NETWORK SERVICE"
-        - SubjectUserName|endswith: "$"
-        - SubjectUserName: "DWM-1"
+        - SubjectUserName: 'SYSTEM'
+        - SubjectUserName: 'LOCAL SERVICE'
+        - SubjectUserName: 'NETWORK SERVICE'
+        - SubjectUserName|endswith: '$'
+        - SubjectUserName|re: '(DWM)-([0-9]|1[0-3])$' #Filter out default Desktop Windows Manager accounts. DWM-1, DWM-2, etc... to DWM-13
+        - SubjectUserName: 'DefaultAppPool' #IIS webserver account
+        - SubjectUserName: 'IUSR' #IIS webserver account
     condition: selection and not filter
 falsepositives:
     - normal system usage
