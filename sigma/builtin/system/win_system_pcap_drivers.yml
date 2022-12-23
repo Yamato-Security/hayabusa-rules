@@ -6,7 +6,7 @@ description: Detects Windows Pcap driver installation based on a list of associa
     .sys files.
 detection:
     SELECTION_1:
-        Channel: Security
+        Channel: System
     SELECTION_2:
         EventID: 4697
     SELECTION_3:
@@ -36,8 +36,8 @@ logsource:
     definition: The 'System Security Extension' audit subcategory need to be enabled
         to log the EID 4697
     product: windows
-    service: security
-modified: 2021/11/27
+    service: system
+modified: 2022/12/22
 references:
 - https://ragged-lab.blogspot.com/2020/06/capturing-pcap-driver-installations.html#more
 status: test

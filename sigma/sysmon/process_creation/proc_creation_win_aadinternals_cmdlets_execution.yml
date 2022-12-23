@@ -1,0 +1,66 @@
+title: AADInternals PowerShell Cmdlets Execution - ProccessCreation
+ruletype: Sigma
+author: Austin Songer (@austinsonger), Nasreddine Bencherchali (update)
+date: 2022/12/23
+description: Detects ADDInternals Cmdlet execution. A tool for administering Azure
+    AD and Office 365. Which can be abused by threat actors to attack Azure AD or
+    Office 365.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        OriginalFileName:
+        - PowerShell.Exe
+        - pwsh.dll
+    SELECTION_5:
+        CommandLine:
+        - '*Add-AADInt*'
+        - '*ConvertTo-AADInt*'
+        - '*Disable-AADInt*'
+        - '*Enable-AADInt*'
+        - '*Export-AADInt*'
+        - '*Get-AADInt*'
+        - '*Grant-AADInt*'
+        - '*Install-AADInt*'
+        - '*Invoke-AADInt*'
+        - '*Join-AADInt*'
+        - '*New-AADInt*'
+        - '*Open-AADInt*'
+        - '*Read-AADInt*'
+        - '*Register-AADInt*'
+        - '*Remove-AADInt*'
+        - '*Restore-AADInt*'
+        - '*Search-AADInt*'
+        - '*Send-AADInt*'
+        - '*Set-AADInt*'
+        - '*Start-AADInt*'
+        - '*Update-AADInt*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Legitimate use of the library for administrative activity
+id: c86500e9-a645-4680-98d7-f882c70c1ea3
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://o365blog.com/aadinternals/
+- https://github.com/Gerenios/AADInternals
+related:
+-   id: 91e69562-2426-42ce-a647-711b8152ced6
+    type: similar
+status: experimental
+tags:
+- attack.execution
+- attack.reconnaissance
+- attack.discovery
+- attack.credential_access
+- attack.impact
+
