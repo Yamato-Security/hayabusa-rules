@@ -1,0 +1,48 @@
+title: Group Modification Logging
+ruletype: Sigma
+author: Alexandr Yampolskyi, SOC Prime
+date: 2019/03/26
+description: "Configure systems to issue a log entry and alert when an account is\
+    \ added to or removed from any group assigned administrative privileges.\nSigma\
+    \ detects\nEvent ID 4728 indicates a \u2018Member is added to a Security Group\u2019\
+    .\nEvent ID 4729 indicates a \u2018Member is removed from a Security enabled-group\u2019\
+    \ .\nEvent ID 4730 indicates a \u2018Security Group is deleted\u2019.\nThe case\
+    \ is not applicable for Unix OS.\nSupported OS - Windows 2008 R2 and 7, Windows\
+    \ 2012 R2 and 8.1, Windows 2016 and 10 Windows Server 2019, Windows Server 2000,\
+    \ Windows 2003 and XP.\n"
+detection:
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 4728
+    SELECTION_3:
+        EventID: 4729
+    SELECTION_4:
+        EventID: 4730
+    SELECTION_5:
+        EventID: 633
+    SELECTION_6:
+        EventID: 632
+    SELECTION_7:
+        EventID: 634
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6 or SELECTION_7))
+falsepositives:
+- Unknown
+id: 9cf01b6c-e723-4841-a868-6d7f8245ca6e
+level: low
+logsource:
+    product: windows
+    service: security
+references:
+- https://www.cisecurity.org/controls/cis-controls-list/
+- https://www.pcisecuritystandards.org/documents/PCI_DSS_v3-2-1.pdf
+- https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.04162018.pdf
+- https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4728
+- https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4729
+- https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4730
+- https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=633
+- https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=632
+- https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=634
+status: stable
+

@@ -1,0 +1,62 @@
+title: Potential Browser Data Stealing
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/12/23
+description: 'Adversaries may acquire credentials from web browsers by reading files
+    specific to the target browser.
+
+    Web browsers commonly save credentials such as website usernames and passwords
+    so that they do not need to be entered manually in the future.
+
+    Web browsers typically store the credentials in an encrypted format within a credential
+    store.
+
+    '
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '*copy-item*'
+        - '*copy*'
+        - '*cpi *'
+        - '* cp *'
+        - '*move*'
+        - '*move-item*'
+        - '* mi *'
+        - '* mv *'
+    SELECTION_4:
+        NewProcessName:
+        - '*\xcopy.exe'
+        - '*\robocopy.exe'
+    SELECTION_5:
+        OriginalFileName:
+        - XCOPY.EXE
+        - robocopy.exe
+    SELECTION_6:
+        CommandLine:
+        - '*\Opera Software\Opera Stable\\*'
+        - '*\Mozilla\Firefox\Profiles*'
+        - '*\Microsoft\Edge\User Data\\*'
+        - '*\Google\Chrome\User Data\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: 47147b5b-9e17-4d76-b8d2-7bac24c5ce1b
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1555.003/T1555.003.md
+related:
+-   id: fc028194-969d-4122-8abe-0470d5b8f12f
+    type: derived
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1555.003
+

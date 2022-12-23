@@ -1,0 +1,56 @@
+title: Remote Access Tool Services Have Been Installed - System
+ruletype: Sigma
+author: Connor Martin, Nasreddine Bencherchali
+date: 2022/12/23
+description: Detects service installation of different remote access tools software.
+    These software are often abused by threat actors to perform
+detection:
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7045
+    SELECTION_4:
+        EventID: 7036
+    SELECTION_5:
+        ServiceName:
+        - '*SSUService*'
+        - '*SplashtopRemoteService*'
+        - '*Atera*'
+        - '*LogMeIn*'
+        - '*LMIGuardianSvc*'
+        - '*TeamViewer*'
+        - '*RPCService*'
+        - '*RPCPerformanceService*'
+        - '*BASupportExpressStandaloneService*'
+        - '*BASupportExpressSrvcUpdater*'
+        - '*GoToMyPC*'
+        - '*monblanking*'
+        - '*RManService*'
+        - '*GoToAssist*'
+        - '*AmmyyAdmin*'
+        - '*vncserver*'
+        - '*Parsec*'
+        - '*chromoting*'
+        - '*Zoho*'
+        - '*jumpcloud*'
+    condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4) and SELECTION_5)
+falsepositives:
+- Unknown
+id: 1a31b18a-f00c-4061-9900-f735b96c99fc
+level: medium
+logsource:
+    product: windows
+    service: system
+references:
+- https://redcanary.com/blog/misbehaving-rats/
+related:
+-   id: c8b00925-926c-47e3-beea-298fd563728e
+    type: similar
+status: experimental
+tags:
+- attack.persistence
+- attack.t1543.003
+- attack.t1569.002
+
