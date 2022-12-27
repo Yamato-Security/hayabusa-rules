@@ -53,6 +53,8 @@ detection:
 falsepositives:
 - Admins that use PsExec or PAExec to escalate to the SYSTEM account for maintenance
     purposes (rare)
+- Users that debug Microsoft Intune issues using the commands mentioned in the official
+    documentation; see https://learn.microsoft.com/en-us/mem/intune/apps/intune-management-extension
 id: 8834e2f7-6b4b-4f09-8906-d2276470ee23
 level: high
 logsource:

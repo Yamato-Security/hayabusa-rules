@@ -1,0 +1,49 @@
+title: SharpImpersonation Execution
+ruletype: Sigma
+author: Sai Prashanth Pulisetti @pulisettis, Nasreddine Bencherchali
+date: 2022/12/27
+description: Detects execution of the SharpImpersonation tool. Which can be used to
+    manipulate tokens on a Windows computers remotely (PsExec/WmiExec) or interactively
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\SharpImpersonation.exe'
+    SELECTION_4:
+        OriginalFileName: SharpImpersonation.exe
+    SELECTION_5:
+        CommandLine: '* user:*'
+    SELECTION_6:
+        CommandLine: '* binary:*'
+    SELECTION_7:
+        CommandLine: '* user:*'
+    SELECTION_8:
+        CommandLine: '* shellcode:*'
+    SELECTION_9:
+        CommandLine:
+        - '* technique:CreateProcessAsUserW*'
+        - '* technique:ImpersonateLoggedOnuser*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
+        and SELECTION_6) or (SELECTION_7 and SELECTION_8) or SELECTION_9))
+falsepositives:
+- Unknown
+id: f89b08d0-77ad-4728-817b-9b16c5a69c7a
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://s3cur3th1ssh1t.github.io/SharpImpersonation-Introduction/
+- https://github.com/S3cur3Th1sSh1t/SharpImpersonation
+related:
+-   id: cf0c254b-22f1-4b2b-8221-e137b3c0af94
+    type: similar
+status: experimental
+tags:
+- attack.privilege_escalation
+- attack.defense_evasion
+- attack.t1134.001
+- attack.t1134.003
+
