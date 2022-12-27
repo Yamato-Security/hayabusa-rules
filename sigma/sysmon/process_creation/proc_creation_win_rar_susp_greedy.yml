@@ -1,0 +1,49 @@
+title: RAR Greedy Compression
+ruletype: Sigma
+author: X__Junior, Florian Roth
+date: 2022/12/15
+description: Detects RAR usage that creates an archive from a suspicious folder, either
+    a system folder or one of the folders often used by attackers for staging purposes
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\rar.exe'
+    SELECTION_4:
+        Description: Command line RAR
+    SELECTION_5:
+        CommandLine:
+        - '*.exe a *'
+        - '* a -m*'
+    SELECTION_6:
+        CommandLine: '* -hp*'
+    SELECTION_7:
+        CommandLine: '* -r *'
+    SELECTION_8:
+        CommandLine:
+        - '* C:\\\*.*'
+        - '* C:\\\\\*.*'
+        - '* C:\Users\Public\\*'
+        - '* %public%*'
+        - '* C:\Windows\\*'
+        - '* C:\PerfLogs\\*'
+        - '* C:\Temp*'
+        - '* C:\$Recycle.bin\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and (SELECTION_6 and SELECTION_7 and SELECTION_8))
+falsepositives:
+- Unknown
+id: afe52666-401e-4a02-b4ff-5d128990b8cb
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://decoded.avast.io/martinchlumecky/png-steganography
+status: experimental
+tags:
+- attack.execution
+- attack.t1059
+

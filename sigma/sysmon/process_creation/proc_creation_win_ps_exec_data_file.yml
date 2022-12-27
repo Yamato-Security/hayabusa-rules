@@ -1,0 +1,35 @@
+title: Powershell Inline Execution From A File
+ruletype: Sigma
+author: frack113
+date: 2022/12/25
+description: Detects inline execution of PowerShell code from a file
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '*iex *'
+        - '*Invoke-Expression *'
+        - '*Invoke-Command *'
+        - '*icm *'
+    SELECTION_4:
+        CommandLine:
+        - '*cat *'
+        - '*get-content *'
+        - '*type *'
+    SELECTION_5:
+        CommandLine: '* -raw*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Unknown
+id: ee218c12-627a-4d27-9e30-d6fb2fe22ed2
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=50
+status: experimental
+

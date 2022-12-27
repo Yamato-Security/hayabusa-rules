@@ -1,0 +1,36 @@
+title: Htran or NATBypass Markers
+ruletype: Sigma
+author: Florian Roth
+date: 2022/12/27
+description: Detects exeuctable names or flags used by Htran or Htran-like tools (e.g.
+    NATBypass)
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\htran.exe'
+        - '*\lcx.exe'
+    SELECTION_4:
+        CommandLine:
+        - '*.exe -tran *'
+        - '*.exe -slave *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+falsepositives:
+- Unknown
+id: f5e3b62f-e577-4e59-931e-0a15b2b94e1e
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/HiwinCN/HTran
+- https://github.com/cw1997/NATBypass
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1090
+- attack.s0040
+
