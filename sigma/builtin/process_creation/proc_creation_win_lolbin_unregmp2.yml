@@ -1,0 +1,33 @@
+title: Lolbin Unregmp2.exe Use As Proxy
+ruletype: Sigma
+author: frack113
+date: 2022/12/29
+description: Detect usage of the "unregmp2.exe" binary as a proxy to launch a custom
+    version of "wmpnscfg.exe"
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\unregmp2.exe'
+    SELECTION_4:
+        OriginalFileName: unregmp2.exe
+    SELECTION_5:
+        CommandLine: '* /HideWMP*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: 727454c0-d851-48b0-8b89-385611ab0704
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://lolbas-project.github.io/lolbas/Binaries/Unregmp2/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218
+

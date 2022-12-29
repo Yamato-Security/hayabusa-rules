@@ -11,11 +11,11 @@ detection:
         - Microsoft-Windows-PowerShell/Operational
         - PowerShellCore/Operational
     SELECTION_3:
-        ScriptBlockText|re: \w+\`(\w+|-|.)\`[\w+|\s]
+        ScriptBlockText|re: \w+`(\w+|-|.)`[\w+|\s]
     SELECTION_4:
-        ScriptBlockText|re: '"({\d})+"\s*-f'
+        ScriptBlockText|re: '"(\{\d\})+"\s*-f'
     SELECTION_5:
-        ScriptBlockText|re: \${((e|n|v)*`(e|n|v)*)+:path}|\${((e|n|v)*`(e|n|v)*)+:((p|a|t|h)*`(p|a|t|h)*)+}|\${env:((p|a|t|h)*`(p|a|t|h)*)+}
+        ScriptBlockText|re: \$\{((e|n|v)*`(e|n|v)*)+:path\}|\$\{((e|n|v)*`(e|n|v)*)+:((p|a|t|h)*`(p|a|t|h)*)+\}|\$\{env:((p|a|t|h)*`(p|a|t|h)*)+\}
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unknown
@@ -25,6 +25,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
+modified: 2022/12/30
 references:
 - https://github.com/danielbohannon/Invoke-Obfuscation
 related:
