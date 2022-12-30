@@ -21,11 +21,8 @@ detection:
         CommandLine: '*/configure*'
     SELECTION_8:
         CommandLine: '*/db*'
-    SELECTION_9:
-        SubjectUserName: '*$'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8))) and  not
-        (SELECTION_9))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Legitimate administrative use
 id: c2c76b77-32be-4d1f-82c9-7e544bdfe0eb
@@ -33,6 +30,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/30
 references:
 - https://blueteamops.medium.com/secedit-and-i-know-it-595056dee53d
 - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/secedit

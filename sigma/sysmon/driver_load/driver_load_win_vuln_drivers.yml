@@ -514,7 +514,7 @@ detection:
         - '*SHA256=09b0e07af8b17db1d896b78da4dd3f55db76738ee1f4ced083a97d737334a184*'
         - '*SHA256=2a4f4400402cdc475d39389645ca825bb0e775c3ecb7c527e30c5be44e24af7d*'
     SELECTION_4:
-        SHA1:
+        sha1:
         - 2261198385d62d2117f50f631652eded0ecc71db
         - 8db869c0674221a2d3280143cbb0807fac08e0cc
         - 27d3ebea7655a72e6e8b95053753a25db944ec0f
@@ -769,7 +769,7 @@ detection:
         - 755349d56cdd668ca22eebc4fc89f0cccef47327
         - 56af49e030eb85528e82849d7d1b6147f3c4973e
     SELECTION_5:
-        SHA256:
+        sha256:
         - 04A85E359525D662338CAE86C1E59B1D7AA9BD12B920E8067503723DC1E03162
         - 05F052C64D192CF69A462A5EC16DDA0D43CA5D0245900C9FCB9201685A2E7748
         - 4045AE77859B1DBF13972451972EAAF6F3C97BEA423E9E78F1C2F14330CD47CA
@@ -1035,7 +1035,7 @@ level: high
 logsource:
     category: driver_load
     product: windows
-modified: 2022/11/29
+modified: 2022/12/30
 references:
 - https://github.com/eclypsium/Screwed-Drivers/blob/master/DRIVERS.md
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-driver-block-rules

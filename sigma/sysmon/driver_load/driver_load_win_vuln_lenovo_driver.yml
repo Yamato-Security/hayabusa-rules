@@ -15,11 +15,11 @@ detection:
         - '*SHA1=B89A8EEF5AEAE806AF5BA212A8068845CAFDAB6F*'
         - '*MD5=B941C8364308990EE4CC6EADF7214E0F*'
     SELECTION_4:
-        SHA256: f05b1ee9e2f6ab704b8919d5071becbce6f9d0f9d0ba32a460c41d5272134abe
+        sha256: f05b1ee9e2f6ab704b8919d5071becbce6f9d0f9d0ba32a460c41d5272134abe
     SELECTION_5:
-        SHA1: b89a8eef5aeae806af5ba212a8068845cafdab6f
+        sha1: b89a8eef5aeae806af5ba212a8068845cafdab6f
     SELECTION_6:
-        MD5: b941c8364308990ee4cc6eadf7214e0f
+        md5: b941c8364308990ee4cc6eadf7214e0f
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
         or SELECTION_6))
 falsepositives:
@@ -29,6 +29,7 @@ level: high
 logsource:
     category: driver_load
     product: windows
+modified: 2022/12/30
 references:
 - https://support.lenovo.com/de/en/product_security/ps500533-lenovo-diagnostics-vulnerabilities
 - https://github.com/alfarom256/CVE-2022-3699/

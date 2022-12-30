@@ -11,15 +11,15 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        ScriptBlockText:
+        CommandLine:
         - '*Get-WmiObject*'
         - '*gwmi*'
         - '*Get-CimInstance*'
         - '*gcim*'
     SELECTION_4:
-        ScriptBlockText: '*Win32_Shadowcopy*'
+        CommandLine: '*Win32_Shadowcopy*'
     SELECTION_5:
-        ScriptBlockText:
+        CommandLine:
         - '*.Delete()*'
         - '*Remove-WmiObject*'
         - '*rwmi*'
@@ -33,6 +33,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/30
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-5---windows---delete-volume-shadow-copies-via-wmi-with-powershell
 - https://www.elastic.co/guide/en/security/current/volume-shadow-copy-deletion-via-powershell.html

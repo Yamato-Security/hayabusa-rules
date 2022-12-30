@@ -14,7 +14,7 @@ detection:
     SELECTION_3:
         Image: '*\aspnet_regiis.exe'
     SELECTION_4:
-        OriginalFilename: aspnet_regiis.exe
+        OriginalFileName: aspnet_regiis.exe
     SELECTION_5:
         CommandLine: '*connectionStrings*'
     SELECTION_6:
@@ -28,6 +28,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/30
 references:
 - https://www.elastic.co/guide/en/security/current/microsoft-iis-connection-strings-decryption.html
 status: experimental
