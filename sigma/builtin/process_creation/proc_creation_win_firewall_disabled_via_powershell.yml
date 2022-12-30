@@ -14,7 +14,7 @@ detection:
         - '*\pwsh.exe'
         - '*\powershell_ise.exe'
     SELECTION_4:
-        OriginalFilename: PowerShell.EXE
+        OriginalFileName: PowerShell.EXE
     SELECTION_5:
         CommandLine: '*Set-NetFirewallProfile *'
     SELECTION_6:
@@ -36,6 +36,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/30
 references:
 - https://www.elastic.co/guide/en/security/current/windows-firewall-disabled-via-powershell.html
 related:

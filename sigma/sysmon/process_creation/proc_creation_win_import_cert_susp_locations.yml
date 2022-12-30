@@ -18,11 +18,11 @@ detection:
     SELECTION_6:
         CommandLine:
         - '*\AppData\Local\Temp\\*'
-        - '*C:\Windows\TEMP\\*'
+        - '*:\Windows\TEMP\\*'
         - '*\Desktop\\*'
         - '*\Downloads\\*'
         - '*\Perflogs\\*'
-        - '*C:\Users\Public\\*'
+        - '*:\Users\Public\\*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
         and SELECTION_6)
 falsepositives:
@@ -32,6 +32,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/29
 references:
 - https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/
 - https://docs.microsoft.com/en-us/powershell/module/pki/import-certificate?view=windowsserver2022-ps

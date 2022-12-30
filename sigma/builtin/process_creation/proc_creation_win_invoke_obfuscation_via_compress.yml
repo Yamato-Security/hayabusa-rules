@@ -16,10 +16,8 @@ detection:
         CommandLine:
         - '*system.io.compression.deflatestream*'
         - '*system.io.streamreader*'
-    SELECTION_6:
-        CommandLine: '*readtoend'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+        - '*readtoend(*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unknown
 id: 7eedcc9d-9fdb-4d94-9c54-474e8affc0c7
@@ -27,7 +25,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/03/07
+modified: 2022/12/29
 references:
 - https://github.com/SigmaHQ/sigma/issues/1009
 status: test

@@ -14,7 +14,7 @@ detection:
         - '*\cmd.exe'
         - '*\powershell.exe'
     SELECTION_4:
-        OriginalFilename:
+        OriginalFileName:
         - Cmd.Exe
         - PowerShell.EXE
     SELECTION_5:
@@ -32,6 +32,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/30
 references:
 - https://www.elastic.co/guide/en/security/current/privilege-escalation-via-named-pipe-impersonation.html
 related:

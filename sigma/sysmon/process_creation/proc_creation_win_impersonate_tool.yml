@@ -22,11 +22,11 @@ detection:
         - '*SHA256=E81CC96E2118DC4FBFE5BAD1604E0AC7681960143E2101E1A024D52264BB0A8A*'
         - '*IMPHASH=0A358FFC1697B7A07D0E817AC740DF62*'
     SELECTION_6:
-        MD5: 9520714AB576B0ED01D1513691377D01
+        md5: 9520714AB576B0ED01D1513691377D01
     SELECTION_7:
-        SHA256: E81CC96E2118DC4FBFE5BAD1604E0AC7681960143E2101E1A024D52264BB0A8A
+        sha256: E81CC96E2118DC4FBFE5BAD1604E0AC7681960143E2101E1A024D52264BB0A8A
     SELECTION_8:
-        IMPHASH: 0A358FFC1697B7A07D0E817AC740DF62
+        Imphash: 0A358FFC1697B7A07D0E817AC740DF62
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
         (SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8)))
 falsepositives:
@@ -36,6 +36,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2022/12/30
 references:
 - https://sensepost.com/blog/2022/abusing-windows-tokens-to-compromise-active-directory-without-touching-lsass/
 - https://github.com/sensepost/impersonate

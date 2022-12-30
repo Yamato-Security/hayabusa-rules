@@ -15,7 +15,7 @@ detection:
     SELECTION_4:
         TargetObject: HKLM\System\CurrentControlSet\Services\Fax\ObjectName
     SELECTION_5:
-        details: '*NetworkService*'
+        NewValue: '*NetworkService*'
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and SELECTION_4 and  not
         (SELECTION_5))
 falsepositives:
@@ -25,6 +25,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
+modified: 2022/12/30
 references:
 - https://twitter.com/dottor_morte/status/1544652325570191361
 - https://raw.githubusercontent.com/RiccardoAncarani/talks/master/F-Secure/unorthodox-lateral-movement.pdf

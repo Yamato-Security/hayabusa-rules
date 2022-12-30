@@ -10,9 +10,9 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Hashes: '*IMPHASH=*'
+        Hash: '*IMPHASH=*'
     SELECTION_4:
-        Hashes: '*IMPHASH=00000000000000000000000000000000*'
+        Hash: '*IMPHASH=00000000000000000000000000000000*'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
 falsepositives:
 - Unknown
@@ -25,7 +25,7 @@ logsource:
     category: create_stream_hash
     definition: 'Requirements: Sysmon config with Imphash logging activated'
     product: windows
-modified: 2022/08/24
+modified: 2022/12/30
 references:
 - https://twitter.com/0xrawsec/status/1002478725605273600?s=21
 status: test

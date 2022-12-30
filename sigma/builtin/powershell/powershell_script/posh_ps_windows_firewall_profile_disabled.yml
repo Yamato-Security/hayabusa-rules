@@ -12,13 +12,13 @@ detection:
         - Microsoft-Windows-PowerShell/Operational
         - PowerShellCore/Operational
     SELECTION_3:
-        CommandLine: '*Set-NetFirewallProfile *'
+        ScriptBlockText: '*Set-NetFirewallProfile *'
     SELECTION_4:
-        CommandLine: '* -Enabled *'
+        ScriptBlockText: '* -Enabled *'
     SELECTION_5:
-        CommandLine: '* False*'
+        ScriptBlockText: '* False*'
     SELECTION_6:
-        CommandLine:
+        ScriptBlockText:
         - '* -All *'
         - '*Public*'
         - '*Domain*'
@@ -33,7 +33,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
-modified: 2022/10/11
+modified: 2022/12/30
 references:
 - https://docs.microsoft.com/en-us/powershell/module/netsecurity/set-netfirewallprofile?view=windowsserver2019-ps
 - https://www.tutorialspoint.com/how-to-get-windows-firewall-profile-settings-using-powershell

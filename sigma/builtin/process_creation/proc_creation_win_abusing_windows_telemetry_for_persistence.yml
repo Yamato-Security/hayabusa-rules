@@ -18,8 +18,8 @@ detection:
         CommandLine: '*run *'
     SELECTION_6:
         CommandLine: '*\Application Experience\Microsoft Compatibility Appraiser*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
 - Unknown
 id: f548a603-c9f2-4c89-b511-b089f7e94549

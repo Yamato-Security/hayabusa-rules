@@ -18,14 +18,12 @@ detection:
         - '*bypass*'
         - '*RemoteSigned*'
     SELECTION_5:
-        ParentImage: C:\ProgramData\chocolatey\choco.exe
-    SELECTION_6:
         ScriptBlockText:
         - '*(New-Object System.Net.WebClient).DownloadString(''https://community.chocolatey.org/install.ps1'')*'
         - '*(New-Object System.Net.WebClient).DownloadString(''https://chocolatey.org/install.ps1'')*'
         - '*\AppData\Roaming\Code\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5 or SELECTION_6))
+        (SELECTION_5))
 falsepositives:
 - Administrator script
 id: 61d0475c-173f-4844-86f7-f3eebae1c66b
@@ -34,7 +32,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
-modified: 2022/12/02
+modified: 2022/12/30
 references:
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.1
 - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1
