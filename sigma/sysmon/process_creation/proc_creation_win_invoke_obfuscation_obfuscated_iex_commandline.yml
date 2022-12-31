@@ -18,11 +18,11 @@ detection:
     SELECTION_6:
         CommandLine|re: \$env:ComSpec\[(\s*\d{1,3}\s*,){2}
     SELECTION_7:
-        CommandLine|re: \\\\*mdr\\\\*\W\s*\)\.Name
+        CommandLine|re: \*mdr\*\W\s*\)\.Name
     SELECTION_8:
         CommandLine|re: \$VerbosePreference\.ToString\(
     SELECTION_9:
-        CommandLine|re: \\\\String\]\s*\$VerbosePreference
+        CommandLine|re: \[String\]\s*\$VerbosePreference
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
         or SELECTION_6 or SELECTION_7 or SELECTION_8 or SELECTION_9))
 falsepositives:
@@ -32,7 +32,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/12/31
 references:
 - https://github.com/danielbohannon/Invoke-Obfuscation/blob/f20e7f843edd0a3a7716736e9eddfa423395dd26/Out-ObfuscatedStringCommand.ps1#L873-L888
 status: test
