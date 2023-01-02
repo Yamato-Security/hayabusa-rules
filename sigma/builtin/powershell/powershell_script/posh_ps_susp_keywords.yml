@@ -21,8 +21,6 @@ detection:
         - '*Runtime.InteropServices.DllImportAttribute*'
         - '*SuspendThread*'
         - '*rundll32*'
-        - '*Invoke-WMIMethod*'
-        - '*http://127.0.0.1*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -32,7 +30,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled for 4104
     product: windows
-modified: 2022/12/25
+modified: 2023/01/02
 references:
 - https://posts.specterops.io/entering-a-covenant-net-command-and-control-e11038bcf462
 - https://github.com/PowerShellMafia/PowerSploit/blob/d943001a7defb5e0d1657085a77a0e78609be58f/CodeExecution/Invoke-ReflectivePEInjection.ps1

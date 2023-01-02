@@ -18,10 +18,10 @@ detection:
     SELECTION_4:
         ScriptBlockText: '*-Method *'
     SELECTION_5:
-    - ' Put '
-    - ' Post '
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and SELECTION_4 and
-        (SELECTION_5))
+        ScriptBlockText:
+        - '* Put *'
+        - '* Post *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate script
 id: d2e3f2f6-7e09-4bf2-bc5d-90186809e7fb
@@ -30,6 +30,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
+modified: 2023/01/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1020/T1020.md
 - https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html

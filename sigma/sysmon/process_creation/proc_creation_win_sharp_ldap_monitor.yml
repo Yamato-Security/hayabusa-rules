@@ -1,0 +1,36 @@
+title: SharpLDAPmonitor Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/12/30
+description: Detects execution of the SharpLDAPmonitor. Which can monitor the creation,
+    deletion and changes to LDAP objects.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\SharpLDAPmonitor.exe'
+    SELECTION_4:
+        OriginalFileName: SharpLDAPmonitor.exe
+    SELECTION_5:
+        CommandLine: '*/user:*'
+    SELECTION_6:
+        CommandLine: '*/pass:*'
+    SELECTION_7:
+        CommandLine: '*/dcip:*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) or
+        (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Unknown
+id: 9f8fc146-1d1a-4dbf-b8fd-dfae15e08541
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/p0dalirius/LDAPmonitor
+status: experimental
+tags:
+- attack.discovery
+
