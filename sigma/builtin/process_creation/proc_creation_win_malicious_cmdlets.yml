@@ -1,20 +1,15 @@
-title: Malicious PowerShell Commandlets - ScriptBlock
+title: Malicious PowerShell Commandlets - ProcessCreation
 ruletype: Sigma
-author: Sean Metcalf (source), Florian Roth (rule), Bartlomiej Czyz @bczyz1 (update),
-    oscd.community (update), Nasreddine Bencherchali (update), Tim Shelton (fp), Mustafa
-    Kaan Demir (update), Georg Lauenstein (update), Max Altgelt (update), Tobias Michalski
-    (update), Austin Songer (@austinsonger) (update)
-date: 2017/03/05
+author: Nasreddine Bencherchali
+date: 2023/01/02
 description: Detects Commandlet names from well-known PowerShell exploitation frameworks
 detection:
     SELECTION_1:
-        EventID: 4104
+        EventID: 4688
     SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
+        Channel: Security
     SELECTION_3:
-        ScriptBlockText:
+        CommandLine:
         - '*Add-Exfiltration*'
         - '*Add-Persistence*'
         - '*Add-RegBackdoor*'
@@ -196,24 +191,14 @@ detection:
         - '*Start-CaptureServer*'
         - '*Start-WebcamRecorder*'
         - '*VolumeShadowCopyTools*'
-    SELECTION_4:
-        ScriptBlockText:
-        - '*Get-SystemDriveInfo*'
-        - '*C:\ProgramData\Amazon\EC2-Windows\Launch\Module\\*'
-    SELECTION_5:
-        ScriptBlockText: '# Copyright 2016 Amazon.com, Inc. or its affiliates. All
-            Rights Reserved*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5)))
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
-id: 89819aa4-bbd6-46bc-88ec-c7f7fe30efa6
+id: 02030f2f-6199-49ec-b258-ea71b07e03dc
 level: high
 logsource:
-    category: ps_script
-    definition: Script Block Logging must be enabled
+    category: process_creation
     product: windows
-modified: 2023/01/02
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries
@@ -227,13 +212,9 @@ references:
 - https://github.com/BloodHoundAD/BloodHound/blob/0927441f67161cc6dc08a53c63ceb8e333f55874/Collectors/AzureHound.ps1
 - https://bloodhound.readthedocs.io/en/latest/data-collection/azurehound.html
 related:
--   id: f331aa1f-8c53-4fc3-b083-cc159bc971cb
-    type: similar
--   id: 6d3f1399-a81c-4409-aff3-1ecfe9330baf
-    type: obsoletes
--   id: 83083ac6-1816-4e76-97d7-59af9a9ae46e
-    type: obsoletes
-status: test
+-   id: 89819aa4-bbd6-46bc-88ec-c7f7fe30efa6
+    type: derived
+status: experimental
 tags:
 - attack.execution
 - attack.discovery

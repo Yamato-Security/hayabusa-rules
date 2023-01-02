@@ -1,0 +1,43 @@
+title: EVTX Created In Uncommon Location
+ruletype: Sigma
+author: D3F7A5105
+date: 2023/01/02
+description: Detects the creation of new files with the ".evtx" extension in non-common
+    locations. Which could indicate tampering with default evtx locations in order
+    to evade security controls
+detection:
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*.evtx'
+    SELECTION_4:
+        TargetFilename: C:\Windows\System32\winevt\Logs\\*
+    SELECTION_5:
+        TargetFilename: C:\ProgramData\Microsoft\Windows\Containers\BaseImages\\*
+    SELECTION_6:
+        TargetFilename: '*\Windows\System32\winevt\Logs\'
+    SELECTION_7:
+        Image:
+        - C:\Windows\explorer.exe
+        - C:\Windows\system32\dllhost.exe
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5 and SELECTION_6) or (SELECTION_7)))
+falsepositives:
+- Admin activity
+- Backup activity
+id: 65236ec7-ace0-4f0c-82fd-737b04fd4dcb
+level: medium
+logsource:
+    category: file_event
+    definition: 'Requirements: The ".evtx" exntesion should be monitored via a Sysmon
+        configuration. Example: <TargetFilename condition="end with">.evtx<TargetFilename>'
+    product: windows
+references:
+- https://learn.microsoft.com/en-us/windows/win32/eventlog/eventlog-key
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.002
+

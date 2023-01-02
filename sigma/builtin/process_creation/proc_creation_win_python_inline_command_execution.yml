@@ -1,0 +1,42 @@
+title: Python Inline Command Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2023/01/02
+description: Detects execution of python using the "-c" flag. This is could be used
+    as a way to launch a reverse shell or execute live python code.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*python.exe'
+        - '*python3.exe'
+        - '*python2.exe'
+    SELECTION_4:
+        OriginalFileName: python.exe
+    SELECTION_5:
+        CommandLine: '* -c*'
+    SELECTION_6:
+        ParentProcessName: C:\Program Files\Python*
+    SELECTION_7:
+        ParentProcessName: '*\python.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Unknown
+id: 899133d5-4d7c-4a7f-94ee-27355c879d90
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://docs.python.org/3/using/cmdline.html#cmdoption-c
+- https://www.revshells.com/
+- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
+status: experimental
+tags:
+- attack.execution
+- attack.t1059
+

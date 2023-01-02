@@ -14,7 +14,6 @@ detection:
         ScriptBlockText:
         - '*Invoke-SMBAutoBrute*'
         - '*Invoke-GPOLinks*'
-        - '*Out-Minidump*'
         - '*Invoke-Potato*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
@@ -25,7 +24,7 @@ logsource:
     category: ps_script
     definition: Script Block Logging must be enabled
     product: windows
-modified: 2022/12/25
+modified: 2023/01/02
 references:
 - https://github.com/Shellntel/scripts/
 status: test
