@@ -21,6 +21,7 @@ detection:
         - '*\opera.exe'
         - '*\firefox.exe'
         - '*\MicrosoftEdge.exe'
+        - '*\WMIADAP.exe'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
         and SELECTION_5))
 falsepositives:
@@ -30,7 +31,7 @@ level: high
 logsource:
     category: process_tampering
     product: windows
-modified: 2022/02/01
+modified: 2023/01/03
 references:
 - https://twitter.com/SecurePeacock/status/1486054048390332423?s=20
 - https://www.bleepingcomputer.com/news/microsoft/microsoft-sysmon-now-detects-malware-process-tampering-attempts/
