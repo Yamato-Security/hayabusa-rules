@@ -13,6 +13,16 @@ detection:
         ParentImage: C:\Program Files\erl-*
     SELECTION_12:
         ParentImage: '*\bin\erl.exe'
+    SELECTION_13:
+        ParentImage: C:\Windows\System32\CompatTelRunner.exe
+    SELECTION_14:
+        CommandLine: '*get-vmswitch *'
+    SELECTION_15:
+        ParentImage: C:\Windows\System32\asgard2-agent\bin\generic.exe
+    SELECTION_16:
+        CommandLine: '* -taskid *'
+    SELECTION_17:
+        CommandLine: '* -name asgard2-agent *'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -39,7 +49,8 @@ detection:
         OriginalFileName: PowerShell.EXE
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
         (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and
-        SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12)))
+        SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13
+        and SELECTION_14) or (SELECTION_15 and SELECTION_16 and SELECTION_17)))
 falsepositives:
 - Unknown
 id: 178e615d-e666-498b-9630-9ed363038101
@@ -47,7 +58,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/28
+modified: 2023/01/03
 references:
 - https://github.com/Wh04m1001/SysmonEoP
 status: experimental

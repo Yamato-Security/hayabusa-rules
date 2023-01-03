@@ -14,11 +14,13 @@ detection:
         ScriptBlockText:
         - '* -enc *'
         - '* -EncodedCommand *'
+        - '* -ec *'
     SELECTION_4:
         ScriptBlockText:
         - '* -w hidden *'
         - '* -window hidden *'
         - '* -windowstyle hidden *'
+        - '* -w 1 *'
     SELECTION_5:
         ScriptBlockText:
         - '* -noni *'
@@ -32,7 +34,7 @@ logsource:
     category: ps_script
     definition: Script block logging must be enabled
     product: windows
-modified: 2022/12/25
+modified: 2023/01/03
 related:
 -   id: 3d304fda-78aa-43ed-975c-d740798a49c1
     type: derived

@@ -10,12 +10,10 @@ detection:
     SELECTION_2:
         EventID: 31017
     SELECTION_3:
-        Description: '*Rejected an insecure guest logon*'
-    SELECTION_4:
         UserName: ''
-    SELECTION_5:
+    SELECTION_4:
         ServerName: \1*
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Account fallback reasons (after failed login with specific account)
 fields:
@@ -26,7 +24,7 @@ level: medium
 logsource:
     product: windows
     service: smbclient-security
-modified: 2022/10/09
+modified: 2023/01/02
 references:
 - https://twitter.com/KevTheHermit/status/1410203844064301056
 - https://github.com/hhlxf/PrintNightmare
