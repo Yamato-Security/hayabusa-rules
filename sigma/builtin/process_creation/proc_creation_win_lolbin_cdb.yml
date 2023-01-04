@@ -1,15 +1,16 @@
-title: Possible App Whitelisting Bypass via WinDbg/CDB as a Shellcode Runner
+title: WinDbg/CDB LOLBIN Usage
 ruletype: Sigma
 author: Beyu Denis, oscd.community, Nasreddine Bencherchali
 date: 2019/10/26
-description: Launch 64-bit shellcode from a debugger script file using cdb.exe.
+description: Detects usage of "cdb.exe" to launch 64-bit shellcode or arbitrary processes
+    or commands from a debugger script file
 detection:
     SELECTION_1:
-        EventID: 1
+        EventID: 4688
     SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: Security
     SELECTION_3:
-        Image: '*\cdb.exe'
+        NewProcessName: '*\cdb.exe'
     SELECTION_4:
         OriginalFileName: CDB.Exe
     SELECTION_5:
@@ -25,10 +26,10 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/09
+modified: 2023/01/04
 references:
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Cdb/
-- http://www.exploit-monday.com/2016/08/windbg-cdb-shellcode-runner.html
+- https://web.archive.org/web/20170715043507/http://www.exploit-monday.com/2016/08/windbg-cdb-shellcode-runner.html
 - https://twitter.com/nas_bench/status/1534957360032120833
 status: test
 tags:

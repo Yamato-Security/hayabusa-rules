@@ -1,0 +1,53 @@
+title: Suspicious Git Clone
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2023/01/03
+description: Detects execution of "git" in order to clone a remote repository that
+    contain suspicious keywords which might be suspicious
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\git.exe'
+        - '*\git-remote-https.exe'
+    SELECTION_4:
+        OriginalFileName: git.exe
+    SELECTION_5:
+        CommandLine:
+        - '* clone *'
+        - '*git-remote-https *'
+    SELECTION_6:
+        CommandLine:
+        - '*exploit*'
+        - '*Vulns*'
+        - '*vulnerability*'
+        - '*RCE*'
+        - '*RemoteCodeExecution*'
+        - '*Invoke-*'
+        - '*CVE-*'
+        - '*poc-*'
+        - '*ProofOfConcept*'
+        - '*proxyshell*'
+        - '*log4shell*'
+        - '*eternalblue*'
+        - '*eternal-blue*'
+        - '*MS17-*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
+falsepositives:
+- Unknown
+id: aef9d1f1-7396-4e92-a927-4567c7a495c1
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://gist.githubusercontent.com/MichaelKoczwara/12faba9c061c12b5814b711166de8c2f/raw/e2068486692897b620c25fde1ea258c8218fe3d3/history.txt
+status: experimental
+tags:
+- attack.reconnaissance
+- attack.t1593.003
+
