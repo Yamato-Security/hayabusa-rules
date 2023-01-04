@@ -13,6 +13,7 @@ detection:
         - '*Add-Exfiltration*'
         - '*Add-Persistence*'
         - '*Add-RegBackdoor*'
+        - '*Add-RemoteRegBackdoor*'
         - '*Add-ScrnSaveBackdoor*'
         - '*Check-VM*'
         - '*Do-Exfiltration*'
@@ -32,6 +33,9 @@ detection:
         - '*Get-PassHashes*'
         - '*Get-RegAlwaysInstallElevated*'
         - '*Get-RegAutoLogon*'
+        - '*Get-RemoteCachedCredential*'
+        - '*Get-RemoteLocalAccountHash*'
+        - '*Get-RemoteMachineAccountHash*'
         - '*Get-RickAstley*'
         - '*Get-Screenshot*'
         - '*Get-SecurityPackages*'
@@ -199,6 +203,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/04
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries

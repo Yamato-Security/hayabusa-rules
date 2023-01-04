@@ -2,36 +2,37 @@ title: Monitoring Winget For LOLbin Execution
 ruletype: Sigma
 author: Sreeman, Florian Roth, Frack113
 date: 2020/04/21
-description: Adversaries can abuse winget to download payloads remotely and execute
-    them without touching disk. Winget will be included by default in Windows 10 and
-    is already available in Windows 10 insider programs. The manifest option enables
-    you to install an application by passing in a YAML file directly to the client.
-    Winget can be used to download and install exe's, msi, msix files later.
+description: Detects usage of winget to install applications via manifest file. Adversaries
+    can abuse winget to download payloads remotely and execute them without touching
+    disk. The manifest option enables you to install an application by passing in
+    a YAML file directly to the client. Winget can be used to download and install
+    exe's, msi, msix files later.
 detection:
     SELECTION_1:
         EventID: 1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        CommandLine: '*winget*'
+        Image: '*\winget.exe'
     SELECTION_4:
-        CommandLine: '*install*'
+        OriginalFileName: winget.exe
     SELECTION_5:
+        CommandLine: '*install*'
+    SELECTION_6:
         CommandLine:
         - '*-m *'
         - '*--manifest*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
 falsepositives:
 - Admin activity installing packages not in the official Microsoft repo. Winget probably
     won't be used by most users.
-fields:
-- CommandLine
 id: 313d6012-51a0-4d93-8dfc-de8553239e25
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/01/11
+modified: 2023/01/03
 references:
 - https://docs.microsoft.com/en-us/windows/package-manager/winget/install#local-install
 status: experimental

@@ -1,0 +1,33 @@
+title: Potential AMSI Bypass Using NULL Bits - ProcessCreation
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2023/01/04
+description: Detects usage of special strings/null bits in order to potentially bypass
+    AMSI functionalities
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '*if(0){{{0}}}'' -f $(0 -as [char]) +*'
+        - '*#<NULL>*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unknown
+id: 92a974db-ab84-457f-9ec0-55db83d7a825
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/r00t-3xp10it/hacking-material-books/blob/43cb1e1932c16ff1f58b755bc9ab6b096046853f/obfuscation/simple_obfuscation.md#amsi-bypass-using-null-bits-satoshi
+related:
+-   id: fa2559c8-1197-471d-9cdd-05a0273d4522
+    type: similar
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+

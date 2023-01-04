@@ -18,6 +18,7 @@ detection:
         - '*Add-Exfiltration*'
         - '*Add-Persistence*'
         - '*Add-RegBackdoor*'
+        - '*Add-RemoteRegBackdoor*'
         - '*Add-ScrnSaveBackdoor*'
         - '*Check-VM*'
         - '*Do-Exfiltration*'
@@ -37,6 +38,9 @@ detection:
         - '*Get-PassHashes*'
         - '*Get-RegAlwaysInstallElevated*'
         - '*Get-RegAutoLogon*'
+        - '*Get-RemoteCachedCredential*'
+        - '*Get-RemoteLocalAccountHash*'
+        - '*Get-RemoteMachineAccountHash*'
         - '*Get-RickAstley*'
         - '*Get-Screenshot*'
         - '*Get-SecurityPackages*'
@@ -211,9 +215,9 @@ id: 89819aa4-bbd6-46bc-88ec-c7f7fe30efa6
 level: high
 logsource:
     category: ps_script
-    definition: Script Block Logging must be enabled
+    definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2023/01/02
+modified: 2023/01/04
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries
