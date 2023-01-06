@@ -11,7 +11,7 @@ detection:
     SELECTION_3:
         CommandLine: '*\HarddiskVolumeShadowCopy*'
     SELECTION_4:
-        CommandLine: '*ystem32\config\sam*'
+        CommandLine: '*System32\config\sam*'
     SELECTION_5:
         CommandLine:
         - '*Copy-Item*'
@@ -28,7 +28,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/25
+modified: 2023/01/06
 references:
 - https://twitter.com/splinter_code/status/1420546784250769408
 status: test

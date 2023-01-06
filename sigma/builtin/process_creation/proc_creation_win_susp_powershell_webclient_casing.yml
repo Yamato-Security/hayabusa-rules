@@ -15,6 +15,10 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_5:
         CommandLine:
         - '*TgBlAFQALgB3AEUAQg*'
         - '*4AZQBUAC4AdwBFAEIA*'
@@ -161,7 +165,8 @@ detection:
         - '*bgBFAFQALgBXAEUAQg*'
         - '*4ARQBUAC4AVwBFAEIA*'
         - '*uAEUAVAAuAFcARQBCA*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unknown
 id: c86133ad-4725-4bd0-8170-210788e0a7ba
@@ -169,7 +174,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2023/01/05
 references:
 - https://app.any.run/tasks/b9040c63-c140-479b-ad59-f1bb56ce7a97/
 status: experimental

@@ -16,7 +16,7 @@ detection:
         - '*.gmmp'
         - '*.cdmp'
         - '*.camp'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
 falsepositives:
 - Unknown
 id: e15b518d-b4ce-4410-a9cd-501f23ce4a18
@@ -24,6 +24,7 @@ level: high
 logsource:
     category: file_event
     product: windows
+modified: 2023/01/05
 references:
 - https://twitter.com/eral4m/status/1480468728324231172?s=20
 status: experimental

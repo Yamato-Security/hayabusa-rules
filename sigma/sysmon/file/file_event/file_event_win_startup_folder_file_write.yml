@@ -18,7 +18,7 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
         or SELECTION_5))
 falsepositives:
-- An FP could be caused by legitimate application writing shortcuts for example. This
+- FP could be caused by legitimate application writing shortcuts for example. This
     folder should always be inspected to make sure that all the files in there are
     legitimate
 id: 2aa0a6b4-a865-495b-ab51-c28249537b75
@@ -30,6 +30,9 @@ modified: 2022/10/07
 references:
 - https://github.com/OTRF/detection-hackathon-apt29/issues/12
 - https://threathunterplaybook.com/evals/apt29/detections/5.B.1_611FCA99-97D0-4873-9E51-1C1BA2DBB40D.html
+related:
+-   id: 28208707-fe31-437f-9a7f-4b1108b94d2e
+    type: similar
 status: test
 tags:
 - attack.persistence

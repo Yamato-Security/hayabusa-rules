@@ -1,0 +1,40 @@
+title: Suspicious Double File Extention in ParentCommandLine
+ruletype: Sigma
+author: frack113
+date: 2023/01/06
+description: Detect execution of suspicious double extension files in ParentCommandLine
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentCommandLine:
+        - '*.doc.lnk*'
+        - '*.docx.lnk*'
+        - '*.xls.lnk*'
+        - '*.xlsx.lnk*'
+        - '*.ppt.lnk*'
+        - '*.pptx.lnk*'
+        - '*.rtf.lnk*'
+        - '*.pdf.lnk*'
+        - '*.txt.lnk*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unknown
+id: 5e6a80c8-2d45-4633-9ef4-fa2671a39c5c
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.virustotal.com/gui/file/7872d8845a332dce517adae9c3389fde5313ff2fed38c2577f3b498da786db68/behavior
+- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/bluebottle-banks-targeted-africa
+related:
+-   id: 1cdd9a09-06c9-4769-99ff-626e2b3991b8
+    type: derived
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036.007
+

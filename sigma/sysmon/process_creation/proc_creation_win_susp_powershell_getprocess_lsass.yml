@@ -2,15 +2,18 @@ title: PowerShell Get-Process LSASS
 ruletype: Sigma
 author: Florian Roth
 date: 2021/04/23
-description: Detects a Get-Process command on lsass process, which is in almost all
-    cases a sign of malicious activity
+description: Detects a "Get-Process" cmdlet and it's aliases on lsass process, which
+    is in almost all cases a sign of malicious activity
 detection:
     SELECTION_1:
         EventID: 1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        CommandLine: '*Get-Process lsass*'
+        CommandLine:
+        - '*Get-Process lsas*'
+        - '*ps lsas*'
+        - '*gps lsas*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -19,7 +22,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2023/01/05
 references:
 - https://twitter.com/PythonResponder/status/1385064506049630211
 status: test

@@ -19,6 +19,10 @@ detection:
         - '*.ps1'
         - '*.hta'
         - '*.dll'
+        - '*.jar'
+        - '*.msi'
+        - '*.scr'
+        - '*.cmd'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Rare legitimate usage of some of the extensions mentioned in the rule
@@ -27,8 +31,12 @@ level: high
 logsource:
     category: file_event
     product: windows
+modified: 2023/01/06
 references:
 - https://github.com/last-byte/PersistenceSniper
+related:
+-   id: 2aa0a6b4-a865-495b-ab51-c28249537b75
+    type: similar
 status: experimental
 tags:
 - attack.persistence

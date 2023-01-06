@@ -14,8 +14,12 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
-        CommandLine: '* hidden *'
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
     SELECTION_5:
+        CommandLine: '* hidden *'
+    SELECTION_6:
         CommandLine:
         - '*AGkAdABzAGEAZABtAGkAbgAgAC8AdAByAGEAbgBzAGYAZQByA*'
         - '*aXRzYWRtaW4gL3RyYW5zZmVy*'
@@ -65,7 +69,8 @@ detection:
         - '*bQBlAG0AbQBvAHYAZQ*'
         - '*bWVtbW92Z*'
         - '*ZW1tb3Zl*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
 falsepositives:
 - Unknown
 id: f26c6093-6f14-4b12-800f-0fcb46f5ffd0
@@ -73,7 +78,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2023/01/05
 references:
 - http://www.leeholmes.com/blog/2017/09/21/searching-for-content-in-base-64-strings/
 status: test

@@ -2,7 +2,8 @@ title: CLR DLL Loaded Via Scripting Applications
 ruletype: Sigma
 author: omkar72, oscd.community
 date: 2020/10/14
-description: Detects CLR DLL being loaded by an scripting applications
+description: Detects .NET CLR DLLs being loaded by scripting applications such as
+    wscript or cscript
 detection:
     SELECTION_1:
         EventID: 7
@@ -13,6 +14,8 @@ detection:
         - '*\wscript.exe'
         - '*\cscript.exe'
         - '*\mshta.exe'
+        - '*\cmstp.exe'
+        - '*\msxsl.exe'
     SELECTION_4:
         ImageLoaded:
         - '*\clr.dll'
@@ -26,11 +29,12 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2021/11/27
+modified: 2023/01/06
 references:
 - https://github.com/tyranid/DotNetToJScript
 - https://thewover.github.io/Introducing-Donut/
 - https://blog.menasec.net/2019/07/interesting-difr-traces-of-net-clr.html
+- https://web.archive.org/web/20221026202428/https://gist.github.com/code-scrap/d7f152ffcdb3e0b02f7f394f5187f008
 status: test
 tags:
 - attack.execution

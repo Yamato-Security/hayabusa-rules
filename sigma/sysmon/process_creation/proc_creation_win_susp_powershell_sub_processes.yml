@@ -1,8 +1,8 @@
-title: Suspicious PowerShell Sub Processes
+title: Suspicious PowerShell Child Processes
 ruletype: Sigma
 author: Florian Roth, Tim Shelton
 date: 2022/04/26
-description: Detects suspicious sub processes spawned by PowerShell
+description: Detects suspicious child processes spawned by PowerShell
 detection:
     SELECTION_1:
         EventID: 1
@@ -35,7 +35,7 @@ detection:
     SELECTION_6:
         CommandLine: '*\Program Files\Amazon\WorkspacesConfig\Scripts\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5 and SELECTION_6))
+        ((SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Unknown
 id: e4b6d2a7-d8a4-4f19-acbd-943c16d90647
@@ -43,7 +43,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2023/01/05
 references:
 - https://twitter.com/ankit_anubhav/status/1518835408502620162
 status: experimental
