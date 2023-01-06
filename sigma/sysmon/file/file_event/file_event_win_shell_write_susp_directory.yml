@@ -18,11 +18,10 @@ detection:
         - '*\sh.exe'
         - '*\bash.exe'
         - '*\msbuild.exe'
-        - '*\certutil.exe'
     SELECTION_4:
         TargetFilename:
-        - '*C:\Users\Public*'
-        - '*C:\PerfLogs*'
+        - C:\Users\Public*
+        - C:\PerfLogs*
     SELECTION_5:
         Image:
         - '*\schtasks.exe'
@@ -41,15 +40,12 @@ detection:
         (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Unknown
-fields:
-- CommandLine
-- ParentCommandLine
 id: 1277f594-a7d1-4f28-a2d3-73af5cbeab43
 level: high
 logsource:
     category: file_event
     product: windows
-modified: 2022/07/14
+modified: 2023/01/05
 references:
 - Internal Research
 status: experimental

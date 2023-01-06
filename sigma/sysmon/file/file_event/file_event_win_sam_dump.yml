@@ -1,4 +1,4 @@
-title: SAM Dump File Creation
+title: Potential SAM Database Dump
 ruletype: Sigma
 author: Florian Roth
 date: 2022/02/11
@@ -22,9 +22,8 @@ detection:
         - '*\AppData\Roaming\sam'
         - '*_ShadowSteal.zip'
         - '*\Documents\SAM.export'
+        - '*:\sam'
     SELECTION_4:
-        TargetFilename: c:\sam
-    SELECTION_5:
         TargetFilename:
         - '*\hive_sam_*'
         - '*\sam.save*'
@@ -33,7 +32,7 @@ detection:
         - '*\sam_backup*'
         - '*\sam.bck*'
         - '*\sam.backup*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Rare cases of administrative activity
 id: 4e87b8e2-2ee9-4b2a-a715-4727d297ece0
@@ -41,6 +40,7 @@ level: high
 logsource:
     category: file_event
     product: windows
+modified: 2023/01/05
 references:
 - https://github.com/search?q=CVE-2021-36934
 - https://github.com/cube0x0/CVE-2021-36934

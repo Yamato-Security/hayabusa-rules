@@ -8,39 +8,9 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        CommandLine: '*-ExecutionPolicy Restricted -Command Write-Host*'
-    SELECTION_11:
-        ParentProcessName: C:\Program Files\erl-*
-    SELECTION_12:
-        ParentProcessName: '*\bin\erl.exe'
-    SELECTION_13:
-        ParentProcessName: C:\Windows\System32\CompatTelRunner.exe
-    SELECTION_14:
-        CommandLine: '*get-vmswitch *'
-    SELECTION_15:
-        ParentProcessName: C:\Windows\System32\asgard2-agent\bin\generic.exe
-    SELECTION_16:
-        CommandLine: '* -taskid *'
-    SELECTION_17:
-        CommandLine: '* -name asgard2-agent *'
-    SELECTION_18:
-        ParentProcessName: C:\ManageEngine\ADManager Plus\pgsql\bin\postgres.exe
-    SELECTION_19:
         NewProcessName: '*\cmd.exe'
     SELECTION_2:
         Channel: Security
-    SELECTION_20:
-        ParentProcessName: C:\Program Files (x86)\LANDesk\LDClient\sdistbat.exe
-    SELECTION_21:
-        NewProcessName: '*\cmd.exe'
-    SELECTION_22:
-        ParentProcessName: C:\Program Files (x86)\Varonis\DatAdvantage\GridCollector\VrnsRealTimeAlertsSvc.exe
-    SELECTION_23:
-        NewProcessName: '*\cmd.exe'
-    SELECTION_24:
-        ParentProcessName: C:\Program Files\Tenable\Nessus Agent\nessus-agent-module.exe
-    SELECTION_25:
-        NewProcessName: '*\cmd.exe'
     SELECTION_3:
         NewProcessName:
         - '*\powershell.exe'
@@ -58,17 +28,19 @@ detection:
     SELECTION_6:
         SubjectLogonId: '0x3e7'
     SELECTION_7:
-        ParentProcessName: C:\Windows\System32\CompatTelRunner.exe
+        ParentProcessName:
+        - C:\Windows\System32\\*
+        - C:\Program Files (x86)\\*
+        - C:\Program Files\\*
     SELECTION_8:
-        ParentCommandLine: '*-m:appraiser.dll -f:DoScheduledTelemetryRun*'
+        NewProcessName:
+        - '*\cmd.exe'
+        - '*\powershell.exe'
     SELECTION_9:
-        OriginalFileName: PowerShell.EXE
+        ParentProcessName: C:\ManageEngine\ADManager Plus\pgsql\bin\postgres.exe
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and
-        SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13
-        and SELECTION_14) or (SELECTION_15 and SELECTION_16 and SELECTION_17) or (SELECTION_18
-        and SELECTION_19) or (SELECTION_20 and SELECTION_21) or (SELECTION_22 and
-        SELECTION_23) or (SELECTION_24 and SELECTION_25)))
+        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8) or
+        (SELECTION_9 and SELECTION_10)))
 falsepositives:
 - Unknown
 id: 178e615d-e666-498b-9630-9ed363038101
@@ -76,7 +48,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/04
+modified: 2023/01/06
 references:
 - https://github.com/Wh04m1001/SysmonEoP
 status: experimental

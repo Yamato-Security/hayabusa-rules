@@ -1,4 +1,4 @@
-title: Remote Credential Dump
+title: Potential Remote Credential Dumping Activity
 ruletype: Sigma
 author: SecurityAura
 date: 2022/11/16
@@ -21,7 +21,7 @@ level: high
 logsource:
     category: file_event
     product: windows
-modified: 2022/11/29
+modified: 2023/01/05
 references:
 - https://github.com/Porchetta-Industries/CrackMapExec
 - https://github.com/SecureAuthCorp/impacket/blob/master/examples/secretsdump.py

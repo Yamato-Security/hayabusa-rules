@@ -8,6 +8,8 @@ description: Detects clearing or configuration of eventlogs using wevtutil, powe
 detection:
     SELECTION_1:
         EventID: 1
+    SELECTION_10:
+        CommandLine: '* sl *'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -33,21 +35,29 @@ detection:
         Image: '*\wmic.exe'
     SELECTION_8:
         CommandLine: '* ClearEventLog *'
+    SELECTION_9:
+        ParentImage:
+        - C:\Windows\SysWOW64\msiexec.exe
+        - C:\Windows\System32\msiexec.exe
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)) and  not ((SELECTION_9
+        and SELECTION_10)))
 falsepositives:
 - Admin activity
 - Scripts and administrative tools used in the monitored environment
+- Maintenance activity
 id: cc36992a-4671-4f21-a91d-6c2b72a2edf5
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/03
+modified: 2023/01/06
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.001/T1070.001.md
 - https://eqllib.readthedocs.io/en/latest/analytics/5b223758-07d6-4100-9e11-238cfdd0fe97.html
 - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil
+- https://gist.github.com/fovtran/ac0624983c7722e80a8f5a4babb170ee
+- https://jdhnet.wordpress.com/2017/12/19/changing-the-location-of-the-windows-event-logs/
 status: stable
 tags:
 - attack.defense_evasion

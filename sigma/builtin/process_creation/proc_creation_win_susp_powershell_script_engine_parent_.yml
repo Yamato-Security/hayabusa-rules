@@ -1,4 +1,4 @@
-title: Suspicious PowerShell Invocation Based on Parent Process
+title: Suspicious PowerShell Invocation From Script Engines
 ruletype: Sigma
 author: Florian Roth
 date: 2019/01/16
@@ -20,21 +20,18 @@ detection:
     SELECTION_5:
         CurrentDirectory: '*\Health Service State\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
+        ((SELECTION_5)))
 falsepositives:
 - Microsoft Operations Manager (MOM)
 - Other scripts
-fields:
-- CommandLine
-- ParentCommandLine
 id: 95eadcb2-92e4-4ed1-9031-92547773a6db
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2023/01/05
 references:
-- https://www.carbonblack.com/2017/03/15/attackers-leverage-excel-powershell-dns-latest-non-malware-attack/
+- https://www.securitynewspaper.com/2017/03/20/attackers-leverage-excel-powershell-dns-latest-non-malware-attack/
 status: test
 tags:
 - attack.execution

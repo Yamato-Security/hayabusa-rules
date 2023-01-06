@@ -14,7 +14,9 @@ detection:
     SELECTION_4:
         CommandLine: '*gameplayapi.intel.com*'
     SELECTION_5:
-        ParentProcessName: '*\GfxDownloadWrapper.exe'
+        ParentProcessName:
+        - '*\GfxDownloadWrapper.exe'
+        - '*\igfxEM.exe'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
         and SELECTION_5))
 falsepositives:
@@ -26,7 +28,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2022/01/06
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/GfxDownloadWrapper/
 status: test

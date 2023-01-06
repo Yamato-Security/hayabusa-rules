@@ -12,6 +12,8 @@ detection:
         CommandLine:
         - '*.DownloadString(*'
         - '*.DownloadFile(*'
+        - '*Invoke-WebRequest *'
+        - '*iwr *'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Scripts or tools that download files
@@ -20,6 +22,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/05
 references:
 - https://github.com/VirtualAlllocEx/Payload-Download-Cradles/blob/88e8eca34464a547c90d9140d70e9866dcbc6a12/Download-Cradles.cmd
 status: experimental
