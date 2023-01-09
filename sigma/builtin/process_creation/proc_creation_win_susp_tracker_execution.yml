@@ -19,7 +19,9 @@ detection:
     SELECTION_6:
         CommandLine: '* /ERRORREPORT:PROMPT *'
     SELECTION_7:
-        ParentProcessName: '*\Msbuild\Current\Bin\MSBuild.exe'
+        ParentProcessName:
+        - '*\Msbuild\Current\Bin\MSBuild.exe'
+        - '*\Msbuild\Current\Bin\amd64\MSBuild.exe'
     SELECTION_8:
         CommandLine: '*\VC\Tools\MSVC\\*'
     SELECTION_9:
@@ -33,7 +35,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/12
+modified: 2023/01/06
 references:
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Tracker/
 status: test
