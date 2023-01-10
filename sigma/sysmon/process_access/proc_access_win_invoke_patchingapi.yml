@@ -16,8 +16,16 @@ detection:
         CallTrace: '*|UNKNOWN(*'
     SELECTION_6:
         CallTrace: '*)'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    SELECTION_7:
+        SourceImage: C:\Program Files\Microsoft Visual Studio\\*
+    SELECTION_8:
+        SourceImage:
+        - '*\MSBuild\Current\Bin\amd64\MSBuild.exe'
+        - '*\MSBuild\Current\Bin\MSBuild.exe'
+    SELECTION_9:
+        TargetImage: C:\Program Files\Microsoft Visual Studio\\*
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Unknown
 id: b916cba1-b38a-42da-9223-17114d846fd6
@@ -25,6 +33,7 @@ level: medium
 logsource:
     category: process_access
     product: windows
+modified: 2023/01/09
 references:
 - https://github.com/D1rkMtr/UnhookingPatch
 - https://twitter.com/D1rkMtr/status/1611471891193298944?s=20

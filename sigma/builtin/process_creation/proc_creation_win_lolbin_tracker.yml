@@ -1,8 +1,8 @@
-title: DLL Injection with Tracker.exe
+title: Potential DLL Injection Or Execution Using Tracker.exe
 ruletype: Sigma
 author: Avneet Singh @v3t0_, oscd.community
 date: 2020/10/18
-description: This rule detects DLL injection and execution via LOLBAS - Tracker.exe
+description: Detects potential DLL injection and execution using "Tracker.exe"
 detection:
     SELECTION_1:
         EventID: 4688
@@ -22,12 +22,8 @@ detection:
         ParentProcessName:
         - '*\Msbuild\Current\Bin\MSBuild.exe'
         - '*\Msbuild\Current\Bin\amd64\MSBuild.exe'
-    SELECTION_8:
-        CommandLine: '*\VC\Tools\MSVC\\*'
-    SELECTION_9:
-        CommandLine: '*\bin\HostX86\x64\\*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Unknown
 id: 148431ce-4b70-403d-8525-fcc2993f29ea
@@ -35,7 +31,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/06
+modified: 2023/01/09
 references:
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Tracker/
 status: test
