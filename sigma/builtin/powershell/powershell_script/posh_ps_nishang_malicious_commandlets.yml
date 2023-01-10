@@ -14,15 +14,18 @@ detection:
     SELECTION_3:
         ScriptBlockText:
         - '*Add-ConstrainedDelegationBackdoor*'
-        - '*Add-Persistence*'
         - '*Copy-VSS*'
         - '*Create-MultipleSessions*'
         - '*DataToEncode*'
         - '*DNS_TXT_Pwnage*'
+        - '*Do-Exfiltration-Dns*'
         - '*Download_Execute*'
         - '*Download-Execute-PS*'
+        - '*DownloadAndExtractFromRemoteRegistry*'
         - '*DumpCerts*'
         - '*DumpCreds*'
+        - '*DumpHashes*'
+        - '*Enable-DuplicateToken*'
         - '*Enable-Duplication*'
         - '*Execute-Command-MSSQL*'
         - '*Execute-DNSTXT-Code*'
@@ -36,6 +39,7 @@ detection:
         - '*Get-Information*'
         - '*Get-PassHints*'
         - '*Get-Web-Credentials*'
+        - '*Get-WebCredentials*'
         - '*Get-WLAN-Keys*'
         - '*HTTP-Backdoor*'
         - '*Invoke-AmsiBypass*'
@@ -48,7 +52,6 @@ detection:
         - '*Invoke-JSRatRundll*'
         - '*Invoke-MimikatzWDigestDowngrade*'
         - '*Invoke-NetworkRelay*'
-        - '*Invoke-PoshRatHttps*'
         - '*Invoke-PowerShellIcmp*'
         - '*Invoke-PowerShellUdp*'
         - '*Invoke-Prasadhak*'
@@ -56,7 +59,6 @@ detection:
         - '*Invoke-PsGcatAgent*'
         - '*Invoke-SessionGopher*'
         - '*Invoke-SSIDExfil*'
-        - '*Keylogger*'
         - '*LoggedKeys*'
         - '*Nishang*'
         - '*NotAllNameSpaces*'
@@ -92,7 +94,7 @@ logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2023/01/02
+modified: 2023/01/09
 references:
 - https://github.com/samratashok/nishang
 status: experimental

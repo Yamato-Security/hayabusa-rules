@@ -12,9 +12,13 @@ detection:
         - C:\Program Files\Avast Software\Avast\AvastSvc.exe
         - C:\Program Files (x86)\Avast Software\Avast\AvastSvc.exe
     SELECTION_11:
-        SourceIp: ::1
+        SourceIp:
+        - ::1
+        - 127.0.0.1
     SELECTION_12:
-        DestinationIp: ::1
+        DestinationIp:
+        - ::1
+        - 127.0.0.1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -46,7 +50,7 @@ level: high
 logsource:
     category: network_connection
     product: windows
-modified: 2022/08/24
+modified: 2023/01/09
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190511223310.html
 status: test
