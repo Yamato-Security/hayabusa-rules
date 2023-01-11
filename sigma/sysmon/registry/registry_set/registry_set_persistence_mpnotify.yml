@@ -1,4 +1,4 @@
-title: Persistence Via Mpnotify
+title: Potential Persistence Via Mpnotify
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/07/21
@@ -6,17 +6,14 @@ description: Detects when an attacker register a new SIP provider for persistenc
     and defense evasion
 detection:
     SELECTION_1:
-        EventID: 4657
+        EventID: 13
     SELECTION_2:
-        OperationType:
-        - Existing registry value modified
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Channel: Security
-    SELECTION_4:
         EventType: SetValue
-    SELECTION_5:
+    SELECTION_4:
         TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\mpnotify*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Might trigger if a legitimate new SIP provider is registered. But this is not a
     common occurrence in an environment and should be investigated either way
@@ -25,6 +22,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
+modified: 2023/01/10
 references:
 - https://persistence-info.github.io/Data/mpnotify.html
 - https://www.youtube.com/watch?v=ggY3srD9dYs&ab_channel=GrzegorzTworek

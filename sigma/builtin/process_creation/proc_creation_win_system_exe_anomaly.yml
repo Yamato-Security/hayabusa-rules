@@ -71,8 +71,12 @@ detection:
         NewProcessName:
         - C:\Windows\explorer.exe
         - C:\Program Files\PowerShell\7\pwsh.exe
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-        or SELECTION_5 or SELECTION_6))
+    SELECTION_7:
+        NewProcessName: C:\Program Files\WindowsApps\MicrosoftCorporationII.WindowsSubsystemForLinux*
+    SELECTION_8:
+        NewProcessName: '*\wsl.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        or SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Exotic software
 fields:
@@ -84,7 +88,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/13
+modified: 2023/01/10
 references:
 - https://twitter.com/GelosSnake/status/934900723426439170
 - https://asec.ahnlab.com/en/39828/

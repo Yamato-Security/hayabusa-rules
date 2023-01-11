@@ -1,9 +1,10 @@
-title: Usage Of Web Request Commands And Cmdlets - PowerShell
+title: Usage Of Web Request Commands And Cmdlets - ScriptBlock
 ruletype: Sigma
 author: James Pemberton / @4A616D6573
 date: 2019/10/24
 description: Detects the use of various web request commands with commandline tools
-    and Windows PowerShell cmdlets (including aliases) via PowerShell logs
+    and Windows PowerShell cmdlets (including aliases) via PowerShell scriptblock
+    logs
 detection:
     SELECTION_1:
         EventID: 4104
@@ -19,6 +20,7 @@ detection:
         - '*curl *'
         - '*Net.WebClient*'
         - '*Start-BitsTransfer*'
+        - '*Resume-BitsTransfer*'
         - '*[System.Net.WebRequest]::create*'
         - '*Invoke-RestMethod*'
         - '*WinHttp.WinHttpRequest*'
@@ -33,7 +35,7 @@ logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2022/12/27
+modified: 2023/01/10
 references:
 - https://4sysops.com/archives/use-powershell-to-download-a-file-with-http-https-and-ftp/
 - https://blog.jourdant.me/post/3-ways-to-download-files-with-powershell

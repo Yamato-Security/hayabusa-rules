@@ -19,6 +19,7 @@ detection:
         - '*C:\Users\Public\\*'
         - '*%public%*'
         - '*\Desktop\\*'
+        - '*C:\PerfLogs\\*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Administrator PowerShell scripts
@@ -27,6 +28,7 @@ level: high
 logsource:
     product: windows
     service: bits-client
+modified: 2023/01/10
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md
 status: experimental

@@ -1,8 +1,8 @@
-title: Powershell in Windows Run Keys
+title: Suspicious Powershell In Registry Run Keys
 ruletype: Sigma
 author: frack113, Florian Roth
 date: 2022/03/17
-description: Adds a RUN key that contains a powershell keyword
+description: Detects potential PowerShell commands or code within registry run keys
 detection:
     SELECTION_1:
         EventID: 13
@@ -11,31 +11,36 @@ detection:
     SELECTION_3:
         EventType: SetValue
     SELECTION_4:
-        TargetObject:
-        - '*\Software\Microsoft\Windows\CurrentVersion\Run*'
-        - '*\Software\Microsoft\Windows\CurrentVersion\RunOnce*'
+        TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\Run*'
     SELECTION_5:
         Details:
         - '*powershell*'
+        - '*pwsh *'
         - '*FromBase64String*'
         - '*.DownloadFile(*'
         - '*.DownloadString(*'
         - '* -w hidden *'
+        - '* -w 1 *'
         - '*-windowstyle hidden*'
+        - '*-window hidden*'
         - '* -nop *'
         - '* -encodedcommand *'
         - '*-ExecutionPolicy Bypass*'
         - '*Invoke-Expression*'
         - '*IEX (*'
+        - '*Invoke-WebRequest*'
+        - '*IWR *'
+        - '* -noni *'
+        - '* -noninteractive *'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
-- Legitimate admin or third party scripts
+- Legitimate admin or third party scripts. Baseline according to your environnement
 id: 8d85cf08-bf97-4260-ba49-986a2a65129c
 level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/11/09
+modified: 2023/01/10
 references:
 - https://github.com/frack113/atomic-red-team/blob/a9051c38de8a5320b31c7039efcbd3b56cf2d65a/atomics/T1547.001/T1547.001.md#atomic-test-9---systembc-malware-as-a-service-registry
 - https://www.trendmicro.com/en_us/research/22/j/lv-ransomware-exploits-proxyshell-in-attack.html

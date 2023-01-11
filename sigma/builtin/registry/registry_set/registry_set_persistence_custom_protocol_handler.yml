@@ -1,8 +1,11 @@
-title: Newly Registered Protocol Handler
+title: Potential Persistence Via Custom Protocol Handler
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/05/30
-description: Detects when a new custom protocole handler is registered
+description: Detects potential persistence activity via the registering of a new custom
+    protocole handlers. While legitimate applications register protocole handlers
+    often times during installation. And attacker can abuse this by setting a custom
+    handler to be used as a persistence mechanism.
 detection:
     SELECTION_1:
         EventID: 4657
@@ -23,7 +26,7 @@ detection:
         - C:\Program Files (x86)*
         - C:\Windows\\*
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6 or SELECTION_7)))
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Legitimate applications registering a new custom protocol handler
 id: fdbf0b9d-0182-4c43-893b-a1eaab92d085
@@ -31,6 +34,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
+modified: 2023/01/10
 references:
 - https://ladydebug.com/blog/2019/06/21/custom-protocol-handler-cph/
 status: experimental

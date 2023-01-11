@@ -1,17 +1,15 @@
-title: Import PowerShell Modules From Suspicious Directories
+title: Import PowerShell Modules From Suspicious Directories - ProcCreation
 ruletype: Sigma
 author: Nasreddine Bencherchali
-date: 2022/07/07
+date: 2023/01/10
 description: Detects powershell scripts that import modules from suspicious directories
 detection:
     SELECTION_1:
-        EventID: 4104
+        EventID: 1
     SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        ScriptBlockText:
+        CommandLine:
         - '*Import-Module "$Env:Temp\\*'
         - '*Import-Module ''$Env:Temp\\*'
         - '*Import-Module $Env:Temp\\*'
@@ -29,17 +27,15 @@ detection:
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
-id: 21f9162c-5f5d-4b01-89a8-b705bd7d10ab
+id: c31364f7-8be6-4b77-8483-dd2b5a7b69a3
 level: medium
 logsource:
-    category: ps_script
-    definition: 'Requirements: Script Block Logging must be enabled'
+    category: process_creation
     product: windows
-modified: 2023/01/10
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md
 related:
--   id: c31364f7-8be6-4b77-8483-dd2b5a7b69a3
+-   id: 21f9162c-5f5d-4b01-89a8-b705bd7d10ab
     type: similar
 status: experimental
 tags:

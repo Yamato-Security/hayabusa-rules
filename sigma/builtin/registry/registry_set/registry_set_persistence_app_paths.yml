@@ -1,4 +1,4 @@
-title: Suspicious Values In App Paths Default Property
+title: Potential Persistence Via App Paths Default Property
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/08/10
@@ -16,19 +16,22 @@ description: 'Detects changes to the "Default" property for keys located in the 
     '
 detection:
     SELECTION_1:
-        EventID: 13
+        EventID: 4657
     SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        OperationType:
+        - Existing registry value modified
     SELECTION_3:
-        EventType: SetValue
+        Channel: Security
     SELECTION_4:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths*'
+        EventType: SetValue
     SELECTION_5:
+        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths*'
+    SELECTION_6:
         TargetObject:
         - '*(Default)'
         - '*Path'
-    SELECTION_6:
-        Details:
+    SELECTION_7:
+        NewValue:
         - '*\Users\Public*'
         - '*\AppData\Local\Temp\\*'
         - '*\Windows\Temp\\*'
@@ -48,7 +51,7 @@ detection:
         - '*.dll*'
         - '*.ps1*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Legitimate applications registering their binary from on of the suspicious locations
     mentioned above (tune it)
@@ -57,7 +60,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/13
+modified: 2023/01/10
 references:
 - https://www.hexacorn.com/blog/2013/01/19/beyond-good-ol-run-key-part-3/
 - https://docs.microsoft.com/en-us/windows/win32/shell/app-registration?redirectedfrom=MSDN

@@ -1,4 +1,4 @@
-title: Scrobj.dll COM Hijacking
+title: Potential Persistence Via Scrobj.dll COM Hijacking
 ruletype: Sigma
 author: frack113
 date: 2022/08/20
@@ -6,20 +6,16 @@ description: Detect use of scrobj.dll as this DLL looks for the ScriptletURL key
     get the location of the script to execute
 detection:
     SELECTION_1:
-        EventID: 4657
+        EventID: 13
     SELECTION_2:
-        OperationType:
-        - Existing registry value modified
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Channel: Security
-    SELECTION_4:
         EventType: SetValue
-    SELECTION_5:
+    SELECTION_4:
         TargetObject: '*InprocServer32\(Default)'
-    SELECTION_6:
-        NewValue: C:\WINDOWS\system32\scrobj.dll
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    SELECTION_5:
+        Details: C:\WINDOWS\system32\scrobj.dll
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitimate use of the dll.
 id: fe20dda1-6f37-4379-bbe0-a98d400cae90
@@ -27,6 +23,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
+modified: 2023/01/10
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1546.015/T1546.015.md
 status: experimental

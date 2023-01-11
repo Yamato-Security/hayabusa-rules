@@ -1,0 +1,81 @@
+title: Suspicious Download with BITS from Direct IP
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2023/01/11
+description: Detects a suspicious download using the BITS client from a direct IP.
+    Adversaries may abuse BITS jobs to persistently execute or clean up after malicious
+    payloads.
+detection:
+    SELECTION_1:
+        Channel: Microsoft-Windows-Bits-Client/Operational
+    SELECTION_2:
+        EventID: 16403
+    SELECTION_3:
+        RemoteName:
+        - '*http://1*'
+        - '*http://2*'
+        - '*http://3*'
+        - '*http://4*'
+        - '*http://5*'
+        - '*http://6*'
+        - '*http://7*'
+        - '*http://8*'
+        - '*http://9*'
+        - '*https://1*'
+        - '*https://2*'
+        - '*https://3*'
+        - '*https://4*'
+        - '*https://5*'
+        - '*https://6*'
+        - '*https://7*'
+        - '*https://8*'
+        - '*https://9*'
+    SELECTION_4:
+        RemoteName:
+        - '*://10.*'
+        - '*://192.168.*'
+        - '*://172.16.*'
+        - '*://172.17.*'
+        - '*://172.18.*'
+        - '*://172.19.*'
+        - '*://172.20.*'
+        - '*://172.21.*'
+        - '*://172.22.*'
+        - '*://172.23.*'
+        - '*://172.24.*'
+        - '*://172.25.*'
+        - '*://172.26.*'
+        - '*://172.27.*'
+        - '*://172.28.*'
+        - '*://172.29.*'
+        - '*://172.30.*'
+        - '*://172.31.*'
+        - '*://127.*'
+        - '*://169.254.*'
+    SELECTION_5:
+        RemoteName:
+        - '*https://7-*'
+        - '*http://7-*'
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)
+        or (SELECTION_5)))
+falsepositives:
+- Unknown
+id: 90f138c1-f578-4ac3-8c49-eecfd847c8b7
+level: high
+logsource:
+    product: windows
+    service: bits-client
+references:
+- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
+- https://isc.sans.edu/diary/22264
+- https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/
+- https://blog.talosintelligence.com/breaking-the-silence-recent-truebot-activity/
+related:
+-   id: 99c840f2-2012-46fd-9141-c761987550ef
+    type: similar
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.persistence
+- attack.t1197
+

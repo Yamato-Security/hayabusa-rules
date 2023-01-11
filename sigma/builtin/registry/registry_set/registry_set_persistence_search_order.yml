@@ -1,4 +1,4 @@
-title: Windows Registry Persistence COM Search Order Hijacking
+title: Potential Persistence Via COM Search Order Hijacking
 ruletype: Sigma
 author: "Maxime Thiebaut (@0xThiebaut), oscd.community, C\xE9dric Hien"
 date: 2020/04/14
@@ -103,7 +103,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/20
+modified: 2023/01/10
 references:
 - https://www.cyberbit.com/blog/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
 status: experimental
