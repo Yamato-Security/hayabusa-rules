@@ -11,6 +11,29 @@ detection:
     SELECTION_1:
         EventID: 13
     SELECTION_10:
+        Image:
+        - C:\Windows\System32\\*
+        - C:\Program Files (x86)\\*
+        - C:\Program Files\\*
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject:
+        - HKLM\SOFTWARE\Classes\.*
+        - HKEY_LOCAL_MACHINE\SOFTWARE\Classes\.*
+    SELECTION_5:
+        TargetObject: '*\PersistentHandler*'
+    SELECTION_6:
+        EventType: SetValue
+    SELECTION_7:
+        TargetObject:
+        - HKLM\SOFTWARE\Classes\CLSID*
+        - HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID*
+    SELECTION_8:
+        TargetObject: '*\PersistentAddinsRegistered\{89BCB740-6119-101A-BCB7-00DD010655AF}*'
+    SELECTION_9:
         TargetObject:
         - '*\CLSID\{4F46F75F-199F-4C63-8B7D-86D48FE7970C}\\*'
         - '*\CLSID\{4887767F-7ADC-4983-B576-88FB643D6F79}\\*'
@@ -40,32 +63,9 @@ detection:
         - '*\CLSID\{E772CEB3-E203-4828-ADF1-765713D981B8}\\*'
         - '*\CLSID\{eec97550-47a9-11cf-b952-00aa0051fe20}*'
         - '*\CLSID\{FB10BD80-A331-4e9e-9EB7-00279903AD99}\\*'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject:
-        - HKLM\SOFTWARE\Classes\.*
-        - HKEY_LOCAL_MACHINE\SOFTWARE\Classes\.*
-    SELECTION_5:
-        TargetObject: '*\PersistentHandler*'
-    SELECTION_6:
-        EventType: SetValue
-    SELECTION_7:
-        TargetObject:
-        - HKLM\SOFTWARE\Classes\CLSID*
-        - HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID*
-    SELECTION_8:
-        TargetObject: '*\PersistentAddinsRegistered\{89BCB740-6119-101A-BCB7-00DD010655AF}*'
-    SELECTION_9:
-        Image:
-        - C:\Windows\System32\\*
-        - C:\Program Files (x86)\\*
-        - C:\Program Files\\*
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)) and  not ((SELECTION_9
-        and SELECTION_10)))
+        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)) and  not ((SELECTION_9)
+        or (SELECTION_10)))
 falsepositives:
 - Legitimate registration of IFilters by the OS or software
 id: b23818c7-e575-4d13-8012-332075ec0a2b
@@ -73,7 +73,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/06
+modified: 2023/01/10
 references:
 - https://persistence-info.github.io/Data/ifilters.html
 - https://twitter.com/0gtweet/status/1468548924600459267

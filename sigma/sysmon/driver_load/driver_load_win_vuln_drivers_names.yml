@@ -121,6 +121,7 @@ detection:
         - '*\TmComm.sys'
         - '*\cpuz.sys'
         - '*\iQVW64.SYS'
+        - '*\iQVW32.SYS'
         - '*\vmdrv.sys'
         - '*\HpPortIox64.sys'
         - '*\AMDPowerProfiler.sys'
@@ -188,7 +189,7 @@ level: medium
 logsource:
     category: driver_load
     product: windows
-modified: 2022/11/29
+modified: 2023/01/11
 references:
 - https://github.com/eclypsium/Screwed-Drivers/blob/master/DRIVERS.md
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-driver-block-rules

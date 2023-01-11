@@ -1,4 +1,4 @@
-title: Windows Registry Persistence DebugPath
+title: Potential Persistence Using DebugPath
 ruletype: Sigma
 author: frack113
 date: 2022/07/27
@@ -29,6 +29,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
+modified: 2023/01/10
 references:
 - https://oddvar.moe/2018/09/06/persistence-using-universal-windows-platform-apps-appx/
 - https://github.com/rootm0s/WinPwnage

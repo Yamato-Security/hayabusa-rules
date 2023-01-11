@@ -1,4 +1,4 @@
-title: DllRegisterServer Call From Non Rundll32
+title: Renamed Rundll32 Execution Via DllRegisterServer
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/08/22
@@ -22,10 +22,11 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/10
 references:
 - https://twitter.com/swisscom_csirt/status/1331634525722521602?s=20
 - https://app.any.run/tasks/f74c5157-8508-4ac6-9805-d63fe7b0d399/
-status: stable
+status: experimental
 tags:
 - attack.execution
 

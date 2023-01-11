@@ -25,6 +25,15 @@ detection:
         - '* /i:http://7*'
         - '* /i:http://8*'
         - '* /i:http://9*'
+        - '* /i:https://1*'
+        - '* /i:https://2*'
+        - '* /i:https://3*'
+        - '* /i:https://4*'
+        - '* /i:https://5*'
+        - '* /i:https://6*'
+        - '* /i:https://7*'
+        - '* /i:https://8*'
+        - '* /i:https://9*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - FQDNs that start with a number
@@ -33,6 +42,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/11
 references:
 - https://twitter.com/mrd0x/status/1461041276514623491c19-ps
 - https://twitter.com/tccontre18/status/1480950986650832903

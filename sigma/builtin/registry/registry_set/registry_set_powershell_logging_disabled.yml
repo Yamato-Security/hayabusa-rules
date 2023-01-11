@@ -1,10 +1,10 @@
-title: PowerShell Logging Disabled
+title: PowerShell Logging Disabled Via Registry Key Tampering
 ruletype: Sigma
 author: frack113
 date: 2022/04/02
-description: Detects the modification of the registry of the currently logged in user
-    to disable PowerShell module logging, script block logging or transcription and
-    script execution logging
+description: Detects changes to the registry for the currently logged-in user. In
+    order to disable PowerShell module logging, script block logging or transcription
+    and script execution logging
 detection:
     SELECTION_1:
         EventID: 4657
@@ -17,10 +17,14 @@ detection:
         EventType: SetValue
     SELECTION_5:
         TargetObject:
-        - '*SOFTWARE\Policies\Microsoft\Windows\PowerShell\ModuleLogging\EnableModuleLogging'
-        - '*SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging\EnableScriptBlockLogging'
-        - '*SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription\EnableTranscripting'
-        - '*SOFTWARE\Policies\Microsoft\Windows\PowerShell\EnableScripts'
+        - '*\Microsoft\Windows\PowerShell\ModuleLogging\EnableModuleLogging'
+        - '*\Microsoft\Windows\PowerShell\ScriptBlockLogging\EnableScriptBlockLogging'
+        - '*\Microsoft\Windows\PowerShell\Transcription\EnableTranscripting'
+        - '*\Microsoft\Windows\PowerShell\EnableScripts'
+        - '*\Microsoft\PowerShellCore\ModuleLogging\EnableModuleLogging'
+        - '*\Microsoft\PowerShellCore\ScriptBlockLogging\EnableScriptBlockLogging'
+        - '*\Microsoft\PowerShellCore\Transcription\EnableTranscripting'
+        - '*\Microsoft\PowerShellCore\EnableScripts'
     SELECTION_6:
         NewValue: DWORD (0x00000000)
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
@@ -28,11 +32,11 @@ detection:
 falsepositives:
 - Unknown
 id: fecfd1a1-cc78-4313-a1ea-2ee2e8ec27a7
-level: medium
+level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/06/26
+modified: 2023/01/10
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-32---windows-powershell-logging-disabled
 status: experimental

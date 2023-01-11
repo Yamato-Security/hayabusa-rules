@@ -1,4 +1,4 @@
-title: Potential GlobalFlags Registry Persistence Attempt
+title: Potential Persistence Via GlobalFlags
 ruletype: Sigma
 author: Karneades, Jonhnathan Ribeiro, Florian Roth
 date: 2018/04/11
@@ -6,26 +6,23 @@ description: Detects registry persistence technique using the GlobalFlags and Si
     keys
 detection:
     SELECTION_1:
-        EventID: 4657
+        EventID: 13
     SELECTION_2:
-        OperationType:
-        - Existing registry value modified
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Channel: Security
-    SELECTION_4:
         TargetObject: '*\Microsoft\Windows NT\CurrentVersion\\*'
-    SELECTION_5:
+    SELECTION_4:
         TargetObject: '*\Image File Execution Options\\*'
-    SELECTION_6:
+    SELECTION_5:
         TargetObject: '*\GlobalFlag*'
-    SELECTION_7:
+    SELECTION_6:
         TargetObject: '*\SilentProcessExit\\*'
-    SELECTION_8:
+    SELECTION_7:
         TargetObject:
         - '*\ReportingMode*'
         - '*\MonitorProcess*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7 and SELECTION_8)
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: 36803969-5421-41ec-b92f-8500f79c23b0
@@ -33,7 +30,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/12/19
+modified: 2023/01/10
 references:
 - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
 - https://www.deepinstinct.com/2021/02/16/lsass-memory-dumps-are-stealthier-than-ever-before-part-2/
