@@ -1,0 +1,43 @@
+title: Suspicious Windows App Activity
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2023/01/12
+description: Detects suspicious children of application launched from inside the WindowsApps
+    directory. This could be a sign of a rogue ".appx" package installation/execution
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage: '*C:\Program Files\WindowsApps\\*'
+    SELECTION_4:
+        Image:
+        - '*\poweshell.exe'
+        - '*\pwsh.exe'
+        - '*\rundll32.exe'
+        - '*\regsvr32.exe'
+        - '*\mshta.exe'
+        - '*\cscript.exe'
+        - '*\wscript.exe'
+    SELECTION_5:
+        CommandLine:
+        - '*cmd /c*'
+        - '*Invoke-*'
+        - '*Base64*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
+        SELECTION_5))
+falsepositives:
+- Unknown
+id: f91ed517-a6ba-471d-9910-b3b4a398c0f3
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://news.sophos.com/en-us/2021/11/11/bazarloader-call-me-back-attack-abuses-windows-10-apps-mechanism/
+- https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/
+status: experimental
+tags:
+- attack.defense_evasion
+

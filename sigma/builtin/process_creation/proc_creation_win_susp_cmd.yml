@@ -15,6 +15,12 @@ detection:
         ParentProcessName: '*\CitrixReceiverUpdater.exe'
     SELECTION_13:
         NewProcessName: '*\cmd.exe'
+    SELECTION_14:
+        ParentProcessName: '*\python.exe'
+    SELECTION_15:
+        CommandLine: C:\WINDOWS\system32\cmd.exe /c "ver"
+    SELECTION_16:
+        CurrentDirectory: '*C:\WINDOWS\Temp\asgard2-agent\\*'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -46,7 +52,8 @@ detection:
         ParentProcessName: C:\ManageEngine\ADManager Plus\pgsql\bin\postgres.exe
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
         (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8) or
-        (SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13)))
+        (SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13)
+        or (SELECTION_14 and SELECTION_15 and SELECTION_16)))
 falsepositives:
 - Unknown
 id: 178e615d-e666-498b-9630-9ed363038101
@@ -54,7 +61,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/10
+modified: 2023/01/11
 references:
 - https://github.com/Wh04m1001/SysmonEoP
 status: experimental

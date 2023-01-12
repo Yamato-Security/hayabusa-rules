@@ -32,8 +32,10 @@ detection:
         Image:
         - C:\Windows\system32\efsui.exe
         - C:\Windows\system32\dsac.exe
+    SELECTION_9:
+        Image: '*:\Program Files\Citrix\Receiver StoreFront\Services\DefaultDomainServices\Citrix.DeliveryServices.DomainServices.ServiceHost.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
+        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9)))
 falsepositives:
 - Other legimate tools, which do ADSI (LDAP) operations, e.g. any remoting activity
     by MMC, Powershell, Windows etc.
@@ -42,7 +44,7 @@ level: high
 logsource:
     category: file_event
     product: windows
-modified: 2022/08/24
+modified: 2023/01/12
 references:
 - https://medium.com/@ivecodoe/detecting-ldapfragger-a-newly-released-cobalt-strike-beacon-using-ldap-for-c2-communication-c274a7f00961
 - https://blog.fox-it.com/2020/03/19/ldapfragger-command-and-control-over-ldap-attributes/

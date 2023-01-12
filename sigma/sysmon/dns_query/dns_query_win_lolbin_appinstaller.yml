@@ -1,9 +1,9 @@
-title: AppInstaller Attempts From URL by DNS
+title: AppX Package Installation Attempts Via AppInstaller
 ruletype: Sigma
 author: frack113
 date: 2021/11/24
-description: AppInstaller.exe is spawned by the default handler for the URI, it attempts
-    to load/install a package from the URL
+description: AppInstaller.exe is spawned by the default handler for the "ms-appinstaller"
+    URI. It attempts to load/install a package from the referenced URL
 detection:
     SELECTION_1:
         EventID: 22
@@ -21,7 +21,7 @@ level: medium
 logsource:
     category: dns_query
     product: windows
-modified: 2022/12/25
+modified: 2023/01/12
 references:
 - https://twitter.com/notwhickey/status/1333900137232523264
 - https://lolbas-project.github.io/lolbas/Binaries/AppInstaller/
