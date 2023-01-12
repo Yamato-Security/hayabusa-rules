@@ -6,6 +6,8 @@ description: Detects potential NT API stub patching as seen used by the project 
 detection:
     SELECTION_1:
         EventID: 10
+    SELECTION_10:
+        SourceImage: '*\thor\thor64.exe'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -17,15 +19,22 @@ detection:
     SELECTION_6:
         CallTrace: '*)'
     SELECTION_7:
-        SourceImage: C:\Program Files\Microsoft Visual Studio\\*
-    SELECTION_8:
         SourceImage:
-        - '*\MSBuild\Current\Bin\amd64\MSBuild.exe'
-        - '*\MSBuild\Current\Bin\MSBuild.exe'
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
+    SELECTION_8:
+        TargetImage:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
     SELECTION_9:
-        TargetImage: C:\Program Files\Microsoft Visual Studio\\*
+        SourceImage: C:\Windows\Temp\asgard2-agent\\*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8 and SELECTION_9)))
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10)))
 falsepositives:
 - Unknown
 id: b916cba1-b38a-42da-9223-17114d846fd6
@@ -33,7 +42,7 @@ level: medium
 logsource:
     category: process_access
     product: windows
-modified: 2023/01/09
+modified: 2023/01/11
 references:
 - https://github.com/D1rkMtr/UnhookingPatch
 - https://twitter.com/D1rkMtr/status/1611471891193298944?s=20
