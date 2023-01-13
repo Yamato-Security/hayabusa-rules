@@ -5,7 +5,7 @@ date: 2023/01/11
 description: Detects an appx package deployment that was blocked by AppLocker policy
 detection:
     SELECTION_1:
-        Provider_Name: Microsoft-Windows-AppXDeploymentServer/Operational
+        Channel: Microsoft-Windows-AppXDeploymentServer/Operational
     SELECTION_2:
         EventID: 412
     condition: (SELECTION_1 and SELECTION_2)

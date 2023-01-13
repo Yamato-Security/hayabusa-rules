@@ -7,7 +7,7 @@ description: Detects an appx package installation with the error code "0x80073cf
     be suspicious
 detection:
     SELECTION_1:
-        Provider_Name: Microsoft-Windows-AppXDeploymentServer/Operational
+        Channel: Microsoft-Windows-AppXDeploymentServer/Operational
     SELECTION_2:
         EventID: 401
     SELECTION_3:
