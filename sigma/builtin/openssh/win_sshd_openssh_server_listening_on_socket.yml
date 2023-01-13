@@ -6,7 +6,7 @@ description: Detects scenarios where an attacker enables the OpenSSH server and 
     starts to listening on SSH socket.
 detection:
     SELECTION_1:
-        Provider_Name: OpenSSH/Operational
+        Channel: OpenSSH/Operational
     SELECTION_2:
         EventID: 4
     SELECTION_3:
