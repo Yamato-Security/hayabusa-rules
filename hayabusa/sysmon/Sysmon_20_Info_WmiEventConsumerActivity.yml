@@ -1,10 +1,11 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: WMI Event Consumer
-details: 'Op: %Operation% ¦ Type: %Type% ¦ Name: %Name% ¦ Dst: %Destination% ¦ User: %User%'
-description: When a WMI event filter is registered, which is a method used by malware to execute, this event logs the WMI namespace, filter name and filter expression.
+title: 'WMI Event Consumer'
+description: |
+    When a WMI event filter is registered, which is a method used by malware to execute, this event logs the WMI namespace, 
+    filter name and filter expression.
 
 id: 372be7ff-d34c-4b23-b147-42b2046b3ea8
 level: informational
@@ -12,14 +13,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
         EventID: 20
     selection_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and selection_no_alerts
 falsepositives:
 tags:

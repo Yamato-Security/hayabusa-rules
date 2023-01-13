@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Pipe Conn
-details: 'Pipe: %PipeName% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%'
+title: 'Pipe Conn'
 description: This event logs when a named pipe connection is made between a client and a server.
 
 id: 558798b0-2cf6-42c0-8323-6001b4508e04
@@ -12,14 +11,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
         EventID: 18
     selection_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and selection_no_alerts
 falsepositives:
 tags:

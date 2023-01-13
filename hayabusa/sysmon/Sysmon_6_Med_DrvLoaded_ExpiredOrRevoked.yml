@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Driver Loaded (Expired/Revoked Cert)
-details: 'Path: %ImageLoaded% ¦ Status: %SignatureStatus% ¦ Hash: %Hashes%'
-description: 
+title: 'Driver Loaded (Expired/Revoked Cert)'
+description: ''
 
 id: c837dd6d-0c91-4593-aeab-f6a1f3ca1961
 level: medium
@@ -15,14 +14,14 @@ logsource:
     definition: Sysmon needs to be installed and configured.
 detection:
     selection:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
         EventID: 6
-        SignatureStatus: Expired
+        SignatureStatus: 'Expired'
     filter:
-        Signed: true
+        Signed: 'true'
     condition: selection and not filter
 falsepositives:
-    - Software with expired/revoked certs
+    - 'Software with expired/revoked certs'
 tags:
     - attack.defense_evasion
     - attack.t1553.002

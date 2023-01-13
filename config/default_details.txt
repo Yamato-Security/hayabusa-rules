@@ -47,8 +47,8 @@ Microsoft-Windows-Security-Auditing, 4692, User: %SubjectUserName% ¦ SID: %Subj
 Microsoft-Windows-Security-Auditing, 5038, Path: %param1%
 Microsoft-Windows-Sysmon, 1, Cmd: %CommandLine% ¦ Proc: %Image% ¦ User: %User% ¦ ParentCmd: %ParentCommandLine% ¦ LID: %LogonId% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 2, Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ CreationTime: %CreationUtcTime% ¦ PreviousTime: %PreviousCreationUtcTime% ¦ PID: %PID% ¦ PGUID: %ProcessGuid%
-Microsoft-Windows-Sysmon, 3, Protocol: %Protocol% ¦ SrcIP: %SourceIp% ¦ SrcPort: %SourcePort% ¦ SrcHost: %SourceHostname% ¦ TgtIP: %DestinationIp% ¦ TgtPort: %DestinationPort% ¦ TgtHost: %DestinationHostname% ¦ User: %User% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
-Microsoft-Windows-Sysmon, 4, State: %State% ¦ SysmonVersion: %SysmonVersion% ¦ SchemaVersion: %SchemaVersion%
+Microsoft-Windows-Sysmon, 3, Proto: %Protocol% ¦ SrcIP: %SourceIp% ¦ SrcPort: %SourcePort% ¦ SrcHost: %SourceHostname% ¦ TgtIP: %DestinationIp% ¦ TgtPort: %DestinationPort% ¦ TgtHost: %DestinationHostname% ¦ User: %User% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
+Microsoft-Windows-Sysmon, 4, State: %State% ¦ SysmonVer: %SysmonVersion% ¦ SchemaVer: %SchemaVersion%
 Microsoft-Windows-Sysmon, 5, Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 6, Path: %ImageLoaded% ¦ Sig: %Signature%
 Microsoft-Windows-Sysmon, 7, Image: %ImageLoaded% ¦ Proc: %Image% ¦ Company: %Company% ¦ Signed: %Signed% ¦ Sig: %SignatureStatus% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ Hash: %Hashes%
@@ -63,9 +63,9 @@ Microsoft-Windows-Sysmon, 15, Path: %TargetFilename% ¦ Proc: %Image% ¦ PID: %P
 Microsoft-Windows-Sysmon, 16, Config: %Configuration%
 Microsoft-Windows-Sysmon, 17, Pipe: %PipeName% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 18, Pipe: %PipeName% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
-Microsoft-Windows-Sysmon, 19, %Operation% ¦ Namespace: %EventNamespace% ¦ Name: %Name% ¦ Query: %query% ¦ User: %User%
-Microsoft-Windows-Sysmon, 20, Operation: %Operation% ¦ Type: %Type% ¦ Name: %Name% ¦ Tgt: %Destination% ¦ User: %User%
-Microsoft-Windows-Sysmon, 21, Operation: %Operation% ¦ Consumer: %Consumer% ¦ Filter: %Filter%
+Microsoft-Windows-Sysmon, 19, Op: %Operation% ¦ Namespace: %EventNamespace% ¦ Name: %Name% ¦ Query: %query% ¦ User: %User%
+Microsoft-Windows-Sysmon, 20, Op: %Operation% ¦ Type: %Type% ¦ Name: %Name% ¦ Tgt: %Destination% ¦ User: %User%
+Microsoft-Windows-Sysmon, 21, Op: %Operation% ¦ Consumer: %Consumer% ¦ Filter: %Filter%
 Microsoft-Windows-Sysmon, 22, Query: %QueryName% ¦ Result: %QueryResults% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 23, Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 24, Proc: %Image% ¦ User: %User% ¦ CliInfo: %ClientInfo% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
@@ -76,9 +76,9 @@ Service Control Manager, 7031, Svc: %param1% ¦ CrashCount: %param2% ¦ Action: 
 Service Control Manager, 7045, Svc: %ServiceName% ¦ Path: %ImagePath% ¦ Acct: %AccountName% ¦ StartType: %StartType%
 Microsoft-Windows-Windows Firewall With Advanced Security, 2003, Profile: %Profiles% ¦ Type: %SettingType% ¦ Value: %SettingValueString% ¦ User: %ModifyingUser% ¦ App: %ModifyingApplication%
 Microsoft-Windows-Windows Firewall With Advanced Security, 2004, RuleName: %RuleName% ¦ App: %ApplicationPath% ¦ ModifyingApp: %ModifyingApplication% ¦ User: %ModifyingUser% ¦ Svc: %ServiceName% ¦ Protocol: %Protocol% ¦ LocalAddr: %LocalAddresses% ¦ LocalPort: %LocalPorts% ¦ RemoteAddr: %RemoteAddresses% ¦ RemotePort: %RemotePorts% ¦ Action: %Action%
-Microsoft-Windows-DNS-Server-Service, 150, %param1%
+Microsoft-Windows-DNS-Server-Service, 150, DLL: %param1%
 Microsoft-Windows-DNS-Server-Service, 770, Path: %param1% ¦ SrcComp: %param2%
-MSExchange CmdletLogs, 6, %Data%
+MSExchange CmdletLogs, 6, Data: %Data%
 Microsoft-Windows-Windows Defender, 1013, Time: %Timestamp% ¦ User: %User%
 Microsoft-Windows-Windows Defender, 1116, Threat: %ThreatName% ¦ Severity: %SeverityName% ¦ Type: %CategoryName% ¦ User: %DetectionUser% ¦ Path: %Path% ¦ Proc: %WindowsDefenderProcessName%
 Microsoft-Windows-PrintService, 301, DeletedPrinter: %Param1%

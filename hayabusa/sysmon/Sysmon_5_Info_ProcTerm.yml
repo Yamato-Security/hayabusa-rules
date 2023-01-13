@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2022/03/22
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Proc Terminated
-details: 'Process: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%'
-description:
+title: 'Proc Terminated'
+description: ''
 
 id: 02353fdd-522c-48f8-9243-28d4830ebc1e
 level: informational
@@ -12,10 +11,10 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
         EventID: 5
     condition: selection_basic
 falsepositives:

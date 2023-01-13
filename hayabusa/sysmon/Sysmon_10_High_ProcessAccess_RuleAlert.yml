@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Proc Access (Sysmon Alert)
-details: 'Rule: %RuleName% ¦ SrcProc: %SourceImage% ¦ TgtProc: %TargetImage% ¦ SrcUser: %SourceUser% ¦ TgtUser: %TargetUser% ¦ Access: %GrantedAccess% ¦ SrcPID: %SourceProcessId% ¦ SrcPGUID: %SourceProcessGUID% ¦ TgtPID: %TargetProcessId% ¦ TgtPGUID: %TargetProcessGUID%'
+title: 'Proc Access (Sysmon Alert)'
 description: |
     The process accessed event reports when a process opens another process, an operation that is often followed by information queries or reading and writing the address space of the target process. 
     This enables detection of hacking tools that read the memory contents of processes like Local Security Authority (Lsass.exe) in order to steal credentials for use in Pass-the-Hash attacks. 
@@ -15,14 +14,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Src User and Tgt User information won't be present in older versions of Sysmon.
+    definition: 'Src User and Tgt User information will not be present in older versions of Sysmon.'
 detection:
     selection_basic:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
         EventID: 10
     filter_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and not filter_no_alerts
 falsepositives:
 tags:

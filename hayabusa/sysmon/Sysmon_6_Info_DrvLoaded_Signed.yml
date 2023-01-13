@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Signed Driver Loaded
-details: 'Path: %ImageLoaded% ¦ Sig: %Signature%'
+title: 'Signed Driver Loaded'
 description: 
 
 id: 6a67e65e-e414-44ed-94b2-72f8e3107c92
@@ -12,13 +11,13 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
         EventID: 6
     selection_signed:
-        Signed: true
+        Signed: 'true'
     condition: selection_basic and selection_signed
 falsepositives:
 tags:

@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Pipe Connected (Sysmon Alert)
-details: 'Rule: %RuleName% ¦ Pipe: %PipeName% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%'
-description: This event logs when a named pipe connection is made between a client and a server.
+title: 'Pipe Connected (Sysmon Alert)'
+description: 'This event logs when a named pipe connection is made between a client and a server.'
 
 id: b607538d-cc16-4d51-8e3f-bbee6610aa1e
 level: medium
@@ -12,14 +11,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
         EventID: 18
     filter_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and not filter_no_alerts
 falsepositives:
 tags:

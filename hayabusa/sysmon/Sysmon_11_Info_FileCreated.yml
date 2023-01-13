@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: File Created
-details: 'Path: %TargetFilename% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%'
+title: 'File Created'
 description: |
     File create operations are logged when a file is created or overwritten. 
     This event is useful for monitoring autostart locations, like the Startup folder, as well as temporary and download directories, which are common places malware drops during initial infection.
@@ -14,14 +13,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
         EventID: 11
     selection_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and selection_no_alerts
 falsepositives:
 tags:
