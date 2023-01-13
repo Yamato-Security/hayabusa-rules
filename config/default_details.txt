@@ -18,8 +18,8 @@ Microsoft-Windows-Security-Auditing, 4732, SrcSID: %MemberSid% ¦ TgtGrp: %Targe
 Microsoft-Windows-Security-Auditing, 4768, TgtUser: %TargetUserName% ¦ Svc: %ServiceName% ¦ SrcIP: %IpAddress% ¦ Status: %Status% ¦ PreAuthType: %PreAuthType%
 Microsoft-Windows-Security-Auditing, 4769, TgtUser: %TargetUserName% ¦ Svc: %ServiceName% ¦ SrcIP: %IpAddress% ¦ Status: %Status%
 Microsoft-Windows-Security-Auditing, 4776, TgtUser: %TargetUserName% ¦ SrcComp: %Workstation% ¦ Status: %Status%
-Microsoft-Windows-Security-Auditing, 4778, User: %AccountName% ¦ Domain: %AccountDomain% ¦ Cli: %ClientAddress% (%ClientName%) ¦ LID: %LogonID%
-Microsoft-Windows-Security-Auditing, 4779, User: %AccountName% ¦ Domain: %AccountDomain% ¦ Cli: %ClientAddress% (%ClientName%) ¦ LID: %LogonID%
+Microsoft-Windows-Security-Auditing, 4778, SrcUser: %AccountName% ¦ Domain: %AccountDomain% ¦ SrcIP: %ClientAddress% ¦ SrcComp: %ClientName% ¦ LID: %LogonID%
+Microsoft-Windows-Security-Auditing, 4779, SrcUser: %AccountName% ¦ Domain: %AccountDomain% ¦ SrcIP: %ClientAddress% ¦ SrcComp: %ClientName% ¦ LID: %LogonID%
 Microsoft-Windows-Security-Auditing, 5136, User: %SubjectUserName% ¦ SID: %SubjectUserSid% ¦ ObjDN: %ObjectDN% ¦ AttrLDAPName: %AttributeLDAPDisplayName% ¦ OpType: %OperationType% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 5140, SrcUser: %SubjectUserName% ¦ ShareName: %ShareName% ¦ SharePath: %ShareLocalPath% ¦ SrcIP: %IpAddress% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 5145, SrcUser: %SubjectUserName% ¦ ShareName: %ShareName% ¦ SharePath: %ShareLocalPath% ¦ Path: %RelativeTargetName% ¦ SrcIP: %IpAddress% ¦ LID: %SubjectLogonId%
@@ -38,7 +38,8 @@ Microsoft-Windows-Security-Auditing, 4742, SPN: %ServicePrincipalNames% ¦ User:
 Microsoft-Windows-Security-Auditing, 4765, User: %SubjectUserName% ¦ SID: %SubjectUserSid% ¦ SrcUser: %SourceUserName% ¦ SrcSID: %SourceSid% ¦ TgtUser: %TargetUserName% ¦ TgtSID: %TargetSid% ¦ Domain: %SubjectDomainName% ¦ TgtDomain: %TargetDomainName% ¦ PrivList: %PrivilegeList% ¦ SidList: %SidList% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4781, OldTgtUser: %OldTargetUserName% ¦ NewTgtUser: %NewTargetUserName% ¦ TgtSID: %TargetSid% ¦ User: %SubjectUserName% ¦ SID: %SubjectUserSid% ¦ Domain: %SubjectDomainName% ¦ TgtDomain: %TargetDomainName% ¦ PrivList: %PrivilegeList% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4794, User: %SubjectUserName% ¦ SID: %SubjectUserSid% ¦ Domain: %SubjectDomainName% ¦ Status: %Status% ¦ SrcComp: %Workstation% ¦ LID: %SubjectLogonId%
-Microsoft-Windows-Security-Auditing, 5156, Proc: %Application% ¦ Src: %SourceAddress%:%SourcePort% ¦ Tgt: %DestAddress%:%DestPort% ¦ Protocol: %Protocol% ¦ TgtMachineID: %RemoteMachineID% ¦ TgtSID: %RemoteUserID% ¦ PID: %ProcessID%
+Microsoft-Windows-Security-Auditing, 5156, Proc: %Application% ¦ SrcIP: %SourceAddress% ¦ SrcPort: %SourcePort% ¦ TgtIP: %DestAddress% ¦ TgtPort: %DestPort% ¦ Protocol: %Protocol% ¦ TgtMachineID: %RemoteMachineID% ¦ TgtSID: %RemoteUserID% ¦ PID: %ProcessID%
+Microsoft-Windows-Security-Auditing, 5379, PID: %ClientProcessId% ¦ SrcUser: %SubjectUserName% ¦ Tgt: %TargetName% ¦ CredsReturned: %CountOfCredentialsReturned% ¦ ReturnCode: %ReturnCode% ¦ LID: %SubjectLogonId% ¦ SrcSID: %SubjectUserSid%
 Microsoft-Windows-Security-Auditing, 6416, DeviceDescrip: %DeviceDescription% ¦ DeviceID: %DeviceId% ¦ LocInfo: %LocationInformation% ¦ CompatibleIDs: %CompatibleIds% ¦ User: %SubjectUserName% ¦ SID: %SubjectUserSid% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 5142, User: %SubjectUserName% ¦ ShareName: %ShareName% ¦ ShareLocalPath: %ShareLocalPath% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 6281, Path: %param1%
@@ -46,7 +47,7 @@ Microsoft-Windows-Security-Auditing, 4692, User: %SubjectUserName% ¦ SID: %Subj
 Microsoft-Windows-Security-Auditing, 5038, Path: %param1%
 Microsoft-Windows-Sysmon, 1, Cmd: %CommandLine% ¦ Proc: %Image% ¦ User: %User% ¦ ParentCmd: %ParentCommandLine% ¦ LID: %LogonId% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 2, Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ CreationTime: %CreationUtcTime% ¦ PreviousTime: %PreviousCreationUtcTime% ¦ PID: %PID% ¦ PGUID: %ProcessGuid%
-Microsoft-Windows-Sysmon, 3, Protocol: %Protocol% ¦ Src: %SourceIp%:%SourcePort% (%SourceHostname%) ¦ Dst: %DestinationIp%:%DestinationPort% (%DestinationHostname%) ¦ User: %User% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
+Microsoft-Windows-Sysmon, 3, Protocol: %Protocol% ¦ SrcIP: %SourceIp% ¦ SrcPort: %SourcePort% ¦ SrcHost: %SourceHostname% ¦ TgtIP: %DestinationIp% ¦ TgtPort: %DestinationPort% ¦ TgtHost: %DestinationHostname% ¦ User: %User% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 4, State: %State% ¦ SysmonVersion: %SysmonVersion% ¦ SchemaVersion: %SchemaVersion%
 Microsoft-Windows-Sysmon, 5, Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 6, Path: %ImageLoaded% ¦ Sig: %Signature%
@@ -63,7 +64,7 @@ Microsoft-Windows-Sysmon, 16, Config: %Configuration%
 Microsoft-Windows-Sysmon, 17, Pipe: %PipeName% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 18, Pipe: %PipeName% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 19, %Operation% ¦ Namespace: %EventNamespace% ¦ Name: %Name% ¦ Query: %query% ¦ User: %User%
-Microsoft-Windows-Sysmon, 20, Operation: %Operation% ¦ Type: %Type% ¦ Name: %Name% ¦ Dst: %Destination% ¦ User: %User%
+Microsoft-Windows-Sysmon, 20, Operation: %Operation% ¦ Type: %Type% ¦ Name: %Name% ¦ Tgt: %Destination% ¦ User: %User%
 Microsoft-Windows-Sysmon, 21, Operation: %Operation% ¦ Consumer: %Consumer% ¦ Filter: %Filter%
 Microsoft-Windows-Sysmon, 22, Query: %QueryName% ¦ Result: %QueryResults% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 23, Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
