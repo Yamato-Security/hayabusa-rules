@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Pipe Created
-details: 'Pipe: %PipeName% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%'
-description: This event generates when a named pipe is created. Malware often uses named pipes for interprocess communication.
+title: 'Pipe Created'
+description: 'This event generates when a named pipe is created. Malware often uses named pipes for interprocess communication.'
 
 id: 79dbbdb1-3272-4518-a633-d38db0527dfc
 level: informational
@@ -12,14 +11,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 17
     selection_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and selection_no_alerts
 falsepositives:
 tags:

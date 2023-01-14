@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2021/12/11
-modified: 2022/09/01
+modified: 2023/01/13
 
 title: Proc Exec (Sysmon Alert)
-details: 'Rule: %RuleName% ¦ Cmd: %CommandLine% ¦ Proc: %Image% ¦ User: %User% ¦ ParentCmd: %ParentCommandLine% ¦ LID: %LogonId% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ Hash: %Hashes%'
 description: Sysmon process creation
 
 id: d5e4fb89-b027-43bf-bd3a-2e7f74f105ac
@@ -12,14 +11,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 1
     filter_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and not filter_no_alerts
 falsepositives:
     - bad sysmon rule

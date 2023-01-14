@@ -1,11 +1,11 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Reg Key Create/Delete
-details: 'Op: %EventType% ¦ Obj: %TargetObject% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%'
+title: 'Reg Key Create/Delete'
 description: |
-    Registry key and value create and delete operations map to this event type, which can be useful for monitoring for changes to Registry autostart locations, or specific malware registry modifications.
+    Registry key and value create and delete operations map to this event type, 
+    which can be useful for monitoring for changes to Registry autostart locations, or specific malware registry modifications.
     Marked as noisy by default.
 
 id: 1703ba97-b2c2-4071-a241-a16d017d25d3
@@ -14,14 +14,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 12
     selection_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and selection_no_alerts
 falsepositives:
 tags:

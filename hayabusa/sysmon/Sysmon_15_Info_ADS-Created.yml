@@ -1,12 +1,14 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: ADS Created
-details: 'Path: %TargetFilename% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ Hash: %Hash%'
+title: 'ADS Created'
 description: |
-    This event logs when a named file stream (Alternate Data Stream) is created, and it generates events that log the hash of the contents of the file to which the stream is assigned (the unnamed stream), as well as the contents of the named stream. 
-    There are malware variants that drop their executables or configuration settings via browser downloads, and this event is aimed at capturing that based on the browser attaching a Zone.Identifier "mark of the web" stream.
+    This event logs when a named file stream (Alternate Data Stream) is created, 
+    and it generates events that log the hash of the contents of the file to which the stream is assigned (the unnamed stream),
+    as well as the contents of the named stream. 
+    There are malware variants that drop their executables or configuration settings via browser downloads, 
+    and this event is aimed at capturing that based on the browser attaching a Zone.Identifier "mark of the web" stream.
 
 id: 046cac6f-d622-4044-ae0c-1bdbad6210f9
 level: informational
@@ -14,14 +16,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 15
     selection_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and selection_no_alerts
 falsepositives:
 tags:

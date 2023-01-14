@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Sysmon Config Change
-details: 'Config: %Configuration%'
-description: This event logs changes in the Sysmon configuration - for example when the filtering rules are updated.
+title: 'Sysmon Config Change'
+description: 'This event logs changes in the Sysmon configuration - for example when the filtering rules are updated.'
 
 id: ccd0d7ed-de7d-4948-ab9d-b849cc4a5944
 level: informational
@@ -12,7 +11,7 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational

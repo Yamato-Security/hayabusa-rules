@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: File Deleted
-details: 'Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%'
+title: 'File Deleted'
 description: Logs when a file gets deleted.
 
 id: 60338f41-0384-4469-a4f9-e6acaae1e091
@@ -12,14 +11,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Requires Sysmon 13+ (Released 2021/01/21)
+    definition: 'Requires Sysmon 13+ (Released 2021/01/21)'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 26
     selection_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and selection_no_alerts
 falsepositives:
 tags:

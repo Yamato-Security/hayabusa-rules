@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Proc Access
-details: 'SrcProc: %SourceImage% ¦ TgtProc: %TargetImage% ¦ SrcUser: %SourceUser% ¦ TgtUser: %TargetUser% ¦ Access: %GrantedAccess% ¦ SrcPID: %SourceProcessId% ¦ SrcPGUID: %SourceProcessGUID% ¦ TgtPID: %TargetProcessId% ¦ TgtPGUID: %TargetProcessGUID%'
+title: 'Proc Access'
 description: |
     The process accessed event reports when a process opens another process, an operation that is often followed by information queries or reading and writing the address space of the target process. 
     This enables detection of hacking tools that read the memory contents of processes like Local Security Authority (Lsass.exe) in order to steal credentials for use in Pass-the-Hash attacks. 
@@ -16,22 +15,22 @@ status: test
 logsource:
     product: windows
     service: sysmon
-    definition: Src User and Tgt User information won't be present in older versions of Sysmon.
+    definition: 'SrcUser and TgtUser fields are not be present in older versions of Sysmon.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 10
     selection_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     filter_allowlist:
-        - SourceImage: C:\Program Files (x86)\McAfee\VirusScan Enterprise\VsTskMgr.exe
-        - SourceImage: C:\Program Files\Common Files\McAfee\SystemCore\mcshield.exe
-        - SourceImage: C:\Program Files\VMware\VMware Tools\vmtoolsd.exe
-        - SourceImage: C:\windows\system32\MRT.exe
+        - SourceImage: 'C:\Program Files (x86)\McAfee\VirusScan Enterprise\VsTskMgr.exe'
+        - SourceImage: 'C:\Program Files\Common Files\McAfee\SystemCore\mcshield.exe'
+        - SourceImage: 'C:\Program Files\VMware\VMware Tools\vmtoolsd.exe'
+        - SourceImage: 'C:\windows\system32\MRT.exe'
     filter_lsass_to_winlogon:
-        SourceImage: C:\Windows\system32\lsass.exe
-        TargetImage: C:\windows\system32\winlogon.exe
+        SourceImage: 'C:\Windows\system32\lsass.exe'
+        TargetImage: 'C:\windows\system32\winlogon.exe'
     condition: selection_basic and selection_no_alerts and not filter_allowlist and not filter_lsass_to_winlogon
 falsepositives:
 tags:

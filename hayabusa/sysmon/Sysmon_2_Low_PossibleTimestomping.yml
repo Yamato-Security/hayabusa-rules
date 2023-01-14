@@ -1,8 +1,8 @@
 author: Zach Mathis
 date: 2022/03/22
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Possible Timestomping
+title: 'Possible Timestomping'
 details: 'Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ CreateTime: %CreationUtcTime% ¦ PrevTime: %PreviousCreationUtcTime% ¦ PID: %PID% ¦ PGUID: %ProcessGuid%'
 description: |
     The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
@@ -16,7 +16,7 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational

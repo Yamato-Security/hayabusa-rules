@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/05
-modified:  2022/09/01
+modified: 2023/01/13
 
-title: Raw Access Read
-details: 'Proc: %Image% ¦ Device: %Device% ¦ PID: %ProessId% ¦ PGUID: %ProcessGuid%'
+title: 'Raw Access Read'
 description: |
     The RawAccessRead event detects when a process conducts reading operations from the drive using the \\.\ denotation. 
     This technique is often used by malware for data exfiltration of files that are locked for reading, as well as to avoid file access auditing tools. 
@@ -15,14 +14,14 @@ status: test
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 9
     condition: selection_basic
 falsepositives:
-    - Memory dumping tools
+    - 'Memory dumping tools'
 tags:
     - sysmon
 references:

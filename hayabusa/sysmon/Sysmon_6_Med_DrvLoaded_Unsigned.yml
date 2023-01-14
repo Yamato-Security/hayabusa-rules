@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Driver Loaded (Unsigned)
-details: 'Path: %ImageLoaded% ¦ Status: %SignatureStatus% ¦ Hash: %Hashes%'
+title: 'Driver Loaded (Unsigned)'
 description: 
 
 id: 42316be5-5732-40cc-8685-03e7c7f2c6ea
@@ -12,17 +11,17 @@ status: test
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 6
     filter:
-        Signed: true
-        SignatureStatus: Expired
+        Signed: 'true'
+        SignatureStatus: 'Expired'
     condition: selection and not filter
 falsepositives:
-    - Expired/revoked certs
+    - 'Expired/revoked certs'
 tags:
     - attack.defense_evasion
     - attack.t1553.002

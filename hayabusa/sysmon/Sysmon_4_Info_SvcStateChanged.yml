@@ -1,10 +1,9 @@
 author: Zach Mathis
 date: 2022/03/22
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Sysmon Service State Changed
-details: 'State: %State% ¦ Ver: %SysmonVersion% ¦ SchemaVer: %SchemaVersion%'
-description:
+title: 'Sysmon Service State Changed'
+description: ''
 
 id: f48ff752-0475-4e05-8203-56f6b2e2ab06
 level: informational
@@ -12,7 +11,7 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational

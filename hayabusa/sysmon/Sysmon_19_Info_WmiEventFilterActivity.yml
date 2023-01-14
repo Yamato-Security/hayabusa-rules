@@ -1,10 +1,11 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: WMI Event Filter
-details: 'Op: %Operation% ¦ Namespace: %EventNamespace% ¦ Name: %Name% ¦ Query: %query% ¦ User: %User%' # %Query% is mapped to Event.UserData.Query so we are using %query%.
-description: When a WMI event filter is registered, which is a method used by malware to execute, this event logs the WMI namespace, filter name and filter expression.
+title: 'WMI Event Filter'
+description: |
+    When a WMI event filter is registered, which is a method used by malware to execute, this event logs the WMI namespace, 
+    filter name and filter expression.
 
 id: 7636985e-6ceb-42bd-946b-282b6e4ff65b
 level: informational
@@ -12,14 +13,14 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 19
     selection_no_alerts:
-        - RuleName: ""
-        - RuleName: "-"
+        - RuleName: ''
+        - RuleName: '-'
     condition: selection_basic and selection_no_alerts
 falsepositives:
 tags:

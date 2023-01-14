@@ -1,23 +1,22 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Driver Loaded (Unknown Signature)
-details: 'Path: %ImageLoaded% ¦ Sig: %Signature% ¦ Status: %SignatureStatus% ¦ Hash: %Hashes%'
-description: This rule is marked as noisy by default due to a high probability of false positives.
+title: 'Driver Loaded (Unknown Signature)'
+description: 'This rule is marked as noisy by default due to a high probability of false positives.'
 
 id: 0090ea60-f4a2-43a8-8657-3a9a4ddcf547
 level: low
-status: stable
+status: experimental
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 6
-        Signed: true
+        Signed: 'true'
     filter:
         - Signature: 'Microsoft Windows'
         - Signature: 'VMware'

@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/04/17
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: LOLBIN Renamed
-details: 'Rule: %RuleName% ¦ Cmd: %CommandLine% ¦ Proc: %Image% ¦ OrigFileName: %OriginalFileName% ¦ User: %User% ¦ ParentCmd: %ParentCommandLine% ¦ LID: %LogonId% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ Hash: %Hashes%'
+title: 'LOLBIN Renamed'
 description: This is to detect when a LOLBIN (default Windows binary) was renamed in order to hide its execution. OringalFileName is the original filename in the PE header. From my tests, false positives should be low so I rated this as high.
 
 id: dc5700ef-3688-44c9-b719-8e1a632ff3dd
@@ -12,17 +11,17 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 1
     selection_OriginalFilenameIsLOLBIN:
         OriginalFileName:
-            regexes: ./rules/config/regex/LOLBAS_paths.txt
+            regexes: './rules/config/regex/LOLBAS_paths.txt'
     filter_CurrentFilenameIsDifferent:
         Image:
-            regexes: ./rules/config/regex/LOLBAS_paths.txt
+            regexes: './rules/config/regex/LOLBAS_paths.txt'
     condition: selection_basic and selection_OriginalFilenameIsLOLBIN and not filter_CurrentFilenameIsDifferent
 falsepositives:
 tags:

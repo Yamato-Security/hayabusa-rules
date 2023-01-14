@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/23
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Proc Tampering
-details: 'Rule: %RuleName% ¦ Proc: %Image% ¦ Type: %Type% ¦ User: %User% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%'
+title: 'Proc Tampering'
 description: |
     Detects process hollowing or process herpaderping techniques which would normally not be visible in Task Manager.
     Process hollowing is when malware launches a legitimate process in a suspended state and replaces legitimate code in the process with malicious code. 
@@ -17,7 +16,7 @@ status: test
 logsource:
     product: windows
     service: sysmon
-    definition: Requires Sysmon 13+ (Released 2021/01/21)
+    definition: 'Requires Sysmon 13+ (Released 2021/01/21)'
 detection:
     selection_basic:
         Channel: Microsoft-Windows-Sysmon/Operational

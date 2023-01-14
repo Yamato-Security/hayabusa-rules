@@ -1,9 +1,8 @@
 author: Zach Mathis
 date: 2022/03/05
-modified: 2022/09/01
+modified: 2023/01/13
 
-title: Driver Loaded (Suspicious Path)
-details: 'Path: %ImageLoaded% ¦ Sig: %Signature% ¦ Hash: %Hashes%'
+title: 'Driver Loaded (Suspicious Path)'
 description: 
 
 id: 92fe5e3e-6a23-4aa8-a41d-30feea4dd16b
@@ -12,16 +11,16 @@ status: stable
 logsource:
     product: windows
     service: sysmon
-    definition: Sysmon needs to be installed and configured.
+    definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection:
         Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 6
-        Signed: true #Unsigned drivers will be alerted on regardless of path.
+        Signed: 'true' #Unsigned drivers will be alerted on regardless of path.
     filter:
-        - ImageLoaded|startswith: C:\Windows\System32    # Majority of drivers will run from C:\Windows\System32\drivers but also in the directories below
-        - ImageLoaded|startswith: C:\Program Files
-        - ImageLoaded|startswith: C:\ProgramData\Microsoft\Windows Defender
+        - ImageLoaded|startswith: 'C:\Windows\System32'    # Majority of drivers will run from C:\Windows\System32\drivers but also in the directories below
+        - ImageLoaded|startswith: 'C:\Program Files'
+        - ImageLoaded|startswith: 'C:\ProgramData\Microsoft\Windows Defender'
     condition: selection and not filter
 falsepositives:
 tags:
