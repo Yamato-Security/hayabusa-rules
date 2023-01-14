@@ -15,10 +15,10 @@ status: test
 logsource:
     product: windows
     service: sysmon
-    definition: 'SrcUser and TgtUser information won't be present in older versions of Sysmon.'
+    definition: 'SrcUser and TgtUser fields are not be present in older versions of Sysmon.'
 detection:
     selection_basic:
-        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 10
     selection_no_alerts:
         - RuleName: ''

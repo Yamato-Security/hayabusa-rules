@@ -22,7 +22,7 @@ logsource:
     definition: 'Requires Sysmon 12+ (Released 2020/09/18)'
 detection:
     selection_basic:
-        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 24
     filter_no_alerts:
         - RuleName: ''

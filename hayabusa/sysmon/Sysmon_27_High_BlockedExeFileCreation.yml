@@ -14,7 +14,7 @@ logsource:
     definition: 'Requires Sysmon 14+ (Released 2022/08/16)'
 detection:
     selection_basic:
-        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 27
     condition: selection_basic
 falsepositives:

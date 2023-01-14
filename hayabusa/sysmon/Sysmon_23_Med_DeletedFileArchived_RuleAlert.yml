@@ -16,7 +16,7 @@ logsource:
     definition: 'Sysmon needs to be installed and configured.'
 detection:
     selection_basic:
-        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 23
     filter_no_alerts:
         - RuleName: ''

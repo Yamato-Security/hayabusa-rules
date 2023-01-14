@@ -14,7 +14,7 @@ logsource:
     definition: 
 detection:
     selection_basic:
-        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 255
     condition: selection_basic
 falsepositives:

@@ -17,7 +17,7 @@ logsource:
     definition: 'Src User and Tgt User information will not be present in older versions of Sysmon.'
 detection:
     selection_basic:
-        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        Channel: Microsoft-Windows-Sysmon/Operational
         EventID: 10
     filter_no_alerts:
         - RuleName: ''
