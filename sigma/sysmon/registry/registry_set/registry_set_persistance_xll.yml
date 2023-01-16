@@ -1,0 +1,38 @@
+title: Potential Persistence Via Excel Add-in - Registry
+ruletype: Sigma
+author: frack113
+date: 2023/01/15
+description: Detect potential persistence via the creation of an excel add-in (XLL)
+    file to make it run automatically when Excel is started.
+detection:
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*Software\Microsoft\Office\\*'
+    SELECTION_5:
+        TargetObject: '*\Excel\Options'
+    SELECTION_6:
+        Details: /R *
+    SELECTION_7:
+        Details: '*.xll'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
+falsepositives:
+- Unknown
+id: 961e33d1-4f86-4fcf-80ab-930a708b2f82
+level: high
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/4ae9580a1a8772db87a1b6cdb0d03e5af231e966/atomics/T1137.006/T1137.006.md
+- https://labs.withsecure.com/publications/add-in-opportunities-for-office-persistence
+status: experimental
+tags:
+- attack.persistence
+- attack.t1137.006
+

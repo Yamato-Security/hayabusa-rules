@@ -36,7 +36,7 @@ detection:
         - '*FakeDC*'
         - '*FireBuster*'
         - '*FireListener*'
-        - '*Get-Information*'
+        - '*Get-Information *'
         - '*Get-PassHints*'
         - '*Get-Web-Credentials*'
         - '*Get-WebCredentials*'
@@ -94,7 +94,7 @@ logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2023/01/09
+modified: 2023/01/16
 references:
 - https://github.com/samratashok/nishang
 status: experimental
