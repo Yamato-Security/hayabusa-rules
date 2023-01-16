@@ -12,7 +12,7 @@ detection:
     SELECTION_3:
         CommandLine: '*Import-Certificate*'
     SELECTION_4:
-        CommandLine: '* -File-Path *'
+        CommandLine: '* -FilePath *'
     SELECTION_5:
         CommandLine: '*Cert:\LocalMachine\Root*'
     SELECTION_6:
@@ -32,7 +32,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/29
+modified: 2023/01/16
 references:
 - https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/
 - https://docs.microsoft.com/en-us/powershell/module/pki/import-certificate?view=windowsserver2022-ps
