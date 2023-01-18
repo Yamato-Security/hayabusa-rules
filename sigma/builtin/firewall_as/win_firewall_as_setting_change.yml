@@ -1,8 +1,9 @@
-title: Setting Change in Windows Firewall with Advanced Security
+title: Windows Firewall Settings Have Been Changed
 ruletype: Sigma
 author: frack113
 date: 2022/02/19
-description: Setting have been change in Windows Firewall
+description: Detects activity when the settings of the Windows firewall have been
+    changed
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
@@ -18,7 +19,7 @@ level: low
 logsource:
     product: windows
     service: firewall-as
-modified: 2022/03/28
+modified: 2023/01/17
 references:
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 status: experimental

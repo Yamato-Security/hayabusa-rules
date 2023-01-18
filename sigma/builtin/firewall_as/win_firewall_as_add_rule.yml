@@ -1,8 +1,9 @@
-title: Added Rule in Windows Firewall with Advanced Security
+title: New Firewall Rule Added In Windows Firewall Exception List
 ruletype: Sigma
 author: frack113
 date: 2022/02/19
-description: A rule has been modified in the Windows Firewall exception list
+description: Detects when a rule has been added to the Windows Firewall exception
+    list
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
@@ -35,7 +36,7 @@ level: medium
 logsource:
     product: windows
     service: firewall-as
-modified: 2022/11/01
+modified: 2023/01/17
 references:
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 status: experimental

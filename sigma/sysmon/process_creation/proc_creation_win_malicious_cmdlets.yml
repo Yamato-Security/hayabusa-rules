@@ -87,6 +87,9 @@ detection:
         - '*Invoke-Gopher*'
         - '*Invoke-Grouper*'
         - '*Invoke-HandleKatz*'
+        - '*Invoke-ImpersonatedProcess*'
+        - '*Invoke-ImpersonateSystem*'
+        - '*Invoke-InteractiveSystemPowerShell*'
         - '*Invoke-Internalmonologue*'
         - '*Invoke-Inveigh*'
         - '*Invoke-InveighRelay*'
@@ -170,6 +173,7 @@ detection:
         - '*Invoke-SSHCommand*'
         - '*Invoke-StandIn*'
         - '*Invoke-StickyNotesExtract*'
+        - '*Invoke-SystemCommand*'
         - '*Invoke-Tater*'
         - '*Invoke-Thunderfox*'
         - '*Invoke-ThunderStruck*'
@@ -209,7 +213,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/05
+modified: 2023/01/16
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries
@@ -224,6 +228,7 @@ references:
 - https://bloodhound.readthedocs.io/en/latest/data-collection/azurehound.html
 - https://github.com/HarmJ0y/DAMP
 - https://github.com/samratashok/nishang
+- https://github.com/DarkCoderSc/PowerRunAsSystem/
 related:
 -   id: 89819aa4-bbd6-46bc-88ec-c7f7fe30efa6
     type: derived

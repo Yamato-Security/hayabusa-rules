@@ -1,8 +1,8 @@
-title: Query Tor Onion Address
+title: DNS Query Tor Onion Address - Sysmon
 ruletype: Sigma
 author: frack113
 date: 2022/02/20
-description: Detects DNS resolution of an .onion address related to Tor routing networks
+description: Detects DNS queries to an ".onion" address related to Tor routing networks
 detection:
     SELECTION_1:
         EventID: 22
@@ -18,8 +18,12 @@ level: high
 logsource:
     category: dns_query
     product: windows
+modified: 2023/01/16
 references:
 - https://www.logpoint.com/en/blog/detecting-tor-use-with-logpoint/
+related:
+-   id: 8384bd26-bde6-4da9-8e5d-4174a7a47ca2
+    type: similar
 status: experimental
 tags:
 - attack.command_and_control

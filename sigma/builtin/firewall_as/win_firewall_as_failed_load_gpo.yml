@@ -1,19 +1,21 @@
-title: Reset to Default Configuration Windows Firewall with Advanced Security
+title: The Windows Defender Firewall Service Failed To Load Group Policy
 ruletype: Sigma
 author: frack113
 date: 2022/02/19
-description: Windows Firewall has been reset to its default configuration.
+description: Detects activity when The Windows Defender Firewall service failed to
+    load Group Policy
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
     SELECTION_2:
-        EventID: 2032
+        EventID: 2009
     condition: (SELECTION_1 and SELECTION_2)
-id: 04b60639-39c0-412a-9fbe-e82499c881a3
+id: 7ec15688-fd24-4177-ba43-1a950537ee39
 level: low
 logsource:
     product: windows
     service: firewall-as
+modified: 2023/01/17
 references:
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 status: experimental
