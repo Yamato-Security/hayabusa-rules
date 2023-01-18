@@ -1,9 +1,9 @@
 title: Suspicious Use of PsLogList
 ruletype: Sigma
-author: Nasreddine Bencherchali @nas_bench
+author: Nasreddine Bencherchali
 date: 2021/12/18
-description: Threat actors can use the PsLogList utility to dump event log in order
-    to extract admin accounts and perform account discovery.
+description: Detects usage of the PsLogList utility to dump event log in order to
+    extract admin accounts and perform account discovery or delete events logs
 detection:
     SELECTION_1:
         EventID: 1
@@ -16,10 +16,11 @@ detection:
         - '*\psloglist.exe'
         - '*\psloglist64.exe'
     SELECTION_5:
-        CommandLine: '*security*'
+        CommandLine:
+        - '* security*'
+        - '* application*'
+        - '* system*'
     SELECTION_6:
-        CommandLine: '*accepteula*'
-    SELECTION_7:
         CommandLine:
         - '* -d*'
         - '* /d*'
@@ -27,8 +28,12 @@ detection:
         - '* /x*'
         - '* -s*'
         - '* /s*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) or
-        (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+        - '* -c*'
+        - '* /c*'
+        - '* -g*'
+        - '* /g*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
 falsepositives:
 - Another tool that uses the command line switches of PsLogList
 - Legitimate use of PsLogList by an administrator
@@ -37,11 +42,12 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/16
+modified: 2023/01/16
 references:
 - https://research.nccgroup.com/2021/01/12/abusing-cloud-services-to-fly-under-the-radar/
 - https://www.cybereason.com/blog/deadringer-exposing-chinese-threat-actors-targeting-major-telcos
 - https://github.com/3CORESec/MAL-CL/tree/master/Descriptors/Sysinternals/PsLogList
+- https://twitter.com/EricaZelic/status/1614075109827874817
 status: experimental
 tags:
 - attack.discovery

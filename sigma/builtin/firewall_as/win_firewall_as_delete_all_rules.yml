@@ -1,14 +1,14 @@
-title: A Rule Has Been Deleted From The Windows Firewall Exception List
+title: All Rules Have Been Deleted From The Windows Firewall Configuration
 ruletype: Sigma
-author: frack113
-date: 2022/02/19
-description: Detects when a singe rules or all of the rules have been deleted from
-    the Windows Defender Firewall
+author: frack113, Nasreddine Bencherchali
+date: 2023/01/17
+description: Detects when a all the rules have been deleted from the Windows Defender
+    Firewall configuration
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
     SELECTION_2:
-        EventID: 2006
+        EventID: 2033
     SELECTION_3:
         ModifyingApplication:
         - C:\Program Files\\*
@@ -21,12 +21,11 @@ detection:
         ModifyingApplication: '*\MsMpEng.exe'
     condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3) or (SELECTION_4)
         or (SELECTION_5 and SELECTION_6)))
-id: c187c075-bb3e-4c62-b4fa-beae0ffc211f
-level: medium
+id: 79609c82-a488-426e-abcf-9f341a39365d
+level: high
 logsource:
     product: windows
     service: firewall-as
-modified: 2023/01/17
 references:
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 status: experimental

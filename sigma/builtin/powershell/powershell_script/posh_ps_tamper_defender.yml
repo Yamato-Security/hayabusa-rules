@@ -51,7 +51,7 @@ detection:
         - '*htdefac *'
         - '*stdefac *'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6 and SELECTION_7) or SELECTION_8))
+        ((SELECTION_5 and SELECTION_6 and SELECTION_7) or SELECTION_8)))
 falsepositives:
 - Legitimate PowerShell scripts
 id: 14c71865-6cd3-44ae-adaa-1db923fae5f2
@@ -60,7 +60,7 @@ logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2023/01/06
+modified: 2023/01/12
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
 - https://docs.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2022-ps

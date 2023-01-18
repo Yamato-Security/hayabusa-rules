@@ -1,37 +1,35 @@
-title: Suspicious Cobalt Strike DNS Beaconing - Sysmon
+title: Suspicious Cobalt Strike DNS Beaconing - DNS Client
 ruletype: Sigma
-author: Florian Roth
-date: 2021/11/09
+author: Nasreddine Bencherchali
+date: 2023/01/16
 description: Detects a program that invoked suspicious DNS queries known from Cobalt
     Strike beacons
 detection:
     SELECTION_1:
-        EventID: 22
+        Channel: Microsoft-Windows-DNS Client Events/Operational
     SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 3008
     SELECTION_3:
         QueryName:
         - aaa.stage.*
         - post.1*
     SELECTION_4:
         QueryName: '*.stage.123456.*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+    condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Unknown
-fields:
-- Image
-- CommandLine
-id: f356a9c4-effd-4608-bbf8-408afd5cd006
+id: 0d18728b-f5bf-4381-9dcf-915539fff6c2
 level: critical
 logsource:
-    category: dns_query
+    definition: 'Requirements: Microsoft-Windows-DNS Client Events/Operational Event
+        Log must be enabled/collected in order to receive the events.'
     product: windows
-modified: 2023/01/16
+    service: dns-client
 references:
 - https://www.icebrg.io/blog/footprints-of-fin7-tracking-actor-patterns
 - https://www.sekoia.io/en/hunting-and-detecting-cobalt-strike/
 related:
--   id: 0d18728b-f5bf-4381-9dcf-915539fff6c2
+-   id: f356a9c4-effd-4608-bbf8-408afd5cd006
     type: similar
 status: test
 tags:

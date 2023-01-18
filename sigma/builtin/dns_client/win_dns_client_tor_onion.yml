@@ -1,0 +1,32 @@
+title: Query Tor Onion Address - DNS Client
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2022/02/20
+description: Detects DNS resolution of an .onion address related to Tor routing networks
+detection:
+    SELECTION_1:
+        Channel: Microsoft-Windows-DNS Client Events/Operational
+    SELECTION_2:
+        EventID: 3008
+    SELECTION_3:
+        QueryName: '*.onion*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unlikely
+id: 8384bd26-bde6-4da9-8e5d-4174a7a47ca2
+level: high
+logsource:
+    definition: 'Requirements: Microsoft-Windows-DNS Client Events/Operational Event
+        Log must be enabled/collected in order to receive the events.'
+    product: windows
+    service: dns-client
+references:
+- https://www.logpoint.com/en/blog/detecting-tor-use-with-logpoint/
+related:
+-   id: b55ca2a3-7cff-4dda-8bdd-c7bfa63bf544
+    type: similar
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1090.003
+

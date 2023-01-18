@@ -1,29 +1,30 @@
-title: DNS Query for Ufile.io Upload Domain - Sysmon
+title: DNS Query for Ufile.io Upload Domain - DNS Client
 ruletype: Sigma
-author: yatinwad and TheDFIRReport
-date: 2022/06/23
+author: Nasreddine Bencherchali
+date: 2023/01/16
 description: Detects DNS queries to "ufile.io". Which is often abused by malware for
     upload and exfiltration
 detection:
     SELECTION_1:
-        EventID: 22
+        Channel: Microsoft-Windows-DNS Client Events/Operational
     SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 3008
     SELECTION_3:
         QueryName: '*ufile.io*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Legitimate DNS queries and usage of Ufile
-id: 1cbbeaaf-3c8c-4e4c-9d72-49485b6a176b
+id: 090ffaad-c01a-4879-850c-6d57da98452d
 level: high
 logsource:
-    category: dns_query
+    definition: 'Requirements: Microsoft-Windows-DNS Client Events/Operational Event
+        Log must be enabled/collected in order to receive the events.'
     product: windows
-modified: 2023/01/16
+    service: dns-client
 references:
 - https://thedfirreport.com/2021/12/13/diavol-ransomware/
 related:
--   id: 090ffaad-c01a-4879-850c-6d57da98452d
+-   id: 1cbbeaaf-3c8c-4e4c-9d72-49485b6a176b
     type: similar
 status: experimental
 tags:

@@ -1,8 +1,8 @@
-title: DNS Query for Anonfiles.com Domain
+title: DNS Query for Anonfiles.com Domain - Sysmon
 ruletype: Sigma
 author: pH-T
 date: 2022/07/15
-description: Detects DNS queries for anonfiles.com, which is an anonymous file upload
+description: Detects DNS queries for "anonfiles.com", which is an anonymous file upload
     platform often used for malicious purposes
 detection:
     SELECTION_1:
@@ -13,14 +13,18 @@ detection:
         QueryName: '*.anonfiles.com*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- Legitimate access to anonfiles.com
+- Rare legitimate access to anonfiles.com
 id: 065cceea-77ec-4030-9052-fc0affea7110
 level: high
 logsource:
     category: dns_query
     product: windows
+modified: 2023/01/16
 references:
 - https://www.trendmicro.com/vinfo/us/security/news/ransomware-spotlight/ransomware-spotlight-blackbyte
+related:
+-   id: 29f171d7-aa47-42c7-9c7b-3c87938164d9
+    type: similar
 status: experimental
 tags:
 - attack.exfiltration

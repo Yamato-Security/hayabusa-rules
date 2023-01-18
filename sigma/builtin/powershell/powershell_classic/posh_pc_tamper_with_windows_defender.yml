@@ -42,8 +42,14 @@ detection:
         - '*LowThreatDefaultAction*'
         - '*ModerateThreatDefaultAction*'
         - '*HighThreatDefaultAction*'
+    SELECTION_8:
+        HostApplication:
+        - '*ltdefac *'
+        - '*mtdefac *'
+        - '*htdefac *'
+        - '*stdefac *'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+        ((SELECTION_5 and SELECTION_6 and SELECTION_7) or SELECTION_8)))
 falsepositives:
 - Unknown
 id: ec19ebab-72dc-40e1-9728-4c0b805d722c
@@ -52,7 +58,7 @@ logsource:
     category: ps_classic_provider_start
     definition: fields have to be extract from event
     product: windows
-modified: 2022/08/05
+modified: 2023/01/12
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
 related:
