@@ -41,8 +41,21 @@ detection:
         - fe80:*
         - fc*
         - fd*
+    SELECTION_7:
+        DestinationIp:
+        - 20.184.*
+        - 20.185.*
+        - 20.186.*
+        - 20.187.*
+        - 20.188.*
+        - 20.189.*
+        - 20.190.*
+        - 20.191.*
+        - 51.103.*
+        - 51.104.*
+        - 51.105.*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6)))
+        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Communication to other corporate systems that use IP addresses from public address
     spaces
@@ -51,7 +64,7 @@ level: medium
 logsource:
     category: network_connection
     product: windows
-modified: 2022/04/21
+modified: 2023/01/18
 references:
 - https://redcanary.com/blog/child-processes/
 - https://nasbench.medium.com/what-is-the-dllhost-exe-process-actually-running-ef9fe4c19c08

@@ -16,10 +16,13 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        NewProcessName: '*\cipher.exe'
+        OriginalFileName: CIPHER.EXE
     SELECTION_4:
+        NewProcessName: '*\cipher.exe'
+    SELECTION_5:
         CommandLine: '* /w:*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unknown
 id: 4b046706-5789-4673-b111-66f25fe99534
@@ -27,6 +30,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/18
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1485/T1485.md#atomic-test-3---overwrite-deleted-data-on-c-drive
 status: experimental

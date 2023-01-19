@@ -58,6 +58,10 @@ detection:
         Image: '*.exe'
     SELECTION_30:
         TargetFilename: '*\.vscode\extensions\\*'
+    SELECTION_31:
+        Image: '*\AppData\Local\GitHubDesktop\Update.exe'
+    SELECTION_32:
+        TargetFilename: '*\AppData\Local\SquirrelTemp\\*'
     SELECTION_4:
         TargetFilename: '*.exe'
     SELECTION_5:
@@ -82,7 +86,7 @@ detection:
         and SELECTION_15) or (SELECTION_16 or SELECTION_17) or (SELECTION_18) or (SELECTION_19)
         or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
         and SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28 and SELECTION_29
-        and SELECTION_30)))
+        and SELECTION_30) or (SELECTION_31 and SELECTION_32)))
 falsepositives:
 - Software installers
 - Update utilities
@@ -92,7 +96,7 @@ level: low
 logsource:
     category: file_event
     product: windows
-modified: 2022/12/07
+modified: 2023/01/18
 references:
 - Malware Sandbox
 status: experimental
