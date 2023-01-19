@@ -40,6 +40,7 @@ detection:
         - C:\Windows\System32\wimserv.exe
         - C:\Windows\System32\RuntimeBroker.exe
         - C:\Windows\System32\SystemSettingsBroker.exe
+        - C:\Windows\explorer.exe
     SELECTION_7:
         ProcessName:
         - '*\procexp64.exe'
@@ -47,6 +48,7 @@ detection:
         - '*\procmon64.exe'
         - '*\procmon.exe'
         - '*\Google\Chrome\Application\chrome.exe'
+        - '*\AppData\Local\Microsoft\Teams\current\Teams.exe'
     condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
         and  not ((SELECTION_6) or (SELECTION_7)))
 falsepositives:
@@ -59,7 +61,7 @@ level: medium
 logsource:
     product: windows
     service: security
-modified: 2023/01/09
+modified: 2023/01/18
 references:
 - https://blog.dylan.codes/evading-sysmon-and-windows-event-logging/
 - https://docs.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4673

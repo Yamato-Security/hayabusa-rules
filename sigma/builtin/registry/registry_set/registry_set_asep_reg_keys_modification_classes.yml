@@ -7,6 +7,10 @@ description: Detects modification of autostart extensibility point (ASEP) in reg
 detection:
     SELECTION_1:
         EventID: 4657
+    SELECTION_10:
+        NewProcessName: C:\Windows\System32\svchost.exe
+    SELECTION_11:
+        TargetObject: '*\lnkfile\shellex\ContextMenuHandlers\\*'
     SELECTION_2:
         OperationType:
         - Existing registry value modified
@@ -41,7 +45,8 @@ detection:
     SELECTION_9:
         NewProcessName: C:\Windows\System32\drvinst.exe
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9)))
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9)
+        or (SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
     keys for legitimate reason
@@ -56,7 +61,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/06/04
+modified: 2023/01/18
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

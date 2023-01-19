@@ -1,4 +1,4 @@
-title: Wevtutil Recon
+title: Potential Recon Activity Using Wevtutil
 ruletype: Sigma
 author: Nasreddine Bencherchali
 date: 2022/09/09
@@ -18,6 +18,7 @@ detection:
         CommandLine:
         - '*Microsoft-Windows-TerminalServices-LocalSessionManager/Operational*'
         - '*Microsoft-Windows-Terminal-Services-RemoteConnectionManager/Operational*'
+        - '*Security*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Legitmate usage of the utility by administrators to query the event log
@@ -26,6 +27,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/18
 references:
 - http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
 status: experimental

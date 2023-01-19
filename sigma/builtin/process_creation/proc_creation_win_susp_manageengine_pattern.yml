@@ -1,0 +1,51 @@
+title: Manage Engine Java Suspicious Sub Process
+ruletype: Sigma
+author: Florian Roth
+date: 2023/01/18
+description: Detects suspicious sub processes started by the Manage Engine ServiceDesk
+    Plus Java web service process
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\ManageEngine\ServiceDesk\\*'
+    SELECTION_4:
+        ParentProcessName: '*\java.exe*'
+    SELECTION_5:
+        NewProcessName:
+        - '*\powershell.exe'
+        - '*\sh.exe'
+        - '*\bash.exe'
+        - '*\pwsh.exe'
+        - '*\schtasks.exe'
+        - '*\certutil.exe'
+        - '*\whoami.exe'
+        - '*\bitsadmin.exe'
+        - '*\wscript.exe'
+        - '*\cscript.exe'
+        - '*\scrcons.exe'
+        - '*\wmic.exe'
+        - '*\mshta.exe'
+        - '*\forfiles.exe'
+        - '*\mftrace.exe'
+        - '*\AppVLP.exe'
+        - '*\curl.exe'
+        - '*\notepad.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+falsepositives:
+- Legitimate sub processes started by Manage Engine ServiceDesk Pro
+fields:
+- CommandLine
+id: cea2b7ea-792b-405f-95a1-b903ea06458f
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.horizon3.ai/manageengine-cve-2022-47966-technical-deep-dive/
+- https://github.com/horizon3ai/CVE-2022-47966/blob/3a51c6b72ebbd87392babd955a8fbeaee2090b35/CVE-2022-47966.py
+- https://blog.viettelcybersecurity.com/saml-show-stopper/
+status: experimental
+

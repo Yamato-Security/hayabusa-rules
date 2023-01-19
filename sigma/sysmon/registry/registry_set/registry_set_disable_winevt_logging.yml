@@ -1,4 +1,4 @@
-title: Disable Winevt Event Logging Via Registry
+title: Disable Windows Event Logging Via Registry
 ruletype: Sigma
 author: frack113, Nasreddine Bencherchali
 date: 2022/07/04
@@ -50,7 +50,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/10/11
+modified: 2023/01/18
 references:
 - https://twitter.com/WhichbufferArda/status/1543900539280293889
 - https://github.com/DebugPrivilege/CPP/blob/c39d365617dbfbcb01fffad200d52b6239b2918c/Windows%20Defender/RestoreDefenderConfig.cpp
