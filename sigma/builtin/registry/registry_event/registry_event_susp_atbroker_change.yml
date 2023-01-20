@@ -23,8 +23,12 @@ detection:
         TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Accessibility\Configuration*'
     SELECTION_7:
         NewValue: (Empty)
+    SELECTION_8:
+        NewProcessName: C:\Windows\Installer\MSI*
+    SELECTION_9:
+        TargetObject: '*Software\Microsoft\Windows NT\CurrentVersion\Accessibility\ATs*'
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and SELECTION_4 and  not
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
+        ((SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Creation of non-default, legitimate at usage
 id: 9577edbb-851f-4243-8c91-1d5b50c1a39b
@@ -32,7 +36,7 @@ level: medium
 logsource:
     category: registry_event
     product: windows
-modified: 2022/09/21
+modified: 2023/01/19
 references:
 - http://www.hexacorn.com/blog/2016/07/22/beyond-good-ol-run-key-part-42/
 - https://lolbas-project.github.io/lolbas/Binaries/Atbroker/

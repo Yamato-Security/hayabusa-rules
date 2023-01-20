@@ -64,6 +64,14 @@ detection:
         EventType: SetValue
     SELECTION_30:
         Details: '* /burn.runonce'
+    SELECTION_31:
+        Image: C:\Windows\Installer\MSI*
+    SELECTION_32:
+        TargetObject: '*\Explorer\Browser Helper Objects*'
+    SELECTION_33:
+        Image: C:\WINDOWS\system32\msiexec.exe
+    SELECTION_34:
+        TargetObject: '*\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\\*'
     SELECTION_4:
         TargetObject: '*\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion*'
     SELECTION_5:
@@ -93,7 +101,8 @@ detection:
         or SELECTION_15 and SELECTION_16 and SELECTION_17) or (SELECTION_18) or (SELECTION_19
         and SELECTION_20 and SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24)
         or (SELECTION_25) or (SELECTION_26 and SELECTION_27) or (SELECTION_28 and
-        SELECTION_29 and SELECTION_30)))
+        SELECTION_29 and SELECTION_30) or (SELECTION_31 and SELECTION_32) or (SELECTION_33
+        and SELECTION_34)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
     keys for legitimate reason
@@ -108,7 +117,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/12/14
+modified: 2023/01/19
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

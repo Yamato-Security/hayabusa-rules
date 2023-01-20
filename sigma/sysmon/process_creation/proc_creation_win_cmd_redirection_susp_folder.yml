@@ -7,8 +7,6 @@ description: Detects inline windows shell commands redirecting output via the ">
 detection:
     SELECTION_1:
         EventID: 1
-    SELECTION_10:
-        CommandLine: '* > %TMP%\\*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -16,18 +14,25 @@ detection:
     SELECTION_4:
         OriginalFileName: Cmd.Exe
     SELECTION_5:
-        CommandLine: '* > %USERPROFILE%\\*'
+        CommandLine:
+        - '*> %USERPROFILE%\\*'
+        - '*> %APPDATA%\\*'
+        - '*> \Users\Public\\*'
+        - '*> C:\Users\Public\\*'
+        - '*> %TEMP%\\*'
+        - '*> %TMP%\\*'
+        - '*> C:\Windows\Temp\\*'
+        - '*> C:\Temp\\*'
     SELECTION_6:
-        CommandLine: '* > %APPDATA%\\*'
+        CommandLine:
+        - '* > *'
+        - '* >> *'
     SELECTION_7:
-        CommandLine: '* > \Users\Public\\*'
+        CommandLine: '*C:\Users\\*'
     SELECTION_8:
-        CommandLine: '* > C:\Users\Public\\*'
-    SELECTION_9:
-        CommandLine: '* > %TEMP%\\*'
+        CommandLine: '*\AppData\Local\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9
-        and SELECTION_10))
+        (SELECTION_5 or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Legitimate admin scripts
 id: 8e0bb260-d4b2-4fff-bb8d-3f82118e6892
@@ -35,9 +40,12 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2023/01/19
 references:
 - https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
+related:
+-   id: aa2efee7-34dd-446e-8a37-40790a66efd7
+    type: derived
 status: experimental
 tags:
 - attack.execution

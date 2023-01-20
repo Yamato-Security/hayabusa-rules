@@ -42,6 +42,7 @@ detection:
         TargetFilename:
         - '*\AppData\Local\Microsoft\Teams\stage\Teams.exe'
         - '*\AppData\Local\Microsoft\Teams\stage\Squirrel.exe'
+        - '*\AppData\Local\Microsoft\SquirrelTemp\tempb\'
     SELECTION_24:
         Image: C:\Windows\Microsoft.NET\Framework\\*
     SELECTION_25:
@@ -96,7 +97,7 @@ level: low
 logsource:
     category: file_event
     product: windows
-modified: 2023/01/18
+modified: 2023/01/20
 references:
 - Malware Sandbox
 status: experimental

@@ -1,4 +1,4 @@
-title: Wmiprvse Spawning Process
+title: WmiPrvSE Spawned A Process
 ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/08/15
@@ -24,19 +24,24 @@ detection:
         - '*\WerFault.exe'
     SELECTION_7:
         SubjectLogonId: null
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not (SELECTION_4
-        or SELECTION_5 or SELECTION_6)) and  not (SELECTION_7))
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        or SELECTION_5 or SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Unknown
 id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
-level: high
+level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/05/27
+modified: 2023/01/19
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190810201010.html
-status: experimental
+related:
+-   id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
+    type: similar
+-   id: 692f0bec-83ba-4d04-af7e-e884a96059b6
+    type: similar
+status: stable
 tags:
 - attack.execution
 - attack.t1047

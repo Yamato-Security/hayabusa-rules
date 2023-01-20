@@ -2,36 +2,19 @@ title: Suspicious PowerShell Parent Process
 ruletype: Sigma
 author: Teymur Kheirkhabarov, Harish Segar (rule)
 date: 2020/03/20
-description: Detects a suspicious parents of powershell.exe process
+description: Detects a suspicious or uncommon parent processes of PowerShell
 detection:
     SELECTION_1:
         EventID: 1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        CommandLine:
-        - '*/c powershell*'
-        - '*/c pwsh*'
-    SELECTION_5:
-        Description: Windows PowerShell
-    SELECTION_6:
-        Product: PowerShell Core 6
-    SELECTION_7:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_8:
         ParentImage:
         - '*\mshta.exe'
         - '*\rundll32.exe'
         - '*\regsvr32.exe'
         - '*\services.exe'
         - '*\winword.exe'
-        - '*\wmiprvse.exe'
         - '*\powerpnt.exe'
         - '*\excel.exe'
         - '*\msaccess.exe'
@@ -56,10 +39,26 @@ detection:
         - '*\php-cgi.exe'
         - '*\jbosssvc.exe'
         - '*\MicrosoftEdgeSH.exe'
-    SELECTION_9:
+    SELECTION_4:
         ParentImage: '*tomcat*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-        or SELECTION_6 or SELECTION_7) and (SELECTION_8 or SELECTION_9))
+    SELECTION_5:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_6:
+        CommandLine:
+        - '*/c powershell*'
+        - '*/c pwsh*'
+    SELECTION_7:
+        Description: Windows PowerShell
+    SELECTION_8:
+        Product: PowerShell Core 6
+    SELECTION_9:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8 or SELECTION_9))
 falsepositives:
 - Other scripts
 id: 754ed792-634f-40ae-b3bc-e0448d33f695
@@ -67,7 +66,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/05
+modified: 2023/01/19
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=26
 status: test
