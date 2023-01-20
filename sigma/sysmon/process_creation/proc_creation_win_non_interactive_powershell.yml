@@ -1,24 +1,36 @@
-title: Non Interactive PowerShell
+title: Non Interactive PowerShell Process Spawned
 ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g (rule), oscd.community (improvements)
 date: 2019/09/12
 description: Detects non-interactive PowerShell activity by looking at powershell.exe
-    with not explorer.exe as a parent.
+    with a non user process such as "explorer.exe" as a parent.
 detection:
     SELECTION_1:
         EventID: 1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Image: '*\powershell.exe'
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
     SELECTION_4:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_5:
         ParentImage:
         - '*\explorer.exe'
         - '*\CompatTelRunner.exe'
-    SELECTION_5:
+    SELECTION_6:
         ParentImage: C:\$WINDOWS.~BT\Sources\SetupHost.exe
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5)))
+    SELECTION_7:
+        ParentImage: C:\Users\\*
+    SELECTION_8:
+        ParentImage: '*\AppData\Local\Programs\Microsoft VS Code\Code.exe'
+    SELECTION_9:
+        ParentCommandLine: '* --ms-enable-electron-run-as-node *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
+        ((SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Legitimate programs executing PowerShell scripts
 id: f4bbd493-b796-416e-bbf2-121235348529
@@ -26,7 +38,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/08
+modified: 2023/01/20
 references:
 - https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190410151110.html
 status: test

@@ -1,9 +1,9 @@
-title: SQLite Chrome Cookie DB Access
+title: SQLite Chromium Profile Data DB Access
 ruletype: Sigma
 author: TropChaud
 date: 2022/12/19
-description: Detect use of sqlite binary to query the Chrome Cookies database and
-    steal the cookie data contained within it
+description: Detect usage of the "sqlite" binary to query databases in Chromium-based
+    browsers for potential data stealing.
 detection:
     SELECTION_1:
         EventID: 1
@@ -17,10 +17,18 @@ detection:
         - '*\sqlite3.exe'
     SELECTION_5:
         CommandLine:
-        - '*\Google\Chrome\User Data\Default\Network\Cookies*'
-        - '*\Google\Chrome\User Data\Default\Cookies*'
+        - '*\User Data\\*'
+        - '*\Opera Software\\*'
+        - '*\ChromiumViewer\\*'
+    SELECTION_6:
+        CommandLine:
+        - '*Login Data*'
+        - '*Cookies*'
+        - '*Web Data*'
+        - '*History*'
+        - '*Bookmarks*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
+        SELECTION_5 and SELECTION_6)
 falsepositives:
 - Unknown
 id: 24c77512-782b-448a-8950-eddb0785fc71
@@ -28,10 +36,15 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/19
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/84d9edaaaa2c5511144521b0e4af726d1c7276ce/atomics/T1539/T1539.md#atomic-test-2---steal-chrome-cookies-windows
+- https://blog.cyble.com/2022/04/21/prynt-stealer-a-new-info-stealer-performing-clipper-and-keylogger-activities/
 status: experimental
 tags:
 - attack.credential_access
 - attack.t1539
+- attack.t1555.003
+- attack.collection
+- attack.t1005
 

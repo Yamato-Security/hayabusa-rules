@@ -30,6 +30,9 @@ detection:
         - '*privatlab.net*'
         - '*privatlab.com*'
         - '*sendspace.com*'
+        - '*pastetext.net*'
+        - '*pastebin.pl*'
+        - '*paste.ee*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -38,7 +41,7 @@ level: high
 logsource:
     product: windows
     service: bits-client
-modified: 2022/12/02
+modified: 2023/01/19
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md
 - https://twitter.com/malmoeb/status/1535142803075960832

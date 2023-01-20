@@ -51,9 +51,12 @@ detection:
         - 20.189.*
         - 20.190.*
         - 20.191.*
+        - 23.79.*
+        - 51.10.*
         - 51.103.*
         - 51.104.*
         - 51.105.*
+        - 52.239.*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
 falsepositives:
@@ -64,7 +67,7 @@ level: medium
 logsource:
     category: network_connection
     product: windows
-modified: 2023/01/18
+modified: 2023/01/20
 references:
 - https://redcanary.com/blog/child-processes/
 - https://nasbench.medium.com/what-is-the-dllhost-exe-process-actually-running-ef9fe4c19c08

@@ -29,6 +29,9 @@ detection:
         - '*feeds.rapidfeeds.com'
         - '*livejournal.com'
         - '*.githubusercontent.com'
+        - '*pastetext.net'
+        - '*pastebin.pl'
+        - '*paste.ee'
     SELECTION_5:
         Image:
         - '*\iexplore.exe'
@@ -57,7 +60,7 @@ level: high
 logsource:
     category: network_connection
     product: windows
-modified: 2022/08/29
+modified: 2023/01/19
 references:
 - https://content.fireeye.com/apt-41/rpt-apt41
 - https://securelist.com/the-tetrade-brazilian-banking-malware/97779/

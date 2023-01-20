@@ -67,6 +67,14 @@ detection:
         - '*\AspNetCoreSharedFrameworkBundle-*'
     SELECTION_31:
         NewValue: '* /burn.runonce'
+    SELECTION_32:
+        NewProcessName: C:\Windows\Installer\MSI*
+    SELECTION_33:
+        TargetObject: '*\Explorer\Browser Helper Objects*'
+    SELECTION_34:
+        NewProcessName: C:\WINDOWS\system32\msiexec.exe
+    SELECTION_35:
+        TargetObject: '*\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\\*'
     SELECTION_4:
         EventType: SetValue
     SELECTION_5:
@@ -96,7 +104,8 @@ detection:
         or SELECTION_15 or SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19)
         or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
         and SELECTION_25) or (SELECTION_26) or (SELECTION_27 and SELECTION_28) or
-        (SELECTION_29 and SELECTION_30 and SELECTION_31)))
+        (SELECTION_29 and SELECTION_30 and SELECTION_31) or (SELECTION_32 and SELECTION_33)
+        or (SELECTION_34 and SELECTION_35)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
     keys for legitimate reason
@@ -111,7 +120,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/12/14
+modified: 2023/01/19
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns

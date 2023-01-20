@@ -29,6 +29,9 @@ detection:
         - '*privatlab.net*'
         - '*privatlab.com*'
         - '*sendspace.com*'
+        - '*pastetext.net*'
+        - '*pastebin.pl*'
+        - '*paste.ee*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -37,6 +40,7 @@ level: high
 logsource:
     product: windows
     service: appxdeployment-server
+modified: 2023/01/19
 references:
 - Internal Research
 - https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/

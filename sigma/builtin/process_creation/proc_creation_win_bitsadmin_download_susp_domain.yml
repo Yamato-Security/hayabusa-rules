@@ -37,6 +37,9 @@ detection:
         - '*privatlab.net*'
         - '*privatlab.com*'
         - '*sendspace.com*'
+        - '*pastetext.net*'
+        - '*pastebin.pl*'
+        - '*paste.ee*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5 and SELECTION_6)
 falsepositives:
@@ -49,7 +52,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/02
+modified: 2023/01/19
 references:
 - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
 - https://isc.sans.edu/diary/22264

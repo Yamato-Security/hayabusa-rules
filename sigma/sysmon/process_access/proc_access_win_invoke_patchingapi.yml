@@ -13,7 +13,9 @@ detection:
     SELECTION_12:
         SourceImage: '*\AppData\Local\GitHubDesktop\app-*'
     SELECTION_13:
-        SourceImage: '*\GitHubDesktop.exe'
+        SourceImage:
+        - '*\GitHubDesktop.exe'
+        - '*\resources\app\git\usr\bin\sh.exe'
     SELECTION_14:
         TargetImage: C:\Users\\*
     SELECTION_15:
@@ -24,8 +26,28 @@ detection:
         SourceImage: '*\NGenTask.exe'
     SELECTION_18:
         TargetImage: C:\Windows\Microsoft.NET\Framework\
+    SELECTION_19:
+        SourceImage: C:\Users\\*
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        SourceImage: '*\AppData\Local\Microsoft\Teams\stage\Teams.exe'
+    SELECTION_21:
+        TargetImage: C:\Users\\*
+    SELECTION_22:
+        TargetImage: '*\AppData\Local\Microsoft\Teams\Update.exe'
+    SELECTION_23:
+        SourceImage: C:\Users\\*
+    SELECTION_24:
+        SourceImage: '*\AppData\Local\Microsoft\Teams\Update.exe'
+    SELECTION_25:
+        TargetImage: C:\WINDOWS\SysWOW64\regsvr32.exe
+    SELECTION_26:
+        SourceImage: C:\Users\\*
+    SELECTION_27:
+        SourceImage: '*\AppData\Local\Microsoft\Teams\Update.exe'
+    SELECTION_28:
+        TargetImage: '*\AppData\Local\Microsoft\Teams\stage\Teams.exe'
     SELECTION_3:
         GrantedAccess: '0x1FFFFF'
     SELECTION_4:
@@ -51,7 +73,9 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
         SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8) or (SELECTION_9
         and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18)))
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19
+        and SELECTION_20 and SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24
+        and SELECTION_25) or (SELECTION_26 and SELECTION_27 and SELECTION_28)))
 falsepositives:
 - Unknown
 id: b916cba1-b38a-42da-9223-17114d846fd6
@@ -59,7 +83,7 @@ level: medium
 logsource:
     category: process_access
     product: windows
-modified: 2023/01/18
+modified: 2023/01/20
 references:
 - https://github.com/D1rkMtr/UnhookingPatch
 - https://twitter.com/D1rkMtr/status/1611471891193298944?s=20

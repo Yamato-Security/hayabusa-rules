@@ -29,6 +29,9 @@ detection:
         - '*privatlab.net*'
         - '*privatlab.com*'
         - '*sendspace.com*'
+        - '*pastetext.net*'
+        - '*pastebin.pl*'
+        - '*paste.ee*'
     SELECTION_4:
         TargetFilename:
         - '*.exe:Zone*'
@@ -46,7 +49,7 @@ logsource:
     category: create_stream_hash
     definition: 'Requirements: Sysmon config with Imphash logging activated'
     product: windows
-modified: 2022/12/02
+modified: 2023/01/19
 references:
 - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=90015
 - https://www.cisa.gov/uscert/ncas/alerts/aa22-321a

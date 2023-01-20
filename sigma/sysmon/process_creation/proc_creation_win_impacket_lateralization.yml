@@ -1,6 +1,6 @@
-title: Impacket Lateralization Detection
+title: Potential Impacket Lateral Movement Activity
 ruletype: Sigma
-author: Ecco, oscd.community, Jonhnathan Ribeiro
+author: Ecco, oscd.community, Jonhnathan Ribeiro, Tim Rauch
 date: 2019/09/03
 description: Detects wmiexec/dcomexec/atexec/smbexec from Impacket framework
 detection:
@@ -49,12 +49,16 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/08
+modified: 2023/01/19
 references:
 - https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/wmiexec.py
 - https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/atexec.py
 - https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/smbexec.py
 - https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/dcomexec.py
+- https://www.elastic.co/guide/en/security/current/suspicious-cmd-execution-via-wmi.html
+related:
+-   id: e31f89f7-36fb-4697-8ab6-48823708353b
+    type: obsoletes
 status: stable
 tags:
 - attack.execution

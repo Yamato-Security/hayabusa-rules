@@ -28,6 +28,8 @@ detection:
         - '*-ExecutionPolicy Bypass*'
         - '*Invoke-Expression*'
         - '*IEX (*'
+        - '*Invoke-Command*'
+        - '*ICM -*'
         - '*Invoke-WebRequest*'
         - '*IWR *'
         - '* -noni *'
@@ -40,7 +42,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
+modified: 2023/01/19
 references:
 - https://github.com/frack113/atomic-red-team/blob/a9051c38de8a5320b31c7039efcbd3b56cf2d65a/atomics/T1547.001/T1547.001.md#atomic-test-9---systembc-malware-as-a-service-registry
 - https://www.trendmicro.com/en_us/research/22/j/lv-ransomware-exploits-proxyshell-in-attack.html

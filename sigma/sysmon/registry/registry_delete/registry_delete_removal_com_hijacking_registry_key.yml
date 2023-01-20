@@ -27,8 +27,16 @@ detection:
         Image: '*\Everything.exe'
     SELECTION_18:
         TargetObject: '*\Everything.*'
+    SELECTION_19:
+        Image: C:\Windows\Installer\MSI*
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        Image: C:\Program Files (x86)\Java\\*
+    SELECTION_21:
+        Image: '*\installer.exe'
+    SELECTION_22:
+        TargetObject: '*\Classes\WOW6432Node\CLSID\{4299124F-F2C3-41b4-9C73-9236B2AD0E8F}*'
     SELECTION_3:
         EventType: DeleteKey
     SELECTION_4:
@@ -48,7 +56,8 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
         ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9
         and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
-        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)))
+        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)
+        or (SELECTION_19) or (SELECTION_20 and SELECTION_21 and SELECTION_22)))
 falsepositives:
 - Legitimate software (un)installations are known to cause some false positives. Please
     add them as a filter when encountered
@@ -57,7 +66,7 @@ level: medium
 logsource:
     category: registry_delete
     product: windows
-modified: 2022/10/20
+modified: 2023/01/19
 references:
 - https://github.com/OTRF/detection-hackathon-apt29/issues/7
 - https://threathunterplaybook.com/evals/apt29/detections/3.C.1_22A46621-7A92-48C1-81BF-B3937EB4FDC3.html
