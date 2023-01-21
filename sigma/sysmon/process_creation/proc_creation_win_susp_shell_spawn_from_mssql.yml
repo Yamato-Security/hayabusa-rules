@@ -19,6 +19,7 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
         - '*\bitsadmin.exe'
+        - '*\systeminfo.exe'
     SELECTION_5:
         ParentImage: C:\Program Files\Microsoft SQL Server\\*
     SELECTION_6:
@@ -34,7 +35,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2023/01/21
 status: experimental
 tags:
 - attack.t1505.003

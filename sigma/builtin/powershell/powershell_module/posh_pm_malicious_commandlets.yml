@@ -1,15 +1,17 @@
-title: Malicious PowerShell Commandlets - ProcessCreation
+title: Malicious PowerShell Commandlets - PoshModule
 ruletype: Sigma
 author: Nasreddine Bencherchali
-date: 2023/01/02
+date: 2023/01/20
 description: Detects Commandlet names from well-known PowerShell exploitation frameworks
 detection:
     SELECTION_1:
-        EventID: 4688
+        EventID: 4103
     SELECTION_2:
-        Channel: Security
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_3:
-        CommandLine:
+        Payload:
         - '*Add-Exfiltration*'
         - '*Add-Persistence*'
         - '*Add-RegBackdoor*'
@@ -173,10 +175,11 @@ detection:
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
-id: 02030f2f-6199-49ec-b258-ea71b07e03dc
+id: 7d0d0329-0ef1-4e84-a9f5-49500f9d7c6c
 level: high
 logsource:
-    category: process_creation
+    category: ps_module
+    definition: 'Requirements: PowerShell Module Logging must be enabled'
     product: windows
 modified: 2023/01/21
 references:
@@ -197,10 +200,10 @@ references:
 - https://github.com/besimorhino/powercat
 related:
 -   id: 89819aa4-bbd6-46bc-88ec-c7f7fe30efa6
-    type: derived
--   id: 7d0d0329-0ef1-4e84-a9f5-49500f9d7c6c
     type: similar
-status: experimental
+-   id: 02030f2f-6199-49ec-b258-ea71b07e03dc
+    type: similar
+status: test
 tags:
 - attack.execution
 - attack.discovery

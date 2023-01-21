@@ -128,43 +128,7 @@ detection:
         - '*Invoke-Seatbelt*'
         - '*Invoke-ServiceAbuse*'
         - '*Invoke-ShadowSpray*'
-        - '*Invoke-SharpAllowedToAct*'
-        - '*Invoke-SharpBlock*'
-        - '*Invoke-SharpBypassUAC*'
-        - '*Invoke-SharpChromium*'
-        - '*Invoke-SharpClipboard*'
-        - '*Invoke-SharpCloud*'
-        - '*Invoke-SharpDPAPI*'
-        - '*Invoke-SharpDump*'
-        - '*Invoke-SharPersist*'
-        - '*Invoke-SharpGPOAbuse*'
-        - '*Invoke-SharpGPO-RemoteAccessPolicies*'
-        - '*Invoke-SharpHandler*'
-        - '*Invoke-SharpHide*'
-        - '*Invoke-Sharphound*'
-        - '*Invoke-SharpImpersonation*'
-        - '*Invoke-SharpImpersonationNoSpace*'
-        - '*Invoke-SharpKatz*'
-        - '*Invoke-SharpLdapRelayScan*'
-        - '*Invoke-Sharplocker*'
-        - '*Invoke-SharpLoginPrompt*'
-        - '*Invoke-SharpMove*'
-        - '*Invoke-SharpPrinter*'
-        - '*Invoke-SharpPrintNightmare*'
-        - '*Invoke-SharpRDP*'
-        - '*Invoke-SharpSCCM*'
-        - '*Invoke-SharpSecDump*'
-        - '*Invoke-Sharpshares*'
-        - '*Invoke-SharpSniper*'
-        - '*Invoke-SharpSploit*'
-        - '*Invoke-SharpSpray*'
-        - '*Invoke-SharpSSDP*'
-        - '*Invoke-SharpStay*'
-        - '*Invoke-SharpUp*'
-        - '*Invoke-Sharpview*'
-        - '*Invoke-SharpWatson*'
-        - '*Invoke-Sharpweb*'
-        - '*Invoke-SharpWSUS*'
+        - '*Invoke-Sharp*'
         - '*Invoke-Shellcode*'
         - '*Invoke-SMBScanner*'
         - '*Invoke-Snaffler*'
@@ -196,6 +160,7 @@ detection:
         - '*Out-Minidump*'
         - '*Port-Scan*'
         - '*PowerBreach*'
+        - '*powercat *'
         - '*PowerUp*'
         - '*PowerView*'
         - '*Remove-Update*'
@@ -213,7 +178,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/16
+modified: 2023/01/21
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries
@@ -229,9 +194,12 @@ references:
 - https://github.com/HarmJ0y/DAMP
 - https://github.com/samratashok/nishang
 - https://github.com/DarkCoderSc/PowerRunAsSystem/
+- https://github.com/besimorhino/powercat
 related:
 -   id: 89819aa4-bbd6-46bc-88ec-c7f7fe30efa6
     type: derived
+-   id: 7d0d0329-0ef1-4e84-a9f5-49500f9d7c6c
+    type: similar
 status: experimental
 tags:
 - attack.execution
