@@ -1,0 +1,30 @@
+title: Potential Rundll32 Execution With DLL Stored In ADS
+ruletype: Sigma
+author: Harjot Singh, '@cyb3rjy0t'
+date: 2023/01/21
+description: Detects execution of rundll32 where the DLL being called is stored in
+    an Alternate Data Stream (ADS).
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\rundll32.exe'
+    SELECTION_4:
+        CommandLine|re: '[Rr][Uu][Nn][Dd][Ll][Ll]32.+\w:.+:'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: 9248c7e1-2bf3-4661-a22c-600a8040b446
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://lolbas-project.github.io/lolbas/Binaries/Rundll32
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1564.004
+

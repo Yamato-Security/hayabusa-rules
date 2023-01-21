@@ -34,6 +34,9 @@ detection:
         - '*\scriptrunner.exe'
         - '*\mftrace.exe'
         - '*\AppVLP.exe'
+        - '*\systeminfo.exe'
+        - '*\reg.exe'
+        - '*\query.exe'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
@@ -42,7 +45,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2023/01/21
 references:
 - https://redcanary.com/blog/intelligence-insights-december-2021
 - https://www.synacktiv.com/en/publications/how-to-exploit-cve-2021-40539-on-manageengine-adselfservice-plus.html

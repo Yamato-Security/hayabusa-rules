@@ -33,7 +33,19 @@ detection:
         - '*\AppVLP.exe'
         - '*\curl.exe'
         - '*\notepad.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+        - '*\systeminfo.exe'
+        - '*\net.exe'
+        - '*\net1.exe'
+        - '*\reg.exe'
+        - '*\query.exe'
+    SELECTION_6:
+        NewProcessName:
+        - '*\net.exe'
+        - '*\net1.exe'
+    SELECTION_7:
+        CommandLine: '* stop*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Legitimate sub processes started by Manage Engine ServiceDesk Pro
 fields:
@@ -43,6 +55,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/21
 references:
 - https://www.horizon3.ai/manageengine-cve-2022-47966-technical-deep-dive/
 - https://github.com/horizon3ai/CVE-2022-47966/blob/3a51c6b72ebbd87392babd955a8fbeaee2090b35/CVE-2022-47966.py

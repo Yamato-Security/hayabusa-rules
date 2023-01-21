@@ -17,18 +17,20 @@ detection:
         EventType: SetValue
     SELECTION_5:
         TargetObject:
-        - '*\Microsoft\Windows\PowerShell\ModuleLogging\EnableModuleLogging'
-        - '*\Microsoft\Windows\PowerShell\ScriptBlockLogging\EnableScriptBlockLogging'
-        - '*\Microsoft\Windows\PowerShell\Transcription\EnableTranscripting'
-        - '*\Microsoft\Windows\PowerShell\EnableScripts'
-        - '*\Microsoft\PowerShellCore\ModuleLogging\EnableModuleLogging'
-        - '*\Microsoft\PowerShellCore\ScriptBlockLogging\EnableScriptBlockLogging'
-        - '*\Microsoft\PowerShellCore\Transcription\EnableTranscripting'
-        - '*\Microsoft\PowerShellCore\EnableScripts'
+        - '*\Microsoft\Windows\PowerShell\\*'
+        - '*\Microsoft\PowerShellCore\\*'
     SELECTION_6:
+        TargetObject:
+        - '*\ModuleLogging\EnableModuleLogging'
+        - '*\ScriptBlockLogging\EnableScriptBlockLogging'
+        - '*\ScriptBlockLogging\EnableScriptBlockInvocationLogging'
+        - '*\Transcription\EnableTranscripting'
+        - '*\Transcription\EnableInvocationHeader'
+        - '*\EnableScripts'
+    SELECTION_7:
         NewValue: DWORD (0x00000000)
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: fecfd1a1-cc78-4313-a1ea-2ee2e8ec27a7
@@ -36,7 +38,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
+modified: 2023/01/20
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-32---windows-powershell-logging-disabled
 status: experimental

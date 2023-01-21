@@ -50,8 +50,13 @@ detection:
         - '*\schtasks.exe'
         - '*\write.exe'
         - '*\wuauclt.exe'
+        - '*\systeminfo.exe'
+        - '*\reg.exe'
+        - '*\query.exe'
     SELECTION_6:
-        NewProcessName: '*\net.exe'
+        NewProcessName:
+        - '*\net.exe'
+        - '*\net1.exe'
     SELECTION_7:
         CommandLine: '*start*'
     SELECTION_8:
@@ -75,10 +80,10 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2023/01/21
 references:
 - https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries/blob/efa17a600b43c897b4b7463cc8541daa1987eeb4/Exploits/Print%20Spooler%20RCE/Suspicious%20Spoolsv%20Child%20Process.md
-status: stable
+status: test
 tags:
 - attack.execution
 - attack.t1203
