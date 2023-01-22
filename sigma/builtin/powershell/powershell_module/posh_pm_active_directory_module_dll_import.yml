@@ -1,0 +1,43 @@
+title: Potential Active Directory Enumeration Using AD Module - PsModule
+ruletype: Sigma
+author: Nasreddine Bencherchali, frack113
+date: 2023/01/22
+description: Detects usage of the "Import-Module" cmdlet to load the "Microsoft.ActiveDirectory.Management.dl"
+    DLL. Which is often used by attackers to perform AD enumeration.
+detection:
+    SELECTION_1:
+        EventID: 4103
+    SELECTION_2:
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
+    SELECTION_3:
+        Payload:
+        - '*Import-Module *'
+        - '*ipmo *'
+    SELECTION_4:
+        Payload: '*Microsoft.ActiveDirectory.Management.dll*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate use of the library for administrative activity
+id: 74176142-4684-4d8a-8b0a-713257e7df8e
+level: medium
+logsource:
+    category: ps_module
+    definition: 'Requirements: PowerShell Module Logging must be enabled'
+    product: windows
+references:
+- https://github.com/samratashok/ADModule
+- https://twitter.com/cyb3rops/status/1617108657166061568?s=20
+- https://www.ired.team/offensive-security-experiments/active-directory-kerberos-abuse/active-directory-enumeration-with-ad-module-without-rsat-or-admin-privileges
+related:
+-   id: 70bc5215-526f-4477-963c-a47a5c9ebd12
+    type: similar
+-   id: 9e620995-f2d8-4630-8430-4afd89f77604
+    type: similar
+status: experimental
+tags:
+- attack.reconnaissance
+- attack.discovery
+- attack.impact
+
