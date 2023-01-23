@@ -1,9 +1,9 @@
-title: WSL Execution
+title: Arbitrary Command Execution Using WSL
 ruletype: Sigma
 author: oscd.community, Zach Stanford @svch0st, Nasreddine Bencherchali
 date: 2020/10/05
 description: Detects Possible usage of Windows Subsystem for Linux (WSL) binary as
-    a LOLBIN
+    a LOLBIN to execute arbitrary linux and windows commands
 detection:
     SELECTION_1:
         EventID: 1
@@ -16,9 +16,12 @@ detection:
     SELECTION_5:
         CommandLine:
         - '* -e *'
-        - '* --exec *'
-        - '* --system *'
+        - '* --exec*'
+        - '* --system*'
+        - '* --shell-type *'
         - '* /mnt/c*'
+        - '* --user root*'
+        - '* -u root*'
     SELECTION_6:
         ParentImage: '*\cmd.exe'
     SELECTION_7:
@@ -35,7 +38,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/16
+modified: 2023/01/23
 references:
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Wsl/
 - https://twitter.com/nas_bench/status/1535431474429808642

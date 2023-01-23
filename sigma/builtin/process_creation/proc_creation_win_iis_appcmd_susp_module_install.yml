@@ -11,13 +11,19 @@ detection:
     SELECTION_3:
         NewProcessName: '*\appcmd.exe'
     SELECTION_4:
-        CommandLine: '*install*'
+        OriginalFileName: appcmd.exe
     SELECTION_5:
-        CommandLine: '*module*'
+        CommandLine: '*install*'
     SELECTION_6:
-        CommandLine: '*/name:*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+        CommandLine: '*module*'
+    SELECTION_7:
+        CommandLine:
+        - '*/name:*'
+        - '*-name:*'
+    SELECTION_8:
+        ParentProcessName: C:\Windows\System32\inetsrv\iissetup.exe
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8)))
 falsepositives:
 - Unknown as it may vary from organisation to organisation how admins use to install
     IIS modules
@@ -26,7 +32,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/01/07
+modified: 2023/01/22
 references:
 - https://researchcenter.paloaltonetworks.com/2018/01/unit42-oilrig-uses-rgdoor-iis-backdoor-targets-middle-east/
 - https://www.microsoft.com/security/blog/2022/07/26/malicious-iis-extensions-quietly-open-persistent-backdoors-into-servers/
