@@ -37,8 +37,10 @@ detection:
     SELECTION_6:
         CommandLine:
         - '* iex *'
+        - '* icm*'
         - '*Invoke-*'
-        - '*Import-Module*'
+        - '*Import-Module *'
+        - '*ipmo *'
         - '*DownloadString(*'
         - '* /c *'
         - '* /k *'
@@ -59,7 +61,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/18
+modified: 2023/01/22
 references:
 - https://persistence-info.github.io/Data/windowsterminalprofile.html
 - https://twitter.com/nas_bench/status/1550836225652686848
