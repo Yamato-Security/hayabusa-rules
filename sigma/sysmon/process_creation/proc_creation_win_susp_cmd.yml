@@ -31,6 +31,9 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_20:
         Image: '*\cmd.exe'
+    SELECTION_21:
+        CommandLine: 'powershell.exe -ExecutionPolicy Restricted -Command Write-Host
+            ''Final result: 1'';'
     SELECTION_3:
         Image:
         - '*\powershell.exe'
@@ -62,7 +65,7 @@ detection:
         (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8) or
         (SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13)
         or (SELECTION_14 and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18
-        and SELECTION_19 and SELECTION_20)))
+        and SELECTION_19 and SELECTION_20) or (SELECTION_21)))
 falsepositives:
 - Unknown
 id: 178e615d-e666-498b-9630-9ed363038101
@@ -70,7 +73,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/18
+modified: 2023/01/24
 references:
 - https://github.com/Wh04m1001/SysmonEoP
 status: experimental
