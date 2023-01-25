@@ -10,21 +10,19 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        CommandLine: '*appcmd.exe add module*'
-    SELECTION_4:
         ParentImage: '*\w3wp.exe'
+    SELECTION_4:
+        CommandLine: '*appcmd.exe add module*'
     SELECTION_5:
         CommandLine: '* system.enterpriseservices.internal.publish*'
     SELECTION_6:
-        ParentImage: '*\w3wp.exe'
-    SELECTION_7:
         Image: '*\powershell.exe'
+    SELECTION_7:
+        CommandLine: '*gacutil*'
     SELECTION_8:
-        CommandLine: '* \\gacutil.exe /I*'
-    SELECTION_9:
-        ParentImage: '*\w3wp.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)))
+        CommandLine: '* /I*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
+        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Administrative activity
 id: 043c4b8b-3a54-4780-9682-081cb6b8185c
@@ -32,6 +30,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/23
 references:
 - https://www.microsoft.com/security/blog/2022/07/26/malicious-iis-extensions-quietly-open-persistent-backdoors-into-servers/
 status: test

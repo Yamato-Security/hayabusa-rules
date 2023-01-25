@@ -25,8 +25,16 @@ detection:
     SELECTION_17:
         CommandLine: C:\Windows\system32\rundll32.exe" /uninstall /longpath "C:\Program
             Files\McAfee\MSC\mscrem.inf*
+    SELECTION_18:
+        ParentProcessName: C:\Users\\*
+    SELECTION_19:
+        ParentProcessName: '*\AppData\Local\Microsoft\EdgeUpdate\Install\{*'
     SELECTION_2:
         Channel: Security
+    SELECTION_20:
+        ParentProcessName: '*\setup.exe'
+    SELECTION_21:
+        ParentCommandLine: '*\setup.exe" --install-archive="C:\Users\\*'
     SELECTION_3:
         NewProcessName: '*\rundll32.exe'
     SELECTION_4:
@@ -44,7 +52,8 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
         or (SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
         and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
-        SELECTION_14) or (SELECTION_15) or (SELECTION_16 or SELECTION_17)))
+        SELECTION_14) or (SELECTION_15) or (SELECTION_16 or SELECTION_17) or (SELECTION_18
+        and SELECTION_19 and SELECTION_20 and SELECTION_21)))
 falsepositives:
 - Unknown
 fields:
@@ -55,7 +64,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/02
+modified: 2023/01/25
 references:
 - https://twitter.com/mrd0x/status/1481630810495139841?s=12
 status: experimental

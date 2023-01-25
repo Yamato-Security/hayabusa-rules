@@ -18,6 +18,7 @@ detection:
         - '*\rdpclip.exe'
         - '*:\Windows\System32\csrss.exe'
         - '*:\Windows\System32\wininit.exe'
+        - '*:\Windows\System32\winlogon.exe'
     SELECTION_6:
         Image: null
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
@@ -29,7 +30,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/25
+modified: 2023/01/25
 references:
 - https://securingtomorrow.mcafee.com/other-blogs/mcafee-labs/rdp-stands-for-really-do-patch-understanding-the-wormable-rdp-vulnerability-cve-2019-0708/
 status: test
