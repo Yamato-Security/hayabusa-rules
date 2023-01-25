@@ -18,6 +18,14 @@ detection:
         NewProcessName: '*\regsvr32.exe'
     SELECTION_12:
         CommandLine: '*regsvr32.exe'
+    SELECTION_13:
+        ParentProcessName: C:\Users\\*
+    SELECTION_14:
+        ParentProcessName: '*\AppData\Local\Microsoft\EdgeUpdate\Install\{*'
+    SELECTION_15:
+        ParentProcessName: '*\setup.exe'
+    SELECTION_16:
+        ParentCommandLine: '*\setup.exe" --install-archive="C:\Users\\*'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -36,7 +44,8 @@ detection:
         NewProcessName: '*\regasm.exe'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
         (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12)))
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12)) and  not ((SELECTION_13
+        and SELECTION_14 and SELECTION_15 and SELECTION_16)))
 falsepositives:
 - Unlikely
 fields:
@@ -47,7 +56,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/07
+modified: 2023/01/25
 references:
 - https://blog.malwarebytes.com/malwarebytes-news/2020/10/kraken-attack-abuses-wer-service/
 - https://www.cobaltstrike.com/help-opsec

@@ -24,6 +24,7 @@ detection:
         - powershell_ise.exe
         - psexec.exe
         - psexec.c
+        - psexesvc.exe
         - cscript.exe
         - wscript.exe
         - mshta.exe
@@ -40,6 +41,7 @@ detection:
         - '*\powershell_ise.exe'
         - '*\psexec.exe'
         - '*\psexec64.exe'
+        - '*\PSEXESVC.exe'
         - '*\cscript.exe'
         - '*\wscript.exe'
         - '*\mshta.exe'
@@ -59,7 +61,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/18
+modified: 2023/01/23
 references:
 - https://mgreen27.github.io/posts/2019/05/12/BinaryRename.html
 - https://mgreen27.github.io/posts/2019/05/29/BinaryRename2.html
