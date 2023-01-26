@@ -28,10 +28,11 @@ logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
+modified: 2023/01/25
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1136.002/T1136.002.md#atomic-test-3---create-a-new-domain-account-using-powershell
 - https://docs.microsoft.com/en-us/dotnet/api/system.directoryservices.accountmanagement?view=dotnet-plat-ext-6.0
-status: experimental
+status: test
 tags:
 - attack.persistence
 - attack.t1136.002
