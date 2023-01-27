@@ -1,0 +1,39 @@
+title: Rhadamanthys Stealer Module Launch via Rundll32
+ruletype: Sigma
+author: TropChaud
+date: 2023/01/26
+description: Detects the use of Rundll32 to launch an NSIS module that serves as the
+    main stealer capability of Rhadamanthys infostealer, as observed in reports and
+    samples in early 2023
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        OriginalFileName: RUNDLL32.EXE
+    SELECTION_4:
+        NewProcessName: '*\rundll32.exe'
+    SELECTION_5:
+        CommandLine: '*nsis_uns*'
+    SELECTION_6:
+        CommandLine: '*PrintUIEntry*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
+falsepositives:
+- Unknown
+id: 5cdbc2e8-86dd-43df-9a1a-200d4745fba5
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://elis531989.medium.com/dancing-with-shellcodes-analyzing-rhadamanthys-stealer-3c4986966a88
+- https://blog.cyble.com/2023/01/12/rhadamanthys-new-stealer-spreading-through-google-ads/
+- https://www.joesandbox.com/analysis/790122/0/html
+- https://twitter.com/anfam17/status/1607477672057208835
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1218.011
+

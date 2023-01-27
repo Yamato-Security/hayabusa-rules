@@ -9,12 +9,10 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        CommandLine: '*AAAAYInlM*'
-    SELECTION_4:
         CommandLine:
         - '*OiCAAAAYInlM*'
         - '*OiJAAAAYInlM*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
 id: 2d117e49-e626-4c7c-bd1f-c3c0147774c8
@@ -22,7 +20,7 @@ level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/07
+modified: 2023/01/26
 references:
 - https://twitter.com/cyb3rops/status/1063072865992523776
 status: stable

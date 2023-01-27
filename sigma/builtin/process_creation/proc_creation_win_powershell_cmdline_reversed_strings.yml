@@ -1,8 +1,9 @@
-title: Suspicious PowerShell Cmdline
+title: Potential PowerShell Obfuscation Via Reversed Commands
 ruletype: Sigma
 author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
 date: 2020/10/11
-description: Detects the PowerShell command lines with reversed strings
+description: Detects the presenece of reversed PowerShell commands in the CommandLine.
+    This is often used as a method of obfuscation by attackers
 detection:
     SELECTION_1:
         EventID: 4688
@@ -51,7 +52,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2023/01/27
 references:
 - https://2019.offzone.moscow/ru/report/hunting-for-powershell-abuses/
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=66

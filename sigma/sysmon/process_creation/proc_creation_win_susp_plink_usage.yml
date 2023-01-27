@@ -1,4 +1,4 @@
-title: Suspicious Plink Usage RDP Tunneling
+title: Potential RDP Tunneling Via SSH Plink
 ruletype: Sigma
 author: Florian Roth
 date: 2022/08/04
@@ -29,8 +29,12 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/27
 references:
 - https://www.microsoft.com/security/blog/2022/07/26/malicious-iis-extensions-quietly-open-persistent-backdoors-into-servers/
+related:
+-   id: f7d7ebd5-a016-46e2-9c54-f9932f2d386d
+    type: similar
 status: test
 tags:
 - attack.command_and_control

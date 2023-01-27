@@ -1,0 +1,63 @@
+title: VsCode Child Process Anomaly
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2023/01/26
+description: Detects uncommon or suspicious child processes spawning from a VsCode
+    "code.exe" process. This could indicate an attempt of persistence via VsCode tasks
+    or terminal profiles.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\code.exe'
+    SELECTION_4:
+        NewProcessName:
+        - '*\calc.exe'
+        - '*\regsvr32.exe'
+        - '*\rundll32.exe'
+        - '*\cscript.exe'
+        - '*\wscript.exe'
+    SELECTION_5:
+        NewProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\cmd.exe'
+    SELECTION_6:
+        CommandLine:
+        - '*Invoke-Expressions*'
+        - '*IEX*'
+        - '*Invoke-Command*'
+        - '*ICM*'
+        - '*DownloadString*'
+        - '*rundll32*'
+        - '*regsvr32*'
+        - '*wscript*'
+        - '*cscript*'
+    SELECTION_7:
+        NewProcessName:
+        - '*C:\Users\Public\\*'
+        - '*C:\Windows\Temp\\*'
+        - '*C:\Temp\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
+        (SELECTION_5 and SELECTION_6) or SELECTION_7))
+falsepositives:
+- In development environment where VsCode is used heavily. False positives may occure
+    when developers use task to compile or execute different types of code. Remove
+    or add processes accordingly
+id: 5a3164f2-b373-4152-93cf-090b13c12d27
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://twitter.com/nas_bench/status/1618021838407495681
+- https://twitter.com/nas_bench/status/1618021415852335105
+status: experimental
+tags:
+- attack.execution
+- attack.defense_evasion
+- attack.t1218
+- attack.t1202
+

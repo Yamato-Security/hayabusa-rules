@@ -27,42 +27,40 @@ detection:
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
     SELECTION_18:
-        Image: C:\ProgramData\Microsoft\Windows Defender\\*
+        Image:
+        - C:\ProgramData\Microsoft\Windows Defender\\*
+        - C:\Program Files\Windows Defender\\*
     SELECTION_19:
         TargetFilename: '*\Microsoft\WindowsApps\\*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_20:
-        Image: C:\Users\\*
-    SELECTION_21:
         Image: '*\AppData\Local\Microsoft\Teams\Update.exe'
-    SELECTION_22:
-        TargetFilename: C:\Users\\*
-    SELECTION_23:
+    SELECTION_21:
         TargetFilename:
         - '*\AppData\Local\Microsoft\Teams\stage\Teams.exe'
         - '*\AppData\Local\Microsoft\Teams\stage\Squirrel.exe'
         - '*\AppData\Local\Microsoft\SquirrelTemp\tempb\'
-    SELECTION_24:
+    SELECTION_22:
         Image: C:\Windows\Microsoft.NET\Framework\\*
-    SELECTION_25:
+    SELECTION_23:
         Image: '*\mscorsvw.exe'
-    SELECTION_26:
+    SELECTION_24:
         TargetFilename: C:\Windows\assembly\NativeImages_*
-    SELECTION_27:
-        Image: C:\Users\\*
-    SELECTION_28:
+    SELECTION_25:
         Image: '*\AppData\Local\\*'
-    SELECTION_29:
+    SELECTION_26:
         Image: '*\Microsoft VS Code\Code.exe'
+    SELECTION_27:
+        TargetFilename: '*\.vscode\extensions\\*'
+    SELECTION_28:
+        Image: '*\AppData\Local\GitHubDesktop\Update.exe'
+    SELECTION_29:
+        TargetFilename: '*\AppData\Local\SquirrelTemp\\*'
     SELECTION_3:
         Image: '*.exe'
     SELECTION_30:
-        TargetFilename: '*\.vscode\extensions\\*'
-    SELECTION_31:
-        Image: '*\AppData\Local\GitHubDesktop\Update.exe'
-    SELECTION_32:
-        TargetFilename: '*\AppData\Local\SquirrelTemp\\*'
+        TargetFilename: C:\WINDOWS\TEMP\\*
     SELECTION_4:
         TargetFilename: '*.exe'
     SELECTION_5:
@@ -85,9 +83,9 @@ detection:
         ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
         and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14
         and SELECTION_15) or (SELECTION_16 or SELECTION_17) or (SELECTION_18) or (SELECTION_19)
-        or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
-        and SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28 and SELECTION_29
-        and SELECTION_30) or (SELECTION_31 and SELECTION_32)))
+        or (SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24)
+        or (SELECTION_25 and SELECTION_26 and SELECTION_27) or (SELECTION_28 and SELECTION_29)
+        or (SELECTION_30)))
 falsepositives:
 - Software installers
 - Update utilities
@@ -97,7 +95,7 @@ level: low
 logsource:
     category: file_event
     product: windows
-modified: 2023/01/20
+modified: 2023/01/26
 references:
 - Malware Sandbox
 status: experimental
