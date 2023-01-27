@@ -1,6 +1,6 @@
 title: Lolbin Ssh.exe Use As Proxy
 ruletype: Sigma
-author: frack113
+author: frack113, Nasreddine Bencherchali
 date: 2022/12/29
 description: Detect usage of the "ssh.exe" binary as a proxy to launch other programs
 detection:
@@ -10,18 +10,32 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         ParentImage: C:\Windows\System32\OpenSSH\sshd.exe
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    SELECTION_4:
+        Image: '*\ssh.exe'
+    SELECTION_5:
+        CommandLine: '*ProxyCommand=*'
+    SELECTION_6:
+        CommandLine: '*PermitLocalCommand*'
+    SELECTION_7:
+        CommandLine: '*LocalCommand*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        (SELECTION_5 or (SELECTION_6 and SELECTION_7)))))
 falsepositives:
-- Unknown
+- Legitimate usage for administration purposes
 id: 7d6d30b8-5b91-4b90-a891-46cccaf29598
 level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/25
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Ssh/
+- https://github.com/LOLBAS-Project/LOLBAS/pull/211/files
+- https://gtfobins.github.io/gtfobins/ssh/
+- https://man.openbsd.org/ssh_config#ProxyCommand
+- https://man.openbsd.org/ssh_config#LocalCommand
 status: experimental
 tags:
 - attack.defense_evasion
-- attack.t1218
+- attack.t1202
 

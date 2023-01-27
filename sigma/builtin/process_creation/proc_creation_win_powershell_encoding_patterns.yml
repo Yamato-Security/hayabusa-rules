@@ -1,12 +1,14 @@
-title: Encoded PowerShell Command Line
+title: Potential Encoded PowerShell Patterns In CommandLine
 ruletype: Sigma
 author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
 date: 2020/10/11
-description: Detects specific combinations of encoding methods in the PowerShell command
-    lines
+description: Detects specific combinations of encoding methods in PowerShell via the
+    commandline
 detection:
     SELECTION_1:
         EventID: 4688
+    SELECTION_10:
+        CommandLine: '*join*'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -14,6 +16,10 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_5:
         CommandLine:
         - '*ToInt*'
         - '*ToDecimal*'
@@ -21,29 +27,28 @@ detection:
         - '*ToUint*'
         - '*ToSingle*'
         - '*ToSByte*'
-    SELECTION_5:
+    SELECTION_6:
         CommandLine:
         - '*ToChar*'
         - '*ToString*'
         - '*String*'
-    SELECTION_6:
-        CommandLine: '*char*'
     SELECTION_7:
-        CommandLine: '*join*'
+        CommandLine: '*char*'
     SELECTION_8:
-        CommandLine: '*split*'
-    SELECTION_9:
         CommandLine: '*join*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and ((SELECTION_4 and
-        SELECTION_5) or ((SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9))))
+    SELECTION_9:
+        CommandLine: '*split*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        ((SELECTION_5 and SELECTION_6) or ((SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10))))
 falsepositives:
-- Unlikely
+- Unknown
 id: cdf05894-89e7-4ead-b2b0-0a5f97a90f2f
 level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2023/01/26
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=65
 related:

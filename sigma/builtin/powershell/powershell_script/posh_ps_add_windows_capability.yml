@@ -1,0 +1,36 @@
+title: Add New Windows Capability - ScriptBlock
+ruletype: Sigma
+author: Nasreddine Bencherchali
+date: 2023/01/22
+description: Detects usage of the "Add-WindowsCapability" cmdlet to add new windows
+    capabilities. Notable capabilities could be "OpenSSH" and others.
+detection:
+    SELECTION_1:
+        EventID: 4104
+    SELECTION_2:
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
+    SELECTION_3:
+        ScriptBlockText: '*Add-WindowsCapability *'
+    SELECTION_4:
+        ScriptBlockText: '*OpenSSH.*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate usage of the capabilities by administartors or users. Filter accordingly
+id: 155c7fd5-47b4-49b2-bbeb-eb4fab335429
+level: medium
+logsource:
+    category: ps_script
+    definition: 'Requirements: Script Block Logging must be enabled'
+    product: windows
+references:
+- https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=powershell
+- https://www.virustotal.com/gui/file/af1c82237b6e5a3a7cdbad82cc498d298c67845d92971bada450023d1335e267/content
+related:
+-   id: b36d01a3-ddaf-4804-be18-18a6247adfcd
+    type: similar
+status: experimental
+tags:
+- attack.execution
+

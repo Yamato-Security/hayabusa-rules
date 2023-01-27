@@ -21,8 +21,14 @@ detection:
             profile=Any*'
         - '*\netsh.exe advfirewall firewall add rule name=Dropbox dir=in action=allow
             "program=C:\Program Files\Dropbox\Client\Dropbox.exe" enable=yes profile=Any*'
+    SELECTION_7:
+        ParentImage: C:\Windows\Temp\asgard2-agent\\*
+    SELECTION_8:
+        ParentImage: '*\thor64.exe'
+    SELECTION_9:
+        CommandLine: '*advfirewall firewall show rule name=all*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6)))
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Legitimate administration
 id: cd5cfd80-aa5f-44c0-9c20-108c4ae12e3c
@@ -30,7 +36,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/02/10
+modified: 2023/01/25
 references:
 - https://attack.mitre.org/software/S0246/ (Lazarus HARDRAIN)
 - https://www.operationblockbuster.com/wp-content/uploads/2016/02/Operation-Blockbuster-RAT-and-Staging-Report.pdf

@@ -1,21 +1,35 @@
-title: Detection of PowerShell Execution via DLL
+title: Potential PowerShell Execution Via DLL
 ruletype: Sigma
-author: Markus Neis
+author: Markus Neis, Nasreddine Bencherchali
 date: 2018/08/25
-description: Detects PowerShell Strings applied to rundll as seen in PowerShdll.dll
+description: Detects potential PowerShell execution from a DLL instead of the usual
+    PowerShell process as seen used in PowerShdll
 detection:
     SELECTION_1:
         EventID: 1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Image: '*\rundll32.exe'
+        Image:
+        - '*\rundll32.exe'
+        - '*\regsvcs.exe'
+        - '*\InstallUtil.exe'
+        - '*\regasm.exe'
     SELECTION_4:
-        Description: '*Windows-Hostprozess (Rundll32)*'
+        OriginalFileName:
+        - RUNDLL32.EXE
+        - RegSvcs.exe
+        - InstallUtil.exe
+        - RegAsm.exe
     SELECTION_5:
         CommandLine:
         - '*Default.GetString*'
         - '*FromBase64String*'
+        - '*Invoke-Expression*'
+        - '*IEX *'
+        - '*Invoke-Command*'
+        - '*ICM *'
+        - '*DownloadString*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5)
 falsepositives:
@@ -25,7 +39,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/11
+modified: 2023/01/26
 references:
 - https://github.com/p3nt4/PowerShdll/blob/62cfa172fb4e1f7f4ac00ca942685baeb88ff356/README.md
 status: test

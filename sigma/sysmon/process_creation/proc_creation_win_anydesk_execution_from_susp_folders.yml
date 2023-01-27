@@ -1,7 +1,7 @@
-title: Use of Anydesk Remote Access Software
+title: Anydesk Execution From Suspicious Folder
 ruletype: Sigma
-author: frack113
-date: 2022/02/11
+author: Florian Roth
+date: 2022/05/20
 description: 'An adversary may use legitimate desktop support and remote access software,
     such as Team Viewer, Go2Assist, LogMein, AmmyyAdmin, etc, to establish an interactive
     command and control channel to target systems within networks.
@@ -16,25 +16,37 @@ description: 'An adversary may use legitimate desktop support and remote access 
     '
 detection:
     SELECTION_1:
-        EventID: 4688
+        EventID: 1
     SELECTION_2:
-        Channel: Security
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Description: AnyDesk
+        Image: '*\AnyDesk.exe'
     SELECTION_4:
-        Product: AnyDesk
+        Description: AnyDesk
     SELECTION_5:
+        Product: AnyDesk
+    SELECTION_6:
         Company: AnyDesk Software GmbH
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+    SELECTION_7:
+        Image:
+        - '*\AppData\\*'
+        - '*Program Files (x86)\AnyDesk*'
+        - '*Program Files\AnyDesk*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6) and  not (SELECTION_7))
 falsepositives:
-- Legitimate use
-id: b52e84a3-029e-4529-b09b-71d19dd27e94
-level: medium
+- Legitimate use of AnyDesk from a non-standard folder
+id: 065b00ca-5d5c-4557-ac95-64a6d0b64d86
+level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/27
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-2---anydesk-files-detected-test-on-windows
+related:
+-   id: b52e84a3-029e-4529-b09b-71d19dd27e94
+    type: similar
 status: experimental
 tags:
 - attack.command_and_control

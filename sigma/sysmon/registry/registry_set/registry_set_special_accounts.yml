@@ -1,10 +1,10 @@
-title: Hide User Account Via Special Accounts Reg Key
+title: Hiding User Account Via SpecialAccounts Registry Key
 ruletype: Sigma
-author: Nasreddine Bencherchali
+author: Nasreddine Bencherchali, frack113
 date: 2022/07/12
-description: Detects when an attacker set the registry key "HKLM\Software\Microsoft\Windows
-    NT\CurrentVersion\Winlogon\SpecialAccounts\Userlist" to "0" in order to hide user
-    account.
+description: Detects modifications to the registry key "HKLM\Software\Microsoft\Windows
+    NT\CurrentVersion\Winlogon\SpecialAccounts\Userlist" where the value is set to
+    "0" in order to hide user account from being listed on the logon screen.
 detection:
     SELECTION_1:
         EventID: 13
@@ -24,9 +24,14 @@ level: high
 logsource:
     category: registry_set
     product: windows
+modified: 2023/01/26
 references:
 - https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
-status: experimental
+- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1564.002/T1564.002.md
+related:
+-   id: 8a58209c-7ae6-4027-afb0-307a78e4589a
+    type: obsoletes
+status: test
 tags:
 - attack.defense_evasion
 - attack.t1564.002
