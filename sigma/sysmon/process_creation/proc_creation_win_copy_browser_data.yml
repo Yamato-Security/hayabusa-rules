@@ -20,10 +20,10 @@ detection:
     SELECTION_3:
         CommandLine:
         - '*copy-item*'
-        - '*copy*'
+        - '*copy *'
         - '*cpi *'
         - '* cp *'
-        - '*move*'
+        - '*move *'
         - '*move-item*'
         - '* mi *'
         - '* mv *'
@@ -50,6 +50,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/29
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1555.003/T1555.003.md
 related:
