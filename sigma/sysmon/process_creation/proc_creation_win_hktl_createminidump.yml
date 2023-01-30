@@ -10,7 +10,7 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Image: '*\CreateMiniDump.exe*'
+        Image: '*\CreateMiniDump.exe'
     SELECTION_4:
         Imphash: 4a07f944a83e8a7c2525efa35dd30e2f
     SELECTION_5:
@@ -23,7 +23,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/03/04
+modified: 2023/01/30
 references:
 - https://ired.team/offensive-security/credential-access-and-credential-dumping/dumping-lsass-passwords-without-mimikatz-minidumpwritedump-av-signature-bypass
 status: test

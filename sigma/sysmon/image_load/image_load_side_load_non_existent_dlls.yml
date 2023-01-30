@@ -11,12 +11,12 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         ImageLoaded:
-        - '*C:\Windows\System32\WLBSCTRL.dll'
-        - '*C:\Windows\System32\TSMSISrv.dll'
-        - '*C:\Windows\System32\TSVIPSrv.dll'
-        - '*C:\Windows\System32\wow64log.dll'
-        - '*C:\Windows\System32\WptsExtensions.dll'
-        - '*C:\Windows\System32\wbem\wbemcomn.dll'
+        - C:\Windows\System32\WLBSCTRL.dll
+        - C:\Windows\System32\TSMSISrv.dll
+        - C:\Windows\System32\TSVIPSrv.dll
+        - C:\Windows\System32\wow64log.dll
+        - C:\Windows\System32\WptsExtensions.dll
+        - C:\Windows\System32\wbem\wbemcomn.dll
     SELECTION_4:
         Signed: 'true'
     SELECTION_5:
@@ -30,7 +30,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2023/01/10
+modified: 2023/01/30
 references:
 - https://decoded.avast.io/martinchlumecky/png-steganography/
 - https://posts.specterops.io/lateral-movement-scm-and-dll-hijacking-primer-d2f61e8ab992
