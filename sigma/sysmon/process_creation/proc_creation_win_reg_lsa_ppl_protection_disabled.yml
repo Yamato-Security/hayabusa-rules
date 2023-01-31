@@ -1,8 +1,9 @@
-title: Registry Disabling LSASS PPL
+title: LSA PPL Protection Disabled Via Reg.EXE
 ruletype: Sigma
 author: Florian Roth
 date: 2022/03/22
-description: Detects reg command lines that disables PPL on the LSA process
+description: Detects the usage of the "reg.exe" utility to disable PPL protection
+    on the LSA process
 detection:
     SELECTION_1:
         EventID: 1
@@ -11,19 +12,21 @@ detection:
     SELECTION_3:
         Image: '*\reg.exe'
     SELECTION_4:
-        CommandLine: '*SYSTEM\CurrentControlSet\Control\Lsa*'
+        OriginalFileName: reg.exe
     SELECTION_5:
-        CommandLine: '* add *'
+        CommandLine: '*SYSTEM\CurrentControlSet\Control\Lsa*'
     SELECTION_6:
-        CommandLine: '* /d 0*'
+        CommandLine: '* add *'
     SELECTION_7:
-        CommandLine: '* /v RunAsPPL *'
+        CommandLine: '* /d 0*'
     SELECTION_8:
+        CommandLine: '* /v RunAsPPL *'
+    SELECTION_9:
         CommandLine:
         - '*Real-Time Protection*'
         - '*TamperProtection*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7 and SELECTION_8)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) and SELECTION_9)
 falsepositives:
 - Unlikely
 id: 8c0eca51-0f88-4db2-9183-fdfb10c703f9
@@ -31,7 +34,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/05/09
+modified: 2023/01/30
 references:
 - https://thedfirreport.com/2022/03/21/apt35-automates-initial-access-using-proxyshell/
 status: experimental

@@ -15,6 +15,7 @@ detection:
         NewProcessName: '*\cmd.exe'
     SELECTION_5:
         CommandLine:
+        - cmd *
         - cmd.exe*
         - c:\windows\system32\cmd.exe*
     SELECTION_6:
@@ -28,29 +29,23 @@ detection:
         - '*logonpasswords*'
         - '*execute-assembly*'
         - '*getsystem*'
-    SELECTION_7:
-        ParentProcessName: '*\AppData\Local\Programs\Microsoft VS Code\Code.exe'
-    SELECTION_8:
-        CommandLine: '*/d /s /c *'
-    SELECTION_9:
-        CommandLine: '*checkfilenameiocs --ioc-path *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and
-        SELECTION_9)))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
 - Unknown
-fields:
-- CommandLine
 id: 647c7b9e-d784-4fda-b9a0-45c565a7b729
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2023/01/30
 references:
 - https://hstechdocs.helpsystems.com/manuals/cobaltstrike/current/userguide/content/cobalt-4-5-user-guide.pdf
 - https://thedfirreport.com/2021/10/04/bazarloader-and-the-conti-leaks/
 - https://thedfirreport.com/2022/06/16/sans-ransomware-summit-2022-can-you-detect-this/
+related:
+-   id: 4f154fb6-27d1-4813-a759-78b93e0b9c48
+    type: similar
 status: experimental
 tags:
 - attack.execution
