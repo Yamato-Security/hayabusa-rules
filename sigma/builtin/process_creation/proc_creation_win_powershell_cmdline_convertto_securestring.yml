@@ -14,8 +14,13 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_5:
         CommandLine: '*ConvertTo-SecureString*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unlikely
 id: 74403157-20f5-415d-89a7-c505779585cf
@@ -23,7 +28,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/26
+modified: 2023/01/30
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=65
 status: test

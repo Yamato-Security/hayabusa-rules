@@ -1,4 +1,4 @@
-title: Reg Add RUN Key
+title: Potential Persistence Attempt Via Run Keys Using Reg.EXE
 ruletype: Sigma
 author: Florian Roth
 date: 2021/06/28
@@ -26,7 +26,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2023/01/30
 references:
 - https://app.any.run/tasks/9c0f37bc-867a-4314-b685-e101566766d7/
 - https://docs.microsoft.com/en-us/windows/win32/setupapi/run-and-runonce-registry-keys

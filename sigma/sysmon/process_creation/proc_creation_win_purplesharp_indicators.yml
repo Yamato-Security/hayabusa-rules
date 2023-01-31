@@ -9,12 +9,14 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
+        Image: '*\purplesharp*'
+    SELECTION_4:
+        OriginalFileName: PurpleSharp.exe
+    SELECTION_5:
         CommandLine:
         - '*xyz123456.exe*'
         - '*PurpleSharp*'
-    SELECTION_4:
-        OriginalFileName: PurpleSharp.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
 falsepositives:
 - Unlikely
 id: ff23ffbc-3378-435e-992f-0624dcf93ab4
@@ -22,7 +24,7 @@ level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2022/01/12
+modified: 2023/01/31
 references:
 - https://github.com/mvelazc0/PurpleSharp
 status: test

@@ -1,4 +1,4 @@
-title: RedMimicry Winnti Playbook Execute
+title: RedMimicry Winnti Playbook Execution
 ruletype: Sigma
 author: Alexander Rausch
 date: 2020/06/24
@@ -10,8 +10,8 @@ detection:
         Channel: Security
     SELECTION_3:
         NewProcessName:
-        - '*rundll32.exe*'
-        - '*cmd.exe*'
+        - '*\rundll32.exe'
+        - '*\cmd.exe'
     SELECTION_4:
         CommandLine:
         - '*gthread-3.6.dll*'
@@ -25,9 +25,9 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2023/01/30
 references:
-- https://redmimicry.com
+- https://redmimicry.com/posts/redmimicry-winnti/
 status: test
 tags:
 - attack.execution

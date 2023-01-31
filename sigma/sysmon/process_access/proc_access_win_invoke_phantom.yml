@@ -1,9 +1,9 @@
-title: Suspect Svchost Memory Asccess
+title: Potential Svchost Memory Access
 ruletype: Sigma
 author: Tim Burrell
 date: 2020/01/02
-description: Detects suspect access to svchost process memory such as that used by
-    Invoke-Phantom to kill the winRM windows event logging service.
+description: Detects potential access to svchost process memory such as that used
+    by Invoke-Phantom to kill the winRM windows event logging service.
 detection:
     SELECTION_1:
         EventID: 10
@@ -32,7 +32,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/11/01
+modified: 2023/01/30
 references:
 - https://github.com/hlldz/Invoke-Phant0m
 - https://twitter.com/timbmsft/status/900724491076214784

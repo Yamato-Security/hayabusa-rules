@@ -1,7 +1,7 @@
-title: Potential Suspicious Windows Feature Enabled
+title: Potential Suspicious Windows Feature Enabled - ProcCreation
 ruletype: Sigma
-author: frack113
-date: 2022/09/10
+author: Nasreddine Bencherchali
+date: 2022/12/29
 description: 'Detects usage of the built-in PowerShell cmdlet "Enable-WindowsOptionalFeature"
     used as a Deployment Image Servicing and Management tool.
 
@@ -11,19 +11,17 @@ description: 'Detects usage of the built-in PowerShell cmdlet "Enable-WindowsOpt
     '
 detection:
     SELECTION_1:
-        EventID: 4104
+        EventID: 1
     SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        ScriptBlockText: '*Enable-WindowsOptionalFeature*'
+        CommandLine: '*Enable-WindowsOptionalFeature*'
     SELECTION_4:
-        ScriptBlockText: '*-Online*'
+        CommandLine: '*-Online*'
     SELECTION_5:
-        ScriptBlockText: '*-FeatureName*'
+        CommandLine: '*-FeatureName*'
     SELECTION_6:
-        ScriptBlockText:
+        CommandLine:
         - '*TelnetServer*'
         - '*Internet-Explorer-Optional-amd64*'
         - '*TFTP*'
@@ -33,20 +31,18 @@ detection:
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
         and SELECTION_6)
 falsepositives:
-- Unknown
-id: 55c925c1-7195-426b-a136-a9396800e29b
+- Legitimate usage of the features listed in the rule.
+id: c740d4cf-a1e9-41de-bb16-8a46a4f57918
 level: medium
 logsource:
-    category: ps_script
-    definition: 'Requirements: Script Block Logging must be enabled'
+    category: process_creation
     product: windows
-modified: 2022/12/29
 references:
 - https://docs.microsoft.com/en-us/powershell/module/dism/enable-windowsoptionalfeature?view=windowsserver2022-ps
 - https://learn.microsoft.com/en-us/windows/win32/projfs/enabling-windows-projected-file-system
 - https://learn.microsoft.com/en-us/windows/wsl/install-on-server
 related:
--   id: c740d4cf-a1e9-41de-bb16-8a46a4f57918
+-   id: 55c925c1-7195-426b-a136-a9396800e29b
     type: similar
 status: experimental
 tags:

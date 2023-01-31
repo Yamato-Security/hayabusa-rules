@@ -10,7 +10,7 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Image: '*PktMon.exe'
+        Image: '*\pktmon.exe'
     SELECTION_4:
         OriginalFileName: PktMon.exe
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
@@ -21,6 +21,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/01/31
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Pktmon/
 status: test
