@@ -1,6 +1,6 @@
 title: Renamed Rundll32 Execution Via DllRegisterServer
 ruletype: Sigma
-author: Nasreddine Bencherchali
+author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/22
 description: Detects when 'DllRegisterServer' is called in the commandline and the
     image is not rundll32. This could mean that the 'rundll32' utility has been renamed

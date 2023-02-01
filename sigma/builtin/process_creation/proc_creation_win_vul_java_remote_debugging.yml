@@ -1,6 +1,6 @@
 title: Java Running with Remote Debugging
 ruletype: Sigma
-author: Florian Roth
+author: Florian Roth (Nextron Systems)
 date: 2019/01/16
 description: Detects a JAVA process running with remote debugging allowing more than
     just localhost to connect
@@ -16,11 +16,11 @@ detection:
         - '*jre1.*'
         - '*jdk1.*'
     SELECTION_5:
-        CommandLine: '*address=127.0.0.1*'
-    SELECTION_6:
-        CommandLine: '*address=localhost*'
+        CommandLine:
+        - '*address=127.0.0.1*'
+        - '*address=localhost*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5 or SELECTION_6))
+        (SELECTION_5))
 falsepositives:
 - Unknown
 fields:
@@ -31,7 +31,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2023/02/01
 references:
 - https://dzone.com/articles/remote-debugging-java-applications-with-jdwp
 status: test
