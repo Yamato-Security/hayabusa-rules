@@ -29,5 +29,5 @@ Filter:
     - 5140 # A network share object was accessed %IpAddress%
     - 5145 # NetShare File Access %IpAddress%
     - 5156 # The Windows Filtering Platform has allowed a connection %SourceAddress%
-  - Sysmon: 
+  - Microsoft-Windows-Sysmon/Operational: 
     - 3 # Network Connection %SourceIp%
