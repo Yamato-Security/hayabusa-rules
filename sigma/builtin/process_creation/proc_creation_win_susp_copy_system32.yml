@@ -35,11 +35,15 @@ detection:
         - '*\robocopy.exe'
         - '*\xcopy.exe'
     SELECTION_8:
+        OriginalFileName:
+        - robocopy.exe
+        - XCOPY.EXE
+    SELECTION_9:
         CommandLine:
         - '*\System32*'
         - '*\SysWOW64*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6) or SELECTION_7) and SELECTION_8)
+        (SELECTION_5 and SELECTION_6) or (SELECTION_7 or SELECTION_8)) and SELECTION_9)
 falsepositives:
 - Depend on scripts and administrative tools used in the monitored environment (For
     example an admin scripts like https://www.itexperience.net/sccm-batch-files-and-32-bits-processes-on-64-bits-os/)
@@ -53,7 +57,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/10
+modified: 2023/01/31
 references:
 - https://www.hybrid-analysis.com/sample/8da5b75b6380a41eee3a399c43dfe0d99eeefaa1fd21027a07b1ecaa4cd96fdd?environmentId=120
 - https://web.archive.org/web/20180331144337/https://www.fireeye.com/blog/threat-research/2018/03/sanny-malware-delivery-method-updated-in-recently-observed-attacks.html

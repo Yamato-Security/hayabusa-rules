@@ -1,0 +1,36 @@
+title: Windows Share Mounted Via Net.EXE
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/02
+description: Detects when a share is mounted using the "net.exe" utility
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\net.exe'
+        - '*\net1.exe'
+    SELECTION_4:
+        CommandLine:
+        - '* use *'
+        - '* \\\\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate activity by administrators and scripts
+id: f117933c-980c-4f78-b384-e3d838111165
+level: low
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
+related:
+-   id: 3abd6094-7027-475f-9630-8ab9be7b9725
+    type: similar
+status: experimental
+tags:
+- attack.lateral_movement
+- attack.t1021.002
+

@@ -1,15 +1,16 @@
-title: Service Execution
+title: Services Started Via Net.EXE
 ruletype: Sigma
 author: Timur Zinniatullin, Daniil Yugoslavskiy, oscd.community
 date: 2019/10/21
-description: Detects manual service execution (start) via system utilities.
+description: Detects the usage of the "net.exe" command to start a service using the
+    "start" flag
 detection:
     SELECTION_1:
-        EventID: 4688
+        EventID: 1
     SELECTION_2:
-        Channel: Security
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        NewProcessName:
+        Image:
         - '*\net.exe'
         - '*\net1.exe'
     SELECTION_4:
@@ -22,7 +23,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2023/02/01
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1569.002/T1569.002.md
 status: test

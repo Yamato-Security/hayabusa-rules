@@ -22,15 +22,16 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5)
 falsepositives:
-- Unlikely
+- Legitimate use to pass password to different powershell commands
 id: 74403157-20f5-415d-89a7-c505779585cf
-level: high
+level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/30
+modified: 2023/02/01
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=65
+- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.security/convertto-securestring?view=powershell-7.3#examples
 status: test
 tags:
 - attack.defense_evasion

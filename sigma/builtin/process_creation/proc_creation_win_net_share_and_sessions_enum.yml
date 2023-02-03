@@ -1,9 +1,9 @@
-title: Windows Network Enumeration
+title: Share And Session Enumeration Using Net.EXE
 ruletype: Sigma
 author: Endgame, JHasenbusch (ported for oscd.community)
 date: 2018/10/30
-description: Identifies attempts to enumerate hosts in a network using the built-in
-    Windows net.exe tool.
+description: Detects attempts to enumerate file shares, printer shares and sessions
+    using "net.exe" with the "view" flag.
 detection:
     SELECTION_1:
         EventID: 4688
@@ -30,7 +30,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/13
+modified: 2023/02/01
 references:
 - https://eqllib.readthedocs.io/en/latest/analytics/b8a94d2f-dc75-4630-9d73-1edc6bd26fff.html
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md
