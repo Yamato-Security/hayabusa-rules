@@ -25,6 +25,7 @@ detection:
         - '*\Desktop\\*'
         - '*C:\Temp*'
         - '*C:\Perflogs*'
+        - '*C:\Windows\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5 and SELECTION_6)
 falsepositives:
@@ -37,7 +38,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/13
+modified: 2023/01/31
 references:
 - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
 - https://isc.sans.edu/diary/22264

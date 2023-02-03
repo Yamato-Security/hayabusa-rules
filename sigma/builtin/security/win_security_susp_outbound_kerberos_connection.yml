@@ -13,21 +13,25 @@ detection:
         DestPort: 88
     SELECTION_4:
         Application:
-        - '*\lsass.exe'
-        - '*\opera.exe'
-        - '*\chrome.exe'
-        - '*\firefox.exe'
-    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
+        - C:\Windows\System32\lsass.exe
+        - C:\Program Files\Google\Chrome\Application\chrome.exe
+        - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+        - C:\Program Files\Mozilla Firefox\firefox.exe
+        - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4)))
 falsepositives:
-- Other browsers
+- Web Browsers
 id: eca91c7c-9214-47b9-b4c5-cb1d7e4f2350
 level: high
 logsource:
     product: windows
     service: security
-modified: 2022/11/29
+modified: 2023/01/30
 references:
 - https://github.com/GhostPack/Rubeus
+related:
+-   id: e54979bd-c5f9-4d6c-967b-a04b19ac4c74
+    type: similar
 status: test
 tags:
 - attack.lateral_movement

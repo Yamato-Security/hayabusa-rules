@@ -15,23 +15,24 @@ detection:
         Initiated: 'true'
     SELECTION_5:
         Image:
-        - '*\lsass.exe'
-        - '*\opera.exe'
-        - '*\chrome.exe'
-        - '*\firefox.exe'
-        - '*\tomcat\bin\tomcat8.exe'
+        - C:\Windows\System32\lsass.exe
+        - C:\Program Files\Google\Chrome\Application\chrome.exe
+        - C:\Program Files\Mozilla Firefox\firefox.exe
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
+        ((SELECTION_5)))
 falsepositives:
-- Other browsers
+- Web Browsers
 id: e54979bd-c5f9-4d6c-967b-a04b19ac4c74
 level: high
 logsource:
     category: network_connection
     product: windows
-modified: 2021/12/02
+modified: 2023/01/30
 references:
 - https://github.com/GhostPack/Rubeus
+related:
+-   id: eca91c7c-9214-47b9-b4c5-cb1d7e4f2350
+    type: similar
 status: test
 tags:
 - attack.credential_access
