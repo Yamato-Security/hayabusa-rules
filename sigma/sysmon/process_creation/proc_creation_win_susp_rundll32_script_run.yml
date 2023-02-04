@@ -1,6 +1,6 @@
 title: Suspicious Rundll32 Script in CommandLine
 ruletype: Sigma
-author: frack113
+author: frack113, Zaw Min Htun (ZETA)
 date: 2021/12/04
 description: Detects suspicious process related to rundll32 based on arguments
 detection:
@@ -11,7 +11,9 @@ detection:
     SELECTION_3:
         CommandLine: '*rundll32*'
     SELECTION_4:
-        CommandLine: '*mshtml,RunHTMLApplication*'
+        CommandLine:
+        - '*mshtml,RunHTMLApplication*'
+        - '*mshtml,#135*'
     SELECTION_5:
         CommandLine:
         - '*javascript:*'
@@ -25,10 +27,10 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/11
+modified: 2023/02/03
 references:
 - https://gist.github.com/ryhanson/227229866af52e2d963cf941af135a52
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.011/T1218.011.md
+- https://github.com/redcanaryco/atomic-red-team/blob/cd3690b100a495885c407282d0c94c85f48a8a2e/atomics/T1218.011/T1218.011.md
 status: experimental
 tags:
 - attack.defense_evasion
