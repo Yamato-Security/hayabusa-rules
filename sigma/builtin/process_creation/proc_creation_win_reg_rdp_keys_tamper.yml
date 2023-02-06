@@ -1,0 +1,61 @@
+title: Potential Tampering With RDP Related Registry Keys Via Reg.EXE
+ruletype: Sigma
+author: pH-T (Nextron Systems), @Kostastsale, @TheDFIRReport
+date: 2022/02/12
+description: Detects the execution of "reg.exe" for enabling/disabling the RDP service
+    on the host by tampering with the 'CurrentControlSet\Control\Terminal Server'
+    values
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine: '*EnableConcurrentSessions*'
+    SELECTION_11:
+        CommandLine:
+        - '*WinStations\RDP-Tcp*'
+        - '*MaxInstanceCount*'
+        - '*fEnableWinStation*'
+        - '*TSUserEnabled*'
+        - '*TSEnabled*'
+        - '*TSAppCompat*'
+        - '*IdleWinStationPoolCount*'
+        - '*TSAdvertise*'
+        - '*AllowTSConnections*'
+        - '*fSingleSessionPerUser*'
+        - '*fDenyTSConnections*'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\reg.exe'
+    SELECTION_4:
+        OriginalFileName: reg.exe
+    SELECTION_5:
+        CommandLine: '* add *'
+    SELECTION_6:
+        CommandLine: '*\CurrentControlSet\Control\Terminal Server*'
+    SELECTION_7:
+        CommandLine: '*REG_DWORD*'
+    SELECTION_8:
+        CommandLine: '* /f*'
+    SELECTION_9:
+        CommandLine: '*Licensing Core*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8)) and ((SELECTION_9
+        and SELECTION_10) or SELECTION_11))
+falsepositives:
+- Unknown
+id: 0d5675be-bc88-4172-86d3-1e96a4476536
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/05
+references:
+- https://thedfirreport.com/2022/02/21/qbot-and-zerologon-lead-to-full-domain-compromise/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.lateral_movement
+- attack.t1021.001
+- attack.t1112
+

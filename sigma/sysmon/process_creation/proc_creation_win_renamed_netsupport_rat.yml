@@ -1,9 +1,9 @@
-title: Execution of Renamed NetSupport RAT
+title: Renamed NetSupport RAT Execution
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/09/19
-description: Detects execution of renamed client32.exe (NetSupport RAT) via Imphash,
-    Product and OriginalFileName strings
+description: Detects the execution of a renamed "client32.exe" (NetSupport RAT) via
+    Imphash, Product and OriginalFileName strings
 detection:
     SELECTION_1:
         EventID: 1
@@ -28,6 +28,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/04
 references:
 - https://redcanary.com/blog/misbehaving-rats/
 status: experimental

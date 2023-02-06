@@ -1,6 +1,6 @@
 title: Suspicious WMI Execution Via Office Process
 ruletype: Sigma
-author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule)
+author: Vadim Khrykov, Cyb3rEng
 date: 2021/08/23
 description: Office application called wmic to proxye execution through a LOLBIN process.
     This is often used to break suspicious parent-child chain (Office app spawns LOLBin).
@@ -10,14 +10,21 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        NewProcessName: '*\wbem\WMIC.exe'
-    SELECTION_4:
-        OriginalFileName: wmic.exe
-    SELECTION_5:
         ParentProcessName:
-        - '*\winword.exe'
-        - '*\excel.exe'
-        - '*\powerpnt.exe'
+        - '*\WINWORD.EXE'
+        - '*\EXCEL.EXE'
+        - '*\POWERPNT.exe'
+        - '*\MSPUB.exe'
+        - '*\VISIO.exe'
+        - '*\MSACCESS.EXE'
+        - '*\EQNEDT32.EXE'
+        - '*\ONENOTE.EXE'
+        - '*\wordpad.exe'
+        - '*\wordview.exe'
+    SELECTION_4:
+        NewProcessName: '*\wbem\WMIC.exe'
+    SELECTION_5:
+        OriginalFileName: wmic.exe
     SELECTION_6:
         CommandLine: '*process*'
     SELECTION_7:
@@ -31,8 +38,10 @@ detection:
         - '*msiexec*'
         - '*mshta*'
         - '*verclsid*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9))
+        - '*wscript*'
+        - '*cscript*'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
+        SELECTION_5) and (SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9))
 falsepositives:
 - Unknown
 id: e1693bc8-7168-4eab-8718-cdcaa68a1738
@@ -40,16 +49,20 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/30
+modified: 2023/02/04
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/02bcbfc2bfb8b4da601bb30de0344ae453aa1afe/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml
 related:
--   id: 518643ba-7d9c-4fa5-9f37-baed36059f6a
+-   id: 438025f9-5856-4663-83f7-52f878a70a50
     type: derived
+-   id: 518643ba-7d9c-4fa5-9f37-baed36059f6a
+    type: obsoletes
 -   id: 9d1c72f5-43f0-4da5-9320-648cf2099dd0
     type: obsoletes
 -   id: c0e1c3d5-4381-4f18-8145-2583f06a1fe5
+    type: obsoletes
+-   id: 04f5363a-6bca-42ff-be70-0d28bf629ead
     type: obsoletes
 status: experimental
 tags:

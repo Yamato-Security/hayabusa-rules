@@ -1,9 +1,10 @@
-title: Registry Defender Tampering
+title: Suspicious Windows Defender Registry Key Tampering Via Reg.EXE
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2022/03/22
-description: Detects reg command lines that disable certain important features of
-    Microsoft Defender
+description: Detects the usage of "reg.exe" to tamper with different Windows defender
+    registry keys in order to disable some important features related to protection
+    and detection
 detection:
     SELECTION_1:
         EventID: 1
@@ -41,7 +42,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/18
+modified: 2023/02/04
 references:
 - https://thedfirreport.com/2022/03/21/apt35-automates-initial-access-using-proxyshell/
 - https://github.com/swagkarna/Defeat-Defender-V1.2.0

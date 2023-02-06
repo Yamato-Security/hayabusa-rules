@@ -179,10 +179,10 @@ detection:
         - '*\vLTZ19.sys'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- False positives may occure if one of the vulnerable driver names mentioned above
-    didn't change it's name between versions. So always make sure that the driver
-    being loaded is the legitimate one and the non vulnerable version.
-- If you experience a lot of FP you could comment the driver name or it's exact known
+- False positives may occur if one of the vulnerable driver names mentioned above
+    didn't change its name between versions. So always make sure that the driver being
+    loaded is the legitimate one and the non vulnerable version.
+- If you experience a lot of FP you could comment the driver name or its exact known
     legitimate location (when possible)
 id: c316eac1-f3d8-42da-ad1c-66dcec5ca787
 level: medium

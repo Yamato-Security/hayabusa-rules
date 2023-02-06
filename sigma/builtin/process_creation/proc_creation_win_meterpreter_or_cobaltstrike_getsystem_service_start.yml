@@ -1,4 +1,4 @@
-title: Meterpreter or Cobalt Strike Getsystem Service Start
+title: Potential Meterpreter/CobaltStrike Activity
 ruletype: Sigma
 author: Teymur Kheirkhabarov, Ecco, Florian Roth
 date: 2019/10/26
@@ -8,46 +8,30 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        CommandLine: '*echo*'
-    SELECTION_11:
-        CommandLine: '*\pipe\\*'
-    SELECTION_12:
-        CommandLine: '*cmd.exe*'
-    SELECTION_13:
-        CommandLine: '*/c*'
-    SELECTION_14:
-        CommandLine: '*echo*'
-    SELECTION_15:
-        CommandLine: '*\pipe\\*'
-    SELECTION_16:
-        CommandLine: '*rundll32*'
-    SELECTION_17:
-        CommandLine: '*.dll,a*'
-    SELECTION_18:
         CommandLine: '*/p:*'
-    SELECTION_19:
+    SELECTION_11:
         CommandLine: '*MpCmdRun*'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
         ParentProcessName: '*\services.exe'
     SELECTION_4:
-        CommandLine: '*cmd*'
+        CommandLine: '*/c*'
     SELECTION_5:
-        CommandLine: '*/c*'
-    SELECTION_6:
         CommandLine: '*echo*'
-    SELECTION_7:
+    SELECTION_6:
         CommandLine: '*\pipe\\*'
+    SELECTION_7:
+        CommandLine:
+        - '*cmd*'
+        - '*%COMSPEC%*'
     SELECTION_8:
-        CommandLine: '*%COMSPEC%*'
+        CommandLine: '*rundll32*'
     SELECTION_9:
-        CommandLine: '*/c*'
+        CommandLine: '*.dll,a*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and ((SELECTION_4 and
         SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18))) and  not
-        (SELECTION_19))
+        and SELECTION_10))) and  not ((SELECTION_11)))
 falsepositives:
 - Commandlines containing components like cmd accidentally
 - Jobs and services started with cmd
@@ -60,7 +44,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2023/02/05
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
 - https://blog.cobaltstrike.com/2014/04/02/what-happens-when-i-type-getsystem/

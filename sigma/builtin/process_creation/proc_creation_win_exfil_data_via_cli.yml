@@ -1,9 +1,8 @@
-title: Possible Exfiltration Of Data Via CLI
+title: Potential Data Exfiltration Activity Via CommandLine Tools
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/02
-description: Detects the use of various cli utility related to web request exfiltrating
-    data
+description: Detects the use of various CLI utilities exfiltrating data via web requests
 detection:
     SELECTION_1:
         EventID: 4688
@@ -66,6 +65,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/02
 references:
 - https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool/
 status: experimental

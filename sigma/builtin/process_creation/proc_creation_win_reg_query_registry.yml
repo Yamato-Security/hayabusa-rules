@@ -1,0 +1,44 @@
+title: Potential Configuration And Service Reconnaissance Via Reg.EXE
+ruletype: Sigma
+author: Timur Zinniatullin, oscd.community
+date: 2019/10/21
+description: Detects the usage of "reg.exe" in order to query reconnaissance information
+    from the registry. Adversaries may interact with the Windows registry to gather
+    information about credentials, the system, configuration, and installed software.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\reg.exe'
+    SELECTION_4:
+        OriginalFileName: reg.exe
+    SELECTION_5:
+        CommandLine: '*query*'
+    SELECTION_6:
+        CommandLine:
+        - '*currentVersion\windows*'
+        - '*winlogon\\*'
+        - '*currentVersion\shellServiceObjectDelayLoad*'
+        - '*currentVersion\run*'
+        - '*currentVersion\policies\explorer\run*'
+        - '*currentcontrolset\services*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
+falsepositives:
+- Unknown
+id: 970007b7-ce32-49d0-a4a4-fbef016950bd
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/05
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1012/T1012.md
+status: test
+tags:
+- attack.discovery
+- attack.t1012
+- attack.t1007
+

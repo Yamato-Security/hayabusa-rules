@@ -1,4 +1,4 @@
-title: Unusual Child Porcess of dns.exe
+title: Unusual Child Process of dns.exe
 ruletype: Sigma
 author: Tim Rauch
 date: 2022/09/27
@@ -22,6 +22,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/05
 references:
 - https://www.elastic.co/guide/en/security/current/unusual-child-process-of-dns.exe.html
 status: experimental

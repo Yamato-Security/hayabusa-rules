@@ -1,8 +1,9 @@
-title: Renamed jusched.exe
+title: Renamed Jusched.EXE Execution
 ruletype: Sigma
 author: Markus Neis, Swisscom
 date: 2019/06/04
-description: Detects renamed jusched.exe used by cobalt group
+description: Detects the execution of a renamed "jusched.exe" as seen used by the
+    cobalt group
 detection:
     SELECTION_1:
         EventID: 1
@@ -22,7 +23,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/18
+modified: 2023/02/03
 references:
 - https://www.bitdefender.com/files/News/CaseStudies/study/262/Bitdefender-WhitePaper-An-APT-Blueprint-Gaining-New-Visibility-into-Financial-Threats-interactive.pdf
 status: test
