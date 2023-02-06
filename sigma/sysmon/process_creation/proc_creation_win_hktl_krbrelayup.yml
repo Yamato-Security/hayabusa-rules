@@ -1,0 +1,53 @@
+title: HackTool - KrbRelayUp Execution
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2022/04/26
+description: Detects KrbRelayUp used to perform a universal no-fix local privilege
+    escalation in windows domain environments where LDAP signing is not enforced
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine: '* spawn *'
+    SELECTION_11:
+        CommandLine: '* -d *'
+    SELECTION_12:
+        CommandLine: '* -cn *'
+    SELECTION_13:
+        CommandLine: '* -cp *'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\KrbRelayUp.exe'
+    SELECTION_4:
+        OriginalFileName: KrbRelayUp.exe
+    SELECTION_5:
+        CommandLine: '* relay *'
+    SELECTION_6:
+        CommandLine: '* -Domain *'
+    SELECTION_7:
+        CommandLine: '* -ComputerName *'
+    SELECTION_8:
+        CommandLine: '* krbscm *'
+    SELECTION_9:
+        CommandLine: '* -sc *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) or
+        (SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11 and SELECTION_12 and SELECTION_13)))
+falsepositives:
+- Unlikely
+id: 12827a56-61a4-476a-a9cb-f3068f191073
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/04
+references:
+- https://github.com/Dec0ne/KrbRelayUp
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1558.003
+- attack.lateral_movement
+- attack.t1550.003
+

@@ -1,0 +1,39 @@
+title: New DNS ServerLevelPluginDll Installed
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2017/05/08
+description: Detects the installation of a DNS plugin DLL via ServerLevelPluginDll
+    parameter in registry, which can be used to execute code in context of the DNS
+    server (restart required)
+detection:
+    SELECTION_1:
+        EventID: 13
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        EventType: SetValue
+    SELECTION_4:
+        TargetObject: '*\services\DNS\Parameters\ServerLevelPluginDll'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: e61e8a88-59a9-451c-874e-70fcc9740d67
+level: high
+logsource:
+    category: registry_set
+    product: windows
+modified: 2023/02/05
+references:
+- https://medium.com/@esnesenon/feature-not-bug-dnsadmin-to-dc-compromise-in-one-line-a0f779b8dc83
+- https://blog.3or.de/hunting-dns-server-level-plugin-dll-injection.html
+related:
+-   id: cbe51394-cd93-4473-b555-edf0144952d9
+    type: derived
+-   id: f63b56ee-3f79-4b8a-97fb-5c48007e8573
+    type: derived
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1574.002
+- attack.t1112
+

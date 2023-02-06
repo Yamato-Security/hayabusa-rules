@@ -1,0 +1,36 @@
+title: Nltest.EXE Execution
+ruletype: Sigma
+author: Arun Chauhan
+date: 2023/02/03
+description: Detects nltest commands that can be used for information discovery
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\nltest.exe'
+    SELECTION_4:
+        OriginalFileName: nltestrk.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+falsepositives:
+- Legitimate administration activity
+id: 903076ff-f442-475a-b667-4f246bcc203b
+level: low
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://jpcertcc.github.io/ToolAnalysisResultSheet/details/nltest.htm
+related:
+-   id: 5cc90652-4cbd-4241-aa3b-4b462fa5a248
+    type: similar
+-   id: eeb66bbb-3dde-4582-815a-584aee9fe6d1
+    type: obsoletes
+status: experimental
+tags:
+- attack.discovery
+- attack.t1016
+- attack.t1018
+- attack.t1482
+

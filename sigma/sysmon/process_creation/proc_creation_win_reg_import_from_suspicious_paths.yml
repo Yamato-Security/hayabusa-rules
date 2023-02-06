@@ -1,9 +1,9 @@
-title: Imports Registry Key From a File Using Reg.exe
+title: Potential Suspicious Registry File Imported Via Reg.EXE
 ruletype: Sigma
 author: frack113, Nasreddine Bencherchali
 date: 2022/08/01
-description: Detects the import of the '.reg' files from suspicious paths using the
-    'reg.exe' utility
+description: Detects the import of '.reg' files from suspicious paths using the 'reg.exe'
+    utility
 detection:
     SELECTION_1:
         EventID: 1
@@ -33,7 +33,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/30
+modified: 2023/02/05
 references:
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/reg-import
 related:

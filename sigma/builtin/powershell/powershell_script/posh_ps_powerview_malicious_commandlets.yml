@@ -35,7 +35,6 @@ detection:
         - '*Find-InterestingFile*'
         - '*Find-LocalAdminAccess*'
         - '*Find-ManagedSecurityGroups*'
-        - '*Get-ADObject*'
         - '*Get-CachedRDPConnection*'
         - '*Get-DFSshare*'
         - '*Get-DNSRecord*'
@@ -100,7 +99,7 @@ logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2023/01/02
+modified: 2023/02/06
 references:
 - https://powersploit.readthedocs.io/en/stable/Recon/README
 - https://github.com/PowerShellMafia/PowerSploit/tree/master/Recon

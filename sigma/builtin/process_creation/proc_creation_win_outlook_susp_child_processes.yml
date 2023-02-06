@@ -1,0 +1,59 @@
+title: Suspicious Outlook Child Process
+ruletype: Sigma
+author: Michael Haag, Florian Roth (Nextron Systems), Markus Neis, Elastic, FPT.EagleEye
+    Team
+date: 2022/02/28
+description: Detects a suspicious process spawning from an Outlook process.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\OUTLOOK.EXE'
+    SELECTION_4:
+        NewProcessName:
+        - '*\AppVLP.exe'
+        - '*\bash.exe'
+        - '*\cmd.exe'
+        - '*\cscript.exe'
+        - '*\forfiles.exe'
+        - '*\hh.exe'
+        - '*\mftrace.exe'
+        - '*\msbuild.exe'
+        - '*\msdt.exe'
+        - '*\mshta.exe'
+        - '*\msiexec.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\regsvr32.exe'
+        - '*\schtasks.exe'
+        - '*\scrcons.exe'
+        - '*\scriptrunner.exe'
+        - '*\sh.exe'
+        - '*\svchost.exe'
+        - '*\wmic.exe'
+        - '*\wscript.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+- ParentCommandLine
+id: 208748f7-881d-47ac-a29c-07ea84bf691d
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/04
+references:
+- https://www.hybrid-analysis.com/sample/465aabe132ccb949e75b8ab9c5bda36d80cf2fd503d52b8bad54e295f28bbc21?environmentId=100
+- https://mgreen27.github.io/posts/2018/04/02/DownloadCradle.html
+related:
+-   id: 438025f9-5856-4663-83f7-52f878a70a50
+    type: derived
+status: test
+tags:
+- attack.execution
+- attack.t1204.002
+

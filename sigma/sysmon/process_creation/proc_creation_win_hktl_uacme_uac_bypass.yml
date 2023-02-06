@@ -1,9 +1,9 @@
-title: UAC Bypass Tool UACMe Akagi
+title: HackTool - UACMe Akagi Execution
 ruletype: Sigma
-author: Christian Burkard (Nextron Systems), Florian Roth
+author: Christian Burkard (Nextron Systems), Florian Roth (Nextron Systems)
 date: 2021/08/30
-description: Detects execution of UACMe (a tool used for UAC bypass) via default PE
-    metadata
+description: Detects the execution of UACMe, a tool used for UAC bypasses, via default
+    PE metadata
 detection:
     SELECTION_1:
         EventID: 1

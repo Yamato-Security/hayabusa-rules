@@ -1,8 +1,8 @@
-title: Execution Of Renamed Plink Binary
+title: Renamed Plink Execution
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/06/06
-description: Execution of a renamed version of the Plink binary
+description: Detects the execution of a renamed version of the Plink binary
 detection:
     SELECTION_1:
         EventID: 1
@@ -27,7 +27,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/04
+modified: 2023/02/03
 references:
 - https://thedfirreport.com/2022/06/06/will-the-real-msiexec-please-stand-up-exploit-leads-to-data-exfiltration/
 - https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter7.html

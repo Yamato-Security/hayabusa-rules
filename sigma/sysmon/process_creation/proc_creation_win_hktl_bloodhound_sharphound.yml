@@ -1,0 +1,65 @@
+title: HackTool - Bloodhound/Sharphound Execution
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2019/12/20
+description: Detects command line parameters used by Bloodhound and Sharphound hack
+    tools
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine: '* DCOnly *'
+    SELECTION_11:
+        CommandLine: '* --NoSaveCache *'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Product: '*SharpHound*'
+    SELECTION_4:
+        Description: '*SharpHound*'
+    SELECTION_5:
+        Company:
+        - '*SpecterOps*'
+        - '*evil corp*'
+    SELECTION_6:
+        Image:
+        - '*\Bloodhound.exe*'
+        - '*\SharpHound.exe*'
+    SELECTION_7:
+        CommandLine:
+        - '* -CollectionMethod All *'
+        - '* --CollectionMethods Session *'
+        - '* --Loop --Loopduration *'
+        - '* --PortScanTimeout *'
+        - '*.exe -c All -d *'
+        - '*Invoke-Bloodhound*'
+        - '*Get-BloodHoundData*'
+    SELECTION_8:
+        CommandLine: '* -JsonFolder *'
+    SELECTION_9:
+        CommandLine: '* -ZipFileName *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or
+        SELECTION_5 or SELECTION_6) or SELECTION_7 or (SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11)))
+falsepositives:
+- Other programs that use these command line option and accepts an 'All' parameter
+id: f376c8a7-a2d0-4ddc-aa0c-16c17236d962
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/04
+references:
+- https://github.com/BloodHoundAD/BloodHound
+- https://github.com/BloodHoundAD/SharpHound
+status: test
+tags:
+- attack.discovery
+- attack.t1087.001
+- attack.t1087.002
+- attack.t1482
+- attack.t1069.001
+- attack.t1069.002
+- attack.execution
+- attack.t1059.001
+

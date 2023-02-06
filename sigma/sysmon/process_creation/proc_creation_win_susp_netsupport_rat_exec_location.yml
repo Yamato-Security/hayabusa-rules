@@ -2,8 +2,8 @@ title: Execution of NetSupport RAT From Unusual Location
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/09/19
-description: Detects execution of client32.exe (NetSupport RAT) from an unsual location
-    (outisde of 'C:\Program Files')
+description: Detects execution of client32.exe (NetSupport RAT) from an unusual location
+    (outside of 'C:\Program Files')
 detection:
     SELECTION_1:
         EventID: 1

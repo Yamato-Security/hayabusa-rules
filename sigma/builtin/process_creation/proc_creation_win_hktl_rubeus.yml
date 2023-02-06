@@ -1,0 +1,56 @@
+title: HackTool - Rubeus Execution
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2018/12/19
+description: Detects the execution of the hacktool Rubeus via PE information of command
+    line parameters
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\Rubeus.exe'
+    SELECTION_4:
+        OriginalFileName: Rubeus.exe
+    SELECTION_5:
+        Description: Rubeus
+    SELECTION_6:
+        CommandLine:
+        - '* asreproast *'
+        - '* dump /service:krbtgt *'
+        - '* dump /luid:0x*'
+        - '* kerberoast *'
+        - '* createnetonly /program:*'
+        - '* ptt /ticket:*'
+        - '* /impersonateuser:*'
+        - '* renew /ticket:*'
+        - '* asktgt /user:*'
+        - '* harvest /interval:*'
+        - '* s4u /user:*'
+        - '* s4u /ticket:*'
+        - '* hash /password:*'
+        - '* golden /aes256:*'
+        - '* silver /user:*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6))
+falsepositives:
+- Unlikely
+id: 7ec2c172-dceb-4c10-92c9-87c1881b7e18
+level: critical
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/04
+references:
+- https://www.harmj0y.net/blog/redteaming/from-kekeo-to-rubeus/
+- https://m0chan.github.io/2019/07/31/How-To-Attack-Kerberos-101.html
+- https://github.com/GhostPack/Rubeus
+status: stable
+tags:
+- attack.credential_access
+- attack.t1003
+- attack.t1558.003
+- attack.lateral_movement
+- attack.t1550.003
+

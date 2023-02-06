@@ -1,0 +1,40 @@
+title: CreateDump Process Dump
+ruletype: Sigma
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+date: 2022/01/04
+description: Detects uses of the createdump.exe LOLOBIN utility to dump process memory
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\createdump.exe'
+    SELECTION_4:
+        OriginalFileName: FX_VER_INTERNALNAME_STR
+    SELECTION_5:
+        CommandLine:
+        - '* -u *'
+        - '* --full *'
+        - '* -f *'
+        - '* --name *'
+        - '*.dmp *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Command lines that use the same flags
+id: 515c8be5-e5df-4c5e-8f6d-a4a2f05e4b48
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/08/19
+references:
+- https://www.crowdstrike.com/blog/overwatch-exposes-aquatic-panda-in-possession-of-log-4-shell-exploit-tools/
+- https://twitter.com/bopin2020/status/1366400799199272960
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036
+- attack.t1003.001
+
