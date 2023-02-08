@@ -1,9 +1,10 @@
-title: Suspicious Security Scheduled Tasks Deleted
+title: Important Scheduled Task Deleted
 ruletype: Sigma
 author: frack113
 date: 2023/01/13
-description: Detects when adversaries stop services or processes by deleting their
-    respective scheduled tasks in order to conduct data destructive activities
+description: Detects when adversaries try to stop system services or processes by
+    deleting their respective scheduled tasks in order to conduct data destructive
+    activities
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-TaskScheduler/Operational
@@ -33,10 +34,9 @@ logsource:
         trigger'
     product: windows
     service: taskscheduler
+modified: 2023/02/07
 related:
 -   id: dbc1f800-0fe0-4bc0-9c66-292c2abe3f78
-    type: similar
--   id: 9ac94dc8-9042-493c-ba45-3b5e7c86b980
     type: similar
 -   id: 7595ba94-cf3b-4471-aa03-4f6baa9e5fad
     type: similar

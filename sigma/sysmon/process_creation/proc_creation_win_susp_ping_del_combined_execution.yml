@@ -1,4 +1,4 @@
-title: Suspicious Ping And Del Combination
+title: Suspicious Ping/Del Command Combination
 ruletype: Sigma
 author: Ilya Krestinichev
 date: 2022/11/03
@@ -17,16 +17,17 @@ detection:
     SELECTION_4:
         CommandLine: '*Nul*'
     SELECTION_5:
-    - ' /f '
-    - ' -f '
-    - ' /q '
-    - ' -q '
+        CommandLine:
+        - '* /f *'
+        - '* -f *'
+        - '* /q *'
+        - '* -q *'
     SELECTION_6:
         CommandLine: '*ping*'
     SELECTION_7:
         CommandLine: '*del *'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and SELECTION_4 and
-        (SELECTION_5) and (SELECTION_6 and SELECTION_7))
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7)
 falsepositives:
 - False positive could occur in admin scripts that execute inline
 id: 54786ddc-5b8a-11ed-9b6a-0242ac120002
@@ -34,6 +35,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/07
 references:
 - https://blog.sygnia.co/kaseya-ransomware-supply-chain-attack
 - https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2022/06/23093553/Common-TTPs-of-the-modern-ransomware_low-res.pdf

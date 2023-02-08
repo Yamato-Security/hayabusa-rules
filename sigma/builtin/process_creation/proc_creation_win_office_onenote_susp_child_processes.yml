@@ -7,11 +7,11 @@ description: Detects suspicious child processes of the Microsoft OneNote applica
     file.
 detection:
     SELECTION_1:
-        EventID: 1
+        EventID: 4688
     SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: Security
     SELECTION_3:
-        ParentImage: '*\onenote.exe'
+        ParentProcessName: '*\onenote.exe'
     SELECTION_4:
         OriginalFileName:
         - RUNDLL32.exe
@@ -43,7 +43,7 @@ detection:
         - msiexec.exe
         - msdt.exe
     SELECTION_5:
-        Image:
+        NewProcessName:
         - '*\rundll32.exe'
         - '*\regsvr32.exe'
         - '*\bitsadmin.exe'
@@ -73,7 +73,7 @@ detection:
         - '*\msiexec.exe'
         - '*\msdt.exe'
     SELECTION_6:
-        Image: '*\explorer.exe'
+        NewProcessName: '*\explorer.exe'
     SELECTION_7:
         CommandLine:
         - '*.hta*'
@@ -86,7 +86,7 @@ detection:
         - '*.bat*'
         - '*.cmd*'
     SELECTION_8:
-        Image:
+        NewProcessName:
         - '*\AppData\\*'
         - '*\Users\Public\\*'
         - '*\ProgramData\\*'
@@ -98,13 +98,16 @@ detection:
 falsepositives:
 - File located in the AppData folder with trusted signature
 id: c27515df-97a9-4162-8a60-dc0eeb51b775
-level: medium
+level: high
 logsource:
     category: process_creation
     product: windows
 modified: 2022/12/30
 references:
 - https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-e34e43eb5666427602ddf488b2bf3b545bd9aae81af3e6f6c7949f9652abdf18
+related:
+-   id: 438025f9-5856-4663-83f7-52f878a70a50
+    type: derived
 status: experimental
 tags:
 - attack.t1566

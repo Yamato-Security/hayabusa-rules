@@ -1,6 +1,6 @@
-title: Advanced IP Scanner
+title: PUA - Advanced IP Scanner Execution
 ruletype: Sigma
-author: '@ROxPinTeddy, Nasreddine Bencherchali'
+author: Nasreddine Bencherchali (Nextron Systems), @ROxPinTeddy
 date: 2020/05/12
 description: Detects the use of Advanced IP Scanner. Seems to be a popular tool for
     ransomware groups.
@@ -28,7 +28,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2023/02/07
 references:
 - https://news.sophos.com/en-us/2019/12/09/snatch-ransomware-reboots-pcs-into-safe-mode-to-bypass-protection/
 - https://www.fireeye.com/blog/threat-research/2020/05/tactics-techniques-procedures-associated-with-maze-ransomware-incidents.html

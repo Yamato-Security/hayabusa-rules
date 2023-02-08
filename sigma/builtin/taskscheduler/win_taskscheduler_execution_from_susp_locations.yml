@@ -1,4 +1,4 @@
-title: Suspicious Scheduled Tasks Locations
+title: Scheduled Task Executed From A Suspicious Location
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/12/05
@@ -18,9 +18,6 @@ detection:
         - '*\Downloads\\*'
         - '*\Users\Public\\*'
         - '*C:\Temp\\*'
-        - '*C:\Windows\System32\calc.exe*'
-        - '*C:\Windows\System32\regsvr32.exe*'
-        - '*C:\Windows\System32\rundll32.exe*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -32,6 +29,9 @@ logsource:
         trigger'
     product: windows
     service: taskscheduler
+modified: 2023/02/07
+references:
+- Internal Research
 status: experimental
 tags:
 - attack.persistence

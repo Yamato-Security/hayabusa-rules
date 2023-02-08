@@ -1,18 +1,18 @@
-title: MSHTA Spwaned by SVCHOST
+title: Potential LethalHTA Technique Execution
 ruletype: Sigma
 author: Markus Neis
 date: 2018/06/07
-description: Detects MSHTA.EXE spwaned by SVCHOST as seen in LethalHTA and described
-    in report
+description: Detects potential LethalHTA technique where the "mshta.exe" is spwaned
+    by an "svchost.exe" process
 detection:
     SELECTION_1:
-        EventID: 1
+        EventID: 4688
     SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
+        Channel: Security
     SELECTION_3:
-        ParentImage: '*\svchost.exe'
+        ParentProcessName: '*\svchost.exe'
     SELECTION_4:
-        Image: '*\mshta.exe'
+        NewProcessName: '*\mshta.exe'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
@@ -21,7 +21,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2023/02/07
 references:
 - https://codewhitesec.blogspot.com/2018/07/lethalhta.html
 status: test
