@@ -23,9 +23,13 @@ detection:
     SELECTION_5:
         Task: '*\Windows\UpdateOrchestrator\AC Power Download*'
     SELECTION_6:
+        EventID: 4699
+    SELECTION_7:
         SubjectUserName: '*$'
+    SELECTION_8:
+        Task: '*\Windows\Windows Defender\\*'
     condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6)))
+        ((SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: 7595ba94-cf3b-4471-aa03-4f6baa9e5fad
@@ -36,7 +40,7 @@ logsource:
         extracting the Command field from the embedded XML in the event data.
     product: windows
     service: security
-modified: 2022/12/09
+modified: 2023/02/07
 references:
 - https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4699
 - https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4701

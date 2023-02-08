@@ -1,8 +1,8 @@
-title: Cabinet File Expansion
+title: Suspicious Cabinet File Expansion
 ruletype: Sigma
 author: Bhabesh Raj
 date: 2021/07/30
-description: Adversaries can use the inbuilt expand utility to decompress cab files
+description: Adversaries can use the built-in expand utility to decompress cab files
     as seen in recent Iranian MeteorExpress attack
 detection:
     SELECTION_1:
@@ -38,7 +38,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2023/02/07
 references:
 - https://labs.sentinelone.com/meteorexpress-mysterious-wiper-paralyzes-iranian-trains-with-epic-troll
 - https://blog.malwarebytes.com/threat-intelligence/2021/08/new-variant-of-konni-malware-used-in-campaign-targetting-russia/

@@ -30,14 +30,14 @@ detection:
         - "*hkey_\u02EAoca\u02EA_machine*"
     SELECTION_7:
         CommandLine:
-        - '*\system'
-        - '*\sam'
-        - '*\security'
-        - "*\\\u02E2ystem"
-        - "*\\sy\u02E2tem"
-        - "*\\\u02E2y\u02E2tem"
-        - "*\\\u02E2am"
-        - "*\\\u02E2ecurity"
+        - '*\system*'
+        - '*\sam*'
+        - '*\security*'
+        - "*\\\u02E2ystem*"
+        - "*\\sy\u02E2tem*"
+        - "*\\\u02E2y\u02E2tem*"
+        - "*\\\u02E2am*"
+        - "*\\\u02E2ecurity*"
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5 and SELECTION_6 and SELECTION_7)
 falsepositives:
@@ -47,7 +47,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
+modified: 2023/02/06
 references:
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 - https://eqllib.readthedocs.io/en/latest/analytics/aed95fc6-5e3f-49dc-8b35-06508613f979.html
@@ -56,6 +56,8 @@ references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md#atomic-test-1---registry-dump-of-sam-creds-and-secrets
 related:
 -   id: 038cd51c-3ad8-41c5-ba8f-5d1c92f3cc1e
+    type: obsoletes
+-   id: 4d6c9da1-318b-4edf-bcea-b6c93fa98fd0
     type: obsoletes
 status: test
 tags:

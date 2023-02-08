@@ -1,4 +1,4 @@
-title: MSDT Executed with Suspicious Parent
+title: Suspicious MSDT Parent Process
 ruletype: Sigma
 author: Nextron Systems
 date: 2022/06/01
@@ -11,15 +11,17 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         ParentImage:
+        - '*\cmd.exe'
+        - '*\cscript.exe'
+        - '*\mshta.exe'
         - '*\powershell.exe'
         - '*\pwsh.exe'
-        - '*\cmd.exe'
-        - '*\mshta.exe'
-        - '*\cscript.exe'
+        - '*\regsvr32.exe'
+        - '*\rundll32.exe'
+        - '*\schtasks.exe'
+        - '*\wmic.exe'
         - '*\wscript.exe'
         - '*\wsl.exe'
-        - '*\rundll32.exe'
-        - '*\regsvr32.exe'
     SELECTION_4:
         Image: '*\msdt.exe'
     SELECTION_5:
@@ -33,7 +35,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
+modified: 2023/02/06
 references:
 - https://twitter.com/nao_sec/status/1530196847679401984
 - https://app.any.run/tasks/713f05d2-fe78-4b9d-a744-f7c133e3fafb/

@@ -15,19 +15,19 @@ detection:
     SELECTION_4:
         OriginalFileName: bitsadmin.exe
     SELECTION_5:
+        CommandLine: '* /transfer *'
+    SELECTION_6:
+        NewProcessName: '*\bitsadmin.exe'
+    SELECTION_7:
+        OriginalFileName: bitsadmin.exe
+    SELECTION_8:
         CommandLine:
         - '* /create *'
         - '* /addfile *'
-    SELECTION_6:
-        CommandLine: '*http*'
-    SELECTION_7:
-        NewProcessName: '*\bitsadmin.exe'
-    SELECTION_8:
-        OriginalFileName: bitsadmin.exe
     SELECTION_9:
-        CommandLine: '* /transfer *'
+        CommandLine: '*http*'
     condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6) or ((SELECTION_7 or SELECTION_8) and SELECTION_9)
+        SELECTION_5) or ((SELECTION_6 or SELECTION_7) and (SELECTION_8 and SELECTION_9))
         or SELECTION_10))
 falsepositives:
 - Some legitimate apps use this, but limited.

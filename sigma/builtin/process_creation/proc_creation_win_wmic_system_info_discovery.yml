@@ -1,0 +1,58 @@
+title: Potential System Information Discovery Via Wmic.EXE
+ruletype: Sigma
+author: TropChaud
+date: 2023/01/26
+description: 'Detects the use of the WMI command-line (WMIC) utility to identify and
+    display various system information,
+
+    including OS, CPU, GPU, and disk drive names; memory capacity; display resolution;
+    and baseboard, BIOS,
+
+    and GPU driver products/versions.
+
+    Some of these commands were used by Aurora Stealer in late 2022/early 2023.
+
+    '
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        Description: WMI Commandline Utility
+    SELECTION_4:
+        OriginalFileName: wmic.exe
+    SELECTION_5:
+        NewProcessName: '*\WMIC.exe'
+    SELECTION_6:
+        CommandLine:
+        - '*cpu get name*'
+        - '*MEMPHYSICAL get MaxCapacity*'
+        - '*baseboard get product*'
+        - '*baseboard get version*'
+        - '*bios get SMBIOSBIOSVersion*'
+        - '*path win32_VideoController get name*'
+        - '*path win32_VideoController get DriverVersion*'
+        - '*path win32_VideoController get VideoModeDescription*'
+        - '*OS get Caption,OSArchitecture,Version*'
+        - '*DISKDRIVE get Caption*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: 9d5a1274-922a-49d0-87f3-8c653483b909
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/a2ccd19c37d0278b4ffa8583add3cf52060a5418/atomics/T1082/T1082.md#atomic-test-25---system-information-discovery-with-wmic
+- https://nwgat.ninja/getting-system-information-with-wmic-on-windows/
+- https://blog.sekoia.io/aurora-a-rising-stealer-flying-under-the-radar
+- https://blog.cyble.com/2023/01/18/aurora-a-stealer-using-shapeshifting-tactics/
+- https://app.any.run/tasks/a6aa0057-82ec-451f-8f99-55650ca537da/
+status: experimental
+tags:
+- attack.discovery
+- attack.t1082
+

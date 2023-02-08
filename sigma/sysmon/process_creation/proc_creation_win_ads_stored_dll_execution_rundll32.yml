@@ -12,8 +12,11 @@ detection:
     SELECTION_3:
         Image: '*\rundll32.exe'
     SELECTION_4:
+        OriginalFileName: RUNDLL32.EXE
+    SELECTION_5:
         CommandLine|re: '[Rr][Uu][Nn][Dd][Ll][Ll]32(\.[Ee][Xx][Ee])? \S+?\w:\S+?:'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unknown
 id: 9248c7e1-2bf3-4661-a22c-600a8040b446
@@ -21,7 +24,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/23
+modified: 2023/02/08
 references:
 - https://lolbas-project.github.io/lolbas/Binaries/Rundll32
 status: experimental
