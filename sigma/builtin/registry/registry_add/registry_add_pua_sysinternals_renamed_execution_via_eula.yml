@@ -1,0 +1,80 @@
+title: Suspicious Execution Of Renamed Sysinternals Tools - Registry
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/24
+description: Detects the creation of the "accepteula" key related to the Sysinternals
+    tools being created from executables with the wrong name (e.g. a renamed Sysinternals
+    tool)
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - New registry value created
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: CreateKey
+    SELECTION_5:
+        TargetObject:
+        - '*\Active Directory Explorer*'
+        - '*\Handle*'
+        - '*\LiveKd*'
+        - '*\ProcDump*'
+        - '*\Process Explorer*'
+        - '*\PsExec*'
+        - '*\PsLoggedon*'
+        - '*\PsLoglist*'
+        - '*\PsPasswd*'
+        - '*\PsPing*'
+        - '*\PsService*'
+        - '*\SDelete*'
+    SELECTION_6:
+        TargetObject: '*\EulaAccepted'
+    SELECTION_7:
+        NewProcessName:
+        - '*\ADExplorer.exe'
+        - '*\ADExplorer64.exe'
+        - '*\handle.exe'
+        - '*\handle64.exe'
+        - '*\livekd.exe'
+        - '*\livekd64.exe'
+        - '*\procdump.exe'
+        - '*\procdump64.exe'
+        - '*\procexp.exe'
+        - '*\procexp64.exe'
+        - '*\PsExec.exe'
+        - '*\PsExec64.exe'
+        - '*\PsLoggedon.exe'
+        - '*\PsLoggedon64.exe'
+        - '*\psloglist.exe'
+        - '*\psloglist64.exe'
+        - '*\pspasswd.exe'
+        - '*\pspasswd64.exe'
+        - '*\PsPing.exe'
+        - '*\PsPing64.exe'
+        - '*\PsService.exe'
+        - '*\PsService64.exe'
+        - '*\sdelete.exe'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
+falsepositives:
+- Unlikely
+id: f50f3c09-557d-492d-81db-9064a8d4e211
+level: high
+logsource:
+    category: registry_add
+    product: windows
+modified: 2023/02/07
+references:
+- Internal Research
+related:
+-   id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
+    type: derived
+-   id: 8023f872-3f1d-4301-a384-801889917ab4
+    type: similar
+status: experimental
+tags:
+- attack.resource_development
+- attack.t1588.002
+

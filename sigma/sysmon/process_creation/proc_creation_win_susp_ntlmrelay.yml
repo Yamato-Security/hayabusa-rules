@@ -12,16 +12,18 @@ detection:
     SELECTION_3:
         Image: '*\rundll32.exe'
     SELECTION_4:
-        CommandLine: '*C:\windows\system32\davclnt.dll,DavSetCookie*'
+        OriginalFileName: RUNDLL32.EXE
     SELECTION_5:
-        CommandLine: '*http*'
+        CommandLine: '*C:\windows\system32\davclnt.dll,DavSetCookie*'
     SELECTION_6:
+        CommandLine: '*http*'
+    SELECTION_7:
         CommandLine:
         - '*spoolss*'
         - '*srvsvc*'
         - '*/print/pipe/*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7))
 falsepositives:
 - Unknown
 id: bb76d96b-821c-47cf-944b-7ce377864492
@@ -29,7 +31,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/02
+modified: 2023/02/09
 references:
 - https://twitter.com/med0x2e/status/1520402518685200384
 - https://github.com/elastic/detection-rules/blob/dd224fb3f81d0b4bf8593c5f02a029d647ba2b2d/rules/windows/credential_access_relay_ntlm_auth_via_http_spoolss.toml

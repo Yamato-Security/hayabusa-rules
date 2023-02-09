@@ -12,10 +12,13 @@ detection:
     SELECTION_3:
         NewProcessName: '*\rundll32.exe'
     SELECTION_4:
-        CommandLine: '*keymgr*'
+        OriginalFileName: RUNDLL32.EXE
     SELECTION_5:
+        CommandLine: '*keymgr*'
+    SELECTION_6:
         CommandLine: '*KRShowKeyMgr*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
 - Administrative activity
 id: a4694263-59a8-4608-a3a0-6f8d3a51664c
@@ -23,6 +26,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/09
 references:
 - https://twitter.com/NinjaParanoid/status/1516442028963659777
 status: experimental

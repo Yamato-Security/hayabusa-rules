@@ -12,13 +12,15 @@ detection:
     SELECTION_3:
         NewProcessName: '*\rundll32.exe'
     SELECTION_4:
-        ParentProcessName: '*\cmd.exe'
+        OriginalFileName: RUNDLL32.EXE
     SELECTION_5:
-        CommandLine: '*user32.dll,*'
+        ParentProcessName: '*\cmd.exe'
     SELECTION_6:
+        CommandLine: '*user32.dll,*'
+    SELECTION_7:
         CommandLine: '*LockWorkStation*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Scripts or links on the user desktop used to lock the workstation instead of Windows+L
     or the menu option
@@ -30,6 +32,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/09
 references:
 - https://app.any.run/tasks/2aef9c63-f944-4763-b3ef-81eee209d128/
 status: experimental

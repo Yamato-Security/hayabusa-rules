@@ -8,52 +8,54 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        ParentCommandLine: C:\Windows\syswow64\MsiExec.exe -Embedding*
+        ParentProcessName: '*:\Windows\SysWOW64\msiexec.exe'
     SELECTION_11:
-        ParentProcessName: '*:\Windows\System32\msiexec.exe'
+        ParentCommandLine: C:\Windows\syswow64\MsiExec.exe -Embedding*
     SELECTION_12:
-        ParentCommandLine: C:\Windows\system32\MsiExec.exe -Embedding*
+        ParentProcessName: '*:\Windows\System32\msiexec.exe'
     SELECTION_13:
-        ParentProcessName: '*:\Windows\System32\cmd.exe'
+        ParentCommandLine: C:\Windows\system32\MsiExec.exe -Embedding*
     SELECTION_14:
-        ParentCommandLine: '* C:\Program Files\SplunkUniversalForwarder\\*'
+        ParentProcessName: '*:\Windows\System32\cmd.exe'
     SELECTION_15:
-        CommandLine: '* -localserver *'
+        ParentCommandLine: '* C:\Program Files\SplunkUniversalForwarder\\*'
     SELECTION_16:
+        CommandLine: '* -localserver *'
+    SELECTION_17:
         ParentCommandLine: C:\Windows\system32\rundll32.exe" "C:\Program Files\McAfee\MSC\mcmscins.dll",DllUninstallFunction
             *
-    SELECTION_17:
+    SELECTION_18:
         CommandLine: C:\Windows\system32\rundll32.exe" /uninstall /longpath "C:\Program
             Files\McAfee\MSC\mscrem.inf*
-    SELECTION_18:
-        ParentProcessName: C:\Users\\*
     SELECTION_19:
-        ParentProcessName: '*\AppData\Local\Microsoft\EdgeUpdate\Install\{*'
+        ParentProcessName: C:\Users\\*
     SELECTION_2:
         Channel: Security
     SELECTION_20:
-        ParentProcessName: '*\setup.exe'
+        ParentProcessName: '*\AppData\Local\Microsoft\EdgeUpdate\Install\{*'
     SELECTION_21:
+        ParentProcessName: '*\setup.exe'
+    SELECTION_22:
         ParentCommandLine: '*\setup.exe" --install-archive="C:\Users\\*'
     SELECTION_3:
         NewProcessName: '*\rundll32.exe'
     SELECTION_4:
-        CommandLine: null
+        OriginalFileName: RUNDLL32.EXE
     SELECTION_5:
-        CommandLine: '*.dll*'
+        CommandLine: null
     SELECTION_6:
-        CommandLine: ''
+        CommandLine: '*.dll*'
     SELECTION_7:
-        ParentProcessName: '*:\Program Files\Internet Explorer\iexplore.exe'
+        CommandLine: ''
     SELECTION_8:
-        CommandLine: '*.cpl*'
+        ParentProcessName: '*:\Program Files\Internet Explorer\iexplore.exe'
     SELECTION_9:
-        ParentProcessName: '*:\Windows\SysWOW64\msiexec.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
-        SELECTION_14) or (SELECTION_15) or (SELECTION_16 or SELECTION_17) or (SELECTION_18
-        and SELECTION_19 and SELECTION_20 and SELECTION_21)))
+        CommandLine: '*.cpl*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6 or SELECTION_7) or (SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14
+        and SELECTION_15) or (SELECTION_16) or (SELECTION_17 or SELECTION_18) or (SELECTION_19
+        and SELECTION_20 and SELECTION_21 and SELECTION_22)))
 falsepositives:
 - Unknown
 fields:
@@ -64,7 +66,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/25
+modified: 2023/02/09
 references:
 - https://twitter.com/mrd0x/status/1481630810495139841?s=12
 status: experimental

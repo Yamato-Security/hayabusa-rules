@@ -12,8 +12,11 @@ detection:
     SELECTION_3:
         NewProcessName: '*\rundll32.exe'
     SELECTION_4:
+        OriginalFileName: RUNDLL32.EXE
+    SELECTION_5:
         CommandLine: '*InstallScreenSaver*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Legitimate installation of a new screensaver
 id: 15bd98ea-55f4-4d37-b09a-e7caa0fa2221
@@ -21,6 +24,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/09
 references:
 - https://lolbas-project.github.io/lolbas/Libraries/Desk/
 status: experimental

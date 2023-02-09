@@ -1,0 +1,40 @@
+title: Suspicious Reconnaissance Activity Via GatherNetworkInfo.VBS
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/08
+description: Detects execution of the built-in script located in "C:\Windows\System32\gatherNetworkInfo.vbs".
+    Which can be used to gather information about the target machine
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*gatherNetworkInfo.vbs*'
+    SELECTION_4:
+        NewProcessName:
+        - '*\cscript.exe'
+        - '*\wscript.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: 07aa184a-870d-413d-893a-157f317f6f58
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://posts.slayerlabs.com/living-off-the-land/#gathernetworkinfovbs
+- https://www.mandiant.com/resources/blog/trojanized-windows-installers-ukrainian-government
+related:
+-   id: f92a6f1e-a512-4a15-9735-da09e78d7273
+    type: similar
+-   id: 575dce0c-8139-4e30-9295-1ee75969f7fe
+    type: similar
+status: test
+tags:
+- attack.discovery
+- attack.execution
+- attack.t1615
+- attack.t1059.005
+
