@@ -1,0 +1,30 @@
+title: Microsoft VBA For Outlook Addin Loaded Via Outlook
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/08
+description: Detects outlvba (Microsoft VBA for Outlook Addin) DLL being loaded by
+    the outlook process
+detection:
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\outlook.exe'
+    SELECTION_4:
+        ImageLoaded: \outlvba.dll*
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate macro usage. Add the appropriate filter according to your environment
+id: 9a0b8719-cd3c-4f0a-90de-765a4cb3f5ed
+level: high
+logsource:
+    category: image_load
+    product: windows
+references:
+- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=58
+status: test
+tags:
+- attack.execution
+- attack.t1204.002
+

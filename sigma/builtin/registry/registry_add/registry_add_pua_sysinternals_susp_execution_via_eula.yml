@@ -1,0 +1,53 @@
+title: PUA - Sysinternals Tools Execution - Registry
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/24
+description: Detects the execution of some potentially unwanted tools such as PsExec,
+    Procdump, etc. (part of the Sysinternals suite) via the creation of the "accepteula"
+    registry key.
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_2:
+        OperationType:
+        - New registry value created
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        EventType: CreateKey
+    SELECTION_5:
+        TargetObject:
+        - '*\Active Directory Explorer*'
+        - '*\Handle*'
+        - '*\LiveKd*'
+        - '*\Process Explorer*'
+        - '*\ProcDump*'
+        - '*\PsExec*'
+        - '*\PsLoglist*'
+        - '*\PsPasswd*'
+        - '*\SDelete*'
+        - '*\Sysinternals*'
+    SELECTION_6:
+        TargetObject: '*\EulaAccepted'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Legitimate use of SysInternals tools. Filter the legitimate paths used in your environnement
+id: c7da8edc-49ae-45a2-9e61-9fd860e4e73d
+level: medium
+logsource:
+    category: registry_add
+    product: windows
+modified: 2023/02/07
+references:
+- https://twitter.com/Moti_B/status/1008587936735035392
+related:
+-   id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
+    type: derived
+-   id: 9841b233-8df8-4ad7-9133-b0b4402a9014
+    type: obsoletes
+status: experimental
+tags:
+- attack.resource_development
+- attack.t1588.002
+

@@ -8,6 +8,14 @@ description: Detects suspicious child processes of the Microsoft OneNote applica
 detection:
     SELECTION_1:
         EventID: 1
+    SELECTION_10:
+        CommandLine: '*-Embedding'
+    SELECTION_11:
+        Image: '*\AppData\Local\Microsoft\OneDrive\\*'
+    SELECTION_12:
+        Image: '*\FileCoAuth.exe'
+    SELECTION_13:
+        CommandLine: '*-Embedding'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -93,8 +101,11 @@ detection:
         - '*\Windows\Tasks\\*'
         - '*\Windows\Temp\\*'
         - '*\Windows\System32\Tasks\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and ((SELECTION_4 or
-        SELECTION_5) or (SELECTION_6 and SELECTION_7) or SELECTION_8))
+    SELECTION_9:
+        Image: '*\AppData\Local\Microsoft\Teams\current\Teams.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and ((SELECTION_4 or
+        SELECTION_5) or (SELECTION_6 and SELECTION_7) or SELECTION_8)) and  not ((SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13)))
 falsepositives:
 - File located in the AppData folder with trusted signature
 id: c27515df-97a9-4162-8a60-dc0eeb51b775
@@ -102,9 +113,10 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/30
+modified: 2023/02/09
 references:
 - https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-e34e43eb5666427602ddf488b2bf3b545bd9aae81af3e6f6c7949f9652abdf18
+- https://micahbabinski.medium.com/detecting-onenote-one-malware-delivery-407e9321ecf0
 related:
 -   id: 438025f9-5856-4663-83f7-52f878a70a50
     type: derived

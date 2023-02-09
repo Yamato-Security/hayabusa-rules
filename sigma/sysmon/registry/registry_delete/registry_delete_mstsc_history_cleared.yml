@@ -1,4 +1,4 @@
-title: Terminal Server Client Connection History Cleared
+title: Terminal Server Client Connection History Cleared - Registry
 ruletype: Sigma
 author: Christian Burkard (Nextron Systems)
 date: 2021/10/19
@@ -26,7 +26,7 @@ level: high
 logsource:
     category: registry_delete
     product: windows
-modified: 2022/03/26
+modified: 2023/02/08
 references:
 - https://docs.microsoft.com/en-us/troubleshoot/windows-server/remote/remove-entries-from-remote-desktop-connection-computer
 - http://woshub.com/how-to-clear-rdp-connections-history/

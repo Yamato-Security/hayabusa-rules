@@ -21,6 +21,8 @@ detection:
     SELECTION_14:
         Image: '*\rundll32.exe'
     SELECTION_15:
+        OriginalFileName: RUNDLL32.EXE
+    SELECTION_16:
         CommandLine: '*rundll32.exe'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -69,7 +71,7 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
         (((((SELECTION_5 or (SELECTION_6 and  not (SELECTION_7))) or (SELECTION_8
         and  not (SELECTION_9))) or (SELECTION_10 and  not (SELECTION_11))) or (SELECTION_12
-        and  not (SELECTION_13))) or (SELECTION_14 and SELECTION_15)))
+        and  not (SELECTION_13))) or ((SELECTION_14 or SELECTION_15) and SELECTION_16)))
 falsepositives:
 - Unknown
 fields:
@@ -80,7 +82,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/21
+modified: 2023/02/09
 references:
 - https://github.com/microsoft/Microsoft-365-Defender-Hunting-Queries/blob/efa17a600b43c897b4b7463cc8541daa1987eeb4/Exploits/Print%20Spooler%20RCE/Suspicious%20Spoolsv%20Child%20Process.md
 status: test

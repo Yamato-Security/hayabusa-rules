@@ -2,8 +2,13 @@ title: Removal of Potential COM Hijacking Registry Keys
 ruletype: Sigma
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
 date: 2020/05/02
-description: A General detection to trigger for processes removing .*\shell\open\command
-    registry keys. Registry keys that might have been used for COM hijacking activities.
+description: 'Detects any deletion of entries in ".*\shell\open\command" registry
+    keys.
+
+    These registry keys might have been used for COM hijacking activities by a threat
+    actor or an attacker and the deletion could indicate steps to remove its tracks.
+
+    '
 detection:
     SELECTION_1:
         EventID: 12
