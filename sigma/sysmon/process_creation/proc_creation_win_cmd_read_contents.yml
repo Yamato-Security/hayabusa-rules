@@ -15,13 +15,13 @@ detection:
     SELECTION_4:
         Image: '*\cmd.exe'
     SELECTION_5:
-        ParentCommandLine: '*cmd *'
+        ParentCommandLine: '*cmd*'
     SELECTION_6:
         ParentCommandLine: '*/r *'
     SELECTION_7:
         ParentCommandLine: '*<*'
     SELECTION_8:
-        CommandLine: '*cmd *'
+        CommandLine: '*cmd*'
     SELECTION_9:
         CommandLine: '*/r *'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
@@ -34,6 +34,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/10
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1059.003/T1059.003.md
 status: experimental

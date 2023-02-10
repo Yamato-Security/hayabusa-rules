@@ -1,9 +1,9 @@
-title: Executable in ADS
+title: Hidden Executable In NTFS Alternate Data Stream
 ruletype: Sigma
 author: Florian Roth (Nextron Systems), @0xrawsec
 date: 2018/06/03
-description: Detects the creation of an ADS data stream that contains an executable
-    (non-empty imphash)
+description: Detects the creation of an ADS (Alternate Data Stream) that contains
+    an executable (non-empty imphash)
 detection:
     SELECTION_1:
         EventID: 15
@@ -25,7 +25,7 @@ logsource:
     category: create_stream_hash
     definition: 'Requirements: Sysmon config with Imphash logging activated'
     product: windows
-modified: 2022/12/30
+modified: 2023/02/10
 references:
 - https://twitter.com/0xrawsec/status/1002478725605273600?s=21
 status: test
