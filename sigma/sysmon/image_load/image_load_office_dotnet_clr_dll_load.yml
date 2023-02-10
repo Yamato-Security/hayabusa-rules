@@ -13,6 +13,8 @@ detection:
         - '*\excel.exe'
         - '*\mspub.exe'
         - '*\outlook.exe'
+        - '*\onenote.exe'
+        - '*\onenoteim.exe'
         - '*\powerpnt.exe'
         - '*\winword.exe'
     SELECTION_4:
@@ -25,7 +27,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2023/02/08
+modified: 2023/02/10
 references:
 - https://medium.com/threatpunter/detecting-adversary-tradecraft-with-image-load-event-logging-and-eql-8de93338c16
 status: test

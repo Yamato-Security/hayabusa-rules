@@ -1,0 +1,52 @@
+title: Suspicious File Created Via OneNote Application
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/09
+description: Detects suspicious files created via the OneNote application. This could
+    indicate a potential malicious ".one"/".onepkg" file was executed as seen being
+    used in malware activity in the wild
+detection:
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\onenote.exe'
+        - '*\onenotem.exe'
+        - '*\onenoteim.exe'
+    SELECTION_4:
+        TargetFilename: '*\AppData\Local\Temp\OneNote\\*'
+    SELECTION_5:
+        TargetFilename: '*\Exported\\*'
+    SELECTION_6:
+        TargetFilename:
+        - '*.bat'
+        - '*.cmd'
+        - '*.exe'
+        - '*.hta'
+        - '*.htm'
+        - '*.html'
+        - '*.lnk'
+        - '*.ps1'
+        - '*.vbe'
+        - '*.vbs'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: fcc6d700-68d9-4241-9a1a-06874d621b06
+level: high
+logsource:
+    category: file_event
+    product: windows
+references:
+- https://www.bleepingcomputer.com/news/security/hackers-now-use-microsoft-onenote-attachments-to-spread-malware/
+- https://blog.osarmor.com/319/onenote-attachment-delivers-asyncrat-malware/
+- https://twitter.com/MaD_c4t/status/1623414582382567424
+- https://labs.withsecure.com/publications/detecting-onenote-abuse
+- https://www.trustedsec.com/blog/new-attacks-old-tricks-how-onenote-malware-is-evolving/
+status: experimental
+tags:
+- attack.defense_evasion
+
