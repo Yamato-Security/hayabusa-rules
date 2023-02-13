@@ -11,13 +11,15 @@ detection:
     SELECTION_3:
         NewProcessName: '*\cmd.exe'
     SELECTION_4:
-        CommandLine: '*/q*'
+        OriginalFileName: Cmd.Exe
     SELECTION_5:
-        CommandLine: '*/c*'
+        CommandLine: '*/q*'
     SELECTION_6:
+        CommandLine: '*/c*'
+    SELECTION_7:
         CommandLine: '*chcp*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7))
 falsepositives:
 - Unknown
 fields:
@@ -28,7 +30,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
+modified: 2023/02/11
 references:
 - https://unit42.paloaltonetworks.com/unit42-sofacy-groups-parallel-attacks/
 - https://github.com/offsecginger/koadic/blob/457f9a3ff394c989cdb4c599ab90eb34fb2c762c/data/stager/js/stdlib.js
