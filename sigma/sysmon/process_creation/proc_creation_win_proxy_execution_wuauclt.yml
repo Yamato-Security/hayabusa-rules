@@ -11,7 +11,7 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Image: '*wuauclt*'
+        Image: '*\wuauclt.exe'
     SELECTION_4:
         OriginalFileName: wuauclt.exe
     SELECTION_5:
@@ -33,7 +33,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2023/02/11
 references:
 - https://dtm.uk/wuauclt/
 - https://blog.malwarebytes.com/threat-intelligence/2022/01/north-koreas-lazarus-apt-leverages-windows-update-client-github-in-latest-campaign/
