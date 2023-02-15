@@ -1,0 +1,43 @@
+title: HackTool - LocalPotato Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/14
+description: Detects the execution of the LocalPotato POC based on basic PE metadata
+    information and default CLI examples
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\LocalPotato.exe'
+    SELECTION_4:
+        CommandLine: '*.exe -i C:\\*'
+    SELECTION_5:
+        CommandLine: '*-o Windows\\*'
+    SELECTION_6:
+        Hashes:
+        - '*IMPHASH=E1742EE971D6549E8D4D81115F88F1FC*'
+        - '*IMPHASH=DD82066EFBA94D7556EF582F247C8BB5*'
+    SELECTION_7:
+        Imphash:
+        - E1742EE971D6549E8D4D81115F88F1FC
+        - DD82066EFBA94D7556EF582F247C8BB5
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5) or SELECTION_6 or SELECTION_7))
+falsepositives:
+- Unlikely
+id: 6bd75993-9888-4f91-9404-e1e4e4e34b77
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.localpotato.com/localpotato_html/LocalPotato.html
+- https://github.com/decoder-it/LocalPotato
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.privilege_escalation
+- cve.2023.21746
+
