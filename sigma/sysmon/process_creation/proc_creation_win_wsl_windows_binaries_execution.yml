@@ -1,0 +1,31 @@
+title: Windows Binary Executed From WSL
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/14
+description: Detects the execution of Windows binaries from within a WSL instance.
+    This could be used to masquerade parent-child relationships
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image|re: '[a-zA-Z]:\\'
+    SELECTION_4:
+        CurrentDirectory: '*\\\\wsl.localhost*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: ed825c86-c009-4014-b413-b76003e33d35
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- Internal Research
+status: experimental
+tags:
+- attack.execution
+- attack.defense_evasion
+- attack.t1202
+

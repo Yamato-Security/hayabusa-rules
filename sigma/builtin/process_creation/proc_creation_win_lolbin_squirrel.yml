@@ -1,16 +1,41 @@
 title: Use of Squirrel.exe
 ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
+author: Nasreddine Bencherchali (Nextron Systems), Karneades / Markus Neis, Jonhnathan
+    Ribeiro, oscd.community
 date: 2022/06/09
-description: The "Squirrel.exe" binary that is part of multiple software (Slack, Teams,
-    Discord...etc) can be used as a LOLBIN
+description: Detects the usage of the "Squirrel.exe" binary as a LOLBIN. This binary
+    is part of multiple software installations (Slack, Teams, Discord, etc.)
 detection:
     SELECTION_1:
         EventID: 4688
+    SELECTION_10:
+        CommandLine: '*Discord.exe*'
+    SELECTION_11:
+        CommandLine: '*C:\Users\\*'
+    SELECTION_12:
+        CommandLine: '*\AppData\Local\GitHubDesktop\Update.exe*'
+    SELECTION_13:
+        CommandLine: '*GitHubDesktop.exe*'
+    SELECTION_14:
+        CommandLine:
+        - '*--createShortcut*'
+        - '*--processStartAndWait*'
+    SELECTION_15:
+        CommandLine: '*C:\Users\\*'
+    SELECTION_16:
+        CommandLine: '*\AppData\Local\Microsoft\Teams\Update.exe*'
+    SELECTION_17:
+        CommandLine: '*Teams.exe*'
+    SELECTION_18:
+        CommandLine:
+        - '*--processStart*'
+        - '*--createShortcut*'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        NewProcessName: '*\squirrel.exe'
+        NewProcessName:
+        - '*\squirrel.exe'
+        - '*\update.exe'
     SELECTION_4:
         CommandLine:
         - '* --download *'
@@ -18,21 +43,40 @@ detection:
         - '* --updateRollback=*'
     SELECTION_5:
         CommandLine: '*http*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    SELECTION_6:
+        CommandLine:
+        - '*--processStart*'
+        - '*--processStartAndWait*'
+        - '*--createShortcut*'
+    SELECTION_7:
+        CommandLine: '*C:\Users\\*'
+    SELECTION_8:
+        CommandLine: '*\AppData\Local\Discord\Update.exe*'
+    SELECTION_9:
+        CommandLine: '* --processStart*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and ((SELECTION_4 and
+        SELECTION_5) or SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14)
+        or (SELECTION_15 and SELECTION_16 and SELECTION_17 and SELECTION_18)))
 falsepositives:
-- See rule (fa4b21c9-0057-4493-b289-2556416ae4d7) for possible FPs
+- Expected FP with some electron based applications such as (1Clipboard, Beaker Browser,
+    Caret, Discord, GitHub Desktop,...Etc)
 id: 45239e6a-b035-4aaf-b339-8ad379fcb67e
 level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/14
 references:
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Squirrel/
+- http://www.hexacorn.com/blog/2019/03/30/sqirrel-packages-manager-as-a-lolbin-a-k-a-many-electron-apps-are-lolbins-by-default/
+- http://www.hexacorn.com/blog/2018/08/16/squirrel-as-a-lolbin/
 related:
 -   id: fa4b21c9-0057-4493-b289-2556416ae4d7
-    type: derived
+    type: obsoletes
 status: experimental
 tags:
 - attack.defense_evasion
 - attack.execution
+- attack.t1218
 

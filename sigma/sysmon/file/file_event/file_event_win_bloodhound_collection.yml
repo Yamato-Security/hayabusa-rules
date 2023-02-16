@@ -23,8 +23,14 @@ detection:
         TargetFilename: '*BloodHound*'
     SELECTION_5:
         TargetFilename: '*.zip*'
+    SELECTION_6:
+        Image: '*\svchost.exe'
+    SELECTION_7:
+        TargetFilename: C:\Program Files\WindowsApps\Microsoft.*
+    SELECTION_8:
+        TargetFilename: '*\pocket_containers.json'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)))
+        SELECTION_5)) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
 id: 02773bed-83bf-469f-b7ff-e676e7d78bab
@@ -32,7 +38,7 @@ level: high
 logsource:
     category: file_event
     product: windows
-modified: 2022/08/09
+modified: 2023/02/13
 references:
 - https://academy.hackthebox.com/course/preview/active-directory-bloodhound/bloodhound--data-collection
 status: experimental

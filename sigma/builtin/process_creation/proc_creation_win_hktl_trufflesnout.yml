@@ -1,0 +1,33 @@
+title: HackTool - TruffleSnout Execution
+ruletype: Sigma
+author: frack113
+date: 2022/08/20
+description: Detects the use of TruffleSnout.exe an iterative AD discovery toolkit
+    for offensive operators, situational awareness and targeted low noise enumeration.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        OriginalFileName: TruffleSnout.exe
+    SELECTION_4:
+        NewProcessName: '*\TruffleSnout.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+falsepositives:
+- Unknown
+id: 69ca006d-b9a9-47f5-80ff-ecd4d25d481a
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/13
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1482/T1482.md
+- https://github.com/dsnezhkov/TruffleSnout
+- https://github.com/dsnezhkov/TruffleSnout/blob/master/TruffleSnout/Docs/USAGE.md
+status: experimental
+tags:
+- attack.discovery
+- attack.t1482
+

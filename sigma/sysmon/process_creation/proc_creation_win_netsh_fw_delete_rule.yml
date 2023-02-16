@@ -1,0 +1,41 @@
+title: Firewall Rule Deleted Via Netsh.EXE
+ruletype: Sigma
+author: frack113
+date: 2022/08/14
+description: Detects the removal of a port or application rule in the Windows Firewall
+    configuration using netsh
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\netsh.exe'
+    SELECTION_4:
+        OriginalFileName: netsh.exe
+    SELECTION_5:
+        CommandLine: '*firewall*'
+    SELECTION_6:
+        CommandLine: '*delete *'
+    SELECTION_7:
+        ParentImage: '*\Dropbox.exe'
+    SELECTION_8:
+        CommandLine: '*name=Dropbox*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6)) and  not (SELECTION_7 and SELECTION_8))
+falsepositives:
+- Legitimate administration activity
+- Software installations and removal
+id: 1a5fefe6-734f-452e-a07d-fc1c35bce4b2
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/10
+references:
+- https://app.any.run/tasks/8bbd5b4c-b82d-4e6d-a3ea-d454594a37cc/
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1562.004
+

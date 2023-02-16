@@ -1,0 +1,42 @@
+title: WMIC Remote Command Execution
+ruletype: Sigma
+author: frack113, Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/14
+description: Detects the execution of WMIC to query information on a remote system
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\WMIC.exe'
+    SELECTION_4:
+        OriginalFileName: wmic.exe
+    SELECTION_5:
+        CommandLine: '*/node:*'
+    SELECTION_6:
+        CommandLine:
+        - '*/node:127.0.0.1 *'
+        - '*/node:localhost *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) and  not ((SELECTION_6)))
+falsepositives:
+- Unknown
+id: 7773b877-5abb-4a3e-b9c9-fd0369b59b00
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://securelist.com/moonbounce-the-dark-side-of-uefi-firmware/105468/
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/wmic
+related:
+-   id: e42af9df-d90b-4306-b7fb-05c863847ebd
+    type: obsoletes
+-   id: 09af397b-c5eb-4811-b2bb-08b3de464ebf
+    type: obsoletes
+status: experimental
+tags:
+- attack.execution
+- attack.t1047
+

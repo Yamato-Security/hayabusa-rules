@@ -1,4 +1,4 @@
-title: NTLM Coercion Via Certutil.exe
+title: Potential NTLM Coercion Via Certutil.EXE
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/09/01
@@ -25,6 +25,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/14
 references:
 - https://github.com/LOLBAS-Project/LOLBAS/issues/243
 status: experimental
