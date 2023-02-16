@@ -18,7 +18,9 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        ParentImage: '*\WindowsTerminal.exe'
+        ParentImage:
+        - '*\WindowsTerminal.exe'
+        - '*\wt.exe'
     SELECTION_4:
         Image:
         - '*\rundll32.exe'
@@ -61,7 +63,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/22
+modified: 2023/02/14
 references:
 - https://persistence-info.github.io/Data/windowsterminalprofile.html
 - https://twitter.com/nas_bench/status/1550836225652686848

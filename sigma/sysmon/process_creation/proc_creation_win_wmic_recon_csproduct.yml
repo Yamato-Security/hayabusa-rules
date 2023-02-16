@@ -1,0 +1,35 @@
+title: Hardware Model Reconnaissance Via Wmic.EXE
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2023/02/14
+description: Detects the execution of WMIC with the "csproduct" which is used to obtain
+    information such as hardware models and vendor information
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\wmic.exe'
+    SELECTION_4:
+        OriginalFileName: wmic.exe
+    SELECTION_5:
+        CommandLine: '*csproduct*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: 3e3ceccd-6c06-48b8-b5ff-ab1d25db8c1d
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://jonconwayuk.wordpress.com/2014/01/31/wmic-csproduct-using-wmi-to-identify-make-and-model-of-hardware/
+- https://www.uptycs.com/blog/kuraystealer-a-bandit-using-discord-webhooks
+status: experimental
+tags:
+- attack.execution
+- attack.t1047
+- car.2016-03-002
+

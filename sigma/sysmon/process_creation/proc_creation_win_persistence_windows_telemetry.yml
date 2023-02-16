@@ -1,0 +1,44 @@
+title: Potential Persistence Via Microsoft Compatibility Appraiser
+ruletype: Sigma
+author: Sreeman
+date: 2020/09/29
+description: 'Detects manual execution of the "Microsoft Compatibility Appraiser"
+    task via schtasks.
+
+    In order to trigger persistence stored in the "\AppCompatFlags\TelemetryController"
+    registry key.
+
+    '
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\schtasks.exe'
+    SELECTION_4:
+        OriginalFileName: schtasks.exe
+    SELECTION_5:
+        CommandLine: '*run *'
+    SELECTION_6:
+        CommandLine: '*\Application Experience\Microsoft Compatibility Appraiser*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
+falsepositives:
+- Unknown
+id: f548a603-c9f2-4c89-b511-b089f7e94549
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/10
+references:
+- https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/
+related:
+-   id: 73a883d0-0348-4be4-a8d8-51031c2564f8
+    type: derived
+status: experimental
+tags:
+- attack.persistence
+- attack.t1053.005
+

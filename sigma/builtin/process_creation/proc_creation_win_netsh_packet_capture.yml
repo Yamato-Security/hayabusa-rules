@@ -1,31 +1,35 @@
-title: Capture a Network Trace with netsh.exe
+title: New Network Trace Capture Started Via Netsh.EXE
 ruletype: Sigma
 author: Kutepov Anton, oscd.community
 date: 2019/10/24
-description: Detects capture a network trace via netsh.exe trace functionality
+description: Detects the execution of netsh with the "trace" flag in order to start
+    a network capture
 detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine: '*netsh*'
+        NewProcessName: '*\netsh.exe'
     SELECTION_4:
-        CommandLine: '*trace*'
+        OriginalFileName: netsh.exe
     SELECTION_5:
+        CommandLine: '*trace*'
+    SELECTION_6:
         CommandLine: '*start*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
-- Legitimate administrator or user uses netsh.exe trace functionality for legitimate
-    reason
+- Legitimate administration activity
 id: d3c3861d-c504-4c77-ba55-224ba82d0118
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2023/02/13
 references:
 - https://blogs.msdn.microsoft.com/canberrapfe/2012/03/30/capture-a-network-trace-without-installing-anything-capture-a-network-trace-of-a-reboot/
+- https://klausjochem.me/2016/02/03/netsh-the-cyber-attackers-tool-of-choice/
 status: test
 tags:
 - attack.discovery

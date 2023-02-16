@@ -1,0 +1,100 @@
+title: Potential Tampering With Security Products Via WMIC
+ruletype: Sigma
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+date: 2021/01/30
+description: Detects uninstallation or termination of security products using the
+    WMIC utility
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine:
+        - '*call delete*'
+        - '*call terminate*'
+    SELECTION_11:
+        CommandLine: '*process *'
+    SELECTION_12:
+        CommandLine: '*where *'
+    SELECTION_13:
+        CommandLine: '*delete*'
+    SELECTION_14:
+        CommandLine:
+        - '*%carbon%*'
+        - '*%cylance%*'
+        - '*%endpoint%*'
+        - '*%eset%*'
+        - '*%malware%*'
+        - '*%Sophos%*'
+        - '*%symantec%*'
+        - '*Antivirus*'
+        - '*AVG *'
+        - '*Carbon Black*'
+        - '*CarbonBlack*'
+        - '*Cb Defense Sensor 64-bit*'
+        - '*Crowdstrike Sensor*'
+        - '*Cylance *'
+        - '*Dell Threat Defense*'
+        - '*DLP Endpoint*'
+        - '*Endpoint Detection*'
+        - '*Endpoint Protection*'
+        - '*Endpoint Security*'
+        - '*Endpoint Sensor*'
+        - '*ESET File Security*'
+        - '*LogRhythm System Monitor Service*'
+        - '*Malwarebytes*'
+        - '*McAfee Agent*'
+        - '*Microsoft Security Client*'
+        - '*Sophos Anti-Virus*'
+        - '*Sophos AutoUpdate*'
+        - '*Sophos Credential Store*'
+        - '*Sophos Management Console*'
+        - '*Sophos Management Database*'
+        - '*Sophos Management Server*'
+        - '*Sophos Remote Management System*'
+        - '*Sophos Update Manager*'
+        - '*Threat Protection*'
+        - '*VirusScan*'
+        - '*Webroot SecureAnywhere*'
+        - '*Windows Defender*'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*wmic*'
+    SELECTION_4:
+        CommandLine: '*product where *'
+    SELECTION_5:
+        CommandLine: '*call*'
+    SELECTION_6:
+        CommandLine: '*uninstall*'
+    SELECTION_7:
+        CommandLine: '*/nointeractive*'
+    SELECTION_8:
+        CommandLine: '*wmic*'
+    SELECTION_9:
+        CommandLine: '*caption like *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13)) and
+        SELECTION_14)
+falsepositives:
+- Legitimate administration
+id: 847d5ff3-8a31-4737-a970-aeae8fe21765
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/14
+references:
+- https://twitter.com/cglyer/status/1355171195654709249
+- https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/
+- https://www.mandiant.com/resources/unc2165-shifts-to-evade-sanctions
+- https://research.nccgroup.com/2022/08/19/back-in-black-unlocking-a-lockbit-3-0-ransomware-attack/
+- https://www.trendmicro.com/en_us/research/23/a/vice-society-ransomware-group-targets-manufacturing-companies.html
+related:
+-   id: b53317a0-8acf-4fd1-8de8-a5401e776b96
+    type: derived
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+

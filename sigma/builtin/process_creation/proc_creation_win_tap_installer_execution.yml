@@ -15,7 +15,12 @@ detection:
         NewProcessName:
         - C:\Program Files\Avast Software\SecureLine VPN\tapinstall.exe
         - C:\Program Files (x86)\Avast Software\SecureLine VPN\tapinstall.exe
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
+    SELECTION_5:
+        NewProcessName: C:\Program Files\OpenVPN Connect\drivers\tap\\*
+    SELECTION_6:
+        NewProcessName: C:\Program Files (x86)\Proton Technologies\ProtonVPNTap\installer\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - Legitimate OpenVPN TAP insntallation
 id: 99793437-3e16-439b-be0f-078782cf953d
@@ -23,7 +28,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/10
+modified: 2023/02/13
 status: test
 tags:
 - attack.exfiltration

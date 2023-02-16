@@ -1,0 +1,50 @@
+title: Renamed CreateDump Utility Execution
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2022/09/20
+description: Detects uses of a renamed legitimate createdump.exe LOLOBIN utility to
+    dump process memory
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        Image: '*\createdump.exe'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        OriginalFileName: FX_VER_INTERNALNAME_STR
+    SELECTION_4:
+        CommandLine: '* -u *'
+    SELECTION_5:
+        CommandLine: '* -f *'
+    SELECTION_6:
+        CommandLine: '*.dmp*'
+    SELECTION_7:
+        CommandLine: '* --full *'
+    SELECTION_8:
+        CommandLine: '* --name *'
+    SELECTION_9:
+        CommandLine: '*.dmp*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9))
+        and  not (SELECTION_10))
+falsepositives:
+- Command lines that use the same flags
+id: 1a1ed54a-2ba4-4221-94d5-01dee560d71e
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/14
+references:
+- https://www.crowdstrike.com/blog/overwatch-exposes-aquatic-panda-in-possession-of-log-4-shell-exploit-tools/
+- https://twitter.com/bopin2020/status/1366400799199272960
+related:
+-   id: 515c8be5-e5df-4c5e-8f6d-a4a2f05e4b48
+    type: similar
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036
+- attack.t1003.001
+
