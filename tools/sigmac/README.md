@@ -43,6 +43,7 @@ Create an environmental variable `$sigma_path` that points to the Sigma reposito
 export sigma_path=/path/to/sigma_repository
 cp hayabusa.py $sigma_path/tools/sigma/backends
 cp convert.py $sigma_path
+cp rule.py $sigma_path/tools/sigma/parser
 ```
 
 * Caution：Be sure to specify the path to your Sigma repository in place of `/path/to/sigma_repository`.
