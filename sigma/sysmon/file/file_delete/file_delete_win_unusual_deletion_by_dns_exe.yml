@@ -1,6 +1,6 @@
-title: Unusual File Deletion by dns.exe
+title: Unusual File Deletion by Dns.exe
 ruletype: Sigma
-author: Tim Rauch
+author: Tim Rauch (Nextron Systems)
 date: 2022/09/27
 description: Detects an unexpected file being deleted by dns.exe which my indicate
     activity related to remote code execution or other forms of exploitation as seen
@@ -25,8 +25,12 @@ level: high
 logsource:
     category: file_delete
     product: windows
+modified: 2023/02/15
 references:
 - https://www.elastic.co/guide/en/security/current/unusual-file-modification-by-dns.exe.html
+related:
+-   id: 9f383dc0-fdeb-4d56-acbc-9f9f4f8f20f3
+    type: similar
 status: experimental
 tags:
 - attack.initial_access

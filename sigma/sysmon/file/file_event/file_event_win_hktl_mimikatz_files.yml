@@ -1,16 +1,18 @@
 title: Mimikatz Kirbi File Creation
 ruletype: Sigma
-author: Florian Roth (Nextron Systems)
+author: Florian Roth (Nextron Systems), David ANDRE
 date: 2021/11/08
-description: Detects the creation of files that contain Kerberos tickets based on
-    an extension used by the popular tool Mimikatz
+description: Detects the creation of files created by mimikatz such as ".kirbi", "mimilsa.log",
+    etc.
 detection:
     SELECTION_1:
         EventID: 11
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        TargetFilename: '*.kirbi'
+        TargetFilename:
+        - '*.kirbi'
+        - '*mimilsa.log'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unlikely
@@ -19,8 +21,13 @@ level: critical
 logsource:
     category: file_event
     product: windows
+modified: 2023/02/16
 references:
 - https://cobalt.io/blog/kerberoast-attack-techniques
+- https://pentestlab.blog/2019/10/21/persistence-security-support-provider/
+related:
+-   id: 034affe8-6170-11ec-844f-0f78aa0c4d66
+    type: obsoletes
 status: test
 tags:
 - attack.credential_access

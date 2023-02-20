@@ -1,0 +1,46 @@
+title: Suspicious Volume Shadow Copy Vsstrace.dll Load
+ruletype: Sigma
+author: frack113
+date: 2023/02/17
+description: Detects the image load of VSS DLL by uncommon executables
+detection:
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ImageLoaded: '*\vsstrace.dll'
+    SELECTION_4:
+        Image: C:\Windows\explorer.exe
+    SELECTION_5:
+        Image:
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
+        - C:\Windows\Temp\{*
+        - C:\Windows\WinSxS\\*
+    SELECTION_6:
+        Image:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        or SELECTION_5) or (SELECTION_6)))
+falsepositives:
+- Unknown
+id: 48bfd177-7cf2-412b-ad77-baf923489e82
+level: high
+logsource:
+    category: image_load
+    product: windows
+references:
+- https://github.com/ORCx41/DeleteShadowCopies
+related:
+-   id: 333cdbe8-27bb-4246-bf82-b41a0dca4b70
+    type: similar
+-   id: 37774c23-25a1-4adb-bb6d-8bb9fd59c0f8
+    type: similar
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.impact
+- attack.t1490
+

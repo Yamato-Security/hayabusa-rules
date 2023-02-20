@@ -2,12 +2,12 @@ title: Suspicious Binary Writes Via AnyDesk
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/09/28
-description: 'Detects anydesk writing binaries files to disk other than "gcapi.dll".
+description: 'Detects AnyDesk writing binary files to disk other than "gcapi.dll".
 
-    According to RedCanary research it''s highly abnormal for AnyDesk to write executable
+    According to RedCanary research it is highly abnormal for AnyDesk to write executable
     files to disk besides gcapi.dll,
 
-    which is a legitimate DLL that''s part of the Google Chrome web browser used to
+    which is a legitimate DLL that is part of the Google Chrome web browser used to
     interact with the Google Cloud API. (See reference section for more details)
 
     '

@@ -1,9 +1,10 @@
-title: In-memory PowerShell
+title: PowerShell Core DLL Loaded By Non PowerShell Process
 ruletype: Sigma
 author: Tom Kern, oscd.community, Natalia Shornikova, Tim Shelton
 date: 2019/11/14
-description: Detects loading of essential DLL used by PowerShell, but not by the process
-    powershell.exe. Detects meterpreter's "load powershell" extension.
+description: Detects loading of essential DLLs used by PowerShell, but not by the
+    process powershell.exe. Detects behaviour similar to meterpreter's "load powershell"
+    extension.
 detection:
     SELECTION_1:
         EventID: 7
@@ -58,7 +59,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2022/10/10
+modified: 2023/02/17
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/p3nt4/PowerShdll

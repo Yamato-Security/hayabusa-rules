@@ -2,8 +2,8 @@ title: HackTool - SharpEvtMute Execution
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2022/09/07
-description: Detects the use of SharpEvtHook, a tool to tamper with Windows event
-    logs
+description: Detects the use of SharpEvtHook, a tool that tampers with the Windows
+    event logs
 detection:
     SELECTION_1:
         EventID: 4688
@@ -28,6 +28,9 @@ logsource:
 modified: 2023/02/14
 references:
 - https://github.com/bats3c/EvtMute
+related:
+-   id: 49329257-089d-46e6-af37-4afce4290685
+    type: similar
 status: experimental
 tags:
 - attack.defense_evasion

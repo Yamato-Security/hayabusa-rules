@@ -1,26 +1,31 @@
-title: Unidentified Attacker November 2018 - File
+title: APT29 2018 Phishing Campaign File Indicators
 ruletype: Sigma
-author: '@41thexplorer, Microsoft Defender ATP'
+author: '@41thexplorer'
 date: 2018/11/20
-description: A sigma rule detecting an unidetefied attacker who used phishing emails
-    to target high profile orgs on November 2018. The Actor shares some TTPs with
-    YYTRIUM/APT29 campaign in 2016.
+description: Detects indicators of APT 29 (Cozy Bear) phishing-campaign as reported
+    by mandiant
 detection:
     SELECTION_1:
         EventID: 11
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        TargetFilename: '*ds7002.lnk*'
+        TargetFilename:
+        - '*ds7002.lnk*'
+        - '*ds7002.pdf*'
+        - '*ds7002.zip*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unlikely
 id: 3a3f81ca-652c-482b-adeb-b1c804727f74
-level: high
+level: critical
 logsource:
     category: file_event
     product: windows
-modified: 2022/12/02
+modified: 2023/02/20
 references:
 - https://twitter.com/DrunkBinary/status/1063075530180886529
+- https://www.mandiant.com/resources/blog/not-so-cozy-an-uncomfortable-examination-of-a-suspected-apt29-phishing-campaign
 related:
 -   id: 7453575c-a747-40b9-839b-125a0aae324b
     type: derived
