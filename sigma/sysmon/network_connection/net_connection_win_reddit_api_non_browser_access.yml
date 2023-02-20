@@ -1,0 +1,47 @@
+title: Suspicious Non-Browser Network Communication With Reddit API
+ruletype: Sigma
+author: Gavin Knapp
+date: 2023/02/16
+description: Detects an a non-browser process interacting with the Reddit API which
+    could indicate use of a covert C2 such as RedditC2
+detection:
+    SELECTION_1:
+        EventID: 3
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        DestinationHostname: '*reddit.com/api*'
+    SELECTION_4:
+        Image:
+        - '*\brave.exe'
+        - '*\chrome.exe'
+        - '*\ExpressConnectNetworkService.exe'
+        - '*\firefox.exe'
+        - '*\iexplorer.exe'
+        - '*\maxthon.exe'
+        - '*\msedge.exe'
+        - '*\opera.exe'
+        - '*\safari.exe'
+        - '*\seamonkey.exe'
+        - '*\vivaldi.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Legitimate applications communicating with the Reddit API e.g. web browsers not
+    in exclusion list, app with an RSS  etc.
+id: d7b09985-95a3-44be-8450-b6eadf49833e
+level: low
+logsource:
+    category: network_connection
+    product: windows
+references:
+- https://github.com/kleiton0x00/RedditC2
+- https://twitter.com/kleiton0x7e/status/1600567316810551296
+- https://www.linkedin.com/posts/kleiton-kurti_github-kleiton0x00redditc2-abusing-reddit-activity-7009939662462984192-5DbI/?originalSubdomain=al
+related:
+-   id: 47e939f5-a4c1-4467-b8ae-242dd0a195c1
+    type: similar
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1102
+

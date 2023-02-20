@@ -33,20 +33,25 @@ detection:
     SELECTION_6:
         Details: (Empty)
     SELECTION_7:
+        Image:
+        - C:\Program Files\Microsoft Office\\*
+        - C:\Program Files (x86)\Microsoft Office\\*
+        - C:\Windows\System32\msiexec.exe*
+        - C:\Windows\System32\regsvr32.exe*
+    SELECTION_8:
         TargetObject:
         - '*\Excel\Addins\AdHocReportingExcelClientLib.AdHocReportingExcelClientAddIn.1\\*'
         - '*\Excel\Addins\ExcelPlugInShell.PowerMapConnect\\*'
         - '*\Excel\Addins\NativeShim\\*'
         - '*\Excel\Addins\NativeShim.InquireConnector.1\\*'
         - '*\Excel\Addins\PowerPivotExcelClientAddIn.NativeEntry.1\\*'
-    SELECTION_8:
-        TargetObject:
         - '*\Outlook\AddIns\AccessAddin.DC\\*'
         - '*\Outlook\AddIns\ColleagueImport.ColleagueImportAddin\\*'
         - '*\Outlook\AddIns\EvernoteCC.EvernoteContactConnector\\*'
         - '*\Outlook\AddIns\EvernoteOLRD.Connect\\*'
         - '*\Outlook\Addins\Microsoft.VbaAddinForOutlook.1\\*'
         - '*\Outlook\Addins\OcOffice.OcForms\\*'
+        - '*\Outlook\Addins\\OneNote.OutlookAddin*'
         - '*\Outlook\Addins\OscAddin.Connect\\*'
         - '*\Outlook\Addins\OutlookChangeNotifier.Connect\\*'
         - '*\Outlook\Addins\UCAddin.LyncAddin.1*'
@@ -57,8 +62,8 @@ detection:
         - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
         - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8) or
-        (SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12)))
+        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12)))
 falsepositives:
 - Legitimate software automatically (mostly, during installation) sets up autorun
     keys for legitimate reason
@@ -73,7 +78,7 @@ level: medium
 logsource:
     category: registry_set
     product: windows
-modified: 2022/06/10
+modified: 2023/02/17
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
 - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
