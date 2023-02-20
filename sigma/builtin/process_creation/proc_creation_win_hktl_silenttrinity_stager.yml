@@ -12,7 +12,7 @@ detection:
         Description: '*st2stager*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- Unknown
+- Unlikely
 id: 03552375-cc2c-4883-bbe4-7958d5a980be
 level: high
 logsource:
@@ -21,6 +21,9 @@ logsource:
 modified: 2023/02/13
 references:
 - https://github.com/byt3bl33d3r/SILENTTRINITY
+related:
+-   id: 75c505b1-711d-4f68-a357-8c3fe37dbf2d
+    type: derived
 status: test
 tags:
 - attack.command_and_control
