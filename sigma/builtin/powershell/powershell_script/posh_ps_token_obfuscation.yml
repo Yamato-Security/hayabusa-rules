@@ -17,7 +17,9 @@ detection:
     SELECTION_5:
         ScriptBlockText|re: \$\{((e|n|v)*`(e|n|v)*)+:path\}|\$\{((e|n|v)*`(e|n|v)*)+:((p|a|t|h)*`(p|a|t|h)*)+\}|\$\{env:((p|a|t|h)*`(p|a|t|h)*)+\}
     SELECTION_6:
-        ScriptBlockText: '*it will return true or false instead*'
+        ScriptBlockText:
+        - '*it will return true or false instead*'
+        - '*The function also prevents `Get-ItemProperty` from failing*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
         and  not (SELECTION_6))
 falsepositives:
@@ -28,7 +30,7 @@ logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2023/01/24
+modified: 2023/02/21
 references:
 - https://github.com/danielbohannon/Invoke-Obfuscation
 related:
