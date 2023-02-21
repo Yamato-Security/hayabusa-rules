@@ -1,8 +1,9 @@
-title: Delete Log from Application
+title: TeamViewer Log File Deleted
 ruletype: Sigma
 author: frack113
 date: 2022/01/16
-description: Deletion of log files is a known anti-forensic technique
+description: Detects the deletion of the TeamViewer log files which may indicate an
+    attempt to destroy forensic evidence
 detection:
     SELECTION_1:
         EventID: 23
@@ -11,9 +12,9 @@ detection:
     SELECTION_3:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_4:
-        TargetFilename: '*.log'
-    SELECTION_5:
         TargetFilename: '*\TeamViewer_*'
+    SELECTION_5:
+        TargetFilename: '*.log'
     SELECTION_6:
         Image: C:\Windows\system32\svchost.exe
     condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and (SELECTION_4 and
@@ -25,6 +26,7 @@ level: low
 logsource:
     category: file_delete
     product: windows
+modified: 2023/02/15
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.004/T1070.004.md
 status: test

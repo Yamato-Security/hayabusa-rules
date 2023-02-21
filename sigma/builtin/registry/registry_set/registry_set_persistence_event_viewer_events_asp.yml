@@ -1,0 +1,46 @@
+title: Potential Persistence Via Event Viewer Events.asp
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/17
+description: Detects potential registry persistence technique using the Event Viewer
+    "Events.asp" technique
+detection:
+    SELECTION_1:
+        EventID: 4657
+    SELECTION_10:
+        NewValue: -url hcp://services/centers/support?topic=%%s
+    SELECTION_2:
+        OperationType:
+        - Existing registry value modified
+    SELECTION_3:
+        Channel: Security
+    SELECTION_4:
+        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgram*'
+    SELECTION_5:
+        NewProcessName: '*C:\WINDOWS\system32\svchost.exe'
+    SELECTION_6:
+        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgram'
+    SELECTION_7:
+        NewValue: '%%SystemRoot%%\PCHealth\HelpCtr\Binaries\HelpCtr.exe'
+    SELECTION_8:
+        NewProcessName: '*C:\WINDOWS\system32\svchost.exe'
+    SELECTION_9:
+        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgramCommandLineParameters'
+    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and SELECTION_4 and  not
+        ((SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10)))
+falsepositives:
+- Unknown
+id: a1e11042-a74a-46e6-b07c-c4ce8ecc239b
+level: medium
+logsource:
+    category: registry_set
+    product: windows
+references:
+- https://twitter.com/nas_bench/status/1626648985824788480
+- https://admx.help/?Category=Windows_7_2008R2&Policy=Microsoft.Policies.InternetCommunicationManagement::EventViewer_DisableLinks
+- https://www.hexacorn.com/blog/2019/02/15/beyond-good-ol-run-key-part-103/
+status: test
+tags:
+- attack.persistence
+

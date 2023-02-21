@@ -1,4 +1,4 @@
-title: Cmstp Suspicious DLL Load
+title: DLL Loaded From Suspicious Location Via Cmspt.EXE
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/30
@@ -9,17 +9,18 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        ImageLoaded:
-        - '*\Users\\*'
-        - '*\AppData\Local\Temp\\*'
-        - '*\PerfLogs\\*'
-        - '*\Windows\Temp\\*'
+        Image: '*\cmstp.exe'
     SELECTION_4:
+        ImageLoaded:
+        - '*\PerfLogs\\*'
+        - '*\ProgramData\\*'
+        - '*\Users\\*'
+        - '*\Windows\Temp\\*'
+        - '*C:\Temp\\*'
+    SELECTION_5:
         ImageLoaded:
         - '*.dll'
         - '*.ocx'
-    SELECTION_5:
-        Image: '*\cmstp.exe'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
 - Unikely
@@ -28,6 +29,7 @@ level: high
 logsource:
     category: image_load
     product: windows
+modified: 2023/02/17
 references:
 - https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/02bcbfc2bfb8b4da601bb30de0344ae453aa1afe/TTPs/Defense%20Evasion/T1218%20-%20Signed%20Binary%20Proxy%20Execution/T1218.003%20-%20CMSTP/Procedures.yaml
 status: experimental

@@ -1,8 +1,9 @@
-title: Windows Spooler Service Suspicious File Deletion
+title: Potential PrintNightmare Exploitation Attempt
 ruletype: Sigma
 author: Bhabesh Raj
 date: 2021/07/01
-description: Detect DLL deletions from Spooler Service driver folder
+description: Detect DLL deletions from Spooler Service driver folder. This might be
+    a potential exploitation attempt of CVE-2021-1675
 detection:
     SELECTION_1:
         EventID: 23
@@ -22,7 +23,7 @@ level: high
 logsource:
     category: file_delete
     product: windows
-modified: 2022/06/02
+modified: 2023/02/17
 references:
 - https://github.com/hhlxf/PrintNightmare
 - https://github.com/cube0x0/CVE-2021-1675

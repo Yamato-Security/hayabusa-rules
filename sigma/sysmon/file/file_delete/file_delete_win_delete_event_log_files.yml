@@ -1,8 +1,8 @@
-title: WebServer Access Logs Deleted
+title: EventLog EVTX File Deleted
 ruletype: Sigma
-author: Tim Rauch
-date: 2022/09/16
-description: Detects the deletion of WebServer access logs which may indicate an attempt
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/15
+description: Detects the deletion of the event log files which may indicate an attempt
     to destroy forensic evidence
 detection:
     SELECTION_1:
@@ -12,21 +12,19 @@ detection:
     SELECTION_3:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_4:
-        TargetFilename: C:\inetpub\logs\LogFiles\\*
+        TargetFilename: C:\Windows\System32\winevt\Logs\\*
     SELECTION_5:
-        TargetFilename: '*.log'
+        TargetFilename: '*.evtx'
     condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
-- During uninstallation of the IIS service
-- During log rotation
-id: 3eb8c339-a765-48cc-a150-4364c04652bf
+- Unknown
+id: 63c779ba-f638-40a0-a593-ddd45e8b1ddc
 level: medium
 logsource:
     category: file_delete
     product: windows
-modified: 2022/12/30
 references:
-- https://www.elastic.co/guide/en/security/current/webserver-access-logs-deleted.html
+- Internal Research
 status: experimental
 tags:
 - attack.defense_evasion
