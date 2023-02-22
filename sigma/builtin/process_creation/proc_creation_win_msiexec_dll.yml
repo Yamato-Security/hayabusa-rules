@@ -1,4 +1,4 @@
-title: Suspicious Msiexec Load DLL
+title: DllUnregisterServer Function Call Via Msiexec.EXE
 ruletype: Sigma
 author: frack113
 date: 2022/04/24
@@ -11,12 +11,15 @@ detection:
     SELECTION_3:
         NewProcessName: '*\msiexec.exe'
     SELECTION_4:
+        OriginalFileName: \msiexec.exe
+    SELECTION_5:
         CommandLine:
         - '* /z *'
         - '* -z *'
-    SELECTION_5:
+    SELECTION_6:
         CommandLine: '*.dll*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
 falsepositives:
 - Unknown
 id: 84f52741-8834-4a8c-a413-2eb2269aa6c8
@@ -24,10 +27,10 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/23
+modified: 2023/02/22
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec
+- https://lolbas-project.github.io/lolbas/Binaries/Msiexec/
 - https://twitter.com/_st0pp3r_/status/1583914515996897281
 status: experimental
 tags:

@@ -1,0 +1,34 @@
+title: New Service Creation Using PowerShell
+ruletype: Sigma
+author: Timur Zinniatullin, Daniil Yugoslavskiy, oscd.community
+date: 2023/02/20
+description: Detects the creation of a new service using powershell.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*New-Service*'
+    SELECTION_4:
+        CommandLine: '*-BinaryPathName*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Legitimate administrator or user creates a service for legitimate reasons.
+- Software installation
+id: c02e96b7-c63a-4c47-bd83-4a9f74afcfb2
+level: low
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md
+related:
+-   id: 85ff530b-261d-48c6-a441-facaa2e81e48
+    type: similar
+status: test
+tags:
+- attack.persistence
+- attack.privilege_escalation
+- attack.t1543.003
+
