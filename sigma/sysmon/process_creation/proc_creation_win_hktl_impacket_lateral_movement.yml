@@ -1,0 +1,68 @@
+title: HackTool - Potential Impacket Lateral Movement Activity
+ruletype: Sigma
+author: Ecco, oscd.community, Jonhnathan Ribeiro, Tim Rauch
+date: 2019/09/03
+description: Detects wmiexec/dcomexec/atexec/smbexec from Impacket framework
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine: '*cmd.exe*'
+    SELECTION_11:
+        CommandLine: '*/C*'
+    SELECTION_12:
+        CommandLine: '*Windows\Temp\\*'
+    SELECTION_13:
+        CommandLine: '*&1*'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage:
+        - '*\wmiprvse.exe'
+        - '*\mmc.exe'
+        - '*\explorer.exe'
+        - '*\services.exe'
+    SELECTION_4:
+        CommandLine: '*cmd.exe*'
+    SELECTION_5:
+        CommandLine: '*/Q*'
+    SELECTION_6:
+        CommandLine: '*/c*'
+    SELECTION_7:
+        CommandLine: '*\\\\127.0.0.1\\\*'
+    SELECTION_8:
+        CommandLine: '*&1*'
+    SELECTION_9:
+        ParentCommandLine:
+        - '*svchost.exe -k netsvcs*'
+        - '*taskeng.exe*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11 and SELECTION_12 and SELECTION_13)))
+falsepositives:
+- Unknown
+fields:
+- CommandLine
+- ParentCommandLine
+id: 10c14723-61c7-4c75-92ca-9af245723ad2
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/21
+references:
+- https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/wmiexec.py
+- https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/atexec.py
+- https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/smbexec.py
+- https://github.com/SecureAuthCorp/impacket/blob/8b1a99f7c715702eafe3f24851817bb64721b156/examples/dcomexec.py
+- https://www.elastic.co/guide/en/security/current/suspicious-cmd-execution-via-wmi.html
+related:
+-   id: e31f89f7-36fb-4697-8ab6-48823708353b
+    type: obsoletes
+status: stable
+tags:
+- attack.execution
+- attack.t1047
+- attack.lateral_movement
+- attack.t1021.003
+

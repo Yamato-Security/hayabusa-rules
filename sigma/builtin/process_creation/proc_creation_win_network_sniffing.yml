@@ -3,7 +3,7 @@ ruletype: Sigma
 author: Timur Zinniatullin, oscd.community, Nasreddine Bencherchali (Nextron Systems)
 date: 2019/10/21
 description: 'Detects potential network sniffing via use of network tools such as
-    "tshark", "windump" or "netsh".
+    "tshark", "windump".
 
     Network sniffing refers to using the network interface on a system to monitor
     or capture information sent over a wired or wireless connection.
@@ -16,8 +16,6 @@ description: 'Detects potential network sniffing via use of network tools such a
 detection:
     SELECTION_1:
         EventID: 4688
-    SELECTION_10:
-        CommandLine: '*yes*'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -26,17 +24,8 @@ detection:
         CommandLine: '*-i*'
     SELECTION_5:
         NewProcessName: '*\windump.exe'
-    SELECTION_6:
-        NewProcessName: '*\netsh.exe'
-    SELECTION_7:
-        CommandLine: '* trace *'
-    SELECTION_8:
-        CommandLine: '* start *'
-    SELECTION_9:
-        CommandLine: '* capture*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        SELECTION_5 or (SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9
-        and SELECTION_10)))
+        SELECTION_5))
 falsepositives:
 - Legitimate administration activity to troubleshoot network issues
 id: ba1f7802-adc7-48b4-9ecb-81e227fddfd5
@@ -44,7 +33,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/01
+modified: 2023/02/20
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1040/T1040.md
 status: test

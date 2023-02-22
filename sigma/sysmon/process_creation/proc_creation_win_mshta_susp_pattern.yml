@@ -1,0 +1,65 @@
+title: Suspicious Mshta.EXE Execution Patterns
+ruletype: Sigma
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+date: 2021/07/17
+description: Detects suspicious mshta process execution patterns
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine:
+        - '*.htm*'
+        - '*.hta*'
+    SELECTION_11:
+        CommandLine:
+        - '*mshta.exe'
+        - '*mshta'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\mshta.exe'
+    SELECTION_4:
+        OriginalFileName: MSHTA.EXE
+    SELECTION_5:
+        ParentImage:
+        - '*\cmd.exe'
+        - '*\cscript.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\regsvr32.exe'
+        - '*\rundll32.exe'
+        - '*\wscript.exe'
+    SELECTION_6:
+        CommandLine:
+        - '*\AppData\Local\\*'
+        - '*C:\ProgramData\\*'
+        - '*C:\Users\Public\\*'
+        - '*C:\Windows\Temp\\*'
+    SELECTION_7:
+        Image: '*\mshta.exe'
+    SELECTION_8:
+        OriginalFileName: MSHTA.EXE
+    SELECTION_9:
+        Image:
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6)) or ((SELECTION_7 or SELECTION_8) and  not (SELECTION_9
+        or SELECTION_10 or SELECTION_11))))
+falsepositives:
+- Unknown
+id: e32f92d1-523e-49c3-9374-bdb13b46a3ba
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/21
+references:
+- https://en.wikipedia.org/wiki/HTML_Application
+- https://www.echotrail.io/insights/search/mshta.exe
+- https://app.any.run/tasks/34221348-072d-4b70-93f3-aa71f6ebecad/
+status: experimental
+tags:
+- attack.execution
+- attack.t1106
+

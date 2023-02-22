@@ -14,7 +14,7 @@ detection:
         Image: '*\dnscat2*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
-- "Legitimate usage of iodine or dnscat2 \u2014 DNS Exfiltration tools (unlikely)"
+- Unlikely
 id: 98a96a5a-64a0-4c42-92c5-489da3866cb0
 level: high
 logsource:

@@ -14,13 +14,17 @@ detection:
         - '*\net.exe'
         - '*\net1.exe'
     SELECTION_4:
-        CommandLine: '*user*'
+        OriginalFileName:
+        - net.exe
+        - net1.exe
     SELECTION_5:
-        CommandLine: '*add*'
+        CommandLine: '*user*'
     SELECTION_6:
+        CommandLine: '*add*'
+    SELECTION_7:
         CommandLine: '*expires:never*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6 and SELECTION_7))
 falsepositives:
 - Unlikely
 id: b9f0e6f5-09b4-4358-bae4-08408705bd5c
@@ -28,7 +32,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/01
+modified: 2023/02/21
 references:
 - https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
 related:

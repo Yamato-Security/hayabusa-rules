@@ -1,4 +1,4 @@
-title: Suspicious Manipulation Of Default Accounts
+title: Suspicious Manipulation Of Default Accounts Via Net.EXE
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/09/01
@@ -14,8 +14,12 @@ detection:
         - '*\net.exe'
         - '*\net1.exe'
     SELECTION_4:
-        CommandLine: '* user *'
+        OriginalFileName:
+        - net.exe
+        - net1.exe
     SELECTION_5:
+        CommandLine: '* user *'
+    SELECTION_6:
         CommandLine:
         - "* J\xE4rjestelm\xE4nvalvoja *"
         - '* Rendszergazda *'
@@ -47,12 +51,12 @@ detection:
         - '* ''Administrator'' *'
         - '* ''guest'' *'
         - '* ''DefaultAccount'' *'
-    SELECTION_6:
-        CommandLine: '*guest*'
     SELECTION_7:
+        CommandLine: '*guest*'
+    SELECTION_8:
         CommandLine: '*/active no*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6) and  not (SELECTION_7 and SELECTION_8))
 falsepositives:
 - Some false positives could occur with the admin or guest account. It depends on
     the scripts being used by the admins in your env. If you experience a lot of FP
@@ -62,7 +66,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/09
+modified: 2023/02/21
 references:
 - https://www.trellix.com/en-sg/about/newsroom/stories/threat-labs/lockergoga-ransomware-family-used-in-targeted-attacks.html
 - https://redacted.com/blog/bianlian-ransomware-gang-gives-it-a-go/

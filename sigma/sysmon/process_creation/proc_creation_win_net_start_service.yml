@@ -14,8 +14,13 @@ detection:
         - '*\net.exe'
         - '*\net1.exe'
     SELECTION_4:
+        OriginalFileName:
+        - net.exe
+        - net1.exe
+    SELECTION_5:
         CommandLine: '* start *'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Legitimate administrator or user executes a service for legitimate reasons.
 id: 2a072a96-a086-49fa-bcb5-15cc5a619093
@@ -23,7 +28,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/01
+modified: 2023/02/21
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1569.002/T1569.002.md
 status: test

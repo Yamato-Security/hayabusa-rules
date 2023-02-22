@@ -3,7 +3,8 @@ ruletype: Sigma
 author: Alexander McDonald
 date: 2022/06/24
 description: Detects potential process injection via Microsoft Remote Asssistance
-    (Msra.exe). It has been a target used by many threat actors and used for discovery
+    (Msra.exe) by looking at suspicious child processes spawned from the aforementioned
+    process. It has been a target used by many threat actors and used for discovery
     and persistence tactics
 detection:
     SELECTION_1:

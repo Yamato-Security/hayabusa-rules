@@ -1,0 +1,61 @@
+title: HackTool - Mimikatz Execution
+ruletype: Sigma
+author: Teymur Kheirkhabarov, oscd.community, David ANDRE (additional keywords), Tim
+    Shelton
+date: 2019/10/22
+description: Detection well-known mimikatz command line arguments
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '*DumpCreds*'
+        - '*mimikatz*'
+    SELECTION_4:
+        CommandLine:
+        - '*::aadcookie*'
+        - '*::detours*'
+        - '*::memssp*'
+        - '*::mflt*'
+        - '*::ncroutemon*'
+        - '*::ngcsign*'
+        - '*::printnightmare*'
+        - '*::skeleton*'
+        - '*::preshutdown*'
+        - '*::mstsc*'
+        - '*::multirdp*'
+    SELECTION_5:
+        CommandLine:
+        - '*rpc::*'
+        - '*token::*'
+        - '*crypto::*'
+        - '*dpapi::*'
+        - '*sekurlsa::*'
+        - '*kerberos::*'
+        - '*lsadump::*'
+        - '*privilege::*'
+        - '*process::*'
+        - '*vault::*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+falsepositives:
+- Unlikely
+id: a642964e-bead-4bed-8910-1bb4d63e3b4d
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/21
+references:
+- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+- https://tools.thehacker.recipes/mimikatz/modules
+status: test
+tags:
+- attack.credential_access
+- attack.t1003.001
+- attack.t1003.002
+- attack.t1003.004
+- attack.t1003.005
+- attack.t1003.006
+

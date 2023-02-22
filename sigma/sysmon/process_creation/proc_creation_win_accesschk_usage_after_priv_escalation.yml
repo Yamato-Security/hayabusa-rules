@@ -1,10 +1,11 @@
-title: Accesschk Usage To Check Privileges
+title: Permission Check Via Accesschk.EXE
 ruletype: Sigma
-author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community, Nasreddine
-    Bencherchali (modified)
+author: Teymur Kheirkhabarov (idea), Mangatas Tondang, oscd.community, Nasreddine
+    Bencherchali (Nextron Systems)
 date: 2020/10/13
-description: Accesschk is an access and privilege audit tool developed by SysInternal
-    and often being used by attacker to verify privileges
+description: Detects the usage of the "Accesschk" utility, an access and privilege
+    audit tool developed by SysInternal and often being abused by attacker to verify
+    process privileges
 detection:
     SELECTION_1:
         EventID: 1
@@ -40,7 +41,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/20
+modified: 2023/02/20
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment?slide=43
 - https://www.youtube.com/watch?v=JGs-aKf2OtU&ab_channel=OFFZONEMOSCOW

@@ -1,0 +1,46 @@
+title: Audit Policy Tampering Via Auditpol
+ruletype: Sigma
+author: Janantha Marasinghe (https://github.com/blueteam0ps)
+date: 2021/02/02
+description: 'Threat actors can use auditpol binary to change audit policy configuration
+    to impair detection capability.
+
+    This can be carried out by selectively disabling/removing certain audit policies
+    as well as restoring a custom policy owned by the threat actor.
+
+    '
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\auditpol.exe'
+    SELECTION_4:
+        OriginalFileName: AUDITPOL.EXE
+    SELECTION_5:
+        CommandLine:
+        - '*disable*'
+        - '*clear*'
+        - '*remove*'
+        - '*restore*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Admin activity
+id: 0a13e132-651d-11eb-ae93-0242ac130002
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/22
+references:
+- https://www.microsoft.com/security/blog/2021/01/20/deep-dive-into-the-solorigate-second-stage-activation-from-sunburst-to-teardrop-and-raindrop/
+related:
+-   id: c6c56ada-612b-42d1-9a29-adad3c5c2c1e
+    type: similar
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1562.002
+
