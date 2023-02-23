@@ -45,6 +45,7 @@ Sigmaレポジトリのパスが書いてある`$sigma_path`という環境変�
 export sigma_path=/path/to/sigma_repository
 cp hayabusa.py $sigma_path/tools/sigma/backends
 cp convert.py $sigma_path
+cp rule.py $sigma_path/tools/sigma/parser
 ```
 
 * 注意：`/path/to/sigma_repository`そのままではなくて、自分のSigmaレポジトリのパスを指定してください。

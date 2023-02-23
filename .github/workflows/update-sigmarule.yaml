@@ -30,7 +30,8 @@ jobs:
         run: |
           cp hayabusa-rules/tools/sigmac/convert.py sigma-repo/convert.py
           cp hayabusa-rules/tools/sigmac/hayabusa.py sigma-repo/tools/sigma/backends/hayabusa.py
-      
+          cp hayabusa-rules/tools/sigmac/rule.py sigma-repo/tools/sigma/parser/rule.py
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
