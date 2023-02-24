@@ -1,4 +1,4 @@
-title: Creation Suspicious File In Uncommon AppData Folder
+title: Suspicious File Creation In Uncommon AppData Folder
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/05
@@ -12,30 +12,34 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        TargetFilename: '*\AppData\\*'
+        TargetFilename: C:\Users\\*
     SELECTION_4:
+        TargetFilename: '*\AppData\\*'
+    SELECTION_5:
         TargetFilename:
-        - '*.exe'
-        - '*.dll'
         - '*.bat'
-        - '*.vbe'
-        - '*.vbs'
-        - '*.msi'
+        - '*.cmd'
+        - '*.cpl'
+        - '*.dll'
+        - '*.exe'
+        - '*.hta'
         - '*.iso'
         - '*.lnk'
-        - '*.cmd'
+        - '*.msi'
         - '*.ps1'
         - '*.psm1'
-        - '*.hta'
-        - '*.cpl'
         - '*.scr'
-    SELECTION_5:
+        - '*.vbe'
+        - '*.vbs'
+    SELECTION_6:
+        TargetFilename: C:\Users\\*
+    SELECTION_7:
         TargetFilename:
         - '*\AppData\Local\\*'
         - '*\AppData\LocalLow\\*'
         - '*\AppData\Roaming\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
 falsepositives:
 - Unlikely
 id: d7b50671-d1ad-4871-aa60-5aa5b331fe04
@@ -43,7 +47,7 @@ level: high
 logsource:
     category: file_event
     product: windows
-modified: 2022/10/28
+modified: 2023/02/23
 references:
 - Internal Research
 status: experimental

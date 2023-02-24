@@ -1,8 +1,9 @@
-title: MSDT.exe Creates Files in Autorun Directory
+title: File Creation In Suspicious Directory By Msdt.EXE
 ruletype: Sigma
-author: Vadim Varganov, Florian Roth
+author: Vadim Varganov, Florian Roth (Nextron Systems)
 date: 2022/08/24
-description: Detects msdt.exe creating files in suspicious directories
+description: Detects msdt.exe creating files in suspicious directories which could
+    be a sign of exploitation of either Follina or Dogwalk vulnerabilities
 detection:
     SELECTION_1:
         EventID: 11
@@ -12,11 +13,11 @@ detection:
         Image: '*\msdt.exe'
     SELECTION_4:
         TargetFilename:
-        - '*\Start Menu\Programs\Startup\\*'
-        - '*C:\Users\Public\\*'
-        - '*C:\PerfLogs\\*'
         - '*\Desktop\\*'
+        - '*\Start Menu\Programs\Startup\\*'
+        - '*C:\PerfLogs\\*'
         - '*C:\ProgramData\\*'
+        - '*C:\Users\Public\\*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
@@ -25,6 +26,7 @@ level: high
 logsource:
     category: file_event
     product: windows
+modified: 2023/02/23
 references:
 - https://irsl.medium.com/the-trouble-with-microsofts-troubleshooters-6e32fc80b8bd
 - https://msrc-blog.microsoft.com/2022/05/30/guidance-for-cve-2022-30190-microsoft-support-diagnostic-tool-vulnerability/
