@@ -1,9 +1,9 @@
-title: Potential PSEXEC Remote Execution - FileCreation
+title: PSEXEC Remote Execution File Artefact
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/01/21
 description: Detects creation of the PSEXEC key file. Which is created anytime a PsExec
-    command is executed and gets written to the file system and will be recorded in
+    command is executed. It gets written to the file system and will be recorded in
     the USN Journal on the target system
 detection:
     SELECTION_1:
@@ -22,6 +22,7 @@ level: high
 logsource:
     category: file_event
     product: windows
+modified: 2023/02/23
 references:
 - https://aboutdfir.com/the-key-to-identify-psexec/
 - https://twitter.com/davisrichardg/status/1616518800584704028

@@ -1,8 +1,8 @@
-title: Dump Office Macro Files from Commandline
+title: Office Macro File Creation
 ruletype: Sigma
-author: frack113
+author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/01/23
-description: A office file with macro is created from a commandline or a script
+description: Detects the creation of a new office macro files on the systems
 detection:
     SELECTION_1:
         EventID: 11
@@ -16,30 +16,20 @@ detection:
         - '*.xltm'
         - '*.potm'
         - '*.pptm'
-        - '*.pptx'
-    SELECTION_4:
-        Image:
-        - '*\cmd.exe'
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_5:
-        ParentImage:
-        - '*\cmd.exe'
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
-        SELECTION_5))
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- Unknown
-id: b1c50487-1967-4315-a026-6491686d860e
-level: medium
+- Very common in environments that rely heavily on macro documents
+id: 91174a41-dc8f-401b-be89-7bfc140612a0
+level: low
 logsource:
     category: file_event
     product: windows
-modified: 2022/07/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1566.001/T1566.001.md
 - https://docs.microsoft.com/en-us/deployoffice/compat/office-file-format-reference
+related:
+-   id: 0e29e3a7-1ad8-40aa-b691-9f82ecd33d66
+    type: similar
 status: experimental
 tags:
 - attack.initial_access
