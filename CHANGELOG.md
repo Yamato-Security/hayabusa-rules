@@ -1,5 +1,9 @@
 # Changes
 
+## v2.2.2 [2023/02/22] 
+
+Hayabusa now supports rules that use `base64offset|contains`.
+
 ## v1.8.1 [2022/12/14] 
 
 Fixed a bug when rules with fields with `null` values would not be converted properly.
