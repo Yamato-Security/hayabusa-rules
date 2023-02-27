@@ -44,6 +44,7 @@ detection:
         SourceImage:
         - '*\bash.exe'
         - '*\cvtres.exe'
+        - '*\cscript.exe'
         - '*\defrag.exe'
         - '*\dnx.exe'
         - '*\esentutl.exe'
@@ -118,7 +119,7 @@ level: high
 logsource:
     category: create_remote_thread
     product: windows
-modified: 2022/12/14
+modified: 2023/02/26
 notes:
 - MonitoringHost.exe is a process that loads .NET CLR by default and thus a favorite
     for process injection for .NET in-memory offensive tools.

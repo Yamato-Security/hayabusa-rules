@@ -21,7 +21,9 @@ detection:
     SELECTION_16:
         CommandLine: '*scrobj.dll'
     SELECTION_17:
-        NewProcessName: '*\wscript.exe'
+        NewProcessName:
+        - '*\cscript.exe'
+        - '*\wscript.exe'
     SELECTION_18:
         ParentProcessName: '*\regsvr32.exe'
     SELECTION_19:
@@ -96,7 +98,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/21
+modified: 2023/02/26
 references:
 - https://subt0x10.blogspot.de/2017/04/bypass-application-whitelisting-script.html
 - https://app.any.run/tasks/34221348-072d-4b70-93f3-aa71f6ebecad/

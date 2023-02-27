@@ -22,13 +22,17 @@ detection:
     SELECTION_4:
         CommandLine: '*/f*'
     SELECTION_5:
-        CommandLine: '*rmdir*'
+        CommandLine: '* del *'
     SELECTION_6:
         CommandLine: '*/s*'
     SELECTION_7:
+        CommandLine: '*rmdir*'
+    SELECTION_8:
+        CommandLine: '*/s*'
+    SELECTION_9:
         CommandLine: '*/q*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6 and SELECTION_7)))
+        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Legitimate scripts
 id: 379fa130-190e-4c3f-b7bc-6c8e834485f3
@@ -36,7 +40,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/20
+modified: 2023/02/24
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.004/T1070.004.md
 status: experimental
