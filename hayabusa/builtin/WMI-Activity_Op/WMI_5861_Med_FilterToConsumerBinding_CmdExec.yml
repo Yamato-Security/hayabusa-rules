@@ -1,10 +1,10 @@
-author: Zach Mathis
+author: 'Zach Mathis'
 date: 2022/04/06
-modified: 2022/04/06
+modified: 2023/02/27
 
-title: WMI Filter To Consumer Binding_Command Execution
+title: 'WMI Filter To Consumer Binding_Command Execution'
 details: 'Namespace: %UserDataNamespace% ¦ Consumer: %UserDataConsumer% ¦ Details: %UserDataPossibleCause%'
-description: Detects when powershell or cmd is used in WMI. (For persistence, lateral movement, etc...)
+description: 'Detects when powershell or cmd is used in WMI. (For persistence, lateral movement, etc...)'
 
 id: ab4852ca-3e27-4dbb-af6b-5f8458d5717a
 level: medium
@@ -12,16 +12,17 @@ status: stable
 logsource:
     product: windows
     service: wmi
-    definition: Default in 10/2012-R2+
+    definition: 'Default in 10/2012-R2+'
 detection:
     selection_basic:
-        Channel: Microsoft-Windows-WMI-Activity/Operational
+        Channel: 'Microsoft-Windows-WMI-Activity/Operational'
         EventID: 5861
     selection_CommandLineEventConsumer: 
-        UserDataPossibleCause|contains: CommandLineEventConsumer
+        UserDataPossibleCause|contains: 'CommandLineEventConsumer'
     selection_suspicious_commands:
-        - UserDataPossibleCause|contains: powershell
-        - UserDataPossibleCause|contains: cmd
+        UserDataPossibleCause|contains: 
+            - 'powershell'
+            - 'cmd'
     condition: selection_basic and selection_CommandLineEventConsumer and selection_suspicious_commands
 falsepositives:
     - unknown

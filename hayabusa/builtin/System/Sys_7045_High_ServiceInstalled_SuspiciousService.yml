@@ -1,8 +1,8 @@
 author: Zach Mathis
 date: 2022/02/06
-modified: 2022/06/21
+modified: 2023/02/27
 
-title: Susp Svc Installed
+title: 'Susp Svc Installed'
 details: 'Svc: %ServiceName% ¦ Path: %ImagePath% ¦ Acct: %AccountName% ¦ StartType: %StartType%'
 description: A new service was installed. (Possibly malware.)
 
@@ -14,15 +14,15 @@ logsource:
     service: system
 detection:
     selection:
-        Channel: System
+        Channel: 'System'
         EventID: 7045
-    selection_cmd_in_path:
-        ImagePath|contains: cmd
-    selection_powershell_in_path:
-        ImagePath|contains: powershell
-    condition: selection and (selection_cmd_in_path or selection_powershell_in_path) 
+    selection_suspicious_keywords:
+        ImagePath|contains: 
+            - 'cmd'
+            - 'powershell'
+    condition: selection and selection_suspicious_keywords
 falsepositives:
-    - normal system usage
+    - 'normal system usage'
 tags:
     - attack.persistence
     - attack.t1543.003
