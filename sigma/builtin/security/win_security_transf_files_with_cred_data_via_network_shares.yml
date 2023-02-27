@@ -8,10 +8,8 @@ detection:
     SELECTION_1:
         Channel: Security
     SELECTION_2:
-        Provider_Name: Microsoft-Windows-Security-Auditing
-    SELECTION_3:
         EventID: 5145
-    SELECTION_4:
+    SELECTION_3:
         RelativeTargetName:
         - '*\mimidrv*'
         - '*\lsass*'
@@ -21,7 +19,7 @@ detection:
         - '*\sam*'
         - '*\ntds.dit*'
         - '*\security*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Transferring sensitive files for legitimate administration work by legitimate administrator
 id: 910ab938-668b-401b-b08c-b596e80fdca5

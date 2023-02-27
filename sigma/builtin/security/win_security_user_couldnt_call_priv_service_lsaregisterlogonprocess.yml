@@ -9,14 +9,12 @@ detection:
     SELECTION_1:
         Channel: Security
     SELECTION_2:
-        Provider_Name: Microsoft-Windows-Security-Auditing
-    SELECTION_3:
         EventID: 4673
-    SELECTION_4:
+    SELECTION_3:
         Service: LsaRegisterLogonProcess()
-    SELECTION_5:
+    SELECTION_4:
         Keywords: '0x8010000000000000'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 6daac7fc-77d1-449a-a71a-e6b4d59a0e54
