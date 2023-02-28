@@ -1,0 +1,41 @@
+title: New Firewall Exception Rule Added For A Suspicious Folder
+ruletype: Sigma
+author: frack113
+date: 2023/02/26
+description: Detects the addition of a rule to the Windows Firewall exception list
+    where the application resides in a suspicious folder
+detection:
+    SELECTION_1:
+        Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
+    SELECTION_2:
+        EventID: 2004
+    SELECTION_3:
+        EventID: 2071
+    SELECTION_4:
+        ApplicationPath:
+        - '*\AppData\\*'
+        - '*\temp\\*'
+    SELECTION_5:
+        Action: 2
+    SELECTION_6:
+        ApplicationPath:
+        - '*AppData\local\microsoft\teams\current\teams.exe'
+        - '*AppData\Local\Keybase\keybase.exe'
+        - '*AppData\Local\Programs\Messenger\Messenger.exe'
+    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6)))
+falsepositives:
+- Any legitimate application that runs from the AppData user directory
+id: 9e2575e7-2cb9-4da1-adc8-ed94221dca5e
+level: high
+logsource:
+    product: windows
+    service: firewall-as
+references:
+- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
+- https://app.any.run/tasks/7123e948-c91e-49e0-a813-00e8d72ab393/#
+related:
+-   id: cde0a575-7d3d-4a49-9817-b8004a7bf105
+    type: derived
+status: experimental
+

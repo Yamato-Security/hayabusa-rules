@@ -16,30 +16,36 @@ detection:
     SELECTION_1:
         EventID: 8
     SELECTION_10:
-        SourceImage: '*\git.exe'
+        TargetParentProcessId: 4
     SELECTION_11:
+        SourceImage: C:\Windows\System32\provtool.exe
+    SELECTION_12:
+        TargetParentProcessId: 0
+    SELECTION_13:
+        SourceImage: '*\git.exe'
+    SELECTION_14:
         TargetImage:
         - '*\git.exe'
         - '*C:\Windows\System32\conhost.exe'
-    SELECTION_12:
-        SourceImage: C:\Windows\System32\VSSVC.exe
-    SELECTION_13:
-        TargetImage: System
-    SELECTION_14:
-        SourceParentImage: C:\Windows\System32\CompatTelRunner.exe
     SELECTION_15:
+        SourceImage: C:\Windows\System32\VSSVC.exe
+    SELECTION_16:
+        TargetImage: System
+    SELECTION_17:
+        SourceParentImage: C:\Windows\System32\CompatTelRunner.exe
+    SELECTION_18:
         SourceImage:
         - C:\Windows\System32\schtasks.exe
         - C:\Windows\SysWOW64\schtasks.exe
-    SELECTION_16:
+    SELECTION_19:
         TargetImage: C:\Windows\System32\conhost.exe
-    SELECTION_17:
-        SourceImage: C:\Windows\explorer.exe
-    SELECTION_18:
-        TargetImage: C:\Program Files\NVIDIA Corporation\NVIDIA GeForce Experience\NVIDIA
-            GeForce Experience.exe
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        SourceImage: C:\Windows\explorer.exe
+    SELECTION_21:
+        TargetImage: C:\Program Files\NVIDIA Corporation\NVIDIA GeForce Experience\NVIDIA
+            GeForce Experience.exe
     SELECTION_3:
         SourceImage:
         - '*\bash.exe'
@@ -100,13 +106,14 @@ detection:
         - C:\Windows\System32\wininit.exe
         - C:\Windows\System32\csrss.exe
     SELECTION_8:
-        SourceImage: C:\Windows\System32\provtool.exe
+        SourceImage: C:\Windows\System32\winlogon.exe
     SELECTION_9:
-        TargetParentProcessId: 0
+        TargetParentImage: System
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
-        or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)))
+        or SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
+        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17) or (SELECTION_18
+        and SELECTION_19) or (SELECTION_20 and SELECTION_21)))
 falsepositives:
 - Unknown
 fields:
@@ -119,7 +126,7 @@ level: high
 logsource:
     category: create_remote_thread
     product: windows
-modified: 2023/02/26
+modified: 2023/02/28
 notes:
 - MonitoringHost.exe is a process that loads .NET CLR by default and thus a favorite
     for process injection for .NET in-memory offensive tools.
