@@ -1,6 +1,7 @@
-title: Suspicious Double Extension
+title: Suspicious Double Extension File Execution
 ruletype: Sigma
-author: Florian Roth (Nextron Systems), @blu3_team (idea)
+author: Florian Roth (Nextron Systems), @blu3_team (idea), Nasreddine Bencherchali
+    (Nextron Systems)
 date: 2019/06/26
 description: Detects suspicious use of an .exe extension after a non-executable file
     extension like .pdf.exe, a set of spaces or underlines to cloak the executable
@@ -23,7 +24,38 @@ detection:
         - '*.txt.exe'
         - '*      .exe'
         - '*______.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+        - '*.doc.js'
+        - '*.docx.js'
+        - '*.xls.js'
+        - '*.xlsx.js'
+        - '*.ppt.js'
+        - '*.pptx.js'
+        - '*.rtf.js'
+        - '*.pdf.js'
+        - '*.txt.js'
+    SELECTION_4:
+        CommandLine:
+        - '*.doc.exe*'
+        - '*.docx.exe*'
+        - '*.xls.exe*'
+        - '*.xlsx.exe*'
+        - '*.ppt.exe*'
+        - '*.pptx.exe*'
+        - '*.rtf.exe*'
+        - '*.pdf.exe*'
+        - '*.txt.exe*'
+        - '*      .exe*'
+        - '*______.exe*'
+        - '*.doc.js*'
+        - '*.docx.js*'
+        - '*.xls.js*'
+        - '*.xlsx.js*'
+        - '*.ppt.js*'
+        - '*.pptx.js*'
+        - '*.rtf.js*'
+        - '*.pdf.js*'
+        - '*.txt.js*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
 id: 1cdd9a09-06c9-4769-99ff-626e2b3991b8
@@ -31,10 +63,13 @@ level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2023/02/28
 references:
 - https://blu3-team.blogspot.com/2019/06/misleading-extensions-xlsexe-docexe.html
 - https://twitter.com/blackorbird/status/1140519090961825792
+related:
+-   id: 5e6a80c8-2d45-4633-9ef4-fa2671a39c5c
+    type: similar
 status: stable
 tags:
 - attack.initial_access

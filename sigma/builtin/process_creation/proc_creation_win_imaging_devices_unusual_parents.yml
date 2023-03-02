@@ -3,8 +3,7 @@ ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/09/27
 description: Detects unusual parent or children of the ImagingDevices.exe (Windows
-    Contacts) and Wabmig.exe (Microsoft Address Book Import Tool) processes as seen
-    being used with bumblebee activity
+    Contacts) process as seen being used with Bumblebee activity
 detection:
     SELECTION_1:
         EventID: 4688
