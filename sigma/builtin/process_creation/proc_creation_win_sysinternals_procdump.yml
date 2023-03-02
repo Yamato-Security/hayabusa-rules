@@ -1,0 +1,31 @@
+title: Procdump Execution
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2021/08/16
+description: Detects usage of the SysInternals Procdump utility
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\procdump.exe'
+        - '*\procdump64.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Legitimate use of procdump by a developer or administrator
+id: 2e65275c-8288-4ab4-aeb7-6274f58b6b20
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/28
+references:
+- https://learn.microsoft.com/en-us/sysinternals/downloads/procdump
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036
+- attack.t1003.001
+

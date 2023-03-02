@@ -1,0 +1,39 @@
+title: Potential LSASS Process Dump Via Procdump
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2018/10/30
+description: Detects suspicious uses of the SysInternals Procdump utility by using
+    a special command line parameter in combination with the lsass.exe process. This
+    way we're also able to catch cases in which the attacker has renamed the procdump
+    executable.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - '* -ma *'
+        - '* /ma *'
+    SELECTION_4:
+        CommandLine: '* ls*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unlikely, because no one should dump an lsass process memory
+- Another tool that uses the command line switches of Procdump
+id: 5afee48e-67dd-4e03-a783-f74259dcf998
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/28
+references:
+- https://learn.microsoft.com/en-us/sysinternals/downloads/procdump
+status: stable
+tags:
+- attack.defense_evasion
+- attack.t1036
+- attack.credential_access
+- attack.t1003.001
+- car.2013-05-009
+

@@ -1,0 +1,44 @@
+title: Suspicious Whoami.EXE Execution
+ruletype: Sigma
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/28
+description: Detects the execution of "whoami.exe" with the "/all" flag or with redirection
+    options to export the results to a file for later use.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\whoami.exe'
+    SELECTION_4:
+        OriginalFileName: whoami.exe
+    SELECTION_5:
+        CommandLine:
+        - '* -all*'
+        - '* /all*'
+        - '* /FO CSV*'
+        - '* -FO CSV*'
+    SELECTION_6:
+        CommandLine: '*whoami*'
+    SELECTION_7:
+        CommandLine: '*>*'
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Unknown
+id: c30fb093-1109-4dc8-88a8-b30d11c95a5d
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/
+- https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/
+- https://www.youtube.com/watch?v=DsJ9ByX84o4&t=6s
+status: experimental
+tags:
+- attack.discovery
+- attack.t1033
+- car.2016-03-001
+

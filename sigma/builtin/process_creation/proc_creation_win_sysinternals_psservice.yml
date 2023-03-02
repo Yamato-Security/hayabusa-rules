@@ -1,9 +1,9 @@
-title: Use of Sysinternals PsService
+title: Sysinternals PsService Execution
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/06/16
-description: Detects usage of Sysinternals PsService for service reconnaissance or
-    tamper
+description: Detects usage of Sysinternals PsService which can be abused for service
+    reconnaissance and tampering
 detection:
     SELECTION_1:
         EventID: 4688
@@ -23,6 +23,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/02/24
 references:
 - https://docs.microsoft.com/en-us/sysinternals/downloads/psservice
 status: experimental
