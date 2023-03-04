@@ -118,10 +118,11 @@ class Logconverter():
 
         logger.debug("target: " + file_name)
         if "logsource" in rule_data:
-            if "product" in rule_data["logsource"]:
-                    if rule_data["logsource"]["product"] != "windows":
-                        logger.info(file_name + " has no windows rule.")
-                        return convert_datas
+            if "product" not in rule_data["logsource"]:
+                return convert_datas
+            elif rule_data["logsource"]["product"] != "windows":
+                logger.info(file_name + " has no windows rule.")
+                return convert_datas
         if category in EXCLUDE_CATEGORY:
             logger.info(file_name + " has CATEGORY hayabusa couldn't use.")
             return convert_datas
