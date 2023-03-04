@@ -130,7 +130,13 @@ class Logconverter():
         else:
             configs = set()
 
-        rule_path_from_rule_root = rule_path[len(self.rules_dirs)+1:] # rm ./rules/windows
+        rule_path_from_rule_root = rule_path
+        if RULES_DEPRECATED_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_DEPRECATED_DIR, "deprecated")
+        elif RULES_UNSUPPORTED_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_UNSUPPORTED_DIR, "unsupported")
+        else:
+            rule_path_from_rule_root = rule_path[len(RULES_DIR)+1:] # rm ./rules/windows
         if rule_path_from_rule_root.startswith("builtin/"):
             rule_path_from_rule_root = rule_path_from_rule_root[8:] # rm .builtin
 
