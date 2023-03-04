@@ -1,0 +1,27 @@
+title: PsExec Service Start
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2018/03/13
+description: Detects a PsExec service start
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: C:\Windows\PSEXESVC.exe
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Administrative activity
+id: 3ede524d-21cc-472d-a3ce-d21b568d8db7
+level: low
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/02/28
+status: deprecated
+tags:
+- attack.execution
+- attack.s0029
+- attack.t1569.002
+

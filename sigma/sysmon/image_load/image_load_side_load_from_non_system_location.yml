@@ -13,6 +13,10 @@ detection:
         ImageLoaded: '*\ssshim.dll'
     SELECTION_12:
         Image: C:\$WINDOWS.~BT\\*
+    SELECTION_13:
+        Image: C:\Program Files\WindowsApps\DellInc.DellSupportAssistforPCs*
+    SELECTION_14:
+        Image: '*\wldp.dll'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -453,7 +457,8 @@ detection:
         ImageLoaded: C:\Program Files\WindowsApps\DellInc.DellSupportAssistforPCs*
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
         or (SELECTION_5 and SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or (SELECTION_12)))
+        or (SELECTION_10 and SELECTION_11) or (SELECTION_12) or (SELECTION_13 and
+        SELECTION_14)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLLs mentioned in this
     rule
@@ -462,7 +467,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2023/01/09
+modified: 2023/02/28
 references:
 - https://hijacklibs.net/
 - https://blog.cyble.com/2022/07/21/qakbot-resurfaces-with-new-playbook/

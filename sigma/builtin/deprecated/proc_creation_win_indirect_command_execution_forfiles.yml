@@ -1,0 +1,53 @@
+title: Indirect Command Exectuion via Forfiles
+ruletype: Sigma
+author: Tim Rauch (rule), Elastic (idea), E.M. Anhaus (originally from Atomic Blue
+    Detections, Endgame), oscd.community
+date: 2022/10/17
+description: Detects execition of commands and binaries from the context of "forfiles.exe".
+    This can be used as a LOLBIN in order to bypass application whitelisting.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName: '*\forfiles.exe'
+    SELECTION_4:
+        ParentCommandLine:
+        - '* /c *'
+        - '* -c *'
+    SELECTION_5:
+        ParentCommandLine:
+        - '* /p *'
+        - '* -p *'
+    SELECTION_6:
+        ParentCommandLine:
+        - '* /m *'
+        - '* -m *'
+    SELECTION_7:
+        NewProcessName: '*\cmd.exe'
+    SELECTION_8:
+        CommandLine: '*xcopy*'
+    SELECTION_9:
+        CommandLine: '*cmd /c del*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) and  not (SELECTION_7 and SELECTION_8 and SELECTION_9))
+falsepositives:
+- Unknown
+id: a85cf4e3-56ee-4e79-adeb-789f8fb209a8
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/01/04
+references:
+- https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-73d61931b2c77fde294189ce5d62323b416296a7c23ea98a608f425566538d1a
+- https://lolbas-project.github.io/lolbas/Binaries/Forfiles/
+related:
+-   id: fa47597e-90e9-41cd-ab72-c3b74cfb0d02
+    type: obsoletes
+status: deprecated
+tags:
+- attack.defense_evasion
+- attack.t1202
+

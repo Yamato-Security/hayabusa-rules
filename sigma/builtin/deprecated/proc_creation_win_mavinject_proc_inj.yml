@@ -1,0 +1,30 @@
+title: MavInject Process Injection
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2018/12/12
+description: Detects process injection using the signed Windows tool Mavinject32.exe
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '* /INJECTRUNNING *'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- Unknown
+id: 17eb8e57-9983-420d-ad8a-2c4976c22eb8
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/12/19
+references:
+- https://twitter.com/gN3mes1s/status/941315826107510784
+- https://reaqta.com/2017/12/mavinject-microsoft-injector/
+- https://twitter.com/Hexacorn/status/776122138063409152
+status: deprecated
+tags:
+- attack.t1055.001
+- attack.t1218
+
