@@ -1,5 +1,9 @@
 # 変更点
 
+## v2.3.0 [2023/03/24] 
+
+`deprecated`と`unsupported`のSigmaルールも、hayabusa-rulesリポジトリに追加されるようになった。
+
 ## v2.2.2 [2023/02/22] 
 
 `base64offset|contains`を使用するルールに対応した。
