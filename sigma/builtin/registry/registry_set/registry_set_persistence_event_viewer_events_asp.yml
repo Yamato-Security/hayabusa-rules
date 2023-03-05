@@ -9,13 +9,19 @@ detection:
         EventID: 4657
     SELECTION_10:
         NewValue: -url hcp://services/centers/support?topic=%%s
+    SELECTION_11:
+        NewValue: http://go.microsoft.com/fwlink/events.asp
+    SELECTION_12:
+        NewValue: (Empty)
     SELECTION_2:
         OperationType:
         - Existing registry value modified
     SELECTION_3:
         Channel: Security
     SELECTION_4:
-        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgram*'
+        TargetObject:
+        - '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgram*'
+        - '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionURL*'
     SELECTION_5:
         NewProcessName: '*C:\WINDOWS\system32\svchost.exe'
     SELECTION_6:
@@ -28,7 +34,7 @@ detection:
         TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgramCommandLineParameters'
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and SELECTION_4 and  not
         ((SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10)))
+        and SELECTION_10) or (SELECTION_11) or (SELECTION_12)))
 falsepositives:
 - Unknown
 id: a1e11042-a74a-46e6-b07c-c4ce8ecc239b
@@ -36,10 +42,12 @@ level: medium
 logsource:
     category: registry_set
     product: windows
+modified: 2023/03/05
 references:
 - https://twitter.com/nas_bench/status/1626648985824788480
 - https://admx.help/?Category=Windows_7_2008R2&Policy=Microsoft.Policies.InternetCommunicationManagement::EventViewer_DisableLinks
 - https://www.hexacorn.com/blog/2019/02/15/beyond-good-ol-run-key-part-103/
+- https://github.com/redcanaryco/atomic-red-team/blob/f296668303c29d3f4c07e42bdd2b28d8dd6625f9/atomics/T1112/T1112.md
 status: test
 tags:
 - attack.persistence
