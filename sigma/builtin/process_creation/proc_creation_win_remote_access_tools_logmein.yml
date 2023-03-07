@@ -1,4 +1,4 @@
-title: Use of LogMeIn Remote Access Software
+title: Remote Access Tool - LogMeIn Execution
 ruletype: Sigma
 author: frack113
 date: 2022/02/11
@@ -33,6 +33,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/03/05
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-3---logmein-files-detected-test-on-windows
 status: test

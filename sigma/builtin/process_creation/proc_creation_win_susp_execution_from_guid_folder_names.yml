@@ -1,0 +1,45 @@
+title: Suspicious Execution From GUID Like Folder Names
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/09/01
+description: Detects potential suspicious execution of a GUID like folder name located
+    in a suspicious location such as %TEMP% as seen being used in IcedID attacks
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '*\AppData\Roaming\\*'
+        - '*\AppData\Local\Temp\\*'
+    SELECTION_4:
+        CommandLine: '*\{*'
+    SELECTION_5:
+        CommandLine: '*}\\*'
+    SELECTION_6:
+        NewProcessName: '*\{*'
+    SELECTION_7:
+        NewProcessName: '*}\\*'
+    SELECTION_8:
+        NewProcessName: null
+    SELECTION_9:
+        NewProcessName: C:\Windows\System32\drvinst.exe
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9)))
+falsepositives:
+- Installers are sometimes known for creating temporary folders with GUID like names.
+    Add appropriate filters accordingly
+id: 90b63c33-2b97-4631-a011-ceb0f47b77c3
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/02
+references:
+- https://twitter.com/Kostastsale/status/1565257924204986369
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1027
+

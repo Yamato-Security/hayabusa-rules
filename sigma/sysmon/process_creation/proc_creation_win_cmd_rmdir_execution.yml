@@ -1,0 +1,49 @@
+title: Directory Removal Via Rmdir
+ruletype: Sigma
+author: frack113
+date: 2022/01/15
+description: 'Detects execution of the builtin "rmdir" command in order to delete
+    directories.
+
+    Adversaries may delete files left behind by the actions of their intrusion activity.
+
+    Malware, tools, or other non-native files dropped or created on a system by an
+    adversary may leave traces to indicate to what was done within a network and how.
+
+    Removal of these files can occur during an intrusion, or as part of a post-intrusion
+    process to minimize the adversary''s footprint.
+
+    '
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\cmd.exe'
+    SELECTION_4:
+        OriginalFileName: Cmd.Exe
+    SELECTION_5:
+        CommandLine: '*rmdir*'
+    SELECTION_6:
+        CommandLine:
+        - '*/s*'
+        - '*/q*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
+falsepositives:
+- Unknown
+id: 41ca393d-538c-408a-ac27-cf1e038be80c
+level: low
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/07
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.004/T1070.004.md
+- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/erase
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1070.004
+

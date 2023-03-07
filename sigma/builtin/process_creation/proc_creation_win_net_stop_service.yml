@@ -1,0 +1,38 @@
+title: Stop Windows Service Via Net.EXE
+ruletype: Sigma
+author: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali (Nextron Systems)
+date: 2023/03/05
+description: Detects the stopping of a Windows service
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        OriginalFileName:
+        - net.exe
+        - net1.exe
+    SELECTION_4:
+        NewProcessName:
+        - '*\net.exe'
+        - '*\net1.exe'
+    SELECTION_5:
+        CommandLine: '* stop *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- There are many legitimate reasons to stop a service. This rule isn't looking for
+    any suspicious behaviour in particular. Filter legitimate activity accordingly
+id: 88872991-7445-4a22-90b2-a3adadb0e827
+level: low
+logsource:
+    category: process_creation
+    product: windows
+related:
+-   id: eb87818d-db5d-49cc-a987-d5da331fbd90
+    type: obsoletes
+status: experimental
+tags:
+- attack.impact
+- attack.t1489
+

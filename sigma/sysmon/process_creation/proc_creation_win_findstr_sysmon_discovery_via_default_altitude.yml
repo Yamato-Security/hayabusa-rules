@@ -13,8 +13,11 @@ detection:
     SELECTION_3:
         Image: '*\findstr.exe'
     SELECTION_4:
+        OriginalFileName: FINDSTR.EXE
+    SELECTION_5:
         CommandLine: '* 385201*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unknown
 id: 37db85d1-b089-490a-a59a-c7b6f984f480
@@ -22,7 +25,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/08
+modified: 2023/03/06
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518.001/T1518.001.md#atomic-test-5---security-software-discovery---sysmon-service
 status: test

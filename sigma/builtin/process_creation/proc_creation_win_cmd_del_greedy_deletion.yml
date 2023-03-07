@@ -1,0 +1,42 @@
+title: Greedy File Deletion Using Del
+ruletype: Sigma
+author: frack113
+date: 2021/12/02
+description: Detects execution of the "del" builtin command to remove files using
+    greedy/wildcard expression. This is often used by malware to delete content of
+    folders that perhaps contains the initial malware infection or to delete evidence.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\cmd.exe'
+    SELECTION_4:
+        OriginalFileName: Cmd.Exe
+    SELECTION_5:
+        CommandLine:
+        - '*del *'
+        - '*erase *'
+    SELECTION_6:
+        CommandLine:
+        - '*\\\*.dll*'
+        - '*\\\*.exe*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
+falsepositives:
+- Unknown
+id: 204b17ae-4007-471b-917b-b917b315c5db
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/06
+references:
+- https://www.joesandbox.com/analysis/509330/0/html#1044F3BDBE3BB6F734E357235F4D5898582D
+- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/erase
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1070.004
+

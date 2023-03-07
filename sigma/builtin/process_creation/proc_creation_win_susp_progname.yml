@@ -10,7 +10,9 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        NewProcessName: '*\CVE-202*'
+        NewProcessName:
+        - '*\CVE-202*'
+        - '*\CVE202*'
     SELECTION_4:
         NewProcessName:
         - '*\poc.exe'
@@ -65,6 +67,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/03/02
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1560.001/T1560.001.md
 status: test

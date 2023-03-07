@@ -1,9 +1,10 @@
-title: Suspicious Recon Activity Using Findstr Keywords
+title: Permission Misconfiguration Reconnaissance Via Findstr.EXE
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/12
-description: Detects usage of findstr with the "EVERYONE" keyword. This is often used
-    in combination with icacls to look for misconfigured files or folders permissions
+description: Detects usage of findstr with the "EVERYONE" or "BUILTIN" keywords. This
+    is seen being used in combination with "icacls" to look for misconfigured files
+    or folders permissions
 detection:
     SELECTION_1:
         EventID: 4688
@@ -17,13 +18,15 @@ detection:
         CommandLine:
         - '*"Everyone"*'
         - '*''Everyone''*'
+        - '*"BUILTIN\\"*'
+        - '*''BUILTIN\''*'
     SELECTION_6:
         CommandLine: '*icacls *'
     SELECTION_7:
         CommandLine: '*findstr *'
     SELECTION_8:
         CommandLine: '*Everyone*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
         SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
 falsepositives:
 - Unknown
@@ -32,6 +35,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/03/05
 references:
 - https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
 status: experimental

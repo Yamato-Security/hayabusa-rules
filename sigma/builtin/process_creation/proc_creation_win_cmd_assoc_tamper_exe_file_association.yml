@@ -1,0 +1,50 @@
+title: Change Default File Association To Executable Via Assoc
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/06/28
+description: 'Detects when a program changes the default file association of any extension
+    to an executable.
+
+    When a file is opened, the default program used to open the file (also called
+    the file association or handler) is checked. File association selections are stored
+    in the Windows Registry and can be edited by users, administrators, or programs
+    that have Registry access or by administrators using the built-in assoc utility.
+    Applications can modify the file association for a given file extension to call
+    an arbitrary program when a file with the given extension is opened.
+
+    '
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\cmd.exe'
+    SELECTION_4:
+        OriginalFileName: Cmd.Exe
+    SELECTION_5:
+        CommandLine: '*assoc *'
+    SELECTION_6:
+        CommandLine: '*exefile*'
+    SELECTION_7:
+        CommandLine: '*.exe=exefile*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6)) and  not (SELECTION_7))
+falsepositives:
+- Unknown
+id: ae6f14e6-14de-45b0-9f44-c0986f50dc89
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/06
+references:
+- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/assoc
+related:
+-   id: 3d3aa6cd-6272-44d6-8afc-7e88dfef7061
+    type: derived
+status: experimental
+tags:
+- attack.persistence
+- attack.t1546.001
+
