@@ -1,6 +1,6 @@
 title: Potential Product Reconnaissance Via Wmic.EXE
 ruletype: Sigma
-author: Michael Haag, Florian Roth (Nextron Systems), juju4, oscd.community
+author: Nasreddine Bencherchali
 date: 2023/02/14
 description: Detects the execution of WMIC in order to get a list of firewall and
     antivirus products
@@ -14,27 +14,22 @@ detection:
     SELECTION_4:
         OriginalFileName: wmic.exe
     SELECTION_5:
-        CommandLine: '* path *'
-    SELECTION_6:
-        CommandLine:
-        - '*AntiVirusProduct*'
-        - '*FirewallProduct*'
+        CommandLine: '*Product*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
+        SELECTION_5)
 falsepositives:
-- Asset management software
-- During software installations
-id: e568650b-5dcd-4658-8f34-ded0b1e13992
+- Unknown
+id: 15434e33-5027-4914-88d5-3d4145ec25a9
 level: medium
 logsource:
     category: process_creation
     product: windows
 references:
-- https://github.com/albertzsigovits/malware-notes/blob/c820c7fea76cf76a861b28ebc77e06100e20ec29/Ransomware/Maze.md
-- https://www.hybrid-analysis.com/sample/4be06ecd234e2110bd615649fe4a6fa95403979acf889d7e45a78985eb50acf9?environmentId=1
+- https://thedfirreport.com/2023/03/06/2022-year-in-review/
+- https://www.yeahhub.com/list-installed-programs-version-path-windows/
+- https://learn.microsoft.com/en-us/answers/questions/253555/software-list-inventory-wmic-product
 status: experimental
 tags:
 - attack.execution
 - attack.t1047
-- car.2016-03-002
 

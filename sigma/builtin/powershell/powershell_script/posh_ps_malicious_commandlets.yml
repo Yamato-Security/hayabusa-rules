@@ -157,6 +157,7 @@ detection:
         - '*Invoke-winPEAS*'
         - '*Invoke-WireTap*'
         - '*Invoke-WmiCommand*'
+        - '*Invoke-WMIExec*'
         - '*Invoke-WScriptBypassUAC*'
         - '*Invoke-Zerologon*'
         - '*MailRaider*'
@@ -192,7 +193,7 @@ logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2023/01/23
+modified: 2023/03/06
 references:
 - https://adsecurity.org/?p=2921
 - https://github.com/S3cur3Th1sSh1t/PowerSharpPack/tree/master/PowerSharpBinaries

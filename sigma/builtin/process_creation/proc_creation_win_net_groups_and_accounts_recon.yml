@@ -37,11 +37,14 @@ detection:
         - '*Usuarios de escritorio remoto*'
         - '* /do*'
     SELECTION_7:
-        CommandLine: '* accounts *'
+        CommandLine: '* /add*'
     SELECTION_8:
+        CommandLine: '* accounts *'
+    SELECTION_9:
         CommandLine: '* /do*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
+        (((SELECTION_5 and SELECTION_6) and  not (SELECTION_7)) or (SELECTION_8 and
+        SELECTION_9)))
 falsepositives:
 - Inventory tool runs
 - Administrative activity
@@ -53,7 +56,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/01
+modified: 2023/03/02
 references:
 - https://redcanary.com/blog/how-one-hospital-thwarted-a-ryuk-ransomware-outbreak/
 - https://thedfirreport.com/2020/10/18/ryuk-in-5-hours/

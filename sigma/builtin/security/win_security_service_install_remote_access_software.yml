@@ -1,6 +1,6 @@
 title: Remote Access Tool Services Have Been Installed - Security
 ruletype: Sigma
-author: Connor Martin, Nasreddine Bencherchali
+author: Connor Martin, Nasreddine Bencherchali (Nextron Systems)
 date: 2022/12/23
 description: Detects service installation of different remote access tools software.
     These software are often abused by threat actors to perform
@@ -33,7 +33,8 @@ detection:
         - '*jumpcloud*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- Unknown
+- The rule doesn't look for anything suspicious so false positives are expected. If
+    you use one of the tools mentioned, comment it out
 id: c8b00925-926c-47e3-beea-298fd563728e
 level: medium
 logsource:

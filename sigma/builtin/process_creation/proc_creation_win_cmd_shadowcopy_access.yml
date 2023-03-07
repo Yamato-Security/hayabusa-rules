@@ -1,25 +1,27 @@
-title: Copy from Volume Shadow Copy
+title: Copy From VolumeShadowCopy Via Cmd.EXE
 ruletype: Sigma
 author: Max Altgelt (Nextron Systems), Tobias Michalski (Nextron Systems)
 date: 2021/08/09
-description: Detects a copy execution that targets a shadow copy (sometimes used to
-    copy registry hives that are in use)
+description: Detects the execution of the builtin "copy" command that targets a shadow
+    copy (sometimes used to copy registry hives that are in use)
 detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        CommandLine: '*copy \\\\\?\\GLOBALROOT\\Device\\HarddiskVolumeShadowCopy*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+        CommandLine: '*copy *'
+    SELECTION_4:
+        CommandLine: '*\\\\\?\\GLOBALROOT\\Device\\HarddiskVolumeShadowCopy*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- Some rare backup scenarios
+- Backup scenarios using the commandline
 id: c73124a7-3e89-44a3-bdc1-25fe4df754b1
-level: medium
+level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/13
+modified: 2023/03/07
 references:
 - https://twitter.com/vxunderground/status/1423336151860002816?s=20
 - https://www.virustotal.com/gui/file/03e9b8c2e86d6db450e5eceec057d7e369ee2389b9daecaf06331a95410aa5f8/detection

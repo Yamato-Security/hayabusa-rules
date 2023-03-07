@@ -1,9 +1,9 @@
-title: Redirect Output in CommandLine
+title: CMD Shell Output Redirect
 ruletype: Sigma
 author: frack113
 date: 2022/01/22
-description: Detects use of redirection character ">" to redicrect information in
-    commandline
+description: Detects the use of the redirection character ">" to redicrect information
+    in commandline
 detection:
     SELECTION_1:
         EventID: 1
@@ -30,9 +30,12 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/10
+modified: 2023/03/07
 references:
 - https://ss64.com/nt/syntax-redirection.html
+related:
+-   id: 8e0bb260-d4b2-4fff-bb8d-3f82118e6892
+    type: similar
 status: experimental
 tags:
 - attack.discovery

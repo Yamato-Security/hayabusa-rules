@@ -12,20 +12,19 @@ detection:
     SELECTION_3:
         NewProcessName: '*\findstr.exe'
     SELECTION_4:
+        OriginalFileName: FINDSTR.EXE
+    SELECTION_5:
         CommandLine: '*.lnk'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unknown
-fields:
-- Image
-- CommandLine
-- ParentCommandLine
 id: 33339be3-148b-4e16-af56-ad16ec6c7e7b
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
+modified: 2023/03/06
 references:
 - https://www.bleepingcomputer.com/news/security/hhsgov-open-redirect-used-by-coronavirus-phishing-to-spread-malware/
 status: test

@@ -1,0 +1,43 @@
+title: Remote Access Tool - ScreenConnect Execution
+ruletype: Sigma
+author: frack113
+date: 2022/02/13
+description: 'An adversary may use legitimate desktop support and remote access software,
+    such as Team Viewer, Go2Assist, LogMein, AmmyyAdmin, etc, to establish an interactive
+    command and control channel to target systems within networks.
+
+    These services are commonly used as legitimate technical support software, and
+    may be allowed by application control within a target environment.
+
+    Remote access tools like VNC, Ammyy, and Teamviewer are used frequently when compared
+    with other legitimate software commonly used by adversaries. (Citation: Symantec
+    Living off the Land)
+
+    '
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Description: ScreenConnect Service
+    SELECTION_4:
+        Product: ScreenConnect
+    SELECTION_5:
+        Company: ScreenConnect Software
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+falsepositives:
+- Legitimate usage of the tool
+id: 57bff678-25d1-4d6c-8211-8ca106d12053
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/05
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-5---screenconnect-application-download-and-install-on-windows
+status: test
+tags:
+- attack.command_and_control
+- attack.t1219
+

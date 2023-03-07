@@ -1,9 +1,9 @@
-title: Suspicious LSASS Process Clone
+title: Potential Credential Dumping Via LSASS Process Clone
 ruletype: Sigma
 author: Florian Roth (Nextron Systems), Samir Bousseaden
 date: 2021/11/27
 description: Detects a suspicious LSASS process process clone that could be a sign
-    of process dumping activity
+    of credential dumping activity
 detection:
     SELECTION_1:
         EventID: 4688
@@ -21,7 +21,7 @@ level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/25
+modified: 2023/03/02
 references:
 - https://www.matteomalvica.com/blog/2019/12/02/win-defender-atp-cred-bypass/
 - https://twitter.com/Hexacorn/status/1420053502554951689

@@ -1,0 +1,53 @@
+title: HackTool - Default PowerSploit/Empire Scheduled Task Creation
+ruletype: Sigma
+author: Markus Neis, @Karneades
+date: 2018/03/06
+description: Detects the creation of a schtask via PowerSploit or Empire Default Configuration.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        ParentProcessName:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        NewProcessName: '*\schtasks.exe'
+    SELECTION_5:
+        CommandLine: '*/Create*'
+    SELECTION_6:
+        CommandLine: '*powershell.exe -NonI*'
+    SELECTION_7:
+        CommandLine: '*/TN Updater /TR*'
+    SELECTION_8:
+        CommandLine:
+        - '*/SC ONLOGON*'
+        - '*/SC DAILY /ST*'
+        - '*/SC ONIDLE*'
+        - '*/SC HOURLY*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6 and SELECTION_7 and SELECTION_8)
+falsepositives:
+- Unlikely
+id: 56c217c3-2de2-479b-990f-5c109ba8458f
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/03
+references:
+- https://github.com/0xdeadbeefJERKY/PowerSploit/blob/8690399ef70d2cad10213575ac67e8fa90ddf7c3/Persistence/Persistence.psm1
+- https://github.com/EmpireProject/Empire/blob/08cbd274bef78243d7a8ed6443b8364acd1fc48b/lib/modules/powershell/persistence/userland/schtasks.py
+status: test
+tags:
+- attack.execution
+- attack.persistence
+- attack.privilege_escalation
+- attack.s0111
+- attack.g0022
+- attack.g0060
+- car.2013-08-001
+- attack.t1053.005
+- attack.t1059.001
+
