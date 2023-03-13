@@ -27,7 +27,8 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5)
 falsepositives:
-- Admin activity
+- Administrator or administrator scripts might leverage the flags mentioned in the
+    detection section. Either way, it should always be monitored
 id: 0a13e132-651d-11eb-ae93-0242ac130002
 level: high
 logsource:

@@ -8,70 +8,72 @@ detection:
     SELECTION_1:
         EventID: 1
     SELECTION_10:
-        CommandLine: '* -H ''NTHASH''*'
-    SELECTION_11:
-        CommandLine: '* mssql *'
-    SELECTION_12:
-        CommandLine: '* -u *'
-    SELECTION_13:
         CommandLine: '* -p *'
-    SELECTION_14:
-        CommandLine: '* -M *'
-    SELECTION_15:
-        CommandLine: '* -d *'
-    SELECTION_16:
-        CommandLine: '* smb *'
-    SELECTION_17:
+    SELECTION_11:
+        CommandLine: '* -H ''NTHASH''*'
+    SELECTION_12:
+        CommandLine: '* mssql *'
+    SELECTION_13:
         CommandLine: '* -u *'
-    SELECTION_18:
-        CommandLine: '* -H *'
-    SELECTION_19:
+    SELECTION_14:
+        CommandLine: '* -p *'
+    SELECTION_15:
         CommandLine: '* -M *'
+    SELECTION_16:
+        CommandLine: '* -d *'
+    SELECTION_17:
+        CommandLine: '* smb *'
+    SELECTION_18:
+        CommandLine: '* -u *'
+    SELECTION_19:
+        CommandLine: '* -H *'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_20:
-        CommandLine: '* -o *'
+        CommandLine: '* -M *'
     SELECTION_21:
-        CommandLine: '* smb *'
+        CommandLine: '* -o *'
     SELECTION_22:
-        CommandLine: '* -u *'
+        CommandLine: '* smb *'
     SELECTION_23:
-        CommandLine: '* -p *'
+        CommandLine: '* -u *'
     SELECTION_24:
-        CommandLine: '* --local-auth*'
+        CommandLine: '* -p *'
     SELECTION_25:
         CommandLine: '* --local-auth*'
     SELECTION_26:
-        CommandLine: '* -u *'
+        CommandLine: '* --local-auth*'
     SELECTION_27:
-        CommandLine: '* -p *'
+        CommandLine: '* -u *'
     SELECTION_28:
-        CommandLine: '* 10.*'
+        CommandLine: '* -p *'
     SELECTION_29:
-        CommandLine: '* 192.168.*'
+        CommandLine: '* 10.*'
     SELECTION_3:
-        CommandLine: '* -M pe_inject *'
+        Image: '*\crackmapexec.exe'
     SELECTION_30:
+        CommandLine: '* 192.168.*'
+    SELECTION_31:
         CommandLine: '*/24 *'
     SELECTION_4:
-        CommandLine: '* --local-auth*'
+        CommandLine: '* -M pe_inject *'
     SELECTION_5:
-        CommandLine: '* -u *'
-    SELECTION_6:
-        CommandLine: '* -x *'
-    SELECTION_7:
         CommandLine: '* --local-auth*'
-    SELECTION_8:
+    SELECTION_6:
         CommandLine: '* -u *'
+    SELECTION_7:
+        CommandLine: '* -x *'
+    SELECTION_8:
+        CommandLine: '* --local-auth*'
     SELECTION_9:
-        CommandLine: '* -p *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
-        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18 and SELECTION_19
-        and SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23 and SELECTION_24))
-        or (SELECTION_25 and SELECTION_26 and SELECTION_27 and SELECTION_28 and SELECTION_29
-        and SELECTION_30)))
+        CommandLine: '* -u *'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or
+        (SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14
+        and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19
+        and SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24
+        and SELECTION_25)) or (SELECTION_26 and SELECTION_27 and SELECTION_28 and
+        SELECTION_29 and SELECTION_30 and SELECTION_31)))
 falsepositives:
 - Unknown
 fields:
@@ -83,7 +85,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/14
+modified: 2023/03/08
 references:
 - https://mpgn.gitbook.io/crackmapexec/smb-protocol/authentication/checking-credentials-local
 - https://www.mandiant.com/resources/telegram-malware-iranian-espionage

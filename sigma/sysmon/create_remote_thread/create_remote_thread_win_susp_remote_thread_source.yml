@@ -6,7 +6,8 @@ description: 'Offensive tradecraft is switching away from using APIs like "Creat
     however, this is still largely observed in the wild.
 
     This rule aims to detect suspicious processes (those we would not expect to behave
-    in this way like word.exe or outlook.exe) creating remote threads on other processes.
+    in this way like winword.exe or outlook.exe) creating remote threads on other
+    processes.
 
     It is a generalistic rule, but it should have a low FP ratio due to the selected
     range of processes.
@@ -92,7 +93,7 @@ detection:
         - '*\winlogon.exe'
         - '*\winscp.exe'
         - '*\wmic.exe'
-        - '*\word.exe'
+        - '*\winword.exe'
         - '*\wscript.exe'
     SELECTION_4:
         SourceImage: '*Visual Studio*'
@@ -126,7 +127,7 @@ level: high
 logsource:
     category: create_remote_thread
     product: windows
-modified: 2023/02/28
+modified: 2023/03/09
 notes:
 - MonitoringHost.exe is a process that loads .NET CLR by default and thus a favorite
     for process injection for .NET in-memory offensive tools.

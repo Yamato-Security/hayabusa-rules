@@ -28,16 +28,15 @@ falsepositives:
 - IgfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of cmd.exe
     and igfxCUIService.exe is the parent of the cmd.exe)
 - Msiexec.exe hiding desktop.ini
-fields:
-- CommandLine
-- ParentCommandLine
-- User
 id: 4281cb20-2994-4580-aa63-c8b86d019934
 level: low
 logsource:
     category: process_creation
     product: windows
 modified: 2022/11/11
+references:
+- https://unit42.paloaltonetworks.com/unit42-sure-ill-take-new-combojack-malware-alters-clipboards-steal-cryptocurrency/
+- https://www.uptycs.com/blog/lolbins-are-no-laughing-matter
 status: test
 tags:
 - attack.defense_evasion

@@ -1,0 +1,70 @@
+title: Lazarus Group Activity
+ruletype: Sigma
+author: Florian Roth (Nextron Systems), wagga
+date: 2020/12/23
+description: Detects different process execution behaviors as described in various
+    threat reports on Lazarus group activity
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine: '* -p 0x*'
+    SELECTION_11:
+        CommandLine:
+        - '*C:\ProgramData\\*'
+        - '*C:\RECYCLER\\*'
+    SELECTION_12:
+        CommandLine: '*rundll32 *'
+    SELECTION_13:
+        CommandLine: '*C:\ProgramData\\*'
+    SELECTION_14:
+        CommandLine:
+        - '*.bin,*'
+        - '*.tmp,*'
+        - '*.dat,*'
+        - '*.io,*'
+        - '*.ini,*'
+        - '*.db,*'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '*reg.exe save hklm\sam %temp%\~reg_sam.save*'
+        - '*1q2w3e4r@#$@#$@#$*'
+        - '* -hp1q2w3e4 *'
+        - '*.dat data03 10000 -p *'
+    SELECTION_4:
+        CommandLine: '*netstat -aon | find *'
+    SELECTION_5:
+        CommandLine: '*ESTA*'
+    SELECTION_6:
+        CommandLine: '* > %temp%\~*'
+    SELECTION_7:
+        CommandLine: '*.255 10 C:\ProgramData\IBM\\*'
+    SELECTION_8:
+        CommandLine: '*.DAT*'
+    SELECTION_9:
+        CommandLine: '* /c *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14)))
+falsepositives:
+- Unlikely
+id: 24c4d154-05a4-4b99-b57d-9b977472443a
+level: critical
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/10
+references:
+- https://securelist.com/lazarus-covets-covid-19-related-intelligence/99906/
+- https://www.hvs-consulting.de/lazarus-report/
+related:
+-   id: 7b49c990-4a9a-4e65-ba95-47c9cc448f6e
+    type: obsoletes
+status: test
+tags:
+- attack.g0032
+- attack.execution
+- attack.t1059
+

@@ -1,4 +1,4 @@
-title: Uninstall Crowdstrike Falcon
+title: Uninstall Crowdstrike Falcon Sensor
 ruletype: Sigma
 author: frack113
 date: 2021/07/12
@@ -17,18 +17,14 @@ detection:
         CommandLine: '* /quiet*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
 falsepositives:
-- Uninstall by admin
-fields:
-- ComputerName
-- User
-- CommandLine
-- ParentCommandLine
+- Administrator might leverage the same command line for debugging or other purposes.
+    However this action must be always investigated
 id: f0f7be61-9cf5-43be-9836-99d6ef448a18
-level: medium
+level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2023/03/09
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
 status: test

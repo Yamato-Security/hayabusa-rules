@@ -26,7 +26,9 @@ detection:
         - '*/policy:none*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
-- Unknown
+- The old auditpol utility isn't available by default on recent versions of Windows
+    as it was replaced by a newer version. The FP rate should be very low except for
+    tools that use a similar flag structure
 id: c6c56ada-612b-42d1-9a29-adad3c5c2c1e
 level: high
 logsource:

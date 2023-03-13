@@ -5,7 +5,7 @@ date: 2019/10/27
 description: 'Detects the load of dbghelp/dbgcore DLL (used to make memory dumps)
     by suspicious processes.
 
-    Tools like ProcessHacker and some attacker tradecract use MiniDumpWriteDump API
+    Tools like ProcessHacker and some attacker tradecraft use MiniDumpWriteDump API
     found in dbghelp.dll or dbgcore.dll.
 
     As an example, SilentTrynity C2 Framework has a module that leverages this API
@@ -27,7 +27,7 @@ detection:
         - '*\msbuild.exe'
         - '*\cmd.exe'
         - '*\rundll32.exe'
-        - '*\word.exe'
+        - '*\winword.exe'
         - '*\excel.exe'
         - '*\powerpnt.exe'
         - '*\outlook.exe'
@@ -54,7 +54,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2023/02/17
+modified: 2023/03/09
 references:
 - https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump
 - https://www.pinvoke.net/default.aspx/dbghelp/MiniDumpWriteDump.html

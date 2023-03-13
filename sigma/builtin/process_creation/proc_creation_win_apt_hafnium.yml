@@ -1,4 +1,4 @@
-title: Exchange Exploitation Activity
+title: HAFNIUM Exchange Exploitation Activity
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2021/03/09
@@ -8,52 +8,53 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        CommandLine: '*vssadmin list shadows*'
+        CommandLine: '*VSPerfMon*'
     SELECTION_11:
-        CommandLine: '*Temp\__output*'
-    SELECTION_12:
-        CommandLine: '*%TEMP%\execute.bat*'
-    SELECTION_13:
-        NewProcessName: '*Users\Public\opera\Opera_browser.exe'
-    SELECTION_14:
         NewProcessName: '*Opera_browser.exe'
-    SELECTION_15:
+    SELECTION_12:
         ParentProcessName:
         - '*\services.exe'
         - '*\svchost.exe'
+    SELECTION_13:
+        NewProcessName: '*Users\Public\opera\Opera_browser.exe'
+    SELECTION_14:
+        CommandLine: '*vssadmin list shadows*'
+    SELECTION_15:
+        CommandLine: '*Temp\__output*'
     SELECTION_16:
-        NewProcessName: '*\ProgramData\VSPerfMon\\*'
+        NewProcessName: '*\makecab.exe'
     SELECTION_17:
-        CommandLine: '* -t7z *'
+        CommandLine: '*inetpub\wwwroot\\*'
     SELECTION_18:
-        CommandLine: '*C:\Programdata\pst*'
+        CommandLine: '*.dmp.zip*'
     SELECTION_19:
-        CommandLine: '*\it.zip*'
+        NewProcessName: '*\makecab.exe'
     SELECTION_2:
         Channel: Security
     SELECTION_20:
-        NewProcessName: '*\makecab.exe'
-    SELECTION_21:
         CommandLine:
         - '*Microsoft\Exchange Server\\*'
-        - '*inetpub\wwwroot*'
+        - '*compressionmemory*'
+        - '*.gif*'
+    SELECTION_21:
+        CommandLine: '* -t7z *'
     SELECTION_22:
+        CommandLine: '*C:\Programdata\pst*'
+    SELECTION_23:
+        CommandLine: '*\it.zip*'
+    SELECTION_24:
+        CommandLine: '*\comsvcs.dll*'
+    SELECTION_25:
+        CommandLine: '*Minidump*'
+    SELECTION_26:
+        CommandLine: '*full *'
+    SELECTION_27:
+        CommandLine: '*\inetpub\wwwroot*'
+    SELECTION_28:
         CommandLine:
-        - '*\Temp\xx.bat*'
+        - '*Windows\Temp\xx.bat*'
         - '*Windows\WwanSvcdcs*'
         - '*Windows\Temp\cw.exe*'
-    SELECTION_23:
-        CommandLine: '*\comsvcs.dll*'
-    SELECTION_24:
-        CommandLine: '*Minidump*'
-    SELECTION_25:
-        CommandLine: '*\inetpub\wwwroot*'
-    SELECTION_26:
-        CommandLine: '*dsquery*'
-    SELECTION_27:
-        CommandLine: '* -uco *'
-    SELECTION_28:
-        CommandLine: '*\inetpub\wwwroot*'
     SELECTION_3:
         CommandLine: '*attrib*'
     SELECTION_4:
@@ -65,23 +66,23 @@ detection:
     SELECTION_7:
         CommandLine: '*.aspx*'
     SELECTION_8:
-        CommandLine: '*schtasks*'
+        NewProcessName: '*\ProgramData\VSPerfMon\\*'
     SELECTION_9:
-        CommandLine: '*VSPerfMon*'
+        CommandLine: '*schtasks*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or SELECTION_12 or SELECTION_13 or (SELECTION_14
-        and SELECTION_15) or SELECTION_16 or (SELECTION_17 and SELECTION_18 and SELECTION_19)
-        or (SELECTION_20 and SELECTION_21) or SELECTION_22 or (SELECTION_23 and SELECTION_24
-        and SELECTION_25) or (SELECTION_26 and SELECTION_27 and SELECTION_28)))
+        SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 or (SELECTION_9
+        and SELECTION_10)) or (SELECTION_11 and SELECTION_12) or SELECTION_13 or (SELECTION_14
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19
+        and SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
+        and SELECTION_25 and SELECTION_26 and SELECTION_27) or SELECTION_28))
 falsepositives:
-- Unknown
+- Unlikely
 id: bbb2dedd-a0e3-46ab-ba6c-6c82ae7a9aa7
-level: high
+level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
+modified: 2023/03/09
 references:
 - https://blog.truesec.com/2021/03/07/exchange-zero-day-proxylogon-and-hafnium/
 - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/

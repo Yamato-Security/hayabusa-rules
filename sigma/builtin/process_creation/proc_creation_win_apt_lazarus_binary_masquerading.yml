@@ -1,0 +1,35 @@
+title: Lazarus System Binary Masquerading
+ruletype: Sigma
+author: Trent Liffick (@tliffick), Bartlomiej Czyz (@bczyz1)
+date: 2020/06/03
+description: Detects binaries used by the Lazarus group which use system names but
+    are executed and launched from non-default location
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName:
+        - '*\msdtc.exe'
+        - '*\gpsvc.exe'
+    SELECTION_4:
+        NewProcessName:
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unlikely
+id: 3f7f5b0b-5b16-476c-a85f-ab477f6dd24b
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/10
+references:
+- https://media.kasperskycontenthub.com/wp-content/uploads/sites/43/2018/03/07180244/Lazarus_Under_The_Hood_PDF_final.pdf
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1036.005
+
