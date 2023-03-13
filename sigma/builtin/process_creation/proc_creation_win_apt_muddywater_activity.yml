@@ -1,0 +1,55 @@
+title: Potential MuddyWater APT Activity
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/03/10
+description: Detects potential Muddywater APT activity
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_10:
+        CommandLine: '*[System.Net.DNS]*'
+    SELECTION_11:
+        CommandLine: '*[Convert]::ToBase64String*'
+    SELECTION_12:
+        CommandLine: '*[System.Text.Encoding]::UTF8.GetString]*'
+    SELECTION_13:
+        CommandLine: '*GetResponse().GetResponseStream()*'
+    SELECTION_14:
+        CommandLine: '*[System.Net.HttpWebRequest]::Create(*'
+    SELECTION_15:
+        CommandLine: '*-bxor *'
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*vbscript:Close(Execute("CreateObject(*'
+    SELECTION_4:
+        CommandLine: '*powershell*'
+    SELECTION_5:
+        CommandLine: '*-w 1 -exec Bypass*'
+    SELECTION_6:
+        CommandLine: '*\ProgramData\\*'
+    SELECTION_7:
+        CommandLine: '*Win32_OperatingSystem*'
+    SELECTION_8:
+        CommandLine: '*Win32_NetworkAdapterConfiguration*'
+    SELECTION_9:
+        CommandLine: '*root\SecurityCenter2*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
+        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14
+        and SELECTION_15)))
+falsepositives:
+- Unlikely
+id: 36222790-0d43-4fe8-86e4-674b27809543
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.mandiant.com/resources/blog/iranian-threat-group-updates-ttps-in-spear-phishing-campaign
+status: test
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.g0069
+

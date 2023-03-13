@@ -1,4 +1,4 @@
-title: Judgement Panda Credential Access Activity
+title: Potential Russian APT Credential Theft Activity
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2019/02/21
@@ -7,49 +7,31 @@ description: Detects Russian group activity as described in Global Threat Report
 detection:
     SELECTION_1:
         EventID: 4688
-    SELECTION_10:
-        CommandLine: '*\\\\\*'
-    SELECTION_11:
-        NewProcessName: '*\adexplorer.exe'
-    SELECTION_12:
-        OriginalFileName: AdExp
-    SELECTION_13:
-        CommandLine: '*-snapshot*'
-    SELECTION_14:
-        CommandLine: '*""*'
-    SELECTION_15:
-        CommandLine: '*c:\users\\*'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        NewProcessName: '*\xcopy.exe'
+        CommandLine: '*xcopy /S /E /C /Q /H \\\\\*'
     SELECTION_4:
-        OriginalFileName: XCOPY.EXE
+        CommandLine: '*\sysvol\\*'
     SELECTION_5:
-        CommandLine: '*/S*'
+        CommandLine: '*adexplorer -snapshot "" c:\users\\*'
     SELECTION_6:
-        CommandLine: '*/E*'
+        CommandLine: '*\downloads\\*'
     SELECTION_7:
-        CommandLine: '*/C*'
-    SELECTION_8:
-        CommandLine: '*/Q*'
-    SELECTION_9:
-        CommandLine: '*/H*'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9
-        and SELECTION_10)) or ((SELECTION_11 or SELECTION_12) and (SELECTION_13 and
-        SELECTION_14 and SELECTION_15))))
+        CommandLine: '*.snp*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6 and SELECTION_7)))
 falsepositives:
-- Unknown
+- Unlikely
 id: b83f5166-9237-4b5e-9cd4-7b5d52f4d8ee
 level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2023/03/08
 references:
-- https://www.crowdstrike.com/resources/reports/2019-crowdstrike-global-threat-report/
-status: test
+- https://www.documentcloud.org/documents/5743766-Global-Threat-Report-2019.html
+status: stable
 tags:
 - attack.credential_access
 - attack.t1552.001

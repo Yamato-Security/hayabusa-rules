@@ -1,53 +1,52 @@
-title: Greenbug Campaign Indicators
+title: Greenbug Espionage Group Indicators
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2020/05/20
-description: Detects tools and process executions as observed in a Greenbug campaign
-    in May 2020
+description: Detects tools and process executions used by Greenbug in their May 2020
+    campaign as reported by Symantec
 detection:
     SELECTION_1:
         EventID: 1
+    SELECTION_10:
+        CommandLine: '*L3NlcnZlcj1*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        CommandLine: '*bitsadmin*'
+        Image:
+        - '*:\ProgramData\adobe\Adobe.exe'
+        - '*:\ProgramData\oracle\local.exe'
+        - '*\revshell.exe'
+        - '*\infopagesbackup\ncat.exe'
+        - '*:\ProgramData\comms\comms.exe'
     SELECTION_4:
-        CommandLine: '*/transfer*'
+        CommandLine: '*-ExecutionPolicy Bypass -File*'
     SELECTION_5:
-        CommandLine: '*CSIDL_APPDATA*'
+        CommandLine: '*\msf.ps1*'
     SELECTION_6:
-        CommandLine: '*CSIDL_SYSTEM_DRIVE*'
+        CommandLine: '*infopagesbackup*'
     SELECTION_7:
+        CommandLine: '*\ncat*'
+    SELECTION_8:
+        CommandLine: '*-e cmd.exe*'
+    SELECTION_9:
         CommandLine:
-        - '*\msf.ps1*'
-        - '*8989 -e cmd.exe*'
         - '*system.Data.SqlClient.SqlDataAdapter($cmd); [void]$da.fill*'
         - '*-nop -w hidden -c $k=new-object*'
         - '*[Net.CredentialCache]::DefaultCredentials;IEX *'
         - '* -nop -w hidden -c $m=new-object net.webclient;$m*'
         - '*-noninteractive -executionpolicy bypass whoami*'
         - '*-noninteractive -executionpolicy bypass netstat -a*'
-        - '*L3NlcnZlcj1*'
-    SELECTION_8:
-        Image:
-        - '*\adobe\Adobe.exe'
-        - '*\oracle\local.exe'
-        - '*\revshell.exe'
-        - '*infopagesbackup\ncat.exe'
-        - '*CSIDL_SYSTEM\cmd.exe'
-        - '*\programdata\oracle\java.exe'
-        - '*CSIDL_COMMON_APPDATA\comms\comms.exe'
-        - '*\Programdata\VMware\Vmware.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or SELECTION_6 or SELECTION_7 or SELECTION_8))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8) or SELECTION_9
+        or SELECTION_10))
 falsepositives:
-- Unknown
+- Unlikely
 id: 3711eee4-a808-4849-8a14-faf733da3612
 level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2021/09/21
+modified: 2023/03/09
 references:
 - https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/greenbug-espionage-telco-south-asia
 status: test

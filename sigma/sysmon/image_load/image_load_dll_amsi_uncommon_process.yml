@@ -1,0 +1,55 @@
+title: Amsi.DLL Load By Uncommon Process
+ruletype: Sigma
+author: frack113
+date: 2023/03/12
+description: Detects loading of Amsi.dll by uncommon processes
+detection:
+    SELECTION_1:
+        EventID: 7
+    SELECTION_10:
+        Image: '*\ngentask.exe'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ImageLoaded: '*\amsi.dll'
+    SELECTION_4:
+        Image:
+        - C:\Windows\explorer.exe
+        - C:\Windows\Sysmon64.exe
+    SELECTION_5:
+        Image:
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
+        - C:\Windows\WinSxS\\*
+    SELECTION_6:
+        Image:
+        - C:\Program Files\\*
+        - C:\Program Files (x86)\\*
+    SELECTION_7:
+        Image: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
+    SELECTION_8:
+        Image: '*\MsMpEng.exe'
+    SELECTION_9:
+        Image:
+        - C:\Windows\Microsoft.NET\Framework\\*
+        - C:\Windows\Microsoft.NET\Framework64\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        or SELECTION_5) or (SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10)))
+falsepositives:
+- Likely
+id: facd1549-e416-48e0-b8c4-41d7215eedc8
+level: low
+logsource:
+    category: image_load
+    product: windows
+references:
+- https://infosecwriteups.com/amsi-bypass-new-way-2023-d506345944e9
+- https://github.com/TheD1rkMtr/AMSI_patch
+- https://github.com/surya-dev-singh/AmsiBypass-OpenSession
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.impact
+- attack.t1490
+

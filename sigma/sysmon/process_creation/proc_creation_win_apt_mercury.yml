@@ -1,9 +1,8 @@
-title: MERCURY Command Line Patterns
+title: MERCURY APT Activity
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2022/08/26
-description: Detects suspicious command line patterns as seen being used by MERCURY
-    threat actor
+description: Detects suspicious command line patterns seen being used by MERCURY APT
 detection:
     SELECTION_1:
         EventID: 1
@@ -12,7 +11,7 @@ detection:
     SELECTION_3:
         CommandLine: '*-exec bypass -w 1 -enc*'
     SELECTION_4:
-        CommandLine: '*UwB0AGEAcgB0AC0ASgBvAGIAIAAtAFMAYwByAGkAcAB0AEIAbABvAGMAaw*'
+        CommandLine: '*UwB0AGEAcgB0AC0ASgBvAGIAIAAtAFMAYwByAGkAcAB0AEIAbABvAGMAawAgAHsAKABzAGEAcABzACAAKAAiAHAA*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
@@ -21,7 +20,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/12
+modified: 2023/03/10
 references:
 - https://www.microsoft.com/security/blog/2022/08/25/mercury-leveraging-log4j-2-vulnerabilities-in-unpatched-systems-to-target-israeli-organizations/
 status: experimental

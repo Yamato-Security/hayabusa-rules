@@ -1,0 +1,39 @@
+title: Uninstall Sysinternals Sysmon
+ruletype: Sigma
+author: frack113
+date: 2022/01/12
+description: Detects the removal of Sysmon, which could be a potential attempt at
+    defense evasion
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\Sysmon64.exe'
+        - '*\Sysmon.exe'
+    SELECTION_4:
+        Description: System activity monitor
+    SELECTION_5:
+        CommandLine:
+        - '*-u*'
+        - '*/u*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Legitimate administrators might use this command to remove Sysmon for debugging
+    purposes
+id: 6a5f68d1-c4b5-46b9-94ee-5324892ea939
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/09
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md#atomic-test-11---uninstall-sysmon
+status: test
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+

@@ -2,7 +2,7 @@ title: Winrar Compressing Dump Files
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2022/01/04
-description: Detects a suspicious winrar execution that involves a file with a .dmp
+description: Detects a suspicious winrar execution that involves a file with a ".dmp"/".dump"
     extension, which could be a step in a process of dump file exfiltration
 detection:
     SELECTION_1:
@@ -16,7 +16,9 @@ detection:
     SELECTION_4:
         Description: Command line RAR
     SELECTION_5:
-        CommandLine: '*.dmp*'
+        CommandLine:
+        - '*.dmp*'
+        - '*.dump*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5)
 falsepositives:
@@ -26,9 +28,12 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/17
+modified: 2023/03/10
 references:
 - https://www.crowdstrike.com/blog/overwatch-exposes-aquatic-panda-in-possession-of-log-4-shell-exploit-tools/
+related:
+-   id: ec570e53-4c76-45a9-804d-dc3f355ff7a7
+    type: similar
 status: experimental
 tags:
 - attack.collection
