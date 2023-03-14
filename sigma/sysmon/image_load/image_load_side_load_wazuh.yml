@@ -1,0 +1,38 @@
+title: Potential Wazuh Security Platform DLL Sideloading
+ruletype: Sigma
+author: X__Junior
+date: 2023/03/13
+description: Detects potential DLL sideloading of DLLs that are part of the Wazuh
+    security platform
+detection:
+    SELECTION_1:
+        EventID: 7
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ImageLoaded:
+        - '*\libwazuhshared.dll'
+        - '*\libwinpthread-1.dll'
+    SELECTION_4:
+        ImageLoaded:
+        - C:\Program Files (x86)\ossec-agent\\*
+        - C:\Program Files\Inkscape\bin\\*
+        - C:\Program Files (x86)\Pidgin\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+falsepositives:
+- Unknown
+id: db77ce78-7e28-4188-9337-cf30e2b3ba9f
+level: medium
+logsource:
+    category: image_load
+    product: windows
+references:
+- https://www.trendmicro.com/en_us/research/23/c/iron-tiger-sysupdate-adds-linux-targeting.html
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.persistence
+- attack.privilege_escalation
+- attack.t1574.001
+- attack.t1574.002
+
