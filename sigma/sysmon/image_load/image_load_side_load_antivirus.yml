@@ -34,6 +34,12 @@ detection:
         ImageLoaded:
         - C:\program Files\Trend Micro\Titanium\\*
         - C:\program Files (x86)\Trend Micro\Titanium\\*
+    SELECTION_18:
+        ImageLoaded: '*\DLPPREM32.dll'
+    SELECTION_19:
+        ImageLoaded:
+        - C:\program Files\ESET*
+        - C:\program Files (x86)\ESET*
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -56,11 +62,11 @@ detection:
         ImageLoaded:
         - C:\Program Files\F-Secure\Anti-Virus\\*
         - C:\Program Files (x86)\F-Secure\Anti-Virus\\*
-    condition: ((SELECTION_1 and SELECTION_2) and ((((((SELECTION_3 and  not ((SELECTION_4)
+    condition: ((SELECTION_1 and SELECTION_2) and (((((((SELECTION_3 and  not ((SELECTION_4)
         or (SELECTION_5 and SELECTION_6) or (SELECTION_7))) or (SELECTION_8 and  not
         (SELECTION_9))) or (SELECTION_10 and  not (SELECTION_11))) or (SELECTION_12
         and  not (SELECTION_13))) or (SELECTION_14 and  not (SELECTION_15))) or (SELECTION_16
-        and  not (SELECTION_17))))
+        and  not (SELECTION_17))) or (SELECTION_18 and  not (SELECTION_19))))
 falsepositives:
 - Applications that load the same dlls mentioned in the detection section. Investigate
     them and filter them out if a lot FPs are caused.
@@ -73,7 +79,7 @@ level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2023/01/29
+modified: 2023/03/13
 references:
 - https://hijacklibs.net/
 status: experimental
