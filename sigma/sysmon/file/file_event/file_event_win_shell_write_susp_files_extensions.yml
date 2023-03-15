@@ -10,7 +10,6 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         Image:
-        - '*\rundll32.exe'
         - '*\smss.exe'
         - '*\RuntimeBroker.exe'
         - '*\sihost.exe'
@@ -29,7 +28,21 @@ detection:
         - '*.hta'
         - '*.iso'
         - '*.dll'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+    SELECTION_5:
+        Image:
+        - '*\rundll32.exe'
+        - '*\svchost.exe'
+        - '*\dllhost.exe'
+    SELECTION_6:
+        TargetFilename:
+        - '*.bat'
+        - '*.vbe'
+        - '*.vbs'
+        - '*.ps1'
+        - '*.hta'
+        - '*.iso'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)))
 falsepositives:
 - Unknown
 id: b8fd0e93-ff58-4cbd-8f48-1c114e342e62
@@ -37,7 +50,7 @@ level: high
 logsource:
     category: file_event
     product: windows
-modified: 2022/09/27
+modified: 2023/03/14
 references:
 - Internal Research
 related:

@@ -29,11 +29,11 @@ falsepositives:
     and igfxCUIService.exe is the parent of the cmd.exe)
 - Msiexec.exe hiding desktop.ini
 id: 4281cb20-2994-4580-aa63-c8b86d019934
-level: low
+level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2023/03/14
 references:
 - https://unit42.paloaltonetworks.com/unit42-sure-ill-take-new-combojack-malware-alters-clipboards-steal-cryptocurrency/
 - https://www.uptycs.com/blog/lolbins-are-no-laughing-matter

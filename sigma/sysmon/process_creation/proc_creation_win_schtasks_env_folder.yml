@@ -7,8 +7,34 @@ description: Detects Schtask creations that point to a suspicious folder or an e
 detection:
     SELECTION_1:
         EventID: 1
+    SELECTION_10:
+        CommandLine: '*/Create /Xml "C:\Users\\*'
+    SELECTION_11:
+        CommandLine: '*\AppData\Local\Temp\.CR.*'
+    SELECTION_12:
+        CommandLine: '*Avira_Security_Installation.xml*'
+    SELECTION_13:
+        CommandLine: '*/Create /F /TN*'
+    SELECTION_14:
+        CommandLine: '*/Xml *'
+    SELECTION_15:
+        CommandLine: '*\AppData\Local\Temp\is-*'
+    SELECTION_16:
+        CommandLine: '*Avira_*'
+    SELECTION_17:
+        CommandLine:
+        - '*.tmp\UpdateFallbackTask.xml*'
+        - '*.tmp\WatchdogServiceControlManagerTimeout.xml*'
+        - '*.tmp\SystrayAutostart.xml*'
+        - '*.tmp\MaintenanceTask.xml*'
+    SELECTION_18:
+        CommandLine: '*\AppData\Local\Temp\\*'
+    SELECTION_19:
+        CommandLine: '*/Create /TN "klcp_update" /XML *'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        CommandLine: '*\klcp_update_task.xml*'
     SELECTION_3:
         Image: '*\schtasks.exe'
     SELECTION_4:
@@ -37,7 +63,10 @@ detection:
     SELECTION_9:
         ParentCommandLine: '*unattended.ini*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8 or SELECTION_9)))
+        SELECTION_5) or (SELECTION_6 and SELECTION_7)) and  not ((SELECTION_8 or SELECTION_9)
+        or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
+        and SELECTION_15 and SELECTION_16 and SELECTION_17) or (SELECTION_18 and SELECTION_19
+        and SELECTION_20)))
 falsepositives:
 - Benign scheduled tasks creations or executions that happen often during software
     installations
@@ -48,10 +77,13 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/18
+modified: 2023/03/14
 references:
 - https://www.welivesecurity.com/2022/01/18/donot-go-do-not-respawn/
 - https://www.joesandbox.com/analysis/514608/0/html#324415FF7D8324231381BAD48A052F85DF04
+related:
+-   id: 43f487f0-755f-4c2a-bce7-d6d2eec2fcf8
+    type: derived
 status: experimental
 tags:
 - attack.execution

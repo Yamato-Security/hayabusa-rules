@@ -1,11 +1,11 @@
-title: Set Suspicious Files as System Files Using Attrib
+title: Set Suspicious Files as System Files Using Attrib.EXE
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/06/28
-description: 'Detects the usage of attrib with the "+s" option to set suspicious scripts
-    or executables as system files to hide them from users and make them unable to
-    be deleted with simple rights. The rule limits the search to specific extensions
-    and directories to avoid FPs
+description: 'Detects the usage of attrib with the "+s" option to set scripts or executables
+    located in suspicious locations as system files to hide them from users and make
+    them unable to be deleted with simple rights. The rule limits the search to specific
+    extensions and directories to avoid FPs
 
     '
 detection:
@@ -30,10 +30,12 @@ detection:
     SELECTION_7:
         CommandLine:
         - '*.bat*'
+        - '*.dll*'
+        - '*.exe*'
+        - '*.hta*'
         - '*.ps1*'
         - '*.vbe*'
         - '*.vbs*'
-        - '*.exe*'
     SELECTION_8:
         CommandLine: '*\Windows\TEMP\\*'
     SELECTION_9:
@@ -47,7 +49,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2023/03/14
 references:
 - https://app.any.run/tasks/c28cabc8-a19f-40f3-a78b-cae506a5c0d4
 - https://app.any.run/tasks/cfc8870b-ccd7-4210-88cf-a8087476a6d0

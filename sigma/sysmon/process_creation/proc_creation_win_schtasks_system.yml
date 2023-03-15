@@ -9,6 +9,11 @@ detection:
         EventID: 1
     SELECTION_10:
         CommandLine: '*/TN TVInstallRestore*'
+    SELECTION_11:
+        CommandLine:
+        - '*/Create /F /RU System /SC WEEKLY /TN AviraSystemSpeedupVerify /TR *'
+        - '*C:\Program Files (x86)\Avira\System Speedup\setup\avira_speedup_setup.exe*'
+        - '*/VERIFY /VERYSILENT /NOSTART /NODOTNET /NORESTART" /RL HIGHEST*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -30,8 +35,8 @@ detection:
     SELECTION_9:
         Image: '*\schtasks.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not (SELECTION_7 and SELECTION_8 and SELECTION_9
-        and SELECTION_10))
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11)))
 falsepositives:
 - Unknown
 id: 89ca78fd-b37c-4310-b3d3-81a023f83936
@@ -39,6 +44,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/03/14
 references:
 - https://www.elastic.co/security-labs/exploring-the-qbot-attack-pattern
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks
