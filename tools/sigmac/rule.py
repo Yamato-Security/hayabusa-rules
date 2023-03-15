@@ -81,13 +81,10 @@ class SigmaParser:
         elif type(definition) == dict:      # map
             cond = ConditionAND()
             for key, value in definition.items():
-                if "base64offset|contains" in key:
+                if "base64offset|contains" in key or "cidr" in key:
                     fieldname = key
                 elif "|" in key:  # field name contains value modifier
                     fieldname, *modifiers = key.split("|")
-                    if "cidr" in modifiers: # Add other unsupported modifiers here
-                        raise SigmaParseError("Cannot convert the rule. Unsupported new cidr modifier by SIGMAC. Please use the new PySigma/SigmaCLI to be able to convert the rule")
-                        break
                     value = apply_modifiers(value, modifiers)
                 else:
                     fieldname = key
