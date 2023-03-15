@@ -1,6 +1,6 @@
 title: Disable Windows Event Logging Via Registry
 ruletype: Sigma
-author: frack113, Nasreddine Bencherchali
+author: frack113, Nasreddine Bencherchali (Nextron Systems)
 date: 2022/07/04
 description: Detects tampering with the "Enabled" registry key in order to disable
     windows logging of a windows event channel
@@ -15,6 +15,7 @@ detection:
         - '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-ASN1\\*'
         - '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Kernel-AppCompat\\*'
         - '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Runtime\Error\\*'
+        - '*\Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-CAPI2/Operational\\*'
     SELECTION_12:
         Image: C:\Windows\servicing\TrustedInstaller.exe
     SELECTION_13:
@@ -50,7 +51,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/18
+modified: 2023/03/14
 references:
 - https://twitter.com/WhichbufferArda/status/1543900539280293889
 - https://github.com/DebugPrivilege/CPP/blob/c39d365617dbfbcb01fffad200d52b6239b2918c/Windows%20Defender/RestoreDefenderConfig.cpp

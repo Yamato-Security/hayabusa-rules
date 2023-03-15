@@ -66,6 +66,12 @@ detection:
         TargetImage: '*\lsass.exe'
     SELECTION_30:
         GrantedAccess: '0x1fffff'
+    SELECTION_31:
+        SourceImage: '*\AppData\Local\Temp\is-*'
+    SELECTION_32:
+        SourceImage: '*.tmp\avira_system_speedup.tmp'
+    SELECTION_33:
+        GrantedAccess: '0x1410'
     SELECTION_4:
         GrantedAccess:
         - '*10'
@@ -122,7 +128,7 @@ detection:
         and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19)
         or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
         and SELECTION_25 and SELECTION_26) or (SELECTION_27) or (SELECTION_28 and
-        SELECTION_29 and SELECTION_30)))
+        SELECTION_29 and SELECTION_30) or (SELECTION_31 and SELECTION_32 and SELECTION_33)))
 falsepositives:
 - Legitimate software accessing LSASS process for legitimate reason
 fields:
@@ -134,7 +140,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/11/01
+modified: 2023/03/14
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

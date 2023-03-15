@@ -33,6 +33,7 @@ detection:
         - TermSrv_API_service
         - MsFteWds
         - sql\query
+        - eventlog
     condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
 falsepositives:
 - Update the excluded named pipe to filter out any newly observed legit named pipe
@@ -43,7 +44,7 @@ logsource:
         File Share" must be configured for Success/Failure
     product: windows
     service: security
-modified: 2021/12/06
+modified: 2023/03/14
 references:
 - https://twitter.com/menasec1/status/1104489274387451904
 status: test

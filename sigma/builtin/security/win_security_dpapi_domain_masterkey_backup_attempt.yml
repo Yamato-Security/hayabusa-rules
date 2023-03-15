@@ -11,17 +11,18 @@ detection:
         EventID: 4692
     condition: (SELECTION_1 and SELECTION_2)
 falsepositives:
-- Unknown
+- If a computer is a member of a domain, DPAPI has a backup mechanism to allow unprotection
+    of the data. Which will trigger this event.
 fields:
 - ComputerName
 - SubjectDomainName
 - SubjectUserName
 id: 39a94fd1-8c9a-4ff6-bf22-c058762f8014
-level: high
+level: medium
 logsource:
     product: windows
     service: security
-modified: 2021/11/27
+modified: 2023/03/15
 references:
 - https://threathunterplaybook.com/hunts/windows/190620-DomainDPAPIBackupKeyExtraction/notebook.html
 status: test

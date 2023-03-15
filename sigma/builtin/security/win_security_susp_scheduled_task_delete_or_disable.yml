@@ -18,18 +18,16 @@ detection:
         - '*\Windows\BitLocker*'
         - '*\Windows\WindowsBackup\\*'
         - '*\Windows\WindowsUpdate\\*'
-        - '*\Windows\UpdateOrchestrator\\*'
+        - '*\Windows\UpdateOrchestrator\Schedule*'
         - '*\Windows\ExploitGuard*'
     SELECTION_5:
-        TaskName: '*\Windows\UpdateOrchestrator\AC Power Download*'
-    SELECTION_6:
         EventID: 4699
-    SELECTION_7:
+    SELECTION_6:
         SubjectUserName: '*$'
-    SELECTION_8:
+    SELECTION_7:
         TaskName: '*\Windows\Windows Defender\\*'
     condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
+        ((SELECTION_5 and SELECTION_6 and SELECTION_7)))
 falsepositives:
 - Unknown
 id: 7595ba94-cf3b-4471-aa03-4f6baa9e5fad
@@ -40,7 +38,7 @@ logsource:
         extracting the Command field from the embedded XML in the event data.
     product: windows
     service: security
-modified: 2023/02/20
+modified: 2023/03/13
 references:
 - https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4699
 - https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4701

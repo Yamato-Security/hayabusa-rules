@@ -1,8 +1,9 @@
-title: Set Windows System File with Attrib
+title: Set Files as System Files Using Attrib.EXE
 ruletype: Sigma
 author: frack113
 date: 2022/02/04
-description: Marks a file as a system file using the attrib.exe utility
+description: Detects the execution of "attrib" with the "+s" flag to mark files as
+    system files
 detection:
     SELECTION_1:
         EventID: 4688
@@ -23,7 +24,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/11
+modified: 2023/03/14
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.001/T1564.001.md#atomic-test-3---create-windows-system-file-with-attrib
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/attrib

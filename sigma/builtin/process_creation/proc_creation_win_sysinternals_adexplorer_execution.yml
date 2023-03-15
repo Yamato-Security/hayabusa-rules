@@ -1,0 +1,37 @@
+title: Active Directory Database Snapshot Via ADExplorer
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/03/14
+description: Detects the execution of Sysinternals ADExplorer with the "-snapshot"
+    flag in order to save a local copy of the active directory database.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        NewProcessName: '*\ADExplorer.exe'
+    SELECTION_4:
+        OriginalFileName: AdExp
+    SELECTION_5:
+        CommandLine: '*snapshot*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: 9212f354-7775-4e28-9c9f-8f0a4544e664
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.documentcloud.org/documents/5743766-Global-Threat-Report-2019.html
+related:
+-   id: ef61af62-bc74-4f58-b49b-626448227652
+    type: derived
+status: experimental
+tags:
+- attack.credential_access
+- attack.t1552.001
+- attack.t1003.003
+

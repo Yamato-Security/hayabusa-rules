@@ -19,19 +19,16 @@ detection:
         - C:\Windows\SystemTemp\\*
         - C:\Program Files (x86)\\*
         - C:\Program Files\\*
-    SELECTION_5:
-        ImageLoaded: '*\Steam\bin\cef\cef.win7x64\dbgcore.dll'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5)))
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLL mentioned in this
     rule
 id: 9ca2bf31-0570-44d8-a543-534c47c33ed7
-level: medium
+level: high
 logsource:
     category: image_load
     product: windows
-modified: 2022/10/28
+modified: 2023/03/15
 references:
 - https://hijacklibs.net/
 status: experimental

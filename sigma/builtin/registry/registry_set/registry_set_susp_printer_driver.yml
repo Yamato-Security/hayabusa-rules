@@ -7,6 +7,8 @@ description: Detects a suspicious printer driver installation with an empty Manu
 detection:
     SELECTION_1:
         EventID: 4657
+    SELECTION_10:
+        TargetObject: '*\Version-3\PDF24\\*'
     SELECTION_2:
         OperationType:
         - Existing registry value modified
@@ -27,7 +29,8 @@ detection:
         - '*\VNC Printer (PS)\\*'
         - '*\VNC Printer (UD)\\*'
     condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9)))
+        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9)
+        or (SELECTION_10)))
 falsepositives:
 - Alerts on legitimate printer drivers that do not set any more details in the Manufacturer
     value
@@ -36,7 +39,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/21
+modified: 2023/03/14
 references:
 - https://twitter.com/SBousseaden/status/1410545674773467140
 status: test

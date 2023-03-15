@@ -23,8 +23,10 @@ detection:
         TargetObject:
         - '*\VNC Printer (PS)\\*'
         - '*\VNC Printer (UD)\\*'
+    SELECTION_9:
+        TargetObject: '*\Version-3\PDF24\\*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8)))
+        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9)))
 falsepositives:
 - Alerts on legitimate printer drivers that do not set any more details in the Manufacturer
     value
@@ -33,7 +35,7 @@ level: high
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/21
+modified: 2023/03/14
 references:
 - https://twitter.com/SBousseaden/status/1410545674773467140
 status: test
