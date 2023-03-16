@@ -1,0 +1,37 @@
+title: Visual Basic Script Execution
+ruletype: Sigma
+author: frack113
+date: 2022/01/02
+description: Adversaries may abuse Visual Basic (VB) for execution
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        OriginalFileName:
+        - cscript.exe
+        - wscript.exe
+    SELECTION_4:
+        Image:
+        - '*\cscript.exe'
+        - '*\wscript.exe'
+    SELECTION_5:
+        CommandLine: '*.vbs*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
+falsepositives:
+- Unknown
+id: 23250293-eed5-4c39-b57a-841c8933a57d
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/06
+references:
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.005/T1059.005.md
+status: deprecated
+tags:
+- attack.execution
+- attack.t1059.005
+

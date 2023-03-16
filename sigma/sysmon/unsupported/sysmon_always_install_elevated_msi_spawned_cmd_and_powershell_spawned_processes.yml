@@ -1,0 +1,47 @@
+title: MSI Spawned Cmd and Powershell Spawned Processes
+ruletype: Sigma
+author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community
+date: 2020/10/13
+description: This rule looks for Windows Installer service (msiexec.exe) spawning
+    command line and/or powershell that spawns other processes
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage:
+        - '*\cmd.exe'
+        - '*\powershell.exe'
+    SELECTION_4:
+        ParentOfParentImage: '*\Windows\Installer\\*'
+    SELECTION_5:
+        ParentOfParentImage: '*msi*'
+    SELECTION_6:
+        ParentOfParentImage:
+        - '*tmp'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+enrichment:
+- EN_0001_cache_sysmon_event_id_1_info
+- EN_0002_enrich_sysmon_event_id_1_with_parent_info
+falsepositives:
+- Unknown
+fields:
+- ParentImage
+- ParentOfParentImage
+id: 38cf8340-461b-4857-bf99-23a41f772b18
+level: high
+logsource:
+    category: process_creation
+    definition: Works only if  Enrich Sysmon events with additional information about
+        process in ParentOfParentImage check enrichment section
+    product: windows
+references:
+- https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-50-638.jpg
+- https://www.slideshare.net/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
+status: unsupported
+tags:
+- attack.privilege_escalation
+- attack.t1548.002
+

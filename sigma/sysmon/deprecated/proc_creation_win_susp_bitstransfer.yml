@@ -1,0 +1,37 @@
+title: Suspicious Bitstransfer via PowerShell
+ruletype: Sigma
+author: Austin Songer @austinsonger
+date: 2021/08/19
+description: Detects transferring files from system on a server bitstransfer Powershell
+    cmdlets
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image:
+        - '*\powershell.exe'
+        - '*\powershell_ise.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        CommandLine:
+        - '*Get-BitsTransfer*'
+        - '*Add-BitsFile*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unknown
+id: cd5c8085-4070-4e22-908d-a5b3342deb74
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/01/10
+references:
+- https://docs.microsoft.com/en-us/powershell/module/bitstransfer/add-bitsfile?view=windowsserver2019-ps
+status: deprecated
+tags:
+- attack.exfiltration
+- attack.persistence
+- attack.t1197
+
