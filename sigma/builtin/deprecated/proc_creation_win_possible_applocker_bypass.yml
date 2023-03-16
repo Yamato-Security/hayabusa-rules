@@ -1,0 +1,44 @@
+title: Possible Applocker Bypass
+ruletype: Sigma
+author: juju4
+date: 2019/01/16
+description: Detects execution of executables that can be used to bypass Applocker
+    whitelisting
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine:
+        - '*\msdt.exe*'
+        - '*\installutil.exe*'
+        - '*\regsvcs.exe*'
+        - '*\regasm.exe*'
+        - '*\msbuild.exe*'
+        - '*\ieexec.exe*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- False positives depend on scripts and administrative tools used in the monitored
+    environment
+- Using installutil to add features for .NET applications (primarily would occur in
+    developer environments)
+id: 82a19e3a-2bfe-4a91-8c0d-5d4c98fbb719
+level: low
+logsource:
+    category: process_creation
+    product: windows
+modified: 2022/11/03
+references:
+- https://github.com/carnal0wnage/ApplicationWhitelistBypassTechniques/blob/b348846a3bd2ff45e3616d63a4c2b4426f84772c/TheList.txt
+- https://room362.com/post/2014/2014-01-16-application-whitelist-bypass-using-ieexec-dot-exe/
+- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1127.001/T1127.001.md
+status: deprecated
+tags:
+- attack.defense_evasion
+- attack.t1218.004
+- attack.t1218.009
+- attack.t1127.001
+- attack.t1218.005
+- attack.t1218
+
