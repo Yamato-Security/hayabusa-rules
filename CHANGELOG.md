@@ -1,5 +1,9 @@
 # Changes
 
+## v2.3.0 [2023/03/24] 
+
+`deprecated` and `unsupported` sigma rules are now also being added to the hayabusa-rules repository.
+
 ## v2.2.2 [2023/02/22] 
 
 Hayabusa now supports rules that use `base64offset|contains`.

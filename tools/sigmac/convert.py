@@ -16,6 +16,8 @@ SIGMA_DIR = "./"
 SIGMAC_DIR = "./tools/"
 EXPORT_DIR_NAME = "./hayabusa_rules"
 RULES_DIR = "./rules/windows"
+RULES_UNSUPPORTED_DIR = "./rules-unsupported"
+RULES_DEPRECATED_DIR = "./rules-deprecated/windows"
 CPU = None
 IGNORE_CONFIGS = {"windows-services.yml", "powershell.yml"}
 EXCLUDE_CATEGORY = {"file_rename"}
@@ -31,7 +33,7 @@ def main():
         shutil.rmtree(EXPORT_DIR_NAME)
     os.mkdir(EXPORT_DIR_NAME)
     logconverter = Logconverter(SIGMA_DIR,
-        rules_dir=RULES_DIR,
+        rules_dirs=[RULES_DIR, RULES_UNSUPPORTED_DIR, RULES_DEPRECATED_DIR],
         config_dir=os.path.join(SIGMA_DIR, "tools/config/generic/")
     )
     logconverter.create_config_map()
@@ -52,11 +54,11 @@ class ConvertData(object):
 class Logconverter():
     rule_count = 0
 
-    def __init__(self, sigma_dir: str, rules_dir: str, config_dir: str):
+    def __init__(self, sigma_dir: str, rules_dirs: str, config_dir: str):
         self.config_map: dict[str, set[str]] = dict()
 
         self.sigma_dir = sigma_dir
-        self.rules_dir = rules_dir
+        self.rules_dirs = rules_dirs
         self.config_dir = config_dir
 
     def create_config_map(self):
@@ -76,7 +78,9 @@ class Logconverter():
                         self.config_map[category].add(config)
 
     def convert_rules(self):
-        convert_rule_list =self.create_rule_list(self.rules_dir)
+        convert_rule_list = list()
+        for rules_dir in self.rules_dirs:
+            convert_rule_list.extend(self.create_rule_list(rules_dir))
         print("Converting rules. Please wait.")
         with ThreadPool(CPU) as threadpool:
             result = threadpool.map(sigma_executer, convert_rule_list)
@@ -99,7 +103,11 @@ class Logconverter():
         category = None
 
         with open(rule_path, 'r') as yml:
-            rule_data = yaml.load(yml)
+            try:
+                rule_data = yaml.load(yml)
+            except:
+                logger.warning(rule_path + " failed to convert yml.")
+                return convert_datas
             if "logsource" in rule_data:
                 if "category" in rule_data["logsource"]:
                     category = rule_data["logsource"]["category"]
@@ -109,6 +117,12 @@ class Logconverter():
                 logger.warning(rule_path + " has no log category description.")
 
         logger.debug("target: " + file_name)
+        if "logsource" in rule_data:
+            if "product" not in rule_data["logsource"]:
+                return convert_datas
+            elif rule_data["logsource"]["product"] != "windows":
+                logger.info(file_name + " has no windows rule.")
+                return convert_datas
         if category in EXCLUDE_CATEGORY:
             logger.info(file_name + " has CATEGORY hayabusa couldn't use.")
             return convert_datas
@@ -117,7 +131,13 @@ class Logconverter():
         else:
             configs = set()
 
-        rule_path_from_rule_root = rule_path[len(self.rules_dir)+1:] # rm ./rules/windows
+        rule_path_from_rule_root = rule_path
+        if RULES_DEPRECATED_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_DEPRECATED_DIR, "deprecated")
+        elif RULES_UNSUPPORTED_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_UNSUPPORTED_DIR, "unsupported")
+        else:
+            rule_path_from_rule_root = rule_path[len(RULES_DIR)+1:] # rm ./rules/windows
         if rule_path_from_rule_root.startswith("builtin/"):
             rule_path_from_rule_root = rule_path_from_rule_root[8:] # rm .builtin
 
