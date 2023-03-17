@@ -2,7 +2,8 @@ title: Suspicious Regsvr32 Execution With Image Extension
 ruletype: Sigma
 author: frack113
 date: 2021/11/29
-description: Detects execution of REGSVR32.exe with DLL masquerading as image files
+description: Detects the execution of REGSVR32.exe with DLL files masquerading as
+    image files
 detection:
     SELECTION_1:
         EventID: 4688
@@ -14,20 +15,20 @@ detection:
         OriginalFileName: \REGSVR32.EXE
     SELECTION_5:
         CommandLine:
-        - '*.jpg'
-        - '*.jpeg'
-        - '*.gif'
-        - '*.png'
-        - '*.ico'
         - '*.bmp'
-        - '*.tif'
-        - '*.tiff'
-        - '*.eps'
-        - '*.raw'
         - '*.cr2'
+        - '*.eps'
+        - '*.gif'
+        - '*.ico'
+        - '*.jpeg'
+        - '*.jpg'
         - '*.nef'
         - '*.orf'
+        - '*.png'
+        - '*.raw'
         - '*.sr2'
+        - '*.tif'
+        - '*.tiff'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5)
 falsepositives:
@@ -42,6 +43,9 @@ references:
 - https://thedfirreport.com/2021/11/29/continuing-the-bazar-ransomware-story/
 - https://blog.talosintelligence.com/2021/10/threat-hunting-in-large-datasets-by.html
 - https://guides.lib.umich.edu/c.php?g=282942&p=1885348
+related:
+-   id: 4aa6040b-3f28-44e3-a769-9208e5feb5ec
+    type: similar
 status: experimental
 tags:
 - attack.defense_evasion
