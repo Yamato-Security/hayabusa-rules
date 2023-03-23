@@ -58,11 +58,25 @@ detection:
     SELECTION_32:
         TargetImage: C:\WINDOWS\system32\AUDIODG.EXE
     SELECTION_33:
-        Provider_Name: Microsoft-Windows-Kernel-Audit-API-Calls
+        SourceImage: C:\Users\\*
     SELECTION_34:
-        TargetImage: '*\Evernote\Evernote.exe'
+        SourceImage: '*\AppData\Local\yammerdesktop\app-*'
+    SELECTION_35:
+        SourceImage: '*\Yammer.exe'
+    SELECTION_36:
+        TargetImage: C:\Users\\*
+    SELECTION_37:
+        TargetImage: '*\AppData\Local\yammerdesktop\app-*'
+    SELECTION_38:
+        TargetImage: '*\Yammer.exe'
+    SELECTION_39:
+        GrantedAccess: '0x1000'
     SELECTION_4:
         TargetImage: C:\Program Files\Cylance\Desktop\CylanceUI.exe
+    SELECTION_40:
+        Provider_Name: Microsoft-Windows-Kernel-Audit-API-Calls
+    SELECTION_41:
+        TargetImage: '*\Evernote\Evernote.exe'
     SELECTION_5:
         SourceImage: C:\Windows\Explorer.EXE
     SELECTION_6:
@@ -80,7 +94,8 @@ detection:
         or (SELECTION_19 and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23
         and SELECTION_24) or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and
         SELECTION_28) or (SELECTION_29 and SELECTION_30 and SELECTION_31) or (SELECTION_32)
-        or (SELECTION_33) or (SELECTION_34)))
+        or (SELECTION_33 and SELECTION_34 and SELECTION_35 and SELECTION_36 and SELECTION_37
+        and SELECTION_38 and SELECTION_39) or (SELECTION_40) or (SELECTION_41)))
 falsepositives:
 - Unknown
 id: 3f3f3506-1895-401b-9cc3-e86b16e630d0
@@ -88,7 +103,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/12/28
+modified: 2023/03/22
 references:
 - https://medium.com/falconforce/falconfriday-direct-system-calls-and-cobalt-strike-bofs-0xff14-741fa8e1bdd6
 status: experimental

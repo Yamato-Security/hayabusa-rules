@@ -17,17 +17,17 @@ detection:
     SELECTION_12:
         ProcessName: C:\Windows\Sysmon64.exe
     SELECTION_13:
-        AccessList: '%%4484'
+        AccessList: '*%%4484*'
     SELECTION_14:
         ProcessName: C:\Windows\Temp\asgard2-agent-sc\aurora\\*
     SELECTION_15:
         ProcessName: '*\aurora-agent-64.exe'
     SELECTION_16:
-        AccessList: '%%4484'
+        AccessList: '*%%4484*'
     SELECTION_17:
         ProcessName: '*\x64\SCENARIOENGINE.EXE'
     SELECTION_18:
-        AccessList: '%%4484'
+        AccessList: '*%%4484*'
     SELECTION_19:
         ProcessName: C:\Users\\*
     SELECTION_2:
@@ -37,7 +37,7 @@ detection:
     SELECTION_21:
         ProcessName: '*\avira_system_speedup.tmp'
     SELECTION_22:
-        AccessList: '%%4484'
+        AccessList: '*%%4484*'
     SELECTION_3:
         ObjectName: '*\lsass.exe'
     SELECTION_4:
@@ -104,7 +104,7 @@ level: high
 logsource:
     product: windows
     service: security
-modified: 2023/03/21
+modified: 2023/03/23
 references:
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
 - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
