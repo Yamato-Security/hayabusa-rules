@@ -7,33 +7,37 @@ detection:
     SELECTION_1:
         EventID: 10
     SELECTION_10:
+        GrantedAccess: '0x1418'
+    SELECTION_11:
+        SourceImage: C:\Program Files\Microsoft Security Client\MsMpEng.exe
+    SELECTION_12:
+        GrantedAccess: '0x1418'
+    SELECTION_13:
+        SourceImage: C:\ProgramData\VMware\VMware Tools\\*
+    SELECTION_14:
+        SourceImage: '*\vmtoolsd.exe'
+    SELECTION_15:
         SourceImage:
         - C:\Program Files\\*
         - C:\Program Files (x86)\\*
-    SELECTION_11:
-        SourceImage: '*Antivirus*'
-    SELECTION_12:
-        SourceImage: C:\WINDOWS\system32\MRT.exe
-    SELECTION_13:
-        GrantedAccess: '0x1418'
-    SELECTION_14:
-        SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
-    SELECTION_15:
-        SourceImage: C:\Windows\Temp\asgard2-agent\\*
     SELECTION_16:
-        SourceImage:
-        - '*\thor64.exe'
-        - '*\thor.exe'
+        SourceImage: '*Antivirus*'
     SELECTION_17:
-        GrantedAccess: '0x1fffff'
+        SourceImage: C:\WINDOWS\system32\MRT.exe
     SELECTION_18:
-        CallTrace: '*|C:\ProgramData\Microsoft\Windows Defender\Definition Updates\{*'
+        GrantedAccess: '0x1418'
     SELECTION_19:
-        CallTrace: '*}\mpengine.dll+*'
+        SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_20:
-        GrantedAccess: '0x1418'
+        SourceImage: C:\Windows\Temp\asgard2-agent\\*
+    SELECTION_21:
+        SourceImage:
+        - '*\thor64.exe'
+        - '*\thor.exe'
+    SELECTION_22:
+        GrantedAccess: '0x1fffff'
     SELECTION_3:
         TargetImage: '*\lsass.exe'
     SELECTION_4:
@@ -82,26 +86,22 @@ detection:
     SELECTION_7:
         SourceImage: '*\MsMpEng.exe'
     SELECTION_8:
-        SourceImage: C:\ProgramData\VMware\VMware Tools\\*
+        CallTrace: '*|C:\ProgramData\Microsoft\Windows Defender\Definition Updates\{*'
     SELECTION_9:
-        SourceImage: '*\vmtoolsd.exe'
+        CallTrace: '*}\mpengine.dll+*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
-        or (SELECTION_15 and SELECTION_16 and SELECTION_17) or (SELECTION_18 and SELECTION_19
-        and SELECTION_20)))
+        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
+        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)
+        or (SELECTION_19) or (SELECTION_20 and SELECTION_21 and SELECTION_22)))
 falsepositives:
-- Legitimate software accessing LSASS process for legitimate reason
-fields:
-- User
-- SourceImage
-- GrantedAccess
+- Legitimate software such as AV and EDR
 id: a18dd26b-6450-46de-8c91-9659150cf088
 level: high
 logsource:
     category: process_access
     product: windows
-modified: 2022/06/20
+modified: 2023/03/22
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

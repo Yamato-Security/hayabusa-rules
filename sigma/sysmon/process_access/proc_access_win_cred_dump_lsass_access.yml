@@ -155,6 +155,7 @@ detection:
         SourceImage:
         - C:\ProgramData\Microsoft\Windows Defender\\*
         - C:\Program Files\Windows Defender\\*
+        - C:\Program Files\Microsoft Security Client\MsMpEng.exe*
     SELECTION_9:
         SourceImage: '*\MsMpEng.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
@@ -169,8 +170,7 @@ detection:
         SELECTION_43 and SELECTION_44) or (SELECTION_45 and SELECTION_46 and SELECTION_47)
         or (SELECTION_48)))
 falsepositives:
-- Legitimate software accessing LSASS process for legitimate reason; please add more
-    filters
+- Likely
 fields:
 - ComputerName
 - User
@@ -180,7 +180,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2023/01/25
+modified: 2023/03/22
 references:
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
 - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
