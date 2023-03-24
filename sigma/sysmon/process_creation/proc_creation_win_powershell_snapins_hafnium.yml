@@ -26,8 +26,8 @@ detection:
     SELECTION_7:
         ParentImage: C:\Windows\System32\msiexec.exe
     SELECTION_8:
-        CommandLine: '*$exitcode=0 $exserver=Get-ExchangeServer ([Environment]::MachineName)
-            -ErrorVariable exerr*'
+        CommandLine: '*$exserver=Get-ExchangeServer ([Environment]::MachineName) -ErrorVariable
+            exerr 2> $null*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
         SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8)))
 falsepositives:
@@ -37,7 +37,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/14
+modified: 2023/03/24
 references:
 - https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/
 - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/

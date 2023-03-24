@@ -16,31 +16,29 @@ detection:
     SELECTION_13:
         Image: '*\cmd.exe'
     SELECTION_14:
-        ParentImage: '*\python.exe'
+        CommandLine: C:\WINDOWS\system32\cmd.exe /c "*
     SELECTION_15:
-        CommandLine: C:\WINDOWS\system32\cmd.exe /c "ver"
-    SELECTION_16:
         CurrentDirectory: '*C:\WINDOWS\Temp\asgard2-agent\\*'
-    SELECTION_17:
+    SELECTION_16:
         ParentImage: C:\Windows\Temp*
-    SELECTION_18:
+    SELECTION_17:
         ParentImage: '*\invcol.exe'
-    SELECTION_19:
+    SELECTION_18:
         ParentCommandLine: '*C:\ProgramData\Dell\UpdateService\\*'
+    SELECTION_19:
+        Image: '*\cmd.exe'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_20:
-        Image: '*\cmd.exe'
-    SELECTION_21:
         CommandLine: 'powershell.exe -ExecutionPolicy Restricted -Command Write-Host
             ''Final result: 1'';'
+    SELECTION_21:
+        Image: '*\cmd.exe'
     SELECTION_22:
-        Image: '*\cmd.exe'
-    SELECTION_23:
         CommandLine: '*/d /c C:\Windows\system32\silcollector.cmd*'
-    SELECTION_24:
+    SELECTION_23:
         Image: '*\cmd.exe'
-    SELECTION_25:
+    SELECTION_24:
         CommandLine: '*cmd.exe /c btool server list replication_port --no-log'
     SELECTION_3:
         Image:
@@ -72,9 +70,9 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
         (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8) or
         (SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13)
-        or (SELECTION_14 and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18
-        and SELECTION_19 and SELECTION_20) or (SELECTION_21) or (SELECTION_22 and
-        SELECTION_23) or (SELECTION_24 and SELECTION_25)))
+        or (SELECTION_14 and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18
+        and SELECTION_19) or (SELECTION_20) or (SELECTION_21 and SELECTION_22) or
+        (SELECTION_23 and SELECTION_24)))
 falsepositives:
 - Unknown
 id: 178e615d-e666-498b-9630-9ed363038101
@@ -82,7 +80,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/21
+modified: 2023/03/24
 references:
 - https://github.com/Wh04m1001/SysmonEoP
 status: experimental
