@@ -58,7 +58,7 @@ detection:
     SELECTION_7:
         CommandLine: ''
     SELECTION_8:
-        CommandLine: C:\Windows\system32\rundll32.exe C:\Windows\system32\inetcpl.cpl,ClearMyTracksByProcess
+        CommandLine: C:\Windows\system32\rundll32.exe C:\Windows\system32\inetcpl.cpl,ClearMyTracksByProcess*
     SELECTION_9:
         ParentImage: '*:\Program Files\Internet Explorer\iexplore.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
@@ -77,7 +77,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/13
+modified: 2023/03/24
 references:
 - https://twitter.com/mrd0x/status/1481630810495139841?s=12
 status: experimental
