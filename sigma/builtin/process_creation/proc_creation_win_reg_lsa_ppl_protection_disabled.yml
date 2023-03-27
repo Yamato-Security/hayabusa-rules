@@ -21,12 +21,8 @@ detection:
         CommandLine: '* /d 0*'
     SELECTION_8:
         CommandLine: '* /v RunAsPPL *'
-    SELECTION_9:
-        CommandLine:
-        - '*Real-Time Protection*'
-        - '*TamperProtection*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) and SELECTION_9)
+        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8))
 falsepositives:
 - Unlikely
 id: 8c0eca51-0f88-4db2-9183-fdfb10c703f9
@@ -34,7 +30,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/30
+modified: 2023/03/26
 references:
 - https://thedfirreport.com/2022/03/21/apt35-automates-initial-access-using-proxyshell/
 status: experimental
