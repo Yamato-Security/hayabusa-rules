@@ -1,4 +1,4 @@
-author: Zach Mathis
+author: 'Zach Mathis, Fukusuke Takahashi'
 date: 2021/12/01
 modified: 2023/3/27
 
@@ -15,7 +15,7 @@ detection:
     selection:
         Channel: Microsoft-Windows-Windows Defender/Operational
         EventID: 1116
-        SeverityID: 4
+        SeverityID: 4 # High
 falsepositives:
     - bad signature
 tags:
