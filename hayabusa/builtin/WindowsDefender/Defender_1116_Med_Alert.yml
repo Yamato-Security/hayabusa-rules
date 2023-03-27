@@ -1,6 +1,6 @@
-author: Zach Mathis
+author: Zach Mathis, Fukusuke Takahashi
 date: 2021/12/01
-modified: 2022/12/16
+modified: 2023/3/27
 
 title: 'Defender Alert (Moderate)'
 description: 'Windows defender malware detection'
@@ -15,7 +15,7 @@ detection:
     selection:
         Channel: Microsoft-Windows-Windows Defender/Operational
         EventID: 1116
-        SeverityName: 'Moderate'
+        SeverityID: 3 # Moderate
 falsepositives:
     - bad signature
 tags:

@@ -1,6 +1,6 @@
-author: Zach Mathis
+author: Zach Mathis, Fukusuke Takahashi
 date: 2021/12/01
-modified: 2022/10/17
+modified: 2023/3/27
 
 title: 'Defender Alert (Severe)'
 description: Windows defender malware detection
@@ -15,7 +15,7 @@ detection:
     selection:
         Channel: Microsoft-Windows-Windows Defender/Operational
         EventID: 1116
-        SeverityName: 'Severe'
+        SeverityID: 5 # Severe
 falsepositives:
     - bad signature
 tags:
