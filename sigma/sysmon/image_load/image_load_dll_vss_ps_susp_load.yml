@@ -30,6 +30,7 @@ detection:
         - '*\tiworker.exe'
         - '*\vssvc.exe'
         - '*\WmiPrvSE.exe'
+        - '*\System32\SystemPropertiesAdvanced.exe'
     SELECTION_6:
         Image:
         - C:\Program Files\\*
@@ -47,7 +48,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2023/02/17
+modified: 2023/03/28
 references:
 - https://www.virustotal.com/gui/file/ba88ca45589fae0139a40ca27738a8fc2dfbe1be5a64a9558f4e0f52b35c5add
 - https://twitter.com/am0nsec/status/1412232114980982787
