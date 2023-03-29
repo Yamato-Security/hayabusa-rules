@@ -8,6 +8,10 @@ description: Detects dropped files with LNK double extension, which is often use
 detection:
     SELECTION_1:
         EventID: 11
+    SELECTION_10:
+        Image: '*\winword.exe'
+    SELECTION_11:
+        TargetFilename: '*\AppData\Roaming\Microsoft\Word*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -26,8 +30,17 @@ detection:
         TargetFilename:
         - '*\AppData\Roaming\Microsoft\Office\Recent\\*'
         - '*\AppData\Roaming\Microsoft\Windows\Recent\\*'
+    SELECTION_6:
+        Image: '*\excel.exe'
+    SELECTION_7:
+        TargetFilename: '*\AppData\Roaming\Microsoft\Excel*'
+    SELECTION_8:
+        Image: '*\powerpnt.exe'
+    SELECTION_9:
+        TargetFilename: '*\AppData\Roaming\Microsoft\PowerPoint*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
+        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
+        or (SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Users creating a shortcut on e.g. desktop
 id: 3215aa19-f060-4332-86d5-5602511f3ca8
@@ -35,6 +48,7 @@ level: medium
 logsource:
     category: file_event
     product: windows
+modified: 2023/03/29
 references:
 - https://www.crowdstrike.com/blog/meet-crowdstrikes-adversary-of-the-month-for-june-mustang-panda/
 - https://www.anomali.com/blog/china-based-apt-mustang-panda-targets-minority-groups-public-and-private-sector-organizations
