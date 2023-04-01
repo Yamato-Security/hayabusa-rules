@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2020/11/08
-modified: 2022/06/21
+modified: 2023/03/31
 
 title: PwSh Pipeline Exec
 description: Powershell Module Loggong. Displays powershell execution
@@ -13,10 +13,12 @@ logsource:
     service: powershell
     description: Powershell module logging needs to be turned on.
 detection:
-    selection_basic:
-        Channel: Microsoft-Windows-PowerShell/Operational
+    select_channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
+    select_eid:
         EventID: 4103
-    condition: selection_basic
+    condition: select_channel and select_eid
 falsepositives:
     - normal system usage
 tags:
