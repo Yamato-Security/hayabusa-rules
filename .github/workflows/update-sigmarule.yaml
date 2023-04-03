@@ -22,15 +22,22 @@ jobs:
       - name: clone sigmac
         uses: actions/checkout@v3
         with:
+          repository: SigmaHQ/legacy-sigmatools
+          path: sigmac-repo # It is necessary to specify the path because the hayabusa-rules repository has a folder with the same name.
+          token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
+
+      - name: clone sigma
+        uses: actions/checkout@v3
+        with:
           repository: SigmaHQ/sigma
-          path: sigma-repo # It is necessary to specify the path because the hayabusa-rules repository has a folder with the same name.
+          path: sigma-repo
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
       - name: set Hayabusa backend for sigmac
         run: |
-          cp hayabusa-rules/tools/sigmac/convert.py sigma-repo/convert.py
-          cp hayabusa-rules/tools/sigmac/hayabusa.py sigma-repo/tools/sigma/backends/hayabusa.py
-          cp hayabusa-rules/tools/sigmac/rule.py sigma-repo/tools/sigma/parser/rule.py
+          cp hayabusa-rules/tools/sigmac/convert.py sigmac-repo/convert.py
+          cp hayabusa-rules/tools/sigmac/hayabusa.py sigmac-repo/tools/sigma/backends/hayabusa.py
+          cp hayabusa-rules/tools/sigmac/rule.py sigmac-repo/tools/sigma/parser/rule.py
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -50,12 +57,12 @@ jobs:
 
       - name: Update sigma rules
         run: |
-          pushd sigma-repo
-          python3 convert.py --suppression
+          pushd sigmac-repo
+          python3 convert.py -r ../sigma-repo/rules/windows --suppression
           popd
           rm -rf hayabusa-rules/sigma/
           mkdir hayabusa-rules/sigma/
-          cp -r sigma-repo/hayabusa_rules/* hayabusa-rules/sigma/
+          cp -r sigmac-repo/hayabusa_rules/* hayabusa-rules/sigma/
 
       - name: Create Text
         id: create-text
