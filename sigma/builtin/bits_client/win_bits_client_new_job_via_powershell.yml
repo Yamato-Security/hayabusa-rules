@@ -1,14 +1,8 @@
-title: Suspicious Task Added by Powershell
+title: New BITS Job Created Via PowerShell
 ruletype: Sigma
 author: frack113
 date: 2022/03/01
-description: 'Adversaries may abuse BITS jobs to persistently execute or clean up
-    after malicious payloads.
-
-    Windows Background Intelligent Transfer Service (BITS) is a low-bandwidth, asynchronous
-    file transfer mechanism exposed through [Component Object Model](https://attack.mitre.org/techniques/T1559/001)
-
-    '
+description: Detects the creation of a new bits job by PowerShell
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-Bits-Client/Operational
@@ -26,7 +20,7 @@ level: low
 logsource:
     product: windows
     service: bits-client
-modified: 2022/07/14
+modified: 2023/03/27
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md
 status: experimental

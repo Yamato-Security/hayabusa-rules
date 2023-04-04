@@ -1,4 +1,4 @@
-title: DotNET DLL Loaded Via Office Applications
+title: DotNET Assembly DLL Loaded Via Office Application
 ruletype: Sigma
 author: Antonlovesdnb
 date: 2020/02/19
@@ -21,13 +21,13 @@ detection:
         ImageLoaded: C:\Windows\assembly\\*
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- Legitimate macro usage. Add the appropriate filter according to your environment
+- Unknown
 id: ff0f2b05-09db-4095-b96d-1b75ca24894a
-level: high
+level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2023/02/10
+modified: 2023/03/29
 references:
 - https://medium.com/threatpunter/detecting-adversary-tradecraft-with-image-load-event-logging-and-eql-8de93338c16
 status: test

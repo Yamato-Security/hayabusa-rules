@@ -1,14 +1,9 @@
-title: Suspicious Download File Extension with BITS
+title: BITS Transfer Job Downloading File Potential Suspicious Extension
 ruletype: Sigma
 author: frack113
 date: 2022/03/01
-description: 'Adversaries may abuse BITS jobs to persistently execute or clean up
-    after malicious payloads.
-
-    Windows Background Intelligent Transfer Service (BITS) is a low-bandwidth, asynchronous
-    file transfer mechanism exposed through [Component Object Model](https://attack.mitre.org/techniques/T1559/001)
-
-    '
+description: Detects new BITS transfer job saving local files with potential suspicious
+    extensions
 detection:
     SELECTION_1:
         Channel: Microsoft-Windows-Bits-Client/Operational
@@ -19,23 +14,27 @@ detection:
         - '*.bat'
         - '*.dll'
         - '*.exe'
+        - '*.hta'
         - '*.ps1'
+        - '*.psd1'
+        - '*.sh'
         - '*.vbe'
         - '*.vbs'
     SELECTION_4:
         LocalName: '*\AppData\\*'
     SELECTION_5:
         RemoteName: '*.com*'
-    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4
-        and SELECTION_5))
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not ((SELECTION_4
+        and SELECTION_5)))
 falsepositives:
-- Administrator PowerShell scripts
+- While the file extensions in question can be suspicious at times. It's best to add
+    filters according to your environment to avoid large amount false positives
 id: b85e5894-9b19-4d86-8c87-a2f3b81f0521
 level: medium
 logsource:
     product: windows
     service: bits-client
-modified: 2023/01/10
+modified: 2023/03/27
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md
 status: experimental

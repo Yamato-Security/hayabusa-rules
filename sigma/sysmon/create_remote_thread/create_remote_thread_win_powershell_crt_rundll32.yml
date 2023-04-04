@@ -1,8 +1,9 @@
-title: PowerShell Rundll32 Remote Thread Creation
+title: Remote Thread Creation Via PowerShell In Rundll32
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2018/06/25
-description: Detects PowerShell remote thread creation in Rundll32.exe
+description: Detects the creation of a remote thread from a Powershell process in
+    a rundll32 process
 detection:
     SELECTION_1:
         EventID: 8
@@ -22,9 +23,12 @@ level: high
 logsource:
     category: create_remote_thread
     product: windows
-modified: 2022/07/14
+modified: 2023/03/28
 references:
 - https://www.fireeye.com/blog/threat-research/2018/06/bring-your-own-land-novel-red-teaming-technique.html
+related:
+-   id: eeb2e3dc-c1f4-40dd-9bd5-149ee465ad50
+    type: similar
 status: experimental
 tags:
 - attack.defense_evasion

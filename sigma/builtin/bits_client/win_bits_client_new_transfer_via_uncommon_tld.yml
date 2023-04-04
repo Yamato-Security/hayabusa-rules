@@ -1,4 +1,4 @@
-title: Suspicious Uncommon Download with BITS from Suspicious TLD
+title: BITS Transfer Job With Uncommon Or Suspicious Remote TLD
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2022/06/10
@@ -12,19 +12,20 @@ detection:
         EventID: 16403
     SELECTION_3:
         RemoteName:
-        - '*.com*'
-        - '*.azureedge.net*'
-        - '*.sfx.ms*'
-        - '*download.mozilla.org*'
-    condition: (SELECTION_1 and SELECTION_2 and  not (SELECTION_3))
+        - '*.azureedge.net/*'
+        - '*.com/*'
+        - '*.sfx.ms/*'
+        - '*download.mozilla.org/*'
+    condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3)))
 falsepositives:
-- Other legitimate domains used by software updaters
+- This rule doesn't exclude other known TLDs such as ".org" or ".net". It's recommended
+    to apply additional filters for software and scripts that leverage the BITS service
 id: 6d44fb93-e7d2-475c-9d3d-54c9c1e33427
 level: medium
 logsource:
     product: windows
     service: bits-client
-modified: 2022/11/27
+modified: 2023/03/27
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md
 - https://twitter.com/malmoeb/status/1535142803075960832
