@@ -1,4 +1,4 @@
-title: Suspicious Mofcomp Execution
+title: Potential Suspicious Mofcomp Execution
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/07/12
@@ -36,16 +36,22 @@ detection:
         - '*%temp%*'
         - '*%tmp%*'
         - '*%appdata%*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 or SELECTION_6))
+    SELECTION_7:
+        ParentProcessName: C:\Windows\System32\wbem\WmiPrvSE.exe
+    SELECTION_8:
+        CommandLine: '*C:\Windows\TEMP\\*'
+    SELECTION_9:
+        CommandLine: '*.mof'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 or SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and SELECTION_9)))
 falsepositives:
 - Unknown
 id: 1dd05363-104e-4b4a-b963-196a534b03a1
-level: medium
+level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
+modified: 2023/03/30
 references:
 - https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
 - https://github.com/The-DFIR-Report/Sigma-Rules/blob/75260568a7ffe61b2458ca05f6f25914efb44337/win_mofcomp_execution.yml

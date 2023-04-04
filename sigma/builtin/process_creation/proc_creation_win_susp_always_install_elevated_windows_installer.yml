@@ -12,11 +12,15 @@ detection:
     SELECTION_11:
         ParentCommandLine: '*\system32\msiexec.exe /V'
     SELECTION_12:
+        ParentProcessName: C:\ProgramData\Sophos\\*
+    SELECTION_13:
+        ParentProcessName: C:\ProgramData\Avira\\*
+    SELECTION_14:
         ParentProcessName:
-        - C:\ProgramData\Sophos\\*
-        - C:\ProgramData\Avira\\*
         - C:\Program Files\Avast Software\\*
         - C:\Program Files (x86)\Avast Software\\*
+    SELECTION_15:
+        ParentProcessName:
         - C:\Program Files\Google\Update\\*
         - C:\Program Files (x86)\Google\Update\\*
     SELECTION_2:
@@ -39,20 +43,18 @@ detection:
         ParentProcessName: C:\Windows\System32\services.exe
     condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4 and
         SELECTION_5) or (SELECTION_6 and SELECTION_7)) and SELECTION_8) and  not ((SELECTION_9)
-        or (SELECTION_10 or SELECTION_11) or (SELECTION_12)))
+        or (SELECTION_10 or SELECTION_11) or (SELECTION_12) or (SELECTION_13) or (SELECTION_14)
+        or (SELECTION_15)))
 falsepositives:
 - System administrator usage
 - Anti virus products
-fields:
-- IntegrityLevel
-- User
-- Image
+- WindowsApps located in "C:\Program Files\WindowsApps\"
 id: cd951fdc-4b2f-47f5-ba99-a33bf61e3770
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/20
+modified: 2023/03/23
 references:
 - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-48-638.jpg
 status: experimental

@@ -8,6 +8,10 @@ detection:
         EventID: 7
     SELECTION_10:
         Image: '*\ngentask.exe'
+    SELECTION_11:
+        Image: null
+    SELECTION_12:
+        Image: ''
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -33,9 +37,9 @@ detection:
         Image:
         - C:\Windows\Microsoft.NET\Framework\\*
         - C:\Windows\Microsoft.NET\Framework64\\*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5) or (SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10)))
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11) or (SELECTION_12)))
 falsepositives:
 - Likely
 id: facd1549-e416-48e0-b8c4-41d7215eedc8
@@ -43,6 +47,7 @@ level: low
 logsource:
     category: image_load
     product: windows
+modified: 2023/03/24
 references:
 - https://infosecwriteups.com/amsi-bypass-new-way-2023-d506345944e9
 - https://github.com/TheD1rkMtr/AMSI_patch

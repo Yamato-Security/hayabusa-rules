@@ -55,23 +55,29 @@ detection:
     SELECTION_26:
         GrantedAccess: '0x410'
     SELECTION_27:
-        SourceImage:
-        - C:\Program Files (x86)\\*
-        - C:\Program Files\\*
-    SELECTION_28:
         SourceImage: C:\Users\\*
-    SELECTION_29:
+    SELECTION_28:
         SourceImage: '*\AppData\Local\Keybase\keybase.exe'
+    SELECTION_29:
+        GrantedAccess: '0x1fffff'
     SELECTION_3:
         TargetImage: '*\lsass.exe'
     SELECTION_30:
-        GrantedAccess: '0x1fffff'
-    SELECTION_31:
         SourceImage: '*\AppData\Local\Temp\is-*'
-    SELECTION_32:
+    SELECTION_31:
         SourceImage: '*.tmp\avira_system_speedup.tmp'
-    SELECTION_33:
+    SELECTION_32:
         GrantedAccess: '0x1410'
+    SELECTION_33:
+        SourceImage: C:\Users\\*
+    SELECTION_34:
+        SourceImage: '*\AppData\Roaming\ViberPC\\*'
+    SELECTION_35:
+        SourceImage: '*\updater.exe'
+    SELECTION_36:
+        TargetImage: '*\winlogon.exe'
+    SELECTION_37:
+        GrantedAccess: '0x1fffff'
     SELECTION_4:
         GrantedAccess:
         - '*10'
@@ -127,10 +133,12 @@ detection:
         or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
         and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19)
         or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
-        and SELECTION_25 and SELECTION_26) or (SELECTION_27) or (SELECTION_28 and
-        SELECTION_29 and SELECTION_30) or (SELECTION_31 and SELECTION_32 and SELECTION_33)))
+        and SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28 and SELECTION_29)
+        or (SELECTION_30 and SELECTION_31 and SELECTION_32) or (SELECTION_33 and SELECTION_34
+        and SELECTION_35 and SELECTION_36 and SELECTION_37)))
 falsepositives:
-- Legitimate software accessing LSASS process for legitimate reason
+- Updaters and installers are typical false positives. Apply custom filters depending
+    on your environment
 fields:
 - User
 - SourceImage
@@ -140,7 +148,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2023/03/14
+modified: 2023/03/28
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

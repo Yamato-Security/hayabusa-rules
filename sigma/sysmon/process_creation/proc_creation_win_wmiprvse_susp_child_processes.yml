@@ -1,4 +1,4 @@
-title: Suspicious WmiPrvse Child Process Spawned
+title: Suspicious WmiPrvSE Child Process
 ruletype: Sigma
 author: Vadim Khrykov (ThreatIntel), Cyb3rEng
 date: 2021/08/23
@@ -12,24 +12,31 @@ detection:
         ParentImage: '*\wbem\WmiPrvSE.exe'
     SELECTION_4:
         Image:
+        - '*\certutil.exe'
+        - '*\cscript.exe'
+        - '*\mshta.exe'
+        - '*\msiexec.exe'
         - '*\regsvr32.exe'
         - '*\rundll32.exe'
-        - '*\msiexec.exe'
-        - '*\mshta.exe'
         - '*\verclsid.exe'
+        - '*\wscript.exe'
     SELECTION_5:
         Image: '*\cmd.exe'
     SELECTION_6:
         CommandLine:
+        - '*cscript*'
+        - '*mshta*'
         - '*powershell*'
         - '*pwsh*'
-        - '*mshta*'
-        - '*rundll32*'
         - '*regsvr32*'
+        - '*rundll32*'
         - '*wscript*'
-        - '*cscript*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
-        (SELECTION_5 and SELECTION_6)))
+    SELECTION_7:
+        Image: '*\WerFault.exe'
+    SELECTION_8:
+        Image: '*\WmiPrvSE.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and (SELECTION_4 or
+        (SELECTION_5 and SELECTION_6))) and  not ((SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Unknown
 id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
@@ -37,7 +44,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/19
+modified: 2023/03/23
 references:
 - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
 - https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/02bcbfc2bfb8b4da601bb30de0344ae453aa1afe/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml

@@ -1,4 +1,4 @@
-title: Suspicious Msiexec Quiet Install
+title: Msiexec Quiet Installation
 ruletype: Sigma
 author: frack113
 date: 2022/01/16
@@ -45,13 +45,13 @@ detection:
         SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8) or (SELECTION_9)
         or (SELECTION_10 and SELECTION_11)))
 falsepositives:
-- Legitimate script
+- WindowsApps installing updates via the quiet flag
 id: 79a87aa6-e4bd-42fc-a5bb-5e6fbdcd62f5
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/16
+modified: 2023/03/23
 references:
 - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md
