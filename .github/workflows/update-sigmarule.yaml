@@ -22,15 +22,23 @@ jobs:
       - name: clone sigmac
         uses: actions/checkout@v3
         with:
+          repository: SigmaHQ/legacy-sigmatools
+          path: sigmac-repo # It is necessary to specify the path because the hayabusa-rules repository has a folder with the same name.
+          token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
+
+      - name: clone sigma
+        uses: actions/checkout@v3
+        with:
           repository: SigmaHQ/sigma
-          path: sigma-repo # It is necessary to specify the path because the hayabusa-rules repository has a folder with the same name.
+          path: sigma-repo
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
       - name: set Hayabusa backend for sigmac
         run: |
+          cp hayabusa-rules/tools/sigmac/hayabusa.py sigmac-repo/tools/sigma/backends/hayabusa.py
+          cp hayabusa-rules/tools/sigmac/rule.py sigmac-repo/tools/sigma/parser/rule.py
           cp hayabusa-rules/tools/sigmac/convert.py sigma-repo/convert.py
-          cp hayabusa-rules/tools/sigmac/hayabusa.py sigma-repo/tools/sigma/backends/hayabusa.py
-          cp hayabusa-rules/tools/sigmac/rule.py sigma-repo/tools/sigma/parser/rule.py
+          mv sigmac-repo/tools sigma-repo/
 
       - name: Setup Python
         uses: actions/setup-python@v4
