@@ -2,7 +2,7 @@ title: WmiPrvSE Spawned A Process
 ruletype: Sigma
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/08/15
-description: Detects wmiprvse spawning processes
+description: Detects WmiPrvSE spawning a process
 detection:
     SELECTION_1:
         EventID: 4688
@@ -19,21 +19,21 @@ detection:
         - '*AUTHORI*'
         - '*AUTORI*'
     SELECTION_6:
-        NewProcessName:
-        - '*\WmiPrvSE.exe'
-        - '*\WerFault.exe'
+        NewProcessName: '*\WmiPrvSE.exe'
     SELECTION_7:
+        NewProcessName: '*\WerFault.exe'
+    SELECTION_8:
         SubjectLogonId: null
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5 or SELECTION_6) or (SELECTION_7)))
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
 falsepositives:
-- Unknown
+- False positives are expected (e.g. in environments where WinRM is used legitimately)
 id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/19
+modified: 2023/03/23
 references:
 - https://threathunterplaybook.com/hunts/windows/190815-RemoteServiceInstallation/notebook.html
 related:

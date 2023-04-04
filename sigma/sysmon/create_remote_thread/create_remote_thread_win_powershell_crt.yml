@@ -1,4 +1,4 @@
-title: Accessing WinAPI in PowerShell. Code Injection
+title: Remote Thread Creation Via PowerShell
 ruletype: Sigma
 author: Nikita Nazarov, oscd.community
 date: 2020/10/06
@@ -19,15 +19,16 @@ detection:
 falsepositives:
 - Unknown
 id: eeb2e3dc-c1f4-40dd-9bd5-149ee465ad50
-level: high
+level: medium
 logsource:
     category: create_remote_thread
-    definition: Note that you have to configure logging for CreateRemoteThread in
-        Symson config
     product: windows
-modified: 2022/08/12
+modified: 2023/03/28
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
+related:
+-   id: 99b97608-3e21-4bfe-8217-2a127c396a0e
+    type: derived
 status: test
 tags:
 - attack.execution

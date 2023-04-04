@@ -1,12 +1,11 @@
-title: Abusing Azure Browser SSO
+title: Potential Azure Browser SSO Abuse
 ruletype: Sigma
 author: Den Iuzvyk
 date: 2020/07/15
 description: 'Detects abusing Azure Browser SSO by requesting OAuth 2.0 refresh tokens
     for an Azure-AD-authenticated Windows user (i.e. the machine is joined to Azure
-    AD and a user logs in with their Azure AD account)
-
-    wanting to perform SSO authentication in the browser.
+    AD and a user logs in with their Azure AD account) wanting to perform SSO authentication
+    in the browser.
 
     An attacker can use this to authenticate to Azure AD in a browser as that user.
 
@@ -14,34 +13,58 @@ description: 'Detects abusing Azure Browser SSO by requesting OAuth 2.0 refresh 
 detection:
     SELECTION_1:
         EventID: 7
+    SELECTION_10:
+        Image:
+        - '*C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
+        - '*C:\Program Files\Microsoft\Edge\Application\msedge.exe'
+        - '*\WindowsApps\MicrosoftEdge.exe'
+    SELECTION_11:
+        Image:
+        - C:\Program Files (x86)\Microsoft\EdgeCore\\*
+        - C:\Program Files\Microsoft\EdgeCore\\*
+    SELECTION_12:
+        Image:
+        - '*\msedge.exe'
+        - '*\msedgewebview2.exe'
+    SELECTION_13:
+        Image: '*\AppData\Local\Microsoft\OneDrive\OneDrive.exe'
+    SELECTION_14:
+        Image: null
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        ImageLoaded: '*MicrosoftAccountTokenProvider.dll'
+        ImageLoaded: C:\Windows\System32\MicrosoftAccountTokenProvider.dll
     SELECTION_4:
         Image:
-        - '*\BackgroundTaskHost.exe'
-        - '*\devenv.exe'
-        - '*\iexplore.exe'
-        - '*\MicrosoftEdge.exe'
-        - '*\Microsoft\Edge\Application\msedge.exe'
-        - '*\AppData\Local\Microsoft\OneDrive\OneDrive.exe'
-        - '*\msedgewebview2.exe'
-        - '*\OneDrive.exe'
+        - C:\Windows\System32\\*
+        - C:\Windows\SysWOW64\\*
     SELECTION_5:
-        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
+        Image: '*\BackgroundTaskHost.exe'
     SELECTION_6:
-        Image: null
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-        or SELECTION_5 or SELECTION_6))
+        Image:
+        - C:\Program Files\Microsoft Visual Studio\\*
+        - C:\Program Files (x86)\Microsoft Visual Studio\\*
+    SELECTION_7:
+        Image: '*\IDE\devenv.exe'
+    SELECTION_8:
+        Image:
+        - C:\Program Files (x86)\Internet Explorer\iexplore.exe*
+        - C:\Program Files\Internet Explorer\iexplore.exe*
+    SELECTION_9:
+        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not ((SELECTION_4
+        and SELECTION_5))) and  not ((SELECTION_6 and SELECTION_7) or (SELECTION_8)
+        or (SELECTION_9 or SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13)
+        or (SELECTION_14)))
 falsepositives:
-- Unknown
+- False positives are expected since this rules is only looking for the DLL load event.
+    This rule is better used in correlation with related activity
 id: 50f852e6-af22-4c78-9ede-42ef36aa3453
-level: high
+level: low
 logsource:
     category: image_load
     product: windows
-modified: 2022/10/21
+modified: 2023/03/28
 references:
 - https://posts.specterops.io/requesting-azure-ad-request-tokens-on-azure-ad-joined-machines-for-browser-sso-2b0409caad30
 status: test

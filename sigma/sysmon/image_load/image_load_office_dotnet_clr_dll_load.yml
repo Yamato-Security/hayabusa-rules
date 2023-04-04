@@ -21,13 +21,13 @@ detection:
         ImageLoaded: '*\clr.dll*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- Legitimate macro usage. Add the appropriate filter according to your environment
+- Unknown
 id: d13c43f0-f66b-4279-8b2c-5912077c1780
-level: high
+level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2023/02/10
+modified: 2023/03/29
 references:
 - https://medium.com/threatpunter/detecting-adversary-tradecraft-with-image-load-event-logging-and-eql-8de93338c16
 status: test
