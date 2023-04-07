@@ -145,17 +145,17 @@ categories:
         Channel: 'Microsoft-Windows-Sysmon/Operational'
         EID: 24
     # Process Tampering: Sysmon 25
-    create_stream_hash:
+    process_tampering:
         Types: 1
         Channel: 'Microsoft-Windows-Sysmon/Operational'
         EID: 25
     # File Block: Sysmon 27
-    create_stream_hash:
+    file_block:
         Types: 1
         Channel: 'Microsoft-Windows-Sysmon/Operational'
         EID: 27
     # Sysmon Error: Sysmon 255
-    create_stream_hash:
+    sysmon_error:
         Types: 1
         Channel: 'Microsoft-Windows-Sysmon/Operational'
         EID: 255
