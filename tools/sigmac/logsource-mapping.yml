@@ -7,14 +7,14 @@ categories:
             Channel: 'Microsoft-Windows-Sysmon/Operational'
             EID: 1
         Type-2:
-            Channel: Security
+            Channel: 'Security'
             EID: 4688
             # Need to rewrite the Sysmon field names on the left to field names used in the Security log on the right.
             RewriteFields: 
-                Image: NewProcessName
-                ParentImage: ParentProcessName
-                Details: NewValue
-                LogonId: SubjectLogonId
+                Image: 'NewProcessName'
+                ParentImage: 'ParentProcessName'
+                Details: 'NewValue'
+                LogonId: 'SubjectLogonId'
     # File Change: Sysmon 2
     file_change:
         Types: 1
@@ -74,21 +74,21 @@ categories:
             Channel: 'Microsoft-Windows-Sysmon/Operational'
             EID: 12
         Type-2:
-            Channel: Security
+            Channel: 'Security'
             EID: 4657
     # Registry Delete: Sysmon 12
     registry_delete:
         Types: 1
         Channel: 'Microsoft-Windows-Sysmon/Operational'
         EID: 12
-    # Registry Set: Sysmon 13, Security Security 4657
+    # Registry Set: Sysmon 13, Security 4657
     registry_set:
         Types: 2
         Type-1:
             Channel: 'Microsoft-Windows-Sysmon/Operational'
             EID: 13
         Type-2:
-            Channel: Security
+            Channel: 'Security'
             EID: 4657
     # Registry Rename: Sysmon 14
     registry_rename:
@@ -105,7 +105,7 @@ categories:
                 - 13
                 - 14
         Type-2:
-            Channel: Security
+            Channel: 'Security'
             EID: 4657
     # Create Stream Hash: Sysmon 15
     create_stream_hash:
