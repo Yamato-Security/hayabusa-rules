@@ -1,0 +1,208 @@
+categories:
+    ## Sysmon based categories
+    # Process Creation: Sysmon 1, Security 4688
+    process_creation:
+        Types: 2
+        Type-1:
+            Channel: 'Microsoft-Windows-Sysmon/Operational'
+            EID: 1
+        Type-2:
+            Channel: 'Security'
+            EID: 4688
+            # Need to rewrite the Sysmon field names on the left to field names used in the Security log on the right.
+            RewriteFields: 
+                Image: 'NewProcessName'
+                ParentImage: 'ParentProcessName'
+                Details: 'NewValue'
+                LogonId: 'SubjectLogonId'
+    # File Change: Sysmon 2
+    file_change:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 2
+    # Network Connection: Sysmon 3
+    network_connection:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 3
+    # Sysmon Status: Sysmon 4 & 16
+    sysmon_status:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID:
+            - 4
+            - 16 
+    # Process Terminated: Sysmon 5
+    process_terminated:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 5
+    # Driver Loaded: Sysmon 6
+    driver_load:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 6
+    # Image (DLL, etc...) Loaded: Sysmon 7
+    image_load:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 7
+    # Create Remote Thread: Sysmon 8
+    create_remote_thread:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 8
+    # Raw Access Thread: Sysmon 9
+    raw_access_thread:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 9
+    # Process Access: Sysmon 10
+    process_access:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 10
+    # File Creation: Sysmon 11
+    file_event:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 11
+    # Registry Add: Sysmon 12, Security 4657
+    registry_add:
+        Types: 2
+        Type-1:
+            Channel: 'Microsoft-Windows-Sysmon/Operational'
+            EID: 12
+        Type-2:
+            Channel: 'Security'
+            EID: 4657
+    # Registry Delete: Sysmon 12
+    registry_delete:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 12
+    # Registry Set: Sysmon 13, Security 4657
+    registry_set:
+        Types: 2
+        Type-1:
+            Channel: 'Microsoft-Windows-Sysmon/Operational'
+            EID: 13
+        Type-2:
+            Channel: 'Security'
+            EID: 4657
+    # Registry Rename: Sysmon 14
+    registry_rename:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 14
+    # Registry Event: Sysmon 12-14, Security 4657
+    registry_event:
+        Types: 2
+        Type-1:
+            Channel: 'Microsoft-Windows-Sysmon/Operational'
+            EID:
+                - 12
+                - 13
+                - 14
+        Type-2:
+            Channel: 'Security'
+            EID: 4657
+    # Create Stream Hash: Sysmon 15
+    create_stream_hash:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 15
+    # Pipe Created: Sysmon 17 & 18
+    pipe_created:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID:
+            - 17
+            - 18
+    # WMI Event: Sysmon 19-21
+    wmi_event:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID:
+            - 19
+            - 20
+            - 21
+    # DNS Query: Sysmon 22
+    dns_query:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 22
+    # File Delete: Sysmon 23 & 26
+    file_delete:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID:
+            - 23
+            - 26
+    # Clipboard Capture: Sysmon 24
+    clipboard_capture:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 24
+    # Process Tampering: Sysmon 25
+    process_tampering:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 25
+    # File Block: Sysmon 27
+    file_block:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 27
+    # Sysmon Error: Sysmon 255
+    sysmon_error:
+        Channel: 'Microsoft-Windows-Sysmon/Operational'
+        EID: 255
+
+    ## PowerShell based categories
+    # PowerShell Module Logging
+    ps_module: 
+        Channel:
+            - 'Microsoft-Windows-PowerShell/Operational'
+            - 'PowerShellCore/Operational'
+        EID: 4103
+    # PowerShell ScriptBlock Logging
+    ps_script:
+        Channel:
+            - 'Microsoft-Windows-PowerShell/Operational'
+            - 'PowerShellCore/Operational'
+        EID: 4104
+    # PowerShell Classic Logging - Start
+    ps_classic_start:
+        Channel: 'Windows PowerShell'
+        EID: 400
+    # PowerShell Classic Logging - Provider Start
+    ps_classic_provider_start:
+        Channel: 'Windows PowerShell'
+        EID: 600
+    # PowerShell Classic Logging - Script
+    ps_classic_provider_script:
+        Channel: 'Windows PowerShell'
+        EID: 800
+
+services:
+    application: 'Application'
+    applocker:
+        - 'Microsoft-Windows-AppLocker/MSI and Script'
+        - 'Microsoft-Windows-AppLocker/EXE and DLL'
+        - 'Microsoft-Windows-AppLocker/Packaged app-Deployment'
+        - 'Microsoft-Windows-AppLocker/Packaged app-Execution'
+    appmodel-runtime: 'Microsoft-Windows-AppModel-Runtime/Admin'
+    appxpackaging-om: 'Microsoft-Windows-AppxPackaging/Operational'
+    appxdeployment-server: 'Microsoft-Windows-AppXDeploymentServer/Operational'
+    bits-client: 'Microsoft-Windows-Bits-Client/Operational'
+    codeintegrity-operational: 'Microsoft-Windows-CodeIntegrity/Operational'
+    dhcp: 'Microsoft-Windows-DHCP-Server/Operational'
+    diagnosis-scripted: 'Microsoft-Windows-Diagnosis-Scripted/Operational'
+    dns-client: 'Microsoft-Windows-DNS Client Events/Operational'
+    dns-server: 'DNS Server'
+    driver-framework: 'Microsoft-Windows-DriverFrameworks-UserMode/Operational'
+    firewall-as: 'Microsoft-Windows-Windows Firewall With Advanced Security/Firewall'
+    ldap_debug: 'Microsoft-Windows-LDAP-Client/Debug'
+    lsa-server: 'Microsoft-Windows-LSA/Operational'
+    microsoft-servicebus-client: 'Microsoft-ServiceBus-Client'
+    msexchange-management: 'MSExchange Management'
+    ntlm: 'Microsoft-Windows-NTLM/Operational'
+    openssh: 'OpenSSH/Operational'
+    printservice-admin: 'Microsoft-Windows-PrintService/Admin'
+    printservice-operational: 'Microsoft-Windows-PrintService/Operational'
+    powershell:
+        - 'Microsoft-Windows-PowerShell/Operational'
+        - 'PowerShellCore/Operational'
+    powershell-classic: 'Windows PowerShell'
+    security: 'Security'
+    security-mitigations: 'Microsoft-Windows-Security-Mitigations'
+    shell-core: 'Microsoft-Windows-Shell-Core/Operational'
+    smbclient-security: 'Microsoft-Windows-SmbClient/Security'
+    sysmon: 'Microsoft-Windows-Sysmon/Operational'
+    system: 'System'
+    taskscheduler: 'Microsoft-Windows-TaskScheduler/Operational'
+    terminalservices-localsessionmanager: 'Microsoft-Windows-TerminalServices-LocalSessionManager/Operational'
+    vhdmp: 'Microsoft-Windows-VHDMP/Operational'
+    windefend: 'Microsoft-Windows-Windows Defender/Operational'
+    wmi: 'Microsoft-Windows-WMI-Activity/Operational'
