@@ -16,12 +16,14 @@ detection:
     SELECTION_3:
         ParentImage: '*\svchost.exe'
     SELECTION_4:
-        Image: '*\rundll32.exe'
+        ParentCommandLine: '*-s WebClient*'
     SELECTION_5:
-        CommandLine: '*C:\windows\system32\davclnt.dll,DavSetCookie*'
+        Image: '*\rundll32.exe'
     SELECTION_6:
-        CommandLine|re: ://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}
+        CommandLine: '*C:\windows\system32\davclnt.dll,DavSetCookie*'
     SELECTION_7:
+        CommandLine|re: ://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}
+    SELECTION_8:
         CommandLine:
         - '*://10.*'
         - '*://192.168.*'
@@ -44,7 +46,7 @@ detection:
         - '*://127.*'
         - '*://169.254.*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7)))
+        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8)))
 falsepositives:
 - Unknown
 id: 982e9f2d-1a85-4d5b-aea4-31f5e97c6555
@@ -52,10 +54,13 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/04/05
 references:
 - https://twitter.com/aceresponder/status/1636116096506818562
 - https://www.mdsec.co.uk/2023/03/exploiting-cve-2023-23397-microsoft-outlook-elevation-of-privilege-vulnerability/
 - https://www.pwndefend.com/2023/03/15/the-long-game-persistent-hash-theft/
+- https://www.microsoft.com/en-us/security/blog/wp-content/uploads/2023/03/Figure-7-sample-webdav-process-create-event.png
+- https://www.microsoft.com/en-us/security/blog/2023/03/24/guidance-for-investigating-attacks-using-cve-2023-23397/
 status: experimental
 tags:
 - attack.exfiltration

@@ -11,7 +11,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         TargetFilename:
-        - '*_BloodHound.zip'
+        - '*BloodHound.zip'
         - '*_computers.json'
         - '*_containers.json'
         - '*_domains.json'
@@ -20,25 +20,22 @@ detection:
         - '*_ous.json'
         - '*_users.json'
     SELECTION_4:
-        TargetFilename: '*BloodHound*'
-    SELECTION_5:
-        TargetFilename: '*.zip*'
-    SELECTION_6:
         Image: '*\svchost.exe'
-    SELECTION_7:
+    SELECTION_5:
         TargetFilename: C:\Program Files\WindowsApps\Microsoft.*
-    SELECTION_8:
+    SELECTION_6:
         TargetFilename: '*\pocket_containers.json'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8)))
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
+        and SELECTION_5 and SELECTION_6)))
 falsepositives:
-- Unknown
+- Some false positives may arise in some environment and this may require some tuning.
+    Add addional filters or reduce level depending on the level of noise
 id: 02773bed-83bf-469f-b7ff-e676e7d78bab
 level: high
 logsource:
     category: file_event
     product: windows
-modified: 2023/02/13
+modified: 2023/03/29
 references:
 - https://academy.hackthebox.com/course/preview/active-directory-bloodhound/bloodhound--data-collection
 status: experimental

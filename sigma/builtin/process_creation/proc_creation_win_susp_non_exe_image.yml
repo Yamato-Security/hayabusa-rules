@@ -9,103 +9,111 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        NewProcessName: '*NVIDIA\NvBackend\\*'
+        NewProcessName: C:\Windows\Temp\Helper\\*
     SELECTION_11:
-        NewProcessName: '*.dat'
-    SELECTION_12:
         NewProcessName:
         - C:\Windows\System32\\*
         - C:\Windows\SysWOW64\\*
-    SELECTION_13:
+    SELECTION_12:
         NewProcessName: '*.com'
+    SELECTION_13:
+        NewProcessName:
+        - '-'
+        - ''
     SELECTION_14:
-        NewProcessName: '*\WinSCP.com'
+        NewProcessName: null
     SELECTION_15:
-        NewProcessName: '*C:\Users\\*'
+        ParentProcessName: C:\ProgramData\Avira\\*
     SELECTION_16:
-        NewProcessName: '*\AppData\\*'
+        NewProcessName: '*NVIDIA\NvBackend\\*'
     SELECTION_17:
-        NewProcessName: '*.tmp*'
+        NewProcessName: '*.dat'
     SELECTION_18:
-        NewProcessName: '*CodeSetup*'
+        NewProcessName: '*\WinSCP.com'
     SELECTION_19:
-        NewProcessName: '*\program\soffice.bin'
+        NewProcessName: '*C:\Users\\*'
     SELECTION_2:
         Channel: Security
     SELECTION_20:
+        NewProcessName: '*\AppData\\*'
+    SELECTION_21:
+        NewProcessName: '*.tmp*'
+    SELECTION_22:
+        NewProcessName: '*CodeSetup*'
+    SELECTION_23:
+        NewProcessName: '*\program\soffice.bin'
+    SELECTION_24:
         NewProcessName:
         - C:\Program Files\EMC NetWorker\Management\GST\apache\cgi-bin\update_jnlp.cgi
         - C:\Program Files (x86)\EMC NetWorker\Management\GST\apache\cgi-bin\update_jnlp.cgi
-    SELECTION_21:
+    SELECTION_25:
         NewProcessName:
         - C:\Program Files (x86)\WINPAKPRO\\*
         - C:\Program Files\WINPAKPRO\\*
-    SELECTION_22:
+    SELECTION_26:
         NewProcessName: '*.ngn'
-    SELECTION_23:
+    SELECTION_27:
         NewProcessName:
         - C:\Program Files (x86)\MyQ\Server\pcltool.dll
         - C:\Program Files\MyQ\Server\pcltool.dll
-    SELECTION_24:
+    SELECTION_28:
         NewProcessName:
         - C:\Program Files\Microsoft Visual Studio\\*
         - C:\Program Files (x86)\Microsoft Visual Studio*
-    SELECTION_25:
-        NewProcessName: '*.com'
-    SELECTION_26:
-        NewProcessName: C:\Config.Msi\\*
-    SELECTION_27:
-        NewProcessName:
-        - '*.rbf'
-        - '*.rbs'
-    SELECTION_28:
-        NewProcessName: '*\AppData\Local\Packages\\*'
     SELECTION_29:
-        NewProcessName: '*\LocalState\rootfs\\*'
+        NewProcessName: '*.com'
     SELECTION_3:
         NewProcessName:
         - '*.exe'
         - '*.tmp'
+        - '*.scr'
     SELECTION_30:
-        NewProcessName: '*\LZMA_EXE'
+        NewProcessName: '*\AppData\Local\Packages\\*'
     SELECTION_31:
-        ParentProcessName: C:\Windows\Temp\\*
+        NewProcessName: '*\LocalState\rootfs\\*'
     SELECTION_32:
-        NewProcessName: C:\Windows\Temp\Helper\\*
+        NewProcessName: '*\LZMA_EXE'
     SELECTION_33:
         ParentProcessName: C:\Windows\Temp\\*
     SELECTION_34:
         ParentProcessName: '*\TBT_Dock_Firmware\GetDockVer32W.exe'
     SELECTION_35:
         NewProcessName: C:\Program Files\Mozilla Firefox\tobedeleted\\*
+    SELECTION_36:
+        ParentProcessName: C:\Windows\UUS\amd64\MoUsoCoreWorker.exe
+    SELECTION_37:
+        NewProcessName: C:\$Extend\$Deleted\\*
+    SELECTION_38:
+        CommandLine: '*C:\Program Files\Common Files\Microsoft Shared\ClickToRun\OfficeC2RClient.exe*'
+    SELECTION_39:
+        CommandLine: '*/update UPDATEORCHESTRATOR displaylevel=False*'
     SELECTION_4:
-        NewProcessName: null
-    SELECTION_5:
         NewProcessName:
         - System
         - Registry
         - MemCompression
         - vmmem
-    SELECTION_6:
-        NewProcessName:
-        - '-'
-        - ''
-    SELECTION_7:
+    SELECTION_5:
         NewProcessName: C:\Windows\Installer\MSI*
+    SELECTION_6:
+        NewProcessName: C:\Windows\System32\DriverStore\FileRepository\\*
+    SELECTION_7:
+        NewProcessName: C:\Config.Msi\\*
     SELECTION_8:
-        ParentProcessName:
-        - C:\ProgramData\Avira\\*
-        - C:\Windows\System32\DriverStore\FileRepository\\*
+        NewProcessName:
+        - '*.rbf'
+        - '*.rbs'
     SELECTION_9:
-        NewProcessName: '*.scr'
-    condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3) and  not ((SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
-        or (SELECTION_15 and SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19)
-        or (SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23) or
-        (SELECTION_24 and SELECTION_25) or (SELECTION_26 and SELECTION_27) or (SELECTION_28
-        and SELECTION_29) or (SELECTION_30) or (SELECTION_31 and SELECTION_32) or
-        (SELECTION_33 and SELECTION_34) or (SELECTION_35)))
+        ParentProcessName: C:\Windows\Temp\\*
+    condition: ((SELECTION_1 and SELECTION_2) and ( not (SELECTION_3) and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12))) and  not ((SELECTION_13)
+        or (SELECTION_14) or (SELECTION_15) or (SELECTION_16 and SELECTION_17) or
+        (SELECTION_18) or (SELECTION_19 and SELECTION_20 and SELECTION_21 and SELECTION_22)
+        or (SELECTION_23) or (SELECTION_24) or (SELECTION_25 and SELECTION_26) or
+        (SELECTION_27) or (SELECTION_28 and SELECTION_29) or (SELECTION_30 and SELECTION_31)
+        or (SELECTION_32) or (SELECTION_33 and SELECTION_34) or (SELECTION_35) or
+        (SELECTION_36 and SELECTION_37 and SELECTION_38 and SELECTION_39)))
 falsepositives:
 - Unknown
 id: c09dad97-1c78-4f71-b127-7edb2b8e491a
@@ -113,7 +121,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/25
+modified: 2023/04/11
 references:
 - https://pentestlaboratories.com/2021/12/08/process-ghosting/
 status: experimental

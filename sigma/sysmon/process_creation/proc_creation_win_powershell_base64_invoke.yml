@@ -1,6 +1,6 @@
 title: PowerShell Base64 Encoded Invoke Keyword
 ruletype: Sigma
-author: pH-T (Nextron Systems), Harjot Singh, '@cyb3rjy0t'
+author: pH-T (Nextron Systems), Harjot Singh, @cyb3rjy0t
 date: 2022/05/20
 description: Detects UTF-8 and UTF-16 Base64 encoded powershell 'Invoke-' calls
 detection:
@@ -9,6 +9,16 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
+        Image:
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+    SELECTION_4:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_5:
+        CommandLine: '* -e*'
+    SELECTION_6:
         CommandLine:
         - '*SQBuAHYAbwBrAGUALQ*'
         - '*kAbgB2AG8AawBlAC0A*'
@@ -16,15 +26,16 @@ detection:
         - '*SW52b2tlL*'
         - '*ludm9rZS*'
         - '*JbnZva2Ut*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6)
 falsepositives:
-- Unlikely
+- Unknown
 id: 6385697e-9f1b-40bd-8817-f4a91f40508e
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/27
+modified: 2023/04/06
 references:
 - https://thedfirreport.com/2022/05/09/seo-poisoning-a-gootloader-story/
 related:
