@@ -14,17 +14,17 @@ detection:
         NewProcessName: '*\conhost.exe'
     SELECTION_4:
         ParentProcessName:
-        - '*\svchost.exe'
+        - '*\explorer.exe'
         - '*\lsass.exe'
+        - '*\regsvr32.exe'
+        - '*\rundll32.exe'
         - '*\services.exe'
         - '*\smss.exe'
-        - '*\winlogon.exe'
-        - '*\explorer.exe'
-        - '*\rundll32.exe'
-        - '*\regsvr32.exe'
+        - '*\spoolsv.exe'
+        - '*\svchost.exe'
         - '*\userinit.exe'
         - '*\wininit.exe'
-        - '*\spoolsv.exe'
+        - '*\winlogon.exe'
     SELECTION_5:
         ParentCommandLine:
         - '*-k apphost -s AppHostSvc*'

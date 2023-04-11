@@ -1,9 +1,9 @@
 title: PowerShell Base64 Encoded WMI Classes
 ruletype: Sigma
-author: Christian Burkard (Nextron Systems), Nasreddine Bencherchali
+author: Christian Burkard (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2023/01/30
 description: Detects calls to base64 encoded WMI class such as "Win32_Shadowcopy",
-    ""...etc.
+    "Win32_ScheduledJob", etc.
 detection:
     SELECTION_1:
         EventID: 1

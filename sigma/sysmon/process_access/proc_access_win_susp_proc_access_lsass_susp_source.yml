@@ -53,7 +53,9 @@ detection:
     SELECTION_25:
         SourceImage: '*.tmp\GoogleUpdate.exe'
     SELECTION_26:
-        GrantedAccess: '0x410'
+        GrantedAccess:
+        - '0x410'
+        - '0x1410'
     SELECTION_27:
         SourceImage: C:\Users\\*
     SELECTION_28:
@@ -148,7 +150,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2023/03/28
+modified: 2023/04/11
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

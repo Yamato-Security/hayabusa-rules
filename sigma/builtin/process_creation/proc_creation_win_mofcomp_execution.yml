@@ -14,6 +14,10 @@ description: 'Detects execution of the "mofcomp" utility as a child of a suspici
 detection:
     SELECTION_1:
         EventID: 4688
+    SELECTION_10:
+        CommandLine: '*C:\Windows\TEMP\\*'
+    SELECTION_11:
+        CommandLine: '*.mof'
     SELECTION_2:
         Channel: Security
     SELECTION_3:
@@ -42,8 +46,9 @@ detection:
         CommandLine: '*C:\Windows\TEMP\\*'
     SELECTION_9:
         CommandLine: '*.mof'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
         (SELECTION_5 or SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and SELECTION_9)))
+        and  not ((SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Unknown
 id: 1dd05363-104e-4b4a-b963-196a534b03a1
@@ -51,7 +56,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/30
+modified: 2023/04/11
 references:
 - https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
 - https://github.com/The-DFIR-Report/Sigma-Rules/blob/75260568a7ffe61b2458ca05f6f25914efb44337/win_mofcomp_execution.yml

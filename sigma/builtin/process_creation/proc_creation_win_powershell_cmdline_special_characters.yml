@@ -1,4 +1,4 @@
-title: Suspicious PowerShell Command Line
+title: Potential PowerShell Command Line Obfuscation
 ruletype: Sigma
 author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
     (fp)
@@ -8,22 +8,6 @@ detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_10:
-        CommandLine|re: .*\^.*\^.*\^.*\^.*\^.*
-    SELECTION_11:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_12:
-        CommandLine|re: .*`.*`.*`.*`.*`.*
-    SELECTION_13:
-        ParentProcessName: C:\Program Files\Amazon\SSM\ssm-document-worker.exe
-    SELECTION_14:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_15:
-        CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*
-    SELECTION_16:
         CommandLine:
         - '*new EventSource("Microsoft.Windows.Sense.Client.Management"*'
         - '*public static extern bool InstallELAMCertificateInfo(SafeFileHandle handle);*'
@@ -34,29 +18,23 @@ detection:
         - '*\powershell.exe'
         - '*\pwsh.exe'
     SELECTION_4:
-        CommandLine|re: .*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
     SELECTION_5:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
+        CommandLine|re: .*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*
     SELECTION_6:
         CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*
     SELECTION_7:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
+        CommandLine|re: .*\^.*\^.*\^.*\^.*\^.*
     SELECTION_8:
-        CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*
+        CommandLine|re: .*`.*`.*`.*`.*`.*
     SELECTION_9:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4)
-        or (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12)) and  not (SELECTION_13))
-        and  not ((SELECTION_14 and SELECTION_15 and SELECTION_16)))
+        ParentProcessName: C:\Program Files\Amazon\SSM\ssm-document-worker.exe
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8)) and  not ((SELECTION_9)
+        or (SELECTION_10)))
 falsepositives:
-- Unlikely
 - Amazon SSM Document Worker
 - Windows Defender ATP
 id: d7bcd677-645d-4691-a8d4-7a5602b780d1
@@ -64,13 +42,13 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/18
+modified: 2023/04/06
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=64
 status: test
 tags:
+- attack.execution
 - attack.defense_evasion
 - attack.t1027
-- attack.execution
 - attack.t1059.001
 

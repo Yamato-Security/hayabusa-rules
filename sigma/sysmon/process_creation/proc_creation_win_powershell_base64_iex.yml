@@ -1,8 +1,8 @@
-title: PowerShell Base64 Encoded IEX Keyword
+title: PowerShell Base64 Encoded IEX Cmdlet
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2019/08/23
-description: Detects usage of a base64 encoded "IEX" string in a process command line
+description: Detects usage of a base64 encoded "IEX" cmdlet in a process command line
 detection:
     SELECTION_1:
         EventID: 1
@@ -37,15 +37,14 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
 falsepositives:
 - Unknown
-fields:
-- CommandLine
-- ParentCommandLine
 id: 88f680b8-070e-402c-ae11-d2914f2257f1
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/18
+modified: 2023/04/06
+references:
+- Internal Research
 status: test
 tags:
 - attack.execution
