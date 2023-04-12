@@ -12,7 +12,9 @@ detection:
     SELECTION_3:
         HostApplication: '*'
     SELECTION_4:
-        HostApplication: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe*
+        HostApplication:
+        - powershell*
+        - C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe*
     SELECTION_5:
         ContextInfo: '*Citrix\ConfigSync\ConfigSync.ps1*'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
@@ -27,7 +29,7 @@ logsource:
     category: ps_classic_start
     definition: fields have to be extract from event
     product: windows
-modified: 2022/10/05
+modified: 2023/04/12
 references:
 - https://threathunterplaybook.com/hunts/windows/190815-RemoteServiceInstallation/notebook.html
 related:
