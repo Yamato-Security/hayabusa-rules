@@ -14,20 +14,21 @@ detection:
     SELECTION_4:
         NewProcessName: '*\hh.exe'
     SELECTION_5:
-        CommandLine: '* http*'
+        CommandLine: '*http*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5)
 falsepositives:
 - Unknown
 id: f57c58b3-ee69-4ef5-9041-455bf39aaa89
-level: medium
+level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
+modified: 2023/04/12
 references:
 - https://www.splunk.com/en_us/blog/security/follina-for-protocol-handlers.html
 - https://github.com/redcanaryco/atomic-red-team/blob/1cf4dd51f83dcb0ebe6ade902d6157ad2dbc6ac8/atomics/T1218.001/T1218.001.md
+- https://www.zscaler.com/blogs/security-research/unintentional-leak-glimpse-attack-vectors-apt37
 status: experimental
 tags:
 - attack.defense_evasion

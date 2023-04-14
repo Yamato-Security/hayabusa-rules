@@ -12,7 +12,7 @@ detection:
     SELECTION_3:
         Image:
         - '*\powershell.exe'
-        - '*\pwsh.dll'
+        - '*\pwsh.exe'
     SELECTION_4:
         OriginalFileName:
         - PowerShell.EXE
@@ -32,7 +32,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/03
+modified: 2023/04/14
 references:
 - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 status: test

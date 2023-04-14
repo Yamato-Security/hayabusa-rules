@@ -1,76 +1,60 @@
-title: HTML Help Shell Spawn
+title: HTML Help HH.EXE Suspicious Child Process
 ruletype: Sigma
-author: Maxim Pavlunin
+author: Maxim Pavlunin, Nasreddine Bencherchali (Nextron Systems)
 date: 2020/04/01
-description: Detects a suspicious child process of a Microsoft HTML Help system when
-    executing compiled HTML files (.chm)
+description: Detects a suspicious child process of a Microsoft HTML Help (HH.exe)
 detection:
     SELECTION_1:
         EventID: 1
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        ParentImage:
-        - C:\Windows\hh.exe
-        - C:\Windows\SysWOW64\hh.exe
+        ParentImage: '*\hh.exe'
     SELECTION_4:
         Image:
+        - '*\CertReq.exe'
+        - '*\CertUtil.exe'
         - '*\cmd.exe'
+        - '*\cscript.exe'
+        - '*\installutil.exe'
+        - '*\MSbuild.exe'
+        - '*\MSHTA.EXE'
+        - '*\msiexec.exe'
         - '*\powershell.exe'
         - '*\pwsh.exe'
-        - '*\wscript.exe'
-        - '*\cscript.exe'
         - '*\regsvr32.exe'
-        - '*\wmic.exe'
         - '*\rundll32.exe'
-        - '*\MSHTA.EXE'
-        - '*\CertUtil.exe'
-        - '*\CertReq.exe'
-        - '*\MSbuild.exe'
-        - '*\installutil.exe'
         - '*\schtasks.exe'
-        - '*\msiexec.exe'
-    SELECTION_5:
-        Image:
-        - '*\Windows\hh.exe'
-        - '*\Windows\SysWOW64\hh.exe'
-    SELECTION_6:
-        CommandLine:
-        - '*.application*'
-        - '*\Downloads\\*'
-        - '*\Content.Outlook\\*'
-        - '*\AppData\Local\Temp\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6)))
+        - '*\wmic.exe'
+        - '*\wscript.exe'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
 - Unknown
-fields:
-- CommandLine
-- ParentCommandLine
 id: 52cad028-0ff0-4854-8f67-d25dfcbc78b4
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/24
+modified: 2023/04/12
 references:
 - https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/chm-badness-delivers-a-banking-trojan/
 - https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-27939090904026cc396b0b629c8e4314acd6f5dac40a676edbc87f4567b47eb7
 - https://www.ptsecurity.com/ww-en/analytics/pt-esc-threat-intelligence/higaisa-or-winnti-apt-41-backdoors-old-and-new/
+- https://www.zscaler.com/blogs/security-research/unintentional-leak-glimpse-attack-vectors-apt37
 status: test
 tags:
 - attack.defense_evasion
-- attack.t1218.001
-- attack.t1218.010
-- attack.t1218.011
 - attack.execution
+- attack.initial_access
+- attack.t1047
 - attack.t1059.001
 - attack.t1059.003
 - attack.t1059.005
 - attack.t1059.007
-- attack.t1047
+- attack.t1218
+- attack.t1218.001
+- attack.t1218.010
+- attack.t1218.011
 - attack.t1566
 - attack.t1566.001
-- attack.initial_access
-- attack.t1218
 
