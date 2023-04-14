@@ -1,36 +1,30 @@
-title: HTML Help HH.EXE Suspicious Child Process
+title: Suspicious HH.EXE Execution
 ruletype: Sigma
-author: Maxim Pavlunin, Nasreddine Bencherchali (Nextron Systems)
+author: Maxim Pavlunin
 date: 2020/04/01
-description: Detects a suspicious child process of a Microsoft HTML Help (HH.exe)
+description: Detects a suspicious execution of a Microsoft HTML Help (HH.exe)
 detection:
     SELECTION_1:
         EventID: 4688
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        ParentProcessName: '*\hh.exe'
+        OriginalFileName: HH.exe
     SELECTION_4:
-        NewProcessName:
-        - '*\CertReq.exe'
-        - '*\CertUtil.exe'
-        - '*\cmd.exe'
-        - '*\cscript.exe'
-        - '*\installutil.exe'
-        - '*\MSbuild.exe'
-        - '*\MSHTA.EXE'
-        - '*\msiexec.exe'
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-        - '*\regsvr32.exe'
-        - '*\rundll32.exe'
-        - '*\schtasks.exe'
-        - '*\wmic.exe'
-        - '*\wscript.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+        NewProcessName: '*\hh.exe'
+    SELECTION_5:
+        CommandLine:
+        - '*.application*'
+        - '*\AppData\Local\Temp\\*'
+        - '*\Content.Outlook\\*'
+        - '*\Downloads\\*'
+        - '*\Users\Public\\*'
+        - '*\Windows\Temp\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5)
 falsepositives:
 - Unknown
-id: 52cad028-0ff0-4854-8f67-d25dfcbc78b4
+id: e8a95b5e-c891-46e2-b33a-93937d3abc31
 level: high
 logsource:
     category: process_creation

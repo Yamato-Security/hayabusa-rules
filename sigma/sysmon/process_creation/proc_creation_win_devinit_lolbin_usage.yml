@@ -1,9 +1,10 @@
-title: DevInit Lolbin Download
+title: Arbitrary MSI Download Via Devinit.EXE
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2022/01/11
-description: Detects a certain command line flag combination used by devinit.exe lolbin
-    to download arbitrary MSI packages on a Windows system
+description: Detects a certain command line flag combination used by "devinit.exe",
+    which can be abused as a LOLBIN to download arbitrary MSI packages on a Windows
+    system
 detection:
     SELECTION_1:
         EventID: 1
@@ -17,12 +18,14 @@ detection:
 falsepositives:
 - Unknown
 id: 90d50722-0483-4065-8e35-57efaadd354d
-level: high
+level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/04/06
 references:
 - https://twitter.com/mrd0x/status/1460815932402679809
+- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Devinit/
 status: test
 tags:
 - attack.execution

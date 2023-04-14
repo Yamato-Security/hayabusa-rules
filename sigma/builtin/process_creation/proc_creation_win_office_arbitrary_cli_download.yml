@@ -9,9 +9,15 @@ detection:
     SELECTION_2:
         Channel: Security
     SELECTION_3:
-        NewProcessName: '*\WINWORD.exe'
+        NewProcessName:
+        - '*\EXCEL.EXE'
+        - '*\POWERPNT.EXE'
+        - '*\WINWORD.exe'
     SELECTION_4:
-        OriginalFileName: WinWord.exe
+        OriginalFileName:
+        - Excel.exe
+        - POWERPNT.EXE
+        - WinWord.exe
     SELECTION_5:
         CommandLine:
         - '*http://*'
@@ -25,7 +31,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/29
+modified: 2023/04/06
 references:
 - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Winword/
 status: experimental
