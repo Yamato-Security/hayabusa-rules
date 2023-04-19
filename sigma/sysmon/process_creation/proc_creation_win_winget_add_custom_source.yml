@@ -1,0 +1,41 @@
+title: Add New Download Source To Winget
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/04/17
+description: Detects usage of winget to add new additional download sources
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\winget.exe'
+    SELECTION_4:
+        OriginalFileName: winget.exe
+    SELECTION_5:
+        CommandLine: '*source *'
+    SELECTION_6:
+        CommandLine: '*add *'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
+falsepositives:
+- False positive are expected with legitimate sources
+id: 05ebafc8-7aa2-4bcd-a269-2aec93f9e842
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://learn.microsoft.com/en-us/windows/package-manager/winget/source
+- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget
+related:
+-   id: 81a0ecb5-0a41-4ba1-b2ba-c944eb92bfa2
+    type: similar
+-   id: c15a46a0-07d4-4c87-b4b6-89207835a83b
+    type: similar
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.execution
+- attack.t1059
+

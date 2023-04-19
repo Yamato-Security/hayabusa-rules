@@ -1,0 +1,44 @@
+title: Potential Suspicious Winget Package Installation
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/04/18
+description: Detects potential suspicious winget package installation from a suspicious
+    source.
+detection:
+    SELECTION_1:
+        EventID: 15
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Contents: '[ZoneTransfer]  ZoneId=3*'
+    SELECTION_4:
+        Contents:
+        - '*://1*'
+        - '*://2*'
+        - '*://3*'
+        - '*://4*'
+        - '*://5*'
+        - '*://6*'
+        - '*://7*'
+        - '*://8*'
+        - '*://9*'
+    SELECTION_5:
+        TargetFilename: '*:Zone.Identifier'
+    SELECTION_6:
+        TargetFilename: '*\AppData\Local\Temp\WinGet\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: a3f5c081-e75b-43a0-9f5b-51f26fe5dba2
+level: high
+logsource:
+    category: create_stream_hash
+    product: windows
+references:
+- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.persistence
+

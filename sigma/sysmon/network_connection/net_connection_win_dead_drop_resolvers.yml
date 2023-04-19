@@ -1,4 +1,4 @@
-title: Dead Drop Resolvers
+title: Potential Dead Drop Resolvers
 ruletype: Sigma
 author: Sorina Ionescu
 date: 2022/08/17
@@ -8,50 +8,85 @@ description: Detects an executable, which is not an internet browser, making DNS
 detection:
     SELECTION_1:
         EventID: 3
+    SELECTION_10:
+        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
+    SELECTION_11:
+        Image: '*\WindowsApps\MicrosoftEdge.exe'
+    SELECTION_12:
+        Image:
+        - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+        - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+    SELECTION_13:
+        Image:
+        - C:\Program Files (x86)\Microsoft\EdgeCore\\*
+        - C:\Program Files\Microsoft\EdgeCore\\*
+    SELECTION_14:
+        Image:
+        - '*\msedge.exe'
+        - '*\msedgewebview2.exe'
+    SELECTION_15:
+        Image: '*\opera.exe'
+    SELECTION_16:
+        Image: '*\safari.exe'
+    SELECTION_17:
+        Image: '*\seamonkey.exe'
+    SELECTION_18:
+        Image: '*\vivaldi.exe'
+    SELECTION_19:
+        Image: '*\whale.exe'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        Image:
+        - '*\MsMpEng.exe'
+        - '*\MsSense.exe'
+    SELECTION_21:
+        Image: '*\PRTG Probe.exe'
+    SELECTION_22:
+        Image: '*\Engine.exe'
     SELECTION_3:
         Initiated: 'true'
     SELECTION_4:
         DestinationHostname:
-        - '*cdn.discordapp.com'
-        - '*pastebin.com'
-        - '*youtube.com'
-        - '*technet.microsoft.com'
-        - '*facebook.com'
         - '*.cloudflare.com'
-        - '*docs.google.com'
-        - '*steamcommunity.com'
-        - '*reddit.com'
-        - '*fotolog.com'
-        - '*twitter.com'
-        - '*imgur.com'
-        - '*feeds.rapidfeeds.com'
-        - '*livejournal.com'
         - '*.githubusercontent.com'
-        - '*pastetext.net'
-        - '*pastebin.pl'
+        - '*cdn.discordapp.com'
+        - '*docs.google.com'
+        - '*facebook.com'
+        - '*feeds.rapidfeeds.com'
+        - '*fotolog.com'
+        - '*imgur.com'
+        - '*livejournal.com'
         - '*paste.ee'
+        - '*pastebin.com'
+        - '*pastebin.pl'
+        - '*pastetext.net'
+        - '*reddit.com'
+        - '*steamcommunity.com'
+        - '*technet.microsoft.com'
+        - '*twitter.com'
+        - '*youtube.com'
     SELECTION_5:
-        Image:
-        - '*\iexplore.exe'
-        - '*\msedge.exe'
-        - '*\edge.exe'
-        - '*\opera.exe'
-        - '*\brave.exe'
-        - '*\vivaldi.exe'
-        - '*\whale.exe'
-        - '*\chrome.exe'
-        - '*\firefox.exe'
+        Image: '*\brave.exe'
     SELECTION_6:
         Image:
-        - '*\MsMpEng.exe'
-        - '*\MsSense.exe'
-        - '*\PRTG Probe.exe'
-        - '*\Engine.exe'
-        - '*\msedgewebview2.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6)))
+        - C:\Program Files\Google\Chrome\Application\chrome.exe
+        - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+    SELECTION_7:
+        Image:
+        - C:\Program Files\Mozilla Firefox\firefox.exe
+        - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+    SELECTION_8:
+        Image:
+        - C:\Program Files (x86)\Internet Explorer\iexplore.exe
+        - C:\Program Files\Internet Explorer\iexplore.exe
+    SELECTION_9:
+        Image: '*\maxthon.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9)
+        or (SELECTION_10 or SELECTION_11 or SELECTION_12) or (SELECTION_13 and SELECTION_14)
+        or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18) or
+        (SELECTION_19))) and  not ((SELECTION_20) or (SELECTION_21) or (SELECTION_22)))
 falsepositives:
 - One might need to exclude other internet browsers found in it's network or other
     applications like ones mentioned above from Microsoft Defender.
@@ -60,7 +95,7 @@ level: high
 logsource:
     category: network_connection
     product: windows
-modified: 2023/01/19
+modified: 2023/04/18
 references:
 - https://content.fireeye.com/apt-41/rpt-apt41
 - https://securelist.com/the-tetrade-brazilian-banking-malware/97779/

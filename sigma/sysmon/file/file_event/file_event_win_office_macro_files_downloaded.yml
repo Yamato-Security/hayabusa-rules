@@ -11,17 +11,22 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         Image:
+        - '*\RuntimeBroker.exe'
         - '*\outlook.exe'
         - '*\thunderbird.exe'
-        - '*\HxOutlook.exe'
         - '*\brave.exe'
         - '*\chrome.exe'
         - '*\firefox.exe'
-        - '*\iexplorer.exe'
-        - '*\microsoftedge.exe'
-        - '*\microsoftedgecp.exe'
+        - '*\iexplore.exe'
+        - '*\maxthon.exe'
+        - '*\MicrosoftEdge.exe'
         - '*\msedge.exe'
+        - '*\msedgewebview2.exe'
         - '*\opera.exe'
+        - '*\safari.exe'
+        - '*\seamonkey.exe'
+        - '*\vivaldi.exe'
+        - '*\whale.exe'
     SELECTION_4:
         TargetFilename:
         - '*.docm'
@@ -42,12 +47,13 @@ detection:
         SELECTION_5))
 falsepositives:
 - Legitimate macro files downloaded from the internet
-- Legitimate macro files sent as attachemnts via emails
+- Legitimate macro files sent as attachments via emails
 id: 0e29e3a7-1ad8-40aa-b691-9f82ecd33d66
 level: medium
 logsource:
     category: file_event
     product: windows
+modified: 2023/04/18
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1566.001/T1566.001.md
 - https://docs.microsoft.com/en-us/deployoffice/compat/office-file-format-reference

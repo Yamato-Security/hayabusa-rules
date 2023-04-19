@@ -2,8 +2,12 @@ title: Suspicious VHD Image Download From Browser
 ruletype: Sigma
 author: frack113, Christopher Peacock '@securepeacock', SCYTHE '@scythe_io'
 date: 2021/10/25
-description: Malware can use mountable Virtual Hard Disk .vhd file to encapsulate
-    payloads and evade security controls
+description: 'Detects creation of ".vhd"/".vhdx" files by browser processes.
+
+    Malware can use mountable Virtual Hard Disk ".vhd" files to encapsulate payloads
+    and evade security controls.
+
+    '
 detection:
     SELECTION_1:
         EventID: 11
@@ -11,27 +15,30 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         Image:
+        - '*\brave.exe'
         - '*\chrome.exe'
         - '*\firefox.exe'
-        - '*\microsoftedge.exe'
-        - '*\microsoftedgecp.exe'
+        - '*\iexplore.exe'
+        - '*\maxthon.exe'
+        - '*\MicrosoftEdge.exe'
         - '*\msedge.exe'
-        - '*\iexplorer.exe'
-        - '*\brave.exe'
+        - '*\msedgewebview2.exe'
         - '*\opera.exe'
+        - '*\safari.exe'
+        - '*\seamonkey.exe'
+        - '*\vivaldi.exe'
+        - '*\whale.exe'
     SELECTION_4:
         TargetFilename: '*.vhd*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- Legitimate user creation
+- Legitimate downloads of ".vhd" files would also trigger this
 id: 8468111a-ef07-4654-903b-b863a80bbc95
 level: medium
 logsource:
     category: file_event
-    definition: in sysmon add "<TargetFilename condition="end with">.vhd</TargetFilename>
-        <!--vhd files for ZLoader and lazarus malware vectors -->"
     product: windows
-modified: 2022/06/02
+modified: 2023/04/18
 references:
 - https://redcanary.com/blog/intelligence-insights-october-2021/
 - https://www.kaspersky.com/blog/lazarus-vhd-ransomware/36559/

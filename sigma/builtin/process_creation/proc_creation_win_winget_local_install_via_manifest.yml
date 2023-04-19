@@ -1,12 +1,16 @@
-title: Monitoring Winget For LOLbin Execution
+title: Install New Package Via Winget Local Manifest
 ruletype: Sigma
-author: Sreeman, Florian Roth (Nextron Systems), Frack113
+author: Sreeman, Florian Roth (Nextron Systems), frack113
 date: 2020/04/21
-description: Detects usage of winget to install applications via manifest file. Adversaries
-    can abuse winget to download payloads remotely and execute them without touching
-    disk. The manifest option enables you to install an application by passing in
-    a YAML file directly to the client. Winget can be used to download and install
-    exe's, msi, msix files later.
+description: 'Detects usage of winget to install applications via manifest file. Adversaries
+    can abuse winget to download payloads remotely and execute them.
+
+    The manifest option enables you to install an application by passing in a YAML
+    file directly to the client.
+
+    Winget can be used to download and install exe, msi or msix files later.
+
+    '
 detection:
     SELECTION_1:
         EventID: 4688
@@ -17,7 +21,9 @@ detection:
     SELECTION_4:
         OriginalFileName: winget.exe
     SELECTION_5:
-        CommandLine: '*install*'
+        CommandLine:
+        - '*install*'
+        - '* add *'
     SELECTION_6:
         CommandLine:
         - '*-m *'
@@ -25,17 +31,18 @@ detection:
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         SELECTION_5 and SELECTION_6)
 falsepositives:
-- Admin activity installing packages not in the official Microsoft repo. Winget probably
-    won't be used by most users.
+- Some false positives are expected in some environment that may use this functionality
+    to install and test their custom applications
 id: 313d6012-51a0-4d93-8dfc-de8553239e25
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/03
+modified: 2023/04/17
 references:
 - https://docs.microsoft.com/en-us/windows/package-manager/winget/install#local-install
 - https://lolbas-project.github.io/lolbas/Binaries/Winget/
+- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget
 status: experimental
 tags:
 - attack.defense_evasion
