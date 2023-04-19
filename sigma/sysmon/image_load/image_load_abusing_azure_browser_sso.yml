@@ -14,21 +14,22 @@ detection:
     SELECTION_1:
         EventID: 7
     SELECTION_10:
-        Image:
-        - '*C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe'
-        - '*C:\Program Files\Microsoft\Edge\Application\msedge.exe'
-        - '*\WindowsApps\MicrosoftEdge.exe'
+        Image: '*\WindowsApps\MicrosoftEdge.exe'
     SELECTION_11:
+        Image:
+        - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+        - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+    SELECTION_12:
         Image:
         - C:\Program Files (x86)\Microsoft\EdgeCore\\*
         - C:\Program Files\Microsoft\EdgeCore\\*
-    SELECTION_12:
+    SELECTION_13:
         Image:
         - '*\msedge.exe'
         - '*\msedgewebview2.exe'
-    SELECTION_13:
-        Image: '*\AppData\Local\Microsoft\OneDrive\OneDrive.exe'
     SELECTION_14:
+        Image: '*\AppData\Local\Microsoft\OneDrive\OneDrive.exe'
+    SELECTION_15:
         Image: null
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -48,14 +49,14 @@ detection:
         Image: '*\IDE\devenv.exe'
     SELECTION_8:
         Image:
-        - C:\Program Files (x86)\Internet Explorer\iexplore.exe*
-        - C:\Program Files\Internet Explorer\iexplore.exe*
+        - C:\Program Files (x86)\Internet Explorer\iexplore.exe
+        - C:\Program Files\Internet Explorer\iexplore.exe
     SELECTION_9:
         Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not ((SELECTION_4
         and SELECTION_5))) and  not ((SELECTION_6 and SELECTION_7) or (SELECTION_8)
-        or (SELECTION_9 or SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13)
-        or (SELECTION_14)))
+        or (SELECTION_9 or SELECTION_10 or SELECTION_11) or (SELECTION_12 and SELECTION_13)
+        or (SELECTION_14) or (SELECTION_15)))
 falsepositives:
 - False positives are expected since this rules is only looking for the DLL load event.
     This rule is better used in correlation with related activity
@@ -64,7 +65,7 @@ level: low
 logsource:
     category: image_load
     product: windows
-modified: 2023/03/28
+modified: 2023/04/18
 references:
 - https://posts.specterops.io/requesting-azure-ad-request-tokens-on-azure-ad-joined-machines-for-browser-sso-2b0409caad30
 status: test

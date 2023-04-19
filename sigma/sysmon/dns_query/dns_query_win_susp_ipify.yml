@@ -2,11 +2,35 @@ title: Suspicious DNS Query for IP Lookup Service APIs
 ruletype: Sigma
 author: Brandon George (blog post), Thomas Patzke (rule)
 date: 2021/07/08
-description: Detects DNS queries for ip lookup services such as api.ipify.org not
-    originating from a non browser process.
+description: Detects DNS queries for IP lookup services such as "api.ipify.org" originating
+    from a non browser process.
 detection:
     SELECTION_1:
         EventID: 22
+    SELECTION_10:
+        Image: '*\WindowsApps\MicrosoftEdge.exe'
+    SELECTION_11:
+        Image:
+        - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+        - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+    SELECTION_12:
+        Image:
+        - C:\Program Files (x86)\Microsoft\EdgeCore\\*
+        - C:\Program Files\Microsoft\EdgeCore\\*
+    SELECTION_13:
+        Image:
+        - '*\msedge.exe'
+        - '*\msedgewebview2.exe'
+    SELECTION_14:
+        Image: '*\opera.exe'
+    SELECTION_15:
+        Image: '*\safari.exe'
+    SELECTION_16:
+        Image: '*\seamonkey.exe'
+    SELECTION_17:
+        Image: '*\vivaldi.exe'
+    SELECTION_18:
+        Image: '*\whale.exe'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -29,27 +53,35 @@ detection:
         - ifconfig.me
         - ipwho.is
     SELECTION_4:
+        Image: '*\brave.exe'
+    SELECTION_5:
         Image:
-        - '*\Google\Chrome\Application\chrome.exe'
-        - '*\iexplore.exe'
-        - '*\firefox.exe'
-        - '*\brave.exe'
-        - '*\opera.exe'
-        - '*\msedge.exe'
-        - '*\vivaldi.exe'
-        - '*\chromium.exe'
-        - '*\microsoftedge.exe'
-        - '*\iexplorer.exe'
-        - '*\CCleaner Browser\Application\CCleanerBrowser.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+        - C:\Program Files\Google\Chrome\Application\chrome.exe
+        - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+    SELECTION_6:
+        Image:
+        - C:\Program Files\Mozilla Firefox\firefox.exe
+        - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+    SELECTION_7:
+        Image:
+        - C:\Program Files (x86)\Internet Explorer\iexplore.exe
+        - C:\Program Files\Internet Explorer\iexplore.exe
+    SELECTION_8:
+        Image: '*\maxthon.exe'
+    SELECTION_9:
+        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9
+        or SELECTION_10 or SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
+        or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18)))
 falsepositives:
-- Legitimate usage of ip lookup services such as ipify API
+- Legitimate usage of IP lookup services such as ipify API
 id: ec82e2a5-81ea-4211-a1f8-37a0286df2c2
 level: medium
 logsource:
     category: dns_query
     product: windows
-modified: 2022/11/18
+modified: 2023/04/18
 references:
 - https://www.binarydefense.com/analysis-of-hancitor-when-boring-begets-beacon
 - https://twitter.com/neonprimetime/status/1436376497980428318

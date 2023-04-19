@@ -1,0 +1,30 @@
+title: Windows Service Terminated With Error
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/04/14
+description: Detects windows services that got terminated for whatever reason
+detection:
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7023
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
+falsepositives:
+- False positives could occur since service termination could happen due to multiple
+    reasons
+id: acfa2210-0d71-4eeb-b477-afab494d596c
+level: low
+logsource:
+    product: windows
+    service: system
+references:
+- https://www.microsoft.com/en-us/security/blog/2023/04/11/guidance-for-investigating-attacks-using-cve-2022-21894-the-blacklotus-campaign/
+related:
+-   id: d6b5520d-3934-48b4-928c-2aa3f92d6963
+    type: similar
+status: experimental
+tags:
+- attack.defense_evasion
+

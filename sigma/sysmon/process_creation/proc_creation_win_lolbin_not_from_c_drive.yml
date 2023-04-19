@@ -1,6 +1,7 @@
 title: LOLBIN From Abnormal Drive
 ruletype: Sigma
-author: Christopher Peacock '@securepeacock', SCYTHE '@scythe_io'
+author: Christopher Peacock '@securepeacock', SCYTHE '@scythe_io', Angelo Violetti
+    - SEC Consult '@angelo_violetti'
 date: 2022/01/25
 description: Detects LOLBINs executing from an abnormal drive such as a mounted ISO.
 detection:
@@ -19,13 +20,23 @@ detection:
         - '*\installutil.exe'
         - '*\cmstp.exe'
     SELECTION_4:
-        CurrentDirectory: '*C:\\*'
+        OriginalFileName:
+        - RUNDLL32.EXE
+        - CALC.EXE
+        - MSHTA.EXE
+        - cscript.exe
+        - wscript.exe
+        - REGSVR32.EXE
+        - installutil.exe
+        - CMSTP.EXE
     SELECTION_5:
-        CurrentDirectory: ''
+        CurrentDirectory: '*C:\\*'
     SELECTION_6:
+        CurrentDirectory: ''
+    SELECTION_7:
         CurrentDirectory: null
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5) or (SELECTION_6)))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
+        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
 falsepositives:
 - Rare false positives could occur on servers with multiple drives.
 id: d4ca7c59-e9e4-42d8-bf57-91a776efcb87
@@ -33,11 +44,12 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/31
+modified: 2023/04/12
 references:
 - https://thedfirreport.com/2021/12/13/diavol-ransomware/
 - https://www.scythe.io/library/threat-emulation-qakbot
+- https://sec-consult.com/blog/detail/bumblebee-hunting-with-a-velociraptor/
 status: test
 tags:
-- attack.t1218.001
+- attack.defense_evasion
 

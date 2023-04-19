@@ -1,6 +1,6 @@
 title: Microsoft Binary Suspicious Communication Endpoint
 ruletype: Sigma
-author: Florian Roth (Nextron Systems)
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2018/08/30
 description: Detects an executable in the Windows folder accessing suspicious domains
 detection:
@@ -9,47 +9,59 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        Initiated: 'true'
+        Image:
+        - C:\PerfLogs*
+        - C:\Temp\\*
+        - C:\Users\Public\\*
+        - C:\Windows\\*
     SELECTION_4:
+        Image: '*\AppData\Temp\\*'
+    SELECTION_5:
+        Initiated: 'true'
+    SELECTION_6:
         DestinationHostname:
-        - '*dl.dropboxusercontent.com'
-        - '*.pastebin.com'
+        - '*.ghostbin.co'
         - '*.githubusercontent.com'
-        - '*cdn.discordapp.com/attachments/'
+        - '*.hastebin.com'
+        - '*.paste.ee'
+        - '*.pastebin.com'
+        - '*anonfiles.com'
+        - '*cdn.discordapp.com'
+        - '*ddns.net'
+        - '*dl.dropboxusercontent.com'
         - '*mediafire.com'
         - '*mega.nz'
-        - '*ddns.net'
-        - '*.paste.ee'
-        - '*.hastebin.com/raw/'
-        - '*.ghostbin.co/'
-        - '*ufile.io'
-        - '*anonfiles.com'
-        - '*send.exploit.in'
-        - '*transfer.sh'
-        - '*privatlab.net'
-        - '*privatlab.com'
-        - '*sendspace.com'
-        - '*pastetext.net'
-        - '*pastebin.pl'
         - '*paste.ee'
-    SELECTION_5:
-        Image:
-        - C:\Windows\\*
-        - C:\Users\Public\\*
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
+        - '*pastebin.pl'
+        - '*pastetext.net'
+        - '*privatlab.com'
+        - '*privatlab.net'
+        - '*send.exploit.in'
+        - '*sendspace.com'
+        - '*transfer.sh'
+        - '*ufile.io'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 and SELECTION_6))
 falsepositives:
 - Unknown
+- '@subTee in your network'
 id: e0f8ab85-0ac9-423b-a73a-81b3c7b1aa97
 level: high
 logsource:
     category: network_connection
     product: windows
-modified: 2023/01/19
+modified: 2023/04/18
 references:
 - https://twitter.com/M_haggis/status/900741347035889665
 - https://twitter.com/M_haggis/status/1032799638213066752
 - https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/ransomware-hive-conti-avoslocker
 - https://www.cisa.gov/uscert/ncas/alerts/aa22-321a
+- https://twitter.com/M_haggis/status/900741347035889665
+- https://twitter.com/M_haggis/status/1032799638213066752
+- https://github.com/EmpireProject/Empire/blob/e37fb2eef8ff8f5a0a689f1589f424906fe13055/data/module_source/exfil/Invoke-ExfilDataToGitHub.ps1
+related:
+-   id: 635dbb88-67b3-4b41-9ea5-a3af2dd88153
+    type: obsoletes
 status: test
 tags:
 - attack.lateral_movement

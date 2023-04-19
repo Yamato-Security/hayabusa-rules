@@ -1,0 +1,39 @@
+title: Mstsc.EXE Execution With Local RDP File
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems), Christopher Peacock @securepeacock
+date: 2023/04/18
+description: Detects potential RDP connection via Mstsc using a local ".rdp" file
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\mstsc.exe'
+    SELECTION_4:
+        OriginalFileName: mstsc.exe
+    SELECTION_5:
+        CommandLine:
+        - '*.rdp*'
+        - '*.rdp"*'
+    SELECTION_6:
+        ParentImage: C:\Windows\System32\lxss\wslhost.exe
+    SELECTION_7:
+        CommandLine: '*C:\ProgramData\Microsoft\WSL\wslg.rdp*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7)))
+falsepositives:
+- Likely with legitimate usage of ".rdp" files
+id: 5fdce3ac-e7f9-4ecd-a3aa-a4d78ebbf0af
+level: low
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/
+- https://blog.thickmints.dev/mintsights/detecting-rogue-rdp/
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1219
+

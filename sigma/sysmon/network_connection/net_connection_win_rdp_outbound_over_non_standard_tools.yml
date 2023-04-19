@@ -1,0 +1,84 @@
+title: Outbound RDP Connections Over Non-Standard Tools
+ruletype: Sigma
+author: Markus Neis
+date: 2019/05/15
+description: Detects Non-Standard Tools Connecting to TCP port 3389 indicating possible
+    lateral movement
+detection:
+    SELECTION_1:
+        EventID: 3
+    SELECTION_10:
+        Image: '*\RDCMan.exe'
+    SELECTION_11:
+        Image: C:\Program Files\Google\Chrome\Application\chrome.exe
+    SELECTION_12:
+    - \FSAssessment.exe
+    - \FSDiscovery.exe
+    - \MobaRTE.exe
+    - \mRemote.exe
+    - \mRemoteNG.exe
+    - \Passwordstate.exe
+    - \RemoteDesktopManager.exe
+    - \RemoteDesktopManager64.exe
+    - \RemoteDesktopManagerFree.exe
+    - \RSSensor.exe
+    - \RTS2App.exe
+    - \RTSApp.exe
+    - \spiceworks-finder.exe
+    - \Terminals.exe
+    - \ws_TunnelService.exe
+    SELECTION_13:
+        Image:
+        - '*\thor.exe'
+        - '*\thor64.exe'
+    SELECTION_14:
+        Image: C:\Program Files\SplunkUniversalForwarder\bin\\*
+    SELECTION_15:
+        Image: '*\Ranger\SentinelRanger.exe'
+    SELECTION_16:
+        Image: C:\Program Files\Mozilla Firefox\firefox.exe
+    SELECTION_17:
+        Image: null
+    SELECTION_18:
+        Image: ''
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        DestinationPort: 3389
+    SELECTION_4:
+        Initiated: 'true'
+    SELECTION_5:
+        Image:
+        - C:\Windows\System32\mstsc.exe
+        - C:\Windows\SysWOW64\mstsc.exe
+    SELECTION_6:
+        Image: C:\Windows\System32\dns.exe
+    SELECTION_7:
+        SourcePort: 53
+    SELECTION_8:
+        Protocol: udp
+    SELECTION_9:
+        Image:
+        - '*\Avast Software\Avast\AvastSvc.exe'
+        - '*\Avast\AvastSvc.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5))) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8) or
+        (SELECTION_9) or (SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13)
+        or (SELECTION_14) or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or
+        (SELECTION_18)))
+falsepositives:
+- Third party RDP tools
+id: ed74fe75-7594-4b4b-ae38-e38e3fd2eb23
+level: high
+logsource:
+    category: network_connection
+    product: windows
+modified: 2023/04/18
+references:
+- https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708
+status: test
+tags:
+- attack.lateral_movement
+- attack.t1021.001
+- car.2013-07-002
+

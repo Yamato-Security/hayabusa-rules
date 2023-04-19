@@ -17,6 +17,30 @@ description: 'An adversary may use legitimate desktop support and remote access 
 detection:
     SELECTION_1:
         EventID: 22
+    SELECTION_10:
+        Image: '*\WindowsApps\MicrosoftEdge.exe'
+    SELECTION_11:
+        Image:
+        - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+        - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+    SELECTION_12:
+        Image:
+        - C:\Program Files (x86)\Microsoft\EdgeCore\\*
+        - C:\Program Files\Microsoft\EdgeCore\\*
+    SELECTION_13:
+        Image:
+        - '*\msedge.exe'
+        - '*\msedgewebview2.exe'
+    SELECTION_14:
+        Image: '*\opera.exe'
+    SELECTION_15:
+        Image: '*\safari.exe'
+    SELECTION_16:
+        Image: '*\seamonkey.exe'
+    SELECTION_17:
+        Image: '*\vivaldi.exe'
+    SELECTION_18:
+        Image: '*\whale.exe'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -65,26 +89,35 @@ detection:
         - '*license.bomgar.com'
         - '*.beyondtrustcloud.com'
     SELECTION_4:
+        Image: '*\brave.exe'
+    SELECTION_5:
         Image:
-        - '*\Google\Chrome\Application\chrome.exe'
-        - '*\brave.exe'
-        - '*\chromium.exe'
-        - '*\firefox.exe'
-        - '*\msedge.exe'
-        - '*\opera.exe'
-        - '*\microsoftedge.exe'
-        - '*\iexplorer.exe'
-        - '*\vivaldi.exe'
-        - '*\CCleaner Browser\Application\CCleanerBrowser.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
+        - C:\Program Files\Google\Chrome\Application\chrome.exe
+        - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+    SELECTION_6:
+        Image:
+        - C:\Program Files\Mozilla Firefox\firefox.exe
+        - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+    SELECTION_7:
+        Image:
+        - C:\Program Files (x86)\Internet Explorer\iexplore.exe
+        - C:\Program Files\Internet Explorer\iexplore.exe
+    SELECTION_8:
+        Image: '*\maxthon.exe'
+    SELECTION_9:
+        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9
+        or SELECTION_10 or SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
+        or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18)))
 falsepositives:
-- Legitimate usage of the software mentioned above
+- Likely with other browser software
 id: 4d07b1f4-cb00-4470-b9f8-b0191d48ff52
 level: medium
 logsource:
     category: dns_query
     product: windows
-modified: 2022/12/23
+modified: 2023/04/18
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-4---gotoassist-files-detected-test-on-windows
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-3---logmein-files-detected-test-on-windows
