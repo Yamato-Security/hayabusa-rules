@@ -41,6 +41,8 @@ detection:
         Image: null
     SELECTION_18:
         Image: ''
+    SELECTION_19:
+        Image: <unknown process>
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
@@ -65,7 +67,7 @@ detection:
         ((SELECTION_5))) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8) or
         (SELECTION_9) or (SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13)
         or (SELECTION_14) or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or
-        (SELECTION_18)))
+        (SELECTION_18) or (SELECTION_19)))
 falsepositives:
 - Third party RDP tools
 id: ed74fe75-7594-4b4b-ae38-e38e3fd2eb23
@@ -73,7 +75,7 @@ level: high
 logsource:
     category: network_connection
     product: windows
-modified: 2023/04/18
+modified: 2023/04/20
 references:
 - https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708
 status: test

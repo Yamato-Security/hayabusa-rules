@@ -28,6 +28,7 @@ detection:
         - '*\mmc.exe'
         - '*\sqlservr.exe'
         - '*\tssdis.exe'
+        - '*C:\Windows\system32\svchost.exe'
     condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and SELECTION_4 and  not
         (SELECTION_5))
 falsepositives:
@@ -43,7 +44,7 @@ logsource:
         https://github.com/olafhartong/sysmon-modular. How to test detection? You
         can check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575
     product: windows
-modified: 2022/02/16
+modified: 2023/04/20
 references:
 - https://github.com/Azure/Azure-Sentinel/blob/f99542b94afe0ad2f19a82cc08262e7ac8e1428e/Detections/SecurityEvent/ADFSDBNamedPipeConnection.yaml
 - https://o365blog.com/post/adfs/
