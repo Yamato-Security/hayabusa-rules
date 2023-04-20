@@ -1,6 +1,7 @@
 title: New Port Forwarding Rule Added Via Netsh.EXX
 ruletype: Sigma
-author: Florian Roth (Nextron Systems), omkar72, oscd.community
+author: Florian Roth (Nextron Systems), omkar72, oscd.community, Swachchhanda Shrawan
+    Poudel
 date: 2019/01/29
 description: Detects the execution of netsh commands that configure a new port forwarding
     (PortProxy) rule
@@ -8,8 +9,16 @@ detection:
     SELECTION_1:
         EventID: 1
     SELECTION_10:
-        CommandLine: '*listena*'
+        CommandLine: '*p *'
     SELECTION_11:
+        CommandLine: '*a *'
+    SELECTION_12:
+        CommandLine: '*v *'
+    SELECTION_13:
+        CommandLine: '*connectp*'
+    SELECTION_14:
+        CommandLine: '*listena*'
+    SELECTION_15:
         CommandLine: '*c=*'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -26,10 +35,11 @@ detection:
     SELECTION_8:
         CommandLine: '*v4tov4*'
     SELECTION_9:
-        CommandLine: '*connectp*'
+        CommandLine: '*i *'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
         ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10 and SELECTION_11)))
+        and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
+        and SELECTION_15)))
 falsepositives:
 - Legitimate administration activity
 - WSL2 network bridge PowerShell script used for WSL/Kubernetes/Docker (e.g. https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723)
@@ -38,7 +48,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
+modified: 2023/04/20
 references:
 - https://www.fireeye.com/blog/threat-research/2019/01/bypassing-network-restrictions-through-rdp-tunneling.html
 - https://adepts.of0x.cc/netsh-portproxy-code/
