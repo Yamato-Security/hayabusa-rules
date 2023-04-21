@@ -1,0 +1,35 @@
+title: Important Windows Service Terminated Unexpectedly
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/04/14
+description: Detects important or interesting windows services that got terminated
+    unexpectedly.
+detection:
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7034
+    SELECTION_4:
+        param1: '*Message Queuing*'
+    SELECTION_5:
+        Binary:
+        - '*4d0053004d005100*'
+        - '*6d0073006d007100*'
+    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and (SELECTION_4 or
+        SELECTION_5))
+falsepositives:
+- Rare false positives could occur since service termination could happen due to multiple
+    reasons
+id: 56abae0c-6212-4b97-adc0-0b559bb950c3
+level: high
+logsource:
+    product: windows
+    service: system
+references:
+- https://www.randori.com/blog/vulnerability-analysis-queuejumper-cve-2023-21554/
+status: experimental
+tags:
+- attack.defense_evasion
+

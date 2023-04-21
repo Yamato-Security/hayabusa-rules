@@ -1,0 +1,32 @@
+title: PUA - Crassus Execution
+ruletype: Sigma
+author: pH-T (Nextron Systems)
+date: 2023/04/17
+description: Detects Crassus a windows privilege escalation discovery tool based on
+    PE metadata characteristics.
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        Image: '*\Crassus.exe'
+    SELECTION_4:
+        OriginalFileName: Crassus.exe
+    SELECTION_5:
+        Description: '*Crassus*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
+falsepositives:
+- Unlikely
+id: 2c32b543-1058-4808-91c6-5b31b8bed6c5
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://github.com/vu-ls/Crassus
+status: experimental
+tags:
+- attack.discovery
+- attack.t1590.001
+
