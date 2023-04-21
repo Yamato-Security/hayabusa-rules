@@ -10,16 +10,18 @@ detection:
     SELECTION_2:
         EventID: 2005
     SELECTION_3:
+        EventID: 2073
+    SELECTION_4:
         ModifyingApplication:
         - C:\Program Files (x86)\\*
         - C:\Program Files\\*
-    condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3)))
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and  not ((SELECTION_4)))
 id: 5570c4d9-8fdd-4622-965b-403a5a101aa0
 level: low
 logsource:
     product: windows
     service: firewall-as
-modified: 2023/01/17
+modified: 2023/04/21
 references:
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 status: experimental

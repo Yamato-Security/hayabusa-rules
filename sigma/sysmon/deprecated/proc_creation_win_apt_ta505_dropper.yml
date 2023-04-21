@@ -6,13 +6,13 @@ description: Detects mshta loaded by wmiprvse as parent as used by TA505 malicio
     documents
 detection:
     SELECTION_1:
-        EventID: 4688
+        EventID: 1
     SELECTION_2:
-        Channel: Security
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        ParentProcessName: '*\wmiprvse.exe'
+        ParentImage: '*\wmiprvse.exe'
     SELECTION_4:
-        NewProcessName: '*\mshta.exe'
+        Image: '*\mshta.exe'
     SELECTION_5:
         OriginalFileName: mshta.exe
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
@@ -24,10 +24,10 @@ level: critical
 logsource:
     category: process_creation
     product: windows
-modified: 2022/03/31
+modified: 2023/04/05
 references:
 - https://twitter.com/ForensicITGuy/status/1334734244120309760
-status: test
+status: deprecated
 tags:
 - attack.execution
 - attack.g0092

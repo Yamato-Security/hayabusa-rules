@@ -1,9 +1,9 @@
-title: Suspicious PowerShell Keywords
+title: Potential Suspicious PowerShell Keywords
 ruletype: Sigma
-author: Florian Roth (Nextron Systems), Perez Diego (@darkquassar)
+author: Florian Roth (Nextron Systems), Perez Diego (@darkquassar), Tuan Le (NCSGroup)
 date: 2019/02/11
-description: Detects keywords that could indicate the use of some PowerShell exploitation
-    framework
+description: Detects potentially suspicious keywords that could indicate the use of
+    a PowerShell exploitation framework
 detection:
     SELECTION_1:
         EventID: 4104
@@ -18,6 +18,8 @@ detection:
         - '*[Reflection.Assembly]::Load($*'
         - '*System.Reflection.AssemblyName*'
         - '*Reflection.Emit.AssemblyBuilderAccess*'
+        - '*Reflection.Emit.CustomAttributeBuilder*'
+        - '*Runtime.InteropServices.UnmanagedType*'
         - '*Runtime.InteropServices.DllImportAttribute*'
         - '*SuspendThread*'
         - '*rundll32*'
@@ -25,12 +27,12 @@ detection:
 falsepositives:
 - Unknown
 id: 1f49f2ab-26bc-48b3-96cc-dcffbc93eadf
-level: high
+level: medium
 logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2023/01/02
+modified: 2023/04/21
 references:
 - https://posts.specterops.io/entering-a-covenant-net-command-and-control-e11038bcf462
 - https://github.com/PowerShellMafia/PowerSploit/blob/d943001a7defb5e0d1657085a77a0e78609be58f/CodeExecution/Invoke-ReflectivePEInjection.ps1

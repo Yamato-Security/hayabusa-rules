@@ -14,16 +14,17 @@ detection:
     SELECTION_4:
         ApplicationPath:
         - '*\AppData\\*'
-        - '*\temp\\*'
+        - '*\Temp\\*'
     SELECTION_5:
         Action: 2
     SELECTION_6:
-        ApplicationPath:
-        - '*AppData\local\microsoft\teams\current\teams.exe'
-        - '*AppData\Local\Keybase\keybase.exe'
-        - '*AppData\Local\Programs\Messenger\Messenger.exe'
-    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6)))
+        ApplicationPath: '*\AppData\local\microsoft\teams\current\teams.exe'
+    SELECTION_7:
+        ApplicationPath: '*\AppData\Local\Keybase\keybase.exe'
+    SELECTION_8:
+        ApplicationPath: '*\AppData\Local\Programs\Messenger\Messenger.exe'
+    condition: (SELECTION_1 and (((SELECTION_2 or SELECTION_3) and SELECTION_4) and  not
+        ((SELECTION_5))) and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
 falsepositives:
 - Any legitimate application that runs from the AppData user directory
 id: 9e2575e7-2cb9-4da1-adc8-ed94221dca5e
@@ -31,6 +32,7 @@ level: high
 logsource:
     product: windows
     service: firewall-as
+modified: 2023/04/21
 references:
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 - https://app.any.run/tasks/7123e948-c91e-49e0-a813-00e8d72ab393/#

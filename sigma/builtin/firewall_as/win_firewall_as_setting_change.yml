@@ -1,6 +1,6 @@
 title: Windows Firewall Settings Have Been Changed
 ruletype: Sigma
-author: frack113
+author: frack113, Nasreddine Bencherchali (Nextron Systems)
 date: 2022/02/19
 description: Detects activity when the settings of the Windows firewall have been
     changed
@@ -10,16 +10,21 @@ detection:
     SELECTION_2:
         EventID: 2002
     SELECTION_3:
-        EventID: 2003
+        EventID: 2083
     SELECTION_4:
+        EventID: 2003
+    SELECTION_5:
+        EventID: 2082
+    SELECTION_6:
         EventID: 2008
-    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4))
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5
+        or SELECTION_6))
 id: 00bb5bd5-1379-4fcf-a965-a5b6f7478064
 level: low
 logsource:
     product: windows
     service: firewall-as
-modified: 2023/01/17
+modified: 2023/04/21
 references:
 - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 status: experimental
