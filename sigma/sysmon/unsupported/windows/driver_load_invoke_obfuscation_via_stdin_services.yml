@@ -9,7 +9,7 @@ detection:
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        ImagePath|re: (?i).*(set).*&&\s?set.*(environment|invoke|\${?input).*&&.*"
+        ImagePath|re: (?i).*(set).*&&\s?set.*(environment|invoke|\$?\{?input).*&&.*"
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unknown
@@ -18,7 +18,7 @@ level: high
 logsource:
     category: driver_load
     product: windows
-modified: 2021/09/18
+modified: 2023/04/23
 references:
 - https://github.com/SigmaHQ/sigma/issues/1009
 related:
