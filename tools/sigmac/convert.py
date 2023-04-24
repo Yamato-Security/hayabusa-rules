@@ -15,9 +15,14 @@ import ruamel.yaml
 SIGMA_DIR = "./"
 SIGMAC_DIR = "./tools/"
 EXPORT_DIR_NAME = "./hayabusa_rules"
+RULES_DEPRECATED_DIR = "./deprecated/windows"
 RULES_DIR = "./rules/windows"
-RULES_UNSUPPORTED_DIR = "./rules-unsupported"
-RULES_DEPRECATED_DIR = "./rules-deprecated/windows"
+RULES_COMPLIANCE_DIR = "./rules-compliance"
+RULES_DFIR_DIR = "./rules-dfir/"
+RULES_EMERGING_THREATS_DIR = "./rules-emerging-threats"
+RULES_PLACEHOLDER_DIR = "./rules-placeholder/windows"
+RULES_THREAT_HUNTING_DIR = "./rules-threat-hunting"
+RULES_UNSUPPORTED_DIR = "./unsupported"
 CPU = None
 IGNORE_CONFIGS = {"windows-services.yml", "powershell.yml"}
 EXCLUDE_CATEGORY = {"file_rename"}
@@ -28,12 +33,12 @@ logging.basicConfig(format = FORMAT, level=logging.WARNING)
 logger = logging.getLogger(__name__)
 yaml = ruamel.yaml.YAML()
 
-def main():
+def main(rule_folders):
     if os.path.exists(EXPORT_DIR_NAME):
         shutil.rmtree(EXPORT_DIR_NAME)
     os.mkdir(EXPORT_DIR_NAME)
     logconverter = Logconverter(SIGMA_DIR,
-        rules_dirs=[RULES_DIR, RULES_UNSUPPORTED_DIR, RULES_DEPRECATED_DIR],
+        rules_dirs=rule_folders,
         config_dir=os.path.join(SIGMA_DIR, "tools/config/generic/")
     )
     logconverter.create_config_map()
@@ -97,6 +102,30 @@ class Logconverter():
                 convert_datas.extend(self.create_convert_command(file_path, file))
         return convert_datas
 
+
+    @staticmethod
+    def create_rule_path(rule_path) -> str:
+        rule_path_from_rule_root = rule_path
+        if RULES_DEPRECATED_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_DEPRECATED_DIR, "deprecated")
+        elif RULES_UNSUPPORTED_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_UNSUPPORTED_DIR, "unsupported")
+        elif RULES_COMPLIANCE_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_COMPLIANCE_DIR, "compliance")
+        elif RULES_DFIR_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_DFIR_DIR, "dfir")
+        elif RULES_EMERGING_THREATS_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_EMERGING_THREATS_DIR, "emerging-threats")
+        elif RULES_PLACEHOLDER_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_PLACEHOLDER_DIR, "placeholder")
+        elif RULES_THREAT_HUNTING_DIR in rule_path:
+            rule_path_from_rule_root = rule_path.replace(RULES_THREAT_HUNTING_DIR, "threat-hunting")
+        else:
+            rule_path_from_rule_root = rule_path[len(RULES_DIR)+1:] # rm ./rules/windows
+        if rule_path_from_rule_root.startswith("builtin/"):
+            rule_path_from_rule_root = rule_path_from_rule_root[8:] # rm .builtin
+        return rule_path_from_rule_root
+
     def create_convert_command(self, rule_path: str, file_name: str) -> list[ConvertData]:
         convert_datas: list[ConvertData] = list()
         sysmon_related = False
@@ -131,15 +160,7 @@ class Logconverter():
         else:
             configs = set()
 
-        rule_path_from_rule_root = rule_path
-        if RULES_DEPRECATED_DIR in rule_path:
-            rule_path_from_rule_root = rule_path.replace(RULES_DEPRECATED_DIR, "deprecated")
-        elif RULES_UNSUPPORTED_DIR in rule_path:
-            rule_path_from_rule_root = rule_path.replace(RULES_UNSUPPORTED_DIR, "unsupported")
-        else:
-            rule_path_from_rule_root = rule_path[len(RULES_DIR)+1:] # rm ./rules/windows
-        if rule_path_from_rule_root.startswith("builtin/"):
-            rule_path_from_rule_root = rule_path_from_rule_root[8:] # rm .builtin
+        rule_path_from_rule_root = self.create_rule_path(rule_path)
 
         while True:
             if len(configs) > 0:
@@ -218,10 +239,11 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--cpu",
                         help="You can specify the number of CPUs to use. The default number is " + cpu_num + ".",
                         type=int, default=None)
-    parser.add_argument("-r", "--rule_path",
+    parser.add_argument("--rule_path",
+                        nargs='*',
+                        default=[RULES_DEPRECATED_DIR, RULES_DIR, RULES_COMPLIANCE_DIR, RULES_DFIR_DIR, RULES_EMERGING_THREATS_DIR, RULES_PLACEHOLDER_DIR, RULES_THREAT_HUNTING_DIR, RULES_UNSUPPORTED_DIR],
                         help="""
-                        Full path to the rule directory you want to convert.
-                        Default: ./rules/windows/
+                        Full path to the rule directory you want to convert.If more than one directory is provided, separate them with a space.
                         """)
     parser.add_argument("-o", "--output",
                         help="Export directory. Default: ./hayabusa_rules",
@@ -250,13 +272,12 @@ if __name__ == "__main__":
     # SET ENV
     EXPORT_DIR_NAME = args.output
     CPU = args.cpu
-    RULES_DIR = os.path.join(SIGMA_DIR, "rules/windows")
     if args.suppression:
         SUPPRESSION = True
-    if args.rule_path:
-        RULES_DIR = args.rule_path
-        if not os.path.isdir(RULES_DIR):
-            logger.error(args.rule_path + " does not exist.")
-            sys.exit(1)
 
-    main()
+    if args.rule_path:
+        for rule_dir in args.rule_path:
+            if not os.path.isdir(rule_dir):
+                logger.error(rule_dir + " does not exist.")
+                sys.exit(1)
+    main(args.rule_path)
