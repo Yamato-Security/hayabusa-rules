@@ -80,6 +80,12 @@ detection:
         TargetImage: '*\winlogon.exe'
     SELECTION_37:
         GrantedAccess: '0x1fffff'
+    SELECTION_38:
+        SourceImage:
+        - C:\Program Files\Common Files\Adobe\ARM\\*
+        - C:\Program Files (x86)\Common Files\Adobe\ARM\\*
+    SELECTION_39:
+        SourceImage: '*\AdobeARMHelper.exe'
     SELECTION_4:
         GrantedAccess:
         - '*10'
@@ -108,6 +114,8 @@ detection:
         - '*FA'
         - '*0x14C2'
         - '*FF'
+    SELECTION_40:
+        GrantedAcces: '0x1410'
     SELECTION_5:
         SourceImage:
         - '*\Temp\\*'
@@ -137,7 +145,8 @@ detection:
         or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
         and SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28 and SELECTION_29)
         or (SELECTION_30 and SELECTION_31 and SELECTION_32) or (SELECTION_33 and SELECTION_34
-        and SELECTION_35 and SELECTION_36 and SELECTION_37)))
+        and SELECTION_35 and SELECTION_36 and SELECTION_37) or (SELECTION_38 and SELECTION_39
+        and SELECTION_40)))
 falsepositives:
 - Updaters and installers are typical false positives. Apply custom filters depending
     on your environment
@@ -150,7 +159,7 @@ level: high
 logsource:
     category: process_access
     product: windows
-modified: 2023/04/11
+modified: 2023/04/25
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

@@ -1,7 +1,7 @@
 title: Suspicious Microsoft Office Child Process
 ruletype: Sigma
-author: Michael Haag, Florian Roth, Markus Neis, Elastic, FPT.EagleEye Team, Vadim
-    Khrykov, Cyb3rEng, Michael Haag, Christopher Peacock @securepeacock, SCYTHE @scythe_io
+author: Florian Roth (Nextron Systems), Markus Neis, FPT.EagleEye Team, Vadim Khrykov,
+    Cyb3rEng, Michael Haag, Christopher Peacock @securepeacock, @scythe_io
 date: 2018/04/06
 description: Detects a suspicious process spawning from one of the Microsoft Office
     suite products (Word, Excel, PowerPoint, Publisher, Visio, etc.)
@@ -94,8 +94,16 @@ detection:
         - '*\wmic.exe'
         - '*\workfolders.exe'
         - '*\wscript.exe'
+    SELECTION_6:
+        Image:
+        - '*\AppData\\*'
+        - '*\Users\Public\\*'
+        - '*\ProgramData\\*'
+        - '*\Windows\Tasks\\*'
+        - '*\Windows\Temp\\*'
+        - '*\Windows\System32\Tasks\\*'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
-        SELECTION_5))
+        SELECTION_5 or SELECTION_6))
 falsepositives:
 - Unknown
 id: 438025f9-5856-4663-83f7-52f878a70a50
@@ -103,7 +111,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/10
+modified: 2023/04/24
 references:
 - https://www.hybrid-analysis.com/sample/465aabe132ccb949e75b8ab9c5bda36d80cf2fd503d52b8bad54e295f28bbc21?environmentId=100
 - https://mgreen27.github.io/posts/2018/04/02/DownloadCradle.html
