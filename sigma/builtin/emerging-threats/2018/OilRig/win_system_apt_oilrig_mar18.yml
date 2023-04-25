@@ -1,0 +1,48 @@
+title: OilRig APT Schedule Task Persistence - System
+ruletype: Sigma
+author: Florian Roth (Nextron Systems), Markus Neis, Jonhnathan Ribeiro, Daniil Yugoslavskiy,
+    oscd.community
+date: 2018/03/23
+description: Detects OilRig schedule task persistence as reported by Nyotron in their
+    March 2018 report
+detection:
+    SELECTION_1:
+        Channel: System
+    SELECTION_2:
+        Provider_Name: Service Control Manager
+    SELECTION_3:
+        EventID: 7045
+    SELECTION_4:
+        ServiceName:
+        - SC Scheduled Scan
+        - UpdatMachine
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Unlikely
+id: 53ba33fd-3a50-4468-a5ef-c583635cfa92
+level: critical
+logsource:
+    product: windows
+    service: system
+modified: 2023/03/08
+references:
+- https://web.archive.org/web/20180402134442/https://nyotron.com/wp-content/uploads/2018/03/Nyotron-OilRig-Malware-Report-March-2018C.pdf
+related:
+-   id: c0580559-a6bd-4ef6-b9b7-83703d98b561
+    type: similar
+-   id: 7bdf2a7c-3acc-4091-9581-0a77dad1c5b5
+    type: similar
+-   id: ce6e34ca-966d-41c9-8d93-5b06c8b97a06
+    type: similar
+status: experimental
+tags:
+- attack.persistence
+- attack.g0049
+- attack.t1053.005
+- attack.s0111
+- attack.t1543.003
+- attack.defense_evasion
+- attack.t1112
+- attack.command_and_control
+- attack.t1071.004
+
