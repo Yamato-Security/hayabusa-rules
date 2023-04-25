@@ -1,0 +1,144 @@
+title: Mint Sandstorm - ManageEngine Suspicious Process Execution
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems), MSTIC (idea)
+date: 2023/04/20
+description: Detects suspicious execution from ManageEngine as seen used by Mint Sandstorm
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_10:
+        CommandLine: '*http*'
+    SELECTION_11:
+        Image: '*\curl.exe'
+    SELECTION_12:
+        CommandLine: '*http*'
+    SELECTION_13:
+        CommandLine:
+        - '*E:jscript*'
+        - '*e:vbscript*'
+    SELECTION_14:
+        CommandLine: '*localgroup Administrators*'
+    SELECTION_15:
+        CommandLine: '*/add*'
+    SELECTION_16:
+        CommandLine:
+        - '*net*'
+    SELECTION_17:
+        CommandLine: '*user*'
+    SELECTION_18:
+        CommandLine: '*/add*'
+    SELECTION_19:
+        CommandLine: '*reg add*'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        CommandLine: '*DisableAntiSpyware*'
+    SELECTION_21:
+        CommandLine: '*\Microsoft\Windows Defender*'
+    SELECTION_22:
+        CommandLine: '*reg add*'
+    SELECTION_23:
+        CommandLine: '*DisableRestrictedAdmin*'
+    SELECTION_24:
+        CommandLine: '*CurrentControlSet\Control\Lsa*'
+    SELECTION_25:
+        CommandLine: '*wmic*'
+    SELECTION_26:
+        CommandLine: '*process call create*'
+    SELECTION_27:
+        CommandLine: '*wmic*'
+    SELECTION_28:
+        CommandLine: '*delete*'
+    SELECTION_29:
+        CommandLine: '*shadowcopy*'
+    SELECTION_3:
+        ParentImage:
+        - '*manageengine*'
+        - '*ServiceDesk*'
+    SELECTION_30:
+        CommandLine: '*vssadmin*'
+    SELECTION_31:
+        CommandLine: '*delete*'
+    SELECTION_32:
+        CommandLine: '*shadows*'
+    SELECTION_33:
+        CommandLine: '*wbadmin*'
+    SELECTION_34:
+        CommandLine: '*delete*'
+    SELECTION_35:
+        CommandLine: '*catalog*'
+    SELECTION_36:
+        CommandLine: '*download.microsoft.com*'
+    SELECTION_37:
+        CommandLine: '*manageengine.com*'
+    SELECTION_38:
+        CommandLine: '*msiexec*'
+    SELECTION_4:
+        Image:
+        - '*\powershell.exe'
+        - '*\powershell_ise.exe'
+    SELECTION_5:
+        CommandLine:
+        - '* echo *'
+        - '*-dumpmode*'
+        - '*-ssh*'
+        - '*.dmp*'
+        - '*add-MpPreference*'
+        - '*adscredentials*'
+        - '*bitsadmin*'
+        - '*certutil*'
+        - '*csvhost.exe*'
+        - '*DownloadFile*'
+        - '*DownloadString*'
+        - '*dsquery*'
+        - '*ekern.exe*'
+        - '*FromBase64String*'
+        - '*iex *'
+        - '*iex(*'
+        - '*Invoke-Expression*'
+        - '*Invoke-WebRequest*'
+        - '*localgroup administrators*'
+        - '*net group*'
+        - '*net user*'
+        - '*o365accountconfiguration*'
+        - '*query session*'
+        - '*samaccountname=*'
+        - '*set-MpPreference*'
+        - '*svhost.exe*'
+        - '*System.IO.Compression*'
+        - '*System.IO.MemoryStream*'
+        - '*usoprivate*'
+        - '*usoshared*'
+        - '*whoami*'
+    SELECTION_6:
+        CommandLine|re: "[-/\u2013][Ee^]{1,2}[ncodema^]*\\s[A-Za-z0-9+/=]{15,}"
+    SELECTION_7:
+        CommandLine: '*lsass*'
+    SELECTION_8:
+        CommandLine:
+        - '*procdump*'
+        - '*tasklist*'
+        - '*findstr*'
+    SELECTION_9:
+        Image: '*\wget.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and ((SELECTION_4 and
+        (SELECTION_5 or SELECTION_6)) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
+        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or SELECTION_13 or (SELECTION_14
+        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or ((SELECTION_19
+        and SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24))
+        or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28 and SELECTION_29)
+        or (SELECTION_30 and SELECTION_31 and SELECTION_32) or (SELECTION_33 and SELECTION_34
+        and SELECTION_35))) and  not (SELECTION_36 and SELECTION_37 and SELECTION_38))
+falsepositives:
+- Unlikely
+id: 58d8341a-5849-44cd-8ac8-8b020413a31b
+level: critical
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.microsoft.com/en-us/security/blog/2023/04/18/nation-state-threat-actor-mint-sandstorm-refines-tradecraft-to-attack-high-value-targets/
+status: test
+tags:
+- attack.execution
+

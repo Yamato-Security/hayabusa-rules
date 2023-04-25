@@ -1,0 +1,41 @@
+title: Interactive Logon to Server Systems
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2017/03/17
+description: Detects interactive console logons to Server Systems
+detection:
+    SELECTION_1:
+        Channel: Security
+    SELECTION_2:
+        EventID: 528
+    SELECTION_3:
+        EventID: 529
+    SELECTION_4:
+        EventID: 4624
+    SELECTION_5:
+        EventID: 4625
+    SELECTION_6:
+        LogonType: 2
+    SELECTION_7:
+        ComputerName:
+        - '%ServerSystems%'
+        - '%DomainControllers%'
+    SELECTION_8:
+        LogonProcessName: Advapi
+    SELECTION_9:
+        ComputerName: '%Workstations%'
+    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5)
+        and SELECTION_6 and SELECTION_7) and  not (SELECTION_8 and SELECTION_9))
+falsepositives:
+- Administrative activity via KVM or ILO board
+id: 3ff152b2-1388-4984-9cd9-a323323fdadf
+level: medium
+logsource:
+    product: windows
+    service: security
+modified: 2021/11/27
+status: test
+tags:
+- attack.lateral_movement
+- attack.t1078
+

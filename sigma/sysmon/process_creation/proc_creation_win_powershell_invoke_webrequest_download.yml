@@ -1,4 +1,4 @@
-title: Suspicious Invoke-WebRequest Usage
+title: Suspicious Invoke-WebRequest Execution
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/02
@@ -13,30 +13,33 @@ detection:
         Image:
         - '*\powershell.exe'
         - '*\pwsh.exe'
-        - '*\cmd.exe'
     SELECTION_4:
+        OriginalFileName:
+        - PowerShell.EXE
+        - pwsh.dll
+    SELECTION_5:
         CommandLine:
+        - '*curl *'
         - '*Invoke-WebRequest*'
         - '*iwr *'
         - '*wget *'
-        - '*curl *'
-    SELECTION_5:
+    SELECTION_6:
         CommandLine:
         - '* -ur*'
         - '* -o*'
-    SELECTION_6:
+    SELECTION_7:
         CommandLine:
         - '*\AppData\\*'
-        - '*\Users\Public\\*'
+        - '*\Desktop\\*'
         - '*\Temp\\*'
+        - '*\Users\Public\\*'
         - '*%AppData%*'
+        - '*%Public%*'
         - '*%Temp%*'
         - '*%tmp%*'
-        - '*%Public%*'
-        - '*\Desktop\\*'
         - '*C:\Windows\\*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
+        SELECTION_5 and SELECTION_6 and SELECTION_7)
 falsepositives:
 - Unknown
 id: 5e3cc4d8-3e68-43db-8656-eaaeefdec9cc
@@ -44,7 +47,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/13
+modified: 2023/04/21
 references:
 - https://www.sentinelone.com/blog/living-off-windows-defender-lockbit-ransomware-sideloads-cobalt-strike-through-microsoft-security-tool/
 related:

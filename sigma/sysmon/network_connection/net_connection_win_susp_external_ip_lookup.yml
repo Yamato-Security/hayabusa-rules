@@ -1,0 +1,108 @@
+title: Suspicious Network Connection to IP Lookup Service APIs
+ruletype: Sigma
+author: Janantha Marasinghe, Nasreddine Bencherchali (Nextron Systems)
+date: 2023/04/24
+description: Detects external IP address lookups by non-browser processes via services
+    such as "api.ipify.org". This could be indicative of potential post compromise
+    internet test activity.
+detection:
+    SELECTION_1:
+        EventID: 3
+    SELECTION_10:
+        Image: '*\WindowsApps\MicrosoftEdge.exe'
+    SELECTION_11:
+        Image:
+        - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+        - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+    SELECTION_12:
+        Image:
+        - C:\Program Files (x86)\Microsoft\EdgeCore\\*
+        - C:\Program Files\Microsoft\EdgeCore\\*
+    SELECTION_13:
+        Image:
+        - '*\msedge.exe'
+        - '*\msedgewebview2.exe'
+    SELECTION_14:
+        Image: '*\opera.exe'
+    SELECTION_15:
+        Image: '*\safari.exe'
+    SELECTION_16:
+        Image: '*\seamonkey.exe'
+    SELECTION_17:
+        Image: '*\vivaldi.exe'
+    SELECTION_18:
+        Image: '*\whale.exe'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        DestinationHostname:
+        - '*api.2ip.ua*'
+        - '*api.ipify.org*'
+        - '*bot.whatismyipaddress.com*'
+        - '*canireachthe.net*'
+        - '*checkip.amazonaws.com*'
+        - '*checkip.dyndns.org*'
+        - '*curlmyip.com*'
+        - '*edns.ip-api.com*'
+        - '*eth0.me*'
+        - '*freegeoip.app*'
+        - '*icanhazip.com*'
+        - '*ident.me*'
+        - '*ifconfig.io*'
+        - '*ifconfig.me*'
+        - '*ip-api.com*'
+        - '*ip.anysrc.net*'
+        - '*ip.tyk.nu*'
+        - '*ipaddressworld.com*'
+        - '*ipecho.net*'
+        - '*ipinfo.io*'
+        - '*ipof.in*'
+        - '*ipv4.icanhazip.com*'
+        - '*ipv4bot.whatismyipaddress.com*'
+        - '*ipwho.is*'
+        - '*l2.io*'
+        - '*myexternalip.com*'
+        - '*wgetip.com*'
+        - '*whatismyip.akamai.com*'
+        - '*wtfismyip.com*'
+    SELECTION_4:
+        Image: '*\brave.exe'
+    SELECTION_5:
+        Image:
+        - C:\Program Files\Google\Chrome\Application\chrome.exe
+        - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+    SELECTION_6:
+        Image:
+        - C:\Program Files\Mozilla Firefox\firefox.exe
+        - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+    SELECTION_7:
+        Image:
+        - C:\Program Files (x86)\Internet Explorer\iexplore.exe
+        - C:\Program Files\Internet Explorer\iexplore.exe
+    SELECTION_8:
+        Image: '*\maxthon.exe'
+    SELECTION_9:
+        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9
+        or SELECTION_10 or SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
+        or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18)))
+falsepositives:
+- Legitimate use of the external websites for troubleshooting or network monitoring
+id: edf3485d-dac4-4d50-90e4-b0e5813f7e60
+level: medium
+logsource:
+    category: network_connection
+    product: windows
+references:
+- https://github.com/rsp/scripts/blob/c8bb272d68164a9836e4f273d8f924927f39b8c6/externalip-benchmark.md
+- https://www.cisa.gov/news-events/cybersecurity-advisories/aa20-302a
+- https://thedfirreport.com/2022/11/28/emotet-strikes-again-lnk-file-leads-to-domain-wide-ransomware/
+related:
+-   id: ec82e2a5-81ea-4211-a1f8-37a0286df2c2
+    type: derived
+status: experimental
+tags:
+- attack.discovery
+- attack.t1016
+

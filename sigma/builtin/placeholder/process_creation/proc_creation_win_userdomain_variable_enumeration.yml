@@ -1,0 +1,30 @@
+title: Userdomain Variable Enumeration
+ruletype: Sigma
+author: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io
+date: 2023/02/09
+description: Detects suspicious enumeration of the domain the user is associated with.
+detection:
+    SELECTION_1:
+        EventID: 4688
+    SELECTION_2:
+        Channel: Security
+    SELECTION_3:
+        CommandLine: '*echo *'
+    SELECTION_4:
+        CommandLine: '*%userdomain%*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
+falsepositives:
+- Certain scripts or applications may leverage this.
+id: 43311e65-84d8-42a5-b3d4-c94d9b67038f
+level: low
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://www.arxiv-vanity.com/papers/2008.04676/
+- https://thedfirreport.com/2022/11/14/bumblebee-zeros-in-on-meterpreter/
+status: experimental
+tags:
+- attack.discovery
+- attack.t1016
+

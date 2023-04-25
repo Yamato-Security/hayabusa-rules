@@ -1,0 +1,39 @@
+title: APT29 2018 Phishing Campaign CommandLine Indicators
+ruletype: Sigma
+author: Florian Roth (Nextron Systems), @41thexplorer
+date: 2018/11/20
+description: Detects indicators of APT 29 (Cozy Bear) phishing-campaign as reported
+    by mandiant
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*-noni -ep bypass $*'
+    SELECTION_4:
+        CommandLine: '*cyzfc.dat,*'
+    SELECTION_5:
+        CommandLine: '*PointFunctionCall*'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
+        SELECTION_5)))
+falsepositives:
+- Unlikely
+id: 7453575c-a747-40b9-839b-125a0aae324b
+level: critical
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/03/08
+references:
+- https://twitter.com/DrunkBinary/status/1063075530180886529
+- https://www.microsoft.com/security/blog/2018/12/03/analysis-of-cyberattack-on-u-s-think-tanks-non-profits-public-sector-by-unidentified-attackers/
+- https://www.mandiant.com/resources/blog/not-so-cozy-an-uncomfortable-examination-of-a-suspected-apt29-phishing-campaign
+related:
+-   id: 033fe7d6-66d1-4240-ac6b-28908009c71f
+    type: obsoletes
+status: stable
+tags:
+- attack.execution
+- attack.t1218.011
+

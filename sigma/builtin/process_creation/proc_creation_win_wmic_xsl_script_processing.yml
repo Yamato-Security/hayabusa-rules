@@ -1,6 +1,6 @@
 title: XSL Script Processing
 ruletype: Sigma
-author: Timur Zinniatullin, oscd.community
+author: Timur Zinniatullin, oscd.community, Swachchhanda Shrawan Poudel
 date: 2019/10/21
 description: Extensible Stylesheet Language (XSL) files are commonly used to describe
     the processing and rendering of data within XML files. Rule detects when adversaries
@@ -14,18 +14,20 @@ detection:
     SELECTION_3:
         NewProcessName: '*\wmic.exe'
     SELECTION_4:
-        CommandLine: '*/format*'
+        CommandLine:
+        - '*/format*'
+        - '*-format*'
     SELECTION_5:
         CommandLine:
-        - '*/Format:List*'
-        - '*/Format:htable*'
-        - '*/Format:hform*'
-        - '*/Format:table*'
-        - '*/Format:mof*'
-        - '*/Format:value*'
-        - '*/Format:rawxml*'
-        - '*/Format:xml*'
-        - '*/Format:csv*'
+        - '*Format:List*'
+        - '*Format:htable*'
+        - '*Format:hform*'
+        - '*Format:table*'
+        - '*Format:mof*'
+        - '*Format:value*'
+        - '*Format:rawxml*'
+        - '*Format:xml*'
+        - '*Format:csv*'
     SELECTION_6:
         NewProcessName: '*\msxsl.exe'
     condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4)
@@ -39,7 +41,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/29
+modified: 2023/04/21
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1220/T1220.md
 status: test
