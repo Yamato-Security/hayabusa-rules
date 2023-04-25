@@ -5,11 +5,11 @@ date: 2022/01/04
 description: Detects uses of the rdrleakdiag.exe LOLOBIN utility to dump process memory
 detection:
     SELECTION_1:
-        EventID: 4688
+        EventID: 1
     SELECTION_2:
-        Channel: Security
+        Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
-        NewProcessName: '*\rdrleakdiag.exe'
+        Image: '*\rdrleakdiag.exe'
     SELECTION_4:
         CommandLine: '*/fullmemdmp*'
     SELECTION_5:
@@ -27,10 +27,10 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
+modified: 2023/04/24
 references:
 - https://www.crowdstrike.com/blog/overwatch-exposes-aquatic-panda-in-possession-of-log-4-shell-exploit-tools/
-status: experimental
+status: deprecated
 tags:
 - attack.defense_evasion
 - attack.t1036

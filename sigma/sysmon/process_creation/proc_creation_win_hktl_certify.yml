@@ -24,11 +24,11 @@ detection:
         - '*.exe download *'
     SELECTION_7:
         CommandLine:
-        - '*vulnerable *'
-        - '*template*'
-        - '*altname*'
-        - '*domain*'
-        - '*path*'
+        - '* /vulnerable*'
+        - '* /template:*'
+        - '* /altname:*'
+        - '* /domain:*'
+        - '* /path:*'
         - '* /ca:*'
     condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or
         SELECTION_5) or (SELECTION_6 and SELECTION_7)))
@@ -39,6 +39,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
+modified: 2023/04/25
 references:
 - https://github.com/GhostPack/Certify
 status: experimental

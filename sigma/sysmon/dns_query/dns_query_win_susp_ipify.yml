@@ -35,23 +35,35 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     SELECTION_3:
         QueryName:
-        - canireachthe.net
-        - ipv4.icanhazip.com
-        - ip.anysrc.net
-        - edns.ip-api.com
-        - wtfismyip.com
-        - checkip.dyndns.org
-        - api.2ip.ua
-        - icanhazip.com
-        - api.ipify.org
-        - ip-api.com
-        - checkip.amazonaws.com
-        - ipecho.net
-        - ipinfo.io
-        - ipv4bot.whatismyipaddress.com
-        - freegeoip.app
-        - ifconfig.me
-        - ipwho.is
+        - '*api.2ip.ua*'
+        - '*api.ipify.org*'
+        - '*bot.whatismyipaddress.com*'
+        - '*canireachthe.net*'
+        - '*checkip.amazonaws.com*'
+        - '*checkip.dyndns.org*'
+        - '*curlmyip.com*'
+        - '*edns.ip-api.com*'
+        - '*eth0.me*'
+        - '*freegeoip.app*'
+        - '*icanhazip.com*'
+        - '*ident.me*'
+        - '*ifconfig.io*'
+        - '*ifconfig.me*'
+        - '*ip-api.com*'
+        - '*ip.anysrc.net*'
+        - '*ip.tyk.nu*'
+        - '*ipaddressworld.com*'
+        - '*ipecho.net*'
+        - '*ipinfo.io*'
+        - '*ipof.in*'
+        - '*ipv4.icanhazip.com*'
+        - '*ipv4bot.whatismyipaddress.com*'
+        - '*ipwho.is*'
+        - '*l2.io*'
+        - '*myexternalip.com*'
+        - '*wgetip.com*'
+        - '*whatismyip.akamai.com*'
+        - '*wtfismyip.com*'
     SELECTION_4:
         Image: '*\brave.exe'
     SELECTION_5:
@@ -81,7 +93,7 @@ level: medium
 logsource:
     category: dns_query
     product: windows
-modified: 2023/04/18
+modified: 2023/04/24
 references:
 - https://www.binarydefense.com/analysis-of-hancitor-when-boring-begets-beacon
 - https://twitter.com/neonprimetime/status/1436376497980428318
