@@ -23,8 +23,7 @@ detection:
     SELECTION_16:
         CommandLine: '*/add*'
     SELECTION_17:
-        CommandLine:
-        - '*net*'
+        CommandLine: '*net*'
     SELECTION_18:
         CommandLine: '*user*'
     SELECTION_19:
@@ -130,6 +129,7 @@ level: critical
 logsource:
     category: process_creation
     product: windows
+modified: 2023/04/25
 references:
 - https://www.microsoft.com/en-us/security/blog/2023/04/18/nation-state-threat-actor-mint-sandstorm-refines-tradecraft-to-attack-high-value-targets/
 status: test

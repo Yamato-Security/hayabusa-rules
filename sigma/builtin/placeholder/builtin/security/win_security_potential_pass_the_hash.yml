@@ -1,4 +1,4 @@
-title: Pass the Hash Activity
+title: Potential Pass the Hash Activity
 ruletype: Sigma
 author: Ilias el Matani (rule), The Information Assurance Directorate at the NSA (method)
 date: 2017/03/08
@@ -12,7 +12,7 @@ detection:
     SELECTION_3:
         EventID: 4625
     SELECTION_4:
-        LogonType: '3'
+        LogonType: 3
     SELECTION_5:
         LogonProcessName: NtLmSsp
     SELECTION_6:
@@ -33,12 +33,12 @@ logsource:
         ID 4625
     product: windows
     service: security
-modified: 2021/11/27
+modified: 2023/04/25
 references:
-- https://github.com/iadgov/Event-Forwarding-Guidance/tree/master/Events
+- https://github.com/nsacyber/Event-Forwarding-Guidance/tree/6e92d622fa33da911f79e7633da4263d632f9624/Events
 status: test
 tags:
 - attack.lateral_movement
-- car.2016-04-004
 - attack.t1550.002
+- car.2016-04-004
 
