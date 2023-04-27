@@ -69,7 +69,7 @@ class Logconverter():
     def create_config_map(self):
         configs = os.listdir(self.config_dir)
         for config in configs:
-            if not config.endswith(".yml"):
+            if not config.endswith(".yaml"):
                 continue
             if config in IGNORE_CONFIGS:
                 continue
@@ -98,7 +98,7 @@ class Logconverter():
             file_path = os.path.join(rules_dir, file)
             if os.path.isdir(file_path):
                 convert_datas.extend(self.create_rule_list(file_path))
-            elif file.endswith(".yml"):
+            elif file.endswith(".yaml"):
                 convert_datas.extend(self.create_convert_command(file_path, file))
         return convert_datas
 
@@ -169,7 +169,7 @@ class Logconverter():
                 config = None
 
             logger.debug("  config: " + str(config))
-            if config == "sysmon.yml" or sysmon_related == True:
+            if config == "sysmon.yaml" or sysmon_related == True:
                 output_path = os.path.join(EXPORT_DIR_NAME, "sysmon", rule_path_from_rule_root)
             else:
                 output_path = os.path.join(EXPORT_DIR_NAME, "builtin", rule_path_from_rule_root)
@@ -188,7 +188,7 @@ class Logconverter():
                 sigma_command.extend(["-c", os.path.join(self.config_dir, config)])
             sigma_command.extend([
                 "-c",
-                os.path.join(self.config_dir, "windows-services.yml"),
+                os.path.join(self.config_dir, "windows-services.yaml"),
                 "--defer-abort",
                 rule_path
             ])
