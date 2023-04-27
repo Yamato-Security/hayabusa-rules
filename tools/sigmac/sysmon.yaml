@@ -9,14 +9,6 @@ logsources:
         rewrite:
             product: windows
             service: sysmon
-    process_creation_linux:
-        category: process_creation
-        product: linux
-        conditions:
-            EventID: 1
-        rewrite:
-            product: linux
-            service: sysmon
     file_change:
         category: file_change
         product: windows
@@ -33,14 +25,6 @@ logsources:
         rewrite:
             product: windows
             service: sysmon
-    network_connection_linux:
-        category: network_connection
-        product: linux
-        conditions:
-            EventID: 3
-        rewrite:
-            product: linux
-            service: sysmon
     sysmon_status:
         category: sysmon_status
         product: windows
@@ -51,14 +35,6 @@ logsources:
         rewrite:
             product: windows
             service: sysmon
-    sysmon_status_linux:
-        category: sysmon_status
-        product: linux
-        conditions:
-            EventID: 16
-        rewrite:
-            product: linux
-            service: sysmon
     process_terminated:
         category: process_termination
         product: windows
@@ -66,14 +42,6 @@ logsources:
             EventID: 5
         rewrite:
             product: windows
-            service: sysmon
-    process_terminated_linux:
-        category: process_termination
-        product: linux
-        conditions:
-            EventID: 5
-        rewrite:
-            product: linux
             service: sysmon
     driver_loaded:
         category: driver_load
@@ -115,14 +83,6 @@ logsources:
         rewrite:
             product: windows
             service: sysmon
-    raw_access_read_linux:
-        category: raw_access_read
-        product: linux
-        conditions:
-            EventID: 9
-        rewrite:
-            product: linux
-            service: sysmon
     file_creation:
         category: file_event
         product: windows
@@ -130,14 +90,6 @@ logsources:
             EventID: 11
         rewrite:
             product: windows
-            service: sysmon
-    file_creation_linux:
-        category: file_event
-        product: linux
-        conditions:
-            EventID: 11
-        rewrite:
-            product: linux
             service: sysmon
     registry_add:
         category: registry_add
@@ -228,14 +180,6 @@ logsources:
                 - 26
         rewrite:
             product: windows
-            service: sysmon
-    file_delete_linux:
-        category: file_delete
-        product: linux
-        conditions:
-            EventID: 23
-        rewrite:
-            product: linux
             service: sysmon
     clipboard_capture:
         category: clipboard_capture
