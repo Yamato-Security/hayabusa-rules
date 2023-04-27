@@ -28,25 +28,29 @@ pip3 install -r requirements.txt
 
 ## Settings
 
-hayabusa.py needs `sigmac` from the Sigma repository.
-Before using hayabusa.py, please clone the Sigma repository.
+hayabusa.py needs `sigmac` from the [legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools) repository.
+Before using hayabusa.py, please clone the [Sigma](https://github.com/SigmaHQ/sigma) repository and the [legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools) repository.
 
 ```sh
-git clone https://github.com/SigmaHQ/sigma.git
+git clone https://github.com/SigmaHQ/sigma
+git clone https://github.com/SigmaHQ/legacy-sigmatools
 ```
 
 ## Usage
 
-Create an environmental variable `$sigma_path` that points to the Sigma repository and register haybausa as a backend for Sigma:
+Create an environmental variable `$legacy_sigmatools_path` that points to the Sigma repository and register haybausa as a backend for Sigma:
 
 ```sh
-export sigma_path=/path/to/sigma_repository
-cp hayabusa.py $sigma_path/tools/sigma/backends
-cp convert.py $sigma_path
-cp rule.py $sigma_path/tools/sigma/parser
+export legacy_sigmatools_path=/path/to/legacy-sigmatools
+export sigma_path=/path/to/sigma
+cp hayabusa.py $legacy_sigmatools_path/tools/sigma/backends
+cp rule.py $legacy_sigmatools_path/tools/sigma/parser
+cp *.yaml $legacy_sigmatools_path/tools/config/generic/
+cp convert.py $legacy_sigmatools_path
+mv $legacy_sigmatools_path/tools $sigma_path/
 ```
 
-* Caution：Be sure to specify the path to your Sigma repository in place of `/path/to/sigma_repository`.
+* Caution：Be sure to specify the path to your Sigma repository in place of `/path/to/sigma` and [legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools) repository in place of `path/to/legacy-sigmatools`.
 
 ### Convert Rule
 
