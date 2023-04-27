@@ -1,6 +1,6 @@
 # Changes
 
-## v2.4.0 [2023/xx/xx] 
+## v2.4.0 [2023/04/28] 
 
 Started to self host config files when converting rules from Sigma as the sigmac tool is deprecated and not updated anymore.
 
