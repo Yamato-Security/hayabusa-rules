@@ -1,5 +1,9 @@
 # Changes
 
+## v2.4.0 [2023/xx/xx] 
+
+Started to self host config files when converting rules from Sigma as the sigmac tool is deprecated and not updated anymore.
+
 ## v2.3.0 [2023/03/24] 
 
 `deprecated` and `unsupported` sigma rules are now also being added to the hayabusa-rules repository.
