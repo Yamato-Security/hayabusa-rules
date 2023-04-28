@@ -1,22 +1,18 @@
-title: HackTool - Rubeus Execution
+title: HackTool - Rubeus Execution - ScriptBlock
 ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2018/12/19
-description: Detects the execution of the hacktool Rubeus via PE information of command
-    line parameters
+author: Christian Burkard (Nextron Systems), Florian Roth (Nextron Systems)
+date: 2023/04/27
+description: Detects the execution of the hacktool Rubeus using specific command line
+    flags
 detection:
     SELECTION_1:
-        EventID: 4688
+        EventID: 4104
     SELECTION_2:
-        Channel: Security
+        Channel:
+        - Microsoft-Windows-PowerShell/Operational
+        - PowerShellCore/Operational
     SELECTION_3:
-        NewProcessName: '*\Rubeus.exe'
-    SELECTION_4:
-        OriginalFileName: Rubeus.exe
-    SELECTION_5:
-        Description: Rubeus
-    SELECTION_6:
-        CommandLine:
+        ScriptBlockText:
         - '*asreproast *'
         - '*dump /service:krbtgt *'
         - '*dump /luid:0x*'
@@ -32,16 +28,15 @@ detection:
         - '*hash /password:*'
         - '*golden /aes256:*'
         - '*silver /user:*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-        or SELECTION_6))
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
 falsepositives:
 - Unlikely
-id: 7ec2c172-dceb-4c10-92c9-87c1881b7e18
-level: critical
+id: 3245cd30-e015-40ff-a31d-5cadd5f377ec
+level: high
 logsource:
-    category: process_creation
+    category: ps_script
+    definition: 'Requirements: Script Block Logging must be enabled'
     product: windows
-modified: 2023/04/20
 references:
 - https://www.harmj0y.net/blog/redteaming/from-kekeo-to-rubeus/
 - https://m0chan.github.io/2019/07/31/How-To-Attack-Kerberos-101.html
@@ -49,7 +44,7 @@ references:
 related:
 -   id: 7ec2c172-dceb-4c10-92c9-87c1881b7e18
     type: similar
-status: stable
+status: experimental
 tags:
 - attack.credential_access
 - attack.t1003
