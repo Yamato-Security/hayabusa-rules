@@ -98,7 +98,7 @@ class Logconverter():
             file_path = os.path.join(rules_dir, file)
             if os.path.isdir(file_path):
                 convert_datas.extend(self.create_rule_list(file_path))
-            elif file.endswith(".yaml"):
+            elif file.endswith(".yml"):
                 convert_datas.extend(self.create_convert_command(file_path, file))
         return convert_datas
 

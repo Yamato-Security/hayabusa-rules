@@ -48,8 +48,8 @@ export sigma_path=/path/to/sigma
 cp hayabusa.py $legacy_sigmatools_path/tools/sigma/backends
 cp rule.py $legacy_sigmatools_path/tools/sigma/parser
 cp *.yaml $legacy_sigmatools_path/tools/config/generic/
-cp convert.py $legacy_sigmatools_path
 mv $legacy_sigmatools_path/tools $sigma_path/
+cp convert.py sigma_path
 ```
 
 * 注意：`/path/to/legacy-sigmatools`と`/path/to/sigma`はそのままではなくて、自分のSigmaレポジトリのパスを指定してください。
