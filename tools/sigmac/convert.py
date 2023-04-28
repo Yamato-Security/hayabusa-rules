@@ -24,7 +24,7 @@ RULES_PLACEHOLDER_DIR = "./rules-placeholder/windows"
 RULES_THREAT_HUNTING_DIR = "./rules-threat-hunting"
 RULES_UNSUPPORTED_DIR = "./unsupported"
 CPU = None
-IGNORE_CONFIGS = {"windows-services.yml", "powershell.yml"}
+IGNORE_CONFIGS = {"windows-services.yaml"}
 EXCLUDE_CATEGORY = {"file_rename"}
 SUPPRESSION = False
 
