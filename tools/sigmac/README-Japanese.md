@@ -30,25 +30,29 @@ pip3 install -r requirements.txt
 
 ## 環境設定
 
-hayabusa.pyはSigmaリポジトリの中にある`sigmac`を使います。
-事前に任意のディレクトリにSigmaリポジトリをcloneしてください。
+hayabusa.pyは[legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools)リポジトリの中にある`sigmac`を使います。
+事前に任意のディレクトリに[Sigma](https://github.com/SigmaHQ/sigma)リポジトリと[legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools)リポジトリをcloneしてください。
 
 ```sh
-git clone https://github.com/SigmaHQ/sigma.git
+git clone https://github.com/SigmaHQ/sigma
+git clone https://github.com/SigmaHQ/legacy-sigmatools
 ```
 
 ## 使い方
 
-Sigmaレポジトリのパスが書いてある`$sigma_path`という環境変数を設定して、hayabusaをSigmaのbackendとして登録します:
+Sigmaレポジトリのパスが書いてある`$legacy_sigmatools_path`という環境変数を設定して、hayabusaをSigmaのbackendとして登録します:
 
 ```sh
-export sigma_path=/path/to/sigma_repository
-cp hayabusa.py $sigma_path/tools/sigma/backends
-cp convert.py $sigma_path
-cp rule.py $sigma_path/tools/sigma/parser
+export legacy_sigmatools_path=/path/to/legacy-sigmatools
+export sigma_path=/path/to/sigma
+cp hayabusa.py $legacy_sigmatools_path/tools/sigma/backends
+cp rule.py $legacy_sigmatools_path/tools/sigma/parser
+cp *.yaml $legacy_sigmatools_path/tools/config/generic/
+mv $legacy_sigmatools_path/tools $sigma_path/
+cp convert.py sigma_path
 ```
 
-* 注意：`/path/to/sigma_repository`そのままではなくて、自分のSigmaレポジトリのパスを指定してください。
+* 注意：`/path/to/legacy-sigmatools`と`/path/to/sigma`はそのままではなくて、自分のSigmaレポジトリのパスを指定してください。
 
 ### ルールの変換
 `convert.py`を実行することでルールの変換が実行されます。変換されたルールは`hayabusa_rules`フォルダに作成されます。

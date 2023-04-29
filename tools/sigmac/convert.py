@@ -24,7 +24,7 @@ RULES_PLACEHOLDER_DIR = "./rules-placeholder/windows"
 RULES_THREAT_HUNTING_DIR = "./rules-threat-hunting"
 RULES_UNSUPPORTED_DIR = "./unsupported"
 CPU = None
-IGNORE_CONFIGS = {"windows-services.yml", "powershell.yml"}
+IGNORE_CONFIGS = {"windows-services.yaml"}
 EXCLUDE_CATEGORY = {"file_rename"}
 SUPPRESSION = False
 
@@ -69,7 +69,7 @@ class Logconverter():
     def create_config_map(self):
         configs = os.listdir(self.config_dir)
         for config in configs:
-            if not config.endswith(".yml"):
+            if not config.endswith(".yaml"):
                 continue
             if config in IGNORE_CONFIGS:
                 continue
@@ -169,7 +169,7 @@ class Logconverter():
                 config = None
 
             logger.debug("  config: " + str(config))
-            if config == "sysmon.yml" or sysmon_related == True:
+            if config == "sysmon.yaml" or sysmon_related == True:
                 output_path = os.path.join(EXPORT_DIR_NAME, "sysmon", rule_path_from_rule_root)
             else:
                 output_path = os.path.join(EXPORT_DIR_NAME, "builtin", rule_path_from_rule_root)
@@ -188,7 +188,7 @@ class Logconverter():
                 sigma_command.extend(["-c", os.path.join(self.config_dir, config)])
             sigma_command.extend([
                 "-c",
-                os.path.join(self.config_dir, "windows-services.yml"),
+                os.path.join(self.config_dir, "windows-services.yaml"),
                 "--defer-abort",
                 rule_path
             ])

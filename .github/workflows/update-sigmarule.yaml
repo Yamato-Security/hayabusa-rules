@@ -37,6 +37,7 @@ jobs:
         run: |
           cp hayabusa-rules/tools/sigmac/hayabusa.py sigmac-repo/tools/sigma/backends/hayabusa.py
           cp hayabusa-rules/tools/sigmac/rule.py sigmac-repo/tools/sigma/parser/rule.py
+          cp hayabusa-rules/tools/sigmac/*.yaml sigmac-repo/tools/config/generic/
           cp hayabusa-rules/tools/sigmac/convert.py sigma-repo/convert.py
           mv sigmac-repo/tools sigma-repo/
 
