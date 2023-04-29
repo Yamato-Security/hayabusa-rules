@@ -74,10 +74,7 @@ detection:
     SELECTION_35:
         ValidatedPolicy: 1
     SELECTION_36:
-        FileNameBuffer:
-        - '*\stdole.dll'
-        - '*\msdatasrc.dll'
-        - '*\adodb.dll'
+        FileNameBuffer: '*\Windows\assembly\GAC\\*'
     SELECTION_37:
         ProcessNameBuffer: '*\mscorsvw.exe'
     SELECTION_38:
@@ -87,16 +84,18 @@ detection:
     SELECTION_4:
         ProcessNameBuffer: '*\Windows\System32\svchost.exe'
     SELECTION_40:
-        ValidatedPolicy: 2
+        ValidatedPolicy: 1
     SELECTION_41:
-        FileNameBuffer: '*\Program Files\Google\Drive File Stream\\*'
+        ValidatedPolicy: 2
     SELECTION_42:
-        FileNameBuffer: '*\crashpad_handler.exe'
+        FileNameBuffer: '*\Program Files\Google\Drive File Stream\\*'
     SELECTION_43:
-        ProcessNameBuffer: '*\Windows\ImmersiveControlPanel\SystemSettings.exe'
+        FileNameBuffer: '*\crashpad_handler.exe'
     SELECTION_44:
-        RequestedPolicy: 8
+        ProcessNameBuffer: '*\Windows\ImmersiveControlPanel\SystemSettings.exe'
     SELECTION_45:
+        RequestedPolicy: 8
+    SELECTION_46:
         ValidatedPolicy: 1
     SELECTION_5:
         RequestedPolicy: 12
@@ -116,8 +115,8 @@ detection:
         and SELECTION_25 and SELECTION_26 and SELECTION_27 and SELECTION_28) or (SELECTION_29
         and SELECTION_30 and SELECTION_31) or (SELECTION_32 and (SELECTION_33 or SELECTION_34)
         and SELECTION_35) or (SELECTION_36 and SELECTION_37 and SELECTION_38 and SELECTION_39
-        and SELECTION_40) or (SELECTION_41 and SELECTION_42 and SELECTION_43 and SELECTION_44
-        and SELECTION_45)))
+        and (SELECTION_40 or SELECTION_41)) or (SELECTION_42 and SELECTION_43 and
+        SELECTION_44 and SELECTION_45 and SELECTION_46)))
 falsepositives:
 - Antivirus products
 id: f8931561-97f5-4c46-907f-0a4a592e47a7
@@ -125,7 +124,7 @@ level: high
 logsource:
     product: windows
     service: codeintegrity-operational
-modified: 2023/01/25
+modified: 2023/04/27
 references:
 - https://twitter.com/SBousseaden/status/1483810148602814466
 - https://github.com/MicrosoftDocs/windows-itpro-docs/blob/40fe118976734578f83e5e839b9c63ae7a4af82d/windows/security/threat-protection/windows-defender-application-control/event-id-explanations.md#windows-codeintegrity-operational-log
