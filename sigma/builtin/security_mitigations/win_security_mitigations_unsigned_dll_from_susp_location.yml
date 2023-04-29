@@ -6,7 +6,7 @@ description: Detects Code Integrity (CI) engine blocking processes from loading 
     DLLs residing in suspicious locations
 detection:
     SELECTION_1:
-        Channel: Microsoft-Windows-Security-Mitigations
+        Channel: Microsoft-Windows-Security-Mitigations*
     SELECTION_2:
         EventID: 11
     SELECTION_3:
