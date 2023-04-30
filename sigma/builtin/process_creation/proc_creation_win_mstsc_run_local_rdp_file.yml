@@ -14,8 +14,8 @@ detection:
         OriginalFileName: mstsc.exe
     SELECTION_5:
         CommandLine:
-        - '*.rdp*'
-        - '*.rdp"*'
+        - '*.rdp'
+        - '*.rdp"'
     SELECTION_6:
         ParentProcessName: C:\Windows\System32\lxss\wslhost.exe
     SELECTION_7:
@@ -29,6 +29,7 @@ level: low
 logsource:
     category: process_creation
     product: windows
+modified: 2023/04/30
 references:
 - https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/
 - https://blog.thickmints.dev/mintsights/detecting-rogue-rdp/
