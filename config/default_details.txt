@@ -11,7 +11,7 @@ Microsoft-Windows-Security-Auditing, 4648, TgtUser: %TargetUserName% ¦ SrcUser:
 Microsoft-Windows-Security-Auditing, 4672, TgtUser: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4673, Proc: %ProcessName% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4674, Svc: %ObjectName% ¦ User: %SubjectUserName% ¦ AccessMask: %AccessMask% ¦ LID: %SubjectLogonId%
-Microsoft-Windows-Security-Auditing, 4688, CmdLine: %CommandLine% ¦ Path: %NewProcessName% ¦ PID: %NewProcessId% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4688, Cmd: %CommandLine% ¦ Proc: %NewProcessName% ¦ PID: %NewProcessId% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4698, Name: %TaskName% ¦ Content: %TaskContent% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4699, Name: %TaskName% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4720, TgtUser: %TargetUserName% ¦ TgtSID: %TargetSid%
