@@ -475,8 +475,8 @@ String matches are case insensitive. However, they become case sensitive wheneve
 - `|startswith`: Checks the string from the beginning
 - `|endswith`: Checks the end of the string
 - `|contains`: Checks if a word is contained in the data
-- `|re`: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/1.5.4/regex/> to know how to write correct regular expressions.)
-  > Caution: Some sigma rules that use regular expressions may fail to detect due to differences in Rust's implementation of regex.
+- `|re`: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/latest/regex/#syntax> to learn how to write correct regular expressions.)
+> Caution: Regular expression syntax in sigma rules is still not defined so some sigma rules may not match correctly if they differ from the Rust regex syntax.
 - `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
 - `|endswithfield`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` if they are different.
 
