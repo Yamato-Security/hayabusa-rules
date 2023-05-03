@@ -1,0 +1,94 @@
+title: Suspicious Non-Browser Network Communication With Google API
+ruletype: Sigma
+author: Gavin Knapp
+date: 2023/05/01
+description: Detects a non-browser process interacting with the Google API which could
+    indicate the use of a covert C2 such as Google Sheet C2 (GC2-sheet)
+detection:
+    SELECTION_1:
+        EventID: 3
+    SELECTION_10:
+        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
+    SELECTION_11:
+        Image: '*\WindowsApps\MicrosoftEdge.exe'
+    SELECTION_12:
+        Image:
+        - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+        - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+    SELECTION_13:
+        Image:
+        - C:\Program Files (x86)\Microsoft\EdgeCore\\*
+        - C:\Program Files\Microsoft\EdgeCore\\*
+    SELECTION_14:
+        Image:
+        - '*\msedge.exe'
+        - '*\msedgewebview2.exe'
+    SELECTION_15:
+        Image: '*\opera.exe'
+    SELECTION_16:
+        Image: '*\safari.exe'
+    SELECTION_17:
+        Image: '*\seamonkey.exe'
+    SELECTION_18:
+        Image: '*\vivaldi.exe'
+    SELECTION_19:
+        Image: '*\whale.exe'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        Image: '*\GoogleUpdate.exe'
+    SELECTION_21:
+        Image: '*\outlook.exe'
+    SELECTION_22:
+        Image: '*\teams.exe'
+    SELECTION_3:
+        DestinationHostname:
+        - '*oauth2.googleapis.com*'
+        - '*sheets.googleapis.com*'
+        - '*drive.googleapis.com*'
+        - '*www.googleapis.com*'
+    SELECTION_4:
+        Image: '*\brave.exe'
+    SELECTION_5:
+        Image:
+        - C:\Program Files\Google\Chrome\Application\chrome.exe
+        - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+    SELECTION_6:
+        Image:
+        - C:\Program Files\Google\Drive File Stream\\*
+        - C:\Program Files\Google\Drive File Stream\*\GoogleDriveFS.exe*
+    SELECTION_7:
+        Image:
+        - C:\Program Files\Mozilla Firefox\firefox.exe
+        - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+    SELECTION_8:
+        Image:
+        - C:\Program Files (x86)\Internet Explorer\iexplore.exe
+        - C:\Program Files\Internet Explorer\iexplore.exe
+    SELECTION_9:
+        Image: '*\maxthon.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
+        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9)
+        or (SELECTION_10 or SELECTION_11 or SELECTION_12) or (SELECTION_13 and SELECTION_14)
+        or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18) or
+        (SELECTION_19) or (SELECTION_20) or (SELECTION_21) or (SELECTION_22)))
+falsepositives:
+- Legitimate applications communicating with the "googleapis.com" endpoints that are
+    not already in the exclusion list. This is environmental dependent and requires
+    further testing and tuning.
+id: 7e9cf7b6-e827-11ed-a05b-0242ac120003
+level: medium
+logsource:
+    category: network_connection
+    product: windows
+references:
+- https://github.com/looCiprian/GC2-sheet
+- https://youtu.be/n2dFlSaBBKo
+- https://services.google.com/fh/files/blogs/gcat_threathorizons_full_apr2023.pdf
+- https://www.tanium.com/blog/apt41-deploys-google-gc2-for-attacks-cyber-threat-intelligence-roundup/
+- https://www.bleepingcomputer.com/news/security/hackers-abuse-google-command-and-control-red-team-tool-in-attacks/
+status: experimental
+tags:
+- attack.command_and_control
+- attack.t1102
+

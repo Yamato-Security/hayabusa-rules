@@ -1,0 +1,51 @@
+title: Suspicious Chromium Browser Instance Executed With Custom Extensions
+ruletype: Sigma
+author: Aedan Russell, frack113, X__Junior (Nextron Systems)
+date: 2022/06/19
+description: Detects a suspicious process spawning a Chromium based browser process
+    with the 'load-extension' flag to start a instance with custom extensions
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        ParentImage:
+        - '*\cmd.exe'
+        - '*\cscript.exe'
+        - '*\mshta.exe'
+        - '*\powershell.exe'
+        - '*\pwsh.exe'
+        - '*\regsvr32.exe'
+        - '*\rundll32.exe'
+        - '*\wscript.exe'
+    SELECTION_4:
+        Image:
+        - '*\brave.exe'
+        - '*\chrome.exe'
+        - '*\msedge.exe'
+        - '*\opera.exe'
+        - '*\vivaldi.exe'
+    SELECTION_5:
+        CommandLine: '*--load-extension=*'
+    SELECTION_6:
+        CommandLine: '*\AppData\Local\\*'
+    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
+        and SELECTION_6)
+falsepositives:
+- Unknown
+id: 27ba3207-dd30-4812-abbf-5d20c57d474e
+level: high
+logsource:
+    category: process_creation
+    product: windows
+modified: 2023/05/02
+references:
+- https://redcanary.com/blog/chromeloader/
+- https://emkc.org/s/RJjuLa
+- https://www.mandiant.com/resources/blog/lnk-between-browsers
+status: experimental
+tags:
+- attack.persistence
+- attack.t1176
+

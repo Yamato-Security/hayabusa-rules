@@ -13,7 +13,7 @@ detection:
     SELECTION_4:
         Image:
         - C:\Windows\explorer.exe
-        - "\tC:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe"
+        - C:\Windows\ImmersiveControlPanel\SystemSettings.exe
     SELECTION_5:
         Image:
         - C:\Windows\System32\\*
@@ -35,7 +35,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2023/04/20
+modified: 2023/05/03
 references:
 - https://github.com/ORCx41/DeleteShadowCopies
 related:
