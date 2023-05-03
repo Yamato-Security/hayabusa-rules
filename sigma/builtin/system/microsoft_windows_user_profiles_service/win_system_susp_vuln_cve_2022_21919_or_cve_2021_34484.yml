@@ -17,11 +17,11 @@ detection:
 falsepositives:
 - Corrupted user profiles - https://social.technet.microsoft.com/wiki/contents/articles/3571.windows-user-profiles-service-event-1511-windows-cannot-find-the-local-profile-and-is-logging-you-on-with-a-temporary-profile.aspx
 id: 52a85084-6989-40c3-8f32-091e12e17692
-level: high
+level: low
 logsource:
     product: windows
     service: application
-modified: 2023/04/27
+modified: 2023/05/02
 references:
 - https://packetstormsecurity.com/files/166692/Windows-User-Profile-Service-Privlege-Escalation.html
 status: experimental

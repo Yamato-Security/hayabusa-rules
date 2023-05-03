@@ -1,6 +1,6 @@
 title: Potential Data Exfiltration Via Curl.EXE
 ruletype: Sigma
-author: Florian Roth (Nextron Systems)
+author: Florian Roth (Nextron Systems), Cedric MAURUGEON (Update)
 date: 2020/07/03
 description: Detects the execution of the "curl" process with "upload" flags. Which
     might indicate potential data exfiltration
@@ -15,26 +15,26 @@ detection:
         Product: The curl executable
     SELECTION_5:
         CommandLine:
-        - '* -F *'
         - '* --form*'
-        - '* -T *'
         - '* --upload-file *'
-        - '* -d *'
         - '* --data *'
         - '* --data-*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
+    SELECTION_6:
+        CommandLine|re: \s-[FTd]\s
+    SELECTION_7:
+        CommandLine:
+        - '*://localhost*'
+        - '*://127.0.0.1*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
+        (SELECTION_5 or SELECTION_6)) and  not ((SELECTION_7)))
 falsepositives:
 - Scripts created by developers and admins
-fields:
-- CommandLine
-- ParentCommandLine
 id: 00bca14a-df4e-4649-9054-3f2aa676bc04
 level: medium
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
+modified: 2023/05/02
 references:
 - https://twitter.com/d1r4c/status/1279042657508081664
 - https://medium.com/@petehouston/upload-files-with-curl-93064dcccc76

@@ -1,0 +1,29 @@
+title: Windows Defender Real-Time Protection Failure/Restart
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems), Christopher Peacock '@securepeacock'
+    (Update)
+date: 2023/03/28
+description: Detects issues with Windows Defender Real-Time Protection features
+detection:
+    SELECTION_1:
+        Channel: Microsoft-Windows-Windows Defender/Operational
+    SELECTION_2:
+        EventID: 3002
+    SELECTION_3:
+        EventID: 3007
+    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3))
+falsepositives:
+- Unknown
+id: dd80db93-6ec2-4f4c-a017-ad40da6ffe81
+level: high
+logsource:
+    product: windows
+    service: windefend
+references:
+- Internal Research
+- https://www.microsoft.com/en-us/security/blog/2023/04/11/guidance-for-investigating-attacks-using-cve-2022-21894-the-blacklotus-campaign/
+status: stable
+tags:
+- attack.defense_evasion
+- attack.t1562.001
+
