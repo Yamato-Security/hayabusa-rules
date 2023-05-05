@@ -30,10 +30,15 @@ class LogSource:
     def __hash__(self):
         return hash((self.category, self.service, tuple(self.channel)))
 
-    def get_identifier_for_detection(self) -> str:
+    def get_identifier_for_detection(self, keys: list[str]) -> str:
+        new_identifier = ""
         if not self.category:
-            return self.service.replace("-", "_")
-        return self.category.replace("-", "_")
+            new_identifier = self.service.replace("-", "_")
+        else:
+            new_identifier = self.category.replace("-", "_")
+        if any([True for key in keys if key == new_identifier]):
+            new_identifier = "logsource_mapping_" + new_identifier
+        return new_identifier
 
     def get_detection(self) -> dict:
         """
@@ -43,16 +48,16 @@ class LogSource:
             return {"Channel": self.channel, "EventID": self.event_id}
         return {"Channel": self.channel}
 
-    def get_condition(self, condition_str) -> str:
+    def get_condition(self, condition_str, keys: list[str]) -> str:
         """
         detectionに追加したlogsourceの条件をconditionにも追加
         """
         if match := re.search(r"([^|].*?)(\s?\| count\(.*)", condition_str):
             # 集計条件はパイプの前までを（）で囲んでand
-            return f"({self.get_identifier_for_detection()} and {match.group(1)}){match.group(2)}"
+            return f"({self.get_identifier_for_detection(keys)} and {match.group(1)}){match.group(2)}"
         if ' ' not in condition_str:
-            return f"{self.get_identifier_for_detection()} and {condition_str}"
-        return f"{self.get_identifier_for_detection()} and ({condition_str})"
+            return f"{self.get_identifier_for_detection(keys)} and {condition_str}"
+        return f"{self.get_identifier_for_detection(keys)} and ({condition_str})"
 
 
 @dataclass(frozen=True)
@@ -128,7 +133,7 @@ class LogsourceConverter:
             # 出力時に順番を logsource -> selection -> conditionにしたいので一旦クリア
             new_obj['detection'] = dict()
             # detection用に変換したlogsource条件をセット
-            new_obj['detection'][ls.get_identifier_for_detection()] = ls.get_detection()
+            new_obj['detection'][ls.get_identifier_for_detection(list(detection.keys()))] = ls.get_detection()
             for key, val in detection.items():
                 if re.search(r"\.", key):
                     # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
@@ -137,7 +142,8 @@ class LogsourceConverter:
                     # process_creationかつSecurityイベント用ルールのみ、一部フィールド名を変換
                     val = self.transform_field_recursive(val)
                 new_obj['detection'][key] = val
-            new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'])
+            new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
+                                                                 list(detection.keys()))
             condition_str = new_obj['detection']['condition']
             new_obj['ruletype'] = 'Sigma'
             if '%' in condition_str or '->' in condition_str:

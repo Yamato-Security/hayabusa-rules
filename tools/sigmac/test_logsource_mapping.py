@@ -40,7 +40,11 @@ class TestLogSourceMapper(TestCase):
 
     def test_get_key(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=1)
-        self.assertEquals(ls.get_identifier_for_detection(), "process_creation")
+        self.assertEquals(ls.get_identifier_for_detection([]), "process_creation")
+
+    def test_get_uniq_key(self):
+        ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=1)
+        self.assertEquals(ls.get_identifier_for_detection(["process_creation"]), "logsource_mapping_process_creation")
 
     def test_get_detection(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
@@ -48,14 +52,14 @@ class TestLogSourceMapper(TestCase):
 
     def test_get_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
-        self.assertEquals(ls.get_condition("select1 and select2"), "process_creation and (select1 and select2)")
+        self.assertEquals(ls.get_condition("select1 and select2", []), "process_creation and (select1 and select2)")
 
     def test_get_single_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
-        self.assertEquals(ls.get_condition("select"), "process_creation and select")
+        self.assertEquals(ls.get_condition("select", []), "process_creation and select")
 
     def test_get_aggregation_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
         condition = "select | count(TargetUserName) by Workstation > 10"
-        self.assertEquals(ls.get_condition(condition),
+        self.assertEquals(ls.get_condition(condition, []),
                           "(process_creation and select) | count(TargetUserName) by Workstation > 10")
