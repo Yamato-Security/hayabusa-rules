@@ -14,7 +14,7 @@ SigmaからHayabusa形式に変換されたルールが`./rules/sigma`ディレ�
 
 ## Pythonの環境依存
 
-Python 3.8以上と次のモジュールが必要です：`oyaml`
+Python 3.8以上と次のモジュールが必要です：`oyaml`  
 以下のコマンドでインストール可能です。
 
 ```sh
@@ -25,6 +25,53 @@ pip3 install oyaml
 
 [https://github.com/SigmaHQ/sigma](https://github.com/SigmaHQ/sigma)
 
+## logsource_mapping.pyについて
+`logsource_mapping.py`は、Sigmaルールの`logsource`をHayabusa形式に変換するツールです。  
+`Hayabusa`では`logsource`は検知処理に使われないため、 以下`yaml`のマッピングを使い、`logsource`の内容を`detection`,`condition`に変換します。
+- sysmon.yaml
+- windows-audit.yaml
+- windows-services.yaml
+
+### 変換の例
+以下のSigmaルールは、`logsource_mapping.py`実行後、以下2つのHayabusa形式に変換されます。
+#### 変換前
+Sigmaルール
+```yaml
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        - Image|endswith: '.exe'
+    detection: selection
+```
+#### 変換後
+Hayabusaルール(Sysmon用)
+```yaml
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    process_creation:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 1
+    selection:
+        - Image|endswith: '.exe'
+    detection: process_creation and selection
+```
+Hayabusaルール(Windowsビルトイン用)
+```yaml
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    process_creation:
+        Channel: Security
+        EventID: 4688
+    selection:
+        - Image|endswith: '.exe'
+    detection: process_creation and selection
+```
 
 ## 使い方
 
