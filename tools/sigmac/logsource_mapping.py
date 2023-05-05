@@ -281,12 +281,8 @@ if __name__ == '__main__':
     parser.add_argument("-o", "--output", help="Output dir. Default: ./hayabusa_rules", default="./hayabusa_rules")
     parser.add_argument("-r", "--rule_path", help="Target sigma dir.", required=True)
     parser.add_argument("--rule_filter", help="Target file filter. Default: *.yml", default="*.yml")
-    parser.add_argument("--debug", help="Debug mode.", action="store_true")
     args = parser.parse_args()
 
-    if args.debug:
-        LOGGER.setLevel(level=logging.DEBUG)
-    LOGGER.info(f"args: output[{args.output}], rule_path[{args.rule_path}].")
     if Path(args.output).exists():
         try:
             shutil.rmtree(args.output)
