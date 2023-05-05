@@ -7,8 +7,6 @@
 ![version](https://img.shields.io/badge/Platform-Lin-green)
 ![version](https://img.shields.io/badge/Platform-Mac-green)
 
-You can use `hayabusa.py`, a `sigmac` backend, to automatically convert Sigma rules to Hayabusa rules.
-
 ## Pre-converted Sigma rules
 
 Sigma rules have already been pre-converted to hayabusa format and placed in the `./rules/sigma` directory. 
@@ -16,61 +14,24 @@ Please refer to this documentation to convert rules on your own for local testin
 
 ## Python requirements
 
-You need Python 3.8+ and the following modules: `pyyaml`, `ruamel.yaml`, `requests`. 
+You need Python 3.8+ and the following modules: `oyaml`
 
 ```sh
-pip3 install -r requirements.txt
+pip3 install oyaml
 ```
 
 ## About Sigma
 
 [https://github.com/SigmaHQ/sigma](https://github.com/SigmaHQ/sigma)
 
-## Settings
-
-hayabusa.py needs `sigmac` from the [legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools) repository.
-Before using hayabusa.py, please clone the [Sigma](https://github.com/SigmaHQ/sigma) repository and the [legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools) repository.
-
-```sh
-git clone https://github.com/SigmaHQ/sigma
-git clone https://github.com/SigmaHQ/legacy-sigmatools
-```
 
 ## Usage
 
-Create an environmental variable `$legacy_sigmatools_path` that points to the Sigma repository and register haybausa as a backend for Sigma:
+1. `pip install oyaml`
+2. `git clone https://github.com/SigmaHQ/sigma.git`
+3. `git clone https://github.com/Yamato-Security/hayabusa-rules.git`
+4. `cd hayabusa-rules`
+5. `cd tools/sigmac`
+6. `python logsource_mapping.py -r ../../../sigma -o ./hayabusa_rule`
 
-```sh
-export legacy_sigmatools_path=/path/to/legacy-sigmatools
-export sigma_path=/path/to/sigma
-cp hayabusa.py $legacy_sigmatools_path/tools/sigma/backends
-cp rule.py $legacy_sigmatools_path/tools/sigma/parser
-cp *.yaml $legacy_sigmatools_path/tools/config/generic/
-mv $legacy_sigmatools_path/tools $sigma_path/
-cp convert.py $sigma_path
-```
-
-* Caution：Be sure to specify the path to your Sigma repository in place of `/path/to/sigma` and [legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools) repository in place of `path/to/legacy-sigmatools`.
-
-### Convert Rule
-
-`convert.py` will convert sigma rules to hayabusa rules and save them in a new `hayabusa_rules` folder.
-
-```sh
-cd $sigma_path
-python3 convert.py
-```
-
-## Currently unsupported rules
-
-The following rules currently cannot be automatically converted because it contains an aggregation operator (`|near`) that has not been implemented yet.
-
-```
-sigma/rules/windows/builtin/win_susp_samr_pwset.yml
-sigma/rules/windows/image_load/sysmon_mimikatz_inmemory_detection.yml
-sigma/rules/windows/process_creation/process_creation_apt_turla_commands_medium.yml
-```
-
-## Sigma rule parsing errors
-
-Some rules will have been able to be converted but will cause parsing errors or will not be usable due to various bugs. We will continue to fix these bugs but for the meantime the majority of Sigma rules do work so please ignore the errors for now.
+After executing the above, the rules converted to Hayabusa format will be output to `./hayabusa_rule`.
