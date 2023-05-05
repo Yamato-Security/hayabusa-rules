@@ -1,0 +1,45 @@
+title: Process Explorer Driver Creation By Non-Sysinternals Binary
+ruletype: Sigma
+author: Florian Roth (Nextron Systems)
+date: 2023/05/05
+description: 'Detects creation of the Process Explorer drivers by processes other
+    than Process Explorer (procexp) itself.
+
+    Hack tools or malware may use the Process Explorer driver to elevate privileges,
+    drops it to disk for a few moments, runs a service using that driver and removes
+    it afterwards.
+
+    '
+detection:
+    SELECTION_1:
+        EventID: 11
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        TargetFilename: '*\PROCEXP*'
+    SELECTION_4:
+        TargetFilename: '*.sys'
+    SELECTION_5:
+        Image:
+        - '*\procexp.exe'
+        - '*\procexp64.exe'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
+        ((SELECTION_5)))
+falsepositives:
+- Some false positives may occur with legitimate renamed process explorer binaries
+id: de46c52b-0bf8-4936-a327-aace94f94ac6
+level: high
+logsource:
+    category: file_event
+    product: windows
+references:
+- https://learn.microsoft.com/en-us/sysinternals/downloads/process-explorer
+- https://github.com/Yaxser/Backstab
+- https://www.elastic.co/security-labs/stopping-vulnerable-driver-attacks
+- https://news.sophos.com/en-us/2023/04/19/aukill-edr-killer-malware-abuses-process-explorer-driver/
+status: experimental
+tags:
+- attack.persistence
+- attack.privilege_escalation
+- attack.t1068
+
