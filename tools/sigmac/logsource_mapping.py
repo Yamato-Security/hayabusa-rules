@@ -154,7 +154,7 @@ class LogsourceConverter:
             else:
                 self.sigma_converted.append((False, new_obj))
 
-    def dump_yml(self, base_dir, out_dir) -> list[tuple[str, str]]:
+    def dump_yml(self, base_dir: str, out_dir: str) -> list[tuple[str, str]]:
         """
         dictをyaml形式のstringに変換する
         """
@@ -171,6 +171,8 @@ def build_out_path(base_dir: str, out_dir: str, sigma_path: str, sysmon: bool) -
     """
     入力ファイルのパスをもとに、出力用のファイルパスを生成する
     """
+    if not base_dir:
+        return str(Path(out_dir).joinpath(Path(sigma_path).name))
     new_path = sigma_path.replace(base_dir, '')
     new_path = new_path.replace('/windows', '')
     new_path = new_path.replace('/builtin', '')
@@ -260,10 +262,12 @@ def merge_category_map(service_map: dict, logsources_lst: list) -> dict[str, lis
     return merged_map
 
 
-def find_windows_sigma_rule_files(root, rule_pattern):
+def find_windows_sigma_rule_files(root: str, rule_pattern: str):
     """
     指定したディレクトリから変換対象のSigmaファイルのファイルパスを取得する
     """
+    if Path(root).exists() and Path(root).is_file() and rule_pattern.replace("*", "") in root:
+        yield root
     for dirpath, dirnames, filenames in os.walk(root):
         for filename in fnmatch.filter(filenames, rule_pattern):
             filepath = os.path.join(dirpath, filename)
@@ -285,9 +289,13 @@ if __name__ == '__main__':
     LOGGER.info("Start to logsource mapping sigma rules.")
     parser = argparse.ArgumentParser()
     parser.add_argument("-o", "--output", help="Output dir. Default: ./hayabusa_rules", default="./hayabusa_rules")
-    parser.add_argument("-r", "--rule_path", help="Target sigma dir.", required=True)
+    parser.add_argument("-r", "--rule_path", help="Target sigma dir or file path.", required=True)
     parser.add_argument("--rule_filter", help="Target file filter. Default: *.yml", default="*.yml")
     args = parser.parse_args()
+
+    if not Path(args.rule_path).exists():
+        LOGGER.error(f"Rule directory(file) [{args.rule_path}] does not exists.")
+        sys.exit(1)
 
     if Path(args.output).exists():
         try:
@@ -311,7 +319,8 @@ if __name__ == '__main__':
         try:
             lc = LogsourceConverter(sigma_file, all_category_map, process_creation_field_map)
             lc.convert()  # Sigmaルールをマッピングデータにもとづき変換
-            for out_path, parsed_yaml in lc.dump_yml(args.rule_path, args.output):  # dictをyml形式の文字列に変換
+            base_dir = args.rule_path if Path(args.rule_path).is_dir() else ""
+            for out_path, parsed_yaml in lc.dump_yml(base_dir, args.output):  # dictをyml形式の文字列に変換
                 p = Path(out_path)
                 if not p.parent.exists():
                     os.makedirs(p.parent)
