@@ -79,6 +79,6 @@ detection:
 2. `git clone https://github.com/SigmaHQ/sigma.git`
 3. `git clone https://github.com/Yamato-Security/hayabusa-rules.git`
 4. `cd hayabusa-rules/tools/sigmac`
-5. `python logsource_mapping.py -r ../../../sigma -o ./hayabusa_rule`
+5. `python logsource_mapping.py -r ../../../sigma -o ./converted_sigma_rules`
 
-After executing the commands above, the rules converted to Hayabusa format will be output to the `./hayabusa_rule` directory.
+After executing the commands above, the rules converted to Hayabusa format will be output to the `./converted_sigma_rules` directory.

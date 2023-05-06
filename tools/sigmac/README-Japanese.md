@@ -34,6 +34,7 @@ pip3 install oyaml
 
 ### 変換の例
 以下のSigmaルールは、`logsource_mapping.py`実行後、以下2つのHayabusa形式に変換されます。
+
 #### 変換前
 Sigmaルール
 ```yaml
@@ -45,6 +46,7 @@ detection:
         - Image|endswith: '.exe'
     detection: selection
 ```
+
 #### 変換後
 Hayabusaルール(Sysmon用)
 ```yaml
@@ -79,7 +81,7 @@ detection:
 2. `git clone https://github.com/SigmaHQ/sigma.git`
 3. `git clone https://github.com/Yamato-Security/hayabusa-rules.git`
 4. `cd hayabusa-rules/tools/sigmac`
-5. `python logsource_mapping.py -r ../../../sigma -o ./hayabusa_rule`
+5. `python logsource_mapping.py -r ../../../sigma -o ./converted_sigma_rules`
 
-上記実行後、`./hayabusa_rule`にHayabusa形式に変換されたルールが出力されます。
+上記実行後、`./converted_sigma_rules`にHayabusa形式に変換されたルールが出力されます。
 
