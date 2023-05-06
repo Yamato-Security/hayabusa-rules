@@ -71,7 +71,7 @@ detection:
         Channel: Security
         EventID: 4688
     selection:
-        - Image|endswith: '.exe'
+        - NewProcessName|endswith: '.exe'
     detection: process_creation and selection
 ```
 
