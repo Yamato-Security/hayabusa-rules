@@ -25,16 +25,17 @@ pip3 install oyaml
 [https://github.com/SigmaHQ/sigma](https://github.com/SigmaHQ/sigma)
 
 ## About logsource_mapping.py
-`logsource_mapping.py` is a tool to convert `logsource` of Sigma rule to Hayabusa format.
-Since `Hayabusa` does not use `logsource` for detection processing, use the following `yaml` mapping to convert the contents of `logsource` to `detection` and `condition`.
+`logsource_mapping.py` is a tool to convert the `logsource` field of Sigma rules to Hayabusa format.
+Since `Hayabusa` at the moment does not support `logsource` for filtering on `Channel` and `EventID` fields and rewriting field names when necessary, we use the following `yaml` mapping files to convert the contents of `logsource` to the `detection` and `condition` fields.
 - sysmon.yaml
 - windows-audit.yaml
 - windows-services.yaml
 
 ### Conversion example
 The following Sigma rules are converted to the following two Hayabusa formats after running `logsource_mapping.py`.
+
 #### Before conversion
-Sigma rule
+Sigma rule:
 ```yaml
 logsource:
     category: process_creation
@@ -45,7 +46,7 @@ detection:
     detection: selection
 ```
 #### After conversion
-Hayabusa rule(For Sysmon)
+Hayabusa rule (for Sysmon rules):
 ```yaml
 logsource:
     category: process_creation
@@ -58,7 +59,7 @@ detection:
         - Image|endswith: '.exe'
     detection: process_creation and selection
 ```
-Hayabusa rule(For Windows builtin)
+Hayabusa rule (for Windows built-in rules)
 ```yaml
 logsource:
     category: process_creation
@@ -80,4 +81,4 @@ detection:
 4. `cd hayabusa-rules/tools/sigmac`
 5. `python logsource_mapping.py -r ../../../sigma -o ./hayabusa_rule`
 
-After executing the above, the rules converted to Hayabusa format will be output to `./hayabusa_rule`.
+After executing the commands above, the rules converted to Hayabusa format will be output to the `./hayabusa_rule` directory.
