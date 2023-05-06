@@ -172,7 +172,9 @@ def build_out_path(base_dir: str, out_dir: str, sigma_path: str, sysmon: bool) -
     入力ファイルのパスをもとに、出力用のファイルパスを生成する
     """
     if not base_dir:
-        return str(Path(out_dir).joinpath(Path(sigma_path).name))
+        if sysmon:
+            return str(Path(out_dir).joinpath(Path("sysmon")).joinpath(Path(sigma_path).name))
+        return str(Path(out_dir).joinpath(Path("builtin")).joinpath(Path(sigma_path).name))
     new_path = sigma_path.replace(base_dir, '')
     new_path = new_path.replace('/windows', '')
     new_path = new_path.replace('/builtin', '')
