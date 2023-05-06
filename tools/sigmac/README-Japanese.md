@@ -78,9 +78,8 @@ detection:
 1. `pip install oyaml`
 2. `git clone https://github.com/SigmaHQ/sigma.git`
 3. `git clone https://github.com/Yamato-Security/hayabusa-rules.git`
-4. `cd hayabusa-rules`
-5. `cd tools/sigmac`
-6. `python logsource_mapping.py -r ../../../sigma -o ./hayabusa_rule`
+4. `cd hayabusa-rules/tools/sigmac`
+5. `python logsource_mapping.py -r ../../../sigma -o ./hayabusa_rule`
 
 上記実行後、`./hayabusa_rule`にHayabusa形式に変換されたルールが出力されます。
 
