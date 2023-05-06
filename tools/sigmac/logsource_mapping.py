@@ -154,8 +154,13 @@ class LogsourceConverter:
                 new_obj['detection'][key] = val
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
                                                                  list(detection.keys()), self.field_map)
-            condition_str = new_obj['detection']['condition']
+            if ls.need_field_conversion() and "fields" in new_obj:
+                fields = new_obj['fields']
+                converted_fields = [self.field_map[f] for f in fields if f in self.field_map]
+                not_converted_fields = [f for f in fields if f not in self.field_map]
+                new_obj['fields'] = converted_fields + not_converted_fields
             new_obj['ruletype'] = 'Sigma'
+            condition_str = new_obj['detection']['condition']
             if '%' in condition_str or '->' in condition_str:
                 LOGGER.error(f"invalid character [{condition_str}] in [{self.sigma_path}]. skip conversion.")
                 continue  # conditionブロックに変な文字が入っているルールがある。この場合スキップ
