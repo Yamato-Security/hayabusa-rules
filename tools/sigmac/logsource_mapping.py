@@ -48,16 +48,26 @@ class LogSource:
             return {"Channel": self.channel, "EventID": self.event_id}
         return {"Channel": self.channel}
 
-    def get_condition(self, condition_str, keys: list[str]) -> str:
+    def get_condition(self, condition_str, keys: list[str], field_map: dict[str, str]) -> str:
         """
         detectionに追加したlogsourceの条件をconditionにも追加
         """
         if match := re.search(r"([^|].*?)(\s?\| count\(.*)", condition_str):
             # 集計条件はパイプの前までを（）で囲んでand
-            return f"({self.get_identifier_for_detection(keys)} and {match.group(1)}){match.group(2)}"
+            cond_before_pipe = f"({self.get_identifier_for_detection(keys)} and {match.group(1)})"
+            cond_after_pipe = match.group(2)
+            if self.need_field_conversion():
+                for field in field_map.keys():
+                    cond_after_pipe = cond_after_pipe.replace(field, field_map[field])
+            return cond_before_pipe + cond_after_pipe
         if ' ' not in condition_str:
             return f"{self.get_identifier_for_detection(keys)} and {condition_str}"
         return f"{self.get_identifier_for_detection(keys)} and ({condition_str})"
+
+    def need_field_conversion(self):
+        if self.category == "process_creation" and self.event_id == 4688:
+            return True
+        return False
 
 
 @dataclass(frozen=True)
@@ -138,12 +148,12 @@ class LogsourceConverter:
                 if re.search(r"\.", key):
                     # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
                     key = re.sub(r"\.", "_", key)
-                if ls.category == "process_creation" and ls.event_id == 4688:
+                if ls.need_field_conversion():
                     # process_creationかつSecurityイベント用ルールのみ、一部フィールド名を変換
                     val = self.transform_field_recursive(val)
                 new_obj['detection'][key] = val
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
-                                                                 list(detection.keys()))
+                                                                 list(detection.keys()), self.field_map)
             condition_str = new_obj['detection']['condition']
             new_obj['ruletype'] = 'Sigma'
             if '%' in condition_str or '->' in condition_str:

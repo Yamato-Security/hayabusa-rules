@@ -52,14 +52,21 @@ class TestLogSourceMapper(TestCase):
 
     def test_get_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
-        self.assertEquals(ls.get_condition("select1 and select2", []), "process_creation and (select1 and select2)")
+        self.assertEquals(ls.get_condition("select1 and select2", [], dict()),
+                          "process_creation and (select1 and select2)")
 
     def test_get_single_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
-        self.assertEquals(ls.get_condition("select", []), "process_creation and select")
+        self.assertEquals(ls.get_condition("select", [], dict()), "process_creation and select")
 
     def test_get_aggregation_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
         condition = "select | count(TargetUserName) by Workstation > 10"
-        self.assertEquals(ls.get_condition(condition, []),
+        self.assertEquals(ls.get_condition(condition, [], dict()),
                           "(process_creation and select) | count(TargetUserName) by Workstation > 10")
+
+    def test_get_aggregation_conversion_field_condition(self):
+        ls = LogSource(category="process_creation", service="Security", channel="hoge", event_id=4688)
+        condition = "select | count(Image) by Workstation > 10"
+        self.assertEquals(ls.get_condition(condition, [], {"Image": "NewProcessName"}),
+                          "(process_creation and select) | count(NewProcessName) by Workstation > 10")
