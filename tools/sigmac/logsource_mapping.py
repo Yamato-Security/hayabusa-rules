@@ -162,7 +162,7 @@ class LogsourceConverter:
             new_obj['ruletype'] = 'Sigma'
             condition_str = new_obj['detection']['condition']
             if '%' in condition_str or '->' in condition_str:
-                LOGGER.error(f"invalid character [{condition_str}] in [{self.sigma_path}]. skip conversion.")
+                LOGGER.error(f"invalid character in condition [{condition_str}] file [{self.sigma_path}]. skip conversion.")
                 continue  # conditionブロックに変な文字が入っているルールがある。この場合スキップ
             if ls.service == "sysmon":
                 self.sigma_converted.append((True, new_obj))
