@@ -212,7 +212,7 @@ def create_obj(filepath: str) -> dict:
         LOGGER.error(f"file [{filepath}] does not exists.")
         sys.exit(1)
     try:
-        with open(filepath) as f:
+        with open(filepath, encoding="utf-8") as f:
             return yaml.safe_load(f)
     except Exception as e:
         LOGGER.error(f"Error while loading yml [{filepath}]: {e}")
@@ -291,7 +291,7 @@ def find_windows_sigma_rule_files(root: str, rule_pattern: str):
             if not any(target in dirpath for target in ["rule", "deprecated", "unsupported"]):
                 continue  # フォルダパスにrule/deprecated/unsupportedがつかないものは、Sigmaルールと関係ないため、除外
             try:
-                with open(filepath) as f:
+                with open(filepath, encoding="utf-8") as f:
                     data = yaml.safe_load(f)
                 if data.get('logsource', {}).get('product') != 'windows':
                     LOGGER.info(f"[{filepath}] has no windows rule. skip conversion.")
@@ -341,7 +341,7 @@ if __name__ == '__main__':
                 p = Path(out_path)
                 if not p.parent.exists():
                     os.makedirs(p.parent)
-                p.write_text(parsed_yaml)  # 変換後のSigmaルール(yml形式の文字列)をファイルに出力
+                p.write_text(parsed_yaml, encoding="utf-8")  # 変換後のSigmaルール(yml形式の文字列)をファイルに出力
                 file_cnt += 1
                 LOGGER.info(f"converted to [{out_path}] done.")
         except Exception as err:
