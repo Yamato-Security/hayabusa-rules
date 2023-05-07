@@ -223,6 +223,11 @@ logsources:
         service: dns-client
         conditions:
             Channel: 'Microsoft-Windows-DNS Client Events/Operational'
+    windows-dns-server-analytic:
+        product: windows
+        service: dns-server-analytic
+        conditions:
+            Channel: 'Microsoft-Windows-DNS-Server/Analytical'
     windows-appmodel-runtime:
         product: windows
         service: appmodel-runtime
