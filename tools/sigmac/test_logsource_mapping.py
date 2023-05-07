@@ -5,7 +5,7 @@ from logsource_mapping import *
 class TestLogSourceMapper(TestCase):
     def test_create_service_map(self):
         res = create_service_map(create_obj("windows-services.yaml"))
-        self.assertEquals(len(res.keys()), 35)
+        self.assertEquals(len(res.keys()), 36)
 
     def test_create_category_map(self):
         service_to_channels = create_service_map(create_obj("windows-services.yaml"))
@@ -13,19 +13,8 @@ class TestLogSourceMapper(TestCase):
         s2 = create_category_map(create_obj('windows-audit.yaml'), service_to_channels)
         s3 = create_category_map(create_obj('windows-services.yaml'), service_to_channels)
         s4 = merge_category_map(service_to_channels, [s1, s2, s3])
-        self.assertEquals(len(s4), 65)
+        self.assertEquals(len(s4), 66)
         self.assertEquals(len(s4["process_creation"]), 2)
-
-    # def test_logsource_converter(self):
-    #     service_to_channels = create_service_map(create_obj("windows-services.yaml"))
-    #     s1 = create_category_map(create_obj('sysmon.yaml'), service_to_channels)
-    #     s2 = create_category_map(create_obj('windows-audit.yaml'), service_to_channels)
-    #     s3 = create_category_map(create_obj('windows-services.yaml'), service_to_channels)
-    #     s4 = merge_category_map(service_to_channels, [s1, s2, s3])
-    #     f1 = create_field_map(create_obj('windows-audit.yaml'))
-    #     lc = LogsourceConverter("proc_creation_win_7zip_exfil_dmp_files.yml", s4, f1)
-    #     lc.convert()
-    #     self.assertEquals(len(lc.sigma_converted), 2)
 
     def test_build_out_path(self):
         sigma_path = "/hoge/sigma/builtin/security/sample.yml"

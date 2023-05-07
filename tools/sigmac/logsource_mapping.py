@@ -115,15 +115,15 @@ class LogsourceConverter:
             logsources = self.logsource_map.get(obj['logsource']['service'])
             if logsources:
                 return logsources
-            msg = f"[{self.sigma_path}] has inconvertible service:[{obj['logsource']['service']}].skip conversion and output as is."
-            LOGGER.warning(msg)
+            msg = f"This rule inconvertible service:[{obj['logsource']['service']}].skip conversion."
+            raise Exception(msg)
         elif 'category' in obj['logsource']:
             category = obj['logsource']['category']
             logsources = self.logsource_map.get(category)
             if logsources:
                 return logsources
-            msg = f"[{self.sigma_path}] has inconvertible service:[{category}].skip conversion and output as is."
-            LOGGER.warning(msg)
+            msg = f"This rule has inconvertible service:[{category}].skip conversion."
+            raise Exception(msg)
         return []
 
     def convert(self):
