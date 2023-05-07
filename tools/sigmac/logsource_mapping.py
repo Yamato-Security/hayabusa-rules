@@ -76,6 +76,7 @@ class IndentDumper(yaml.Dumper):
     https://github.com/yaml/pyyaml/issues/234
     https://stackoverflow.com/questions/25108581/python-yaml-dump-bad-indentation/39681672#39681672
     """
+
     def increase_indent(self, flow=False, indentless=False):
         return super(IndentDumper, self).increase_indent(flow, False)
 
@@ -98,7 +99,7 @@ class LogsourceConverter:
                 new_key = self.field_map[rewrite_filed] + original_field.replace(rewrite_filed, "")
                 obj[new_key] = obj.pop(original_field)
 
-    def transform_field_recursive(self, obj: dict) -> dict:
+    def transform_field_recursive(self, obj: dict, need_field_conversion: bool) -> dict:
         """
         dictを再帰的に探索し、field_mapの内容でfiled名を変換する(category=process_creation以外は変換されない)
         """
@@ -108,15 +109,17 @@ class LogsourceConverter:
                     # TODO Hayabusa側でフィールド名なしの'|all'に対応したらこの分岐は削除
                     msg = f"Unsupported value-modifier '|all' found. Skip conversion."
                     raise Exception(msg)
+                if not need_field_conversion:
+                    return obj
                 self.transform_field(obj, field_name)
                 if isinstance(val, dict):
-                    self.transform_field_recursive(val)
+                    self.transform_field_recursive(val, need_field_conversion)
                 elif isinstance(val, list):
                     for item in val:
-                        self.transform_field_recursive(item)
+                        self.transform_field_recursive(item, need_field_conversion)
         elif isinstance(obj, list):
             for item in obj:
-                self.transform_field_recursive(item)
+                self.transform_field_recursive(item, need_field_conversion)
         return obj
 
     def get_logsources(self, obj: dict) -> list[LogSource]:
@@ -160,7 +163,7 @@ class LogsourceConverter:
             new_obj['detection'][ls.get_identifier_for_detection(list(detection.keys()))] = ls.get_detection()
             for key, val in detection.items():
                 key = re.sub(r"\.", "_", key)  # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
-                val = self.transform_field_recursive(val)
+                val = self.transform_field_recursive(val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
                                                                  list(detection.keys()), self.field_map)
