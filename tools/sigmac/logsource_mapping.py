@@ -70,6 +70,16 @@ class LogSource:
         return False
 
 
+class IndentDumper(yaml.Dumper):
+    """
+    pyyamlの↓バグで、valueがlistの場合インデントされないため、yaml.dump時にインデントさせるためのカスタムクラス
+    https://github.com/yaml/pyyaml/issues/234
+    https://stackoverflow.com/questions/25108581/python-yaml-dump-bad-indentation/39681672#39681672
+    """
+    def increase_indent(self, flow=False, indentless=False):
+        return super(IndentDumper, self).increase_indent(flow, False)
+
+
 @dataclass(frozen=True)
 class LogsourceConverter:
     sigma_path: str
@@ -178,7 +188,7 @@ class LogsourceConverter:
         for is_sysmon, obj in self.sigma_converted:
             output_path = build_out_path(base_dir, out_dir, self.sigma_path, is_sysmon)
             with StringIO() as bs:
-                yaml.safe_dump(obj, bs, indent=4, default_flow_style=False)
+                yaml.dump(obj, bs, Dumper=IndentDumper, default_flow_style=False)
                 res.append((output_path, bs.getvalue()))
         return res
 
