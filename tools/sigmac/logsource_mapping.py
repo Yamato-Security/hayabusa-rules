@@ -94,6 +94,10 @@ class LogsourceConverter:
         """
         if isinstance(obj, dict):
             for field_name, val in list(obj.items()):
+                if field_name == "|all":
+                    # TODO Hayabusa側でフィールド名なしの'|all'に対応したらこの分岐は削除
+                    msg = f"Unsupported value-modifier '|all' found. Skip conversion."
+                    raise Exception(msg)
                 self.transform_field(obj, field_name)
                 if isinstance(val, dict):
                     self.transform_field_recursive(val)
@@ -115,14 +119,14 @@ class LogsourceConverter:
             logsources = self.logsource_map.get(obj['logsource']['service'])
             if logsources:
                 return logsources
-            msg = f"This rule inconvertible service:[{obj['logsource']['service']}].skip conversion."
+            msg = f"This rule inconvertible service:[{obj['logsource']['service']}]. Skip conversion."
             raise Exception(msg)
         elif 'category' in obj['logsource']:
             category = obj['logsource']['category']
             logsources = self.logsource_map.get(category)
             if logsources:
                 return logsources
-            msg = f"This rule has inconvertible service:[{category}].skip conversion."
+            msg = f"This rule has inconvertible service:[{category}]. Skip conversion."
             raise Exception(msg)
         return []
 
@@ -145,12 +149,8 @@ class LogsourceConverter:
             # detection用に変換したlogsource条件をセット
             new_obj['detection'][ls.get_identifier_for_detection(list(detection.keys()))] = ls.get_detection()
             for key, val in detection.items():
-                if re.search(r"\.", key):
-                    # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
-                    key = re.sub(r"\.", "_", key)
-                if ls.need_field_conversion():
-                    # process_creationかつSecurityイベント用ルールのみ、一部フィールド名を変換
-                    val = self.transform_field_recursive(val)
+                key = re.sub(r"\.", "_", key)  # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
+                val = self.transform_field_recursive(val)
                 new_obj['detection'][key] = val
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
                                                                  list(detection.keys()), self.field_map)
@@ -338,6 +338,7 @@ if __name__ == '__main__':
     win_service_map = create_category_map(create_obj('windows-services.yaml'), service2channel)
     all_category_map = merge_category_map(service2channel, [sysmon_map, win_audit_map, win_service_map])
     process_creation_field_map = create_field_map(create_obj('windows-audit.yaml'))
+    LOGGER.info(f"Loading logsource mapping yaml(sysmon/windows-audit/windows-services) done.")
 
     # Sigmaディレクトリから対象ファイルをリストアップ
     sigma_files = list(find_windows_sigma_rule_files(args.rule_path, args.rule_filter))
@@ -356,7 +357,7 @@ if __name__ == '__main__':
                 file_cnt += 1
                 LOGGER.debug(f"Converted to [{out_path}] done.")
         except Exception as err:
-            LOGGER.error(f"Error while converting yml [{sigma_file}]: {err}")
+            LOGGER.error(f"Error while converting rule [{sigma_file}]: {err}")
     end_time = time.perf_counter()
     LOGGER.info(f"[{file_cnt}] files created successfully. Created files were saved under [{args.output}].")
     LOGGER.info(f"Script took [{'{:.2f}'.format(end_time - start_time)}] seconds.")
