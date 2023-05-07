@@ -59,3 +59,25 @@ class TestLogSourceMapper(TestCase):
         condition = "select | count(Image) by Workstation > 10"
         self.assertEquals(ls.get_condition(condition, [], {"Image": "NewProcessName"}),
                           "(process_creation and select) | count(NewProcessName) by Workstation > 10")
+
+    def test_get_logsources(self):
+        service2channel = create_service_map(create_obj("windows-services.yaml"))
+        sysmon_map = create_category_map(create_obj('sysmon.yaml'), service2channel)
+        win_audit_map = create_category_map(create_obj('windows-audit.yaml'), service2channel)
+        win_service_map = create_category_map(create_obj('windows-services.yaml'), service2channel)
+        all_category_map = merge_category_map(service2channel, [sysmon_map, win_audit_map, win_service_map])
+        process_creation_field_map = create_field_map(create_obj('windows-audit.yaml'))
+        lc = LogsourceConverter("", all_category_map, process_creation_field_map, [])
+        r = lc.get_logsources({"logsource": {"service": "sysmon"}})
+        self.assertEquals(r[0].service, "sysmon")
+
+    def test_get_logsources_raise_exception_if_not_supported_category(self):
+        service2channel = create_service_map(create_obj("windows-services.yaml"))
+        sysmon_map = create_category_map(create_obj('sysmon.yaml'), service2channel)
+        win_audit_map = create_category_map(create_obj('windows-audit.yaml'), service2channel)
+        win_service_map = create_category_map(create_obj('windows-services.yaml'), service2channel)
+        all_category_map = merge_category_map(service2channel, [sysmon_map, win_audit_map, win_service_map])
+        process_creation_field_map = create_field_map(create_obj('windows-audit.yaml'))
+        lc = LogsourceConverter("", all_category_map, process_creation_field_map, [])
+        with self.assertRaises(Exception):
+            lc.get_logsources({"logsource": {"service": "file_rename"}})
