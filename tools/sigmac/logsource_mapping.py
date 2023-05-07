@@ -115,14 +115,14 @@ class LogsourceConverter:
             logsources = self.logsource_map.get(obj['logsource']['service'])
             if logsources:
                 return logsources
-            msg = f"[{self.sigma_path}] has inconvertible service:[{obj['logsource']['service']}].skip conversion."
+            msg = f"[{self.sigma_path}] has inconvertible service:[{obj['logsource']['service']}].skip conversion and output as is."
             LOGGER.warning(msg)
         elif 'category' in obj['logsource']:
             category = obj['logsource']['category']
             logsources = self.logsource_map.get(category)
             if logsources:
                 return logsources
-            msg = f"[{self.sigma_path}] has inconvertible service:[{category}].skip conversion."
+            msg = f"[{self.sigma_path}] has inconvertible service:[{category}].skip conversion and output as is."
             LOGGER.warning(msg)
         return []
 
@@ -162,7 +162,8 @@ class LogsourceConverter:
             new_obj['ruletype'] = 'Sigma'
             condition_str = new_obj['detection']['condition']
             if '%' in condition_str or '->' in condition_str:
-                LOGGER.error(f"Invalid character in condition [{condition_str}] file [{self.sigma_path}]. Skip conversion.")
+                LOGGER.error(
+                    f"Invalid character in condition [{condition_str}] file [{self.sigma_path}]. Skip conversion.")
                 continue  # conditionブロックに変な文字が入っているルールがある。この場合スキップ
             if ls.service == "sysmon":
                 self.sigma_converted.append((True, new_obj))
