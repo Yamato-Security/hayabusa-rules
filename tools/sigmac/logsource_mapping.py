@@ -162,7 +162,7 @@ class LogsourceConverter:
             new_obj['ruletype'] = 'Sigma'
             condition_str = new_obj['detection']['condition']
             if '%' in condition_str or '->' in condition_str:
-                LOGGER.error(f"invalid character in condition [{condition_str}] file [{self.sigma_path}]. skip conversion.")
+                LOGGER.error(f"Invalid character in condition [{condition_str}] file [{self.sigma_path}]. Skip conversion.")
                 continue  # conditionブロックに変な文字が入っているルールがある。この場合スキップ
             if ls.service == "sysmon":
                 self.sigma_converted.append((True, new_obj))
@@ -213,7 +213,9 @@ def create_obj(filepath: str) -> dict:
         sys.exit(1)
     try:
         with open(filepath, encoding="utf-8") as f:
-            return yaml.safe_load(f)
+            d = yaml.safe_load(f)
+            LOGGER.debug(f"loading yaml [{filepath}] done successfully.")
+            return d
     except Exception as e:
         LOGGER.error(f"Error while loading yml [{filepath}]: {e}")
         sys.exit(1)
@@ -241,7 +243,7 @@ def create_service_map(obj: dict) -> dict[str, Union[str, list[str]]]:
     for v in obj['logsources'].values():
         if 'service' in v.keys() and 'conditions' in v.keys():
             service_to_channel[v['service']] = v['conditions']['Channel']
-    LOGGER.info("create service map done.")
+    LOGGER.debug("create service map done.")
     return service_to_channel
 
 
@@ -261,7 +263,7 @@ def create_category_map(obj: dict, service_to_channel: dict[str, Union[str, list
                        channel=service_to_channel[v['rewrite']['service']],
                        event_id=v['conditions']['EventID'])
         mapper.add(ls)
-    LOGGER.info("create category map done.")
+    LOGGER.debug("create category map done.")
     return mapper
 
 
@@ -275,7 +277,7 @@ def merge_category_map(service_map: dict, logsources_lst: list) -> dict[str, lis
             merged_map[ls.category].append(ls)
     for k, v in service_map.items():
         merged_map[k].append(LogSource(category=None, service=k, channel=v, event_id=None))
-    LOGGER.info(f"merge category map done.")
+    LOGGER.debug(f"create category map done.")
     return merged_map
 
 
@@ -283,6 +285,7 @@ def find_windows_sigma_rule_files(root: str, rule_pattern: str):
     """
     指定したディレクトリから変換対象のSigmaファイルのファイルパスを取得する
     """
+    LOGGER.info(f"Start to collect target yml files path.")
     if Path(root).exists() and Path(root).is_file() and rule_pattern.replace("*", "") in root:
         yield root
     for dirpath, dirnames, filenames in os.walk(root):
@@ -294,7 +297,7 @@ def find_windows_sigma_rule_files(root: str, rule_pattern: str):
                 with open(filepath, encoding="utf-8") as f:
                     data = yaml.safe_load(f)
                 if data.get('logsource', {}).get('product') != 'windows':
-                    LOGGER.info(f"[{filepath}] has no windows rule. skip conversion.")
+                    LOGGER.debug(f"[{filepath}] has no windows rule. skip conversion.")
                 else:
                     yield filepath
             except Exception as e:
@@ -308,7 +311,12 @@ if __name__ == '__main__':
     parser.add_argument("-o", "--output", help="Output dir. Default: ./hayabusa_rules", default="./hayabusa_rules")
     parser.add_argument("-r", "--rule_path", help="Target sigma dir or file path.", required=True)
     parser.add_argument("--rule_filter", help="Target file filter. Default: *.yml", default="*.yml")
+    parser.add_argument("--debug", help="Debug mode.", action="store_true")
     args = parser.parse_args()
+
+    if args.debug:
+        LOGGER.setLevel(level=logging.DEBUG)
+    LOGGER.debug(f"Args: output[{args.output}], rule_path[{args.rule_path}].")
 
     if not Path(args.rule_path).exists():
         LOGGER.error(f"Rule directory(file) [{args.rule_path}] does not exists.")
@@ -331,8 +339,10 @@ if __name__ == '__main__':
     process_creation_field_map = create_field_map(create_obj('windows-audit.yaml'))
 
     # Sigmaディレクトリから対象ファイルをリストアップ
+    sigma_files = list(find_windows_sigma_rule_files(args.rule_path, args.rule_filter))
+    LOGGER.info(f"Collecting target yml files path done. Start to convert [{len(sigma_files)}] files.")
     file_cnt = 0
-    for sigma_file in find_windows_sigma_rule_files(args.rule_path, args.rule_filter):
+    for sigma_file in sigma_files:
         try:
             lc = LogsourceConverter(sigma_file, all_category_map, process_creation_field_map)
             lc.convert()  # Sigmaルールをマッピングデータにもとづき変換
@@ -343,9 +353,9 @@ if __name__ == '__main__':
                     os.makedirs(p.parent)
                 p.write_text(parsed_yaml, encoding="utf-8")  # 変換後のSigmaルール(yml形式の文字列)をファイルに出力
                 file_cnt += 1
-                LOGGER.info(f"converted to [{out_path}] done.")
+                LOGGER.debug(f"Converted to [{out_path}] done.")
         except Exception as err:
             LOGGER.error(f"Error while converting yml [{sigma_file}]: {err}")
     end_time = time.perf_counter()
-    LOGGER.info(f"[{file_cnt}] files conversion finished. converted file was saved under [{args.output}].")
+    LOGGER.info(f"[{file_cnt}] files created successfully. Created files were saved under [{args.output}].")
     LOGGER.info(f"Script took [{'{:.2f}'.format(end_time - start_time)}] seconds.")
