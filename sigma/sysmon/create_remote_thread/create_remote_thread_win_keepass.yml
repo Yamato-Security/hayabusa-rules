@@ -1,9 +1,9 @@
-title: KeePass Password Dumping
+title: Remote Thread Created In KeePass.EXE
 ruletype: Sigma
 author: Timon Hackenjos
 date: 2022/04/22
-description: Detects remote thread creation in KeePass.exe indicating password dumping
-    activity
+description: Detects remote thread creation in "KeePass.exe" which could indicates
+    potential password dumping activity
 detection:
     SELECTION_1:
         EventID: 8
@@ -19,6 +19,7 @@ level: high
 logsource:
     category: create_remote_thread
     product: windows
+modified: 2023/05/05
 references:
 - https://www.cisa.gov/uscert/ncas/alerts/aa20-259a
 - https://github.com/denandz/KeeFarce

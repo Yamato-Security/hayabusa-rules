@@ -1,0 +1,89 @@
+title: Potential Homoglyph Attack Using Lookalike Characters
+ruletype: Sigma
+author: Micah Babinski, @micahbabinski
+date: 2023/05/07
+description: 'Detects the presence of unicode characters which are homoglyphs, or
+    identical in appearance, to ASCII letter characters.
+
+    This is used as an obfuscation and masquerading techniques. Only "perfect" homoglyphs
+    are included; these are characters that
+
+    are indistinguishable from ASCII characters and thus may make excellent candidates
+    for homoglyph attack characters.
+
+    '
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine:
+        - "*\u0410*"
+        - "*\u0412*"
+        - "*\u0415*"
+        - "*\u041A*"
+        - "*\u041C*"
+        - "*\u041D*"
+        - "*\u041E*"
+        - "*\u0420*"
+        - "*\u0421*"
+        - "*\u0422*"
+        - "*\u0425*"
+        - "*\u0405*"
+        - "*\u0406*"
+        - "*\u0408*"
+        - "*\u04AE*"
+        - "*\u04C0*"
+        - "*\u050C*"
+        - "*\u051A*"
+        - "*\u051C*"
+        - "*\u0391*"
+        - "*\u0392*"
+        - "*\u0395*"
+        - "*\u0396*"
+        - "*\u0397*"
+        - "*\u0399*"
+        - "*\u039A*"
+        - "*\u039C*"
+        - "*\u039D*"
+        - "*\u039F*"
+        - "*\u03A1*"
+        - "*\u03A4*"
+        - "*\u03A5*"
+        - "*\u03A7*"
+    SELECTION_4:
+        CommandLine:
+        - "*\u0430*"
+        - "*\u0435*"
+        - "*\u043E*"
+        - "*\u0440*"
+        - "*\u0441*"
+        - "*\u0445*"
+        - "*\u0455*"
+        - "*\u0456*"
+        - "*\u04CF*"
+        - "*\u0458*"
+        - "*\u04BB*"
+        - "*\u0501*"
+        - "*\u051B*"
+        - "*\u051D*"
+        - "*\u03BF*"
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
+falsepositives:
+- Commandlines with legitimate Cyrillic text; will likely require tuning (or not be
+    usable) in countries where these alphabets are in use.
+id: 32e280f1-8ad4-46ef-9e80-910657611fbc
+level: medium
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://redcanary.com/threat-detection-report/threats/socgholish/#threat-socgholish
+- http://www.irongeek.com/homoglyph-attack-generator.php
+status: experimental
+tags:
+- attack.defense_evasion
+- attack.t1036
+- attack.t1036.003
+

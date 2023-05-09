@@ -1,9 +1,9 @@
-title: LSASS Access from Program in Suspicious Folder
+title: LSASS Access From Program in Potentially Suspicious Folder
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2021/11/27
 description: Detects process access to LSASS memory with suspicious access flags and
-    from a suspicious folder
+    from a potentially suspicious folder
 detection:
     SELECTION_1:
         EventID: 10
@@ -25,67 +25,67 @@ detection:
         GrantedAccess: '0x1410'
     SELECTION_17:
         SourceImage:
+        - C:\Program Files (x86)\Dropbox\\*
+        - C:\Program Files\Dropbox\\*
+    SELECTION_18:
+        SourceImage: '*\DropboxUpdate.exe'
+    SELECTION_19:
+        GrantedAccess: '0x1410'
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_20:
+        SourceImage:
         - C:\Windows\Temp\asgard2-agent\\*
         - C:\Windows\Temp\asgard2-agent-sc\\*
-    SELECTION_18:
+    SELECTION_21:
         SourceImage:
         - '*\thor64.exe'
         - '*\thor.exe'
         - '*\aurora-agent-64.exe'
         - '*\aurora-agent.exe'
-    SELECTION_19:
+    SELECTION_22:
         GrantedAccess:
         - '0x1fffff'
         - '0x1010'
         - '0x101010'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        SourceImage: C:\Users\\*
-    SELECTION_21:
-        SourceImage: '*\AppData\Local\Temp\\*'
-    SELECTION_22:
-        SourceImage: '*\vs_bootstrapper_*'
     SELECTION_23:
-        GrantedAccess: '0x1410'
+        SourceImage: C:\Users\\*
     SELECTION_24:
-        SourceImage: C:\Program Files (x86)\Google\Temp\\*
+        SourceImage: '*\AppData\Local\Temp\\*'
     SELECTION_25:
-        SourceImage: '*.tmp\GoogleUpdate.exe'
+        SourceImage: '*\vs_bootstrapper_*'
     SELECTION_26:
+        GrantedAccess: '0x1410'
+    SELECTION_27:
+        SourceImage: C:\Program Files (x86)\Google\Temp\\*
+    SELECTION_28:
+        SourceImage: '*.tmp\GoogleUpdate.exe'
+    SELECTION_29:
         GrantedAccess:
         - '0x410'
         - '0x1410'
-    SELECTION_27:
-        SourceImage: C:\Users\\*
-    SELECTION_28:
-        SourceImage: '*\AppData\Local\Keybase\keybase.exe'
-    SELECTION_29:
-        GrantedAccess: '0x1fffff'
     SELECTION_3:
         TargetImage: '*\lsass.exe'
     SELECTION_30:
-        SourceImage: '*\AppData\Local\Temp\is-*'
-    SELECTION_31:
-        SourceImage: '*.tmp\avira_system_speedup.tmp'
-    SELECTION_32:
-        GrantedAccess: '0x1410'
-    SELECTION_33:
         SourceImage: C:\Users\\*
-    SELECTION_34:
-        SourceImage: '*\AppData\Roaming\ViberPC\\*'
-    SELECTION_35:
-        SourceImage: '*\updater.exe'
-    SELECTION_36:
-        TargetImage: '*\winlogon.exe'
-    SELECTION_37:
+    SELECTION_31:
+        SourceImage: '*\AppData\Local\Keybase\keybase.exe'
+    SELECTION_32:
         GrantedAccess: '0x1fffff'
+    SELECTION_33:
+        SourceImage: '*\AppData\Local\Temp\is-*'
+    SELECTION_34:
+        SourceImage: '*.tmp\avira_system_speedup.tmp'
+    SELECTION_35:
+        GrantedAccess: '0x1410'
+    SELECTION_36:
+        SourceImage: C:\Users\\*
+    SELECTION_37:
+        SourceImage: '*\AppData\Roaming\ViberPC\\*'
     SELECTION_38:
-        SourceImage:
-        - C:\Program Files\Common Files\Adobe\ARM\\*
-        - C:\Program Files (x86)\Common Files\Adobe\ARM\\*
+        SourceImage: '*\updater.exe'
     SELECTION_39:
-        SourceImage: '*\AdobeARMHelper.exe'
+        TargetImage: '*\winlogon.exe'
     SELECTION_4:
         GrantedAccess:
         - '*10'
@@ -115,6 +115,14 @@ detection:
         - '*0x14C2'
         - '*FF'
     SELECTION_40:
+        GrantedAccess: '0x1fffff'
+    SELECTION_41:
+        SourceImage:
+        - C:\Program Files\Common Files\Adobe\ARM\\*
+        - C:\Program Files (x86)\Common Files\Adobe\ARM\\*
+    SELECTION_42:
+        SourceImage: '*\AdobeARMHelper.exe'
+    SELECTION_43:
         GrantedAccess: '0x1410'
     SELECTION_5:
         SourceImage:
@@ -142,11 +150,11 @@ detection:
         SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
         or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
         and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19)
-        or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
+        or (SELECTION_20 and SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24
         and SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28 and SELECTION_29)
         or (SELECTION_30 and SELECTION_31 and SELECTION_32) or (SELECTION_33 and SELECTION_34
-        and SELECTION_35 and SELECTION_36 and SELECTION_37) or (SELECTION_38 and SELECTION_39
-        and SELECTION_40)))
+        and SELECTION_35) or (SELECTION_36 and SELECTION_37 and SELECTION_38 and SELECTION_39
+        and SELECTION_40) or (SELECTION_41 and SELECTION_42 and SELECTION_43)))
 falsepositives:
 - Updaters and installers are typical false positives. Apply custom filters depending
     on your environment
@@ -155,11 +163,11 @@ fields:
 - SourceImage
 - GrantedAccess
 id: fa34b441-961a-42fa-a100-ecc28c886725
-level: high
+level: medium
 logsource:
     category: process_access
     product: windows
-modified: 2023/04/26
+modified: 2023/05/05
 references:
 - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
 - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow

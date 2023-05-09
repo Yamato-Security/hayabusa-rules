@@ -1,9 +1,8 @@
-title: PowerShell Web Download and Execution
+title: PowerShell Download and Execution Cradles
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2022/03/24
-description: Detects suspicious ways to download files or content and execute them
-    using PowerShell Invoke-Expression
+description: Detects PowerShell download and execution cradles.
 detection:
     SELECTION_1:
         EventID: 4688
@@ -17,26 +16,28 @@ detection:
         - '*iwr *'
     SELECTION_4:
         CommandLine:
-        - '*IEX(*'
-        - '*IEX (*'
-        - '*I`EX*'
-        - '*IE`X*'
-        - '*I`E`X*'
+        - '*;iex $*'
         - '*| IEX*'
         - '*|IEX *'
+        - '*I`E`X*'
+        - '*I`EX*'
+        - '*IE`X*'
+        - '*iex *'
+        - '*IEX (*'
+        - '*IEX(*'
         - '*Invoke-Expression*'
-        - '*;iex $*'
     condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
 falsepositives:
-- Scripts or tools that download files and execute them
+- Some PowerShell installers were seen using similar combinations. Apply filters accordingly
 id: 85b0b087-eddf-4a2b-b033-d771fa2b9775
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/05
+modified: 2023/05/04
 references:
 - https://github.com/VirtualAlllocEx/Payload-Download-Cradles/blob/88e8eca34464a547c90d9140d70e9866dcbc6a12/Download-Cradles.cmd
+- https://labs.withsecure.com/publications/fin7-target-veeam-servers
 status: experimental
 tags:
 - attack.execution

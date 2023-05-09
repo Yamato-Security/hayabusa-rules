@@ -1,4 +1,4 @@
-title: DLL Sideloading Of DBGCORE.DLL
+title: Potential DLL Sideloading Of DBGCORE.DLL
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)
 date: 2022/10/25
@@ -12,23 +12,26 @@ detection:
         ImageLoaded: '*\dbgcore.dll'
     SELECTION_4:
         ImageLoaded:
-        - C:\Windows\System32\\*
-        - C:\Windows\SysWOW64\\*
-        - C:\Windows\WinSxS\\*
-        - C:\Windows\SoftwareDistribution\\*
-        - C:\Windows\SystemTemp\\*
         - C:\Program Files (x86)\\*
         - C:\Program Files\\*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
+        - C:\Windows\SoftwareDistribution\\*
+        - C:\Windows\System32\\*
+        - C:\Windows\SystemTemp\\*
+        - C:\Windows\SysWOW64\\*
+        - C:\Windows\WinSxS\\*
+    SELECTION_5:
+        ImageLoaded: '*\Steam\bin\cef\cef.win7x64\dbgcore.dll'
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not ((SELECTION_4)))
+        and  not ((SELECTION_5)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLL mentioned in this
     rule
 id: 9ca2bf31-0570-44d8-a543-534c47c33ed7
-level: high
+level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2023/03/15
+modified: 2023/05/05
 references:
 - https://hijacklibs.net/
 status: experimental

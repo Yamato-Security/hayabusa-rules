@@ -8,14 +8,8 @@ detection:
     SELECTION_1:
         EventID: 7
     SELECTION_10:
-        Image: C:\Windows\System32\cleanmgr.exe
-    SELECTION_11:
-        ImageLoaded: '*\ssshim.dll'
-    SELECTION_12:
-        Image: C:\$WINDOWS.~BT\\*
-    SELECTION_13:
         Image: C:\Program Files\WindowsApps\DellInc.DellSupportAssistforPCs*
-    SELECTION_14:
+    SELECTION_11:
         Image: '*\wldp.dll'
     SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -443,10 +437,11 @@ detection:
         - C:\Windows\WinSxS\\*
         - C:\Windows\SoftwareDistribution\\*
         - C:\Windows\SystemTemp\\*
+        - C:\$WINDOWS.~BT\\*
     SELECTION_5:
-        ImageLoaded: C:\Program Files\Common Files\microsoft shared\ClickToRun\AppVPolicy.dll
-    SELECTION_6:
         Image: C:\Program Files\Common Files\microsoft shared\ClickToRun\OfficeClickToRun.exe
+    SELECTION_6:
+        ImageLoaded: C:\Program Files\Common Files\microsoft shared\ClickToRun\AppVPolicy.dll
     SELECTION_7:
         ImageLoaded: C:\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\\*
     SELECTION_8:
@@ -455,10 +450,9 @@ detection:
         - C:\Windows\System32\backgroundTaskHost.exe*
     SELECTION_9:
         ImageLoaded: C:\Program Files\WindowsApps\DellInc.DellSupportAssistforPCs*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5 and SELECTION_6) or (SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or (SELECTION_12) or (SELECTION_13 and
-        SELECTION_14)))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not ((SELECTION_4)))
+        and  not ((SELECTION_5 and SELECTION_6) or (SELECTION_7) or (SELECTION_8 and
+        SELECTION_9) or (SELECTION_10 and SELECTION_11)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLLs mentioned in this
     rule
@@ -467,7 +461,7 @@ level: high
 logsource:
     category: image_load
     product: windows
-modified: 2023/03/15
+modified: 2023/05/05
 references:
 - https://hijacklibs.net/
 - https://blog.cyble.com/2022/07/21/qakbot-resurfaces-with-new-playbook/

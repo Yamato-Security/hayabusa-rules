@@ -1,9 +1,9 @@
-title: Suspicious NTDS.DIT Creation
+title: NTDS.DIT Creation By Uncommon Parent Process
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2022/03/11
-description: Detects suspicious creations of a file named "ntds.dit" (Active Directory
-    Database) by suspicious parent process, directory or a suspicious one liner
+description: Detects creation of a file named "ntds.dit" (Active Directory Database)
+    by an uncommon parent process or directory
 detection:
     SELECTION_1:
         EventID: 11
@@ -13,14 +13,14 @@ detection:
         TargetFilename: '*\ntds.dit'
     SELECTION_4:
         ParentImage:
+        - '*\cscript.exe'
+        - '*\httpd.exe'
+        - '*\nginx.exe'
+        - '*\php-cgi.exe'
         - '*\powershell.exe'
         - '*\pwsh.exe'
-        - '*\wscript.exe'
-        - '*\cscript.exe'
         - '*\w3wp.exe'
-        - '*\php-cgi.exe'
-        - '*\nginx.exe'
-        - '*\httpd.exe'
+        - '*\wscript.exe'
     SELECTION_5:
         ParentImage:
         - '*\apache*'
@@ -29,14 +29,8 @@ detection:
         - '*\Temp\\*'
         - '*\Public\\*'
         - '*\PerfLogs\\*'
-    SELECTION_6:
-        Image:
-        - '*\AppData\\*'
-        - '*\Temp\\*'
-        - '*\Public\\*'
-        - '*\PerfLogs\\*'
     condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
-        SELECTION_5 or SELECTION_6))
+        SELECTION_5))
 falsepositives:
 - Unknown
 id: 4e7050dd-e548-483f-b7d6-527ab4fa784d
@@ -45,7 +39,7 @@ logsource:
     category: file_event
     definition: 'Requirements: The "ParentImage" field is not available by default
         on EID 11 of Sysmon logs. To be able to use this rule to the full extent you
-        need to enriche the log with additional ParentImage data'
+        need to enrich the log with additional ParentImage data'
     product: windows
 modified: 2023/01/05
 references:
@@ -53,6 +47,9 @@ references:
 - https://www.n00py.io/2022/03/manipulating-user-passwords-without-mimikatz/
 - https://pentestlab.blog/tag/ntds-dit/
 - https://github.com/samratashok/nishang/blob/414ee1104526d7057f9adaeee196d91ae447283e/Gather/Copy-VSS.ps1
+related:
+-   id: 11b1ed55-154d-4e82-8ad7-83739298f720
+    type: similar
 status: test
 tags:
 - attack.credential_access

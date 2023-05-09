@@ -1,4 +1,4 @@
-title: CACTUSTORCH Remote Thread Creation
+title: HackTool - CACTUSTORCH Remote Thread Creation
 ruletype: Sigma
 author: '@SBousseaden (detection), Thomas Patzke (rule)'
 date: 2019/02/01
@@ -27,15 +27,15 @@ level: high
 logsource:
     category: create_remote_thread
     product: windows
-modified: 2022/12/25
+modified: 2023/05/05
 references:
 - https://twitter.com/SBousseaden/status/1090588499517079552
 - https://github.com/mdsecactivebreach/CACTUSTORCH
 status: test
 tags:
 - attack.defense_evasion
-- attack.t1055.012
 - attack.execution
+- attack.t1055.012
 - attack.t1059.005
 - attack.t1059.007
 - attack.t1218.005
