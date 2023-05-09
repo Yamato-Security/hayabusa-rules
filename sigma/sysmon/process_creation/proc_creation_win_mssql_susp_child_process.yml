@@ -1,9 +1,9 @@
-title: Suspicious Shells Spawn by SQL Server
+title: Suspicious Child Process Of SQL Server
 ruletype: Sigma
 author: FPT.EagleEye Team, wagga
 date: 2020/12/11
-description: Detects suspicious shell spawn from MSSQL process, this might be sight
-    of RCE or SQL Injection
+description: Detects suspicious child processes of the SQLServer process. This could
+    indicate potential RCE or SQL Injection.
 detection:
     SELECTION_1:
         EventID: 1
@@ -13,13 +13,20 @@ detection:
         ParentImage: '*\sqlservr.exe'
     SELECTION_4:
         Image:
-        - '*\cmd.exe'
-        - '*\sh.exe'
         - '*\bash.exe'
+        - '*\bitsadmin.exe'
+        - '*\cmd.exe'
+        - '*\netstat.exe'
+        - '*\nltest.exe'
+        - '*\ping.exe'
         - '*\powershell.exe'
         - '*\pwsh.exe'
-        - '*\bitsadmin.exe'
+        - '*\regsvr32.exe'
+        - '*\rundll32.exe'
+        - '*\sh.exe'
         - '*\systeminfo.exe'
+        - '*\tasklist.exe'
+        - '*\wsl.exe'
     SELECTION_5:
         ParentImage: C:\Program Files\Microsoft SQL Server\\*
     SELECTION_6:
@@ -35,7 +42,7 @@ level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/21
+modified: 2023/05/04
 related:
 -   id: 344482e4-a477-436c-aa70-7536d18a48c7
     type: obsoletes

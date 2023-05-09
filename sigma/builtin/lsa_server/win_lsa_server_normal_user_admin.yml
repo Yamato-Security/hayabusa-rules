@@ -29,12 +29,13 @@ falsepositives:
     have these right. But in the case where it's necessary. They should be filtered
     out using the "TargetUserName" field
 id: 7ac407cc-0f48-4328-aede-de1d2e6fef41
-level: high
+level: medium
 logsource:
     definition: 'Requirements: Microsoft-Windows-LSA/Operational ({199FE037-2B82-40A9-82AC-E1D46C792B99})
         Event Log must be collected in order to receive the events.'
     product: windows
     service: lsa-server
+modified: 2023/05/05
 references:
 - https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers
 - https://learn.microsoft.com/en-us/windows-server/security/credentials-protection-and-management/configuring-additional-lsa-protection

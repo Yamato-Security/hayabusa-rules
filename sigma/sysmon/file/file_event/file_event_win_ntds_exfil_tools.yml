@@ -1,9 +1,9 @@
-title: Suspicious NTDS Exfil Filename Patterns
+title: NTDS Exfiltration Filename Patterns
 ruletype: Sigma
 author: Florian Roth (Nextron Systems)
 date: 2022/03/11
-description: Detects suspicious creations of files with names used in various tools
-    that export the NTDS.DIT for exfiltration
+description: Detects creation of files with specific name patterns seen used in various
+    tools that export the NTDS.DIT for exfiltration.
 detection:
     SELECTION_1:
         EventID: 11
@@ -21,6 +21,7 @@ level: high
 logsource:
     category: file_event
     product: windows
+modified: 2023/05/05
 references:
 - https://github.com/rapid7/metasploit-framework/blob/eb6535009f5fdafa954525687f09294918b5398d/modules/post/windows/gather/ntds_grabber.rb
 - https://github.com/rapid7/metasploit-framework/blob/eb6535009f5fdafa954525687f09294918b5398d/data/post/powershell/NTDSgrab.ps1

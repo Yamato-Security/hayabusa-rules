@@ -1,0 +1,36 @@
+title: Potential APT FIN7 Reconnaissance/POWERTRASH Related Activity
+ruletype: Sigma
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/05/04
+description: Detects specific command line execution used by FIN7 as reported by WithSecureLabs
+    for reconnaissance and POWERTRASH execution
+detection:
+    SELECTION_1:
+        EventID: 1
+    SELECTION_2:
+        Channel: Microsoft-Windows-Sysmon/Operational
+    SELECTION_3:
+        CommandLine: '*-noni -nop -exe bypass -f \\\\\*'
+    SELECTION_4:
+        CommandLine: '*ADMIN$*'
+    SELECTION_5:
+        CommandLine: '*-ex bypass -noprof -nolog -nonint -f*'
+    SELECTION_6:
+        CommandLine: '*C:\Windows\Temp\\*'
+    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
+        (SELECTION_5 and SELECTION_6)))
+falsepositives:
+- Unlikely
+id: 911389c7-5ae3-43ea-bab3-a947ebdeb85e
+level: high
+logsource:
+    category: process_creation
+    product: windows
+references:
+- https://labs.withsecure.com/publications/fin7-target-veeam-servers
+- https://labs.withsecure.com/publications/fin7-target-veeam-servers/jcr:content/root/responsivegrid/responsivegrid/responsivegrid/image_253944286.img.png/1682500394900.png
+- https://github.com/WithSecureLabs/iocs/blob/344203de742bb7e68bd56618f66d34be95a9f9fc/FIN7VEEAM/iocs.csv
+status: experimental
+tags:
+- attack.execution
+

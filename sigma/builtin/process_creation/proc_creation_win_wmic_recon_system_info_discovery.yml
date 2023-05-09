@@ -26,16 +26,17 @@ detection:
         NewProcessName: '*\WMIC.exe'
     SELECTION_6:
         CommandLine:
-        - '*cpu get name*'
-        - '*MEMPHYSICAL get MaxCapacity*'
         - '*baseboard get product*'
         - '*baseboard get version*'
         - '*bios get SMBIOSBIOSVersion*'
-        - '*path win32_VideoController get name*'
-        - '*path win32_VideoController get DriverVersion*'
-        - '*path win32_VideoController get VideoModeDescription*'
-        - '*OS get Caption,OSArchitecture,Version*'
+        - '*cpu get name*'
         - '*DISKDRIVE get Caption*'
+        - '*LOGICALDISK get Name,Size,FreeSpace*'
+        - '*MEMPHYSICAL get MaxCapacity*'
+        - '*OS get Caption,OSArchitecture,Version*'
+        - '*path win32_VideoController get DriverVersion*'
+        - '*path win32_VideoController get name*'
+        - '*path win32_VideoController get VideoModeDescription*'
     condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
         and SELECTION_6)
 falsepositives:
@@ -45,6 +46,7 @@ level: medium
 logsource:
     category: process_creation
     product: windows
+modified: 2023/05/05
 references:
 - https://github.com/redcanaryco/atomic-red-team/blob/a2ccd19c37d0278b4ffa8583add3cf52060a5418/atomics/T1082/T1082.md#atomic-test-25---system-information-discovery-with-wmic
 - https://nwgat.ninja/getting-system-information-with-wmic-on-windows/

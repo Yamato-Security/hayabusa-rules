@@ -1,4 +1,4 @@
-title: DLL Sideloading Of DBGHELP.DLL
+title: Potential DLL Sideloading Of DBGHELP.DLL
 ruletype: Sigma
 author: Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)
 date: 2022/10/25
@@ -12,30 +12,32 @@ detection:
         ImageLoaded: '*\dbghelp.dll'
     SELECTION_4:
         ImageLoaded:
-        - C:\Windows\System32\\*
-        - C:\Windows\SysWOW64\\*
-        - C:\Windows\WinSxS\\*
-        - C:\Windows\SoftwareDistribution\\*
-        - C:\Windows\SystemTemp\\*
         - C:\Program Files (x86)\\*
         - C:\Program Files\\*
+        - C:\Windows\SoftwareDistribution\\*
+        - C:\Windows\System32\\*
+        - C:\Windows\SystemTemp\\*
+        - C:\Windows\SysWOW64\\*
+        - C:\Windows\WinSxS\\*
     SELECTION_5:
+        ImageLoaded:
+        - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\amd64\dbghelp.dll'
+        - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\i386\dbghelp.dll'
+    SELECTION_6:
         ImageLoaded:
         - '*\Epic Games\Launcher\Engine\Binaries\ThirdParty\DbgHelp\dbghelp.dll'
         - '*\Epic Games\MagicLegends\x86\dbghelp.dll'
-        - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\amd64\dbghelp.dll'
-        - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\i386\dbghelp.dll'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5)))
+    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not ((SELECTION_4)))
+        and  not ((SELECTION_5) or (SELECTION_6)))
 falsepositives:
 - Legitimate applications loading their own versions of the DLL mentioned in this
     rule
 id: 6414b5cd-b19d-447e-bb5e-9f03940b5784
-level: high
+level: medium
 logsource:
     category: image_load
     product: windows
-modified: 2023/03/15
+modified: 2023/05/05
 references:
 - https://hijacklibs.net/
 status: experimental
