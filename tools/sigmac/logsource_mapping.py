@@ -191,7 +191,7 @@ class LogsourceConverter:
         for is_sysmon, obj in self.sigma_converted:
             output_path = build_out_path(base_dir, out_dir, self.sigma_path, is_sysmon)
             with StringIO() as bs:
-                yaml.dump(obj, bs, Dumper=IndentDumper, default_flow_style=False)
+                yaml.dump(obj, bs, Dumper=IndentDumper, default_flow_style=False, indent=4)
                 res.append((output_path, bs.getvalue()))
         return res
 
