@@ -45,7 +45,7 @@ class LogSource:
         logsourceをdetection用に変換
         """
         if self.event_id:
-            return {"Channel": self.channel, "EventID": self.event_id}
+            return {"EventID": self.event_id, "Channel": self.channel}
         return {"Channel": self.channel}
 
     def get_condition(self, condition_str, keys: list[str], field_map: dict[str, str]) -> str:
