@@ -9,6 +9,7 @@ description: |
     The event indicates the source and target process. 
     It gives information on the code that will be run in the new thread: StartAddress, StartModule and StartFunction. 
     Note that StartModule and StartFunction fields are inferred, they might be empty if the starting address is outside loaded modules or known exported functions.
+details: 'Rule: %RuleName% ¦ SrcProc: %SourceImage% ¦ TgtProc: %TargetImage% ¦ SrcPID: %SourceProcessId% ¦ SrcPGUID: %SourceProcessGuid% ¦ TgtPID: %TargetProcessId% ¦ TgtPGUID: %TargetProcessGuid%'
 
 id: 3fe8927b-be96-450e-8040-514229aa6baf
 level: high
