@@ -11,7 +11,7 @@ Microsoft-Windows-Security-Auditing, 4648, TgtUser: %TargetUserName% ¦ SrcUser:
 Microsoft-Windows-Security-Auditing, 4672, TgtUser: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4673, Proc: %ProcessName% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4674, Svc: %ObjectName% ¦ User: %SubjectUserName% ¦ AccessMask: %AccessMask% ¦ LID: %SubjectLogonId%
-Microsoft-Windows-Security-Auditing, 4688, Cmd: %CommandLine% ¦ Proc: %NewProcessName% ¦ PID: %NewProcessId% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4688, Cmdline: %CommandLine% ¦ Proc: %NewProcessName% ¦ PID: %NewProcessId% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4698, Name: %TaskName% ¦ Content: %TaskContent% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4699, Name: %TaskName% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4720, TgtUser: %TargetUserName% ¦ TgtSID: %TargetSid%
@@ -47,13 +47,13 @@ Microsoft-Windows-Security-Auditing, 5142, User: %SubjectUserName% ¦ ShareName:
 Microsoft-Windows-Security-Auditing, 6281, Path: %param1%
 Microsoft-Windows-Security-Auditing, 4692, User: %SubjectUserName% ¦ SID: %SubjectUserSid% ¦ Domain: %SubjectDomainName% ¦ MasterKeyId: %MasterKeyId% ¦ RecoveryServer: %RecoveryServer% ¦ RecoveryKeyId: %RecoveryKeyId% ¦ FailureReason: %FailureReason%
 Microsoft-Windows-Security-Auditing, 5038, Path: %param1%
-Microsoft-Windows-Sysmon, 1, Cmd: %CommandLine% ¦ Proc: %Image% ¦ User: %User% ¦ ParentCmd: %ParentCommandLine% ¦ LID: %LogonId% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
+Microsoft-Windows-Sysmon, 1, Cmdline: %CommandLine% ¦ Proc: %Image% ¦ User: %User% ¦ ParentCmdline: %ParentCommandLine% ¦ LID: %LogonId% ¦ LGUID: %LogonGuid% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ ParentPID: %ParentProcessId% ¦ ParentPGUID: %ParentProcessGuid% ¦ Description: %Description% ¦ Product: %Product% ¦ Company: %Company% ¦ Hashes: %Hashes%
 Microsoft-Windows-Sysmon, 2, Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ CreationTime: %CreationUtcTime% ¦ PreviousTime: %PreviousCreationUtcTime% ¦ PID: %PID% ¦ PGUID: %ProcessGuid%
-Microsoft-Windows-Sysmon, 3, Proto: %Protocol% ¦ SrcIP: %SourceIp% ¦ SrcPort: %SourcePort% ¦ SrcHost: %SourceHostname% ¦ TgtIP: %DestinationIp% ¦ TgtPort: %DestinationPort% ¦ TgtHost: %DestinationHostname% ¦ User: %User% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
+Microsoft-Windows-Sysmon, 3, Initiated: %Initiated% ¦ Proto: %Protocol% ¦ SrcIP: %SourceIp% ¦ SrcPort: %SourcePort% ¦ SrcHost: %SourceHostname% ¦ TgtIP: %DestinationIp% ¦ TgtPort: %DestinationPort% ¦ TgtHost: %DestinationHostname% ¦ User: %User% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 4, State: %State% ¦ SysmonVer: %SysmonVersion% ¦ SchemaVer: %SchemaVersion%
 Microsoft-Windows-Sysmon, 5, Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
-Microsoft-Windows-Sysmon, 6, Path: %ImageLoaded% ¦ Sig: %Signature%
-Microsoft-Windows-Sysmon, 7, Image: %ImageLoaded% ¦ Proc: %Image% ¦ Company: %Company% ¦ Signed: %Signed% ¦ Sig: %SignatureStatus% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ Hash: %Hashes%
+Microsoft-Windows-Sysmon, 6, Path: %ImageLoaded% ¦ Sig: %Signature% ¦ Signed: %Signed% ¦ SigStatus: %SignatureStatus% ¦ Hashes: %Hashes%
+Microsoft-Windows-Sysmon, 7, Image: %ImageLoaded% ¦ Proc: %Image% ¦ Description: %Description% ¦ Product: %Product% ¦ Company: %Company% ¦ Signed: %Signed% ¦ Sig: %SignatureStatus% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ Hash: %Hashes% ¦ OrigFilename: %OriginalFilename%
 Microsoft-Windows-Sysmon, 8, SrcProc: %SourceImage% ¦ TgtProc: %TargetImage% ¦ SrcPID: %SourceProcessId% ¦ SrcPGUID: %SourceProcessGuid% ¦ TgtPID: %TargetProcessId% ¦ TgtPGUID: %TargetProcessGuid%
 Microsoft-Windows-Sysmon, 9, Proc: %Image% ¦ Device: %Device% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 10, SrcProc: %SourceImage% ¦ TgtProc: %TargetImage% ¦ SrcUser: %SourceUser% ¦ TgtUser: %TargetUser% ¦ Access: %GrantedAccess% ¦ SrcPID: %SourceProcessId% ¦ SrcPGUID: %SourceProcessGUID% ¦ TgtPID: %TargetProcessId% ¦ TgtPGUID: %TargetProcessGUID%
