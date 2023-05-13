@@ -4,14 +4,15 @@ from logsource_mapping import *
 
 class TestLogSourceMapper(TestCase):
     def test_create_service_map(self):
-        res = create_service_map(create_obj("windows-services.yaml"))
+        res = create_service_map(create_obj(os.path.dirname(os.path.abspath(__file__)), "windows-services.yaml"))
         self.assertEquals(len(res.keys()), 36)
 
     def test_create_category_map(self):
-        service_to_channels = create_service_map(create_obj("windows-services.yaml"))
-        s1 = create_category_map(create_obj('sysmon.yaml'), service_to_channels)
-        s2 = create_category_map(create_obj('windows-audit.yaml'), service_to_channels)
-        s3 = create_category_map(create_obj('windows-services.yaml'), service_to_channels)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        service_to_channels = create_service_map(create_obj(script_dir, "windows-services.yaml"))
+        s1 = create_category_map(create_obj(script_dir, 'sysmon.yaml'), service_to_channels)
+        s2 = create_category_map(create_obj(script_dir, 'windows-audit.yaml'), service_to_channels)
+        s3 = create_category_map(create_obj(script_dir, 'windows-services.yaml'), service_to_channels)
         s4 = merge_category_map(service_to_channels, [s1, s2, s3])
         self.assertEquals(len(s4), 66)
         self.assertEquals(len(s4["process_creation"]), 2)
@@ -61,23 +62,25 @@ class TestLogSourceMapper(TestCase):
                           "(process_creation and select) | count(NewProcessName) by Workstation > 10")
 
     def test_get_logsources(self):
-        service2channel = create_service_map(create_obj("windows-services.yaml"))
-        sysmon_map = create_category_map(create_obj('sysmon.yaml'), service2channel)
-        win_audit_map = create_category_map(create_obj('windows-audit.yaml'), service2channel)
-        win_service_map = create_category_map(create_obj('windows-services.yaml'), service2channel)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        service2channel = create_service_map(create_obj(script_dir, "windows-services.yaml"))
+        sysmon_map = create_category_map(create_obj(script_dir, 'sysmon.yaml'), service2channel)
+        win_audit_map = create_category_map(create_obj(script_dir, 'windows-audit.yaml'), service2channel)
+        win_service_map = create_category_map(create_obj(script_dir, 'windows-services.yaml'), service2channel)
         all_category_map = merge_category_map(service2channel, [sysmon_map, win_audit_map, win_service_map])
-        process_creation_field_map = create_field_map(create_obj('windows-audit.yaml'))
+        process_creation_field_map = create_field_map(create_obj(script_dir, 'windows-audit.yaml'))
         lc = LogsourceConverter("", all_category_map, process_creation_field_map, [])
         r = lc.get_logsources({"logsource": {"service": "sysmon"}})
         self.assertEquals(r[0].service, "sysmon")
 
     def test_get_logsources_raise_exception_if_not_supported_category(self):
-        service2channel = create_service_map(create_obj("windows-services.yaml"))
-        sysmon_map = create_category_map(create_obj('sysmon.yaml'), service2channel)
-        win_audit_map = create_category_map(create_obj('windows-audit.yaml'), service2channel)
-        win_service_map = create_category_map(create_obj('windows-services.yaml'), service2channel)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        service2channel = create_service_map(create_obj(script_dir, "windows-services.yaml"))
+        sysmon_map = create_category_map(create_obj(script_dir, 'sysmon.yaml'), service2channel)
+        win_audit_map = create_category_map(create_obj(script_dir, 'windows-audit.yaml'), service2channel)
+        win_service_map = create_category_map(create_obj(script_dir, 'windows-services.yaml'), service2channel)
         all_category_map = merge_category_map(service2channel, [sysmon_map, win_audit_map, win_service_map])
-        process_creation_field_map = create_field_map(create_obj('windows-audit.yaml'))
+        process_creation_field_map = create_field_map(create_obj(script_dir, 'windows-audit.yaml'))
         lc = LogsourceConverter("", all_category_map, process_creation_field_map, [])
         with self.assertRaises(Exception):
             lc.get_logsources({"logsource": {"service": "file_rename"}})

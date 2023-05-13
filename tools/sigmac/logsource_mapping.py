@@ -218,20 +218,21 @@ def build_out_path(base_dir: str, out_dir: str, sigma_path: str, sysmon: bool) -
     return out_dir + '/builtin' + new_path
 
 
-def create_obj(filepath: str) -> dict:
+def create_obj(base_dir: str, filename: str) -> dict:
     """
     ymlファイルを読み込み、dictを作成
     """
-    if not Path(filepath).exists():
-        LOGGER.error(f"file [{filepath}] does not exists.")
+    file_path = Path(base_dir).joinpath(filename)
+    if not file_path.exists():
+        LOGGER.error(f"file [{file_path}] does not exists.")
         sys.exit(1)
     try:
-        with open(filepath, encoding="utf-8") as f:
+        with open(file_path, encoding="utf-8") as f:
             d = yaml.safe_load(f)
-            LOGGER.debug(f"loading yaml [{filepath}] done successfully.")
+            LOGGER.debug(f"loading yaml [{file_path}] done successfully.")
             return d
     except Exception as e:
-        LOGGER.error(f"Error while loading yml [{filepath}]: {e}")
+        LOGGER.error(f"Error while loading yml [{file_path}]: {e}")
         sys.exit(1)
 
 
@@ -345,12 +346,13 @@ if __name__ == '__main__':
             sys.exit(1)
 
     # category -> channel/event_id 変換のマッピングデータを作成
-    service2channel = create_service_map(create_obj("windows-services.yaml"))
-    sysmon_map = create_category_map(create_obj('sysmon.yaml'), service2channel)
-    win_audit_map = create_category_map(create_obj('windows-audit.yaml'), service2channel)
-    win_service_map = create_category_map(create_obj('windows-services.yaml'), service2channel)
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    service2channel = create_service_map(create_obj(script_dir, "windows-services.yaml"))
+    sysmon_map = create_category_map(create_obj(script_dir, 'sysmon.yaml'), service2channel)
+    win_audit_map = create_category_map(create_obj(script_dir, 'windows-audit.yaml'), service2channel)
+    win_service_map = create_category_map(create_obj(script_dir, 'windows-services.yaml'), service2channel)
     all_category_map = merge_category_map(service2channel, [sysmon_map, win_audit_map, win_service_map])
-    process_creation_field_map = create_field_map(create_obj('windows-audit.yaml'))
+    process_creation_field_map = create_field_map(create_obj(script_dir, 'windows-audit.yaml'))
     LOGGER.info(f"Loading logsource mapping yaml(sysmon/windows-audit/windows-services) done.")
 
     # Sigmaディレクトリから対象ファイルをリストアップ
