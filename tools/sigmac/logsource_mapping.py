@@ -147,7 +147,7 @@ class LogsourceConverter:
         """
         logsourceのcategory/serviceをlogsource_mapに基づき変換し、変換後の内容でdetectionブロックを更新する
         """
-        obj = create_obj(self.sigma_path)
+        obj = create_obj(base_dir=None, file_name=self.sigma_path)
         logsources = self.get_logsources(obj)
         if not logsources:
             new_obj = copy.deepcopy(obj)
@@ -218,11 +218,14 @@ def build_out_path(base_dir: str, out_dir: str, sigma_path: str, sysmon: bool) -
     return out_dir + '/builtin' + new_path
 
 
-def create_obj(base_dir: str, filename: str) -> dict:
+def create_obj(base_dir: Optional[str], file_name: str) -> dict:
     """
     ymlファイルを読み込み、dictを作成
     """
-    file_path = Path(base_dir).joinpath(filename)
+    if base_dir:
+        file_path = Path(base_dir).joinpath(file_name)
+    else:
+        file_path = Path(file_name)
     if not file_path.exists():
         LOGGER.error(f"file [{file_path}] does not exists.")
         sys.exit(1)
