@@ -7,7 +7,7 @@ references:
     - https://www.trendmicro.com/en_us/research/23/c/iron-tiger-sysupdate-adds-linux-targeting.html
 author: X__Junior (Nextron Systems)
 date: 2023/03/13
-modified: 2023/03/23
+modified: 2023/05/12
 tags:
     - attack.defense_evasion
     - attack.persistence
@@ -25,11 +25,16 @@ detection:
         ImageLoaded|endswith:
             - \libwazuhshared.dll
             - \libwinpthread-1.dll
-    filter:
+    filter_main_generic:
         ImageLoaded|startswith:
             - C:\Program Files\
             - C:\Program Files (x86)\
-    condition: image_load and (selection and not filter)
+    filter_optional_mingw64:
+        ImageLoaded|contains:
+            - \AppData\Local\
+            - \ProgramData\
+        ImageLoaded|endswith: \mingw64\bin\libwinpthread-1.dll
+    condition: image_load and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Many legitimate applications leverage this DLL. (Visual Studio, JetBrains, Ruby,
         Anaconda, GithubDesktop, etc.)

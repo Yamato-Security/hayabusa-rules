@@ -30,23 +30,23 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_gen:
         TargetFilename|endswith:
-            - .zip
-            - .rar
-            - .iso
             - .exe
+            - .iso
+            - .rar
+            - .zip
         TargetFilename|contains:
             - .doc.
             - .docx.
-            - .xls.
-            - .xlsx.
-            - .ppt.
-            - .pptx.
             - .jpg.
             - .pdf.
+            - .ppt.
+            - .pptx.
+            - .xls.
+            - .xlsx.
     selection_exe:
         TargetFilename|endswith:
-            - .zip.exe
             - .rar.exe
+            - .zip.exe
     condition: file_event and (1 of selection_*)
 falsepositives:
     - Unlikely

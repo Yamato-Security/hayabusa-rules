@@ -1,11 +1,12 @@
-title: Potential Binary Or Script Dropper Via PowerShell.EXE
+title: Potential Binary Or Script Dropper Via PowerShell
 id: 7047d730-036f-4f40-b9d8-1c63e36d5e62
 status: experimental
-description: Detects PowerShell creating a binary executable or script file.
+description: Detects PowerShell creating a binary executable or a script file.
 references:
     - https://www.zscaler.com/blogs/security-research/onenote-growing-threat-malware-distribution
-author: frack113
+author: frack113, Nasreddine Bencherchali (Nextron Systems)
 date: 2023/03/17
+modified: 2023/05/09
 tags:
     - attack.persistence
 logsource:
@@ -21,24 +22,34 @@ detection:
             - \pwsh.exe
         TargetFilename|endswith:
             - .bat
+            - .chm
+            - .cmd
             - .com
             - .dll
             - .exe
+            - .hta
+            - .jar
+            - .js
             - .ocx
-            - .ps1
             - .scr
             - .sys
+            - .vbe
             - .vbs
-    filter_psscriptpolicytest:
-        TargetFilename|contains: __PSScriptPolicyTest_
-    filter_appdata:
+            - .wsf
+    filter_main_user_temp:
         TargetFilename|startswith: C:\Users\
         TargetFilename|contains: \AppData\Local\Temp\
-    filter_windows_temp:
+        TargetFilename|endswith:
+            - .dll
+            - .exe
+    filter_main_admin_temp:
         TargetFilename|startswith: C:\Windows\Temp\
-    condition: file_event and (selection and not 1 of filter_*)
+        TargetFilename|endswith:
+            - .dll
+            - .exe
+    condition: file_event and (selection and not 1 of filter_main_*)
 falsepositives:
-    - Depending on your environment accepted applications may leverage this at times.
-        It is recommended to search for anomalies inidicative of malware.
+    - False positives will differ depending on the environement and scripts used.
+        Apply additional filters accordingly.
 level: medium
 ruletype: Sigma
