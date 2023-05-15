@@ -36,7 +36,7 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
     - [EventData](#eventdata)
     - [Abnormal patterns in EventData](#abnormal-patterns-in-eventdata)
       - [Outputting field data from multiple field names with the same name](#outputting-field-data-from-multiple-field-names-with-the-same-name)
-  - [Pipes](#pipes)
+  - [Pipe Modifiers](#pipe-modifiers)
   - [Wildcards](#wildcards)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
     - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
@@ -456,9 +456,9 @@ For example:
 
 If you want to print out just the first `Data` field data, you can specify `%Data[1]%` in your `details:` alert string and only `rundll32.exe` will be outputted.
 
-## Pipes
+## Pipe Modifiers
 
-A pipe can be used with eventkeys as shown below for matching strings. All of the conditions we have described so far use exact matches, but by using pipes, you can describe more flexible detection rules. In the following example, if a value of `Data` contains the string  `EngineVersion=2`, it will match the condition.
+A pipe can be used with eventkeys as shown below for matching strings. All of the conditions we have described so far use exact matches, but by using pipe modifiers, you can describe more flexible detection rules. In the following example, if a value of `Data` contains the string  `EngineVersion=2`, it will match the condition.
 
 ```yaml
 detection:
@@ -479,6 +479,7 @@ String matches are case insensitive. However, they become case sensitive wheneve
 > Caution: Regular expression syntax in sigma rules is still not defined so some sigma rules may not match correctly if they differ from the Rust regex syntax.
 - `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
 - `|endswithfield`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` if they are different.
+- `|base64offset|contains`: Data will be encoded to base64 in three different ways depending on its position in the encoded string. This modifier will encoded a string to all three variations and check if the string is encoded somewhere in the base64 string.
 
 ## Wildcards
 
