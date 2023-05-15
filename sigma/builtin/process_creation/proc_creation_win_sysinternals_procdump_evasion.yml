@@ -1,13 +1,13 @@
-title: Potential Procdump Evasion
+title: Potential SysInternals ProcDump Evasion
 id: 79b06761-465f-4f88-9ef2-150e24d3d737
 status: test
-description: Detects uses of the SysInternals Procdump utility in which procdump or
-    its output get renamed or a dump file is moved ot copied to a different name
+description: Detects uses of the SysInternals ProcDump utility in which ProcDump or
+    its output get renamed, or a dump file is moved or copied to a different name
 references:
     - https://twitter.com/mrd0x/status/1480785527901204481
 author: Florian Roth (Nextron Systems)
 date: 2022/01/11
-modified: 2023/02/28
+modified: 2023/05/09
 tags:
     - attack.defense_evasion
     - attack.t1036
@@ -19,11 +19,11 @@ detection:
     process_creation:
         EventID: 4688
         Channel: Security
-    selection1:
+    selection_1:
         CommandLine|contains:
             - copy procdump
             - move procdump
-    selection2:
+    selection_2:
         CommandLine|contains|all:
             - 'copy '
             - '.dmp '
@@ -31,13 +31,13 @@ detection:
             - 2.dmp
             - lsass
             - out.dmp
-    selection3:
+    selection_3:
         CommandLine|contains:
             - copy lsass.exe_
             - move lsass.exe_
-    condition: process_creation and (1 of selection*)
+    condition: process_creation and (1 of selection_*)
 falsepositives:
-    - Cases in which procdump just gets copied to a different directory without any
-        renaming
+    - False positives are expected in cases in which ProcDump just gets copied to
+        a different directory without any renaming
 level: high
 ruletype: Sigma
