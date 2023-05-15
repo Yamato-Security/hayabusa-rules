@@ -14,7 +14,7 @@ Please refer to this documentation to convert rules on your own for local testin
 
 ## Python requirements
 
-You need Python 3.8+ and the following modules: `oyaml`
+You need Python 3.8+ and the following module: `oyaml`
 
 ```sh
 pip3 install oyaml
