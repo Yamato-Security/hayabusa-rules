@@ -1,5 +1,10 @@
 # Changes
 
+## v2.5.1 [2023/05/14]
+
+Rule converter was completely rewritten to only convert the `logsource` to `Channel` and `EventID` and leave everything else as the original sigma rule. (#396) (@fukusuket)
+This makes reading the converted rules much easier as well as improves speed.
+
 ## v2.4.0 [2023/04/28] 
 
 Started to self host config files when converting rules from Sigma as the sigmac tool is deprecated and not updated anymore.
