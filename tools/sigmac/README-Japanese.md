@@ -7,72 +7,81 @@
 ![version](https://img.shields.io/badge/Platform-Lin-green)
 ![version](https://img.shields.io/badge/Platform-Mac-green)
 
-`hayabusa.py` はSigmaルールをHayabusaルールに変換する`sigmac`のバックエンドです。
-Sigmaの持つ多くの検知ルールをHayabusaのルールセットに追加することでルールを作成する手間を省くことができます。
-
 ## 事前に変換されたSigmaルールについて
 
-Sigmaからhayabusa形式に変換されたルールが`./rules/sigma`ディレクトリに用意されています。 
+SigmaからHayabusa形式に変換されたルールが`./rules/sigma`ディレクトリに用意されています。 
 ローカル環境で新しいルールをテストしたり、Sigmaの最新のルールを変換したりしたい場合は、以下のドキュメンテーションをご参考下さい。
 
 ## Pythonの環境依存
 
-Python 3.8以上と次のモジュールが必要です：`pyyaml`、`ruamel.yaml`、`requests` 
+Python 3.8以上と次のモジュールが必要です：`oyaml`  
 以下のコマンドでインストール可能です。
 
 ```sh
-pip3 install -r requirements.txt
+pip3 install oyaml
 ```
 
 ## Sigmaについて
 
 [https://github.com/SigmaHQ/sigma](https://github.com/SigmaHQ/sigma)
 
-## 環境設定
+## logsource_mapping.pyについて
+`logsource_mapping.py`は、Sigmaルールの`logsource`をHayabusa形式に変換するツールです。  
+`Hayabusa`では`logsource`は検知処理に使われないため、 以下`yaml`のマッピングを使い、`logsource`の内容を`detection`,`condition`に変換します。
+- sysmon.yaml
+- windows-audit.yaml
+- windows-services.yaml
 
-hayabusa.pyは[legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools)リポジトリの中にある`sigmac`を使います。
-事前に任意のディレクトリに[Sigma](https://github.com/SigmaHQ/sigma)リポジトリと[legacy-sigmatools](https://github.com/SigmaHQ/legacy-sigmatools)リポジトリをcloneしてください。
+### 変換の例
+以下のSigmaルールは、`logsource_mapping.py`実行後、以下2つのHayabusa形式に変換されます。
 
-```sh
-git clone https://github.com/SigmaHQ/sigma
-git clone https://github.com/SigmaHQ/legacy-sigmatools
+#### 変換前
+Sigmaルール
+```yaml
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        - Image|endswith: '.exe'
+    detection: selection
+```
+
+#### 変換後
+Hayabusaルール(Sysmon用)
+```yaml
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    process_creation:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 1
+    selection:
+        - Image|endswith: '.exe'
+    detection: process_creation and selection
+```
+Hayabusaルール(Windowsビルトイン用)
+```yaml
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    process_creation:
+        Channel: Security
+        EventID: 4688
+    selection:
+        - NewProcessName|endswith: '.exe'
+    detection: process_creation and selection
 ```
 
 ## 使い方
 
-Sigmaレポジトリのパスが書いてある`$legacy_sigmatools_path`という環境変数を設定して、hayabusaをSigmaのbackendとして登録します:
+1. `pip install oyaml`
+2. `git clone https://github.com/SigmaHQ/sigma.git`
+3. `git clone https://github.com/Yamato-Security/hayabusa-rules.git`
+4. `cd hayabusa-rules/tools/sigmac`
+5. `python logsource_mapping.py -r ../../../sigma -o ./converted_sigma_rules`
 
-```sh
-export legacy_sigmatools_path=/path/to/legacy-sigmatools
-export sigma_path=/path/to/sigma
-cp hayabusa.py $legacy_sigmatools_path/tools/sigma/backends
-cp rule.py $legacy_sigmatools_path/tools/sigma/parser
-cp *.yaml $legacy_sigmatools_path/tools/config/generic/
-mv $legacy_sigmatools_path/tools $sigma_path/
-cp convert.py sigma_path
-```
+上記実行後、`./converted_sigma_rules`にHayabusa形式に変換されたルールが出力されます。
 
-* 注意：`/path/to/legacy-sigmatools`と`/path/to/sigma`はそのままではなくて、自分のSigmaレポジトリのパスを指定してください。
-
-### ルールの変換
-`convert.py`を実行することでルールの変換が実行されます。変換されたルールは`hayabusa_rules`フォルダに作成されます。
-
-```sh
-cd $sigma_path
-python3 convert.py
-```
-
-## 現在サポートされていないルール
-
-以下のルールは、まだ実装されていないaggregation operator (`|near`)が含まれているため、現在は自動変換できません。
-
-```
-sigma/rules/windows/builtin/win_susp_samr_pwset.yml
-sigma/rules/windows/image_load/sysmon_mimikatz_inmemory_detection.yml
-sigma/rules/windows/process_creation/process_creation_apt_turla_commands_medium.yml
-```
-
-## Sigmaルールのパースエラーについて
-
-一部のルールは変換できたものの、パースエラーが発生しています。
-これらのバグは引き続き修正していきますが、当面はSigmaのルールの大部分は動作しますので、今のところエラーは無視してください。
