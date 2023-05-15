@@ -1,30 +1,27 @@
 title: Volume Shadow Copy Mount
-ruletype: Sigma
+id: f512acbf-e662-4903-843e-97ce4652b740
+status: test
+description: Detects volume shadow copy mount via windows event log
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md#atomic-test-3---esentutlexe-sam-copy
 author: Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)
 date: 2020/10/20
-description: Detects volume shadow copy mount via windows event log
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Microsoft-Windows-Ntfs
-    SELECTION_3:
-        EventID: 98
-    SELECTION_4:
-        DeviceName: '*HarddiskVolumeShadowCopy*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Legitimate use of volume shadow copy mounts (backups maybe).
-id: f512acbf-e662-4903-843e-97ce4652b740
-level: low
+modified: 2022/12/25
+tags:
+    - attack.credential_access
+    - attack.t1003.002
 logsource:
     product: windows
     service: system
-modified: 2022/12/25
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md#atomic-test-3---esentutlexe-sam-copy
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.002
-
+detection:
+    system:
+        Channel: System
+    selection:
+        Provider_Name: Microsoft-Windows-Ntfs
+        EventID: 98
+        DeviceName|contains: HarddiskVolumeShadowCopy
+    condition: system and selection
+falsepositives:
+    - Legitimate use of volume shadow copy mounts (backups maybe).
+level: low
+ruletype: Sigma

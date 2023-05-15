@@ -1,41 +1,37 @@
 title: LOLBIN Execution Of The FTP.EXE Binary
-ruletype: Sigma
-author: Victor Sergeev, oscd.community
-date: 2020/10/09
+id: 06b401f4-107c-4ff9-947f-9ec1e7649f1e
+status: test
 description: Detects execution of ftp.exe script execution with the "-s" flag and
     any child processes ran by ftp.exe
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: '*\ftp.exe'
-    SELECTION_4:
-        Image: '*\ftp.exe'
-    SELECTION_5:
-        OriginalFileName: ftp.exe
-    SELECTION_6:
-        CommandLine: '*-s:*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or ((SELECTION_4 or
-        SELECTION_5) and SELECTION_6)))
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-- ParentImage
-id: 06b401f4-107c-4ff9-947f-9ec1e7649f1e
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Ftp/
+author: Victor Sergeev, oscd.community
+date: 2020/10/09
+modified: 2022/11/10
+tags:
+    - attack.execution
+    - attack.t1059
+    - attack.defense_evasion
+    - attack.t1202
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/10
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Ftp/
-status: test
-tags:
-- attack.execution
-- attack.t1059
-- attack.defense_evasion
-- attack.t1202
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_parent:
+        ParentImage|endswith: \ftp.exe
+    selection_ftp_img:
+        -   Image|endswith: \ftp.exe
+        -   OriginalFileName: ftp.exe
+    selection_ftp_cli:
+        CommandLine|contains: '-s:'
+    condition: process_creation and (selection_parent or all of selection_ftp_*)
+fields:
+    - CommandLine
+    - ParentImage
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

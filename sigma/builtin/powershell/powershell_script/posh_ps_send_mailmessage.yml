@@ -1,7 +1,6 @@
 title: Powershell Exfiltration Over SMTP
-ruletype: Sigma
-author: frack113
-date: 2022/09/26
+id: 9a7afa56-4762-43eb-807d-c3dc9ffe211b
+status: experimental
 description: 'Adversaries may steal data by exfiltrating it over an un-encrypted network
     protocol other than that of the existing command and control channel.
 
@@ -9,32 +8,31 @@ description: 'Adversaries may steal data by exfiltrating it over an un-encrypted
     and control server.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Send-MailMessage*'
-    SELECTION_4:
-        ScriptBlockText: '*CmdletsToExport*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Legitimate script
-id: 9a7afa56-4762-43eb-807d-c3dc9ffe211b
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048.003/T1048.003.md#atomic-test-5---exfiltration-over-alternative-protocol---smtp
+    - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/send-mailmessage?view=powershell-7.2
+    - https://www.ietf.org/rfc/rfc2821.txt
+author: frack113
+date: 2022/09/26
+tags:
+    - attack.exfiltration
+    - attack.t1048.003
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1048.003/T1048.003.md#atomic-test-5---exfiltration-over-alternative-protocol---smtp
-- https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/send-mailmessage?view=powershell-7.2
-- https://www.ietf.org/rfc/rfc2821.txt
-status: experimental
-tags:
-- attack.exfiltration
-- attack.t1048.003
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains: Send-MailMessage
+    filter:
+        ScriptBlockText|contains: CmdletsToExport
+    condition: ps_script and (selection and not filter)
+falsepositives:
+    - Legitimate script
+level: medium
+ruletype: Sigma

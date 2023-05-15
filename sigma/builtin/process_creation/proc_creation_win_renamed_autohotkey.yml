@@ -1,50 +1,44 @@
 title: Renamed AutoHotkey.EXE Execution
-ruletype: Sigma
-author: Nasreddine Bencherchali
-date: 2023/02/07
+id: 0f16d9cf-0616-45c8-8fad-becc11b5a41c
+status: test
 description: Detects execution of a renamed autohotkey.exe binary based on PE metadata
     fields
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        Product: '*AutoHotkey*'
-    SELECTION_4:
-        Description: '*AutoHotkey*'
-    SELECTION_5:
-        OriginalFileName:
-        - AutoHotkey.exe
-        - AutoHotkey.rc
-    SELECTION_6:
-        NewProcessName:
-        - '*\AutoHotkey.exe'
-        - '*\AutoHotkey32.exe'
-        - '*\AutoHotkey32_UIA.exe'
-        - '*\AutoHotkey64.exe'
-        - '*\AutoHotkey64_UIA.exe'
-        - '*\AutoHotkeyA32.exe'
-        - '*\AutoHotkeyA32_UIA.exe'
-        - '*\AutoHotkeyU32.exe'
-        - '*\AutoHotkeyU32_UIA.exe'
-        - '*\AutoHotkeyU64.exe'
-        - '*\AutoHotkeyU64_UIA.exe'
-    SELECTION_7:
-        NewProcessName: '*\AutoHotkey*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
-        and  not (SELECTION_6 or SELECTION_7))
-falsepositives:
-- Unknown
-id: 0f16d9cf-0616-45c8-8fad-becc11b5a41c
-level: medium
+references:
+    - https://www.autohotkey.com/download/
+    - https://thedfirreport.com/2023/02/06/collect-exfiltrate-sleep-repeat/
+author: Nasreddine Bencherchali
+date: 2023/02/07
+tags:
+    - attack.defense_evasion
 logsource:
     category: process_creation
     product: windows
-references:
-- https://www.autohotkey.com/download/
-- https://thedfirreport.com/2023/02/06/collect-exfiltrate-sleep-repeat/
-status: test
-tags:
-- attack.defense_evasion
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   Product|contains: AutoHotkey
+        -   Description|contains: AutoHotkey
+        -   OriginalFileName:
+                - AutoHotkey.exe
+                - AutoHotkey.rc
+    filter:
+        -   NewProcessName|endswith:
+                - \AutoHotkey.exe
+                - \AutoHotkey32.exe
+                - \AutoHotkey32_UIA.exe
+                - \AutoHotkey64.exe
+                - \AutoHotkey64_UIA.exe
+                - \AutoHotkeyA32.exe
+                - \AutoHotkeyA32_UIA.exe
+                - \AutoHotkeyU32.exe
+                - \AutoHotkeyU32_UIA.exe
+                - \AutoHotkeyU64.exe
+                - \AutoHotkeyU64_UIA.exe
+        -   NewProcessName|contains: \AutoHotkey
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

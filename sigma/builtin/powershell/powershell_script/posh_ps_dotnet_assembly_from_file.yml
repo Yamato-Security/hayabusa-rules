@@ -1,28 +1,26 @@
 title: Potential In-Memory Execution Using Reflection.Assembly
-ruletype: Sigma
-author: frack113
-date: 2022/12/25
+id: ddcd88cb-7f62-4ce5-86f9-1704190feb0a
+status: experimental
 description: Detects usage of "Reflection.Assembly" load functions to dynamically
     load assemblies in memory
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*[Reflection.Assembly]::load*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Legitimate use of the library
-id: ddcd88cb-7f62-4ce5-86f9-1704190feb0a
-level: medium
+references:
+    - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=50
+author: frack113
+date: 2022/12/25
 logsource:
+    product: windows
     category: ps_script
     definition: Script Block Logging must be enable
-    product: windows
-references:
-- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=50
-status: experimental
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains: '[Reflection.Assembly]::load'
+    condition: ps_script and selection
+falsepositives:
+    - Legitimate use of the library
+level: medium
+ruletype: Sigma

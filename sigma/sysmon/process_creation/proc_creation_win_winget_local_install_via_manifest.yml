@@ -1,7 +1,6 @@
 title: Install New Package Via Winget Local Manifest
-ruletype: Sigma
-author: Sreeman, Florian Roth (Nextron Systems), frack113
-date: 2020/04/21
+id: 313d6012-51a0-4d93-8dfc-de8553239e25
+status: experimental
 description: 'Detects usage of winget to install applications via manifest file. Adversaries
     can abuse winget to download payloads remotely and execute them.
 
@@ -11,41 +10,38 @@ description: 'Detects usage of winget to install applications via manifest file.
     Winget can be used to download and install exe, msi or msix files later.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\winget.exe'
-    SELECTION_4:
-        OriginalFileName: winget.exe
-    SELECTION_5:
-        CommandLine:
-        - '*install*'
-        - '* add *'
-    SELECTION_6:
-        CommandLine:
-        - '*-m *'
-        - '*--manifest*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- Some false positives are expected in some environment that may use this functionality
-    to install and test their custom applications
-id: 313d6012-51a0-4d93-8dfc-de8553239e25
-level: medium
+references:
+    - https://docs.microsoft.com/en-us/windows/package-manager/winget/install#local-install
+    - https://lolbas-project.github.io/lolbas/Binaries/Winget/
+    - https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget
+author: Sreeman, Florian Roth (Nextron Systems), frack113
+date: 2020/04/21
+modified: 2023/04/17
+tags:
+    - attack.defense_evasion
+    - attack.execution
+    - attack.t1059
 logsource:
     category: process_creation
     product: windows
-modified: 2023/04/17
-references:
-- https://docs.microsoft.com/en-us/windows/package-manager/winget/install#local-install
-- https://lolbas-project.github.io/lolbas/Binaries/Winget/
-- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.execution
-- attack.t1059
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \winget.exe
+        -   OriginalFileName: winget.exe
+    selection_install_flag:
+        CommandLine|contains:
+            - install
+            - ' add '
+    selection_manifest_flag:
+        CommandLine|contains:
+            - '-m '
+            - --manifest
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Some false positives are expected in some environment that may use this functionality
+        to install and test their custom applications
+level: medium
+ruletype: Sigma

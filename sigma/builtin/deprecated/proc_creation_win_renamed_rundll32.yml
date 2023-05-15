@@ -1,28 +1,26 @@
 title: Renamed Rundll32.exe Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/06/08
+id: d4d2574f-ac17-4d9e-b986-aeeae0dc8fe2
+status: deprecated
 description: Detects the execution of rundll32.exe that has been renamed to a different
     name to avoid detection
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        OriginalFileName: RUNDLL32.EXE
-    SELECTION_4:
-        NewProcessName: '*\rundll32.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: d4d2574f-ac17-4d9e-b986-aeeae0dc8fe2
-level: high
+references:
+    - https://threatresearch.ext.hp.com/svcready-a-new-loader-reveals-itself/
+author: Florian Roth (Nextron Systems)
+date: 2022/06/08
+modified: 2023/01/18
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/18
-references:
-- https://threatresearch.ext.hp.com/svcready-a-new-loader-reveals-itself/
-status: deprecated
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        OriginalFileName: RUNDLL32.EXE
+    filter:
+        NewProcessName|endswith: \rundll32.exe
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

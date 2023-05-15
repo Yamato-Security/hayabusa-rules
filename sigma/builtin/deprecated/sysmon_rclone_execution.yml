@@ -1,56 +1,51 @@
 title: RClone Execution
-ruletype: Sigma
-author: Bhabesh Raj, Sittikorn S
-date: 2021/05/10
+id: a0d63692-a531-4912-ad39-4393325b2a9c
+status: deprecated
 description: Detects execution of RClone utility for exfiltration as used by various
     ransomwares strains like REvil, Conti, FiveHands, etc
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        Description: Rsync for cloud storage
-    SELECTION_4:
-        CommandLine: '*--config *'
-    SELECTION_5:
-        CommandLine: '*--no-check-certificate *'
-    SELECTION_6:
-        CommandLine: '* copy *'
-    SELECTION_7:
-        NewProcessName:
-        - '*\rclone.exe'
-    SELECTION_8:
-        CommandLine:
-        - '*mega*'
-        - '*pcloud*'
-        - '*ftp*'
-        - '*--progress*'
-        - '*--ignore-existing*'
-        - '*--auto-confirm*'
-        - '*--transfers*'
-        - '*--multi-thread-streams*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Legitimate RClone use
+tags:
+    - attack.exfiltration
+    - attack.t1567.002
+author: Bhabesh Raj, Sittikorn S
+date: 2021/05/10
+modified: 2022/04/11
+references:
+    - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware
+    - https://us-cert.cisa.gov/ncas/analysis-reports/ar21-126a
+    - https://labs.sentinelone.com/egregor-raas-continues-the-chaos-with-cobalt-strike-and-rclone
+    - https://www.splunk.com/en_us/blog/security/darkside-ransomware-splunk-threat-update-and-detections.html
 fields:
-- CommandLine
-- ParentCommandLine
-- Details
-id: a0d63692-a531-4912-ad39-4393325b2a9c
+    - NewValue
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Legitimate RClone use
 level: high
 logsource:
     category: process_creation
     product: windows
-modified: 2022/04/11
-references:
-- https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware
-- https://us-cert.cisa.gov/ncas/analysis-reports/ar21-126a
-- https://labs.sentinelone.com/egregor-raas-continues-the-chaos-with-cobalt-strike-and-rclone
-- https://www.splunk.com/en_us/blog/security/darkside-ransomware-splunk-threat-update-and-detections.html
-status: deprecated
-tags:
-- attack.exfiltration
-- attack.t1567.002
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        Description: Rsync for cloud storage
+    selection2:
+        CommandLine|contains|all:
+            - '--config '
+            - '--no-check-certificate '
+            - ' copy '
+    selection3:
+        CommandLine|contains:
+            - mega
+            - pcloud
+            - ftp
+            - --progress
+            - --ignore-existing
+            - --auto-confirm
+            - --transfers
+            - --multi-thread-streams
+        NewProcessName|endswith:
+            - \rclone.exe
+    condition: process_creation and (1 of selection*)
+ruletype: Sigma

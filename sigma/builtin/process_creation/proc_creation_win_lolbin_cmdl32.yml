@@ -1,38 +1,34 @@
 title: Suspicious Cmdl32 Execution
-ruletype: Sigma
+id: f37aba28-a9e6-4045-882c-d5004043b337
+status: experimental
+description: lolbas Cmdl32 is use to download a payload to evade antivirus
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Cmdl32/
+    - https://twitter.com/SwiftOnSecurity/status/1455897435063074824
 author: frack113
 date: 2021/11/03
-description: lolbas Cmdl32 is use to download a payload to evade antivirus
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\cmdl32.exe'
-    SELECTION_4:
-        OriginalFileName: CMDL32.EXE
-    SELECTION_5:
-        CommandLine: '*/vpn *'
-    SELECTION_6:
-        CommandLine: '*/lan *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6))
-falsepositives:
-- Unknown
-id: f37aba28-a9e6-4045-882c-d5004043b337
-level: medium
+modified: 2022/06/12
+tags:
+    - attack.execution
+    - attack.defense_evasion
+    - attack.t1218
+    - attack.t1202
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/12
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Cmdl32/
-- https://twitter.com/SwiftOnSecurity/status/1455897435063074824
-status: experimental
-tags:
-- attack.execution
-- attack.defense_evasion
-- attack.t1218
-- attack.t1202
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \cmdl32.exe
+        -   OriginalFileName: CMDL32.EXE
+    selection_cli:
+        CommandLine|contains|all:
+            - '/vpn '
+            - '/lan '
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

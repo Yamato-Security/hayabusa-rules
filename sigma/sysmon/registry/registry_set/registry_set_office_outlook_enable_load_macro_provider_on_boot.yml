@@ -1,37 +1,33 @@
 title: Potential Persistence Via Outlook LoadMacroProviderOnBoot Setting
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2021/04/05
+id: 396ae3eb-4174-4b9b-880e-dc0364d78a19
+status: experimental
 description: Detects the modification of Outlook setting "LoadMacroProviderOnBoot"
     which if enabled allows the automatic loading of any configured VBA project/module
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\Outlook\LoadMacroProviderOnBoot'
-    SELECTION_5:
-        Details: '*0x00000001*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: 396ae3eb-4174-4b9b-880e-dc0364d78a19
-level: high
+references:
+    - https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=53
+    - https://www.linkedin.com/pulse/outlook-backdoor-using-vba-samir-b-/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2021/04/05
+modified: 2023/02/08
+tags:
+    - attack.persistence
+    - attack.command_and_control
+    - attack.t1137
+    - attack.t1008
+    - attack.t1546
 logsource:
     category: registry_set
     product: windows
-modified: 2023/02/08
-references:
-- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=53
-- https://www.linkedin.com/pulse/outlook-backdoor-using-vba-samir-b-/
-status: experimental
-tags:
-- attack.persistence
-- attack.command_and_control
-- attack.t1137
-- attack.t1008
-- attack.t1546
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|endswith: \Outlook\LoadMacroProviderOnBoot
+        Details|contains: '0x00000001'
+    condition: registry_set and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

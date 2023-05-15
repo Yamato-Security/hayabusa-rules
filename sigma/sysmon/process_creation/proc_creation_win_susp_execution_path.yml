@@ -1,61 +1,56 @@
 title: Execution from Suspicious Folder
-ruletype: Sigma
+id: 3dfd06d2-eaf4-4532-9555-68aca59f57c4
+status: experimental
+description: Detects a suspicious execution from an uncommon folder
+references:
+    - https://github.com/mbevilacqua/appcompatprocessor/blob/6c847937c5a836e2ce2fe2b915f213c345a3c389/AppCompatSearch.txt
+    - https://www.secureworks.com/research/bronze-butler-targets-japanese-businesses
+    - https://www.crowdstrike.com/resources/reports/2019-crowdstrike-global-threat-report/
+    - https://github.com/ThreatHuntingProject/ThreatHunting/blob/cb22598bb70651f88e0285abc8d835757d2cb596/hunts/suspicious_process_creation_via_windows_event_logs.md
 author: Florian Roth (Nextron Systems), Tim Shelton
 date: 2019/01/16
-description: Detects a suspicious execution from an uncommon folder
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\$Recycle.bin\\*'
-        - '*\config\systemprofile\\*'
-        - '*\Intel\Logs\\*'
-        - '*\RSA\MachineKeys\\*'
-        - '*\Users\All Users\\*'
-        - '*\Users\Default\\*'
-        - '*\Users\NetworkService\\*'
-        - '*\Users\Public\\*'
-        - '*\Windows\addins\\*'
-        - '*\Windows\debug\\*'
-        - '*\Windows\Fonts\\*'
-        - '*\Windows\Help\\*'
-        - '*\Windows\IME\\*'
-        - '*\Windows\Media\\*'
-        - '*\Windows\repair\\*'
-        - '*\Windows\security\\*'
-        - '*\Windows\System32\Tasks\\*'
-        - '*\Windows\Tasks\\*'
-    SELECTION_4:
-        Image: C:\Perflogs\\*
-    SELECTION_5:
-        Image: C:\Users\Public\IBM\ClientSolutions\Start_Programs\\*
-    SELECTION_6:
-        Image: C:\Windows\SysWOW64\config\systemprofile\Citrix\UpdaterBinaries\\*
-    SELECTION_7:
-        Image: '*\CitrixReceiverUpdater.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6 and SELECTION_7)))
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-- ParentCommandLine
-id: 3dfd06d2-eaf4-4532-9555-68aca59f57c4
-level: high
+modified: 2023/01/10
+tags:
+    - attack.defense_evasion
+    - attack.t1036
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/10
-references:
-- https://github.com/mbevilacqua/appcompatprocessor/blob/6c847937c5a836e2ce2fe2b915f213c345a3c389/AppCompatSearch.txt
-- https://www.secureworks.com/research/bronze-butler-targets-japanese-businesses
-- https://www.crowdstrike.com/resources/reports/2019-crowdstrike-global-threat-report/
-- https://github.com/ThreatHuntingProject/ThreatHunting/blob/cb22598bb70651f88e0285abc8d835757d2cb596/hunts/suspicious_process_creation_via_windows_event_logs.md
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1036
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|contains:
+                - \$Recycle.bin\
+                - \config\systemprofile\
+                - \Intel\Logs\
+                - \RSA\MachineKeys\
+                - \Users\All Users\
+                - \Users\Default\
+                - \Users\NetworkService\
+                - \Users\Public\
+                - \Windows\addins\
+                - \Windows\debug\
+                - \Windows\Fonts\
+                - \Windows\Help\
+                - \Windows\IME\
+                - \Windows\Media\
+                - \Windows\repair\
+                - \Windows\security\
+                - \Windows\System32\Tasks\
+                - \Windows\Tasks\
+        -   Image|startswith: C:\Perflogs\
+    filter_ibm:
+        Image|startswith: C:\Users\Public\IBM\ClientSolutions\Start_Programs\
+    filter_citrix:
+        Image|startswith: C:\Windows\SysWOW64\config\systemprofile\Citrix\UpdaterBinaries\
+        Image|endswith: \CitrixReceiverUpdater.exe
+    condition: process_creation and (selection and not 1 of filter_*)
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

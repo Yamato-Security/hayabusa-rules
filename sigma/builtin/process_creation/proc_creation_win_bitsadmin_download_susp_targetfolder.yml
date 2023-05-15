@@ -1,56 +1,52 @@
 title: File Download Via Bitsadmin To A Suspicious Target Folder
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
-date: 2022/06/28
+id: 2ddef153-167b-4e89-86b6-757a9e65dcac
+status: experimental
 description: Detects usage of bitsadmin downloading a file to a suspicious target
     folder
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\bitsadmin.exe'
-    SELECTION_4:
-        OriginalFileName: bitsadmin.exe
-    SELECTION_5:
-        CommandLine:
-        - '* /transfer *'
-        - '* /create *'
-        - '* /addfile *'
-    SELECTION_6:
-        CommandLine:
-        - '*%ProgramData%*'
-        - '*%public%*'
-        - '*\Desktop\\*'
-        - '*C:\Perflogs*'
-        - '*C:\ProgramData\\*'
-        - '*C:\Temp*'
-        - '*C:\Users\Public\\*'
-        - '*C:\Windows\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-- ParentCommandLine
-id: 2ddef153-167b-4e89-86b6-757a9e65dcac
-level: high
+references:
+    - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
+    - https://isc.sans.edu/diary/22264
+    - https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/
+    - https://blog.talosintelligence.com/breaking-the-silence-recent-truebot-activity/
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+date: 2022/06/28
+modified: 2023/02/15
+tags:
+    - attack.defense_evasion
+    - attack.persistence
+    - attack.t1197
+    - attack.s0190
+    - attack.t1036.003
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/15
-references:
-- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
-- https://isc.sans.edu/diary/22264
-- https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/
-- https://blog.talosintelligence.com/breaking-the-silence-recent-truebot-activity/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.persistence
-- attack.t1197
-- attack.s0190
-- attack.t1036.003
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \bitsadmin.exe
+        -   OriginalFileName: bitsadmin.exe
+    selection_flags:
+        CommandLine|contains:
+            - ' /transfer '
+            - ' /create '
+            - ' /addfile '
+    selection_folder:
+        CommandLine|contains:
+            - '%ProgramData%'
+            - '%public%'
+            - \Desktop\
+            - C:\Perflogs
+            - C:\ProgramData\
+            - C:\Temp
+            - C:\Users\Public\
+            - C:\Windows\
+    condition: process_creation and (all of selection_*)
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

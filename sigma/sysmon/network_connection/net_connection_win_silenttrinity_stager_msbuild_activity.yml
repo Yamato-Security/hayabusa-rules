@@ -1,35 +1,31 @@
 title: Silenttrinity Stager Msbuild Activity
-ruletype: Sigma
+id: 50e54b8d-ad73-43f8-96a1-5191685b17a4
+status: test
+description: Detects a possible remote connections to Silenttrinity c2
+references:
+    - https://www.blackhillsinfosec.com/my-first-joyride-with-silenttrinity/
 author: Kiran kumar s, oscd.community
 date: 2020/10/11
-description: Detects a possible remote connections to Silenttrinity c2
-detection:
-    SELECTION_1:
-        EventID: 3
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\msbuild.exe'
-    SELECTION_4:
-        DestinationPort: 80
-    SELECTION_5:
-        DestinationPort: 443
-    SELECTION_6:
-        Initiated: 'true'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and (SELECTION_4 or SELECTION_5)
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: 50e54b8d-ad73-43f8-96a1-5191685b17a4
-level: high
+modified: 2022/10/05
+tags:
+    - attack.execution
+    - attack.t1127.001
 logsource:
     category: network_connection
     product: windows
-modified: 2022/10/05
-references:
-- https://www.blackhillsinfosec.com/my-first-joyride-with-silenttrinity/
-status: test
-tags:
-- attack.execution
-- attack.t1127.001
-
+detection:
+    network_connection:
+        EventID: 3
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \msbuild.exe
+    filter:
+        DestinationPort:
+            - 80
+            - 443
+        Initiated: 'true'
+    condition: network_connection and (selection and filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

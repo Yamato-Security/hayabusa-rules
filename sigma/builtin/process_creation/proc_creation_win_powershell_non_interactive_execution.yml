@@ -1,48 +1,41 @@
 title: Non Interactive PowerShell Process Spawned
-ruletype: Sigma
-author: Roberto Rodriguez @Cyb3rWard0g (rule), oscd.community (improvements)
-date: 2019/09/12
+id: f4bbd493-b796-416e-bbf2-121235348529
+status: test
 description: Detects non-interactive PowerShell activity by looking at powershell.exe
     with a non user process such as "explorer.exe" as a parent.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_5:
-        ParentProcessName:
-        - '*\explorer.exe'
-        - '*\CompatTelRunner.exe'
-    SELECTION_6:
-        ParentProcessName: C:\$WINDOWS.~BT\Sources\SetupHost.exe
-    SELECTION_7:
-        ParentProcessName: C:\Users\\*
-    SELECTION_8:
-        ParentProcessName: '*\AppData\Local\Programs\Microsoft VS Code\Code.exe'
-    SELECTION_9:
-        ParentCommandLine: '* --ms-enable-electron-run-as-node *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-        ((SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
-falsepositives:
-- Legitimate programs executing PowerShell scripts
-id: f4bbd493-b796-416e-bbf2-121235348529
-level: low
+references:
+    - https://web.archive.org/web/20200925032237/https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190410151110.html
+author: Roberto Rodriguez @Cyb3rWard0g (rule), oscd.community (improvements)
+date: 2019/09/12
+modified: 2023/01/20
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/20
-references:
-- https://web.archive.org/web/20200925032237/https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190410151110.html
-status: test
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    filter_generic:
+        -   ParentProcessName|endswith:
+                - \explorer.exe
+                - \CompatTelRunner.exe
+        -   ParentProcessName: C:\$WINDOWS.~BT\Sources\SetupHost.exe
+    filter_vscode:
+        ParentCommandLine|contains: ' --ms-enable-electron-run-as-node '
+        ParentProcessName|startswith: C:\Users\
+        ParentProcessName|endswith: \AppData\Local\Programs\Microsoft VS Code\Code.exe
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - Legitimate programs executing PowerShell scripts
+level: low
+ruletype: Sigma

@@ -1,46 +1,42 @@
 title: Potential Manage-bde.wsf Abuse To Proxy Execution
-ruletype: Sigma
-author: oscd.community, Natalia Shornikova, Nasreddine Bencherchali (Nextron Systems)
-date: 2020/10/13
+id: c363385c-f75d-4753-a108-c1a8e28bdbda
+status: test
 description: Detects potential abuse of the "manage-bde.wsf" script as a LOLBIN to
     proxy execution
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\wscript.exe'
-    SELECTION_4:
-        OriginalFileName: wscript.exe
-    SELECTION_5:
-        CommandLine: '*manage-bde.wsf*'
-    SELECTION_6:
-        ParentImage:
-        - '*\cscript.exe'
-        - '*\wscript.exe'
-    SELECTION_7:
-        ParentCommandLine: '*manage-bde.wsf*'
-    SELECTION_8:
-        Image: '*\cmd.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) or ((SELECTION_6 and SELECTION_7) and  not (SELECTION_8))))
-falsepositives:
-- Unlikely
-id: c363385c-f75d-4753-a108-c1a8e28bdbda
-level: high
+references:
+    - https://lolbas-project.github.io/lolbas/Scripts/Manage-bde/
+    - https://gist.github.com/bohops/735edb7494fe1bd1010d67823842b712
+    - https://twitter.com/bohops/status/980659399495741441
+    - https://twitter.com/JohnLaTwC/status/1223292479270600706
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1216/T1216.md
+author: oscd.community, Natalia Shornikova, Nasreddine Bencherchali (Nextron Systems)
+date: 2020/10/13
+modified: 2023/02/03
+tags:
+    - attack.defense_evasion
+    - attack.t1216
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/03
-references:
-- https://lolbas-project.github.io/lolbas/Scripts/Manage-bde/
-- https://gist.github.com/bohops/735edb7494fe1bd1010d67823842b712
-- https://twitter.com/bohops/status/980659399495741441
-- https://twitter.com/JohnLaTwC/status/1223292479270600706
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1216/T1216.md
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1216
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_wscript_img:
+        -   Image|endswith: \wscript.exe
+        -   OriginalFileName: wscript.exe
+    selection_wscript_cli:
+        CommandLine|contains: manage-bde.wsf
+    selection_parent:
+        ParentImage|endswith:
+            - \cscript.exe
+            - \wscript.exe
+        ParentCommandLine|contains: manage-bde.wsf
+    selection_filter_cmd:
+        Image|endswith: \cmd.exe
+    condition: process_creation and (all of selection_wscript_* or (selection_parent
+        and not selection_filter_cmd))
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

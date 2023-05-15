@@ -1,34 +1,30 @@
 title: Suspicious JavaScript Execution Via Mshta.EXE
-ruletype: Sigma
+id: 67f113fa-e23d-4271-befa-30113b3e08b1
+status: test
+description: Detects execution of javascript code using "mshta.exe".
+references:
+    - https://eqllib.readthedocs.io/en/latest/analytics/6bc283c4-21f2-4aed-a05c-a9a3ffa95dd4.html
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.005/T1218.005.md
 author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
 date: 2019/10/24
-description: Detects execution of javascript code using "mshta.exe".
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\mshta.exe'
-    SELECTION_4:
-        OriginalFileName: MSHTA.EXE
-    SELECTION_5:
-        CommandLine: '*javascript*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- Unknown
-id: 67f113fa-e23d-4271-befa-30113b3e08b1
-level: high
+modified: 2023/02/07
+tags:
+    - attack.defense_evasion
+    - attack.t1218.005
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/07
-references:
-- https://eqllib.readthedocs.io/en/latest/analytics/6bc283c4-21f2-4aed-a05c-a9a3ffa95dd4.html
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.005/T1218.005.md
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218.005
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \mshta.exe
+        -   OriginalFileName: MSHTA.EXE
+    selection_cli:
+        CommandLine|contains: javascript
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

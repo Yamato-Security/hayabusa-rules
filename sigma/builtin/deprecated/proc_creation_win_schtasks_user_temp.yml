@@ -1,37 +1,34 @@
 title: Suspicious Add Scheduled Task From User AppData Temp
-ruletype: Sigma
+id: 43f487f0-755f-4c2a-bce7-d6d2eec2fcf8
+status: deprecated
+description: schtasks.exe create task from user AppData\Local\Temp
+references:
+    - malware analyse https://www.joesandbox.com/analysis/514608/0/html#324415FF7D8324231381BAD48A052F85DF04
 author: frack113
 date: 2021/11/03
-description: schtasks.exe create task from user AppData\Local\Temp
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\schtasks.exe'
-    SELECTION_4:
-        CommandLine: '*/Create *'
-    SELECTION_5:
-        CommandLine: '*\AppData\Local\Temp*'
-    SELECTION_6:
-        CommandLine: '*/Create /TN "klcp_update" /XML *'
-    SELECTION_7:
-        CommandLine: '*\klcp_update_task.xml*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7)))
-falsepositives:
-- Unknown
-id: 43f487f0-755f-4c2a-bce7-d6d2eec2fcf8
-level: high
-logsource:
-    category: process_creation
-    product: windows
 modified: 2023/03/14
-references:
-- malware analyse https://www.joesandbox.com/analysis/514608/0/html#324415FF7D8324231381BAD48A052F85DF04
-status: deprecated
 tags:
-- attack.execution
-- attack.t1053.005
-
+    - attack.execution
+    - attack.t1053.005
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    schtasks:
+        NewProcessName|endswith: \schtasks.exe
+    option:
+        CommandLine|contains|all:
+            - '/Create '
+            - \AppData\Local\Temp
+    filter_klite_codec:
+        CommandLine|contains|all:
+            - '/Create /TN "klcp_update" /XML '
+            - \klcp_update_task.xml
+    condition: process_creation and (schtasks and option and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

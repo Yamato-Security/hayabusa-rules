@@ -1,37 +1,34 @@
 title: Potential Credential Dumping Attempt Via PowerShell Remote Thread
-ruletype: Sigma
+id: fb656378-f909-47c1-8747-278bf09f4f4f
+related:
+    -   id: 3f07b9d1-2082-4c56-9277-613a621983cc
+        type: obsoletes
+    -   id: 0f920ebe-7aea-4c54-b202-9aa0c609cfe5
+        type: similar
+status: experimental
+description: Detects remote thread creation by PowerShell processes into "lsass.exe"
+references:
+    - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 author: oscd.community, Natalia Shornikova
 date: 2020/10/06
-description: Detects remote thread creation by PowerShell processes into "lsass.exe"
-detection:
-    SELECTION_1:
-        EventID: 8
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        SourceImage:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        TargetImage: '*\lsass.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: fb656378-f909-47c1-8747-278bf09f4f4f
-level: high
-logsource:
-    category: create_remote_thread
-    product: windows
 modified: 2022/12/18
-references:
-- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
-related:
--   id: 3f07b9d1-2082-4c56-9277-613a621983cc
-    type: obsoletes
--   id: 0f920ebe-7aea-4c54-b202-9aa0c609cfe5
-    type: similar
-status: experimental
 tags:
-- attack.credential_access
-- attack.t1003.001
-
+    - attack.credential_access
+    - attack.t1003.001
+logsource:
+    product: windows
+    category: create_remote_thread
+detection:
+    create_remote_thread:
+        EventID: 8
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        SourceImage|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+        TargetImage|endswith: \lsass.exe
+    condition: create_remote_thread and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

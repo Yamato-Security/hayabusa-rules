@@ -1,35 +1,32 @@
 title: Remote Access Tool - ScreenConnect Backstage Mode Anomaly
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/02/25
+id: 7b582f1a-b318-4c6a-bf4e-66fe49bf55a5
+status: experimental
 description: Detects suspicious sub processes started by the ScreenConnect client
     service, which indicates the use of the so-called Backstage mode
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        ParentProcessName: '*ScreenConnect.ClientService.exe'
-    SELECTION_4:
-        NewProcessName:
-        - '*\cmd.exe'
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Case in which administrators are allowed to use ScreenConnect's Backstage mode
-id: 7b582f1a-b318-4c6a-bf4e-66fe49bf55a5
-level: high
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/03/05
 references:
-- https://www.mandiant.com/resources/telegram-malware-iranian-espionage
-- https://docs.connectwise.com/ConnectWise_Control_Documentation/Get_started/Host_client/View_menu/Backstage_mode
-status: experimental
+    - https://www.mandiant.com/resources/telegram-malware-iranian-espionage
+    - https://docs.connectwise.com/ConnectWise_Control_Documentation/Get_started/Host_client/View_menu/Backstage_mode
+author: Florian Roth (Nextron Systems)
+date: 2022/02/25
+modified: 2023/03/05
 tags:
-- attack.command_and_control
-- attack.t1219
-
+    - attack.command_and_control
+    - attack.t1219
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        ParentProcessName|endswith: ScreenConnect.ClientService.exe
+        NewProcessName|endswith:
+            - \cmd.exe
+            - \powershell.exe
+            - \pwsh.exe
+    condition: process_creation and selection
+falsepositives:
+    - Case in which administrators are allowed to use ScreenConnect's Backstage mode
+level: high
+ruletype: Sigma

@@ -1,32 +1,30 @@
 title: PowerShell Get-Process LSASS
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/04/23
+id: b2815d0d-7481-4bf0-9b6c-a4c48a94b349
+status: test
 description: Detects a "Get-Process" cmdlet and it's aliases on lsass process, which
     is in almost all cases a sign of malicious activity
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine:
-        - '*Get-Process lsas*'
-        - '*ps lsas*'
-        - '*gps lsas*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: b2815d0d-7481-4bf0-9b6c-a4c48a94b349
-level: high
+references:
+    - https://twitter.com/PythonResponder/status/1385064506049630211
+author: Florian Roth (Nextron Systems)
+date: 2021/04/23
+modified: 2023/01/05
+tags:
+    - attack.credential_access
+    - attack.t1552.004
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/05
-references:
-- https://twitter.com/PythonResponder/status/1385064506049630211
-status: test
-tags:
-- attack.credential_access
-- attack.t1552.004
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains:
+            - Get-Process lsas
+            - ps lsas
+            - gps lsas
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

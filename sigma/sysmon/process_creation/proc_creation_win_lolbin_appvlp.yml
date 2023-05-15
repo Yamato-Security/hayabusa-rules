@@ -1,7 +1,6 @@
 title: Using AppVLP To Circumvent ASR File Path Rule
-ruletype: Sigma
-author: Sreeman
-date: 2020/03/13
+id: 9c7e131a-0f2c-4ae0-9d43-b04f4e266d43
+status: experimental
 description: 'Application Virtualization Utility is included with Microsoft Office.
     We are able to abuse "AppVLP" to execute shell commands.
 
@@ -11,31 +10,30 @@ description: 'Application Virtualization Utility is included with Microsoft Offi
     or to mark a file as a system file.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: '*\appvlp.exe'
-    SELECTION_4:
-        Image:
-        - '*\msoasb.exe'
-        - '*\rundll32.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: 9c7e131a-0f2c-4ae0-9d43-b04f4e266d43
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Appvlp/
+author: Sreeman
+date: 2020/03/13
+modified: 2022/12/29
+tags:
+    - attack.t1218
+    - attack.defense_evasion
+    - attack.execution
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/29
-references:
-- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Appvlp/
-status: experimental
-tags:
-- attack.t1218
-- attack.defense_evasion
-- attack.execution
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ParentImage|endswith: \appvlp.exe
+    filter:
+        Image|endswith:
+            - \msoasb.exe
+            - \rundll32.exe
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

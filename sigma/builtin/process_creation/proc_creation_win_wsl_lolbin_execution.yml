@@ -1,55 +1,52 @@
 title: Arbitrary Command Execution Using WSL
-ruletype: Sigma
-author: oscd.community, Zach Stanford @svch0st, Nasreddine Bencherchali (Nextron Systems)
-date: 2020/10/05
+id: dec44ca7-61ad-493c-bfd7-8819c5faa09b
+related:
+    -   id: 2267fe65-0681-42ad-9a6d-46553d3f3480
+        type: similar
+status: test
 description: Detects potential abuse of Windows Subsystem for Linux (WSL) binary as
     a LOLBIN to execute arbitrary linux and windows commands
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\wsl.exe'
-    SELECTION_4:
-        OriginalFileName: wsl.exe
-    SELECTION_5:
-        CommandLine:
-        - '* -e *'
-        - '* --exec*'
-        - '* --system*'
-        - '* --shell-type *'
-        - '* /mnt/c*'
-        - '* --user root*'
-        - '* -u root*'
-        - '*--debug-shell*'
-    SELECTION_6:
-        ParentProcessName: '*\cmd.exe'
-    SELECTION_7:
-        CommandLine: '* -d *'
-    SELECTION_8:
-        CommandLine: '* -e kill *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Automation and orchestration scripts may use this method to execute scripts etc.
-- Legitimate use by Windows to kill processes opened via WSL (example VsCode WSL server)
-id: dec44ca7-61ad-493c-bfd7-8819c5faa09b
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Wsl/
+    - https://twitter.com/nas_bench/status/1535431474429808642
+author: oscd.community, Zach Stanford @svch0st, Nasreddine Bencherchali (Nextron Systems)
+date: 2020/10/05
+modified: 2023/04/12
+tags:
+    - attack.execution
+    - attack.defense_evasion
+    - attack.t1218
+    - attack.t1202
 logsource:
     category: process_creation
     product: windows
-modified: 2023/04/12
-references:
-- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Wsl/
-- https://twitter.com/nas_bench/status/1535431474429808642
-related:
--   id: 2267fe65-0681-42ad-9a6d-46553d3f3480
-    type: similar
-status: test
-tags:
-- attack.execution
-- attack.defense_evasion
-- attack.t1218
-- attack.t1202
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \wsl.exe
+        -   OriginalFileName: wsl.exe
+    selection_cli:
+        CommandLine|contains:
+            - ' -e '
+            - ' --exec'
+            - ' --system'
+            - ' --shell-type '
+            - ' /mnt/c'
+            - ' --user root'
+            - ' -u root'
+            - --debug-shell
+    filter_main_kill:
+        CommandLine|contains|all:
+            - ' -d '
+            - ' -e kill '
+        ParentProcessName|endswith: \cmd.exe
+    condition: process_creation and (all of selection_* and not 1 of filter_main_*)
+falsepositives:
+    - Automation and orchestration scripts may use this method to execute scripts
+        etc.
+    - Legitimate use by Windows to kill processes opened via WSL (example VsCode WSL
+        server)
+level: medium
+ruletype: Sigma

@@ -1,97 +1,80 @@
 title: HAFNIUM Exchange Exploitation Activity
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/03/09
+id: bbb2dedd-a0e3-46ab-ba6c-6c82ae7a9aa7
+status: test
 description: Detects activity observed by different researchers to be HAFNIUM group
     activity (or related) on Exchange servers
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        CommandLine: '*VSPerfMon*'
-    SELECTION_11:
-        Image: '*Opera_browser.exe'
-    SELECTION_12:
-        ParentImage:
-        - '*\services.exe'
-        - '*\svchost.exe'
-    SELECTION_13:
-        Image: '*Users\Public\opera\Opera_browser.exe'
-    SELECTION_14:
-        CommandLine: '*vssadmin list shadows*'
-    SELECTION_15:
-        CommandLine: '*Temp\__output*'
-    SELECTION_16:
-        Image: '*\makecab.exe'
-    SELECTION_17:
-        CommandLine: '*inetpub\wwwroot\\*'
-    SELECTION_18:
-        CommandLine: '*.dmp.zip*'
-    SELECTION_19:
-        Image: '*\makecab.exe'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        CommandLine:
-        - '*Microsoft\Exchange Server\\*'
-        - '*compressionmemory*'
-        - '*.gif*'
-    SELECTION_21:
-        CommandLine: '* -t7z *'
-    SELECTION_22:
-        CommandLine: '*C:\Programdata\pst*'
-    SELECTION_23:
-        CommandLine: '*\it.zip*'
-    SELECTION_24:
-        CommandLine: '*\comsvcs.dll*'
-    SELECTION_25:
-        CommandLine: '*Minidump*'
-    SELECTION_26:
-        CommandLine: '*full *'
-    SELECTION_27:
-        CommandLine: '*\inetpub\wwwroot*'
-    SELECTION_28:
-        CommandLine:
-        - '*Windows\Temp\xx.bat*'
-        - '*Windows\WwanSvcdcs*'
-        - '*Windows\Temp\cw.exe*'
-    SELECTION_3:
-        CommandLine: '*attrib*'
-    SELECTION_4:
-        CommandLine: '* +h *'
-    SELECTION_5:
-        CommandLine: '* +s *'
-    SELECTION_6:
-        CommandLine: '* +r *'
-    SELECTION_7:
-        CommandLine: '*.aspx*'
-    SELECTION_8:
-        Image: '*\ProgramData\VSPerfMon\\*'
-    SELECTION_9:
-        CommandLine: '*schtasks*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 or (SELECTION_9
-        and SELECTION_10)) or (SELECTION_11 and SELECTION_12) or SELECTION_13 or (SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19
-        and SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
-        and SELECTION_25 and SELECTION_26 and SELECTION_27) or SELECTION_28))
-falsepositives:
-- Unlikely
-id: bbb2dedd-a0e3-46ab-ba6c-6c82ae7a9aa7
-level: critical
+references:
+    - https://blog.truesec.com/2021/03/07/exchange-zero-day-proxylogon-and-hafnium/
+    - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
+    - https://discuss.elastic.co/t/detection-and-response-for-hafnium-activity/266289/3
+    - https://twitter.com/GadixCRK/status/1369313704869834753?s=20
+    - https://twitter.com/BleepinComputer/status/1372218235949617161
+author: Florian Roth (Nextron Systems)
+date: 2021/03/09
+modified: 2023/03/09
+tags:
+    - attack.persistence
+    - attack.t1546
+    - attack.t1053
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/09
-references:
-- https://blog.truesec.com/2021/03/07/exchange-zero-day-proxylogon-and-hafnium/
-- https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
-- https://discuss.elastic.co/t/detection-and-response-for-hafnium-activity/266289/3
-- https://twitter.com/GadixCRK/status/1369313704869834753?s=20
-- https://twitter.com/BleepinComputer/status/1372218235949617161
-status: test
-tags:
-- attack.persistence
-- attack.t1546
-- attack.t1053
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_attrib:
+        CommandLine|contains|all:
+            - attrib
+            - ' +h '
+            - ' +s '
+            - ' +r '
+            - .aspx
+    selection_vsperfmon:
+        -   Image|contains: \ProgramData\VSPerfMon\
+        -   CommandLine|contains|all:
+                - schtasks
+                - VSPerfMon
+    selection_opera_1:
+        Image|endswith: Opera_browser.exe
+        ParentImage|endswith:
+            - \services.exe
+            - \svchost.exe
+    selection_opera_2:
+        Image|endswith: Users\Public\opera\Opera_browser.exe
+    selection_vssadmin:
+        CommandLine|contains|all:
+            - vssadmin list shadows
+            - Temp\__output
+    selection_makecab_1:
+        Image|endswith: \makecab.exe
+        CommandLine|contains|all:
+            - inetpub\wwwroot\
+            - .dmp.zip
+    selection_makecab_2:
+        Image|endswith: \makecab.exe
+        CommandLine|contains:
+            - Microsoft\Exchange Server\
+            - compressionmemory
+            - .gif
+    selection_7zip:
+        CommandLine|contains|all:
+            - ' -t7z '
+            - C:\Programdata\pst
+            - \it.zip
+    selection_rundll32:
+        CommandLine|contains|all:
+            - \comsvcs.dll
+            - Minidump
+            - 'full '
+            - \inetpub\wwwroot
+    selection_other:
+        CommandLine|contains:
+            - Windows\Temp\xx.bat
+            - Windows\WwanSvcdcs
+            - Windows\Temp\cw.exe
+    condition: process_creation and (1 of selection*)
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

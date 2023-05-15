@@ -1,43 +1,39 @@
 title: Add Potential Suspicious New Download Source To Winget
-ruletype: Sigma
+id: c15a46a0-07d4-4c87-b4b6-89207835a83b
+related:
+    -   id: 05ebafc8-7aa2-4bcd-a269-2aec93f9e842
+        type: similar
+    -   id: 81a0ecb5-0a41-4ba1-b2ba-c944eb92bfa2
+        type: similar
+status: experimental
+description: Detects usage of winget to add new potentially suspicious download sources
+references:
+    - https://learn.microsoft.com/en-us/windows/package-manager/winget/source
+    - https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/04/17
-description: Detects usage of winget to add new potentially suspicious download sources
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\winget.exe'
-    SELECTION_4:
-        OriginalFileName: winget.exe
-    SELECTION_5:
-        CommandLine: '*source *'
-    SELECTION_6:
-        CommandLine: '*add *'
-    SELECTION_7:
-        CommandLine|re: ://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6) and SELECTION_7)
-falsepositives:
-- Unknown
-id: c15a46a0-07d4-4c87-b4b6-89207835a83b
-level: high
+tags:
+    - attack.defense_evasion
+    - attack.execution
+    - attack.t1059
 logsource:
     category: process_creation
     product: windows
-references:
-- https://learn.microsoft.com/en-us/windows/package-manager/winget/source
-- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget
-related:
--   id: 05ebafc8-7aa2-4bcd-a269-2aec93f9e842
-    type: similar
--   id: 81a0ecb5-0a41-4ba1-b2ba-c944eb92bfa2
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.execution
-- attack.t1059
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \winget.exe
+        -   OriginalFileName: winget.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - 'source '
+            - 'add '
+    selection_source_direct_ip:
+        CommandLine|re: ://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

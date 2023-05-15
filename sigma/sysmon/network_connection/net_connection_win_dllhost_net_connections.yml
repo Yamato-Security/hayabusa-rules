@@ -1,80 +1,76 @@
 title: Dllhost Internet Connection
-ruletype: Sigma
+id: cfed2f44-16df-4bf3-833a-79405198b277
+status: test
+description: Detects Dllhost that communicates with public IP addresses
+references:
+    - https://redcanary.com/blog/child-processes/
+    - https://nasbench.medium.com/what-is-the-dllhost-exe-process-actually-running-ef9fe4c19c08
 author: bartblaze
 date: 2020/07/13
-description: Detects Dllhost that communicates with public IP addresses
-detection:
-    SELECTION_1:
-        EventID: 3
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\dllhost.exe'
-    SELECTION_4:
-        Initiated: 'true'
-    SELECTION_5:
-        DestinationIp:
-        - 10.*
-        - 192.168.*
-        - 172.16.*
-        - 172.17.*
-        - 172.18.*
-        - 172.19.*
-        - 172.20.*
-        - 172.21.*
-        - 172.22.*
-        - 172.23.*
-        - 172.24.*
-        - 172.25.*
-        - 172.26.*
-        - 172.27.*
-        - 172.28.*
-        - 172.29.*
-        - 172.30.*
-        - 172.31.*
-        - 169.254.*
-        - 127.*
-    SELECTION_6:
-        DestinationIp:
-        - ::1*
-        - 0:0:0:0:0:0:0:1*
-        - fe80:*
-        - fc*
-        - fd*
-    SELECTION_7:
-        DestinationIp:
-        - 20.184.*
-        - 20.185.*
-        - 20.186.*
-        - 20.187.*
-        - 20.188.*
-        - 20.189.*
-        - 20.190.*
-        - 20.191.*
-        - 23.79.*
-        - 51.10.*
-        - 51.103.*
-        - 51.104.*
-        - 51.105.*
-        - 52.239.*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7)))
-falsepositives:
-- Communication to other corporate systems that use IP addresses from public address
-    spaces
-id: cfed2f44-16df-4bf3-833a-79405198b277
-level: medium
+modified: 2023/01/20
+tags:
+    - attack.defense_evasion
+    - attack.t1218
+    - attack.execution
+    - attack.t1559.001
 logsource:
     category: network_connection
     product: windows
-modified: 2023/01/20
-references:
-- https://redcanary.com/blog/child-processes/
-- https://nasbench.medium.com/what-is-the-dllhost-exe-process-actually-running-ef9fe4c19c08
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218
-- attack.execution
-- attack.t1559.001
-
+detection:
+    network_connection:
+        EventID: 3
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \dllhost.exe
+        Initiated: 'true'
+    filter_ipv4:
+        DestinationIp|startswith:
+            - '10.'
+            - 192.168.
+            - 172.16.
+            - 172.17.
+            - 172.18.
+            - 172.19.
+            - 172.20.
+            - 172.21.
+            - 172.22.
+            - 172.23.
+            - 172.24.
+            - 172.25.
+            - 172.26.
+            - 172.27.
+            - 172.28.
+            - 172.29.
+            - 172.30.
+            - 172.31.
+            - 169.254.
+            - '127.'
+    filter_ipv6:
+        DestinationIp|startswith:
+            - ::1
+            - 0:0:0:0:0:0:0:1
+            - 'fe80:'
+            - fc
+            - fd
+    filter_msrange:
+        DestinationIp|startswith:
+            - 20.184.
+            - 20.185.
+            - 20.186.
+            - 20.187.
+            - 20.188.
+            - 20.189.
+            - 20.190.
+            - 20.191.
+            - 23.79.
+            - 51.10.
+            - 51.103.
+            - 51.104.
+            - 51.105.
+            - 52.239.
+    condition: network_connection and (selection and not 1 of filter_*)
+falsepositives:
+    - Communication to other corporate systems that use IP addresses from public address
+        spaces
+level: medium
+ruletype: Sigma

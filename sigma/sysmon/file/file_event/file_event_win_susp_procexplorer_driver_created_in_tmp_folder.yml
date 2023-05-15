@@ -1,7 +1,6 @@
 title: Suspicious PROCEXP152.sys File Created In TMP
-ruletype: Sigma
-author: xknow (@xknow_infosec), xorxes (@xor_xes)
-date: 2019/04/08
+id: 3da70954-0f2c-4103-adff-b7440368f50e
+status: test
 description: 'Detects the creation of the PROCEXP152.sys file in the application-data
     local temporary folder.
 
@@ -10,37 +9,34 @@ description: 'Detects the creation of the PROCEXP152.sys file in the application
     KDU.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*\AppData\Local\Temp\\*'
-    SELECTION_4:
-        TargetFilename: '*PROCEXP152.sys'
-    SELECTION_5:
-        Image:
-        - '*\procexp64.exe*'
-        - '*\procexp.exe*'
-        - '*\procmon64.exe*'
-        - '*\procmon.exe*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Other legimate tools using this driver and filename (like Sysinternals). Note -
-    Clever attackers may easily bypass this detection by just renaming the driver
-    filename. Therefore just Medium-level and don't rely on it.
-id: 3da70954-0f2c-4103-adff-b7440368f50e
-level: medium
-logsource:
-    category: file_event
-    product: windows
-modified: 2022/11/22
 references:
-- https://blog.dylan.codes/evading-sysmon-and-windows-event-logging/
-status: test
+    - https://blog.dylan.codes/evading-sysmon-and-windows-event-logging/
+author: xknow (@xknow_infosec), xorxes (@xor_xes)
+date: 2019/04/08
+modified: 2022/11/22
 tags:
-- attack.t1562.001
-- attack.defense_evasion
-
+    - attack.t1562.001
+    - attack.defense_evasion
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|contains: \AppData\Local\Temp\
+        TargetFilename|endswith: PROCEXP152.sys
+    filter:
+        Image|contains:
+            - \procexp64.exe
+            - \procexp.exe
+            - \procmon64.exe
+            - \procmon.exe
+    condition: file_event and (selection and not filter)
+falsepositives:
+    - Other legimate tools using this driver and filename (like Sysinternals). Note
+        - Clever attackers may easily bypass this detection by just renaming the driver
+        filename. Therefore just Medium-level and don't rely on it.
+level: medium
+ruletype: Sigma

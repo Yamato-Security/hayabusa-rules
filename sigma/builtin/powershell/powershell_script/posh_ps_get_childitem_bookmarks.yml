@@ -1,7 +1,6 @@
 title: Automated Collection Bookmarks Using Get-ChildItem PowerShell
-ruletype: Sigma
-author: frack113
-date: 2021/12/13
+id: e0565f5d-d420-4e02-8a68-ac00d864f9cf
+status: test
 description: 'Adversaries may enumerate browser bookmarks to learn more about compromised
     hosts.
 
@@ -12,40 +11,34 @@ description: 'Adversaries may enumerate browser bookmarks to learn more about co
     infrastructure.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Get-ChildItem*'
-    SELECTION_4:
-        ScriptBlockText: '* -Recurse *'
-    SELECTION_5:
-        ScriptBlockText: '* -Path *'
-    SELECTION_6:
-        ScriptBlockText: '* -Filter Bookmarks*'
-    SELECTION_7:
-        ScriptBlockText: '* -ErrorAction SilentlyContinue*'
-    SELECTION_8:
-        ScriptBlockText: '* -Force*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7 and SELECTION_8)
-falsepositives:
-- Unknown
-id: e0565f5d-d420-4e02-8a68-ac00d864f9cf
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1217/T1217.md
+author: frack113
+date: 2021/12/13
+modified: 2022/12/25
+tags:
+    - attack.discovery
+    - attack.t1217
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2022/12/25
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1217/T1217.md
-status: test
-tags:
-- attack.discovery
-- attack.t1217
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - Get-ChildItem
+            - ' -Recurse '
+            - ' -Path '
+            - ' -Filter Bookmarks'
+            - ' -ErrorAction SilentlyContinue'
+            - ' -Force'
+    condition: ps_script and selection
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

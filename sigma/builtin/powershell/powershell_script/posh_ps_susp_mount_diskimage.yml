@@ -1,34 +1,32 @@
 title: Suspicious Mount-DiskImage
-ruletype: Sigma
-author: frack113
-date: 2022/02/01
+id: 29e1c216-6408-489d-8a06-ee9d151ef819
+status: test
 description: Adversaries may abuse container files such as disk image (.iso, .vhd)
     file formats to deliver malicious payloads that may not be tagged with MOTW.
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Mount-DiskImage *'
-    SELECTION_4:
-        ScriptBlockText: '*-ImagePath *'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Legitimate PowerShell scripts
-id: 29e1c216-6408-489d-8a06-ee9d151ef819
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1553.005/T1553.005.md#atomic-test-1---mount-iso-image
+    - https://docs.microsoft.com/en-us/powershell/module/storage/mount-diskimage?view=windowsserver2022-ps
+author: frack113
+date: 2022/02/01
+tags:
+    - attack.defense_evasion
+    - attack.t1553.005
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1553.005/T1553.005.md#atomic-test-1---mount-iso-image
-- https://docs.microsoft.com/en-us/powershell/module/storage/mount-diskimage?view=windowsserver2022-ps
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1553.005
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - 'Mount-DiskImage '
+            - '-ImagePath '
+    condition: ps_script and selection
+falsepositives:
+    - Legitimate PowerShell scripts
+level: low
+ruletype: Sigma

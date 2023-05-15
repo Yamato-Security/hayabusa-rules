@@ -1,56 +1,50 @@
 title: Stop Windows Service
-ruletype: Sigma
+id: eb87818d-db5d-49cc-a987-d5da331fbd90
+status: deprecated
+description: Detects a windows service to be stopped
 author: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali
 date: 2019/10/23
-description: Detects a windows service to be stopped
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        OriginalFileName:
-        - sc.exe
-        - net.exe
-        - net1.exe
-    SELECTION_4:
-        NewProcessName:
-        - '*\sc.exe'
-        - '*\net.exe'
-        - '*\net1.exe'
-    SELECTION_5:
-        CommandLine: '* stop *'
-    SELECTION_6:
-        CommandLine:
-        - sc  stop KSCWebConsoleMessageQueue
-        - sc  stop LGHUBUpdaterService
-    SELECTION_7:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    SELECTION_8:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_9:
-        CommandLine: '*Stop-Service *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((((SELECTION_3 or SELECTION_4)
-        and SELECTION_5) and  not (SELECTION_6 and SELECTION_7)) or (SELECTION_8 and
-        SELECTION_9)))
-falsepositives:
-- Administrator shutting down the service due to upgrade or removal purposes
-fields:
-- ComputerName
-- User
-- CommandLine
-id: eb87818d-db5d-49cc-a987-d5da331fbd90
-level: low
+modified: 2023/03/05
+tags:
+    - attack.impact
+    - attack.t1489
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/05
-status: deprecated
-tags:
-- attack.impact
-- attack.t1489
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_sc_net_img:
+        -   OriginalFileName:
+                - sc.exe
+                - net.exe
+                - net1.exe
+        -   NewProcessName|endswith:
+                - \sc.exe
+                - \net.exe
+                - \net1.exe
+    selection_sc_net_cli:
+        CommandLine|contains: ' stop '
+    selection_pwsh:
+        CommandLine|contains: 'Stop-Service '
+        NewProcessName|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+    filter:
+        CommandLine:
+            - sc  stop KSCWebConsoleMessageQueue
+            - sc  stop LGHUBUpdaterService
+        User|contains:
+            - AUTHORI
+            - AUTORI
+    condition: process_creation and ((all of selection_sc_net* and not filter) or
+        selection_pwsh)
+fields:
+    - ComputerName
+    - User
+    - CommandLine
+falsepositives:
+    - Administrator shutting down the service due to upgrade or removal purposes
+level: low
+ruletype: Sigma

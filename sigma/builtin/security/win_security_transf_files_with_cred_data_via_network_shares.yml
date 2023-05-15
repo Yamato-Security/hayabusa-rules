@@ -1,42 +1,41 @@
 title: Transferring Files with Credential Data via Network Shares
-ruletype: Sigma
-author: Teymur Kheirkhabarov, oscd.community
-date: 2019/10/22
+id: 910ab938-668b-401b-b08c-b596e80fdca5
+related:
+    -   id: 2e69f167-47b5-4ae7-a390-47764529eff5
+        type: similar
+status: test
 description: Transferring files with well-known filenames (sensitive files with credential
     data) using network shares
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 5145
-    SELECTION_3:
-        RelativeTargetName:
-        - '*\mimidrv*'
-        - '*\lsass*'
-        - '*\windows\minidump\\*'
-        - '*\hiberfil*'
-        - '*\sqldmpr*'
-        - '*\sam*'
-        - '*\ntds.dit*'
-        - '*\security*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Transferring sensitive files for legitimate administration work by legitimate administrator
-id: 910ab938-668b-401b-b08c-b596e80fdca5
-level: medium
+references:
+    - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+author: Teymur Kheirkhabarov, oscd.community
+date: 2019/10/22
+modified: 2021/11/30
+tags:
+    - attack.credential_access
+    - attack.t1003.002
+    - attack.t1003.001
+    - attack.t1003.003
 logsource:
     product: windows
     service: security
-modified: 2021/11/30
-references:
-- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
-related:
--   id: 2e69f167-47b5-4ae7-a390-47764529eff5
-    type: similar
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.002
-- attack.t1003.001
-- attack.t1003.003
-
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 5145
+        RelativeTargetName|contains:
+            - \mimidrv
+            - \lsass
+            - \windows\minidump\
+            - \hiberfil
+            - \sqldmpr
+            - \sam
+            - \ntds.dit
+            - \security
+    condition: security and selection
+falsepositives:
+    - Transferring sensitive files for legitimate administration work by legitimate
+        administrator
+level: medium
+ruletype: Sigma

@@ -1,110 +1,96 @@
 title: Potential Persistence Via COM Search Order Hijacking
-ruletype: Sigma
+id: a0ff33d8-79e4-4cef-b4f3-9dc4133ccd12
+status: experimental
+description: Detects potential COM object hijacking leveraging the COM Search Order
+references:
+    - https://www.cyberbit.com/blog/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
 author: "Maxime Thiebaut (@0xThiebaut), oscd.community, C\xE9dric Hien"
 date: 2020/04/14
-description: Detects potential COM object hijacking leveraging the COM Search Order
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_10:
-        Details: '*\Microsoft.Teams.AddinLoader.dll*'
-    SELECTION_11:
-        Details: '*\AppData\Roaming\Dropbox\\*'
-    SELECTION_12:
-        Details: '*\DropboxExt64.*.dll*'
-    SELECTION_13:
-        Details: '*TmopIEPlg.dll'
-    SELECTION_14:
-        Image:
-        - C:\WINDOWS\system32\wuauclt.exe
-        - C:\WINDOWS\system32\svchost.exe
-    SELECTION_15:
-        Image:
-        - C:\ProgramData\Microsoft\Windows Defender\Platform\\*
-        - C:\Program Files\Windows Defender\\*
-    SELECTION_16:
-        Image: '*\MsMpEng.exe'
-    SELECTION_17:
-        Details: '*\FileRepository\nvmdi.inf*'
-    SELECTION_18:
-        Image: '*\MicrosoftEdgeUpdateComRegisterShell64.exe'
-    SELECTION_19:
-        Image: C:\WINDOWS\SYSTEM32\dxdiag.exe
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        Details:
-        - C:\Windows\pyshellext.amd64.dll
-        - C:\Windows\pyshellext.dll
-    SELECTION_21:
-        Details:
-        - C:\Windows\system32\dnssdX.dll
-        - C:\Windows\SysWOW64\dnssdX.dll
-    SELECTION_22:
-        Details: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
-    SELECTION_23:
-        Details:
-        - C:\Program Files\\*
-        - C:\Program Files (x86)\\*
-    SELECTION_24:
-        Details: C:\ProgramData\Microsoft\\*
-    SELECTION_25:
-        Details: '*C:\WINDOWS\system32\GamingServicesProxy.dll*'
-    SELECTION_26:
-        Image: C:\Windows\System32\poqexec.exe
-    SELECTION_27:
-        Details: '*C:\Windows\System32\Autopilot.dll*'
-    SELECTION_28:
-        Image: C:\Windows\system32\SecurityHealthService.exe
-    SELECTION_29:
-        Details: '*C:\Windows\System32\SecurityHealth*'
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_30:
-        Image:
-        - C:\Windows\System32\poqexec.exe
-        - C:\Windows\System32\regsvr32.exe
-    SELECTION_31:
-        TargetObject: '*\InProcServer32\(Default)'
-    SELECTION_4:
-        TargetObject:
-        - HKCR\CLSID\\*
-        - HKCU\Software\Classes\CLSID\\*
-    SELECTION_5:
-        TargetObject: '*\InprocServer32\(Default)'
-    SELECTION_6:
-        Details:
-        - '*%%systemroot%%\system32\\*'
-        - '*%%systemroot%%\SysWow64\\*'
-    SELECTION_7:
-        Details:
-        - '*\AppData\Local\Microsoft\OneDrive\\*'
-        - '*\FileCoAuthLib64.dll*'
-        - '*\FileSyncShell64.dll*'
-        - '*\FileSyncApi64.dll*'
-    SELECTION_8:
-        Image: C:\WINDOWS\system32\SecurityHealthService.exe
-    SELECTION_9:
-        Details: '*\AppData\Local\Microsoft\TeamsMeetingAddin\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7) or (SELECTION_8) or
-        (SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13)
-        or (SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17) or
-        (SELECTION_18) or (SELECTION_19) or (SELECTION_20) or (SELECTION_21) or (SELECTION_22)
-        or (SELECTION_23) or (SELECTION_24) or (SELECTION_25) or (SELECTION_26 and
-        SELECTION_27) or (SELECTION_28 and SELECTION_29) or (SELECTION_30 and SELECTION_31)))
-falsepositives:
-- Some installed utilities (i.e. OneDrive) may serve new COM objects at user-level
-id: a0ff33d8-79e4-4cef-b4f3-9dc4133ccd12
-level: medium
+modified: 2023/01/10
+tags:
+    - attack.persistence
+    - attack.t1546.015
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
-references:
-- https://www.cyberbit.com/blog/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
-status: experimental
-tags:
-- attack.persistence
-- attack.t1546.015
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|startswith:
+            - HKCR\CLSID\
+            - HKCU\Software\Classes\CLSID\
+        TargetObject|endswith: \InprocServer32\(Default)
+    filter_generic:
+        Details|contains:
+            - '%%systemroot%%\system32\'
+            - '%%systemroot%%\SysWow64\'
+    filter_onedrive:
+        Details|contains:
+            - \AppData\Local\Microsoft\OneDrive\
+            - \FileCoAuthLib64.dll
+            - \FileSyncShell64.dll
+            - \FileSyncApi64.dll
+    filter_health_service:
+        Image: C:\WINDOWS\system32\SecurityHealthService.exe
+    filter_teams:
+        Details|contains|all:
+            - \AppData\Local\Microsoft\TeamsMeetingAddin\
+            - \Microsoft.Teams.AddinLoader.dll
+    filter_dropbox:
+        Details|contains|all:
+            - \AppData\Roaming\Dropbox\
+            - \DropboxExt64.*.dll
+    filter_trend_micro:
+        Details|endswith: TmopIEPlg.dll
+    filter_update:
+        Image:
+            - C:\WINDOWS\system32\wuauclt.exe
+            - C:\WINDOWS\system32\svchost.exe
+    filter_defender:
+        Image|startswith:
+            - C:\ProgramData\Microsoft\Windows Defender\Platform\
+            - C:\Program Files\Windows Defender\
+        Image|endswith: \MsMpEng.exe
+    filter_nvidia:
+        Details|contains: \FileRepository\nvmdi.inf
+    filter_edge:
+        Image|endswith: \MicrosoftEdgeUpdateComRegisterShell64.exe
+    filter_dx:
+        Image: C:\WINDOWS\SYSTEM32\dxdiag.exe
+    filter_python:
+        Details:
+            - C:\Windows\pyshellext.amd64.dll
+            - C:\Windows\pyshellext.dll
+    filter_bonjourlib:
+        Details:
+            - C:\Windows\system32\dnssdX.dll
+            - C:\Windows\SysWOW64\dnssdX.dll
+    filter_printextensionmanager:
+        Details: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
+    filter_programfiles:
+        Details|startswith:
+            - C:\Program Files\
+            - C:\Program Files (x86)\
+    filter_programdata:
+        Details|startswith: C:\ProgramData\Microsoft\
+    filter_gameservice:
+        Details|contains: C:\WINDOWS\system32\GamingServicesProxy.dll
+    filter_poqexec:
+        Image: C:\Windows\System32\poqexec.exe
+        Details|contains: C:\Windows\System32\Autopilot.dll
+    filter_sec_health_svc:
+        Image: C:\Windows\system32\SecurityHealthService.exe
+        Details|contains: C:\Windows\System32\SecurityHealth
+    filter_inprocserver:
+        Image:
+            - C:\Windows\System32\poqexec.exe
+            - C:\Windows\System32\regsvr32.exe
+        TargetObject|endswith: \InProcServer32\(Default)
+    condition: registry_set and (selection and not 1 of filter_*)
+falsepositives:
+    - Some installed utilities (i.e. OneDrive) may serve new COM objects at user-level
+level: medium
+ruletype: Sigma

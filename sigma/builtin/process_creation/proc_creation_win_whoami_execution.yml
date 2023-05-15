@@ -1,35 +1,32 @@
 title: Whoami Utility Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2018/08/13
+id: e28a5a99-da44-436d-b7a0-2afc20a5f413
+status: test
 description: Detects the execution of whoami, which is often used by attackers after
     exploitation / privilege escalation
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\whoami.exe'
-    SELECTION_4:
-        OriginalFileName: whoami.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Admin activity
-- Scripts and administrative tools used in the monitored environment
-- Monitoring activity
-id: e28a5a99-da44-436d-b7a0-2afc20a5f413
-level: medium
+references:
+    - https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/
+    - https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/
+author: Florian Roth (Nextron Systems)
+date: 2018/08/13
+modified: 2023/02/28
+tags:
+    - attack.discovery
+    - attack.t1033
+    - car.2016-03-001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/28
-references:
-- https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/
-- https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/
-status: test
-tags:
-- attack.discovery
-- attack.t1033
-- car.2016-03-001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   NewProcessName|endswith: \whoami.exe
+        -   OriginalFileName: whoami.exe
+    condition: process_creation and selection
+falsepositives:
+    - Admin activity
+    - Scripts and administrative tools used in the monitored environment
+    - Monitoring activity
+level: medium
+ruletype: Sigma

@@ -1,46 +1,44 @@
 title: ShimCache Flush
-ruletype: Sigma
+id: b0524451-19af-4efa-a46f-562a977f792e
+status: stable
+description: Detects actions that clear the local ShimCache and remove forensic evidence
+references:
+    - https://medium.com/@blueteamops/shimcache-flush-89daff28d15e
 author: Florian Roth (Nextron Systems)
 date: 2021/02/01
-description: Detects actions that clear the local ShimCache and remove forensic evidence
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*rundll32*'
-    SELECTION_4:
-        CommandLine: '*apphelp.dll*'
-    SELECTION_5:
-        CommandLine:
-        - '*ShimFlushCache*'
-        - '*#250*'
-    SELECTION_6:
-        CommandLine: '*rundll32*'
-    SELECTION_7:
-        CommandLine: '*kernel32.dll*'
-    SELECTION_8:
-        CommandLine:
-        - '*BaseFlushAppcompatCache*'
-        - '*#46*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Unknown
-fields:
-- Image
-- CommandLine
-- ParentCommandLine
-id: b0524451-19af-4efa-a46f-562a977f792e
-level: high
+tags:
+    - attack.defense_evasion
+    - attack.t1112
 logsource:
     category: process_creation
     product: windows
-references:
-- https://medium.com/@blueteamops/shimcache-flush-89daff28d15e
-status: stable
-tags:
-- attack.defense_evasion
-- attack.t1112
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection1a:
+        CommandLine|contains|all:
+            - rundll32
+            - apphelp.dll
+    selection1b:
+        CommandLine|contains:
+            - ShimFlushCache
+            - '#250'
+    selection2a:
+        CommandLine|contains|all:
+            - rundll32
+            - kernel32.dll
+    selection2b:
+        CommandLine|contains:
+            - BaseFlushAppcompatCache
+            - '#46'
+    condition: process_creation and (( selection1a and selection1b ) or ( selection2a
+        and selection2b ))
+fields:
+    - NewProcessName
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

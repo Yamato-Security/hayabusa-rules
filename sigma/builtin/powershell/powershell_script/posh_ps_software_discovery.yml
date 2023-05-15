@@ -1,41 +1,36 @@
 title: Detected Windows Software Discovery - PowerShell
-ruletype: Sigma
-author: Nikita Nazarov, oscd.community
-date: 2020/10/16
+id: 2650dd1a-eb2a-412d-ac36-83f06c4f2282
+status: experimental
 description: Adversaries may attempt to enumerate software for a variety of reasons,
     such as figuring out what security measures are present or if the compromised
     system has a version of software that is vulnerable.
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*get-itemProperty*'
-    SELECTION_4:
-        ScriptBlockText: '*\software\\*'
-    SELECTION_5:
-        ScriptBlockText: '*select-object*'
-    SELECTION_6:
-        ScriptBlockText: '*format-table*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Legitimate administration activities
-id: 2650dd1a-eb2a-412d-ac36-83f06c4f2282
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518/T1518.md
+    - https://github.com/harleyQu1nn/AggressorScripts
+author: Nikita Nazarov, oscd.community
+date: 2020/10/16
+modified: 2022/12/02
+tags:
+    - attack.discovery
+    - attack.t1518
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2022/12/02
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518/T1518.md
-- https://github.com/harleyQu1nn/AggressorScripts
-status: experimental
-tags:
-- attack.discovery
-- attack.t1518
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - get-itemProperty
+            - \software\
+            - select-object
+            - format-table
+    condition: ps_script and selection
+falsepositives:
+    - Legitimate administration activities
+level: medium
+ruletype: Sigma

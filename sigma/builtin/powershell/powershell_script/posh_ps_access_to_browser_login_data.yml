@@ -1,7 +1,11 @@
 title: Access to Browser Login Data
-ruletype: Sigma
-author: frack113
-date: 2022/01/30
+id: fc028194-969d-4122-8abe-0470d5b8f12f
+related:
+    -   id: 98f4c75c-3089-44f3-b733-b327b9cd9c9d
+        type: obsoletes
+    -   id: 47147b5b-9e17-4d76-b8d2-7bac24c5ce1b
+        type: similar
+status: test
 description: 'Adversaries may acquire credentials from web browsers by reading files
     specific to the target browser.
 
@@ -12,42 +16,36 @@ description: 'Adversaries may acquire credentials from web browsers by reading f
     store.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Copy-Item*'
-    SELECTION_4:
-        ScriptBlockText: '*-Destination*'
-    SELECTION_5:
-        ScriptBlockText:
-        - '*\Opera Software\Opera Stable\Login Data*'
-        - '*\Mozilla\Firefox\Profiles*'
-        - '*\Microsoft\Edge\User Data\Default*'
-        - '*\Google\Chrome\User Data\Default\Login Data*'
-        - '*\Google\Chrome\User Data\Default\Login Data For Account*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: fc028194-969d-4122-8abe-0470d5b8f12f
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1555.003/T1555.003.md
+author: frack113
+date: 2022/01/30
+tags:
+    - attack.credential_access
+    - attack.t1555.003
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1555.003/T1555.003.md
-related:
--   id: 98f4c75c-3089-44f3-b733-b327b9cd9c9d
-    type: obsoletes
--   id: 47147b5b-9e17-4d76-b8d2-7bac24c5ce1b
-    type: similar
-status: test
-tags:
-- attack.credential_access
-- attack.t1555.003
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection_cmd:
+        ScriptBlockText|contains|all:
+            - Copy-Item
+            - -Destination
+    selection_path:
+        ScriptBlockText|contains:
+            - \Opera Software\Opera Stable\Login Data
+            - \Mozilla\Firefox\Profiles
+            - \Microsoft\Edge\User Data\Default
+            - \Google\Chrome\User Data\Default\Login Data
+            - \Google\Chrome\User Data\Default\Login Data For Account
+    condition: ps_script and (all of selection_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

@@ -1,33 +1,31 @@
 title: PowerShell Downgrade Attack - PowerShell
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Lee Holmes (idea), Harish Segar (improvements)
-date: 2017/03/22
+id: 6331d09b-4785-4c13-980f-f96661356249
+status: experimental
 description: Detects PowerShell downgrade attack by comparing the host versions with
     the actually used engine version 2.0
-detection:
-    SELECTION_1:
-        EventID: 400
-    SELECTION_2:
-        Channel: Windows PowerShell
-    SELECTION_3:
-        EngineVersion: 2.*
-    SELECTION_4:
-        HostVersion: 2.*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: 6331d09b-4785-4c13-980f-f96661356249
-level: medium
+references:
+    - http://www.leeholmes.com/blog/2017/03/17/detecting-and-preventing-powershell-downgrade-attacks/
+author: Florian Roth (Nextron Systems), Lee Holmes (idea), Harish Segar (improvements)
+date: 2017/03/22
+modified: 2022/12/02
+tags:
+    - attack.defense_evasion
+    - attack.execution
+    - attack.t1059.001
 logsource:
+    product: windows
     category: ps_classic_start
     definition: fields have to be extract from event
-    product: windows
-modified: 2022/12/02
-references:
-- http://www.leeholmes.com/blog/2017/03/17/detecting-and-preventing-powershell-downgrade-attacks/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.execution
-- attack.t1059.001
-
+detection:
+    ps_classic_start:
+        EventID: 400
+        Channel: Windows PowerShell
+    selection:
+        EngineVersion|startswith: '2.'
+    filter:
+        HostVersion|startswith: '2.'
+    condition: ps_classic_start and (selection and not filter)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

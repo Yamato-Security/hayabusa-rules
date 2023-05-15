@@ -1,49 +1,46 @@
 title: Powershell Base64 Encoded MpPreference Cmdlet
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/03/04
+id: c6fb44c6-71f5-49e6-9462-1425d328aee3
+status: experimental
 description: Detects base64 encoded "MpPreference" PowerShell cmdlet code that tries
     to modifies or tamper with Windows Defender AV
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine|base64offset|contains:
-        - 'Add-MpPreference '
-        - 'Set-MpPreference '
-        - 'add-mppreference '
-        - 'set-mppreference '
-    SELECTION_4:
-        CommandLine:
-        - '*QQBkAGQALQBNAHAAUAByAGUAZgBlAHIAZQBuAGMAZQAgA*'
-        - '*EAZABkAC0ATQBwAFAAcgBlAGYAZQByAGUAbgBjAGUAIA*'
-        - '*BAGQAZAAtAE0AcABQAHIAZQBmAGUAcgBlAG4AYwBlACAA*'
-        - '*UwBlAHQALQBNAHAAUAByAGUAZgBlAHIAZQBuAGMAZQAgA*'
-        - '*MAZQB0AC0ATQBwAFAAcgBlAGYAZQByAGUAbgBjAGUAIA*'
-        - '*TAGUAdAAtAE0AcABQAHIAZQBmAGUAcgBlAG4AYwBlACAA*'
-        - '*YQBkAGQALQBtAHAAcAByAGUAZgBlAHIAZQBuAGMAZQAgA*'
-        - '*EAZABkAC0AbQBwAHAAcgBlAGYAZQByAGUAbgBjAGUAIA*'
-        - '*hAGQAZAAtAG0AcABwAHIAZQBmAGUAcgBlAG4AYwBlACAA*'
-        - '*cwBlAHQALQBtAHAAcAByAGUAZgBlAHIAZQBuAGMAZQAgA*'
-        - '*MAZQB0AC0AbQBwAHAAcgBlAGYAZQByAGUAbgBjAGUAIA*'
-        - '*zAGUAdAAtAG0AcABwAHIAZQBmAGUAcgBlAG4AYwBlACAA*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Unknown
-id: c6fb44c6-71f5-49e6-9462-1425d328aee3
-level: high
+references:
+    - https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/configure-process-opened-file-exclusions-microsoft-defender-antivirus
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
+    - https://twitter.com/AdamTheAnalyst/status/1483497517119590403
+author: Florian Roth (Nextron Systems)
+date: 2022/03/04
+modified: 2023/01/30
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/30
-references:
-- https://docs.microsoft.com/en-us/microsoft-365/security/defender-endpoint/configure-process-opened-file-exclusions-microsoft-defender-antivirus
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
-- https://twitter.com/AdamTheAnalyst/status/1483497517119590403
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   CommandLine|base64offset|contains:
+                - 'Add-MpPreference '
+                - 'Set-MpPreference '
+                - 'add-mppreference '
+                - 'set-mppreference '
+        -   CommandLine|contains:
+                - QQBkAGQALQBNAHAAUAByAGUAZgBlAHIAZQBuAGMAZQAgA
+                - EAZABkAC0ATQBwAFAAcgBlAGYAZQByAGUAbgBjAGUAIA
+                - BAGQAZAAtAE0AcABQAHIAZQBmAGUAcgBlAG4AYwBlACAA
+                - UwBlAHQALQBNAHAAUAByAGUAZgBlAHIAZQBuAGMAZQAgA
+                - MAZQB0AC0ATQBwAFAAcgBlAGYAZQByAGUAbgBjAGUAIA
+                - TAGUAdAAtAE0AcABQAHIAZQBmAGUAcgBlAG4AYwBlACAA
+                - YQBkAGQALQBtAHAAcAByAGUAZgBlAHIAZQBuAGMAZQAgA
+                - EAZABkAC0AbQBwAHAAcgBlAGYAZQByAGUAbgBjAGUAIA
+                - hAGQAZAAtAG0AcABwAHIAZQBmAGUAcgBlAG4AYwBlACAA
+                - cwBlAHQALQBtAHAAcAByAGUAZgBlAHIAZQBuAGMAZQAgA
+                - MAZQB0AC0AbQBwAHAAcgBlAGYAZQByAGUAbgBjAGUAIA
+                - zAGUAdAAtAG0AcABwAHIAZQBmAGUAcgBlAG4AYwBlACAA
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

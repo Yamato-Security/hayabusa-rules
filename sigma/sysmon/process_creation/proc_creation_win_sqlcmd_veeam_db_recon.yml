@@ -1,42 +1,38 @@
 title: Veeam Backup Database Suspicious Query
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/05/04
+id: 696bfb54-227e-4602-ac5b-30d9d2053312
+status: experimental
 description: Detects potentially suspicious SQL queries using SQLCmd targeting the
     Veeam backup databases in order to steal information.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\sqlcmd.exe'
-    SELECTION_4:
-        CommandLine: '*VeeamBackup*'
-    SELECTION_5:
-        CommandLine: '*From *'
-    SELECTION_6:
-        CommandLine:
-        - '*BackupRepositories*'
-        - '*Backups*'
-        - '*Credentials*'
-        - '*HostCreds*'
-        - '*SmbFileShares*'
-        - '*Ssh_creds*'
-        - '*VSphereInfo*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: 696bfb54-227e-4602-ac5b-30d9d2053312
-level: medium
+references:
+    - https://labs.withsecure.com/publications/fin7-target-veeam-servers
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/05/04
+tags:
+    - attack.collection
+    - attack.t1005
 logsource:
     category: process_creation
     product: windows
-references:
-- https://labs.withsecure.com/publications/fin7-target-veeam-servers
-status: experimental
-tags:
-- attack.collection
-- attack.t1005
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_sql:
+        Image|endswith: \sqlcmd.exe
+        CommandLine|contains|all:
+            - VeeamBackup
+            - 'From '
+    selection_db:
+        CommandLine|contains:
+            - BackupRepositories
+            - Backups
+            - Credentials
+            - HostCreds
+            - SmbFileShares
+            - Ssh_creds
+            - VSphereInfo
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

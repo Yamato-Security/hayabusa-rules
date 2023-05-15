@@ -1,32 +1,29 @@
 title: Interactive AT Job
-ruletype: Sigma
-author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
-date: 2019/10/24
+id: 60fc936d-2eb0-4543-8a13-911c750a1dfc
+status: test
 description: Detects an interactive AT job, which may be used as a form of privilege
     escalation.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\at.exe'
-    SELECTION_4:
-        CommandLine: '*interactive*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unlikely (at.exe deprecated as of Windows 8)
-id: 60fc936d-2eb0-4543-8a13-911c750a1dfc
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1053.002/T1053.002.md
+    - https://eqllib.readthedocs.io/en/latest/analytics/d8db43cf-ed52-4f5c-9fb3-c9a4b95a0b56.html
+author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
+date: 2019/10/24
+modified: 2021/11/27
+tags:
+    - attack.privilege_escalation
+    - attack.t1053.002
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1053.002/T1053.002.md
-- https://eqllib.readthedocs.io/en/latest/analytics/d8db43cf-ed52-4f5c-9fb3-c9a4b95a0b56.html
-status: test
-tags:
-- attack.privilege_escalation
-- attack.t1053.002
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \at.exe
+        CommandLine|contains: interactive
+    condition: process_creation and selection
+falsepositives:
+    - Unlikely (at.exe deprecated as of Windows 8)
+level: high
+ruletype: Sigma

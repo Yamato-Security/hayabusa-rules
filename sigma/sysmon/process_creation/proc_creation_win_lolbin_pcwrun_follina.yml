@@ -1,31 +1,28 @@
 title: Execute Pcwrun.EXE To Leverage Follina
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/06/13
+id: 6004abd0-afa4-4557-ba90-49d172e0a299
+status: experimental
 description: Detects indirect command execution via Program Compatibility Assistant
     "pcwrun.exe" leveraging the follina (CVE-2022-30190) vulnerability
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\pcwrun.exe'
-    SELECTION_4:
-        CommandLine: '*../*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unlikely
-id: 6004abd0-afa4-4557-ba90-49d172e0a299
-level: high
+references:
+    - https://twitter.com/nas_bench/status/1535663791362519040
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/06/13
+tags:
+    - attack.defense_evasion
+    - attack.t1218
+    - attack.execution
 logsource:
     category: process_creation
     product: windows
-references:
-- https://twitter.com/nas_bench/status/1535663791362519040
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1218
-- attack.execution
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \pcwrun.exe
+        CommandLine|contains: ../
+    condition: process_creation and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

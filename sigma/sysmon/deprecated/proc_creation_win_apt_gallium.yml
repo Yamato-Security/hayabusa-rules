@@ -1,39 +1,37 @@
 title: GALLIUM Artefacts
-ruletype: Sigma
-author: Tim Burrell
-date: 2020/02/07
+id: 18739897-21b1-41da-8ee4-5b786915a676
+related:
+    -   id: 440a56bf-7873-4439-940a-1c8a671073c2
+        type: derived
+status: deprecated
 description: Detects artefacts associated with activity group GALLIUM - Microsoft
     Threat Intelligence Center indicators released in December 2019.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        sha1: e570585edc69f9074cb5e8a790708336bd45ca0f
-    SELECTION_4:
-        Image:
-        - '*:\Program Files(x86)\\*'
-        - '*:\Program Files\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: 18739897-21b1-41da-8ee4-5b786915a676
-level: high
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/03/09
 references:
-- https://www.microsoft.com/security/blog/2019/12/12/gallium-targeting-global-telecom/
-- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/dn800669(v=ws.11)
-related:
--   id: 440a56bf-7873-4439-940a-1c8a671073c2
-    type: derived
-status: deprecated
+    - https://www.microsoft.com/security/blog/2019/12/12/gallium-targeting-global-telecom/
+    - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/dn800669(v=ws.11)
+author: Tim Burrell
+date: 2020/02/07
+modified: 2023/03/09
 tags:
-- attack.credential_access
-- attack.t1212
-- attack.command_and_control
-- attack.t1071
-
+    - attack.credential_access
+    - attack.t1212
+    - attack.command_and_control
+    - attack.t1071
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    legitimate_process_path:
+        Image|contains:
+            - :\Program Files(x86)\
+            - :\Program Files\
+    legitimate_executable:
+        sha1: e570585edc69f9074cb5e8a790708336bd45ca0f
+    condition: process_creation and (legitimate_executable and not legitimate_process_path)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

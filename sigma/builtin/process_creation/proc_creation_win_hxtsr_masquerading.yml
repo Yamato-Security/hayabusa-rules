@@ -1,7 +1,6 @@
 title: Fake Instance Of Hxtsr.exe
-ruletype: Sigma
-author: Sreeman
-date: 2020/04/17
+id: 4e762605-34a8-406d-b72e-c1a089313320
+status: test
 description: 'HxTsr.exe is a Microsoft compressed executable file called Microsoft
     Outlook Communications.
 
@@ -14,29 +13,26 @@ description: 'HxTsr.exe is a Microsoft compressed executable file called Microso
     as HxTsr.exe
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: hxtsr.exe
-    SELECTION_4:
-        CurrentDirectory: C:\program files\windowsapps\microsoft.windowscommunicationsapps_*
-    SELECTION_5:
-        CurrentDirectory: '*\hxtsr.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-        and SELECTION_5))
-falsepositives:
-- Unknown
-id: 4e762605-34a8-406d-b72e-c1a089313320
-level: medium
-logsource:
-    category: process_creation
-    product: windows
+author: Sreeman
+date: 2020/04/17
 modified: 2023/02/21
-status: test
 tags:
-- attack.defense_evasion
-- attack.t1036
-
+    - attack.defense_evasion
+    - attack.t1036
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        NewProcessName: hxtsr.exe
+    filter:
+        CurrentDirectory|startswith: C:\program files\windowsapps\microsoft.windowscommunicationsapps_
+        CurrentDirectory|endswith: \hxtsr.exe
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

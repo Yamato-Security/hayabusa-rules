@@ -1,39 +1,35 @@
 title: UAC Bypass Tools Using ComputerDefaults
-ruletype: Sigma
-author: Christian Burkard (Nextron Systems)
-date: 2021/08/31
+id: 3c05e90d-7eba-4324-9972-5d7f711a60a8
+status: test
 description: Detects tools such as UACMe used to bypass UAC with computerdefaults.exe
     (UACMe 59)
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        IntegrityLevel:
-        - High
-        - System
-    SELECTION_4:
-        NewProcessName: C:\Windows\System32\ComputerDefaults.exe
-    SELECTION_5:
-        ParentProcessName:
-        - '*:\Windows\System32*'
-        - '*:\Program Files*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Unknown
-id: 3c05e90d-7eba-4324-9972-5d7f711a60a8
-level: high
+references:
+    - https://github.com/hfiref0x/UACME
+author: Christian Burkard (Nextron Systems)
+date: 2021/08/31
+modified: 2022/10/09
+tags:
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1548.002
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
-references:
-- https://github.com/hfiref0x/UACME
-status: test
-tags:
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1548.002
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        IntegrityLevel:
+            - High
+            - System
+        NewProcessName: C:\Windows\System32\ComputerDefaults.exe
+    filter:
+        ParentProcessName|contains:
+            - :\Windows\System32
+            - :\Program Files
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,46 +1,40 @@
 title: New Firewall Rule Added In Windows Firewall Exception List
-ruletype: Sigma
-author: frack113
-date: 2022/02/19
+id: cde0a575-7d3d-4a49-9817-b8004a7bf105
+status: experimental
 description: Detects when a rule has been added to the Windows Firewall exception
     list
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
-    SELECTION_10:
-        ModifyingApplication: '*\MsMpEng.exe'
-    SELECTION_2:
-        EventID: 2004
-    SELECTION_3:
-        EventID: 2071
-    SELECTION_4:
-        Action: 2
-    SELECTION_5:
-        ApplicationPath:
-        - C:\Program Files\\*
-        - C:\Program Files (x86)\\*
-    SELECTION_6:
-        ModifyingApplication: C:\Windows\System32\oobe\Setup.exe
-    SELECTION_7:
-        ModifyingApplication: C:\Windows\WinSxS\\*
-    SELECTION_8:
-        ModifyingApplication:
-        - C:\Windows\SysWOW64\msiexec.exe
-        - C:\Windows\System32\svchost.exe
-        - C:\Windows\System32\dllhost.exe
-        - C:\Program Files\Windows Defender\MsMpEng.exe
-    SELECTION_9:
-        ModifyingApplication: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
-    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and  not ((SELECTION_4)
-        or (SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8))) and  not ((SELECTION_9
-        and SELECTION_10)))
-id: cde0a575-7d3d-4a49-9817-b8004a7bf105
-level: medium
+references:
+    - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
+author: frack113
+date: 2022/02/19
+modified: 2023/04/21
 logsource:
     product: windows
     service: firewall-as
-modified: 2023/04/21
-references:
-- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
-status: experimental
-
+detection:
+    firewall_as:
+        Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
+    selection:
+        EventID:
+            - 2004
+            - 2071
+    filter_main_block:
+        Action: 2
+    filter_main_installations:
+        -   ApplicationPath|startswith:
+                - C:\Program Files\
+                - C:\Program Files (x86)\
+        -   ModifyingApplication: C:\Windows\System32\oobe\Setup.exe
+        -   ModifyingApplication|startswith: C:\Windows\WinSxS\
+        -   ModifyingApplication:
+                - C:\Windows\SysWOW64\msiexec.exe
+                - C:\Windows\System32\svchost.exe
+                - C:\Windows\System32\dllhost.exe
+                - C:\Program Files\Windows Defender\MsMpEng.exe
+    filter_optional_msmpeng:
+        ModifyingApplication|startswith: C:\ProgramData\Microsoft\Windows Defender\Platform\
+        ModifyingApplication|endswith: \MsMpEng.exe
+    condition: firewall_as and (selection and not 1 of filter_main_* and not 1 of
+        filter_optional_*)
+level: medium
+ruletype: Sigma

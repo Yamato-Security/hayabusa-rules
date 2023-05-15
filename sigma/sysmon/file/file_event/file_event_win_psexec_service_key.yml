@@ -1,39 +1,36 @@
 title: PSEXEC Remote Execution File Artefact
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/01/21
+id: 304afd73-55a5-4bb9-8c21-0b1fc84ea9e4
+status: experimental
 description: Detects creation of the PSEXEC key file. Which is created anytime a PsExec
     command is executed. It gets written to the file system and will be recorded in
     the USN Journal on the target system
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: C:\Windows\PSEXEC-*
-    SELECTION_4:
-        TargetFilename: '*.key'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unlikely
-id: 304afd73-55a5-4bb9-8c21-0b1fc84ea9e4
-level: high
+references:
+    - https://aboutdfir.com/the-key-to-identify-psexec/
+    - https://twitter.com/davisrichardg/status/1616518800584704028
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/01/21
+modified: 2023/02/23
+tags:
+    - attack.lateral_movement
+    - attack.privilege_escalation
+    - attack.execution
+    - attack.persistence
+    - attack.t1136.002
+    - attack.t1543.003
+    - attack.t1570
+    - attack.s0029
 logsource:
     category: file_event
     product: windows
-modified: 2023/02/23
-references:
-- https://aboutdfir.com/the-key-to-identify-psexec/
-- https://twitter.com/davisrichardg/status/1616518800584704028
-status: experimental
-tags:
-- attack.lateral_movement
-- attack.privilege_escalation
-- attack.execution
-- attack.persistence
-- attack.t1136.002
-- attack.t1543.003
-- attack.t1570
-- attack.s0029
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|startswith: C:\Windows\PSEXEC-
+        TargetFilename|endswith: .key
+    condition: file_event and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

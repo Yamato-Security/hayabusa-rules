@@ -1,30 +1,28 @@
 title: Tor Client/Browser Execution
-ruletype: Sigma
+id: 62f7c9bf-9135-49b2-8aeb-1e54a6ecc13c
+status: test
+description: Detects the use of Tor or Tor-Browser to connect to onion routing networks
+references:
+    - https://www.logpoint.com/en/blog/detecting-tor-use-with-logpoint/
 author: frack113
 date: 2022/02/20
-description: Detects the use of Tor or Tor-Browser to connect to onion routing networks
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName:
-        - '*\tor.exe'
-        - '*\Tor Browser\Browser\firefox.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: 62f7c9bf-9135-49b2-8aeb-1e54a6ecc13c
-level: high
+modified: 2023/02/13
+tags:
+    - attack.command_and_control
+    - attack.t1090.003
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-references:
-- https://www.logpoint.com/en/blog/detecting-tor-use-with-logpoint/
-status: test
-tags:
-- attack.command_and_control
-- attack.t1090.003
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        NewProcessName|endswith:
+            - \tor.exe
+            - \Tor Browser\Browser\firefox.exe
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

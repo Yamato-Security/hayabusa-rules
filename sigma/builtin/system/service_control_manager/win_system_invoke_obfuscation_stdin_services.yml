@@ -1,45 +1,39 @@
 title: Invoke-Obfuscation STDIN+ Launcher - System
-ruletype: Sigma
+id: 72862bf2-0eb1-11eb-adc1-0242ac120002
+status: experimental
+description: Detects Obfuscated use of stdin to execute PowerShell
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Jonathan Cheong, oscd.community
 date: 2020/10/15
-description: Detects Obfuscated use of stdin to execute PowerShell
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Service Control Manager
-    SELECTION_3:
-        EventID: 7045
-    SELECTION_4:
-        ImagePath: '*cmd*'
-    SELECTION_5:
-        ImagePath: '*powershell*'
-    SELECTION_6:
-        ImagePath:
-        - '*/c*'
-        - '*/r*'
-    SELECTION_7:
-        ImagePath: '*noexit*'
-    SELECTION_8:
-        ImagePath: '*input*'
-    SELECTION_9:
-        ImagePath: '*$*'
-    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6) and (SELECTION_7 or (SELECTION_8 and SELECTION_9)))
-falsepositives:
-- Unknown
-id: 72862bf2-0eb1-11eb-adc1-0242ac120002
-level: high
+modified: 2022/11/29
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
     product: windows
     service: system
-modified: 2022/11/29
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    system:
+        Channel: System
+    selection_main:
+        Provider_Name: Service Control Manager
+        EventID: 7045
+        ImagePath|contains|all:
+            - cmd
+            - powershell
+        ImagePath|contains:
+            - /c
+            - /r
+    selection_other:
+        -   ImagePath|contains: noexit
+        -   ImagePath|contains|all:
+                - input
+                - $
+    condition: system and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,43 +1,37 @@
 title: Potential Signing Bypass Via Windows Developer Features - Registry
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/01/12
+id: b110ebaf-697f-4da1-afd5-b536fa27a2c1
+related:
+    -   id: a383dec4-deec-4e6e-913b-ed9249670848
+        type: similar
+status: experimental
 description: Detects when the enablement of developer features such as "Developer
     Mode" or "Application Sideloading". Which allows the user to install untrusted
     packages.
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject:
-        - '*\Microsoft\Windows\CurrentVersion\AppModelUnlock*'
-        - '*\Policies\Microsoft\Windows\Appx\\*'
-    SELECTION_5:
-        TargetObject:
-        - '*\AllowAllTrustedApps'
-        - '*\AllowDevelopmentWithoutDevLicense'
-    SELECTION_6:
-        Details: DWORD (0x00000001)
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: b110ebaf-697f-4da1-afd5-b536fa27a2c1
-level: high
+references:
+    - https://twitter.com/malmoeb/status/1560536653709598721
+    - https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/01/12
+tags:
+    - attack.defense_evasion
 logsource:
     category: registry_set
     product: windows
-references:
-- https://twitter.com/malmoeb/status/1560536653709598721
-- https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/
-related:
--   id: a383dec4-deec-4e6e-913b-ed9249670848
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|contains:
+            - \Microsoft\Windows\CurrentVersion\AppModelUnlock
+            - \Policies\Microsoft\Windows\Appx\
+        TargetObject|endswith:
+            - \AllowAllTrustedApps
+            - \AllowDevelopmentWithoutDevLicense
+        Details: DWORD (0x00000001)
+    condition: registry_set and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

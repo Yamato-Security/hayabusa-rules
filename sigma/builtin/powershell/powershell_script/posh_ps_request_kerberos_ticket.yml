@@ -1,7 +1,6 @@
 title: Request A Single Ticket via PowerShell
-ruletype: Sigma
-author: frack113
-date: 2021/12/28
+id: a861d835-af37-4930-bcd6-5b178bfb54df
+status: test
 description: 'utilize native PowerShell Identity modules to query the domain to extract
     the Service Principal Names for a single computer.
 
@@ -10,28 +9,27 @@ description: 'utilize native PowerShell Identity modules to query the domain to 
     A successful execution will output the SPNs for the endpoint in question.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*System.IdentityModel.Tokens.KerberosRequestorSecurityToken*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: a861d835-af37-4930-bcd6-5b178bfb54df
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1558.003/T1558.003.md#atomic-test-4---request-a-single-ticket-via-powershell
+author: frack113
+date: 2021/12/28
+tags:
+    - attack.credential_access
+    - attack.t1558.003
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1558.003/T1558.003.md#atomic-test-4---request-a-single-ticket-via-powershell
-status: test
-tags:
-- attack.credential_access
-- attack.t1558.003
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains: System.IdentityModel.Tokens.KerberosRequestorSecurityToken
+    condition: ps_script and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

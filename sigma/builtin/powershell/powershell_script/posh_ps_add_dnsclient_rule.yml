@@ -1,7 +1,6 @@
 title: Powershell Add Name Resolution Policy Table Rule
-ruletype: Sigma
-author: Borna Talebi
-date: 2021/09/14
+id: 4368354e-1797-463c-bc39-a309effbe8d7
+status: test
 description: 'Detects powershell scripts that adds a Name Resolution Policy Table
     (NRPT) rule for the specified namespace.
 
@@ -9,34 +8,32 @@ description: 'Detects powershell scripts that adds a Name Resolution Policy Tabl
     the query.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Add-DnsClientNrptRule*'
-    SELECTION_4:
-        ScriptBlockText: '*-Namesp*'
-    SELECTION_5:
-        ScriptBlockText: '*-NameSe*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: 4368354e-1797-463c-bc39-a309effbe8d7
-level: high
+references:
+    - https://twitter.com/NathanMcNulty/status/1569497348841287681
+    - https://docs.microsoft.com/en-us/powershell/module/dnsclient/add-dnsclientnrptrule?view=windowsserver2022-ps
+author: Borna Talebi
+date: 2021/09/14
+modified: 2022/10/09
+tags:
+    - attack.impact
+    - attack.t1565
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2022/10/09
-references:
-- https://twitter.com/NathanMcNulty/status/1569497348841287681
-- https://docs.microsoft.com/en-us/powershell/module/dnsclient/add-dnsclientnrptrule?view=windowsserver2022-ps
-status: test
-tags:
-- attack.impact
-- attack.t1565
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - Add-DnsClientNrptRule
+            - -Namesp
+            - -NameSe
+    condition: ps_script and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

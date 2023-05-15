@@ -1,51 +1,40 @@
 title: ServiceDll Hijack
-ruletype: Sigma
-author: frack113
-date: 2022/02/04
+id: 612e47e9-8a59-43a6-b404-f48683f45bd6
+status: experimental
 description: Detects changes to the "ServiceDLL" value related to a service in the
     registry. This is often used as a method of persistence.
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_10:
-        NewValue: '%%systemroot%%\system32\ntdsa.dll'
-    SELECTION_11:
-        NewProcessName: C:\Windows\System32\poqexec.exe
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: HKLM\System\CurrentControlSet\Services\\*
-    SELECTION_6:
-        TargetObject: '*\Parameters\ServiceDll'
-    SELECTION_7:
-        NewValue: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
-    SELECTION_8:
-        NewProcessName: C:\Windows\system32\lsass.exe
-    SELECTION_9:
-        TargetObject: '*\CurrentControlSet\Services\NTDS\Parameters\ServiceDll'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10) or (SELECTION_11)))
-falsepositives:
-- Administrative scripts
-- Installation of a service
-id: 612e47e9-8a59-43a6-b404-f48683f45bd6
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md#atomic-test-4---tinyturla-backdoor-service-w64time
+    - https://www.hexacorn.com/blog/2013/09/19/beyond-good-ol-run-key-part-4/
+author: frack113
+date: 2022/02/04
+modified: 2022/09/20
+tags:
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1543.003
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/20
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md#atomic-test-4---tinyturla-backdoor-service-w64time
-- https://www.hexacorn.com/blog/2013/09/19/beyond-good-ol-run-key-part-4/
-status: experimental
-tags:
-- attack.persistence
-- attack.privilege_escalation
-- attack.t1543.003
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|startswith: HKLM\System\CurrentControlSet\Services\
+        TargetObject|endswith: \Parameters\ServiceDll
+    filter_printextensionmanger:
+        Details: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
+    filter_domain_controller:
+        Image: C:\Windows\system32\lsass.exe
+        TargetObject|endswith: \CurrentControlSet\Services\NTDS\Parameters\ServiceDll
+        Details: '%%systemroot%%\system32\ntdsa.dll'
+    filter_poqexec:
+        Image: C:\Windows\System32\poqexec.exe
+    condition: registry_set and (selection and not 1 of filter*)
+falsepositives:
+    - Administrative scripts
+    - Installation of a service
+level: medium
+ruletype: Sigma

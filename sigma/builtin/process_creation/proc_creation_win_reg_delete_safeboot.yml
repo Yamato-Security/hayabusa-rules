@@ -1,40 +1,36 @@
 title: SafeBoot Registry Key Deleted Via Reg.EXE
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems), Tim Shelton
-date: 2022/08/08
+id: fc0e89b5-adb0-43c1-b749-c12a10ec37de
+related:
+    -   id: d7662ff6-9e97-4596-a61d-9839e32dee8d
+        type: similar
+status: experimental
 description: Detects execution of "reg.exe" commands with the "delete" flag on safe
     boot registry keys. Often used by attacker to prevent safeboot execution of security
     products
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*reg.exe'
-    SELECTION_4:
-        OriginalFileName: reg.exe
-    SELECTION_5:
-        CommandLine: '* delete *'
-    SELECTION_6:
-        CommandLine: '*\SYSTEM\CurrentControlSet\Control\SafeBoot*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6))
-falsepositives:
-- Unlikely
-id: fc0e89b5-adb0-43c1-b749-c12a10ec37de
-level: high
+references:
+    - https://www.trendmicro.com/en_us/research/22/e/avoslocker-ransomware-variant-abuses-driver-file-to-disable-anti-Virus-scans-log4shell.html
+author: Nasreddine Bencherchali (Nextron Systems), Tim Shelton
+date: 2022/08/08
+modified: 2023/02/04
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://www.trendmicro.com/en_us/research/22/e/avoslocker-ransomware-variant-abuses-driver-file-to-disable-anti-Virus-scans-log4shell.html
-related:
--   id: d7662ff6-9e97-4596-a61d-9839e32dee8d
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: reg.exe
+        -   OriginalFileName: reg.exe
+    selection_delete:
+        CommandLine|contains|all:
+            - ' delete '
+            - \SYSTEM\CurrentControlSet\Control\SafeBoot
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

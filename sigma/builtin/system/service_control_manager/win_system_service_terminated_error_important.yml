@@ -1,50 +1,46 @@
 title: Important Windows Service Terminated With Error
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/04/14
+id: d6b5520d-3934-48b4-928c-2aa3f92d6963
+related:
+    -   id: acfa2210-0d71-4eeb-b477-afab494d596c
+        type: similar
+status: experimental
 description: Detects important or interesting windows services that got terminated
     for whatever reason
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Service Control Manager
-    SELECTION_3:
-        EventID: 7023
-    SELECTION_4:
-        param1:
-        - '* Antivirus*'
-        - '* Firewall*'
-        - '*Application Guard*'
-        - '*BitLocker Drive Encryption Service*'
-        - '*Encrypting File System*'
-        - '*Microsoft Defender*'
-        - '*Threat Protection*'
-        - '*Windows Event Log*'
-    SELECTION_5:
-        Binary:
-        - '*770069006e0064006500660065006e006400*'
-        - '*4500760065006e0074004c006f006700*'
-        - '*6d0070007300730076006300*'
-        - '*530065006e0073006500*'
-        - '*450046005300*'
-        - '*420044004500530056004300*'
-    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and (SELECTION_4 or
-        SELECTION_5))
-falsepositives:
-- Rare false positives could occur since service termination could happen due to multiple
-    reasons
-id: d6b5520d-3934-48b4-928c-2aa3f92d6963
-level: high
+references:
+    - https://www.microsoft.com/en-us/security/blog/2023/04/11/guidance-for-investigating-attacks-using-cve-2022-21894-the-blacklotus-campaign/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/04/14
+tags:
+    - attack.defense_evasion
 logsource:
     product: windows
     service: system
-references:
-- https://www.microsoft.com/en-us/security/blog/2023/04/11/guidance-for-investigating-attacks-using-cve-2022-21894-the-blacklotus-campaign/
-related:
--   id: acfa2210-0d71-4eeb-b477-afab494d596c
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-
+detection:
+    system:
+        Channel: System
+    selection_eid:
+        Provider_Name: Service Control Manager
+        EventID: 7023
+    selection_name:
+        -   param1|contains:
+                - ' Antivirus'
+                - ' Firewall'
+                - Application Guard
+                - BitLocker Drive Encryption Service
+                - Encrypting File System
+                - Microsoft Defender
+                - Threat Protection
+                - Windows Event Log
+        -   Binary|contains:
+                - 770069006e0064006500660065006e006400
+                - 4500760065006e0074004c006f006700
+                - 6d0070007300730076006300
+                - 530065006e0073006500
+                - '450046005300'
+                - '420044004500530056004300'
+    condition: system and (all of selection_*)
+falsepositives:
+    - Rare false positives could occur since service termination could happen due
+        to multiple reasons
+level: high
+ruletype: Sigma

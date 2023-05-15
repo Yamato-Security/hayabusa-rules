@@ -1,62 +1,56 @@
 title: Disable Windows Defender AV Security Monitoring
-ruletype: Sigma
+id: a7ee1722-c3c5-aeff-3212-c777e4733217
+status: experimental
+description: Detects attackers attempting to disable Windows Defender using Powershell
+references:
+    - https://research.nccgroup.com/2020/06/23/wastedlocker-a-new-ransomware-variant-developed-by-the-evil-corp-group/
+    - https://rvsec0n.wordpress.com/2020/01/24/malwares-that-bypass-windows-defender/
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
 author: ok @securonix invrep-de, oscd.community, frack113
 date: 2020/10/12
-description: Detects attackers attempting to disable Windows Defender using Powershell
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        CommandLine: '*delete*'
-    SELECTION_11:
-        CommandLine: '*WinDefend*'
-    SELECTION_12:
-        CommandLine: '*config*'
-    SELECTION_13:
-        CommandLine: '*WinDefend*'
-    SELECTION_14:
-        CommandLine: '*start=disabled*'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_5:
-        CommandLine:
-        - '*-DisableBehaviorMonitoring $true*'
-        - '*-DisableRuntimeMonitoring $true*'
-    SELECTION_6:
-        Image: '*\sc.exe'
-    SELECTION_7:
-        OriginalFileName: sc.exe
-    SELECTION_8:
-        CommandLine: '*stop*'
-    SELECTION_9:
-        CommandLine: '*WinDefend*'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) or ((SELECTION_6 or SELECTION_7) and ((SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14)))))
-falsepositives:
-- Minimal, for some older versions of dev tools, such as pycharm, developers were
-    known to sometimes disable Windows Defender to improve performance, but this generally
-    is not considered a good security practice.
-id: a7ee1722-c3c5-aeff-3212-c777e4733217
-level: high
+modified: 2022/11/18
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/18
-references:
-- https://research.nccgroup.com/2020/06/23/wastedlocker-a-new-ransomware-variant-developed-by-the-evil-corp-group/
-- https://rvsec0n.wordpress.com/2020/01/24/malwares-that-bypass-windows-defender/
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_pwsh_binary:
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    selection_pwsh_cli:
+        CommandLine|contains:
+            - -DisableBehaviorMonitoring $true
+            - -DisableRuntimeMonitoring $true
+    selection_sc_binary:
+        -   Image|endswith: \sc.exe
+        -   OriginalFileName: sc.exe
+    selection_sc_tamper_cmd_stop:
+        CommandLine|contains|all:
+            - stop
+            - WinDefend
+    selection_sc_tamper_cmd_delete:
+        CommandLine|contains|all:
+            - delete
+            - WinDefend
+    selection_sc_tamper_cmd_disabled:
+        CommandLine|contains|all:
+            - config
+            - WinDefend
+            - start=disabled
+    condition: process_creation and (all of selection_pwsh_* or (selection_sc_binary
+        and 1 of selection_sc_tamper_*))
+falsepositives:
+    - Minimal, for some older versions of dev tools, such as pycharm, developers were
+        known to sometimes disable Windows Defender to improve performance, but this
+        generally is not considered a good security practice.
+level: high
+ruletype: Sigma

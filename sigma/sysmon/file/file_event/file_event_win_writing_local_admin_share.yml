@@ -1,35 +1,33 @@
 title: Writing Local Admin Share
-ruletype: Sigma
-author: frack113
-date: 2022/01/01
+id: 4aafb0fa-bff5-4b9d-b99e-8093e659c65f
+status: experimental
 description: 'Aversaries may use to interact with a remote network share using Server
     Message Block (SMB).
 
     This technique is used by post-exploitation frameworks.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*\\\\127.0.0*'
-    SELECTION_4:
-        TargetFilename: '*\ADMIN$\\*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 4aafb0fa-bff5-4b9d-b99e-8093e659c65f
-level: medium
-logsource:
-    category: file_event
-    product: windows
-modified: 2022/08/13
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.002/T1021.002.md#atomic-test-4---execute-command-writing-output-to-local-admin-share
-status: experimental
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1021.002/T1021.002.md#atomic-test-4---execute-command-writing-output-to-local-admin-share
+author: frack113
+date: 2022/01/01
+modified: 2022/08/13
 tags:
-- attack.lateral_movement
-- attack.t1546.002
-
+    - attack.lateral_movement
+    - attack.t1546.002
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|contains|all:
+            - \\\\127.0.0
+            - \ADMIN$\
+    condition: file_event and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

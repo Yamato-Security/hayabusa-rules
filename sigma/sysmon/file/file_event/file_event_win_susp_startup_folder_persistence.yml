@@ -1,44 +1,41 @@
 title: Suspicious Startup Folder Persistence
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/08/10
+id: 28208707-fe31-437f-9a7f-4b1108b94d2e
+related:
+    -   id: 2aa0a6b4-a865-495b-ab51-c28249537b75
+        type: similar
+status: experimental
 description: Detects when a file with a suspicious extension is created in the startup
     folder
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*\Windows\Start Menu\Programs\Startup\\*'
-    SELECTION_4:
-        TargetFilename:
-        - '*.vbs'
-        - '*.vbe'
-        - '*.bat'
-        - '*.ps1'
-        - '*.hta'
-        - '*.dll'
-        - '*.jar'
-        - '*.msi'
-        - '*.scr'
-        - '*.cmd'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Rare legitimate usage of some of the extensions mentioned in the rule
-id: 28208707-fe31-437f-9a7f-4b1108b94d2e
-level: high
-logsource:
-    category: file_event
-    product: windows
-modified: 2023/01/06
 references:
-- https://github.com/last-byte/PersistenceSniper
-related:
--   id: 2aa0a6b4-a865-495b-ab51-c28249537b75
-    type: similar
-status: experimental
+    - https://github.com/last-byte/PersistenceSniper
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/10
+modified: 2023/01/06
 tags:
-- attack.persistence
-- attack.t1547.001
-
+    - attack.persistence
+    - attack.t1547.001
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|contains: \Windows\Start Menu\Programs\Startup\
+        TargetFilename|endswith:
+            - .vbs
+            - .vbe
+            - .bat
+            - .ps1
+            - .hta
+            - .dll
+            - .jar
+            - .msi
+            - .scr
+            - .cmd
+    condition: file_event and selection
+falsepositives:
+    - Rare legitimate usage of some of the extensions mentioned in the rule
+level: high
+ruletype: Sigma

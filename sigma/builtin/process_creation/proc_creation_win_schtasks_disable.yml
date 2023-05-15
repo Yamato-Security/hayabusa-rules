@@ -1,50 +1,44 @@
 title: Disable Important Scheduled Task
-ruletype: Sigma
-author: frack113, Nasreddine Bencherchali (Nextron Systems)
-date: 2021/12/26
+id: 9ac94dc8-9042-493c-ba45-3b5e7c86b980
+related:
+    -   id: 7595ba94-cf3b-4471-aa03-4f6baa9e5fad
+        type: similar
+status: experimental
 description: Detects when adversaries stop services or processes by disabling their
     respective scheduled tasks in order to conduct data destructive activities
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\schtasks.exe'
-    SELECTION_4:
-        CommandLine: '*/Change*'
-    SELECTION_5:
-        CommandLine: '*/TN*'
-    SELECTION_6:
-        CommandLine: '*/disable*'
-    SELECTION_7:
-        CommandLine:
-        - '*\Windows\SystemRestore\SR*'
-        - '*\Windows\Windows Defender\\*'
-        - '*\Windows\BitLocker*'
-        - '*\Windows\WindowsBackup\\*'
-        - '*\Windows\WindowsUpdate\\*'
-        - '*\Windows\UpdateOrchestrator\\*'
-        - '*\Windows\ExploitGuard*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Unknown
-id: 9ac94dc8-9042-493c-ba45-3b5e7c86b980
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-8---windows---disable-the-sr-scheduled-task
+    - https://twitter.com/MichalKoczwara/status/1553634816016498688
+    - https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/
+author: frack113, Nasreddine Bencherchali (Nextron Systems)
+date: 2021/12/26
+modified: 2022/09/02
+tags:
+    - attack.impact
+    - attack.t1489
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/02
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-8---windows---disable-the-sr-scheduled-task
-- https://twitter.com/MichalKoczwara/status/1553634816016498688
-- https://thedfirreport.com/2021/10/18/icedid-to-xinglocker-ransomware-in-24-hours/
-related:
--   id: 7595ba94-cf3b-4471-aa03-4f6baa9e5fad
-    type: similar
-status: experimental
-tags:
-- attack.impact
-- attack.t1489
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    schtasks_exe:
+        CommandLine|contains|all:
+            - /Change
+            - /TN
+            - /disable
+        CommandLine|contains:
+            - \Windows\SystemRestore\SR
+            - \Windows\Windows Defender\
+            - \Windows\BitLocker
+            - \Windows\WindowsBackup\
+            - \Windows\WindowsUpdate\
+            - \Windows\UpdateOrchestrator\
+            - \Windows\ExploitGuard
+        NewProcessName|endswith: \schtasks.exe
+    condition: process_creation and (all of schtasks_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

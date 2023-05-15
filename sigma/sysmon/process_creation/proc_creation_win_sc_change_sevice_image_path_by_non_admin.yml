@@ -1,43 +1,39 @@
 title: Possible Privilege Escalation via Weak Service Permissions
-ruletype: Sigma
-author: Teymur Kheirkhabarov
-date: 2019/10/26
+id: d937b75f-a665-4480-88a5-2f20e9f9b22a
+status: test
 description: Detection of sc.exe utility spawning by user with Medium integrity level
     to change service ImagePath or FailureCommand
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\sc.exe'
-    SELECTION_4:
-        IntegrityLevel: Medium
-    SELECTION_5:
-        CommandLine: '*config*'
-    SELECTION_6:
-        CommandLine: '*binPath*'
-    SELECTION_7:
-        CommandLine: '*failure*'
-    SELECTION_8:
-        CommandLine: '*command*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
-        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Unknown
-id: d937b75f-a665-4480-88a5-2f20e9f9b22a
-level: high
+references:
+    - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
+    - https://pentestlab.blog/2017/03/30/weak-service-permissions/
+author: Teymur Kheirkhabarov
+date: 2019/10/26
+modified: 2022/07/14
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1574.011
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
-references:
-- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
-- https://pentestlab.blog/2017/03/30/weak-service-permissions/
-status: test
-tags:
-- attack.persistence
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1574.011
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    scbynonadmin:
+        Image|endswith: \sc.exe
+        IntegrityLevel: Medium
+    selection_binpath:
+        CommandLine|contains|all:
+            - config
+            - binPath
+    selection_failure:
+        CommandLine|contains|all:
+            - failure
+            - command
+    condition: process_creation and (scbynonadmin and 1 of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

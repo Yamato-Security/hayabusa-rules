@@ -1,60 +1,55 @@
 title: Windows Binaries Write Suspicious Extensions
-ruletype: Sigma
+id: b8fd0e93-ff58-4cbd-8f48-1c114e342e62
+related:
+    -   id: 1277f594-a7d1-4f28-a2d3-73af5cbeab43
+        type: derived
+status: experimental
+description: Detects windows executables that writes files with suspicious extensions
+references:
+    - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/12
-description: Detects windows executables that writes files with suspicious extensions
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\smss.exe'
-        - '*\RuntimeBroker.exe'
-        - '*\sihost.exe'
-        - '*\lsass.exe'
-        - '*\csrss.exe'
-        - '*\winlogon.exe'
-        - '*\wininit.exe'
-    SELECTION_4:
-        TargetFilename:
-        - '*.bat'
-        - '*.vbe'
-        - '*.txt'
-        - '*.vbs'
-        - '*.exe'
-        - '*.ps1'
-        - '*.hta'
-        - '*.iso'
-        - '*.dll'
-    SELECTION_5:
-        Image:
-        - '*\rundll32.exe'
-        - '*\svchost.exe'
-        - '*\dllhost.exe'
-    SELECTION_6:
-        TargetFilename:
-        - '*.bat'
-        - '*.vbe'
-        - '*.vbs'
-        - '*.ps1'
-        - '*.hta'
-        - '*.iso'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6)))
-falsepositives:
-- Unknown
-id: b8fd0e93-ff58-4cbd-8f48-1c114e342e62
-level: high
+modified: 2023/03/14
 logsource:
     category: file_event
     product: windows
-modified: 2023/03/14
-references:
-- Internal Research
-related:
--   id: 1277f594-a7d1-4f28-a2d3-73af5cbeab43
-    type: derived
-status: experimental
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_generic:
+        Image|endswith:
+            - \smss.exe
+            - \RuntimeBroker.exe
+            - \sihost.exe
+            - \lsass.exe
+            - \csrss.exe
+            - \winlogon.exe
+            - \wininit.exe
+        TargetFilename|endswith:
+            - .bat
+            - .vbe
+            - .txt
+            - .vbs
+            - .exe
+            - .ps1
+            - .hta
+            - .iso
+            - .dll
+    selection_special:
+        Image|endswith:
+            - \rundll32.exe
+            - \svchost.exe
+            - \dllhost.exe
+        TargetFilename|endswith:
+            - .bat
+            - .vbe
+            - .vbs
+            - .ps1
+            - .hta
+            - .iso
+    condition: file_event and (1 of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

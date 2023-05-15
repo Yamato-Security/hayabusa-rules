@@ -1,46 +1,41 @@
 title: Suspicious Printer Driver Empty Manufacturer
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2020/07/01
+id: e0813366-0407-449a-9869-a2db1119dc41
+status: test
 description: Detects a suspicious printer driver installation with an empty Manufacturer
     value
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\Control\Print\Environments\Windows x64\Drivers*'
-    SELECTION_5:
-        TargetObject: '*\Manufacturer*'
-    SELECTION_6:
-        Details: (Empty)
-    SELECTION_7:
-        TargetObject: '*\CutePDF Writer v4.0\\*'
-    SELECTION_8:
-        TargetObject:
-        - '*\VNC Printer (PS)\\*'
-        - '*\VNC Printer (UD)\\*'
-    SELECTION_9:
-        TargetObject: '*\Version-3\PDF24\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8) or (SELECTION_9)))
-falsepositives:
-- Alerts on legitimate printer drivers that do not set any more details in the Manufacturer
-    value
-id: e0813366-0407-449a-9869-a2db1119dc41
-level: high
+references:
+    - https://twitter.com/SBousseaden/status/1410545674773467140
+author: Florian Roth (Nextron Systems)
+date: 2020/07/01
+modified: 2023/03/14
+tags:
+    - attack.privilege_escalation
+    - attack.t1574
+    - cve.2021.1675
 logsource:
     category: registry_set
     product: windows
-modified: 2023/03/14
-references:
-- https://twitter.com/SBousseaden/status/1410545674773467140
-status: test
-tags:
-- attack.privilege_escalation
-- attack.t1574
-- cve.2021.1675
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|contains|all:
+            - \Control\Print\Environments\Windows x64\Drivers
+            - \Manufacturer
+        Details: (Empty)
+    filter_cutepdf:
+        TargetObject|contains: \CutePDF Writer v4.0\
+    filter_vnc:
+        TargetObject|contains:
+            - \VNC Printer (PS)\
+            - \VNC Printer (UD)\
+    filter_pdf24:
+        TargetObject|contains: \Version-3\PDF24\
+    condition: registry_set and (selection and not 1 of filter_*)
+falsepositives:
+    - Alerts on legitimate printer drivers that do not set any more details in the
+        Manufacturer value
+level: high
+ruletype: Sigma

@@ -1,38 +1,34 @@
 title: New Network Trace Capture Started Via Netsh.EXE
-ruletype: Sigma
-author: Kutepov Anton, oscd.community
-date: 2019/10/24
+id: d3c3861d-c504-4c77-ba55-224ba82d0118
+status: test
 description: Detects the execution of netsh with the "trace" flag in order to start
     a network capture
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\netsh.exe'
-    SELECTION_4:
-        OriginalFileName: netsh.exe
-    SELECTION_5:
-        CommandLine: '*trace*'
-    SELECTION_6:
-        CommandLine: '*start*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6))
-falsepositives:
-- Legitimate administration activity
-id: d3c3861d-c504-4c77-ba55-224ba82d0118
-level: medium
+references:
+    - https://blogs.msdn.microsoft.com/canberrapfe/2012/03/30/capture-a-network-trace-without-installing-anything-capture-a-network-trace-of-a-reboot/
+    - https://klausjochem.me/2016/02/03/netsh-the-cyber-attackers-tool-of-choice/
+author: Kutepov Anton, oscd.community
+date: 2019/10/24
+modified: 2023/02/13
+tags:
+    - attack.discovery
+    - attack.credential_access
+    - attack.t1040
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-references:
-- https://blogs.msdn.microsoft.com/canberrapfe/2012/03/30/capture-a-network-trace-without-installing-anything-capture-a-network-trace-of-a-reboot/
-- https://klausjochem.me/2016/02/03/netsh-the-cyber-attackers-tool-of-choice/
-status: test
-tags:
-- attack.discovery
-- attack.credential_access
-- attack.t1040
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \netsh.exe
+        -   OriginalFileName: netsh.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - trace
+            - start
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Legitimate administration activity
+level: medium
+ruletype: Sigma

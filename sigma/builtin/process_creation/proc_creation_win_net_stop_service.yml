@@ -1,38 +1,34 @@
 title: Stop Windows Service Via Net.EXE
-ruletype: Sigma
+id: 88872991-7445-4a22-90b2-a3adadb0e827
+related:
+    -   id: eb87818d-db5d-49cc-a987-d5da331fbd90
+        type: obsoletes
+status: experimental
+description: Detects the stopping of a Windows service
 author: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali (Nextron Systems)
 date: 2023/03/05
-description: Detects the stopping of a Windows service
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        OriginalFileName:
-        - net.exe
-        - net1.exe
-    SELECTION_4:
-        NewProcessName:
-        - '*\net.exe'
-        - '*\net1.exe'
-    SELECTION_5:
-        CommandLine: '* stop *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- There are many legitimate reasons to stop a service. This rule isn't looking for
-    any suspicious behaviour in particular. Filter legitimate activity accordingly
-id: 88872991-7445-4a22-90b2-a3adadb0e827
-level: low
+tags:
+    - attack.impact
+    - attack.t1489
 logsource:
     category: process_creation
     product: windows
-related:
--   id: eb87818d-db5d-49cc-a987-d5da331fbd90
-    type: obsoletes
-status: experimental
-tags:
-- attack.impact
-- attack.t1489
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
+        -   NewProcessName|endswith:
+                - \net.exe
+                - \net1.exe
+    selection_cli:
+        CommandLine|contains: ' stop '
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - There are many legitimate reasons to stop a service. This rule isn't looking
+        for any suspicious behaviour in particular. Filter legitimate activity accordingly
+level: low
+ruletype: Sigma

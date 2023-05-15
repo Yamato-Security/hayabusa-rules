@@ -1,78 +1,74 @@
 title: Suspicious Manipulation Of Default Accounts Via Net.EXE
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/09/01
+id: 5b768e71-86f2-4879-b448-81061cbae951
+status: experimental
 description: Detects suspicious manipulations of default accounts such as 'administrator'
     and 'guest'. For example 'enable' or 'disable' accounts or change the password...etc
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\net.exe'
-        - '*\net1.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - net.exe
-        - net1.exe
-    SELECTION_5:
-        CommandLine: '* user *'
-    SELECTION_6:
-        CommandLine:
-        - "* J\xE4rjestelm\xE4nvalvoja *"
-        - '* Rendszergazda *'
-        - "* \u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\
-            \u0440 *"
-        - '* Administrateur *'
-        - '* Administrador *'
-        - "* Administrat\xF6r *"
-        - '* Administrator *'
-        - '* guest *'
-        - '* DefaultAccount *'
-        - "* \"J\xE4rjestelm\xE4nvalvoja\" *"
-        - '* "Rendszergazda" *'
-        - "* \"\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\
-            \u0440\" *"
-        - '* "Administrateur" *'
-        - '* "Administrador" *'
-        - "* \"Administrat\xF6r\" *"
-        - '* "Administrator" *'
-        - '* "guest" *'
-        - '* "DefaultAccount" *'
-        - "* 'J\xE4rjestelm\xE4nvalvoja' *"
-        - '* ''Rendszergazda'' *'
-        - "* '\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\u043E\
-            \u0440' *"
-        - '* ''Administrateur'' *'
-        - '* ''Administrador'' *'
-        - "* 'Administrat\xF6r' *"
-        - '* ''Administrator'' *'
-        - '* ''guest'' *'
-        - '* ''DefaultAccount'' *'
-    SELECTION_7:
-        CommandLine: '*guest*'
-    SELECTION_8:
-        CommandLine: '*/active no*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6) and  not (SELECTION_7 and SELECTION_8))
-falsepositives:
-- Some false positives could occur with the admin or guest account. It depends on
-    the scripts being used by the admins in your env. If you experience a lot of FP
-    you could reduce the level to medium
-id: 5b768e71-86f2-4879-b448-81061cbae951
-level: high
+references:
+    - https://www.trellix.com/en-sg/about/newsroom/stories/threat-labs/lockergoga-ransomware-family-used-in-targeted-attacks.html
+    - https://redacted.com/blog/bianlian-ransomware-gang-gives-it-a-go/
+    - https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/09/01
+modified: 2023/02/21
+tags:
+    - attack.collection
+    - attack.t1560.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
-references:
-- https://www.trellix.com/en-sg/about/newsroom/stories/threat-labs/lockergoga-ransomware-family-used-in-targeted-attacks.html
-- https://redacted.com/blog/bianlian-ransomware-gang-gives-it-a-go/
-- https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/
-status: experimental
-tags:
-- attack.collection
-- attack.t1560.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith:
+                - \net.exe
+                - \net1.exe
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
+    selection_user_option:
+        CommandLine|contains: ' user '
+    selection_username:
+        CommandLine|contains:
+            - " J\xE4rjestelm\xE4nvalvoja "
+            - ' Rendszergazda '
+            - " \u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\
+                \u043E\u0440 "
+            - ' Administrateur '
+            - ' Administrador '
+            - " Administrat\xF6r "
+            - ' Administrator '
+            - ' guest '
+            - ' DefaultAccount '
+            - " \"J\xE4rjestelm\xE4nvalvoja\" "
+            - ' "Rendszergazda" '
+            - " \"\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\
+                \u043E\u0440\" "
+            - ' "Administrateur" '
+            - ' "Administrador" '
+            - " \"Administrat\xF6r\" "
+            - ' "Administrator" '
+            - ' "guest" '
+            - ' "DefaultAccount" '
+            - " 'J\xE4rjestelm\xE4nvalvoja' "
+            - ' ''Rendszergazda'' '
+            - " '\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\
+                \u043E\u0440' "
+            - ' ''Administrateur'' '
+            - ' ''Administrador'' '
+            - " 'Administrat\xF6r' "
+            - ' ''Administrator'' '
+            - ' ''guest'' '
+            - ' ''DefaultAccount'' '
+    filter:
+        CommandLine|contains|all:
+            - guest
+            - /active no
+    condition: process_creation and (all of selection_* and not filter)
+falsepositives:
+    - Some false positives could occur with the admin or guest account. It depends
+        on the scripts being used by the admins in your env. If you experience a lot
+        of FP you could reduce the level to medium
+level: high
+ruletype: Sigma

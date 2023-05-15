@@ -1,43 +1,37 @@
 title: Potential Persistence Via Notepad++ Plugins
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/06/10
+id: 54127bd4-f541-4ac3-afdb-ea073f63f692
+status: experimental
 description: Detects creation of new ".dll" files inside the plugins directory of
     a notepad++ installation by a process other than "gup.exe". Which could indicates
     possible persistence
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*\Notepad++\plugins\\*'
-    SELECTION_4:
-        TargetFilename: '*.dll'
-    SELECTION_5:
-        Image: '*\Notepad++\updater\gup.exe'
-    SELECTION_6:
-        Image: C:\Users\\*
-    SELECTION_7:
-        Image: '*\AppData\Local\Temp\\*'
-    SELECTION_8:
-        Image:
-        - '*\target.exe'
-        - '*Installer.x64.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Possible FPs during first installation of Notepad++
-- Legitimate use of custom plugins by users in order to enhance notepad++ functionalities
-id: 54127bd4-f541-4ac3-afdb-ea073f63f692
-level: medium
-logsource:
-    category: file_event
-    product: windows
-modified: 2023/01/05
 references:
-- https://pentestlab.blog/2022/02/14/persistence-notepad-plugins/
-status: experimental
+    - https://pentestlab.blog/2022/02/14/persistence-notepad-plugins/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/06/10
+modified: 2023/01/05
 tags:
-- attack.persistence
-
+    - attack.persistence
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|contains: \Notepad++\plugins\
+        TargetFilename|endswith: .dll
+    filter_gup:
+        Image|endswith: \Notepad++\updater\gup.exe
+    filter_install:
+        Image|startswith: C:\Users\
+        Image|contains: \AppData\Local\Temp\
+        Image|endswith:
+            - \target.exe
+            - Installer.x64.exe
+    condition: file_event and (selection and not 1 of filter_*)
+falsepositives:
+    - Possible FPs during first installation of Notepad++
+    - Legitimate use of custom plugins by users in order to enhance notepad++ functionalities
+level: medium
+ruletype: Sigma

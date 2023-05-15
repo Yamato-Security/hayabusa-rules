@@ -1,33 +1,31 @@
 title: SVCHOST Credential Dump
-ruletype: Sigma
-author: Florent Labouyrie
-date: 2021/04/30
+id: 174afcfa-6e40-4ae9-af64-496546389294
+status: test
 description: Detects when a process, such as mimikatz, accesses the memory of svchost
     to dump credentials
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetImage: '*\svchost.exe'
-    SELECTION_4:
-        GrantedAccess: '0x143a'
-    SELECTION_5:
-        SourceImage:
-        - '*\services.exe'
-        - '*\msiexec.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Non identified legit exectubale
-id: 174afcfa-6e40-4ae9-af64-496546389294
-level: high
-logsource:
-    category: process_access
-    product: windows
+author: Florent Labouyrie
+date: 2021/04/30
 modified: 2022/10/09
-status: test
 tags:
-- attack.t1548
-
+    - attack.t1548
+logsource:
+    product: windows
+    category: process_access
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_process:
+        TargetImage|endswith: \svchost.exe
+    selection_memory:
+        GrantedAccess: '0x143a'
+    filter_trusted_process_access:
+        SourceImage|endswith:
+            - '*\services.exe'
+            - '*\msiexec.exe'
+    condition: process_access and (selection_process and selection_memory and not
+        filter_trusted_process_access)
+falsepositives:
+    - Non identified legit exectubale
+level: high
+ruletype: Sigma

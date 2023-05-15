@@ -1,35 +1,31 @@
 title: Powershell Token Obfuscation - Process Creation
-ruletype: Sigma
+id: deb9b646-a508-44ee-b7c9-d8965921c6b6
+related:
+    -   id: f3a98ce4-6164-4dd4-867c-4d83de7eca51
+        type: similar
+status: experimental
+description: Detects TOKEN OBFUSCATION technique from Invoke-Obfuscation
+references:
+    - https://github.com/danielbohannon/Invoke-Obfuscation
 author: frack113
 date: 2022/12/27
-description: Detects TOKEN OBFUSCATION technique from Invoke-Obfuscation
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine|re: \w+`(\w+|-|.)`[\w+|\s]
-    SELECTION_4:
-        CommandLine|re: '"(\{\d\})+"\s*-f'
-    SELECTION_5:
-        CommandLine|re: \$\{((e|n|v)*`(e|n|v)*)+:path\}|\$\{((e|n|v)*`(e|n|v)*)+:((p|a|t|h)*`(p|a|t|h)*)+\}|\$\{env:((p|a|t|h)*`(p|a|t|h)*)+\}
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- Unknown
-id: deb9b646-a508-44ee-b7c9-d8965921c6b6
-level: high
+modified: 2022/12/30
+tags:
+    - attack.defense_evasion
+    - attack.t1027.009
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/30
-references:
-- https://github.com/danielbohannon/Invoke-Obfuscation
-related:
--   id: f3a98ce4-6164-4dd4-867c-4d83de7eca51
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027.009
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   CommandLine|re: \w+`(\w+|-|.)`[\w+|\s]
+        -   CommandLine|re: '"(\{\d\})+"\s*-f'
+        -   CommandLine|re: \$\{((e|n|v)*`(e|n|v)*)+:path\}|\$\{((e|n|v)*`(e|n|v)*)+:((p|a|t|h)*`(p|a|t|h)*)+\}|\$\{env:((p|a|t|h)*`(p|a|t|h)*)+\}
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

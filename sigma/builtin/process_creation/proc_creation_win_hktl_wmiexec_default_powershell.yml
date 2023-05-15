@@ -1,28 +1,26 @@
 title: HackTool - Wmiexec Default Powershell Command
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/03/08
+id: 022eaba8-f0bf-4dd9-9217-4604b0bb3bb0
+status: experimental
 description: Detects the execution of PowerShell with a specific flag sequence that
     is used by the Wmiexec script
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*-NoP -NoL -sta -NonI -W Hidden -Exec Bypass -Enc*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unlikely
-id: 022eaba8-f0bf-4dd9-9217-4604b0bb3bb0
-level: high
+references:
+    - https://github.com/fortra/impacket/blob/f4b848fa27654ca95bc0f4c73dbba8b9c2c9f30a/examples/wmiexec.py
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/03/08
+tags:
+    - attack.defense_evasion
+    - attack.lateral_movement
 logsource:
     category: process_creation
     product: windows
-references:
-- https://github.com/fortra/impacket/blob/f4b848fa27654ca95bc0f4c73dbba8b9c2c9f30a/examples/wmiexec.py
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.lateral_movement
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains: -NoP -NoL -sta -NonI -W Hidden -Exec Bypass -Enc
+    condition: process_creation and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

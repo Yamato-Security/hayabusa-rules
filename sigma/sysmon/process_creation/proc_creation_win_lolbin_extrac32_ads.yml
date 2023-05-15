@@ -1,32 +1,29 @@
 title: Suspicious Extrac32 Alternate Data Stream Execution
-ruletype: Sigma
+id: 4b13db67-0c45-40f1-aba8-66a1a7198a1e
+status: test
+description: Extract data from cab file and hide it in an alternate data stream
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Extrac32/
 author: frack113
 date: 2021/11/26
-description: Extract data from cab file and hide it in an alternate data stream
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*extrac32.exe*'
-    SELECTION_4:
-        CommandLine: '*.cab*'
-    SELECTION_5:
-        CommandLine|re: :[^\\]
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: 4b13db67-0c45-40f1-aba8-66a1a7198a1e
-level: medium
+modified: 2022/12/30
+tags:
+    - attack.defense_evasion
+    - attack.t1564.004
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/30
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Extrac32/
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1564.004
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains|all:
+            - extrac32.exe
+            - .cab
+        CommandLine|re: :[^\\]
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

@@ -1,29 +1,27 @@
 title: Register new Logon Process by Rubeus
-ruletype: Sigma
+id: 12e6d621-194f-4f59-90cc-1959e21e69f7
+status: test
+description: Detects potential use of Rubeus via registered new trusted logon process
+references:
+    - https://posts.specterops.io/hunting-in-active-directory-unconstrained-delegation-forests-trusts-71f2b33688e1
 author: Roberto Rodriguez (source), Ilyas Ochkov (rule), oscd.community
 date: 2019/10/24
-description: Detects potential use of Rubeus via registered new trusted logon process
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4611
-    SELECTION_3:
-        LogonProcessName: User32LogonProcesss
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: 12e6d621-194f-4f59-90cc-1959e21e69f7
-level: high
+modified: 2022/10/09
+tags:
+    - attack.lateral_movement
+    - attack.privilege_escalation
+    - attack.t1558.003
 logsource:
     product: windows
     service: security
-modified: 2022/10/09
-references:
-- https://posts.specterops.io/hunting-in-active-directory-unconstrained-delegation-forests-trusts-71f2b33688e1
-status: test
-tags:
-- attack.lateral_movement
-- attack.privilege_escalation
-- attack.t1558.003
-
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 4611
+        LogonProcessName: User32LogonProcesss
+    condition: security and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

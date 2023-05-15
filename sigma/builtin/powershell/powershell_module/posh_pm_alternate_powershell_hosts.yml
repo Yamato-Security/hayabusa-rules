@@ -1,54 +1,51 @@
 title: Alternate PowerShell Hosts - PowerShell Module
-ruletype: Sigma
-author: Roberto Rodriguez @Cyb3rWard0g
-date: 2019/08/11
+id: 64e8e417-c19a-475a-8d19-98ea705394cc
+status: test
 description: Detects alternate PowerShell hosts potentially bypassing detections looking
     for powershell.exe
-detection:
-    SELECTION_1:
-        EventID: 4103
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ContextInfo: '*'
-    SELECTION_4:
-        ContextInfo:
-        - '*= powershell*'
-        - '*= C:\Windows\System32\WindowsPowerShell\v1.0\powershell*'
-        - '*= C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell*'
-        - '*= C:/Windows/System32/WindowsPowerShell/v1.0/powershell*'
-        - '*= C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell*'
-    SELECTION_5:
-        ContextInfo: '*= C:\WINDOWS\System32\sdiagnhost.exe -Embedding*'
-    SELECTION_6:
-        ContextInfo: '*ConfigSyncRun.exe*'
-    SELECTION_7:
-        ContextInfo: '*C:\Windows\system32\dsac.exe*'
-    SELECTION_8:
-        ContextInfo: '*C:\Windows\system32\wsmprovhost.exe -Embedding*'
-    SELECTION_9:
-        Payload:
-        - '*Update-Help*'
-        - '*Failed to update Help for the module*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9)))
-falsepositives:
-- Programs using PowerShell directly without invocation of a dedicated interpreter
-- MSP Detection Searcher
-- Citrix ConfigSync.ps1
-id: 64e8e417-c19a-475a-8d19-98ea705394cc
-level: medium
+references:
+    - https://threathunterplaybook.com/hunts/windows/190610-PwshAlternateHosts/notebook.html
+author: Roberto Rodriguez @Cyb3rWard0g
+date: 2019/08/11
+modified: 2022/12/13
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
+    product: windows
     category: ps_module
     definition: 'Requirements: PowerShell Module Logging must be enabled'
-    product: windows
-modified: 2022/12/13
-references:
-- https://threathunterplaybook.com/hunts/windows/190610-PwshAlternateHosts/notebook.html
-status: test
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    ps_module:
+        EventID: 4103
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ContextInfo|contains: '*'
+    filter_powershell:
+        ContextInfo|contains:
+            - = powershell
+            - = C:\Windows\System32\WindowsPowerShell\v1.0\powershell
+            - = C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell
+            - = C:/Windows/System32/WindowsPowerShell/v1.0/powershell
+            - = C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell
+    filter_sdiagnhost:
+        ContextInfo|contains: = C:\WINDOWS\System32\sdiagnhost.exe -Embedding
+    filter_citrix:
+        ContextInfo|contains: ConfigSyncRun.exe
+    filter_adace:
+        ContextInfo|contains: C:\Windows\system32\dsac.exe
+    filter_winrm:
+        ContextInfo|contains: C:\Windows\system32\wsmprovhost.exe -Embedding
+    filter_help_update:
+        Payload|contains:
+            - Update-Help
+            - Failed to update Help for the module
+    condition: ps_module and (selection and not 1 of filter_*)
+falsepositives:
+    - Programs using PowerShell directly without invocation of a dedicated interpreter
+    - MSP Detection Searcher
+    - Citrix ConfigSync.ps1
+level: medium
+ruletype: Sigma

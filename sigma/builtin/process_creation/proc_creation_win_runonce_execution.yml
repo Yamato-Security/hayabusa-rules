@@ -1,38 +1,33 @@
 title: Run Once Task Execution as Configured in Registry
-ruletype: Sigma
-author: Avneet Singh @v3t0_, oscd.community, Christopher Peacock @SecurePeacock (updated)
-date: 2020/10/18
+id: 198effb6-6c98-4d0c-9ea3-451fa143c45c
+status: test
 description: This rule detects the execution of Run Once task as configured in the
     registry
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\runonce.exe'
-    SELECTION_4:
-        Description: Run Once Wrapper
-    SELECTION_5:
-        CommandLine: '*/AlternateShellStartup*'
-    SELECTION_6:
-        CommandLine: '*/r'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 or SELECTION_6))
-falsepositives:
-- Unknown
-id: 198effb6-6c98-4d0c-9ea3-451fa143c45c
-level: low
-logsource:
-    category: process_creation
-    product: windows
-modified: 2022/12/13
 references:
-- https://twitter.com/pabraeken/status/990717080805789697
-- https://lolbas-project.github.io/lolbas/Binaries/Runonce/
-- https://twitter.com/0gtweet/status/1602644163824156672?s=20&t=kuxbUnZPltpvFPZdCrqPXA
-status: test
+    - https://twitter.com/pabraeken/status/990717080805789697
+    - https://lolbas-project.github.io/lolbas/Binaries/Runonce/
+    - https://twitter.com/0gtweet/status/1602644163824156672?s=20&t=kuxbUnZPltpvFPZdCrqPXA
+author: Avneet Singh @v3t0_, oscd.community, Christopher Peacock @SecurePeacock (updated)
+date: 2020/10/18
+modified: 2022/12/13
 tags:
-- attack.defense_evasion
-- attack.t1112
-
+    - attack.defense_evasion
+    - attack.t1112
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \runonce.exe
+        -   Description: Run Once Wrapper
+    selection_cli:
+        -   CommandLine|contains: /AlternateShellStartup
+        -   CommandLine|endswith: /r
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

@@ -1,38 +1,36 @@
 title: PowerShell SAM Copy
-ruletype: Sigma
+id: 1af57a4b-460a-4738-9034-db68b880c665
+status: test
+description: Detects suspicious PowerShell scripts accessing SAM hives
+references:
+    - https://twitter.com/splinter_code/status/1420546784250769408
 author: Florian Roth (Nextron Systems)
 date: 2021/07/29
-description: Detects suspicious PowerShell scripts accessing SAM hives
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*\HarddiskVolumeShadowCopy*'
-    SELECTION_4:
-        CommandLine: '*System32\config\sam*'
-    SELECTION_5:
-        CommandLine:
-        - '*Copy-Item*'
-        - '*cp $_.*'
-        - '*cpi $_.*'
-        - '*copy $_.*'
-        - '*.File]::Copy(*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Some rare backup scenarios
-- PowerShell scripts fixing HiveNightmare / SeriousSAM ACLs
-id: 1af57a4b-460a-4738-9034-db68b880c665
-level: high
+modified: 2023/01/06
+tags:
+    - attack.credential_access
+    - attack.t1003.002
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/06
-references:
-- https://twitter.com/splinter_code/status/1420546784250769408
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.002
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_1:
+        CommandLine|contains|all:
+            - \HarddiskVolumeShadowCopy
+            - System32\config\sam
+    selection_2:
+        CommandLine|contains:
+            - Copy-Item
+            - cp $_.
+            - cpi $_.
+            - copy $_.
+            - .File]::Copy(
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Some rare backup scenarios
+    - PowerShell scripts fixing HiveNightmare / SeriousSAM ACLs
+level: high
+ruletype: Sigma

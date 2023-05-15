@@ -1,31 +1,29 @@
 title: Renamed BrowserCore.EXE Execution
-ruletype: Sigma
-author: Max Altgelt (Nextron Systems)
-date: 2022/06/02
+id: 8a4519e8-e64a-40b6-ae85-ba8ad2177559
+status: experimental
 description: Detects process creation with a renamed BrowserCore.exe (used to extract
     Azure tokens)
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        OriginalFileName: BrowserCore.exe
-    SELECTION_4:
-        NewProcessName: '*\BrowserCore.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)))
-falsepositives:
-- Unknown
-id: 8a4519e8-e64a-40b6-ae85-ba8ad2177559
-level: high
+references:
+    - https://twitter.com/mariuszbit/status/1531631015139102720
+author: Max Altgelt (Nextron Systems)
+date: 2022/06/02
+modified: 2023/02/03
+tags:
+    - attack.t1528
+    - attack.t1036.003
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/03
-references:
-- https://twitter.com/mariuszbit/status/1531631015139102720
-status: experimental
-tags:
-- attack.t1528
-- attack.t1036.003
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        OriginalFileName: BrowserCore.exe
+    filter_realbrowsercore:
+        NewProcessName|endswith: \BrowserCore.exe
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

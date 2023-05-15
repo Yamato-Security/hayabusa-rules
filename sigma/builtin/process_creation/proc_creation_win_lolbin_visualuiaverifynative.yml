@@ -1,33 +1,30 @@
 title: Use of VisualUiaVerifyNative.exe
-ruletype: Sigma
-author: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io
-date: 2022/06/01
+id: b30a8bc5-e21b-4ca2-9420-0a94019ac56a
+status: experimental
 description: VisualUiaVerifyNative.exe is a Windows SDK that can be used for AWL bypass
     and is listed in Microsoft's recommended block rules.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\VisualUiaVerifyNative.exe'
-    SELECTION_4:
-        OriginalFileName: VisualUiaVerifyNative.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Legitimate testing of Microsoft UI parts.
-id: b30a8bc5-e21b-4ca2-9420-0a94019ac56a
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/OtherMSBinaries/VisualUiaVerifyNative/
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-block-rules
+    - https://bohops.com/2020/10/15/exploring-the-wdac-microsoft-recommended-block-rules-visualuiaverifynative/
+    - https://github.com/MicrosoftDocs/windows-itpro-docs/commit/937db704b9148e9cee7c7010cad4d00ce9c4fdad
+author: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io
+date: 2022/06/01
+tags:
+    - attack.defense_evasion
+    - attack.t1218
 logsource:
     category: process_creation
     product: windows
-references:
-- https://lolbas-project.github.io/lolbas/OtherMSBinaries/VisualUiaVerifyNative/
-- https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-block-rules
-- https://bohops.com/2020/10/15/exploring-the-wdac-microsoft-recommended-block-rules-visualuiaverifynative/
-- https://github.com/MicrosoftDocs/windows-itpro-docs/commit/937db704b9148e9cee7c7010cad4d00ce9c4fdad
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1218
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   NewProcessName|endswith: \VisualUiaVerifyNative.exe
+        -   OriginalFileName: VisualUiaVerifyNative.exe
+    condition: process_creation and selection
+falsepositives:
+    - Legitimate testing of Microsoft UI parts.
+level: medium
+ruletype: Sigma

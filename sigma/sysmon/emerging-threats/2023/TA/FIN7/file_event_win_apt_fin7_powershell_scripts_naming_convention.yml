@@ -1,29 +1,26 @@
 title: Potential APT FIN7 Related PowerShell Script Created
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/05/04
+id: a88d9f45-ec8a-4b0e-85ee-c9f6a65e9128
+status: experimental
 description: Detects PowerShell script file creation with specific name or suffix
     which was seen being used often by FIN7 PowerShell scripts
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*_64refl.ps1'
-    SELECTION_4:
-        TargetFilename: host_ip.ps1
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Unknown
-id: a88d9f45-ec8a-4b0e-85ee-c9f6a65e9128
-level: high
+references:
+    - https://labs.withsecure.com/publications/fin7-target-veeam-servers
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/05/04
+tags:
+    - attack.execution
 logsource:
     category: file_event
     product: windows
-references:
-- https://labs.withsecure.com/publications/fin7-target-veeam-servers
-status: experimental
-tags:
-- attack.execution
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   TargetFilename|endswith: _64refl.ps1
+        -   TargetFilename: host_ip.ps1
+    condition: file_event and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

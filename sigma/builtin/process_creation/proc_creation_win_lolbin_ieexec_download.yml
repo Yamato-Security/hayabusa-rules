@@ -1,31 +1,27 @@
 title: Abusing IEExec To Download Payloads
-ruletype: Sigma
+id: 9801abb8-e297-4dbf-9fbd-57dde0e830ad
+status: experimental
+description: Detects execution of the IEExec utility to download payloads
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Ieexec/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/05/16
-description: Detects execution of the IEExec utility to download payloads
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\IEExec.exe'
-    SELECTION_4:
-        OriginalFileName: IEExec.exe
-    SELECTION_5:
-        CommandLine:
-        - '*https://*'
-        - '*http://*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- Unknown
-id: 9801abb8-e297-4dbf-9fbd-57dde0e830ad
-level: high
 logsource:
     category: process_creation
     product: windows
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Ieexec/
-status: experimental
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    lolbas:
+        -   NewProcessName|endswith: \IEExec.exe
+        -   OriginalFileName: IEExec.exe
+    remote:
+        CommandLine|contains:
+            - https://
+            - http://
+    condition: process_creation and (lolbas and remote)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

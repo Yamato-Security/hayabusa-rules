@@ -1,37 +1,32 @@
 title: Suspicious Epmap Connection
-ruletype: Sigma
-author: frack113, Tim Shelton (fps)
-date: 2022/07/14
+id: 628d7a0b-7b84-4466-8552-e6138bc03b43
+status: experimental
 description: Detects suspicious "epmap" connection to a remote computer via remote
     procedure call (RPC)
-detection:
-    SELECTION_1:
-        EventID: 3
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Protocol: tcp
-    SELECTION_4:
-        Initiated: 'true'
-    SELECTION_5:
-        DestinationPort: 135
-    SELECTION_6:
-        Image:
-        - C:\Windows\\*
-        - C:\ProgramData\Amazon\SSM\Update\amazon-ssm-agent-updater*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6))
-falsepositives:
-- Unknown
-id: 628d7a0b-7b84-4466-8552-e6138bc03b43
-level: high
+references:
+    - https://github.com/RiccardoAncarani/TaskShell/
+author: frack113, Tim Shelton (fps)
+date: 2022/07/14
+modified: 2022/07/18
+tags:
+    - attack.lateral_movement
 logsource:
     category: network_connection
     product: windows
-modified: 2022/07/18
-references:
-- https://github.com/RiccardoAncarani/TaskShell/
-status: experimental
-tags:
-- attack.lateral_movement
-
+detection:
+    network_connection:
+        EventID: 3
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Protocol: tcp
+        Initiated: 'true'
+        DestinationPort: 135
+    filter:
+        Image|startswith:
+            - C:\Windows\
+            - C:\ProgramData\Amazon\SSM\Update\amazon-ssm-agent-updater
+    condition: network_connection and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

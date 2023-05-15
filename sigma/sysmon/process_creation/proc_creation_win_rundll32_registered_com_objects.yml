@@ -1,41 +1,36 @@
 title: Rundll32 Registered COM Objects
-ruletype: Sigma
+id: f1edd233-30b5-4823-9e6a-c4171b24d316
+status: test
+description: load malicious registered COM objects
+references:
+    - https://nasbench.medium.com/a-deep-dive-into-rundll32-exe-642344b41e90
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.015/T1546.015.md
 author: frack113
 date: 2022/02/13
-description: load malicious registered COM objects
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\rundll32.exe'
-    SELECTION_4:
-        OriginalFileName: RUNDLL32.EXE
-    SELECTION_5:
-        CommandLine:
-        - '*-sta *'
-        - '*-localserver *'
-    SELECTION_6:
-        CommandLine: '*{*'
-    SELECTION_7:
-        CommandLine: '*}*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
-falsepositives:
-- Legitimate use
-id: f1edd233-30b5-4823-9e6a-c4171b24d316
-level: high
+modified: 2023/02/09
+tags:
+    - attack.privilege_escalation
+    - attack.persistence
+    - attack.t1546.015
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/09
-references:
-- https://nasbench.medium.com/a-deep-dive-into-rundll32-exe-642344b41e90
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.015/T1546.015.md
-status: test
-tags:
-- attack.privilege_escalation
-- attack.persistence
-- attack.t1546.015
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \rundll32.exe
+        -   OriginalFileName: RUNDLL32.EXE
+    selection_cli:
+        CommandLine|contains:
+            - '-sta '
+            - '-localserver '
+        CommandLine|contains|all:
+            - '{'
+            - '}'
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Legitimate use
+level: high
+ruletype: Sigma

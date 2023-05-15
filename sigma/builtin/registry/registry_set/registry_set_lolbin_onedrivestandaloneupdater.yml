@@ -1,7 +1,6 @@
 title: Lolbas OneDriveStandaloneUpdater.exe Proxy Download
-ruletype: Sigma
-author: frack113
-date: 2022/05/28
+id: 3aff0be0-7802-4a7e-a4fa-c60c74bc5e1d
+status: experimental
 description: 'Detects setting a custom URL for OneDriveStandaloneUpdater.exe to download
     a file from the Internet without executing any
 
@@ -9,30 +8,25 @@ description: 'Detects setting a custom URL for OneDriveStandaloneUpdater.exe to 
     C:\Users\redacted\AppData\Local\Microsoft\OneDrive\StandaloneUpdaterreSignInSettingsConfig.json
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*\SOFTWARE\Microsoft\OneDrive\UpdateOfficeConfig\UpdateRingSettingURLFromOC*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: 3aff0be0-7802-4a7e-a4fa-c60c74bc5e1d
-level: high
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/OneDriveStandaloneUpdater/
+author: frack113
+date: 2022/05/28
+tags:
+    - attack.command_and_control
+    - attack.t1105
 logsource:
     category: registry_set
     product: windows
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/OneDriveStandaloneUpdater/
-status: experimental
-tags:
-- attack.command_and_control
-- attack.t1105
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|contains: \SOFTWARE\Microsoft\OneDrive\UpdateOfficeConfig\UpdateRingSettingURLFromOC
+    condition: registry_set and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

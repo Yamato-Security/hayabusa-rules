@@ -1,7 +1,6 @@
 title: Potential Startup Shortcut Persistence Via PowerShell.EXE
-ruletype: Sigma
-author: Christopher Peacock '@securepeacock', SCYTHE
-date: 2021/10/24
+id: 92fa78e7-4d39-45f1-91a3-8b23f3f1088d
+status: experimental
 description: 'Detects PowerShell writing startup shortcuts.
 
     This procedure was highlighted in Red Canary Intel Insights Oct. 2021, "We frequently
@@ -15,34 +14,31 @@ description: 'Detects PowerShell writing startup shortcuts.
     the command-line script that leads to the installation of a malicious DLL"
 
     '
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        TargetFilename: '*\start menu\programs\startup\\*'
-    SELECTION_5:
-        TargetFilename: '*.lnk'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Depending on your environment accepted applications may leverage this at times.
-    It is recommended to search for anomalies inidicative of malware.
-id: 92fa78e7-4d39-45f1-91a3-8b23f3f1088d
-level: high
-logsource:
-    category: file_event
-    product: windows
-modified: 2023/02/23
 references:
-- https://redcanary.com/blog/intelligence-insights-october-2021/
-- https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1547.001/T1547.001.md#atomic-test-7---add-executable-shortcut-link-to-user-startup-folder
-status: experimental
+    - https://redcanary.com/blog/intelligence-insights-october-2021/
+    - https://github.com/redcanaryco/atomic-red-team/blob/36d49de4c8b00bf36054294b4a1fcbab3917d7c5/atomics/T1547.001/T1547.001.md#atomic-test-7---add-executable-shortcut-link-to-user-startup-folder
+author: Christopher Peacock '@securepeacock', SCYTHE
+date: 2021/10/24
+modified: 2023/02/23
 tags:
-- attack.persistence
-- attack.t1547.001
-
+    - attack.persistence
+    - attack.t1547.001
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+        TargetFilename|contains: \start menu\programs\startup\
+        TargetFilename|endswith: .lnk
+    condition: file_event and selection
+falsepositives:
+    - Depending on your environment accepted applications may leverage this at times.
+        It is recommended to search for anomalies inidicative of malware.
+level: high
+ruletype: Sigma

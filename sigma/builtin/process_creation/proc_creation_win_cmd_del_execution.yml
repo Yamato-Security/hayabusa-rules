@@ -1,7 +1,6 @@
 title: File Deletion Via Del
-ruletype: Sigma
-author: frack113
-date: 2022/01/15
+id: 379fa130-190e-4c3f-b7bc-6c8e834485f3
+status: experimental
 description: 'Detects execution of the builtin "del"/"erase" commands in order to
     delete files.
 
@@ -14,41 +13,38 @@ description: 'Detects execution of the builtin "del"/"erase" commands in order t
     process to minimize the adversary''s footprint.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\cmd.exe'
-    SELECTION_4:
-        OriginalFileName: Cmd.Exe
-    SELECTION_5:
-        CommandLine:
-        - '*del *'
-        - '*erase *'
-    SELECTION_6:
-        CommandLine:
-        - '* /f*'
-        - '* /s*'
-        - '* /q*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- False positives levels will differ Depending on the environment. You can use a combination
-    of ParentImage and other keywords from the CommandLine field to filter legitimate
-    activity
-id: 379fa130-190e-4c3f-b7bc-6c8e834485f3
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.004/T1070.004.md
+    - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/erase
+author: frack113
+date: 2022/01/15
+modified: 2023/03/06
+tags:
+    - attack.defense_evasion
+    - attack.t1070.004
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/06
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.004/T1070.004.md
-- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/erase
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1070.004
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \cmd.exe
+        -   OriginalFileName: Cmd.Exe
+    selection_del:
+        CommandLine|contains:
+            - 'del '
+            - 'erase '
+    selection_flags:
+        CommandLine|contains:
+            - ' /f'
+            - ' /s'
+            - ' /q'
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - False positives levels will differ Depending on the environment. You can use
+        a combination of ParentImage and other keywords from the CommandLine field
+        to filter legitimate activity
+level: low
+ruletype: Sigma

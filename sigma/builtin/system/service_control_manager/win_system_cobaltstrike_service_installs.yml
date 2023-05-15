@@ -1,51 +1,47 @@
 title: CobaltStrike Service Installations - System
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Wojciech Lesicki
-date: 2021/05/26
+id: 5a105d34-05fc-401e-8553-272b45c1522d
+status: test
 description: Detects known malicious service installs that appear in cases in which
     a Cobalt Strike beacon elevates privileges or lateral movement
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_10:
-        ImagePath|base64offset|contains: 'IEX (New-Object Net.Webclient).DownloadString(''http://127.0.0.1:'
-    SELECTION_2:
-        Provider_Name: Service Control Manager
-    SELECTION_3:
-        EventID: 7045
-    SELECTION_4:
-        ImagePath: '*ADMIN$*'
-    SELECTION_5:
-        ImagePath: '*.exe*'
-    SELECTION_6:
-        ImagePath: '*%COMSPEC%*'
-    SELECTION_7:
-        ImagePath: '*start*'
-    SELECTION_8:
-        ImagePath: '*powershell*'
-    SELECTION_9:
-        ImagePath: '*powershell -nop -w hidden -encodedcommand*'
-    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8) or SELECTION_9
-        or SELECTION_10))
-falsepositives:
-- Unknown
-id: 5a105d34-05fc-401e-8553-272b45c1522d
-level: critical
+references:
+    - https://www.sans.org/webcasts/119395
+    - https://www.crowdstrike.com/blog/getting-the-bacon-from-cobalt-strike-beacon/
+    - https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/
+author: Florian Roth (Nextron Systems), Wojciech Lesicki
+date: 2021/05/26
+modified: 2022/11/27
+tags:
+    - attack.execution
+    - attack.privilege_escalation
+    - attack.lateral_movement
+    - attack.t1021.002
+    - attack.t1543.003
+    - attack.t1569.002
 logsource:
     product: windows
     service: system
-modified: 2022/11/27
-references:
-- https://www.sans.org/webcasts/119395
-- https://www.crowdstrike.com/blog/getting-the-bacon-from-cobalt-strike-beacon/
-- https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/
-status: test
-tags:
-- attack.execution
-- attack.privilege_escalation
-- attack.lateral_movement
-- attack.t1021.002
-- attack.t1543.003
-- attack.t1569.002
-
+detection:
+    system:
+        Channel: System
+    selection_id:
+        Provider_Name: Service Control Manager
+        EventID: 7045
+    selection1:
+        ImagePath|contains|all:
+            - ADMIN$
+            - .exe
+    selection2:
+        ImagePath|contains|all:
+            - '%COMSPEC%'
+            - start
+            - powershell
+    selection3:
+        ImagePath|contains: powershell -nop -w hidden -encodedcommand
+    selection4:
+        ImagePath|base64offset|contains: 'IEX (New-Object Net.Webclient).DownloadString(''http://127.0.0.1:'
+    condition: system and (selection_id and (selection1 or selection2 or selection3
+        or selection4))
+falsepositives:
+    - Unknown
+level: critical
+ruletype: Sigma

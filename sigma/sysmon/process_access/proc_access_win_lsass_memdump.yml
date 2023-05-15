@@ -1,56 +1,48 @@
 title: LSASS Memory Dump
-ruletype: Sigma
-author: Samir Bousseaden, Michael Haag
-date: 2019/04/03
+id: 5ef9853e-4d0e-4a70-846f-a9ca37d876da
+status: experimental
 description: Detects process LSASS memory dump using Mimikatz, NanoDump, Invoke-Mimikatz,
     Procdump or Taskmgr based on the CallTrace pointing to ntdll.dll, dbghelp.dll
     or dbgcore.dll for win10, server2016 and up.
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_10:
-        SourceImage: C:\Windows\Sysmon64.exe
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetImage: '*\lsass.exe'
-    SELECTION_4:
-        GrantedAccess:
-        - '*0x1038*'
-        - '*0x1438*'
-        - '*0x143a*'
-    SELECTION_5:
-        CallTrace:
-        - '*dbghelp.dll*'
-        - '*dbgcore.dll*'
-        - '*ntdll.dll*'
-    SELECTION_6:
-        CallTrace: '*|C:\Windows\Temp\asgard2-agent\\*'
-    SELECTION_7:
-        CallTrace: '*\thor\thor64.exe+*'
-    SELECTION_8:
-        CallTrace: '*|UNKNOWN(*'
-    SELECTION_9:
-        GrantedAccess: '0x103800'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
-        or (SELECTION_10)))
-falsepositives:
-- False positives are present when looking for 0x1410. Exclusions may be required.
-id: 5ef9853e-4d0e-4a70-846f-a9ca37d876da
-level: high
+references:
+    - https://blog.menasec.net/2019/02/threat-hunting-21-procdump-or-taskmgr.html
+    - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.001/T1003.001.md
+    - https://research.splunk.com/endpoint/windows_possible_credential_dumping/
+author: Samir Bousseaden, Michael Haag
+date: 2019/04/03
+modified: 2022/09/29
+tags:
+    - attack.credential_access
+    - attack.t1003.001
+    - attack.s0002
 logsource:
     category: process_access
     product: windows
-modified: 2022/09/29
-references:
-- https://blog.menasec.net/2019/02/threat-hunting-21-procdump-or-taskmgr.html
-- https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.001/T1003.001.md
-- https://research.splunk.com/endpoint/windows_possible_credential_dumping/
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1003.001
-- attack.s0002
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetImage|endswith: \lsass.exe
+        GrantedAccess|contains:
+            - '0x1038'
+            - '0x1438'
+            - '0x143a'
+        CallTrace|contains:
+            - dbghelp.dll
+            - dbgcore.dll
+            - ntdll.dll
+    filter_thor:
+        CallTrace|contains|all:
+            - '|C:\Windows\Temp\asgard2-agent\'
+            - \thor\thor64.exe+
+            - '|UNKNOWN('
+        GrantedAccess: '0x103800'
+    filter_sysmon:
+        SourceImage: C:\Windows\Sysmon64.exe
+    condition: process_access and (selection and not 1 of filter*)
+falsepositives:
+    - False positives are present when looking for 0x1410. Exclusions may be required.
+level: high
+ruletype: Sigma

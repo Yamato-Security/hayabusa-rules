@@ -1,61 +1,55 @@
 title: Private Keys Reconnaissance Via CommandLine Tools
-ruletype: Sigma
-author: frack113, Nasreddine Bencherchali (Nextron Systems)
-date: 2021/07/20
+id: 213d6a77-3d55-4ce8-ba74-fcfef741974e
+status: test
 description: Adversaries may search for private key certificate files on compromised
     systems for insecurely stored credential
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        Image: '*\findstr.exe'
-    SELECTION_11:
-        OriginalFileName: FINDSTR.EXE
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine:
-        - '*.key*'
-        - '*.pgp*'
-        - '*.gpg*'
-        - '*.ppk*'
-        - '*.p12*'
-        - '*.pem*'
-        - '*.pfx*'
-        - '*.cer*'
-        - '*.p7b*'
-        - '*.asc*'
-    SELECTION_4:
-        Image: '*\cmd.exe'
-    SELECTION_5:
-        OriginalFileName: Cmd.Exe
-    SELECTION_6:
-        CommandLine: '*dir *'
-    SELECTION_7:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_8:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_9:
-        CommandLine: '*Get-ChildItem *'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (((SELECTION_4 or
-        SELECTION_5) and SELECTION_6) or ((SELECTION_7 or SELECTION_8) and SELECTION_9)
-        or SELECTION_10 or SELECTION_11))
-falsepositives:
-- Unknown
-id: 213d6a77-3d55-4ce8-ba74-fcfef741974e
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1552.004/T1552.004.md
+author: frack113, Nasreddine Bencherchali (Nextron Systems)
+date: 2021/07/20
+modified: 2023/03/06
+tags:
+    - attack.credential_access
+    - attack.t1552.004
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/06
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1552.004/T1552.004.md
-status: test
-tags:
-- attack.credential_access
-- attack.t1552.004
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_cmd_img:
+        -   Image|endswith: \cmd.exe
+        -   OriginalFileName: Cmd.Exe
+    selection_cmd_cli:
+        CommandLine|contains: 'dir '
+    selection_pwsh_img:
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    selection_pwsh_cli:
+        CommandLine|contains: 'Get-ChildItem '
+    selection_findstr:
+        -   Image|endswith: \findstr.exe
+        -   OriginalFileName: FINDSTR.EXE
+    selection_ext:
+        CommandLine|contains:
+            - .key
+            - .pgp
+            - .gpg
+            - .ppk
+            - .p12
+            - .pem
+            - .pfx
+            - .cer
+            - .p7b
+            - .asc
+    condition: process_creation and (selection_ext and (all of selection_cmd_* or
+        all of selection_pwsh_* or selection_findstr))
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

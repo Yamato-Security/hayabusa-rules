@@ -1,7 +1,6 @@
 title: Potential Persistence Via Shim Database Modification
-ruletype: Sigma
-author: frack113
-date: 2021/12/30
+id: dfb5b4e8-91d0-4291-b40a-e3b0d3942c45
+status: experimental
 description: 'Adversaries may establish persistence and/or elevate privileges by executing
     malicious content triggered by application shims.
 
@@ -10,34 +9,31 @@ description: 'Adversaries may establish persistence and/or elevate privileges by
     system codebase changes over time
 
     '
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetObject:
-        - HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB\\*
-        - HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom\\*
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        Details: ''
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Unknown
-id: dfb5b4e8-91d0-4291-b40a-e3b0d3942c45
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.011/T1546.011.md#atomic-test-3---registry-key-creation-andor-modification-events-for-sdb
+    - https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html
+author: frack113
+date: 2021/12/30
+modified: 2023/01/10
+tags:
+    - attack.persistence
+    - attack.t1546.011
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.011/T1546.011.md#atomic-test-3---registry-key-creation-andor-modification-events-for-sdb
-- https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html
-status: experimental
-tags:
-- attack.persistence
-- attack.t1546.011
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetObject|startswith:
+            - HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB\
+            - HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom\
+        EventType: SetValue
+    filter:
+        Details: ''
+    condition: registry_set and (selection and not filter)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

@@ -1,7 +1,6 @@
 title: Malicious Windows Script Components File Execution by TAEF Detection
-ruletype: Sigma
-author: Agro (@agro_sev) oscd.community
-date: 2020/10/13
+id: 634b00d5-ccc3-4a06-ae3b-0ec8444dd51b
+status: test
 description: 'Windows Test Authoring and Execution Framework (TAEF) framework allows
     you to run automation by executing tests files written on different languages
     (C, C#, Microsoft COM Scripting interfaces
@@ -10,31 +9,28 @@ description: 'Windows Test Authoring and Execution Framework (TAEF) framework al
     so on) directly by running te.exe
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\te.exe'
-    SELECTION_4:
-        ParentProcessName: '*\te.exe'
-    SELECTION_5:
-        OriginalFileName: \te.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- It's not an uncommon to use te.exe directly to execute legal TAEF tests
-id: 634b00d5-ccc3-4a06-ae3b-0ec8444dd51b
-level: low
+references:
+    - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Te/
+    - https://twitter.com/pabraeken/status/993298228840992768
+    - https://docs.microsoft.com/en-us/windows-hardware/drivers/taef/
+author: Agro (@agro_sev) oscd.community
+date: 2020/10/13
+modified: 2021/11/27
+tags:
+    - attack.t1218
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
-references:
-- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Te/
-- https://twitter.com/pabraeken/status/993298228840992768
-- https://docs.microsoft.com/en-us/windows-hardware/drivers/taef/
-status: test
-tags:
-- attack.t1218
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   NewProcessName|endswith: \te.exe
+        -   ParentProcessName|endswith: \te.exe
+        -   OriginalFileName: \te.exe
+    condition: process_creation and selection
+falsepositives:
+    - It's not an uncommon to use te.exe directly to execute legal TAEF tests
+level: low
+ruletype: Sigma

@@ -1,32 +1,29 @@
 title: PUA - DIT Snapshot Viewer
-ruletype: Sigma
-author: Furkan Caliskan (@caliskanfurkan_)
-date: 2020/07/04
+id: d3b70aad-097e-409c-9df2-450f80dc476b
+status: test
 description: Detects the use of Ditsnap tool, an inspection tool for Active Directory
     database, ntds.dit.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\ditsnap.exe'
-    SELECTION_4:
-        CommandLine: '*ditsnap.exe*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Legitimate admin usage
-id: d3b70aad-097e-409c-9df2-450f80dc476b
-level: high
+references:
+    - https://thedfirreport.com/2020/06/21/snatch-ransomware/
+    - https://web.archive.org/web/20201124182207/https://github.com/yosqueoy/ditsnap
+author: Furkan Caliskan (@caliskanfurkan_)
+date: 2020/07/04
+modified: 2023/02/21
+tags:
+    - attack.credential_access
+    - attack.t1003.003
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
-references:
-- https://thedfirreport.com/2020/06/21/snatch-ransomware/
-- https://web.archive.org/web/20201124182207/https://github.com/yosqueoy/ditsnap
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.003
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|endswith: \ditsnap.exe
+        -   CommandLine|contains: ditsnap.exe
+    condition: process_creation and selection
+falsepositives:
+    - Legitimate admin usage
+level: high
+ruletype: Sigma

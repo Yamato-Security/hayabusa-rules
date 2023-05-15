@@ -1,36 +1,34 @@
 title: Suspicious PowerShell Download
-ruletype: Sigma
+id: 3236fcd0-b7e3-4433-b4f8-86ad61a9af2d
+related:
+    -   id: 65531a81-a694-4e31-ae04-f8ba5bc33759
+        type: derived
+status: experimental
+description: Detects suspicious PowerShell download command
+references:
+    - https://www.trendmicro.com/en_us/research/22/j/lv-ransomware-exploits-proxyshell-in-attack.html
 author: Florian Roth (Nextron Systems)
 date: 2017/03/05
-description: Detects suspicious PowerShell download command
-detection:
-    SELECTION_1:
-        EventID: 400
-    SELECTION_2:
-        Channel: Windows PowerShell
-    SELECTION_3:
-        HostApplication: '*Net.WebClient*'
-    SELECTION_4:
-        HostApplication:
-        - '*.DownloadFile(*'
-        - '*.DownloadString(*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- PowerShell scripts that download content from the Internet
-id: 3236fcd0-b7e3-4433-b4f8-86ad61a9af2d
-level: medium
+modified: 2022/11/09
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
+    product: windows
     category: ps_classic_start
     definition: fields have to be extract from event
-    product: windows
-modified: 2022/11/09
-references:
-- https://www.trendmicro.com/en_us/research/22/j/lv-ransomware-exploits-proxyshell-in-attack.html
-related:
--   id: 65531a81-a694-4e31-ae04-f8ba5bc33759
-    type: derived
-status: experimental
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    ps_classic_start:
+        EventID: 400
+        Channel: Windows PowerShell
+    selection_webclient:
+        HostApplication|contains: Net.WebClient
+    selection_download:
+        HostApplication|contains:
+            - .DownloadFile(
+            - .DownloadString(
+    condition: ps_classic_start and (all of selection_*)
+falsepositives:
+    - PowerShell scripts that download content from the Internet
+level: medium
+ruletype: Sigma

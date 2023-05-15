@@ -1,56 +1,49 @@
 title: Execute From Alternate Data Streams
-ruletype: Sigma
-author: frack113
-date: 2021/09/01
+id: 7f43c430-5001-4f8b-aaa9-c3b88f18fa5c
+status: test
 description: Detects execution from an Alternate Data Stream (ADS). Adversaries may
     use NTFS file attributes to hide their malicious data in order to evade detection
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '*regedit *'
-    SELECTION_11:
-        CommandLine: '* /E *'
-    SELECTION_12:
-        CommandLine: '*esentutl *'
-    SELECTION_13:
-        CommandLine: '* /y *'
-    SELECTION_14:
-        CommandLine: '* /d *'
-    SELECTION_15:
-        CommandLine: '* /o *'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*txt:*'
-    SELECTION_4:
-        CommandLine: '*type *'
-    SELECTION_5:
-        CommandLine: '* > *'
-    SELECTION_6:
-        CommandLine: '*makecab *'
-    SELECTION_7:
-        CommandLine: '*.cab*'
-    SELECTION_8:
-        CommandLine: '*reg *'
-    SELECTION_9:
-        CommandLine: '* export *'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and ((SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14
-        and SELECTION_15)))
-falsepositives:
-- Unknown
-id: 7f43c430-5001-4f8b-aaa9-c3b88f18fa5c
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.004/T1564.004.md
+author: frack113
+date: 2021/09/01
+modified: 2022/10/09
+tags:
+    - attack.defense_evasion
+    - attack.t1564.004
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.004/T1564.004.md
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1564.004
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_stream:
+        CommandLine|contains: 'txt:'
+    selection_tools_type:
+        CommandLine|contains|all:
+            - 'type '
+            - ' > '
+    selection_tools_makecab:
+        CommandLine|contains|all:
+            - 'makecab '
+            - .cab
+    selection_tools_reg:
+        CommandLine|contains|all:
+            - 'reg '
+            - ' export '
+    selection_tools_regedit:
+        CommandLine|contains|all:
+            - 'regedit '
+            - ' /E '
+    selection_tools_esentutl:
+        CommandLine|contains|all:
+            - 'esentutl '
+            - ' /y '
+            - ' /d '
+            - ' /o '
+    condition: process_creation and (selection_stream and (1 of selection_tools_*))
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

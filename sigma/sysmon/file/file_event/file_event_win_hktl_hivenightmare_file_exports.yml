@@ -1,43 +1,40 @@
 title: Typical HiveNightmare SAM File Export
-ruletype: Sigma
+id: 6ea858a8-ba71-4a12-b2cc-5d83312404c7
+status: test
+description: Detects files written by the different tools that exploit HiveNightmare
+references:
+    - https://github.com/GossiTheDog/HiveNightmare
+    - https://github.com/FireFart/hivenightmare/
+    - https://github.com/WiredPulse/Invoke-HiveNightmare
+    - https://twitter.com/cube0x0/status/1418920190759378944
 author: Florian Roth (Nextron Systems)
 date: 2021/07/23
-description: Detects files written by the different tools that exploit HiveNightmare
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename:
-        - '*\hive_sam_*'
-        - '*\SAM-2021-*'
-        - '*\SAM-2022-*'
-        - '*\SAM-2023-*'
-        - '*\SAM-haxx*'
-        - '*\Sam.save*'
-    SELECTION_4:
-        TargetFilename: C:\windows\temp\sam
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Files that accidentally contain these strings
-fields:
-- CommandLine
-- ParentCommandLine
-id: 6ea858a8-ba71-4a12-b2cc-5d83312404c7
-level: high
-logsource:
-    category: file_event
-    product: windows
 modified: 2022/10/09
-references:
-- https://github.com/GossiTheDog/HiveNightmare
-- https://github.com/FireFart/hivenightmare/
-- https://github.com/WiredPulse/Invoke-HiveNightmare
-- https://twitter.com/cube0x0/status/1418920190759378944
-status: test
 tags:
-- attack.credential_access
-- attack.t1552.001
-- cve.2021.36934
-
+    - attack.credential_access
+    - attack.t1552.001
+    - cve.2021.36934
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   TargetFilename|contains:
+                - \hive_sam_
+                - \SAM-2021-
+                - \SAM-2022-
+                - \SAM-2023-
+                - \SAM-haxx
+                - \Sam.save
+        -   TargetFilename: C:\windows\temp\sam
+    condition: file_event and selection
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Files that accidentally contain these strings
+level: high
+ruletype: Sigma

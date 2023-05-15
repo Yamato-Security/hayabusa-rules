@@ -1,52 +1,47 @@
 title: Imports Registry Key From an ADS
-ruletype: Sigma
+id: 0b80ade5-6997-4b1d-99a1-71701778ea61
+related:
+    -   id: 73bba97f-a82d-42ce-b315-9182e76c57b1
+        type: similar
+status: test
+description: Detects the import of a alternate datastream to the registry with regedit.exe.
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Regedit/
+    - https://gist.github.com/api0cradle/cdd2d0d0ec9abb686f0e89306e277b8f
 author: Oddvar Moe, Sander Wiebing, oscd.community
 date: 2020/10/12
-description: Detects the import of a alternate datastream to the registry with regedit.exe.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\regedit.exe'
-    SELECTION_4:
-        OriginalFileName: REGEDIT.EXE
-    SELECTION_5:
-        CommandLine:
-        - '* /i *'
-        - '*.reg*'
-    SELECTION_6:
-        CommandLine|re: :[^ \\]
-    SELECTION_7:
-        CommandLine:
-        - '* /e *'
-        - '* /a *'
-        - '* /c *'
-        - '* -e *'
-        - '* -a *'
-        - '* -c *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6)) and  not (SELECTION_7))
-falsepositives:
-- Unknown
-fields:
-- ParentImage
-- CommandLine
-id: 0b80ade5-6997-4b1d-99a1-71701778ea61
-level: high
+modified: 2023/02/03
+tags:
+    - attack.t1112
+    - attack.defense_evasion
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/03
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Regedit/
-- https://gist.github.com/api0cradle/cdd2d0d0ec9abb686f0e89306e277b8f
-related:
--   id: 73bba97f-a82d-42ce-b315-9182e76c57b1
-    type: similar
-status: test
-tags:
-- attack.t1112
-- attack.defense_evasion
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \regedit.exe
+        -   OriginalFileName: REGEDIT.EXE
+    selection_cli:
+        CommandLine|contains:
+            - ' /i '
+            - .reg
+        CommandLine|re: :[^ \\]
+    filter:
+        CommandLine|contains:
+            - ' /e '
+            - ' /a '
+            - ' /c '
+            - ' -e '
+            - ' -a '
+            - ' -c '
+    condition: process_creation and (all of selection_* and not filter)
+fields:
+    - ParentProcessName
+    - CommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

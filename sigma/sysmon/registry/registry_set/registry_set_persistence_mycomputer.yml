@@ -1,34 +1,30 @@
 title: Potential Persistence Via MyComputer Registry Keys
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/08/09
+id: 8fbe98a8-8f9d-44f8-aa71-8c572e29ef06
+status: experimental
 description: Detects modification to the "Default" value of the "MyComputer" key and
     subkeys to point to a custom binary that will be launched whenever the associated
     action is executed (see reference section for example)
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer*'
-    SELECTION_5:
-        TargetObject: '*(Default)'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unlikely but if you experience FPs add specific processes and locations you would
-    like to monitor for
-id: 8fbe98a8-8f9d-44f8-aa71-8c572e29ef06
-level: high
+references:
+    - https://www.hexacorn.com/blog/2017/01/18/beyond-good-ol-run-key-part-55/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/09
+modified: 2023/01/10
+tags:
+    - attack.persistence
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
-references:
-- https://www.hexacorn.com/blog/2017/01/18/beyond-good-ol-run-key-part-55/
-status: experimental
-tags:
-- attack.persistence
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer
+        TargetObject|endswith: (Default)
+    condition: registry_set and selection
+falsepositives:
+    - Unlikely but if you experience FPs add specific processes and locations you
+        would like to monitor for
+level: high
+ruletype: Sigma

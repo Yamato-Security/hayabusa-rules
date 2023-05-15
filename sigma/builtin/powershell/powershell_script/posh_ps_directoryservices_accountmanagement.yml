@@ -1,7 +1,6 @@
 title: Manipulation of User Computer or Group Security Principals Across AD
-ruletype: Sigma
-author: frack113
-date: 2021/12/28
+id: b29a93fb-087c-4b5b-a84d-ee3309e69d08
+status: test
 description: 'Adversaries may create a domain account to maintain access to victim
     systems.
 
@@ -10,29 +9,28 @@ description: 'Adversaries may create a domain account to maintain access to vict
     domain..
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*System.DirectoryServices.AccountManagement*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Legitimate administrative script
-id: b29a93fb-087c-4b5b-a84d-ee3309e69d08
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1136.002/T1136.002.md#atomic-test-3---create-a-new-domain-account-using-powershell
+    - https://docs.microsoft.com/en-us/dotnet/api/system.directoryservices.accountmanagement?view=dotnet-plat-ext-6.0
+author: frack113
+date: 2021/12/28
+tags:
+    - attack.persistence
+    - attack.t1136.002
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1136.002/T1136.002.md#atomic-test-3---create-a-new-domain-account-using-powershell
-- https://docs.microsoft.com/en-us/dotnet/api/system.directoryservices.accountmanagement?view=dotnet-plat-ext-6.0
-status: test
-tags:
-- attack.persistence
-- attack.t1136.002
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains: System.DirectoryServices.AccountManagement
+    condition: ps_script and selection
+falsepositives:
+    - Legitimate administrative script
+level: medium
+ruletype: Sigma

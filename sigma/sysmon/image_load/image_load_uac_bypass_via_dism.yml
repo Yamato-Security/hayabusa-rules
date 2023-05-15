@@ -1,36 +1,32 @@
 title: UAC Bypass With Fake DLL
-ruletype: Sigma
+id: a5ea83a7-05a5-44c1-be2e-addccbbd8c03
+status: test
+description: Attempts to load dismcore.dll after dropping it
+references:
+    - https://steemit.com/utopian-io/@ah101/uac-bypassing-utility
 author: oscd.community, Dmitry Uchakin
 date: 2020/10/06
-description: Attempts to load dismcore.dll after dropping it
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\dism.exe'
-    SELECTION_4:
-        ImageLoaded: '*\dismcore.dll'
-    SELECTION_5:
-        ImageLoaded: C:\Windows\System32\Dism\dismcore.dll
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Actions of a legitimate telnet client
-id: a5ea83a7-05a5-44c1-be2e-addccbbd8c03
-level: high
+modified: 2022/12/25
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1548.002
+    - attack.t1574.002
 logsource:
     category: image_load
     product: windows
-modified: 2022/12/25
-references:
-- https://steemit.com/utopian-io/@ah101/uac-bypassing-utility
-status: test
-tags:
-- attack.persistence
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1548.002
-- attack.t1574.002
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \dism.exe
+        ImageLoaded|endswith: \dismcore.dll
+    filter:
+        ImageLoaded: C:\Windows\System32\Dism\dismcore.dll
+    condition: image_load and (selection and not filter)
+falsepositives:
+    - Actions of a legitimate telnet client
+level: high
+ruletype: Sigma

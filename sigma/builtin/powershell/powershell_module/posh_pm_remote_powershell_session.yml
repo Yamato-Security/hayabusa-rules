@@ -1,38 +1,35 @@
 title: Remote PowerShell Session (PS Module)
-ruletype: Sigma
+id: 96b9f619-aa91-478f-bacb-c3e50f8df575
+status: test
+description: Detects remote PowerShell sessions
+references:
+    - https://threathunterplaybook.com/hunts/windows/190511-RemotePwshExecution/notebook.html
 author: Roberto Rodriguez @Cyb3rWard0g, Tim Shelton
 date: 2019/08/10
-description: Detects remote PowerShell sessions
-detection:
-    SELECTION_1:
-        EventID: 4103
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ContextInfo: '* = ServerRemoteHost *'
-    SELECTION_4:
-        ContextInfo: '*wsmprovhost.exe*'
-    SELECTION_5:
-        ContextInfo: '*\Windows\system32\WindowsPowerShell\v1.0\Modules\Microsoft.PowerShell.Archive\Microsoft.PowerShell.Archive.psm1*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5)))
-falsepositives:
-- Legitimate use remote PowerShell sessions
-id: 96b9f619-aa91-478f-bacb-c3e50f8df575
-level: high
+modified: 2023/01/20
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - attack.lateral_movement
+    - attack.t1021.006
 logsource:
+    product: windows
     category: ps_module
     definition: 'Requirements: PowerShell Module Logging must be enabled'
-    product: windows
-modified: 2023/01/20
-references:
-- https://threathunterplaybook.com/hunts/windows/190511-RemotePwshExecution/notebook.html
-status: test
-tags:
-- attack.execution
-- attack.t1059.001
-- attack.lateral_movement
-- attack.t1021.006
-
+detection:
+    ps_module:
+        EventID: 4103
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ContextInfo|contains|all:
+            - ' = ServerRemoteHost '
+            - wsmprovhost.exe
+    filter_pwsh_archive:
+        ContextInfo|contains: \Windows\system32\WindowsPowerShell\v1.0\Modules\Microsoft.PowerShell.Archive\Microsoft.PowerShell.Archive.psm1
+    condition: ps_module and (selection and not 1 of filter_*)
+falsepositives:
+    - Legitimate use remote PowerShell sessions
+level: high
+ruletype: Sigma

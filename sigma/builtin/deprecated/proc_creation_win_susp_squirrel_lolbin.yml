@@ -1,97 +1,86 @@
 title: Squirrel Lolbin
-ruletype: Sigma
+id: fa4b21c9-0057-4493-b289-2556416ae4d7
+status: deprecated
+description: Detects Possible Squirrel Packages Manager as Lolbin
+references:
+    - http://www.hexacorn.com/blog/2019/03/30/sqirrel-packages-manager-as-a-lolbin-a-k-a-many-electron-apps-are-lolbins-by-default/
+    - http://www.hexacorn.com/blog/2018/08/16/squirrel-as-a-lolbin/
 author: Karneades / Markus Neis, Jonhnathan Ribeiro, oscd.community
 date: 2019/11/12
-description: Detects Possible Squirrel Packages Manager as Lolbin
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '*\AppData\Local\GitHubDesktop\Update.exe*'
-    SELECTION_11:
-        CommandLine: '*GitHubDesktop.exe*'
-    SELECTION_12:
-        CommandLine:
-        - '*--createShortcut*'
-        - '*--processStartAndWait*'
-    SELECTION_13:
-        CommandLine: '*C:\Users\\*'
-    SELECTION_14:
-        CommandLine: '*\AppData\Local\Microsoft\Teams\Update.exe*'
-    SELECTION_15:
-        CommandLine: '*Teams.exe*'
-    SELECTION_16:
-        CommandLine:
-        - '*--processStart*'
-        - '*--createShortcut*'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\update.exe'
-    SELECTION_4:
-        CommandLine:
-        - '*--processStart*'
-        - '*--processStartAndWait*'
-        - '*--createShortcut*'
-    SELECTION_5:
-        CommandLine: '*C:\Users\\*'
-    SELECTION_6:
-        CommandLine: '*\AppData\Local\Discord\Update.exe*'
-    SELECTION_7:
-        CommandLine: '* --processStart*'
-    SELECTION_8:
-        CommandLine: '*Discord.exe*'
-    SELECTION_9:
-        CommandLine: '*C:\Users\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
-        and SELECTION_15 and SELECTION_16)))
-falsepositives:
-- 1Clipboard
-- Beaker Browser
-- Caret
-- Collectie
-- Discord
-- Figma
-- Flow
-- Ghost
-- GitHub Desktop
-- GitKraken
-- Hyper
-- Insomnia
-- JIBO
-- Kap
-- Kitematic
-- Now Desktop
-- Postman
-- PostmanCanary
-- Rambox
-- Simplenote
-- Skype
-- Slack
-- SourceTree
-- Stride
-- Svgsus
-- WebTorrent
-- WhatsApp
-- WordPress.com
-- Atom
-- Gitkraken
-- Slack
-- Teams
-id: fa4b21c9-0057-4493-b289-2556416ae4d7
-level: medium
+modified: 2023/02/14
+tags:
+    - attack.execution
+    - attack.defense_evasion
+    - attack.t1218
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/14
-references:
-- http://www.hexacorn.com/blog/2019/03/30/sqirrel-packages-manager-as-a-lolbin-a-k-a-many-electron-apps-are-lolbins-by-default/
-- http://www.hexacorn.com/blog/2018/08/16/squirrel-as-a-lolbin/
-status: deprecated
-tags:
-- attack.execution
-- attack.defense_evasion
-- attack.t1218
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection1:
+        NewProcessName|endswith: \update.exe
+    selection2:
+        CommandLine|contains:
+            - --processStart
+            - --processStartAndWait
+            - --createShortcut
+    filter_discord:
+        CommandLine|contains|all:
+            - C:\Users\
+            - \AppData\Local\Discord\Update.exe
+            - ' --processStart'
+            - Discord.exe
+    filter_github_desktop:
+        CommandLine|contains|all:
+            - C:\Users\
+            - \AppData\Local\GitHubDesktop\Update.exe
+            - GitHubDesktop.exe
+        CommandLine|contains:
+            - --createShortcut
+            - --processStartAndWait
+    filter_teams:
+        CommandLine|contains|all:
+            - C:\Users\
+            - \AppData\Local\Microsoft\Teams\Update.exe
+            - Teams.exe
+        CommandLine|contains:
+            - --processStart
+            - --createShortcut
+    condition: process_creation and (all of selection* and not 1 of filter_*)
+falsepositives:
+    - 1Clipboard
+    - Beaker Browser
+    - Caret
+    - Collectie
+    - Discord
+    - Figma
+    - Flow
+    - Ghost
+    - GitHub Desktop
+    - GitKraken
+    - Hyper
+    - Insomnia
+    - JIBO
+    - Kap
+    - Kitematic
+    - Now Desktop
+    - Postman
+    - PostmanCanary
+    - Rambox
+    - Simplenote
+    - Skype
+    - Slack
+    - SourceTree
+    - Stride
+    - Svgsus
+    - WebTorrent
+    - WhatsApp
+    - WordPress.com
+    - Atom
+    - Gitkraken
+    - Slack
+    - Teams
+level: medium
+ruletype: Sigma

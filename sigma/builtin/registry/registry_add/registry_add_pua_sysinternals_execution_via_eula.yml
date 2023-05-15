@@ -1,35 +1,29 @@
 title: PUA - Sysinternal Tool Execution - Registry
-ruletype: Sigma
-author: Markus Neis
-date: 2017/08/28
+id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
+status: experimental
 description: Detects the execution of a Sysinternals Tool via the creation of the
     "accepteula" registry key
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - New registry value created
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: CreateKey
-    SELECTION_5:
-        TargetObject: '*\EulaAccepted'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Legitimate use of SysInternals tools
-- Programs that use the same Registry Key
-id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
-level: low
-logsource:
-    category: registry_add
-    product: windows
-modified: 2023/02/07
 references:
-- https://twitter.com/Moti_B/status/1008587936735035392
-status: experimental
+    - https://twitter.com/Moti_B/status/1008587936735035392
+author: Markus Neis
+date: 2017/08/28
+modified: 2023/02/07
 tags:
-- attack.resource_development
-- attack.t1588.002
-
+    - attack.resource_development
+    - attack.t1588.002
+logsource:
+    product: windows
+    category: registry_add
+detection:
+    registry_add:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: CreateKey
+        TargetObject|endswith: \EulaAccepted
+    condition: registry_add and selection
+falsepositives:
+    - Legitimate use of SysInternals tools
+    - Programs that use the same Registry Key
+level: low
+ruletype: Sigma

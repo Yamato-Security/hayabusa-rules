@@ -1,60 +1,51 @@
 title: UNC2452 Process Creation Patterns
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/01/22
+id: 9be34ad0-b6a7-4fbd-91cf-fc7ec1047f5f
+status: test
 description: Detects a specific process creation patterns as seen used by UNC2452
     and provided by Microsoft as Microsoft Defender ATP queries
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        ParentCommandLine: '*C:\Windows*'
-    SELECTION_11:
-        CommandLine: '*cmd.exe /C *'
-    SELECTION_12:
-        CommandLine: '*rundll32 c:\windows\\*'
-    SELECTION_13:
-        CommandLine: '*.dll *'
-    SELECTION_14:
-        ParentImage: '*\rundll32.exe'
-    SELECTION_15:
-        Image: '*\dllhost.exe'
-    SELECTION_16:
-        CommandLine:
-        - ' '
-        - ''
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*7z.exe a -v500m -mx9 -r0 -p*'
-    SELECTION_4:
-        ParentCommandLine: '*wscript.exe*'
-    SELECTION_5:
-        ParentCommandLine: '*.vbs*'
-    SELECTION_6:
-        CommandLine: '*rundll32.exe*'
-    SELECTION_7:
-        CommandLine: '*C:\Windows*'
-    SELECTION_8:
-        CommandLine: '*.dll,Tk_*'
-    SELECTION_9:
-        ParentImage: '*\rundll32.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or (SELECTION_4 and
-        SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13)) or
-        ((SELECTION_14 and SELECTION_15) and  not (SELECTION_16))))
-falsepositives:
-- Unknown
-id: 9be34ad0-b6a7-4fbd-91cf-fc7ec1047f5f
-level: high
+references:
+    - https://www.microsoft.com/security/blog/2021/01/20/deep-dive-into-the-solorigate-second-stage-activation-from-sunburst-to-teardrop-and-raindrop/
+author: Florian Roth (Nextron Systems)
+date: 2021/01/22
+modified: 2022/12/18
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/18
-references:
-- https://www.microsoft.com/security/blog/2021/01/20/deep-dive-into-the-solorigate-second-stage-activation-from-sunburst-to-teardrop-and-raindrop/
-status: test
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_1:
+        CommandLine|contains: 7z.exe a -v500m -mx9 -r0 -p
+    selection_2:
+        ParentCommandLine|contains|all:
+            - wscript.exe
+            - .vbs
+        CommandLine|contains|all:
+            - rundll32.exe
+            - C:\Windows
+            - .dll,Tk_
+    selection_3:
+        ParentImage|endswith: \rundll32.exe
+        ParentCommandLine|contains: C:\Windows
+        CommandLine|contains: 'cmd.exe /C '
+    selection_4:
+        CommandLine|contains|all:
+            - rundll32 c:\windows\
+            - '.dll '
+    specific1:
+        ParentImage|endswith: \rundll32.exe
+        Image|endswith: \dllhost.exe
+    filter1:
+        CommandLine:
+            - ' '
+            - ''
+    condition: process_creation and (1 of selection_* or ( specific1 and not filter1
+        ))
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

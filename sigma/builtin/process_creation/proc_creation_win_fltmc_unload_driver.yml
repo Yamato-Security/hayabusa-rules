@@ -1,41 +1,37 @@
 title: Filter Driver Unloaded Via Fltmc.EXE
-ruletype: Sigma
+id: 4931188c-178e-4ee7-a348-39e8a7a56821
+related:
+    -   id: 4d7cda18-1b12-4e52-b45c-d28653210df8
+        type: derived
+status: test
+description: Detect filter driver unloading activity via fltmc.exe
+references:
+    - https://www.darkoperator.com/blog/2018/10/5/operating-offensively-against-sysmon
+    - https://www.cybereason.com/blog/threat-analysis-report-lockbit-2.0-all-paths-lead-to-ransom
 author: Nasreddine Bencherchali
 date: 2023/02/13
-description: Detect filter driver unloading activity via fltmc.exe
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\fltMC.exe'
-    SELECTION_4:
-        OriginalFileName: fltMC.exe
-    SELECTION_5:
-        CommandLine: '*unload*'
-    SELECTION_6:
-        CommandLine: '*unload rtp_filesystem_filter'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) and  not ((SELECTION_6)))
-falsepositives:
-- Unknown
-id: 4931188c-178e-4ee7-a348-39e8a7a56821
-level: high
-logsource:
-    category: process_creation
-    product: windows
 modified: 2023/03/14
-references:
-- https://www.darkoperator.com/blog/2018/10/5/operating-offensively-against-sysmon
-- https://www.cybereason.com/blog/threat-analysis-report-lockbit-2.0-all-paths-lead-to-ransom
-related:
--   id: 4d7cda18-1b12-4e52-b45c-d28653210df8
-    type: derived
-status: test
 tags:
-- attack.defense_evasion
-- attack.t1070
-- attack.t1562
-- attack.t1562.002
-
+    - attack.defense_evasion
+    - attack.t1070
+    - attack.t1562
+    - attack.t1562.002
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \fltMC.exe
+        -   OriginalFileName: fltMC.exe
+    selection_cli:
+        CommandLine|contains: unload
+    filter_avira:
+        CommandLine|endswith: unload rtp_filesystem_filter
+    condition: process_creation and (all of selection_* and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

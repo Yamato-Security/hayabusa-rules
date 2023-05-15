@@ -1,41 +1,37 @@
 title: HackTool - SharpUp PrivEsc Tool Execution
-ruletype: Sigma
+id: c484e533-ee16-4a93-b6ac-f0ea4868b2f1
+status: experimental
+description: Detects the use of SharpUp, a tool for local privilege escalation
+references:
+    - https://github.com/GhostPack/SharpUp
 author: Florian Roth (Nextron Systems)
 date: 2022/08/20
-description: Detects the use of SharpUp, a tool for local privilege escalation
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\SharpUp.exe'
-    SELECTION_4:
-        Description: SharpUp
-    SELECTION_5:
-        CommandLine:
-        - '*HijackablePaths*'
-        - '*UnquotedServicePath*'
-        - '*ProcessDLLHijack*'
-        - '*ModifiableServiceBinaries*'
-        - '*ModifiableScheduledTask*'
-        - '*DomainGPPPassword*'
-        - '*CachedGPPPassword*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- Unknown
-id: c484e533-ee16-4a93-b6ac-f0ea4868b2f1
-level: critical
+modified: 2023/02/13
+tags:
+    - attack.privilege_escalation
+    - attack.t1615
+    - attack.t1569.002
+    - attack.t1574.005
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-references:
-- https://github.com/GhostPack/SharpUp
-status: experimental
-tags:
-- attack.privilege_escalation
-- attack.t1615
-- attack.t1569.002
-- attack.t1574.005
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|endswith: \SharpUp.exe
+        -   Description: SharpUp
+        -   CommandLine|contains:
+                - HijackablePaths
+                - UnquotedServicePath
+                - ProcessDLLHijack
+                - ModifiableServiceBinaries
+                - ModifiableScheduledTask
+                - DomainGPPPassword
+                - CachedGPPPassword
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: critical
+ruletype: Sigma

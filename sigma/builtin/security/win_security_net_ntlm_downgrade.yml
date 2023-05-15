@@ -1,43 +1,38 @@
 title: NetNTLM Downgrade Attack
-ruletype: Sigma
+id: d3abac66-f11c-4ed0-8acb-50cc29c97eed
+related:
+    -   id: d67572a0-e2ec-45d6-b8db-c100d14b8ef2
+        type: derived
+status: test
+description: Detects NetNTLM downgrade attack
+references:
+    - https://www.optiv.com/blog/post-exploitation-using-netntlm-downgrade-attacks
 author: Florian Roth (Nextron Systems), wagga
 date: 2018/03/20
-description: Detects NetNTLM downgrade attack
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4657
-    SELECTION_3:
-        ObjectName: '*\REGISTRY\MACHINE\SYSTEM*'
-    SELECTION_4:
-        ObjectName: '*ControlSet*'
-    SELECTION_5:
-        ObjectName: '*\Control\Lsa*'
-    SELECTION_6:
-        ObjectValueName:
-        - LmCompatibilityLevel
-        - NtlmMinClientSec
-        - RestrictSendingNTLMTraffic
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: d3abac66-f11c-4ed0-8acb-50cc29c97eed
-level: high
+modified: 2022/10/09
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
+    - attack.t1112
 logsource:
-    definition: 'Requirements: Audit Policy : Object Access > Audit Registry (Success)'
     product: windows
     service: security
-modified: 2022/10/09
-references:
-- https://www.optiv.com/blog/post-exploitation-using-netntlm-downgrade-attacks
-related:
--   id: d67572a0-e2ec-45d6-b8db-c100d14b8ef2
-    type: derived
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-- attack.t1112
-
+    definition: 'Requirements: Audit Policy : Object Access > Audit Registry (Success)'
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 4657
+        ObjectName|contains|all:
+            - \REGISTRY\MACHINE\SYSTEM
+            - ControlSet
+            - \Control\Lsa
+        ObjectValueName:
+            - LmCompatibilityLevel
+            - NtlmMinClientSec
+            - RestrictSendingNTLMTraffic
+    condition: security and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

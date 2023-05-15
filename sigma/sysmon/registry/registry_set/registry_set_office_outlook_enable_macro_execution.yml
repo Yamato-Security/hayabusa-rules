@@ -1,37 +1,33 @@
 title: Outlook Macro Execution Without Warning Setting Enabled
-ruletype: Sigma
-author: '@ScoubiMtl'
-date: 2021/04/05
+id: e3b50fa5-3c3f-444e-937b-0a99d33731cd
+status: test
 description: Detects the modification of Outlook security setting to allow unprompted
     execution of macros.
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\Outlook\Security\Level'
-    SELECTION_5:
-        Details: '*0x00000001*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unlikely
-id: e3b50fa5-3c3f-444e-937b-0a99d33731cd
-level: high
+references:
+    - https://www.mdsec.co.uk/2020/11/a-fresh-outlook-on-mail-based-persistence/
+    - https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=53
+author: '@ScoubiMtl'
+date: 2021/04/05
+modified: 2023/02/08
+tags:
+    - attack.persistence
+    - attack.command_and_control
+    - attack.t1137
+    - attack.t1008
+    - attack.t1546
 logsource:
     category: registry_set
     product: windows
-modified: 2023/02/08
-references:
-- https://www.mdsec.co.uk/2020/11/a-fresh-outlook-on-mail-based-persistence/
-- https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=53
-status: test
-tags:
-- attack.persistence
-- attack.command_and_control
-- attack.t1137
-- attack.t1008
-- attack.t1546
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|endswith: \Outlook\Security\Level
+        Details|contains: '0x00000001'
+    condition: registry_set and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

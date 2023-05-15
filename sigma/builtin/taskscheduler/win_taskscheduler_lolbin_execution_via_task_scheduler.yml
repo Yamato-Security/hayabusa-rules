@@ -1,42 +1,40 @@
 title: Scheduled Task Executed Uncommon LOLBIN
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/12/05
+id: f0767f15-0fb3-44b9-851e-e8d9a6d0005d
+status: experimental
 description: Detects the execution of Scheduled Tasks where the Program being run
     is located in a suspicious location or it's an unusale program to be run from
     a Scheduled Task
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-TaskScheduler/Operational
-    SELECTION_2:
-        EventID: 129
-    SELECTION_3:
-        Path:
-        - '*\calc.exe'
-        - '*\cscript.exe'
-        - '*\mshta.exe'
-        - '*\mspaint.exe'
-        - '*\notepad.exe'
-        - '*\regsvr32.exe'
-        - '*\wscript.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- False positives may occur with some of the selected binaries if you have tasks using
-    them (which could be very common in your environment). Exclude all the specific
-    trusted tasks before using this rule
-id: f0767f15-0fb3-44b9-851e-e8d9a6d0005d
-level: medium
+references:
+    - Internal Research
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/12/05
+modified: 2023/02/07
+tags:
+    - attack.persistence
+    - attack.t1053.005
 logsource:
+    product: windows
+    service: taskscheduler
     definition: 'Requirements: The "Microsoft-Windows-TaskScheduler/Operational" is
         disabled by default and needs to be enabled in order for this detection to
         trigger'
-    product: windows
-    service: taskscheduler
-modified: 2023/02/07
-references:
-- Internal Research
-status: experimental
-tags:
-- attack.persistence
-- attack.t1053.005
-
+detection:
+    taskscheduler:
+        Channel: Microsoft-Windows-TaskScheduler/Operational
+    selection:
+        EventID: 129
+        Path|endswith:
+            - \calc.exe
+            - \cscript.exe
+            - \mshta.exe
+            - \mspaint.exe
+            - \notepad.exe
+            - \regsvr32.exe
+            - \wscript.exe
+    condition: taskscheduler and selection
+falsepositives:
+    - False positives may occur with some of the selected binaries if you have tasks
+        using them (which could be very common in your environment). Exclude all the
+        specific trusted tasks before using this rule
+level: medium
+ruletype: Sigma

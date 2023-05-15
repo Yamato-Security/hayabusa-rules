@@ -1,33 +1,30 @@
 title: Potential UAC Bypass Via Sdclt.EXE
-ruletype: Sigma
-author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
-date: 2020/05/02
+id: 40f9af16-589d-4984-b78d-8c2aec023197
+status: test
 description: A General detection for sdclt being spawned as an elevated process. This
     could be an indicator of sdclt being used for bypass UAC techniques.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*sdclt.exe'
-    SELECTION_4:
-        IntegrityLevel: High
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 40f9af16-589d-4984-b78d-8c2aec023197
-level: medium
+references:
+    - https://github.com/OTRF/detection-hackathon-apt29/issues/6
+    - https://github.com/OTRF/ThreatHunter-Playbook/blob/2d4257f630f4c9770f78d0c1df059f891ffc3fec/docs/evals/apt29/detections/3.B.2_C36B49B5-DF58-4A34-9FE9-56189B9DEFEA.md
+author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+date: 2020/05/02
+modified: 2023/02/14
+tags:
+    - attack.privilege_escalation
+    - attack.defense_evasion
+    - attack.t1548.002
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/14
-references:
-- https://github.com/OTRF/detection-hackathon-apt29/issues/6
-- https://github.com/OTRF/ThreatHunter-Playbook/blob/2d4257f630f4c9770f78d0c1df059f891ffc3fec/docs/evals/apt29/detections/3.B.2_C36B49B5-DF58-4A34-9FE9-56189B9DEFEA.md
-status: test
-tags:
-- attack.privilege_escalation
-- attack.defense_evasion
-- attack.t1548.002
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        IntegrityLevel: High
+        NewProcessName|endswith: sdclt.exe
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

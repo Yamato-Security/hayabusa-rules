@@ -1,31 +1,28 @@
 title: Potential LethalHTA Technique Execution
-ruletype: Sigma
-author: Markus Neis
-date: 2018/06/07
+id: ed5d72a6-f8f4-479d-ba79-02f6a80d7471
+status: test
 description: Detects potential LethalHTA technique where the "mshta.exe" is spwaned
     by an "svchost.exe" process
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: '*\svchost.exe'
-    SELECTION_4:
-        Image: '*\mshta.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: ed5d72a6-f8f4-479d-ba79-02f6a80d7471
-level: high
+references:
+    - https://codewhitesec.blogspot.com/2018/07/lethalhta.html
+author: Markus Neis
+date: 2018/06/07
+modified: 2023/02/07
+tags:
+    - attack.defense_evasion
+    - attack.t1218.005
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/07
-references:
-- https://codewhitesec.blogspot.com/2018/07/lethalhta.html
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218.005
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ParentImage|endswith: \svchost.exe
+        Image|endswith: \mshta.exe
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

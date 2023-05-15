@@ -1,39 +1,37 @@
 title: Vulnerable WinRing0 Driver Load
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/07/26
+id: 1a42dfa6-6cb2-4df9-9b48-295be477e835
+status: experimental
 description: Detects the load of a signed WinRing0 driver often used by threat actors,
     crypto miners (XMRIG) or malware for privilege escalation
-detection:
-    SELECTION_1:
-        EventID: 6
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ImageLoaded:
-        - '*\WinRing0x64.sys'
-        - '*\WinRing0.sys'
-        - '*\WinRing0.dll'
-        - '*\WinRing0x64.dll'
-        - '*\winring00x64.sys'
-    SELECTION_4:
-        Hashes: '*IMPHASH=D41FA95D4642DC981F10DE36F4DC8CD7*'
-    SELECTION_5:
-        Imphash: d41fa95d4642dc981f10de36f4dc8cd7
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- Unknown
-id: 1a42dfa6-6cb2-4df9-9b48-295be477e835
-level: high
-logsource:
-    category: driver_load
-    product: windows
-modified: 2022/11/19
 references:
-- https://github.com/xmrig/xmrig/tree/master/bin/WinRing0
-- https://www.rapid7.com/blog/post/2021/12/13/driver-based-attacks-past-and-present/
-status: experimental
+    - https://github.com/xmrig/xmrig/tree/master/bin/WinRing0
+    - https://www.rapid7.com/blog/post/2021/12/13/driver-based-attacks-past-and-present/
+author: Florian Roth (Nextron Systems)
+date: 2022/07/26
+modified: 2022/11/19
 tags:
-- attack.privilege_escalation
-- attack.t1543.003
-
+    - attack.privilege_escalation
+    - attack.t1543.003
+logsource:
+    product: windows
+    category: driver_load
+detection:
+    driver_load:
+        EventID: 6
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_name:
+        ImageLoaded|endswith:
+            - \WinRing0x64.sys
+            - \WinRing0.sys
+            - \WinRing0.dll
+            - \WinRing0x64.dll
+            - \winring00x64.sys
+    selection_sysmon:
+        Hashes|contains: IMPHASH=D41FA95D4642DC981F10DE36F4DC8CD7
+    selection_other:
+        Imphash: d41fa95d4642dc981f10de36f4dc8cd7
+    condition: driver_load and (1 of selection*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

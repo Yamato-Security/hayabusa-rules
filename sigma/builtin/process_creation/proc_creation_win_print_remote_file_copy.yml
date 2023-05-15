@@ -1,38 +1,33 @@
 title: Abusing Print Executable
-ruletype: Sigma
+id: bafac3d6-7de9-4dd9-8874-4a1194b493ed
+status: test
+description: Attackers can use print.exe for remote file copy
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Print/
+    - https://twitter.com/Oddvarmoe/status/985518877076541440
 author: Furkan CALISKAN, @caliskanfurkan_, @oscd_initiative
 date: 2020/10/05
-description: Attackers can use print.exe for remote file copy
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\print.exe'
-    SELECTION_4:
-        CommandLine: print*
-    SELECTION_5:
-        CommandLine: '*/D*'
-    SELECTION_6:
-        CommandLine: '*.exe*'
-    SELECTION_7:
-        CommandLine: '*print.exe*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
-falsepositives:
-- Unknown
-id: bafac3d6-7de9-4dd9-8874-4a1194b493ed
-level: medium
+modified: 2022/07/07
+tags:
+    - attack.defense_evasion
+    - attack.t1218
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/07
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Print/
-- https://twitter.com/Oddvarmoe/status/985518877076541440
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|startswith: print
+        CommandLine|contains|all:
+            - /D
+            - .exe
+        NewProcessName|endswith: \print.exe
+    filter_print:
+        CommandLine|contains: print.exe
+    condition: process_creation and (selection and not filter_print)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

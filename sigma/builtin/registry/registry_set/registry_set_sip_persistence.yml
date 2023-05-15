@@ -1,57 +1,47 @@
 title: Persistence Via New SIP Provider
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/21
+id: 5a2b21ee-6aaa-4234-ac9d-59a59edf90a1
+status: experimental
 description: Detects when an attacker register a new SIP provider for persistence
     and defense evasion
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_10:
-        NewValue: C:\Windows\System32\PsfSip.dll
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject:
-        - '*\SOFTWARE\Microsoft\Cryptography\Providers\\*'
-        - '*\SOFTWARE\Microsoft\Cryptography\OID\EncodingType*'
-        - '*\SOFTWARE\WOW6432Node\Microsoft\Cryptography\Providers\\*'
-        - '*\SOFTWARE\WOW6432Node\Microsoft\Cryptography\OID\EncodingType*'
-    SELECTION_6:
-        TargetObject:
-        - '*\Dll*'
-        - '*\$DLL*'
-    SELECTION_7:
-        NewValue:
-        - WINTRUST.DLL
-        - mso.dll
-    SELECTION_8:
-        NewProcessName: C:\Windows\System32\poqexec.exe
-    SELECTION_9:
-        TargetObject: '*\CryptSIPDll*'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10)))
-falsepositives:
-- Legitimate SIP being registered by the OS or different software.
-id: 5a2b21ee-6aaa-4234-ac9d-59a59edf90a1
-level: medium
+references:
+    - https://persistence-info.github.io/Data/codesigning.html
+    - https://github.com/gtworek/PSBits/tree/master/SIP
+    - https://specterops.io/assets/resources/SpecterOps_Subverting_Trust_in_Windows.pdf
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/21
+modified: 2022/09/21
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.t1553.003
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/21
-references:
-- https://persistence-info.github.io/Data/codesigning.html
-- https://github.com/gtworek/PSBits/tree/master/SIP
-- https://specterops.io/assets/resources/SpecterOps_Subverting_Trust_in_Windows.pdf
-status: experimental
-tags:
-- attack.persistence
-- attack.defense_evasion
-- attack.t1553.003
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection_root:
+        EventType: SetValue
+        TargetObject|contains:
+            - \SOFTWARE\Microsoft\Cryptography\Providers\
+            - \SOFTWARE\Microsoft\Cryptography\OID\EncodingType
+            - \SOFTWARE\WOW6432Node\Microsoft\Cryptography\Providers\
+            - \SOFTWARE\WOW6432Node\Microsoft\Cryptography\OID\EncodingType
+    selection_dll:
+        TargetObject|contains:
+            - \Dll
+            - \$DLL
+    filter:
+        Details:
+            - WINTRUST.DLL
+            - mso.dll
+    filter_poqexec:
+        Image: C:\Windows\System32\poqexec.exe
+        TargetObject|contains: \CryptSIPDll
+        Details: C:\Windows\System32\PsfSip.dll
+    condition: registry_set and (all of selection_* and not 1 of filter*)
+falsepositives:
+    - Legitimate SIP being registered by the OS or different software.
+level: medium
+ruletype: Sigma

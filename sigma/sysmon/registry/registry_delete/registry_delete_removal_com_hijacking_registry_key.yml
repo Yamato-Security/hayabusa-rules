@@ -1,7 +1,6 @@
 title: Removal of Potential COM Hijacking Registry Keys
-ruletype: Sigma
-author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
-date: 2020/05/02
+id: 96f697b0-b499-4e5d-9908-a67bec11cdb6
+status: test
 description: 'Detects any deletion of entries in ".*\shell\open\command" registry
     keys.
 
@@ -9,77 +8,63 @@ description: 'Detects any deletion of entries in ".*\shell\open\command" registr
     actor or an attacker and the deletion could indicate steps to remove its tracks.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 12
-    SELECTION_10:
-        TargetObject: '*\Dropbox.*'
-    SELECTION_11:
-        Image: '*\AppData\Local\Temp\Wireshark_uninstaller.exe'
-    SELECTION_12:
-        TargetObject: '*\wireshark-capture-file\\*'
-    SELECTION_13:
-        Image:
-        - C:\Program Files\Opera\\*
-        - C:\Program Files (x86)\Opera\\*
-    SELECTION_14:
-        Image: '*\installer.exe'
-    SELECTION_15:
-        Image: '*peazip*'
-    SELECTION_16:
-        TargetObject: '*\PeaZip.*'
-    SELECTION_17:
-        Image: '*\Everything.exe'
-    SELECTION_18:
-        TargetObject: '*\Everything.*'
-    SELECTION_19:
-        Image: C:\Windows\Installer\MSI*
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        Image: C:\Program Files (x86)\Java\\*
-    SELECTION_21:
-        Image: '*\installer.exe'
-    SELECTION_22:
-        TargetObject: '*\Classes\WOW6432Node\CLSID\{4299124F-F2C3-41b4-9C73-9236B2AD0E8F}*'
-    SELECTION_3:
-        EventType: DeleteKey
-    SELECTION_4:
-        TargetObject: '*\shell\open\command'
-    SELECTION_5:
-        Image: C:\Windows\system32\svchost.exe
-    SELECTION_6:
-        Image:
-        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
-        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
-    SELECTION_7:
-        Image: '*\OfficeClickToRun.exe'
-    SELECTION_8:
-        Image: C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
-    SELECTION_9:
-        Image: '*\Dropbox.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
-        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)
-        or (SELECTION_19) or (SELECTION_20 and SELECTION_21 and SELECTION_22)))
-falsepositives:
-- Legitimate software (un)installations are known to cause some false positives. Please
-    add them as a filter when encountered
-id: 96f697b0-b499-4e5d-9908-a67bec11cdb6
-level: medium
-logsource:
-    category: registry_delete
-    product: windows
-modified: 2023/01/19
 references:
-- https://github.com/OTRF/detection-hackathon-apt29/issues/7
-- https://github.com/OTRF/ThreatHunter-Playbook/blob/2d4257f630f4c9770f78d0c1df059f891ffc3fec/docs/evals/apt29/detections/3.C.1_22A46621-7A92-48C1-81BF-B3937EB4FDC3.md
-- https://docs.microsoft.com/en-us/windows/win32/shell/launch
-- https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-iexecutecommand
-- https://docs.microsoft.com/en-us/windows/win32/shell/shell-and-managed-code
-status: test
+    - https://github.com/OTRF/detection-hackathon-apt29/issues/7
+    - https://github.com/OTRF/ThreatHunter-Playbook/blob/2d4257f630f4c9770f78d0c1df059f891ffc3fec/docs/evals/apt29/detections/3.C.1_22A46621-7A92-48C1-81BF-B3937EB4FDC3.md
+    - https://docs.microsoft.com/en-us/windows/win32/shell/launch
+    - https://docs.microsoft.com/en-us/windows/win32/api/shobjidl_core/nn-shobjidl_core-iexecutecommand
+    - https://docs.microsoft.com/en-us/windows/win32/shell/shell-and-managed-code
+author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+date: 2020/05/02
+modified: 2023/01/19
 tags:
-- attack.defense_evasion
-- attack.t1112
-
+    - attack.defense_evasion
+    - attack.t1112
+logsource:
+    product: windows
+    category: registry_delete
+detection:
+    registry_delete:
+        EventID: 12
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: DeleteKey
+        TargetObject|endswith: \shell\open\command
+    filter_svchost:
+        Image: C:\Windows\system32\svchost.exe
+    filter_office:
+        Image|startswith:
+            - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
+            - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
+        Image|endswith: \OfficeClickToRun.exe
+    filter_integrator:
+        Image: C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+    filter_dropbox:
+        Image|endswith: \Dropbox.exe
+        TargetObject|contains: \Dropbox.
+    filter_wireshark:
+        Image|endswith: \AppData\Local\Temp\Wireshark_uninstaller.exe
+        TargetObject|contains: \wireshark-capture-file\
+    filter_opera:
+        Image|startswith:
+            - C:\Program Files\Opera\
+            - C:\Program Files (x86)\Opera\
+        Image|endswith: \installer.exe
+    filter_peazip:
+        Image|contains: peazip
+        TargetObject|contains: \PeaZip.
+    filter_everything:
+        Image|endswith: \Everything.exe
+        TargetObject|contains: \Everything.
+    filter_uninstallers:
+        Image|startswith: C:\Windows\Installer\MSI
+    filter_java:
+        Image|startswith: C:\Program Files (x86)\Java\
+        Image|endswith: \installer.exe
+        TargetObject|contains: \Classes\WOW6432Node\CLSID\{4299124F-F2C3-41b4-9C73-9236B2AD0E8F}
+    condition: registry_delete and (selection and not 1 of filter_*)
+falsepositives:
+    - Legitimate software (un)installations are known to cause some false positives.
+        Please add them as a filter when encountered
+level: medium
+ruletype: Sigma

@@ -1,35 +1,33 @@
 title: All Rules Have Been Deleted From The Windows Firewall Configuration
-ruletype: Sigma
-author: frack113, Nasreddine Bencherchali (Nextron Systems)
-date: 2023/01/17
+id: 79609c82-a488-426e-abcf-9f341a39365d
+status: experimental
 description: Detects when a all the rules have been deleted from the Windows Defender
     Firewall configuration
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
-    SELECTION_2:
-        EventID: 2033
-    SELECTION_3:
-        EventID: 2059
-    SELECTION_4:
-        ModifyingApplication:
-        - C:\Program Files\\*
-        - C:\Program Files (x86)\\*
-    SELECTION_5:
-        ModifyingApplication: C:\Windows\System32\svchost.exe
-    SELECTION_6:
-        ModifyingApplication: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
-    SELECTION_7:
-        ModifyingApplication: '*\MsMpEng.exe'
-    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) and  not ((SELECTION_4)
-        or (SELECTION_5))) and  not ((SELECTION_6 and SELECTION_7)))
-id: 79609c82-a488-426e-abcf-9f341a39365d
-level: high
+references:
+    - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
+author: frack113, Nasreddine Bencherchali (Nextron Systems)
+date: 2023/01/17
+modified: 2023/04/21
 logsource:
     product: windows
     service: firewall-as
-modified: 2023/04/21
-references:
-- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
-status: experimental
-
+detection:
+    firewall_as:
+        Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
+    selection:
+        EventID:
+            - 2033
+            - 2059
+    filter_main_generic:
+        ModifyingApplication|startswith:
+            - C:\Program Files\
+            - C:\Program Files (x86)\
+    filter_main_svchost:
+        ModifyingApplication: C:\Windows\System32\svchost.exe
+    filter_optional_msmpeng:
+        ModifyingApplication|startswith: C:\ProgramData\Microsoft\Windows Defender\Platform\
+        ModifyingApplication|endswith: \MsMpEng.exe
+    condition: firewall_as and (selection and not 1 of filter_main_* and not 1 of
+        filter_optional_*)
+level: high
+ruletype: Sigma

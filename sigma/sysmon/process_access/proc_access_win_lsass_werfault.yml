@@ -1,36 +1,32 @@
 title: WerFault Accassing LSASS
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2012/06/27
+id: e5b33f7d-eb93-48b6-9851-09e1e610b6d7
+status: test
 description: Detects process LSASS memory dump using Mimikatz, NanoDump, Invoke-Mimikatz,
     Procdump or Taskmgr based on the CallTrace pointing to ntdll.dll, dbghelp.dll
     or dbgcore.dll for win10, server2016 and up.
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        SourceImage: '*\WerFault.exe'
-    SELECTION_4:
-        TargetImage: '*\lsass.exe'
-    SELECTION_5:
-        GrantedAccess: '0x1FFFFF'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Actual failures in lsass.exe that trigger a crash dump (unlikely)
-- Unknown cases in which WerFault accesses lsass.exe
-id: e5b33f7d-eb93-48b6-9851-09e1e610b6d7
-level: high
+references:
+    - https://github.com/helpsystems/nanodump/commit/578116faea3d278d53d70ea932e2bbfe42569507
+author: Florian Roth (Nextron Systems)
+date: 2012/06/27
+modified: 2022/10/09
+tags:
+    - attack.credential_access
+    - attack.t1003.001
+    - attack.s0002
 logsource:
     category: process_access
     product: windows
-modified: 2022/10/09
-references:
-- https://github.com/helpsystems/nanodump/commit/578116faea3d278d53d70ea932e2bbfe42569507
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.001
-- attack.s0002
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        SourceImage|endswith: \WerFault.exe
+        TargetImage|endswith: \lsass.exe
+        GrantedAccess: '0x1FFFFF'
+    condition: process_access and selection
+falsepositives:
+    - Actual failures in lsass.exe that trigger a crash dump (unlikely)
+    - Unknown cases in which WerFault accesses lsass.exe
+level: high
+ruletype: Sigma

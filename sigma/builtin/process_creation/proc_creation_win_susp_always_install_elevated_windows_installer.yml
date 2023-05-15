@@ -1,64 +1,57 @@
 title: Always Install Elevated Windows Installer
-ruletype: Sigma
-author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community
-date: 2020/10/13
+id: cd951fdc-4b2f-47f5-ba99-a33bf61e3770
+status: experimental
 description: Detects Windows Installer service (msiexec.exe) trying to install MSI
     packages with SYSTEM privilege
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '*\system32\msiexec.exe /V'
-    SELECTION_11:
-        ParentCommandLine: '*\system32\msiexec.exe /V'
-    SELECTION_12:
-        ParentProcessName: C:\ProgramData\Sophos\\*
-    SELECTION_13:
-        ParentProcessName: C:\ProgramData\Avira\\*
-    SELECTION_14:
-        ParentProcessName:
-        - C:\Program Files\Avast Software\\*
-        - C:\Program Files (x86)\Avast Software\\*
-    SELECTION_15:
-        ParentProcessName:
-        - C:\Program Files\Google\Update\\*
-        - C:\Program Files (x86)\Google\Update\\*
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\Windows\Installer\\*'
-    SELECTION_4:
-        NewProcessName: '*msi*'
-    SELECTION_5:
-        NewProcessName: '*tmp'
-    SELECTION_6:
-        NewProcessName: '*\msiexec.exe'
-    SELECTION_7:
-        IntegrityLevel: System
-    SELECTION_8:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    SELECTION_9:
-        ParentProcessName: C:\Windows\System32\services.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7)) and SELECTION_8) and  not ((SELECTION_9)
-        or (SELECTION_10 or SELECTION_11) or (SELECTION_12) or (SELECTION_13) or (SELECTION_14)
-        or (SELECTION_15)))
-falsepositives:
-- System administrator usage
-- Anti virus products
-- WindowsApps located in "C:\Program Files\WindowsApps\"
-id: cd951fdc-4b2f-47f5-ba99-a33bf61e3770
-level: medium
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/03/23
 references:
-- https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-48-638.jpg
-status: experimental
+    - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-48-638.jpg
+author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community
+date: 2020/10/13
+modified: 2023/03/23
 tags:
-- attack.privilege_escalation
-- attack.t1548.002
-
+    - attack.privilege_escalation
+    - attack.t1548.002
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_user:
+        User|contains:
+            - AUTHORI
+            - AUTORI
+    selection_image_1:
+        NewProcessName|contains|all:
+            - \Windows\Installer\
+            - msi
+        NewProcessName|endswith: tmp
+    selection_image_2:
+        IntegrityLevel: System
+        NewProcessName|endswith: \msiexec.exe
+    filter_installer:
+        ParentProcessName: C:\Windows\System32\services.exe
+    filter_repair:
+        -   CommandLine|endswith: \system32\msiexec.exe /V
+        -   ParentCommandLine|endswith: \system32\msiexec.exe /V
+    filter_sophos:
+        ParentProcessName|startswith: C:\ProgramData\Sophos\
+    filter_avira:
+        ParentProcessName|startswith: C:\ProgramData\Avira\
+    filter_avast:
+        ParentProcessName|startswith:
+            - C:\Program Files\Avast Software\
+            - C:\Program Files (x86)\Avast Software\
+    filter_google_update:
+        ParentProcessName|startswith:
+            - C:\Program Files\Google\Update\
+            - C:\Program Files (x86)\Google\Update\
+    condition: process_creation and (1 of selection_image_* and selection_user and
+        not 1 of filter_*)
+falsepositives:
+    - System administrator usage
+    - Anti virus products
+    - WindowsApps located in "C:\Program Files\WindowsApps\"
+level: medium
+ruletype: Sigma

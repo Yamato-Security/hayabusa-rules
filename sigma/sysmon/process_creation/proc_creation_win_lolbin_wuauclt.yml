@@ -1,50 +1,45 @@
 title: Proxy Execution via Wuauclt
-ruletype: Sigma
+id: af77cf95-c469-471c-b6a0-946c685c4798
+related:
+    -   id: ba1bb0cb-73da-42de-ad3a-de10c643a5d0
+        type: obsoletes
+    -   id: d7825193-b70a-48a4-b992-8b5b3015cc11
+        type: obsoletes
+status: test
+description: Detects the use of the Windows Update Client binary (wuauclt.exe) to
+    proxy execute code.
+references:
+    - https://dtm.uk/wuauclt/
+    - https://blog.malwarebytes.com/threat-intelligence/2022/01/north-koreas-lazarus-apt-leverages-windows-update-client-github-in-latest-campaign/
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research), Florian Roth
     (Nextron Systems), Sreeman, FPT.EagleEye Team
 date: 2020/10/12
-description: Detects the use of the Windows Update Client binary (wuauclt.exe) to
-    proxy execute code.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\wuauclt.exe'
-    SELECTION_4:
-        OriginalFileName: wuauclt.exe
-    SELECTION_5:
-        CommandLine: '*UpdateDeploymentProvider*'
-    SELECTION_6:
-        CommandLine: '*.dll*'
-    SELECTION_7:
-        CommandLine: '*RunHandlerComServer*'
-    SELECTION_8:
-        CommandLine:
-        - '* /UpdateDeploymentProvider UpdateDeploymentProvider.dll *'
-        - '* wuaueng.dll *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7)) and  not (SELECTION_8))
-falsepositives:
-- Unknown
-id: af77cf95-c469-471c-b6a0-946c685c4798
-level: high
+modified: 2023/02/13
+tags:
+    - attack.defense_evasion
+    - attack.t1218
+    - attack.execution
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-references:
-- https://dtm.uk/wuauclt/
-- https://blog.malwarebytes.com/threat-intelligence/2022/01/north-koreas-lazarus-apt-leverages-windows-update-client-github-in-latest-campaign/
-related:
--   id: ba1bb0cb-73da-42de-ad3a-de10c643a5d0
-    type: obsoletes
--   id: d7825193-b70a-48a4-b992-8b5b3015cc11
-    type: obsoletes
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218
-- attack.execution
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \wuauclt.exe
+        -   OriginalFileName: wuauclt.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - UpdateDeploymentProvider
+            - .dll
+            - RunHandlerComServer
+    filter:
+        CommandLine|contains:
+            - ' /UpdateDeploymentProvider UpdateDeploymentProvider.dll '
+            - ' wuaueng.dll '
+    condition: process_creation and (all of selection_* and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

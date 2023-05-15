@@ -1,31 +1,29 @@
 title: HackTool - DInjector PowerShell Cradle Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/12/07
+id: d78b5d61-187d-44b6-bf02-93486a80de5a
+status: test
 description: Detects the use of the Dinject PowerShell cradle based on the specific
     flags
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '* /am51*'
-    SELECTION_4:
-        CommandLine: '* /password*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unlikely
-id: d78b5d61-187d-44b6-bf02-93486a80de5a
-level: critical
+references:
+    - https://github.com/snovvcrash/DInjector
+author: Florian Roth (Nextron Systems)
+date: 2021/12/07
+modified: 2023/02/04
+tags:
+    - attack.defense_evasion
+    - attack.t1055
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://github.com/snovvcrash/DInjector
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1055
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - ' /am51'
+            - ' /password'
+    condition: process_creation and selection
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

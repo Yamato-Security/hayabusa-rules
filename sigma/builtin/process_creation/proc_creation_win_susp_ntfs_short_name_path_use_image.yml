@@ -1,61 +1,52 @@
 title: Use Short Name Path in Image
-ruletype: Sigma
-author: frack113, Nasreddine Bencherchali
-date: 2022/08/07
+id: a96970af-f126-420d-90e1-d37bf25e50e1
+related:
+    -   id: 349d891d-fef0-4fe4-bc53-eee623a15969
+        type: similar
+status: experimental
 description: Detect use of the Windows 8.3 short name. Which could be used as a method
     to avoid Image detection
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        NewProcessName: '*\Temp\\*'
-    SELECTION_11:
-        NewProcessName:
-        - '*~1\unzip.exe'
-        - '*~1\7zG.exe'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName:
-        - '*~1\\*'
-        - '*~2\\*'
-    SELECTION_4:
-        ParentProcessName:
-        - C:\Windows\System32\Dism.exe
-        - C:\Windows\System32\cleanmgr.exe
-    SELECTION_5:
-        ParentProcessName:
-        - '*\WebEx\WebexHost.exe'
-        - '*\thor\thor64.exe'
-    SELECTION_6:
-        Product: InstallShield (R)
-    SELECTION_7:
-        Description: InstallShield (R) Setup Engine
-    SELECTION_8:
-        Company: InstallShield Software Corporation
-    SELECTION_9:
-        NewProcessName: '*\AppData\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8) or (SELECTION_9
-        and SELECTION_10 or SELECTION_11)))
-falsepositives:
-- Applications could use this notation occasionally which might generate some false
-    positives. In that case Investigate the parent and child process.
-id: a96970af-f126-420d-90e1-d37bf25e50e1
-level: medium
+references:
+    - https://www.acunetix.com/blog/articles/windows-short-8-3-filenames-web-security-problem/
+    - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc959352(v=technet.10)?redirectedfrom=MSDN
+    - https://twitter.com/frack113/status/1555830623633375232
+author: frack113, Nasreddine Bencherchali
+date: 2022/08/07
+modified: 2023/03/21
+tags:
+    - attack.defense_evasion
+    - attack.t1564.004
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/21
-references:
-- https://www.acunetix.com/blog/articles/windows-short-8-3-filenames-web-security-problem/
-- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-2000-server/cc959352(v=technet.10)?redirectedfrom=MSDN
-- https://twitter.com/frack113/status/1555830623633375232
-related:
--   id: 349d891d-fef0-4fe4-bc53-eee623a15969
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1564.004
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        NewProcessName|contains:
+            - ~1\
+            - ~2\
+    filter1:
+        -   ParentProcessName:
+                - C:\Windows\System32\Dism.exe
+                - C:\Windows\System32\cleanmgr.exe
+        -   ParentProcessName|endswith:
+                - \WebEx\WebexHost.exe
+                - \thor\thor64.exe
+        -   Product: InstallShield (R)
+        -   Description: InstallShield (R) Setup Engine
+        -   Company: InstallShield Software Corporation
+    filter_installers:
+        -   NewProcessName|contains|all:
+                - \AppData\
+                - \Temp\
+        -   NewProcessName|endswith:
+                - ~1\unzip.exe
+                - ~1\7zG.exe
+    condition: process_creation and (selection and not 1 of filter*)
+falsepositives:
+    - Applications could use this notation occasionally which might generate some
+        false positives. In that case Investigate the parent and child process.
+level: medium
+ruletype: Sigma

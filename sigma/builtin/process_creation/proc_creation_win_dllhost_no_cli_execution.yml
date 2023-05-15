@@ -1,36 +1,33 @@
 title: Dllhost.EXE Execution Anomaly
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/06/27
+id: e7888eb1-13b0-4616-bd99-4bc0c2b054b9
+status: experimental
 description: Detects a "dllhost" process spawning with no commandline arguments which
     is very rare to happen and could indicate process injection activity or malware
     mimicking similar system processes.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*dllhost.exe'
-    SELECTION_4:
-        NewProcessName: '*\dllhost.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unlikely
-fields:
-- CommandLine
-- ParentCommandLine
-id: e7888eb1-13b0-4616-bd99-4bc0c2b054b9
-level: high
+references:
+    - https://redcanary.com/blog/child-processes/
+    - https://nasbench.medium.com/what-is-the-dllhost-exe-process-actually-running-ef9fe4c19c08
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/06/27
+modified: 2023/02/21
+tags:
+    - attack.defense_evasion
+    - attack.t1055
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
-references:
-- https://redcanary.com/blog/child-processes/
-- https://nasbench.medium.com/what-is-the-dllhost-exe-process-actually-running-ef9fe4c19c08
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1055
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|endswith: dllhost.exe
+        NewProcessName|endswith: \dllhost.exe
+    condition: process_creation and selection
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

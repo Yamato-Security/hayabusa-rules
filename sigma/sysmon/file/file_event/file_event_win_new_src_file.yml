@@ -1,37 +1,35 @@
 title: SCR File Write Event
-ruletype: Sigma
-author: Christopher Peacock @securepeacock, SCYTHE @scythe_io
-date: 2022/04/27
+id: c048f047-7e2a-4888-b302-55f509d4a91d
+status: experimental
 description: Detects the creation of screensaver files (.scr) outside of system folders.
     Attackers may execute an application as an ".SCR" file using "rundll32.exe desk.cpl,InstallScreenSaver"
     for example.
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*.scr'
-    SELECTION_4:
-        TargetFilename:
-        - C:\$WINDOWS.~BT\NewOS\\*
-        - C:\Windows\System32\\*
-        - C:\Windows\SysWOW64\\*
-        - C:\Windows\WinSxS\\*
-        - :\WUDownloadCache\\*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- The installation of new screen savers by third party software
-id: c048f047-7e2a-4888-b302-55f509d4a91d
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/Libraries/Desk/
+author: Christopher Peacock @securepeacock, SCYTHE @scythe_io
+date: 2022/04/27
+modified: 2023/02/23
+tags:
+    - attack.defense_evasion
+    - attack.t1218.011
 logsource:
     category: file_event
     product: windows
-modified: 2023/02/23
-references:
-- https://lolbas-project.github.io/lolbas/Libraries/Desk/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1218.011
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|endswith: .scr
+    filter:
+        TargetFilename|startswith:
+            - C:\$WINDOWS.~BT\NewOS\
+            - C:\Windows\System32\
+            - C:\Windows\SysWOW64\
+            - C:\Windows\WinSxS\
+            - :\WUDownloadCache\
+    condition: file_event and (selection and not filter)
+falsepositives:
+    - The installation of new screen savers by third party software
+level: medium
+ruletype: Sigma

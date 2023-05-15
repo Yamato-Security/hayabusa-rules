@@ -1,7 +1,9 @@
 title: Remote Access Tool - Anydesk Execution From Suspicious Folder
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/05/20
+id: 065b00ca-5d5c-4557-ac95-64a6d0b64d86
+related:
+    -   id: b52e84a3-029e-4529-b09b-71d19dd27e94
+        type: similar
+status: experimental
 description: 'An adversary may use legitimate desktop support and remote access software,
     such as Team Viewer, Go2Assist, LogMein, AmmyyAdmin, etc, to establish an interactive
     command and control channel to target systems within networks.
@@ -14,41 +16,33 @@ description: 'An adversary may use legitimate desktop support and remote access 
     Living off the Land)
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\AnyDesk.exe'
-    SELECTION_4:
-        Description: AnyDesk
-    SELECTION_5:
-        Product: AnyDesk
-    SELECTION_6:
-        Company: AnyDesk Software GmbH
-    SELECTION_7:
-        Image:
-        - '*\AppData\\*'
-        - '*Program Files (x86)\AnyDesk*'
-        - '*Program Files\AnyDesk*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-        or SELECTION_6) and  not (SELECTION_7))
-falsepositives:
-- Legitimate use of AnyDesk from a non-standard folder
-id: 065b00ca-5d5c-4557-ac95-64a6d0b64d86
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-2---anydesk-files-detected-test-on-windows
+author: Florian Roth (Nextron Systems)
+date: 2022/05/20
+modified: 2023/03/05
+tags:
+    - attack.command_and_control
+    - attack.t1219
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/05
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-2---anydesk-files-detected-test-on-windows
-related:
--   id: b52e84a3-029e-4529-b09b-71d19dd27e94
-    type: similar
-status: experimental
-tags:
-- attack.command_and_control
-- attack.t1219
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|endswith: \AnyDesk.exe
+        -   Description: AnyDesk
+        -   Product: AnyDesk
+        -   Company: AnyDesk Software GmbH
+    filter:
+        Image|contains:
+            - \AppData\
+            - Program Files (x86)\AnyDesk
+            - Program Files\AnyDesk
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Legitimate use of AnyDesk from a non-standard folder
+level: high
+ruletype: Sigma

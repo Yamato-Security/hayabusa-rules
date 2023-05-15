@@ -1,42 +1,38 @@
 title: Add New Windows Capability - ProcCreation
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/01/22
+id: b36d01a3-ddaf-4804-be18-18a6247adfcd
+related:
+    -   id: 155c7fd5-47b4-49b2-bbeb-eb4fab335429
+        type: similar
+status: experimental
 description: Detects usage of the "Add-WindowsCapability" cmdlet to add new windows
     capabilities. Notable capabilities could be "OpenSSH" and others.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_5:
-        CommandLine: '*Add-WindowsCapability*'
-    SELECTION_6:
-        CommandLine: '*OpenSSH.*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- Legitimate usage of the capabilities by administartors or users. Filter accordingly
-id: b36d01a3-ddaf-4804-be18-18a6247adfcd
-level: medium
-logsource:
-    category: process_creation
-    product: windows
 references:
-- https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=powershell
-- https://www.virustotal.com/gui/file/af1c82237b6e5a3a7cdbad82cc498d298c67845d92971bada450023d1335e267/content
-related:
--   id: 155c7fd5-47b4-49b2-bbeb-eb4fab335429
-    type: similar
-status: experimental
+    - https://learn.microsoft.com/en-us/windows-server/administration/openssh/openssh_install_firstuse?tabs=powershell
+    - https://www.virustotal.com/gui/file/af1c82237b6e5a3a7cdbad82cc498d298c67845d92971bada450023d1335e267/content
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/01/22
 tags:
-- attack.execution
-
+    - attack.execution
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    selection_cmdlet:
+        CommandLine|contains: Add-WindowsCapability
+    selection_capa:
+        CommandLine|contains: OpenSSH.
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Legitimate usage of the capabilities by administartors or users. Filter accordingly
+level: medium
+ruletype: Sigma

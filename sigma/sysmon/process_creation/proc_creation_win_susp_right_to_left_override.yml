@@ -1,35 +1,33 @@
 title: Potential Defense Evasion Via Right-to-Left Override
-ruletype: Sigma
-author: Micah Babinski, @micahbabinski
-date: 2023/02/15
+id: ad691d92-15f2-4181-9aa4-723c74f9ddc3
+status: experimental
 description: 'Detects the presence of the "u202+E" character, which causes a terminal,
     browser, or operating system to render text in a right-to-left sequence.
 
     This is used as an obfuscation and masquerading techniques.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: "*\u202E*"
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Commandlines that contains scriptures such as arabic or hebrew might make use of
-    this character
-id: ad691d92-15f2-4181-9aa4-723c74f9ddc3
-level: high
+references:
+    - https://redcanary.com/blog/right-to-left-override/
+    - https://www.malwarebytes.com/blog/news/2014/01/the-rtlo-method
+    - https://unicode-explorer.com/c/202E
+author: Micah Babinski, @micahbabinski
+date: 2023/02/15
+tags:
+    - attack.defense_evasion
+    - attack.t1036.002
 logsource:
     category: process_creation
     product: windows
-references:
-- https://redcanary.com/blog/right-to-left-override/
-- https://www.malwarebytes.com/blog/news/2014/01/the-rtlo-method
-- https://unicode-explorer.com/c/202E
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1036.002
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains: "\u202E"
+    condition: process_creation and selection
+falsepositives:
+    - Commandlines that contains scriptures such as arabic or hebrew might make use
+        of this character
+level: high
+ruletype: Sigma

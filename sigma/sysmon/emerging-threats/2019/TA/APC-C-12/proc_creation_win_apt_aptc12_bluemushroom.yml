@@ -1,37 +1,32 @@
 title: Potential APT-C-12 BlueMushroom DLL Load Activity Via Regsvr32
-ruletype: Sigma
+id: bd70d3f8-e60e-4d25-89f0-0b5a9cff20e0
+status: test
+description: Detects potential BlueMushroom DLL loading activity via regsvr32 from
+    AppData Local
+references:
+    - https://pbs.twimg.com/media/EF3yLGoWkAEGeLa?format=jpg
 author: Florian Roth (Nextron Systems), Tim Shelton, Nasreddine Bencherchali (Nextron
     Systems)
 date: 2019/10/02
-description: Detects potential BlueMushroom DLL loading activity via regsvr32 from
-    AppData Local
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*regsvr32*'
-    SELECTION_4:
-        CommandLine: '*\AppData\Local\\*'
-    SELECTION_5:
-        CommandLine: '*.dll*'
-    SELECTION_6:
-        CommandLine: '*,DllEntry*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: bd70d3f8-e60e-4d25-89f0-0b5a9cff20e0
-level: medium
+modified: 2023/03/29
+tags:
+    - attack.defense_evasion
+    - attack.t1218.010
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/29
-references:
-- https://pbs.twimg.com/media/EF3yLGoWkAEGeLa?format=jpg
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218.010
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains|all:
+            - regsvr32
+            - \AppData\Local\
+            - .dll
+            - ',DllEntry'
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

@@ -1,54 +1,50 @@
 title: Suspicious Msiexec Execute Arbitrary DLL
-ruletype: Sigma
-author: frack113
-date: 2022/01/16
+id: 6f4191bb-912b-48a8-9ce7-682769541e6d
+status: experimental
 description: 'Adversaries may abuse msiexec.exe to proxy execution of malicious payloads.
 
     Msiexec.exe is the command-line utility for the Windows Installer and is thus
     commonly associated with executing installation packages (.msi)
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\msiexec.exe'
-    SELECTION_4:
-        CommandLine:
-        - '* /y*'
-        - '* -y*'
-    SELECTION_5:
-        CommandLine:
-        - '*\MsiExec.exe" /Y "C:\Program Files\Bonjour\mdnsNSP.dll*'
-        - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Bonjour\mdnsNSP.dll*'
-        - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Apple Software Update\ScriptingObjectModel.dll*'
-        - '*\MsiExec.exe" /Y "C:\Program Files (x86)\Apple Software Update\SoftwareUpdateAdmin.dll*'
-        - '*\MsiExec.exe" /Y "C:\Windows\CCM\\*'
-        - '*\MsiExec.exe" /Y C:\Windows\CCM\\*'
-        - '*\MsiExec.exe" -Y "C:\Program Files\Bonjour\mdnsNSP.dll*'
-        - '*\MsiExec.exe" -Y "C:\Program Files (x86)\Bonjour\mdnsNSP.dll*'
-        - '*\MsiExec.exe" -Y "C:\Program Files (x86)\Apple Software Update\ScriptingObjectModel.dll*'
-        - '*\MsiExec.exe" -Y "C:\Program Files (x86)\Apple Software Update\SoftwareUpdateAdmin.dll*'
-        - '*\MsiExec.exe" -Y "C:\Windows\CCM\\*'
-        - '*\MsiExec.exe" -Y C:\Windows\CCM\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5)))
-falsepositives:
-- Legitimate script
-id: 6f4191bb-912b-48a8-9ce7-682769541e6d
-level: medium
+references:
+    - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md
+    - https://twitter.com/_st0pp3r_/status/1583914515996897281
+author: frack113
+date: 2022/01/16
+modified: 2022/12/08
+tags:
+    - attack.defense_evasion
+    - attack.t1218.007
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/08
-references:
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/msiexec
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md
-- https://twitter.com/_st0pp3r_/status/1583914515996897281
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1218.007
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \msiexec.exe
+        CommandLine|contains:
+            - ' /y'
+            - ' -y'
+    filter_apple:
+        CommandLine|contains:
+            - \MsiExec.exe" /Y "C:\Program Files\Bonjour\mdnsNSP.dll
+            - \MsiExec.exe" /Y "C:\Program Files (x86)\Bonjour\mdnsNSP.dll
+            - \MsiExec.exe" /Y "C:\Program Files (x86)\Apple Software Update\ScriptingObjectModel.dll
+            - \MsiExec.exe" /Y "C:\Program Files (x86)\Apple Software Update\SoftwareUpdateAdmin.dll
+            - \MsiExec.exe" /Y "C:\Windows\CCM\
+            - \MsiExec.exe" /Y C:\Windows\CCM\
+            - \MsiExec.exe" -Y "C:\Program Files\Bonjour\mdnsNSP.dll
+            - \MsiExec.exe" -Y "C:\Program Files (x86)\Bonjour\mdnsNSP.dll
+            - \MsiExec.exe" -Y "C:\Program Files (x86)\Apple Software Update\ScriptingObjectModel.dll
+            - \MsiExec.exe" -Y "C:\Program Files (x86)\Apple Software Update\SoftwareUpdateAdmin.dll
+            - \MsiExec.exe" -Y "C:\Windows\CCM\
+            - \MsiExec.exe" -Y C:\Windows\CCM\
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - Legitimate script
+level: medium
+ruletype: Sigma

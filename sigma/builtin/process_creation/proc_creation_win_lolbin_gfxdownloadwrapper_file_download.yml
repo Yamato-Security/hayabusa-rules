@@ -1,38 +1,34 @@
 title: GfxDownloadWrapper.exe Downloads File from Suspicious URL
-ruletype: Sigma
-author: Victor Sergeev, oscd.community
-date: 2020/10/09
+id: eee00933-a761-4cd0-be70-c42fe91731e7
+status: test
 description: Detects when GfxDownloadWrapper.exe downloads file from non standard
     URL
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\GfxDownloadWrapper.exe'
-    SELECTION_4:
-        CommandLine: '*gameplayapi.intel.com*'
-    SELECTION_5:
-        ParentProcessName:
-        - '*\GfxDownloadWrapper.exe'
-        - '*\igfxEM.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-        and SELECTION_5))
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-id: eee00933-a761-4cd0-be70-c42fe91731e7
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/GfxDownloadWrapper/
+author: Victor Sergeev, oscd.community
+date: 2020/10/09
+modified: 2022/01/06
+tags:
+    - attack.command_and_control
+    - attack.t1105
 logsource:
     category: process_creation
     product: windows
-modified: 2022/01/06
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/GfxDownloadWrapper/
-status: test
-tags:
-- attack.command_and_control
-- attack.t1105
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    image_path:
+        NewProcessName|endswith: \GfxDownloadWrapper.exe
+    filter:
+        CommandLine|contains: gameplayapi.intel.com
+        ParentProcessName|endswith:
+            - \GfxDownloadWrapper.exe
+            - \igfxEM.exe
+    condition: process_creation and (image_path and not filter)
+fields:
+    - CommandLine
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

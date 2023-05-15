@@ -1,41 +1,36 @@
 title: Rundll32 With Suspicious Parent Process
-ruletype: Sigma
-author: CD_ROM_
-date: 2022/05/21
+id: 1723e720-616d-4ddc-ab02-f7e3685a4713
+status: experimental
 description: Detects suspicious start of rundll32.exe with a parent process of Explorer.exe.
     Variant of Raspberry Robin, as first reported by Red Canary.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\rundll32.exe'
-    SELECTION_4:
-        OriginalFileName: RUNDLL32.EXE
-    SELECTION_5:
-        ParentProcessName: '*\explorer.exe'
-    SELECTION_6:
-        CommandLine: '* C:\Windows\System32\\*'
-    SELECTION_7:
-        CommandLine: '* -localserver 22d8c27b-47a1-48d1-ad08-7da7abd79617'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) and  not (SELECTION_6 or SELECTION_7))
-falsepositives:
-- Unknown
-fields:
-- Image
-- ParentImage
-id: 1723e720-616d-4ddc-ab02-f7e3685a4713
-level: medium
+references:
+    - https://redcanary.com/blog/raspberry-robin/
+    - https://thedfirreport.com/2022/09/26/bumblebee-round-two/
+author: CD_ROM_
+date: 2022/05/21
+modified: 2023/02/09
+tags:
+    - attack.defense_evasion
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/09
-references:
-- https://redcanary.com/blog/raspberry-robin/
-- https://thedfirreport.com/2022/09/26/bumblebee-round-two/
-status: experimental
-tags:
-- attack.defense_evasion
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \rundll32.exe
+        -   OriginalFileName: RUNDLL32.EXE
+    selection_parent:
+        ParentProcessName|endswith: \explorer.exe
+    filter:
+        -   CommandLine|contains: ' C:\Windows\System32\'
+        -   CommandLine|endswith: ' -localserver 22d8c27b-47a1-48d1-ad08-7da7abd79617'
+    condition: process_creation and (all of selection_* and not filter)
+fields:
+    - NewProcessName
+    - ParentProcessName
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

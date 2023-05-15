@@ -1,37 +1,32 @@
 title: Invoke-Obfuscation CLIP+ Launcher - System
-ruletype: Sigma
+id: f7385ee2-0e0c-11eb-adc1-0242ac120002
+status: experimental
+description: Detects Obfuscated use of Clip.exe to execute PowerShell
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Jonathan Cheong, oscd.community
 date: 2020/10/13
-description: Detects Obfuscated use of Clip.exe to execute PowerShell
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Service Control Manager
-    SELECTION_3:
-        EventID: 7045
-    SELECTION_4:
-        ImagePath: '*cmd*'
-    SELECTION_5:
-        ImagePath: '*&&*'
-    SELECTION_6:
-        ImagePath: '*clipboard]::*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: f7385ee2-0e0c-11eb-adc1-0242ac120002
-level: high
+modified: 2023/02/20
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
     product: windows
     service: system
-modified: 2023/02/20
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    system:
+        Channel: System
+    selection:
+        Provider_Name: Service Control Manager
+        EventID: 7045
+        ImagePath|contains|all:
+            - cmd
+            - '&&'
+            - 'clipboard]::'
+    condition: system and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

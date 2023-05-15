@@ -1,7 +1,6 @@
 title: Registry-Free Process Scope COR_PROFILER
-ruletype: Sigma
-author: frack113
-date: 2021/12/30
+id: 23590215-4702-4a70-8805-8dc9e58314a2
+status: test
 description: 'Adversaries may leverage the COR_PROFILER environment variable to hijack
     the execution flow of programs that load the .NET CLR.
 
@@ -17,32 +16,30 @@ description: 'Adversaries may leverage the COR_PROFILER environment variable to 
     (Citation: Microsoft COR_PROFILER Feb 2013)
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*$env:COR_ENABLE_PROFILING*'
-    SELECTION_4:
-        ScriptBlockText: '*$env:COR_PROFILER*'
-    SELECTION_5:
-        ScriptBlockText: '*$env:COR_PROFILER_PATH*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Legitimate administrative script
-id: 23590215-4702-4a70-8805-8dc9e58314a2
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1574.012/T1574.012.md#atomic-test-3---registry-free-process-scope-cor_profiler
+author: frack113
+date: 2021/12/30
+tags:
+    - attack.persistence
+    - attack.t1574.012
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1574.012/T1574.012.md#atomic-test-3---registry-free-process-scope-cor_profiler
-status: test
-tags:
-- attack.persistence
-- attack.t1574.012
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - $env:COR_ENABLE_PROFILING
+            - $env:COR_PROFILER
+            - $env:COR_PROFILER_PATH
+    condition: ps_script and selection
+falsepositives:
+    - Legitimate administrative script
+level: medium
+ruletype: Sigma

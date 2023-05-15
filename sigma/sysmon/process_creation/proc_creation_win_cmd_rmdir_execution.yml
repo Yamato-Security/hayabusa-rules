@@ -1,7 +1,6 @@
 title: Directory Removal Via Rmdir
-ruletype: Sigma
-author: frack113
-date: 2022/01/15
+id: 41ca393d-538c-408a-ac27-cf1e038be80c
+status: experimental
 description: 'Detects execution of the builtin "rmdir" command in order to delete
     directories.
 
@@ -14,36 +13,33 @@ description: 'Detects execution of the builtin "rmdir" command in order to delet
     process to minimize the adversary''s footprint.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\cmd.exe'
-    SELECTION_4:
-        OriginalFileName: Cmd.Exe
-    SELECTION_5:
-        CommandLine: '*rmdir*'
-    SELECTION_6:
-        CommandLine:
-        - '*/s*'
-        - '*/q*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- Unknown
-id: 41ca393d-538c-408a-ac27-cf1e038be80c
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.004/T1070.004.md
+    - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/erase
+author: frack113
+date: 2022/01/15
+modified: 2023/03/07
+tags:
+    - attack.defense_evasion
+    - attack.t1070.004
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/07
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.004/T1070.004.md
-- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/erase
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1070.004
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \cmd.exe
+        -   OriginalFileName: Cmd.Exe
+    selection_rmdir:
+        CommandLine|contains: rmdir
+    selection_flags:
+        CommandLine|contains:
+            - /s
+            - /q
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

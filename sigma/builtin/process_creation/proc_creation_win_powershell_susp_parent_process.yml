@@ -1,73 +1,65 @@
 title: Suspicious PowerShell Parent Process
-ruletype: Sigma
+id: 754ed792-634f-40ae-b3bc-e0448d33f695
+related:
+    -   id: 692f0bec-83ba-4d04-af7e-e884a96059b6
+        type: derived
+status: test
+description: Detects a suspicious or uncommon parent processes of PowerShell
+references:
+    - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=26
 author: Teymur Kheirkhabarov, Harish Segar
 date: 2020/03/20
-description: Detects a suspicious or uncommon parent processes of PowerShell
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        ParentProcessName: '*tomcat*'
-    SELECTION_4:
-        ParentProcessName:
-        - '*\amigo.exe'
-        - '*\browser.exe'
-        - '*\chrome.exe'
-        - '*\firefox.exe'
-        - '*\httpd.exe'
-        - '*\iexplore.exe'
-        - '*\jbosssvc.exe'
-        - '*\microsoftedge.exe'
-        - '*\microsoftedgecp.exe'
-        - '*\MicrosoftEdgeSH.exe'
-        - '*\mshta.exe'
-        - '*\nginx.exe'
-        - '*\outlook.exe'
-        - '*\php-cgi.exe'
-        - '*\regsvr32.exe'
-        - '*\rundll32.exe'
-        - '*\safari.exe'
-        - '*\services.exe'
-        - '*\sqlagent.exe'
-        - '*\sqlserver.exe'
-        - '*\sqlservr.exe'
-        - '*\vivaldi.exe'
-        - '*\w3wp.exe'
-    SELECTION_5:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_6:
-        CommandLine:
-        - '*/c powershell*'
-        - '*/c pwsh*'
-    SELECTION_7:
-        Description: Windows PowerShell
-    SELECTION_8:
-        Product: PowerShell Core 6
-    SELECTION_9:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8 or SELECTION_9))
-falsepositives:
-- Other scripts
-id: 754ed792-634f-40ae-b3bc-e0448d33f695
-level: high
+modified: 2023/02/04
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=26
-related:
--   id: 692f0bec-83ba-4d04-af7e-e884a96059b6
-    type: derived
-status: test
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_parent:
+        -   ParentProcessName|contains: tomcat
+        -   ParentProcessName|endswith:
+                - \amigo.exe
+                - \browser.exe
+                - \chrome.exe
+                - \firefox.exe
+                - \httpd.exe
+                - \iexplore.exe
+                - \jbosssvc.exe
+                - \microsoftedge.exe
+                - \microsoftedgecp.exe
+                - \MicrosoftEdgeSH.exe
+                - \mshta.exe
+                - \nginx.exe
+                - \outlook.exe
+                - \php-cgi.exe
+                - \regsvr32.exe
+                - \rundll32.exe
+                - \safari.exe
+                - \services.exe
+                - \sqlagent.exe
+                - \sqlserver.exe
+                - \sqlservr.exe
+                - \vivaldi.exe
+                - \w3wp.exe
+    selection_powershell:
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   CommandLine|contains:
+                - /c powershell
+                - /c pwsh
+        -   Description: Windows PowerShell
+        -   Product: PowerShell Core 6
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Other scripts
+level: high
+ruletype: Sigma

@@ -1,64 +1,59 @@
 title: Suspicious Execution Of PDQDeployRunner
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/22
+id: 12b8e9f5-96b2-41e1-9a42-8c6779a5c184
+related:
+    -   id: d679950c-abb7-43a6-80fb-2a480c4fc450
+        type: similar
+status: experimental
 description: Detects suspicious execution of "PDQDeployRunner" which is part of the
     PDQDeploy service stack that is responsible for executing commands and packages
     on a remote machines
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: '*PDQDeployRunner-*'
-    SELECTION_4:
-        Image:
-        - '*\wscript.exe'
-        - '*\cscript.exe'
-        - '*\rundll32.exe'
-        - '*\regsvr32.exe'
-        - '*\wmic.exe'
-        - '*\msiexec.exe'
-        - '*\mshta.exe'
-        - '*\csc.exe'
-        - '*\dllhost.exe'
-        - '*\certutil.exe'
-        - '*\scriptrunner.exe'
-        - '*\bash.exe'
-        - '*\wsl.exe'
-    SELECTION_5:
-        Image:
-        - '*C:\Users\Public\\*'
-        - '*C:\ProgramData\\*'
-        - '*C:\Windows\TEMP\\*'
-        - '*\AppData\Local\Temp*'
-    SELECTION_6:
-        CommandLine:
-        - '*iex *'
-        - '*Invoke-*'
-        - '*DownloadString*'
-        - '*http*'
-        - '* -enc *'
-        - '* -encodedcommand *'
-        - '*FromBase64String*'
-        - '* -decode *'
-        - '* -w hidden*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
-        SELECTION_5 or SELECTION_6))
-falsepositives:
-- Legitimate use of the PDQDeploy tool to execute these commands
-id: 12b8e9f5-96b2-41e1-9a42-8c6779a5c184
-level: medium
+references:
+    - https://twitter.com/malmoeb/status/1550483085472432128
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/22
+tags:
+    - attack.execution
 logsource:
     category: process_creation
     product: windows
-references:
-- https://twitter.com/malmoeb/status/1550483085472432128
-related:
--   id: d679950c-abb7-43a6-80fb-2a480c4fc450
-    type: similar
-status: experimental
-tags:
-- attack.execution
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_parent:
+        ParentImage|contains: PDQDeployRunner-
+    selection_susp:
+        -   Image|endswith:
+                - \wscript.exe
+                - \cscript.exe
+                - \rundll32.exe
+                - \regsvr32.exe
+                - \wmic.exe
+                - \msiexec.exe
+                - \mshta.exe
+                - \csc.exe
+                - \dllhost.exe
+                - \certutil.exe
+                - \scriptrunner.exe
+                - \bash.exe
+                - \wsl.exe
+        -   Image|contains:
+                - C:\Users\Public\
+                - C:\ProgramData\
+                - C:\Windows\TEMP\
+                - \AppData\Local\Temp
+        -   CommandLine|contains:
+                - 'iex '
+                - Invoke-
+                - DownloadString
+                - http
+                - ' -enc '
+                - ' -encodedcommand '
+                - FromBase64String
+                - ' -decode '
+                - ' -w hidden'
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Legitimate use of the PDQDeploy tool to execute these commands
+level: medium
+ruletype: Sigma

@@ -1,134 +1,132 @@
 title: Malicious PowerView PowerShell Commandlets
-ruletype: Sigma
+id: dcd74b95-3f36-4ed9-9598-0490951643aa
+related:
+    -   id: b2317cfa-4a47-4ead-b3ff-297438c0bc2d
+        type: similar
+status: test
+description: Detects Commandlet names from PowerView of PowerSploit exploitation framework.
+references:
+    - https://powersploit.readthedocs.io/en/stable/Recon/README
+    - https://github.com/PowerShellMafia/PowerSploit/tree/master/Recon
+    - https://thedfirreport.com/2020/10/08/ryuks-return
+    - https://adsecurity.org/?p=2277
 author: Bhabesh Raj
 date: 2021/05/18
-description: Detects Commandlet names from PowerView of PowerSploit exploitation framework.
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText:
-        - '*Add-DomainGroupMember*'
-        - '*Add-DomainObjectAcl*'
-        - '*Add-ObjectAcl*'
-        - '*Add-RemoteConnection*'
-        - '*Convert-ADName*'
-        - '*ConvertFrom-UACValue*'
-        - '*Convert-NameToSid*'
-        - '*ConvertTo-SID*'
-        - '*Export-PowerViewCSV*'
-        - '*Find-DomainLocalGroupMember*'
-        - '*Find-DomainObjectPropertyOutlier*'
-        - '*Find-DomainProcess*'
-        - '*Find-DomainShare*'
-        - '*Find-DomainUserEvent*'
-        - '*Find-DomainUserLocation*'
-        - '*Find-ForeignGroup*'
-        - '*Find-ForeignUser*'
-        - '*Find-GPOComputerAdmin*'
-        - '*Find-GPOLocation*'
-        - '*Find-InterestingDomain*'
-        - '*Find-InterestingFile*'
-        - '*Find-LocalAdminAccess*'
-        - '*Find-ManagedSecurityGroups*'
-        - '*Get-CachedRDPConnection*'
-        - '*Get-DFSshare*'
-        - '*Get-DNSRecord*'
-        - '*Get-DNSZone*'
-        - '*Get-DomainComputer*'
-        - '*Get-DomainController*'
-        - '*Get-DomainDFSShare*'
-        - '*Get-DomainDNSRecord*'
-        - '*Get-DomainDNSZone*'
-        - '*Get-DomainFileServer*'
-        - '*Get-DomainGPO*'
-        - '*Get-DomainGroup*'
-        - '*Get-DomainGroupMember*'
-        - '*Get-DomainManagedSecurityGroup*'
-        - '*Get-DomainObject*'
-        - '*Get-DomainObjectAcl*'
-        - '*Get-DomainOU*'
-        - '*Get-DomainPolicy*'
-        - '*Get-DomainSID*'
-        - '*Get-DomainSite*'
-        - '*Get-DomainSPNTicket*'
-        - '*Get-DomainSubnet*'
-        - '*Get-DomainUser*'
-        - '*Get-DomainUserEvent*'
-        - '*Get-Forest*'
-        - '*Get-IPAddress*'
-        - '*Get-LastLoggedOn*'
-        - '*Get-LoggedOnLocal*'
-        - '*Get-NetComputer*'
-        - '*Get-NetDomain*'
-        - '*Get-NetFileServer*'
-        - '*Get-NetForest*'
-        - '*Get-NetGPO*'
-        - '*Get-NetGroup*'
-        - '*Get-NetLocalGroup*'
-        - '*Get-NetLoggedon*'
-        - '*Get-NetOU*'
-        - '*Get-NetProcess*'
-        - '*Get-NetRDPSession*'
-        - '*Get-NetSession*'
-        - '*Get-NetShare*'
-        - '*Get-NetSite*'
-        - '*Get-NetSubnet*'
-        - '*Get-NetUser*'
-        - '*Get-ObjectAcl*'
-        - '*Get-PathAcl*'
-        - '*Get-Proxy*'
-        - '*Get-RegistryMountedDrive*'
-        - '*Get-RegLoggedOn*'
-        - '*Get-SiteName*'
-        - '*Get-UserEvent*'
-        - '*Get-WMIProcess*'
-        - '*Get-WMIReg*'
-        - '*Invoke-ACLScanner*'
-        - '*Invoke-CheckLocalAdminAccess*'
-        - '*Invoke-EnumerateLocalAdmin*'
-        - '*Invoke-EventHunter*'
-        - '*Invoke-FileFinder*'
-        - '*Invoke-Kerberoast*'
-        - '*Invoke-MapDomainTrust*'
-        - '*Invoke-ProcessHunter*'
-        - '*Invoke-RevertToSelf*'
-        - '*Invoke-ShareFinder*'
-        - '*Invoke-UserHunter*'
-        - '*Invoke-UserImpersonation*'
-        - '*New-DomainGroup*'
-        - '*New-DomainUser*'
-        - '*Remove-RemoteConnection*'
-        - '*Request-SPNTicket*'
-        - '*Resolve-IPAddress*'
-        - '*Set-ADObject*'
-        - '*Set-DomainObject*'
-        - '*Set-DomainUserPassword*'
-        - '*Test-AdminAccess*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Should not be any as administrators do not use this tool
-id: dcd74b95-3f36-4ed9-9598-0490951643aa
-level: high
+modified: 2023/04/20
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2023/04/20
-references:
-- https://powersploit.readthedocs.io/en/stable/Recon/README
-- https://github.com/PowerShellMafia/PowerSploit/tree/master/Recon
-- https://thedfirreport.com/2020/10/08/ryuks-return
-- https://adsecurity.org/?p=2277
-related:
--   id: b2317cfa-4a47-4ead-b3ff-297438c0bc2d
-    type: similar
-status: test
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains:
+            - Add-DomainGroupMember
+            - Add-DomainObjectAcl
+            - Add-ObjectAcl
+            - Add-RemoteConnection
+            - Convert-ADName
+            - ConvertFrom-UACValue
+            - Convert-NameToSid
+            - ConvertTo-SID
+            - Export-PowerViewCSV
+            - Find-DomainLocalGroupMember
+            - Find-DomainObjectPropertyOutlier
+            - Find-DomainProcess
+            - Find-DomainShare
+            - Find-DomainUserEvent
+            - Find-DomainUserLocation
+            - Find-ForeignGroup
+            - Find-ForeignUser
+            - Find-GPOComputerAdmin
+            - Find-GPOLocation
+            - Find-InterestingDomain
+            - Find-InterestingFile
+            - Find-LocalAdminAccess
+            - Find-ManagedSecurityGroups
+            - Get-CachedRDPConnection
+            - Get-DFSshare
+            - Get-DNSRecord
+            - Get-DNSZone
+            - Get-DomainComputer
+            - Get-DomainController
+            - Get-DomainDFSShare
+            - Get-DomainDNSRecord
+            - Get-DomainDNSZone
+            - Get-DomainFileServer
+            - Get-DomainGPO
+            - Get-DomainGroup
+            - Get-DomainGroupMember
+            - Get-DomainManagedSecurityGroup
+            - Get-DomainObject
+            - Get-DomainObjectAcl
+            - Get-DomainOU
+            - Get-DomainPolicy
+            - Get-DomainSID
+            - Get-DomainSite
+            - Get-DomainSPNTicket
+            - Get-DomainSubnet
+            - Get-DomainUser
+            - Get-DomainUserEvent
+            - Get-Forest
+            - Get-IPAddress
+            - Get-LastLoggedOn
+            - Get-LoggedOnLocal
+            - Get-NetComputer
+            - Get-NetDomain
+            - Get-NetFileServer
+            - Get-NetForest
+            - Get-NetGPO
+            - Get-NetGroup
+            - Get-NetLocalGroup
+            - Get-NetLoggedon
+            - Get-NetOU
+            - Get-NetProcess
+            - Get-NetRDPSession
+            - Get-NetSession
+            - Get-NetShare
+            - Get-NetSite
+            - Get-NetSubnet
+            - Get-NetUser
+            - Get-ObjectAcl
+            - Get-PathAcl
+            - Get-Proxy
+            - Get-RegistryMountedDrive
+            - Get-RegLoggedOn
+            - Get-SiteName
+            - Get-UserEvent
+            - Get-WMIProcess
+            - Get-WMIReg
+            - Invoke-ACLScanner
+            - Invoke-CheckLocalAdminAccess
+            - Invoke-EnumerateLocalAdmin
+            - Invoke-EventHunter
+            - Invoke-FileFinder
+            - Invoke-Kerberoast
+            - Invoke-MapDomainTrust
+            - Invoke-ProcessHunter
+            - Invoke-RevertToSelf
+            - Invoke-ShareFinder
+            - Invoke-UserHunter
+            - Invoke-UserImpersonation
+            - New-DomainGroup
+            - New-DomainUser
+            - Remove-RemoteConnection
+            - Request-SPNTicket
+            - Resolve-IPAddress
+            - Set-ADObject
+            - Set-DomainObject
+            - Set-DomainUserPassword
+            - Test-AdminAccess
+    condition: ps_script and selection
+falsepositives:
+    - Should not be any as administrators do not use this tool
+level: high
+ruletype: Sigma

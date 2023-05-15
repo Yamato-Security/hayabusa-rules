@@ -1,35 +1,33 @@
 title: Execution via CL_Mutexverifiers.ps1
-ruletype: Sigma
-author: oscd.community, Natalia Shornikova
-date: 2020/10/14
+id: 39776c99-1c7b-4ba0-b5aa-641525eee1a4
+status: test
 description: Detects Execution via runAfterCancelProcess in CL_Mutexverifiers.ps1
     module
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*CL_Mutexverifiers.ps1*'
-    SELECTION_4:
-        ScriptBlockText: '*runAfterCancelProcess*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 39776c99-1c7b-4ba0-b5aa-641525eee1a4
-level: high
+references:
+    - https://lolbas-project.github.io/lolbas/Scripts/CL_mutexverifiers/
+    - https://twitter.com/pabraeken/status/995111125447577600
+author: oscd.community, Natalia Shornikova
+date: 2020/10/14
+modified: 2022/12/25
+tags:
+    - attack.defense_evasion
+    - attack.t1216
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2022/12/25
-references:
-- https://lolbas-project.github.io/lolbas/Scripts/CL_mutexverifiers/
-- https://twitter.com/pabraeken/status/995111125447577600
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1216
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - CL_Mutexverifiers.ps1
+            - runAfterCancelProcess
+    condition: ps_script and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

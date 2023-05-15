@@ -1,43 +1,39 @@
 title: Windows Admin Share Mount Via Net.EXE
-ruletype: Sigma
+id: 3abd6094-7027-475f-9630-8ab9be7b9725
+related:
+    -   id: f117933c-980c-4f78-b384-e3d838111165
+        type: similar
+status: test
+description: Detects when an admin share is mounted using net.exe
+references:
+    - https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
 author: oscd.community, Teymur Kheirkhabarov @HeirhabarovT, Zach Stanford @svch0st,
     wagga
 date: 2020/10/05
-description: Detects when an admin share is mounted using net.exe
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName:
-        - '*\net.exe'
-        - '*\net1.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - net.exe
-        - net1.exe
-    SELECTION_5:
-        CommandLine: '* use *'
-    SELECTION_6:
-        CommandLine: '* \\\\*\\*$*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6))
-falsepositives:
-- Administrators
-id: 3abd6094-7027-475f-9630-8ab9be7b9725
-level: medium
+modified: 2023/02/21
+tags:
+    - attack.lateral_movement
+    - attack.t1021.002
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
-references:
-- https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
-related:
--   id: f117933c-980c-4f78-b384-e3d838111165
-    type: similar
-status: test
-tags:
-- attack.lateral_movement
-- attack.t1021.002
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith:
+                - \net.exe
+                - \net1.exe
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - ' use '
+            - ' \\\\*\\*$'
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Administrators
+level: medium
+ruletype: Sigma

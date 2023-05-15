@@ -1,37 +1,34 @@
 title: Suspicious File Download Using Office Application
-ruletype: Sigma
-author: Beyu Denis, oscd.community
-date: 2019/10/26
+id: 0c79148b-118e-472b-bdb7-9b57b444cc19
+status: test
 description: Detects the usage of one of three Microsoft office applications (Word,
     Excel, PowerPoint) to download arbitrary files
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName:
-        - '*\powerpnt.exe'
-        - '*\winword.exe'
-        - '*\excel.exe'
-    SELECTION_4:
-        CommandLine: '*http*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 0c79148b-118e-472b-bdb7-9b57b444cc19
-level: high
+references:
+    - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Powerpnt/
+    - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Excel/
+    - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Winword/
+    - https://medium.com/@reegun/unsanitized-file-validation-leads-to-malicious-payload-download-via-office-binaries-202d02db7191
+author: Beyu Denis, oscd.community
+date: 2019/10/26
+modified: 2023/02/04
+tags:
+    - attack.command_and_control
+    - attack.t1105
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Powerpnt/
-- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Excel/
-- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Winword/
-- https://medium.com/@reegun/unsanitized-file-validation-leads-to-malicious-payload-download-via-office-binaries-202d02db7191
-status: test
-tags:
-- attack.command_and_control
-- attack.t1105
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains: http
+        NewProcessName|endswith:
+            - \powerpnt.exe
+            - \winword.exe
+            - \excel.exe
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

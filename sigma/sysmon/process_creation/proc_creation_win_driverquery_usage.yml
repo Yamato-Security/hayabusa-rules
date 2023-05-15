@@ -1,35 +1,32 @@
 title: DriverQuery.EXE Execution
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/01/19
+id: a20def93-0709-4eae-9bd2-31206e21e6b2
+related:
+    -   id: 9fc3072c-dc8f-4bf7-b231-18950000fadd
+        type: similar
+status: experimental
 description: Detect usage of the "driverquery" utility. Which can be used to perform
     reconnaissance on installed drivers
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*driverquery.exe'
-    SELECTION_4:
-        OriginalFileName: drvqry.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Legitimate use by third party tools in order to investigate installed drivers
-id: a20def93-0709-4eae-9bd2-31206e21e6b2
-level: medium
+references:
+    - https://thedfirreport.com/2023/01/09/unwrapping-ursnifs-gifts/
+    - https://www.vmray.com/cyber-security-blog/analyzing-ursnif-behavior-malware-sandbox/
+    - https://www.fireeye.com/blog/threat-research/2020/01/saigon-mysterious-ursnif-fork.html
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/01/19
+modified: 2023/02/04
+tags:
+    - attack.discovery
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://thedfirreport.com/2023/01/09/unwrapping-ursnifs-gifts/
-- https://www.vmray.com/cyber-security-blog/analyzing-ursnif-behavior-malware-sandbox/
-- https://www.fireeye.com/blog/threat-research/2020/01/saigon-mysterious-ursnif-fork.html
-related:
--   id: 9fc3072c-dc8f-4bf7-b231-18950000fadd
-    type: similar
-status: experimental
-tags:
-- attack.discovery
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|endswith: driverquery.exe
+        -   OriginalFileName: drvqry.exe
+    condition: process_creation and selection
+falsepositives:
+    - Legitimate use by third party tools in order to investigate installed drivers
+level: medium
+ruletype: Sigma

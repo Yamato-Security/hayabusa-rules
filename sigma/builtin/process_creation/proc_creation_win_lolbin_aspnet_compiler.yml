@@ -1,31 +1,29 @@
 title: Suspicious aspnet_compiler.exe Execution
-ruletype: Sigma
-author: frack113
-date: 2021/11/24
+id: a01b8329-5953-4f73-ae2d-aa01e1f35f00
+status: test
 description: Execute C# code with the Build Provider and proper folder structure in
     place.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*C:\Windows\Microsoft.NET\Framework*'
-    SELECTION_4:
-        NewProcessName: '*aspnet_compiler.exe*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: a01b8329-5953-4f73-ae2d-aa01e1f35f00
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/
+author: frack113
+date: 2021/11/24
+modified: 2022/12/25
+tags:
+    - attack.defense_evasion
+    - attack.t1127
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/25
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1127
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        NewProcessName|contains|all:
+            - C:\Windows\Microsoft.NET\Framework
+            - aspnet_compiler.exe
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

@@ -1,50 +1,42 @@
 title: Winnti Malware HK University Campaign
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Markus Neis
-date: 2020/02/01
+id: 3121461b-5aa0-4a41-b910-66d25524edbb
+status: test
 description: Detects specific process characteristics of Winnti malware noticed in
     Dec/Jan 2020 in a campaign against Honk Kong universities
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        ParentProcessName: C:\ProgramData\DRM\Windows*
-    SELECTION_11:
-        NewProcessName: '*\SearchFilterHost.exe'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        ParentProcessName:
-        - '*C:\Windows\Temp*'
-        - '*\hpqhvind.exe*'
-    SELECTION_4:
-        NewProcessName: C:\ProgramData\DRM*
-    SELECTION_5:
-        ParentProcessName: C:\ProgramData\DRM*
-    SELECTION_6:
-        NewProcessName: '*\wmplayer.exe'
-    SELECTION_7:
-        ParentProcessName: '*\Test.exe'
-    SELECTION_8:
-        NewProcessName: '*\wmplayer.exe'
-    SELECTION_9:
-        NewProcessName: C:\ProgramData\DRM\CLR\CLR.exe
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or SELECTION_9
-        or (SELECTION_10 and SELECTION_11)))
-falsepositives:
-- Unlikely
-id: 3121461b-5aa0-4a41-b910-66d25524edbb
-level: critical
+references:
+    - https://www.welivesecurity.com/2020/01/31/winnti-group-targeting-universities-hong-kong/
+author: Florian Roth (Nextron Systems), Markus Neis
+date: 2020/02/01
+modified: 2021/11/27
+tags:
+    - attack.defense_evasion
+    - attack.t1574.002
+    - attack.g0044
 logsource:
     category: process_creation
     product: windows
-modified: 2021/11/27
-references:
-- https://www.welivesecurity.com/2020/01/31/winnti-group-targeting-universities-hong-kong/
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1574.002
-- attack.g0044
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection1:
+        ParentProcessName|contains:
+            - C:\Windows\Temp
+            - \hpqhvind.exe
+        NewProcessName|startswith: C:\ProgramData\DRM
+    selection2:
+        ParentProcessName|startswith: C:\ProgramData\DRM
+        NewProcessName|endswith: \wmplayer.exe
+    selection3:
+        ParentProcessName|endswith: \Test.exe
+        NewProcessName|endswith: \wmplayer.exe
+    selection4:
+        NewProcessName: C:\ProgramData\DRM\CLR\CLR.exe
+    selection5:
+        ParentProcessName|startswith: C:\ProgramData\DRM\Windows
+        NewProcessName|endswith: \SearchFilterHost.exe
+    condition: process_creation and (1 of selection*)
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

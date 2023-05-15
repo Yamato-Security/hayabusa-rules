@@ -1,47 +1,42 @@
 title: APT31 Judgement Panda Activity
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2019/02/21
+id: 03e2746e-2b31-42f1-ab7a-eb39365b2422
+status: test
 description: Detects APT31 Judgement Panda activity as described in the Crowdstrike
     2019 Global Threat Report
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*ldifde*'
-    SELECTION_4:
-        CommandLine: '*-f -n*'
-    SELECTION_5:
-        CommandLine: '*eprod.ldf*'
-    SELECTION_6:
-        CommandLine: '*copy \\\\\*'
-    SELECTION_7:
-        CommandLine: '*c$*'
-    SELECTION_8:
-        CommandLine:
-        - '*\aaaa\procdump64.exe*'
-        - '*\aaaa\netsess.exe*'
-        - '*\aaaa\7za.exe*'
-        - '*\c$\aaaa\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Unlikely
-id: 03e2746e-2b31-42f1-ab7a-eb39365b2422
-level: critical
+references:
+    - https://www.documentcloud.org/documents/5743766-Global-Threat-Report-2019.html
+author: Florian Roth (Nextron Systems)
+date: 2019/02/21
+modified: 2023/03/10
+tags:
+    - attack.lateral_movement
+    - attack.credential_access
+    - attack.g0128
+    - attack.t1003.001
+    - attack.t1560.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/10
-references:
-- https://www.documentcloud.org/documents/5743766-Global-Threat-Report-2019.html
-status: test
-tags:
-- attack.lateral_movement
-- attack.credential_access
-- attack.g0128
-- attack.t1003.001
-- attack.t1560.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_ldifde:
+        CommandLine|contains|all:
+            - ldifde
+            - -f -n
+            - eprod.ldf
+    selection_lateral_movement:
+        CommandLine|contains|all:
+            - copy \\\\
+            - c$
+        CommandLine|contains:
+            - \aaaa\procdump64.exe
+            - \aaaa\netsess.exe
+            - \aaaa\7za.exe
+            - \c$\aaaa\
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

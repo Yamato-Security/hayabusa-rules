@@ -1,39 +1,35 @@
 title: Application Whitelisting Bypass via PresentationHost.exe
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/01
+id: d22e2925-cfd8-463f-96f6-89cec9d9bc5f
+status: experimental
 description: Detects usage of "PresentationHost" which is a utility that runs ".xbap"
     (Browser Applications) files. It can be abused to run malicious ".xbap" files
     any bypass AWL
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\presentationhost.exe'
-    SELECTION_4:
-        OriginalFileName: PresentationHost.exe
-    SELECTION_5:
-        CommandLine: '*.xbap*'
-    SELECTION_6:
-        CommandLine:
-        - '*C:\Windows\\*'
-        - '*C:\Program Files*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) and  not (SELECTION_6))
-falsepositives:
-- Legitimate ".xbap" being executed via "PresentationHost"
-id: d22e2925-cfd8-463f-96f6-89cec9d9bc5f
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Presentationhost/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/01
+tags:
+    - attack.defense_evasion
+    - attack.execution
+    - attack.t1218
 logsource:
     category: process_creation
     product: windows
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Presentationhost/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.execution
-- attack.t1218
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \presentationhost.exe
+        -   OriginalFileName: PresentationHost.exe
+    selection_cli:
+        CommandLine|contains: .xbap
+    filter:
+        CommandLine|contains:
+            - C:\Windows\
+            - C:\Program Files
+    condition: process_creation and (all of selection* and not filter)
+falsepositives:
+    - Legitimate ".xbap" being executed via "PresentationHost"
+level: medium
+ruletype: Sigma

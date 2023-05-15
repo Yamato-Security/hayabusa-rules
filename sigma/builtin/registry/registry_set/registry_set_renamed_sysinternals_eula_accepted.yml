@@ -1,67 +1,59 @@
 title: Usage of Renamed Sysinternals Tools - RegistrySet
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/08/24
+id: 8023f872-3f1d-4301-a384-801889917ab4
+related:
+    -   id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
+        type: derived
+    -   id: f50f3c09-557d-492d-81db-9064a8d4e211
+        type: similar
+status: experimental
 description: Detects non-sysinternals tools setting the "accepteula" key which normally
     is set on sysinternals tool execution
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject:
-        - '*\PsExec*'
-        - '*\ProcDump*'
-        - '*\Handle*'
-        - '*\LiveKd*'
-        - '*\Process Explorer*'
-        - '*\PsLoglist*'
-        - '*\PsPasswd*'
-        - '*\Active Directory Explorer*'
-    SELECTION_6:
-        TargetObject: '*\EulaAccepted'
-    SELECTION_7:
-        NewProcessName:
-        - '*\PsExec.exe'
-        - '*\PsExec64.exe'
-        - '*\procdump.exe'
-        - '*\procdump64.exe'
-        - '*\handle.exe'
-        - '*\handle64.exe'
-        - '*\livekd.exe'
-        - '*\livekd64.exe'
-        - '*\procexp.exe'
-        - '*\procexp64.exe'
-        - '*\psloglist.exe'
-        - '*\psloglist64.exe'
-        - '*\pspasswd.exe'
-        - '*\pspasswd64.exe'
-        - '*\ADExplorer.exe'
-        - '*\ADExplorer64.exe'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
-falsepositives:
-- Unlikely
-id: 8023f872-3f1d-4301-a384-801889917ab4
-level: high
-logsource:
-    category: registry_set
-    product: windows
 references:
-- Internal Research
-related:
--   id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
-    type: derived
--   id: f50f3c09-557d-492d-81db-9064a8d4e211
-    type: similar
-status: experimental
+    - Internal Research
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/24
 tags:
-- attack.resource_development
-- attack.t1588.002
-
+    - attack.resource_development
+    - attack.t1588.002
+logsource:
+    product: windows
+    category: registry_set
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|contains:
+            - \PsExec
+            - \ProcDump
+            - \Handle
+            - \LiveKd
+            - \Process Explorer
+            - \PsLoglist
+            - \PsPasswd
+            - \Active Directory Explorer
+        TargetObject|endswith: \EulaAccepted
+    filter:
+        Image|endswith:
+            - \PsExec.exe
+            - \PsExec64.exe
+            - \procdump.exe
+            - \procdump64.exe
+            - \handle.exe
+            - \handle64.exe
+            - \livekd.exe
+            - \livekd64.exe
+            - \procexp.exe
+            - \procexp64.exe
+            - \psloglist.exe
+            - \psloglist64.exe
+            - \pspasswd.exe
+            - \pspasswd64.exe
+            - \ADExplorer.exe
+            - \ADExplorer64.exe
+    condition: registry_set and (selection and not filter)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

@@ -1,8 +1,9 @@
 title: Bad Opsec Defaults Sacrificial Processes With Improper Arguments
-ruletype: Sigma
-author: Oleg Kolesnikov @securonix invrep_de, oscd.community, Florian Roth (Nextron
-    Systems), Christian Burkard (Nextron Systems)
-date: 2020/10/23
+id: a7c3d773-caef-227e-a7e7-c2f13c622329
+related:
+    -   id: f5647edc-a7bf-4737-ab50-ef8c60dc3add
+        type: obsoletes
+status: experimental
 description: 'Detects attackers using tooling with bad opsec defaults.
 
     E.g. spawning a sacrificial process to inject a capability into the process without
@@ -13,67 +14,53 @@ description: 'Detects attackers using tooling with bad opsec defaults.
     (Kraken - credit am0nsec), and other examples.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '*regasm.exe'
-    SELECTION_11:
-        NewProcessName: '*\regsvr32.exe'
-    SELECTION_12:
-        CommandLine: '*regsvr32.exe'
-    SELECTION_13:
-        ParentProcessName: C:\Users\\*
-    SELECTION_14:
-        ParentProcessName: '*\AppData\Local\Microsoft\EdgeUpdate\Install\{*'
-    SELECTION_15:
-        ParentProcessName: '*\setup.exe'
-    SELECTION_16:
-        ParentCommandLine: '*\setup.exe" --install-archive="C:\Users\\*'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\WerFault.exe'
-    SELECTION_4:
-        CommandLine: '*WerFault.exe'
-    SELECTION_5:
-        NewProcessName: '*\rundll32.exe'
-    SELECTION_6:
-        CommandLine: '*rundll32.exe'
-    SELECTION_7:
-        NewProcessName: '*\regsvcs.exe'
-    SELECTION_8:
-        CommandLine: '*regsvcs.exe'
-    SELECTION_9:
-        NewProcessName: '*\regasm.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12)) and  not ((SELECTION_13
-        and SELECTION_14 and SELECTION_15 and SELECTION_16)))
-falsepositives:
-- Unlikely
-fields:
-- ParentImage
-- ParentCommandLine
-id: a7c3d773-caef-227e-a7e7-c2f13c622329
-level: high
+references:
+    - https://blog.malwarebytes.com/malwarebytes-news/2020/10/kraken-attack-abuses-wer-service/
+    - https://www.cobaltstrike.com/help-opsec
+    - https://twitter.com/CyberRaiju/status/1251492025678983169
+    - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/regsvr32
+    - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/rundll32
+    - https://docs.microsoft.com/en-us/dotnet/framework/tools/regasm-exe-assembly-registration-tool
+    - https://docs.microsoft.com/en-us/dotnet/framework/tools/regsvcs-exe-net-services-installation-tool#feedback
+author: Oleg Kolesnikov @securonix invrep_de, oscd.community, Florian Roth (Nextron
+    Systems), Christian Burkard (Nextron Systems)
+date: 2020/10/23
+modified: 2023/01/25
+tags:
+    - attack.defense_evasion
+    - attack.t1218.011
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/25
-references:
-- https://blog.malwarebytes.com/malwarebytes-news/2020/10/kraken-attack-abuses-wer-service/
-- https://www.cobaltstrike.com/help-opsec
-- https://twitter.com/CyberRaiju/status/1251492025678983169
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/regsvr32
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/rundll32
-- https://docs.microsoft.com/en-us/dotnet/framework/tools/regasm-exe-assembly-registration-tool
-- https://docs.microsoft.com/en-us/dotnet/framework/tools/regsvcs-exe-net-services-installation-tool#feedback
-related:
--   id: f5647edc-a7bf-4737-ab50-ef8c60dc3add
-    type: obsoletes
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1218.011
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection1:
+        CommandLine|endswith: WerFault.exe
+        NewProcessName|endswith: \WerFault.exe
+    selection2:
+        CommandLine|endswith: rundll32.exe
+        NewProcessName|endswith: \rundll32.exe
+    selection3:
+        CommandLine|endswith: regsvcs.exe
+        NewProcessName|endswith: \regsvcs.exe
+    selection4:
+        CommandLine|endswith: regasm.exe
+        NewProcessName|endswith: \regasm.exe
+    selection5:
+        CommandLine|endswith: regsvr32.exe
+        NewProcessName|endswith: \regsvr32.exe
+    filter_edge_update:
+        ParentCommandLine|contains: \setup.exe" --install-archive="C:\Users\
+        ParentProcessName|startswith: C:\Users\
+        ParentProcessName|contains: \AppData\Local\Microsoft\EdgeUpdate\Install\{
+        ParentProcessName|endswith: \setup.exe
+    condition: process_creation and (1 of selection* and not 1 of filter*)
+fields:
+    - ParentProcessName
+    - ParentCommandLine
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

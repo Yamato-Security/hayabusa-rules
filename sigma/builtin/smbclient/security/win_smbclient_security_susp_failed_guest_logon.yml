@@ -1,36 +1,33 @@
 title: Suspicious Rejected SMB Guest Logon From IP
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), KevTheHermit, fuzzyf10w
-date: 2021/06/30
+id: 71886b70-d7b4-4dbf-acce-87d2ca135262
+status: test
 description: Detect Attempt PrintNightmare (CVE-2021-1675) Remote code execution in
     Windows Spooler Service
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-SmbClient/Security
-    SELECTION_2:
-        EventID: 31017
-    SELECTION_3:
-        UserName: ''
-    SELECTION_4:
-        ServerName: \1*
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Account fallback reasons (after failed login with specific account)
-fields:
-- Computer
-- User
-id: 71886b70-d7b4-4dbf-acce-87d2ca135262
-level: medium
+references:
+    - https://twitter.com/KevTheHermit/status/1410203844064301056
+    - https://github.com/hhlxf/PrintNightmare
+    - https://github.com/afwu/PrintNightmare
+author: Florian Roth (Nextron Systems), KevTheHermit, fuzzyf10w
+date: 2021/06/30
+modified: 2023/01/02
+tags:
+    - attack.credential_access
+    - attack.t1110.001
 logsource:
     product: windows
     service: smbclient-security
-modified: 2023/01/02
-references:
-- https://twitter.com/KevTheHermit/status/1410203844064301056
-- https://github.com/hhlxf/PrintNightmare
-- https://github.com/afwu/PrintNightmare
-status: test
-tags:
-- attack.credential_access
-- attack.t1110.001
-
+detection:
+    smbclient_security:
+        Channel: Microsoft-Windows-SmbClient/Security
+    selection:
+        EventID: 31017
+        UserName: ''
+        ServerName|startswith: \1
+    condition: smbclient_security and selection
+fields:
+    - Computer
+    - User
+falsepositives:
+    - Account fallback reasons (after failed login with specific account)
+level: medium
+ruletype: Sigma

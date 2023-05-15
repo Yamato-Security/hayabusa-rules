@@ -1,44 +1,34 @@
 title: Registry Modification to Hidden File Extension
-ruletype: Sigma
+id: 5df86130-4e95-4a54-90f7-26541b40aec2
+status: test
+description: Hides the file extension through modification of the registry
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-1---modify-registry-of-current-user-profile---cmd
+    - https://unit42.paloaltonetworks.com/ransomware-families/
+    - https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=TrojanSpy%3aMSIL%2fHakey.A
 author: frack113
 date: 2022/01/22
-description: Hides the file extension through modification of the registry
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\HideFileExt'
-    SELECTION_6:
-        NewValue: DWORD (0x00000001)
-    SELECTION_7:
-        EventType: SetValue
-    SELECTION_8:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Hidden'
-    SELECTION_9:
-        NewValue: DWORD (0x00000002)
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
-        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
-falsepositives:
-- Administrative scripts
-id: 5df86130-4e95-4a54-90f7-26541b40aec2
-level: medium
+modified: 2022/03/26
+tags:
+    - attack.persistence
+    - attack.t1137
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-1---modify-registry-of-current-user-profile---cmd
-- https://unit42.paloaltonetworks.com/ransomware-families/
-- https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=TrojanSpy%3aMSIL%2fHakey.A
-status: test
-tags:
-- attack.persistence
-- attack.t1137
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection_HideFileExt:
+        EventType: SetValue
+        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\HideFileExt
+        Details: DWORD (0x00000001)
+    selection_Hidden:
+        EventType: SetValue
+        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Hidden
+        Details: DWORD (0x00000002)
+    condition: registry_set and (1 of selection_*)
+falsepositives:
+    - Administrative scripts
+level: medium
+ruletype: Sigma

@@ -1,37 +1,31 @@
 title: Change the Fax Dll
-ruletype: Sigma
+id: 9e3357ba-09d4-4fbd-a7c5-ad6386314513
+status: experimental
+description: Detect possible persistence using Fax DLL load when service restart
+references:
+    - https://twitter.com/dottor_morte/status/1544652325570191361
+    - https://raw.githubusercontent.com/RiccardoAncarani/talks/master/F-Secure/unorthodox-lateral-movement.pdf
 author: frack113
 date: 2022/07/17
-description: Detect possible persistence using Fax DLL load when service restart
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        TargetObject: '*\Software\Microsoft\Fax\Device Providers\\*'
-    SELECTION_5:
-        TargetObject: '*\ImageName*'
-    SELECTION_6:
-        NewValue: '%systemroot%\system32\fxst30.dll'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6))
-falsepositives:
-- Unknown
-id: 9e3357ba-09d4-4fbd-a7c5-ad6386314513
-level: high
-logsource:
-    category: registry_set
-    product: windows
 modified: 2022/12/30
-references:
-- https://twitter.com/dottor_morte/status/1544652325570191361
-- https://raw.githubusercontent.com/RiccardoAncarani/talks/master/F-Secure/unorthodox-lateral-movement.pdf
-status: experimental
 tags:
-- attack.defense_evasion
-- attack.t1112
-
+    - attack.defense_evasion
+    - attack.t1112
+logsource:
+    product: windows
+    category: registry_set
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        TargetObject|contains|all:
+            - \Software\Microsoft\Fax\Device Providers\
+            - \ImageName
+    filter:
+        Details: '%systemroot%\system32\fxst30.dll'
+    condition: registry_set and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

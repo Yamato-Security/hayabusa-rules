@@ -1,39 +1,35 @@
 title: Format.com FileSystem LOLBIN
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/01/04
+id: 9fb6b26e-7f9e-4517-a48b-8cac4a1b6c60
+status: test
 description: Detects the execution of format.com with a suspicious filesystem selection
     that could indicate a defense evasion activity in which format.com is used to
     load malicious DLL files or other programs
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\format.com'
-    SELECTION_4:
-        CommandLine: '*/fs:*'
-    SELECTION_5:
-        CommandLine:
-        - '*/fs:FAT*'
-        - '*/fs:exFAT*'
-        - '*/fs:NTFS*'
-        - '*/fs:UDF*'
-        - '*/fs:ReFS*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5)))
-falsepositives:
-- Unknown
-id: 9fb6b26e-7f9e-4517-a48b-8cac4a1b6c60
-level: high
+references:
+    - https://twitter.com/0gtweet/status/1477925112561209344
+    - https://twitter.com/wdormann/status/1478011052130459653?s=20
+author: Florian Roth (Nextron Systems)
+date: 2022/01/04
+tags:
+    - attack.defense_evasion
 logsource:
     category: process_creation
     product: windows
-references:
-- https://twitter.com/0gtweet/status/1477925112561209344
-- https://twitter.com/wdormann/status/1478011052130459653?s=20
-status: test
-tags:
-- attack.defense_evasion
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \format.com
+        CommandLine|contains: '/fs:'
+    filter:
+        CommandLine|contains:
+            - /fs:FAT
+            - /fs:exFAT
+            - /fs:NTFS
+            - /fs:UDF
+            - /fs:ReFS
+    condition: process_creation and (selection and not 1 of filter*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

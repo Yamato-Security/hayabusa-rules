@@ -1,37 +1,33 @@
 title: Remote Access Tool - RURAT Execution From Unusual Location
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/09/19
+id: e01fa958-6893-41d4-ae03-182477c5e77d
+status: experimental
 description: Detects execution of Remote Utilities RAT (RURAT) from an unusual location
     (outside of 'C:\Program Files')
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\rutserv.exe'
-        - '*\rfusclient.exe'
-    SELECTION_4:
-        Product: Remote Utilities
-    SELECTION_5:
-        Image:
-        - C:\Program Files\Remote Utilities*
-        - C:\Program Files (x86)\Remote Utilities*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Unknown
-id: e01fa958-6893-41d4-ae03-182477c5e77d
-level: medium
+references:
+    - https://redcanary.com/blog/misbehaving-rats/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/09/19
+modified: 2023/03/05
+tags:
+    - attack.defense_evasion
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/05
-references:
-- https://redcanary.com/blog/misbehaving-rats/
-status: experimental
-tags:
-- attack.defense_evasion
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|endswith:
+                - \rutserv.exe
+                - \rfusclient.exe
+        -   Product: Remote Utilities
+    filter:
+        Image|startswith:
+            - C:\Program Files\Remote Utilities
+            - C:\Program Files (x86)\Remote Utilities
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

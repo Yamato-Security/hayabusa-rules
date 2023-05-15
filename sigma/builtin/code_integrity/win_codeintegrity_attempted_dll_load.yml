@@ -1,134 +1,93 @@
 title: Code Integrity Attempted DLL Load
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Nasreddine Bencherchali
-date: 2022/01/20
+id: f8931561-97f5-4c46-907f-0a4a592e47a7
 description: Detects attempted DLL load events that didn't meet anti-malware or Windows
     signing level requirements. It often means the file's signature is revoked or
     expired
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-CodeIntegrity/Operational
-    SELECTION_10:
-        ValidatedPolicy: 1
-    SELECTION_11:
-        FileNameBuffer: '*\Windows\System32\nvspcap64.dll'
-    SELECTION_12:
-        ProcessNameBuffer:
-        - '*\AppData\Local\Keybase\Gui\Keybase.exe'
-        - '*\Microsoft\Teams\stage\Teams.exe'
-    SELECTION_13:
-        RequestedPolicy: 8
-    SELECTION_14:
-        ValidatedPolicy: 1
-    SELECTION_15:
-        FileNameBuffer: '*\Program Files\Bonjour\mdnsNSP.dll'
-    SELECTION_16:
-        ProcessNameBuffer:
-        - '*\Windows\System32\svchost.exe'
-        - '*\Windows\System32\SIHClient.exe'
-    SELECTION_17:
-        RequestedPolicy: 8
-    SELECTION_18:
-        RequestedPolicy: 12
-    SELECTION_19:
-        ValidatedPolicy: 1
-    SELECTION_2:
-        EventID: 3033
-    SELECTION_20:
-        FileNameBuffer: '*\Microsoft Office\root\vfs\ProgramFilesCommonX64\Microsoft
-            Shared\OFFICE*'
-    SELECTION_21:
-        FileNameBuffer: '*\MSOXMLMF.DLL'
-    SELECTION_22:
-        RequestedPolicy: 7
-    SELECTION_23:
-        ValidatedPolicy: 1
-    SELECTION_24:
-        FileNameBuffer: '*\Windows\System32\nvspcap64.dll'
-    SELECTION_25:
-        ProcessNameBuffer: '*\AppData\Local\slack\app-*'
-    SELECTION_26:
-        ProcessNameBuffer: '*\slack.exe'
-    SELECTION_27:
-        RequestedPolicy: 8
-    SELECTION_28:
-        ValidatedPolicy: 1
-    SELECTION_29:
-        FileNameBuffer:
-        - '*\Mozilla Firefox\mozavcodec.dll'
-        - '*\Mozilla Firefox\mozavutil.dll'
-    SELECTION_3:
-        FileNameBuffer: '*\Program Files\DTrace\dtrace.dll'
-    SELECTION_30:
-        ProcessNameBuffer: '*\Mozilla Firefox\firefox.exe'
-    SELECTION_31:
-        RequestedPolicy: 8
-    SELECTION_32:
-        FileNameBuffer:
-        - '*\Program Files\Avast Software\Avast\aswAMSI.dll'
-        - '*\Program Files (x86)\Avast Software\Avast\aswAMSI.dll'
-    SELECTION_33:
-        RequestedPolicy: 8
-    SELECTION_34:
-        RequestedPolicy: 12
-    SELECTION_35:
-        ValidatedPolicy: 1
-    SELECTION_36:
-        FileNameBuffer: '*\Windows\assembly\GAC\\*'
-    SELECTION_37:
-        ProcessNameBuffer: '*\mscorsvw.exe'
-    SELECTION_38:
-        ProcessNameBuffer: '*\Windows\Microsoft.NET\\*'
-    SELECTION_39:
-        RequestedPolicy: 8
-    SELECTION_4:
-        ProcessNameBuffer: '*\Windows\System32\svchost.exe'
-    SELECTION_40:
-        ValidatedPolicy: 1
-    SELECTION_41:
-        ValidatedPolicy: 2
-    SELECTION_42:
-        FileNameBuffer: '*\Program Files\Google\Drive File Stream\\*'
-    SELECTION_43:
-        FileNameBuffer: '*\crashpad_handler.exe'
-    SELECTION_44:
-        ProcessNameBuffer: '*\Windows\ImmersiveControlPanel\SystemSettings.exe'
-    SELECTION_45:
-        RequestedPolicy: 8
-    SELECTION_46:
-        ValidatedPolicy: 1
-    SELECTION_5:
-        RequestedPolicy: 12
-    SELECTION_6:
-        ValidatedPolicy: 1
-    SELECTION_7:
-        FileNameBuffer: '*\Windows\System32\DriverStore\FileRepository\\*'
-    SELECTION_8:
-        FileNameBuffer: '*\igd10iumd64.dll'
-    SELECTION_9:
-        RequestedPolicy: 7
-    condition: (SELECTION_1 and SELECTION_2 and  not ((SELECTION_3 and SELECTION_4
-        and SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14)
-        or (SELECTION_15 and SELECTION_16 and (SELECTION_17 or SELECTION_18) and SELECTION_19)
-        or (SELECTION_20 and SELECTION_21 and SELECTION_22 and SELECTION_23) or (SELECTION_24
-        and SELECTION_25 and SELECTION_26 and SELECTION_27 and SELECTION_28) or (SELECTION_29
-        and SELECTION_30 and SELECTION_31) or (SELECTION_32 and (SELECTION_33 or SELECTION_34)
-        and SELECTION_35) or (SELECTION_36 and SELECTION_37 and SELECTION_38 and SELECTION_39
-        and (SELECTION_40 or SELECTION_41)) or (SELECTION_42 and SELECTION_43 and
-        SELECTION_44 and SELECTION_45 and SELECTION_46)))
-falsepositives:
-- Antivirus products
-id: f8931561-97f5-4c46-907f-0a4a592e47a7
-level: high
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali
+status: experimental
+references:
+    - https://twitter.com/SBousseaden/status/1483810148602814466
+    - https://github.com/MicrosoftDocs/windows-itpro-docs/blob/40fe118976734578f83e5e839b9c63ae7a4af82d/windows/security/threat-protection/windows-defender-application-control/event-id-explanations.md#windows-codeintegrity-operational-log
+date: 2022/01/20
+modified: 2023/04/27
+tags:
+    - attack.execution
 logsource:
     product: windows
     service: codeintegrity-operational
-modified: 2023/04/27
-references:
-- https://twitter.com/SBousseaden/status/1483810148602814466
-- https://github.com/MicrosoftDocs/windows-itpro-docs/blob/40fe118976734578f83e5e839b9c63ae7a4af82d/windows/security/threat-protection/windows-defender-application-control/event-id-explanations.md#windows-codeintegrity-operational-log
-status: experimental
-tags:
-- attack.execution
-
+detection:
+    codeintegrity_operational:
+        Channel: Microsoft-Windows-CodeIntegrity/Operational
+    selection:
+        EventID: 3033
+    filter_dtrace:
+        FileNameBuffer|endswith: \Program Files\DTrace\dtrace.dll
+        ProcessNameBuffer|endswith: \Windows\System32\svchost.exe
+        RequestedPolicy: 12
+        ValidatedPolicy: 1
+    filter_msmpeng:
+        FileNameBuffer|contains: \Windows\System32\DriverStore\FileRepository\
+        FileNameBuffer|endswith: \igd10iumd64.dll
+        RequestedPolicy: 7
+        ValidatedPolicy: 1
+    filter_electron_based_app:
+        FileNameBuffer|endswith: \Windows\System32\nvspcap64.dll
+        ProcessNameBuffer|endswith:
+            - \AppData\Local\Keybase\Gui\Keybase.exe
+            - \Microsoft\Teams\stage\Teams.exe
+        RequestedPolicy: 8
+        ValidatedPolicy: 1
+    filter_bonjour:
+        FileNameBuffer|endswith: \Program Files\Bonjour\mdnsNSP.dll
+        ProcessNameBuffer|endswith:
+            - \Windows\System32\svchost.exe
+            - \Windows\System32\SIHClient.exe
+        RequestedPolicy:
+            - 8
+            - 12
+        ValidatedPolicy: 1
+    filter_msoffice:
+        FileNameBuffer|contains: \Microsoft Office\root\vfs\ProgramFilesCommonX64\Microsoft
+            Shared\OFFICE
+        FileNameBuffer|endswith: \MSOXMLMF.DLL
+        RequestedPolicy: 7
+        ValidatedPolicy: 1
+    filter_slack:
+        FileNameBuffer|endswith: \Windows\System32\nvspcap64.dll
+        ProcessNameBuffer|contains: \AppData\Local\slack\app-
+        ProcessNameBuffer|endswith: \slack.exe
+        RequestedPolicy: 8
+        ValidatedPolicy: 1
+    filter_firefox:
+        FileNameBuffer|endswith:
+            - \Mozilla Firefox\mozavcodec.dll
+            - \Mozilla Firefox\mozavutil.dll
+        ProcessNameBuffer|endswith: \Mozilla Firefox\firefox.exe
+        RequestedPolicy: 8
+    filter_avast:
+        FileNameBuffer|endswith:
+            - \Program Files\Avast Software\Avast\aswAMSI.dll
+            - \Program Files (x86)\Avast Software\Avast\aswAMSI.dll
+        RequestedPolicy:
+            - 8
+            - 12
+        ValidatedPolicy: 1
+    filter_gac:
+        FileNameBuffer|contains: \Windows\assembly\GAC\
+        ProcessNameBuffer|endswith: \mscorsvw.exe
+        ProcessNameBuffer|contains: \Windows\Microsoft.NET\
+        RequestedPolicy: 8
+        ValidatedPolicy:
+            - 1
+            - 2
+    filter_google_drive:
+        FileNameBuffer|contains: \Program Files\Google\Drive File Stream\
+        FileNameBuffer|endswith: \crashpad_handler.exe
+        ProcessNameBuffer|endswith: \Windows\ImmersiveControlPanel\SystemSettings.exe
+        RequestedPolicy: 8
+        ValidatedPolicy: 1
+    condition: codeintegrity_operational and (selection and not 1 of filter_*)
+falsepositives:
+    - Antivirus products
+level: high
+ruletype: Sigma

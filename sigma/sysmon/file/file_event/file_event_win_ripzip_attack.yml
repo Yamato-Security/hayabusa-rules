@@ -1,7 +1,6 @@
 title: Potential RipZip Attack on Startup Folder
-ruletype: Sigma
-author: Greg (rule)
-date: 2022/07/21
+id: a6976974-ea6f-4e97-818e-ea08625c52cb
+status: experimental
 description: 'Detects a phishing attack which expands a ZIP file containing a malicious
     shortcut.
 
@@ -13,30 +12,28 @@ description: 'Detects a phishing attack which expands a ZIP file containing a ma
     {0AFACED1-E828-11D1-9187-B532F1E9575D} meaning the folder shortcut operation.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*\Microsoft\Windows\Start Menu\Programs\Startup*'
-    SELECTION_4:
-        TargetFilename: '*.lnk.{0AFACED1-E828-11D1-9187-B532F1E9575D}*'
-    SELECTION_5:
-        Image: '*\explorer.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: a6976974-ea6f-4e97-818e-ea08625c52cb
-level: high
+references:
+    - https://twitter.com/jonasLyk/status/1549338335243534336?t=CrmPocBGLbDyE4p6zTX1cg&s=19
+author: Greg (rule)
+date: 2022/07/21
+modified: 2023/01/05
+tags:
+    - attack.persistence
+    - attack.t1547
 logsource:
     category: file_event
     product: windows
-modified: 2023/01/05
-references:
-- https://twitter.com/jonasLyk/status/1549338335243534336?t=CrmPocBGLbDyE4p6zTX1cg&s=19
-status: experimental
-tags:
-- attack.persistence
-- attack.t1547
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|contains|all:
+            - \Microsoft\Windows\Start Menu\Programs\Startup
+            - .lnk.{0AFACED1-E828-11D1-9187-B532F1E9575D}
+        Image|endswith: \explorer.exe
+    condition: file_event and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

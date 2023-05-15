@@ -1,50 +1,46 @@
 title: PowerShell Base64 Encoded Invoke Keyword
-ruletype: Sigma
+id: 6385697e-9f1b-40bd-8817-f4a91f40508e
+related:
+    -   id: fd6e2919-3936-40c9-99db-0aa922c356f7
+        type: obsoletes
+status: test
+description: Detects UTF-8 and UTF-16 Base64 encoded powershell 'Invoke-' calls
+references:
+    - https://thedfirreport.com/2022/05/09/seo-poisoning-a-gootloader-story/
 author: pH-T (Nextron Systems), Harjot Singh, @cyb3rjy0t
 date: 2022/05/20
-description: Detects UTF-8 and UTF-16 Base64 encoded powershell 'Invoke-' calls
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_5:
-        CommandLine: '* -e*'
-    SELECTION_6:
-        CommandLine:
-        - '*SQBuAHYAbwBrAGUALQ*'
-        - '*kAbgB2AG8AawBlAC0A*'
-        - '*JAG4AdgBvAGsAZQAtA*'
-        - '*SW52b2tlL*'
-        - '*ludm9rZS*'
-        - '*JbnZva2Ut*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- Unknown
-id: 6385697e-9f1b-40bd-8817-f4a91f40508e
-level: high
+modified: 2023/04/06
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - attack.defense_evasion
+    - attack.t1027
 logsource:
     category: process_creation
     product: windows
-modified: 2023/04/06
-references:
-- https://thedfirreport.com/2022/05/09/seo-poisoning-a-gootloader-story/
-related:
--   id: fd6e2919-3936-40c9-99db-0aa922c356f7
-    type: obsoletes
-status: test
-tags:
-- attack.execution
-- attack.t1059.001
-- attack.defense_evasion
-- attack.t1027
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    selection_cli_enc:
+        CommandLine|contains: ' -e'
+    selection_cli_invoke:
+        CommandLine|contains:
+            - SQBuAHYAbwBrAGUALQ
+            - kAbgB2AG8AawBlAC0A
+            - JAG4AdgBvAGsAZQAtA
+            - SW52b2tlL
+            - ludm9rZS
+            - JbnZva2Ut
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

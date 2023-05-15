@@ -1,46 +1,43 @@
 title: PUA - Chisel Tunneling Tool Execution
-ruletype: Sigma
+id: 8b0e12da-d3c3-49db-bb4f-256703f380e5
+related:
+    -   id: cf93e05e-d798-4d9e-b522-b0248dc61eaf
+        type: similar
+status: experimental
+description: Detects usage of the Chisel tunneling tool via the commandline arguments
+references:
+    - https://github.com/jpillora/chisel/
+    - https://arcticwolf.com/resources/blog/lorenz-ransomware-chiseling-in/
+    - https://blog.sekoia.io/lucky-mouse-incident-response-to-detection-engineering/
 author: Florian Roth (Nextron Systems)
 date: 2022/09/13
-description: Detects usage of the Chisel tunneling tool via the commandline arguments
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\chisel.exe'
-    SELECTION_4:
-        CommandLine:
-        - '*exe client *'
-        - '*exe server *'
-    SELECTION_5:
-        CommandLine:
-        - '*-socks5*'
-        - '*-reverse*'
-        - '* r:*'
-        - '*:127.0.0.1:*'
-        - '*-tls-skip-verify *'
-        - '*:socks*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)))
-falsepositives:
-- Some false positives may occur with other tools with similar commandlines
-id: 8b0e12da-d3c3-49db-bb4f-256703f380e5
-level: high
+modified: 2023/02/13
+tags:
+    - attack.command_and_control
+    - attack.t1090.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-references:
-- https://github.com/jpillora/chisel/
-- https://arcticwolf.com/resources/blog/lorenz-ransomware-chiseling-in/
-- https://blog.sekoia.io/lucky-mouse-incident-response-to-detection-engineering/
-related:
--   id: cf93e05e-d798-4d9e-b522-b0248dc61eaf
-    type: similar
-status: experimental
-tags:
-- attack.command_and_control
-- attack.t1090.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        NewProcessName|endswith: \chisel.exe
+    selection_param1:
+        CommandLine|contains:
+            - 'exe client '
+            - 'exe server '
+    selection_param2:
+        CommandLine|contains:
+            - -socks5
+            - -reverse
+            - ' r:'
+            - ':127.0.0.1:'
+            - '-tls-skip-verify '
+            - :socks
+    condition: process_creation and (selection_img or all of selection_param*)
+falsepositives:
+    - Some false positives may occur with other tools with similar commandlines
+level: high
+ruletype: Sigma

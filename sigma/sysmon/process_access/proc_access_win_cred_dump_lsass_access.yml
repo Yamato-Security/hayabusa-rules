@@ -1,195 +1,160 @@
 title: Credential Dumping Tools Accessing LSASS Memory
-ruletype: Sigma
+id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
+status: experimental
+description: Detects processes requesting access to LSASS memory via suspicious access
+    masks. This is typical for credentials dumping tools
+references:
+    - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
+    - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
+    - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+    - http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
 author: Florian Roth, Roberto Rodriguez, Dimitrios Slamaris, Mark Russinovich, Thomas
     Patzke, Teymur Kheirkhabarov, Sherif Eldeeb, James Dickenson, Aleksey Potapov,
     oscd.community
 date: 2017/02/16
-description: Detects processes requesting access to LSASS memory via suspicious access
-    masks. This is typical for credentials dumping tools
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_10:
-        SourceImage: C:\Windows\System32\svchost.exe
-    SELECTION_11:
-        CallTrace: '*|C:\ProgramData\Microsoft\Windows Defender\Definition Updates\{*'
-    SELECTION_12:
-        CallTrace: '*}\mpengine.dll+*'
-    SELECTION_13:
-        GrantedAccess: '0x1418'
-    SELECTION_14:
-        CallTrace:
-        - '*|c:\program files\windows defender\mprtp.dll*'
-        - '*|c:\program files\windows defender\MpClient.dll*'
-    SELECTION_15:
-        SourceImage: C:\Program Files\WindowsApps\\*
-    SELECTION_16:
-        SourceImage: '*\GamingServices.exe'
-    SELECTION_17:
-        GrantedAccess:
-        - '0x1410'
-        - '0x410'
-    SELECTION_18:
-        SourceImage:
-        - '*\PROCEXP64.EXE'
-        - '*\PROCEXP.EXE'
-        - '*C:\WINDOWS\system32\taskhostw.exe'
-        - '*\MBAMInstallerService.exe'
-    SELECTION_19:
-        GrantedAccess:
-        - '0x1410'
-        - '0x410'
-        - '0x40'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        SourceImage:
-        - C:\WINDOWS\system32\wbem\wmiprvse.exe
-        - C:\Windows\syswow64\MsiExec.exe
-        - C:\Windows\System32\msiexec.exe
-    SELECTION_21:
-        GrantedAccess:
-        - '0x1410'
-        - '0x410'
-        - '0x1f1fff'
-        - '0x1f3fff'
-    SELECTION_22:
-        SourceImage:
-        - C:\Windows\system32\wininit.exe
-        - C:\Windows\System32\lsass.exe
-    SELECTION_23:
-        GrantedAccess: '0x1000000'
-    SELECTION_24:
-        SourceImage: C:\ProgramData\VMware\VMware Tools\\*
-    SELECTION_25:
-        SourceImage: '*\vmtoolsd.exe'
-    SELECTION_26:
-        SourceImage: C:\WINDOWS\system32\svchost.exe
-    SELECTION_27:
-        GrantedAccess:
-        - '0x100000'
-        - '0x1410'
-    SELECTION_28:
-        SourceImage:
-        - '*\thor.exe'
-        - '*\thor64.exe'
-        - '*\aurora-agent.exe'
-        - '*\aurora-agent-64.exe'
-    SELECTION_29:
-        GrantedAccess:
-        - '0x40'
-        - '0x1010'
-    SELECTION_3:
-        TargetImage: '*\lsass.exe'
-    SELECTION_30:
-        SourceImage: '*\explorer.exe'
-    SELECTION_31:
-        GrantedAccess: '0x401'
-    SELECTION_32:
-        SourceImage: C:\Windows\system32\MRT.exe
-    SELECTION_33:
-        GrantedAccess:
-        - '0x1410'
-        - '0x1418'
-    SELECTION_34:
-        GrantedAccess: '0x40'
-    SELECTION_35:
-        SourceImage:
-        - '*\handle.exe'
-        - '*\handle64.exe'
-    SELECTION_36:
-        SourceImage: C:\Program Files (x86)\Microsoft\Edge\Application\\*
-    SELECTION_37:
-        SourceImage: '*\Installer\setup.exe'
-    SELECTION_38:
-        SourceImage: '*\AppData\Local\WebEx\WebexHost.exe'
-    SELECTION_39:
-        GrantedAccess: '0x401'
-    SELECTION_4:
-        GrantedAccess:
-        - 0x40*
-        - 0x100000*
-        - 0x1410*
-        - 0x1438*
-        - 0x143a*
-        - 0x1418*
-        - 0x1f0fff*
-        - 0x1f1fff*
-        - 0x1f2fff*
-        - 0x1f3fff*
-    SELECTION_40:
-        SourceImage: C:\PROGRAMDATA\MALWAREBYTES\MBAMSERVICE\ctlrupdate\mbupdatr.exe
-    SELECTION_41:
-        GrantedAccess: '0x1410'
-    SELECTION_42:
-        SourceImage:
-        - '*:\Windows\Temp\\*'
-        - '*\AppData\Local\Temp\\*'
-    SELECTION_43:
-        SourceImage: '*.tmp\DropboxUpdate.exe'
-    SELECTION_44:
-        GrantedAccess:
-        - '0x410'
-        - '0x1410'
-    SELECTION_45:
-        SourceImage: C:\Program Files\Microsoft Visual Studio\\*
-    SELECTION_46:
-        SourceImage: '*\MSBuild\Current\Bin\MSBuild.exe'
-    SELECTION_47:
-        GrantedAccess: '0x1F3FFF'
-    SELECTION_48:
-        SourceImage: '*\SteamLibrary\steamapps\\*'
-    SELECTION_5:
-        SourceImage:
-        - C:\WINDOWS\system32\taskmgr.exe
-        - C:\Windows\System32\perfmon.exe
-    SELECTION_6:
-        SourceImage:
-        - C:\Program Files\\*
-        - C:\Program Files (x86)\\*
-    SELECTION_7:
-        GrantedAccess:
-        - '0x1410'
-        - '0x410'
-    SELECTION_8:
-        SourceImage:
-        - C:\ProgramData\Microsoft\Windows Defender\\*
-        - C:\Program Files\Windows Defender\\*
-        - C:\Program Files\Microsoft Security Client\MsMpEng.exe*
-    SELECTION_9:
-        SourceImage: '*\MsMpEng.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14)
-        or (SELECTION_15 and SELECTION_16 and SELECTION_17) or (SELECTION_18 and SELECTION_19)
-        or (SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23) or (SELECTION_24
-        and SELECTION_25) or (SELECTION_26 and SELECTION_27) or (SELECTION_28 and
-        SELECTION_29) or (SELECTION_30 and SELECTION_31) or (SELECTION_32 and SELECTION_33)
-        or (SELECTION_34 and SELECTION_35) or (SELECTION_36 and SELECTION_37) or (SELECTION_38
-        and SELECTION_39) or (SELECTION_40 and SELECTION_41) or (SELECTION_42 and
-        SELECTION_43 and SELECTION_44) or (SELECTION_45 and SELECTION_46 and SELECTION_47)
-        or (SELECTION_48)))
-falsepositives:
-- Likely
-fields:
-- ComputerName
-- User
-- SourceImage
-id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
-level: high
+modified: 2023/03/22
+tags:
+    - attack.credential_access
+    - attack.t1003.001
+    - attack.s0002
+    - car.2019-04-004
 logsource:
     category: process_access
     product: windows
-modified: 2023/03/22
-references:
-- https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
-- https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
-- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
-- http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1003.001
-- attack.s0002
-- car.2019-04-004
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetImage|endswith: \lsass.exe
+        GrantedAccess|startswith:
+            - '0x40'
+            - '0x100000'
+            - '0x1410'
+            - '0x1438'
+            - '0x143a'
+            - '0x1418'
+            - '0x1f0fff'
+            - '0x1f1fff'
+            - '0x1f2fff'
+            - '0x1f3fff'
+    filter_exact:
+        SourceImage:
+            - C:\WINDOWS\system32\taskmgr.exe
+            - C:\Windows\System32\perfmon.exe
+    filter_generic:
+        SourceImage|startswith:
+            - C:\Program Files\
+            - C:\Program Files (x86)\
+        GrantedAccess:
+            - '0x1410'
+            - '0x410'
+    filter_defender:
+        SourceImage|startswith:
+            - C:\ProgramData\Microsoft\Windows Defender\
+            - C:\Program Files\Windows Defender\
+            - C:\Program Files\Microsoft Security Client\MsMpEng.exe
+        SourceImage|endswith: \MsMpEng.exe
+    filter_defender_updates:
+        SourceImage: C:\Windows\System32\svchost.exe
+        CallTrace|contains|all:
+            - '|C:\ProgramData\Microsoft\Windows Defender\Definition Updates\{'
+            - '}\mpengine.dll+'
+        GrantedAccess: '0x1418'
+    filter_defender_calltrace:
+        CallTrace|contains:
+            - '|c:\program files\windows defender\mprtp.dll'
+            - '|c:\program files\windows defender\MpClient.dll'
+    filter_gaming_services:
+        SourceImage|startswith: C:\Program Files\WindowsApps\
+        SourceImage|endswith: \GamingServices.exe
+        GrantedAccess:
+            - '0x1410'
+            - '0x410'
+    filter_specific_granted_access_1:
+        SourceImage|endswith:
+            - \PROCEXP64.EXE
+            - \PROCEXP.EXE
+            - C:\WINDOWS\system32\taskhostw.exe
+            - \MBAMInstallerService.exe
+        GrantedAccess:
+            - '0x1410'
+            - '0x410'
+            - '0x40'
+    filter_specific_granted_access_2:
+        SourceImage:
+            - C:\WINDOWS\system32\wbem\wmiprvse.exe
+            - C:\Windows\syswow64\MsiExec.exe
+            - C:\Windows\System32\msiexec.exe
+        GrantedAccess:
+            - '0x1410'
+            - '0x410'
+            - '0x1f1fff'
+            - '0x1f3fff'
+    filter_specific_granted_access_3:
+        SourceImage:
+            - C:\Windows\system32\wininit.exe
+            - C:\Windows\System32\lsass.exe
+        GrantedAccess: '0x1000000'
+    filter_vmwaretools:
+        SourceImage|startswith: C:\ProgramData\VMware\VMware Tools\
+        SourceImage|endswith: \vmtoolsd.exe
+    filter_svchost:
+        SourceImage: C:\WINDOWS\system32\svchost.exe
+        GrantedAccess:
+            - '0x100000'
+            - '0x1410'
+    filter_nextron:
+        SourceImage|endswith:
+            - \thor.exe
+            - \thor64.exe
+            - \aurora-agent.exe
+            - \aurora-agent-64.exe
+        GrantedAccess:
+            - '0x40'
+            - '0x1010'
+    filter_explorer:
+        SourceImage|endswith: \explorer.exe
+        GrantedAccess: '0x401'
+    filter_mrt:
+        SourceImage: C:\Windows\system32\MRT.exe
+        GrantedAccess:
+            - '0x1410'
+            - '0x1418'
+    filter_handle:
+        GrantedAccess: '0x40'
+        SourceImage|endswith:
+            - \handle.exe
+            - \handle64.exe
+    filter_edge:
+        SourceImage|startswith: C:\Program Files (x86)\Microsoft\Edge\Application\
+        SourceImage|endswith: \Installer\setup.exe
+    filter_webex:
+        SourceImage|endswith: \AppData\Local\WebEx\WebexHost.exe
+        GrantedAccess: '0x401'
+    filter_malwarebytes:
+        SourceImage: C:\PROGRAMDATA\MALWAREBYTES\MBAMSERVICE\ctlrupdate\mbupdatr.exe
+        GrantedAccess: '0x1410'
+    filter_dropbox:
+        SourceImage|contains:
+            - :\Windows\Temp\
+            - \AppData\Local\Temp\
+        SourceImage|endswith: .tmp\DropboxUpdate.exe
+        GrantedAccess:
+            - '0x410'
+            - '0x1410'
+    filter_msbuild:
+        SourceImage|startswith: C:\Program Files\Microsoft Visual Studio\
+        SourceImage|endswith: \MSBuild\Current\Bin\MSBuild.exe
+        GrantedAccess: '0x1F3FFF'
+    filter_games:
+        SourceImage|contains: \SteamLibrary\steamapps\
+    condition: process_access and (selection and not 1 of filter_*)
+fields:
+    - ComputerName
+    - User
+    - SourceImage
+falsepositives:
+    - Likely
+level: high
+ruletype: Sigma

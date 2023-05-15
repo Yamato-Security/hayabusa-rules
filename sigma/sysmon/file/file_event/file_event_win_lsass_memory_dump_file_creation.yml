@@ -1,36 +1,33 @@
 title: LSASS Memory Dump File Creation
-ruletype: Sigma
-author: Teymur Kheirkhabarov, oscd.community
-date: 2019/10/22
+id: 5e3d3601-0662-4af0-b1d2-36a05e90c40a
+status: test
 description: LSASS memory dump creation using operating systems utilities. Procdump
     will use process name in output file if no name is specified
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*lsass*'
-    SELECTION_4:
-        TargetFilename: '*dmp'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Dumping lsass memory for forensic investigation purposes by legitimate incident
-    responder or forensic invetigator
-- Dumps of another process that contains lsass in its process name (substring)
-fields:
-- ComputerName
-- TargetFilename
-id: 5e3d3601-0662-4af0-b1d2-36a05e90c40a
-level: high
+references:
+    - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+author: Teymur Kheirkhabarov, oscd.community
+date: 2019/10/22
+modified: 2022/10/09
+tags:
+    - attack.credential_access
+    - attack.t1003.001
 logsource:
     category: file_event
     product: windows
-modified: 2022/10/09
-references:
-- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.001
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|contains: lsass
+        TargetFilename|endswith: dmp
+    condition: file_event and selection
+fields:
+    - ComputerName
+    - TargetFilename
+falsepositives:
+    - Dumping lsass memory for forensic investigation purposes by legitimate incident
+        responder or forensic invetigator
+    - Dumps of another process that contains lsass in its process name (substring)
+level: high
+ruletype: Sigma

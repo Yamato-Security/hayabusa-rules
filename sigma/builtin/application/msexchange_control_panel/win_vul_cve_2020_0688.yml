@@ -1,35 +1,31 @@
 title: CVE-2020-0688 Exploitation via Eventlog
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), wagga
-date: 2020/02/29
+id: d6266bf5-935e-4661-b477-78772735a7cb
+status: test
 description: Detects the exploitation of Microsoft Exchange vulnerability as described
     in CVE-2020-0688
-detection:
-    SELECTION_1:
-        Channel: Application
-    SELECTION_2:
-        EventID: 4
-    SELECTION_3:
-        Provider_Name: MSExchange Control Panel
-    SELECTION_4:
-        Level: Error
-    SELECTION_5:
-    - '&__VIEWSTATE='
-    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3 and SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- Unknown
-id: d6266bf5-935e-4661-b477-78772735a7cb
-level: high
+references:
+    - https://www.trustedsec.com/blog/detecting-cve-20200688-remote-code-execution-vulnerability-on-microsoft-exchange-server/
+    - https://cyberpolygon.com/materials/okhota-na-ataki-ms-exchange-chast-2-cve-2020-0688-cve-2020-16875-cve-2021-24085/
+author: Florian Roth (Nextron Systems), wagga
+date: 2020/02/29
+modified: 2022/12/25
+tags:
+    - attack.initial_access
+    - attack.t1190
 logsource:
     product: windows
     service: application
-modified: 2022/12/25
-references:
-- https://www.trustedsec.com/blog/detecting-cve-20200688-remote-code-execution-vulnerability-on-microsoft-exchange-server/
-- https://cyberpolygon.com/materials/okhota-na-ataki-ms-exchange-chast-2-cve-2020-0688-cve-2020-16875-cve-2021-24085/
-status: test
-tags:
-- attack.initial_access
-- attack.t1190
-
+detection:
+    application:
+        Channel: Application
+    selection1:
+        EventID: 4
+        Provider_Name: MSExchange Control Panel
+        Level: Error
+    selection2:
+        - '&__VIEWSTATE='
+    condition: application and (all of selection*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

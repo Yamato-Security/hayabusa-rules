@@ -1,36 +1,34 @@
 title: Invoke-Obfuscation Via Stdin - PowerShell Module
-ruletype: Sigma
+id: c72aca44-8d52-45ad-8f81-f96c4d3c755e
+related:
+    -   id: 86b896ba-ffa1-4fea-83e3-ee28a4c915c7
+        type: derived
+status: experimental
+description: Detects Obfuscated Powershell via Stdin in Scripts
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Nikita Nazarov, oscd.community
 date: 2020/10/12
-description: Detects Obfuscated Powershell via Stdin in Scripts
-detection:
-    SELECTION_1:
-        EventID: 4103
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        Payload|re: (?i).*(set).*&&\s?set.*(environment|invoke|\$?\{?input).*&&.*"
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: c72aca44-8d52-45ad-8f81-f96c4d3c755e
-level: high
+modified: 2022/11/29
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
+    product: windows
     category: ps_module
     definition: 'Requirements: PowerShell Module Logging must be enabled'
-    product: windows
-modified: 2022/11/29
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-related:
--   id: 86b896ba-ffa1-4fea-83e3-ee28a4c915c7
-    type: derived
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    ps_module:
+        EventID: 4103
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection_4103:
+        Payload|re: (?i).*(set).*&&\s?set.*(environment|invoke|\$?\{?input).*&&.*"
+    condition: ps_module and selection_4103
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

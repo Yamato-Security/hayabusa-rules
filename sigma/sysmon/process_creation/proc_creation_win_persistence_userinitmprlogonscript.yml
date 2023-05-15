@@ -1,41 +1,37 @@
 title: Logon Scripts (UserInitMprLogonScript)
-ruletype: Sigma
+id: 0a98a10c-685d-4ab0-bddc-b6bdd1d48458
+status: test
+description: Detects creation or execution of UserInitMprLogonScript persistence method
+references:
+    - https://cocomelonc.github.io/persistence/2022/12/09/malware-pers-20.html
 author: Tom Ueltschi (@c_APT_ure), Tim Shelton
 date: 2019/01/12
-description: Detects creation or execution of UserInitMprLogonScript persistence method
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*UserInitMprLogonScript*'
-    SELECTION_4:
-        ParentImage: '*\userinit.exe'
-    SELECTION_5:
-        CommandLine:
-        - '*netlogon*.bat*'
-        - '*UsrLogon.cmd*'
-        - '*C:\WINDOWS\Explorer.EXE*'
-    SELECTION_6:
-        Image:
-        - '*\explorer.exe'
-        - '*\proquota.exe'
-        - '*\Citrix\System32\icast.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and  not
-        (SELECTION_5 or SELECTION_6))))
-falsepositives:
-- Exclude legitimate logon scripts
-id: 0a98a10c-685d-4ab0-bddc-b6bdd1d48458
-level: high
+modified: 2023/01/31
+tags:
+    - attack.t1037.001
+    - attack.persistence
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/31
-references:
-- https://cocomelonc.github.io/persistence/2022/12/09/malware-pers-20.html
-status: test
-tags:
-- attack.t1037.001
-- attack.persistence
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_cli:
+        CommandLine|contains: UserInitMprLogonScript
+    selection_parent:
+        ParentImage|endswith: \userinit.exe
+    filter_parent:
+        -   CommandLine|contains:
+                - netlogon*.bat
+                - UsrLogon.cmd
+                - C:\WINDOWS\Explorer.EXE
+        -   Image|endswith:
+                - \explorer.exe
+                - \proquota.exe
+                - \Citrix\System32\icast.exe
+    condition: process_creation and (selection_cli or (selection_parent and not filter_parent))
+falsepositives:
+    - Exclude legitimate logon scripts
+level: high
+ruletype: Sigma

@@ -1,41 +1,35 @@
 title: Invoke-Obfuscation COMPRESS OBFUSCATION - System
-ruletype: Sigma
+id: 175997c5-803c-4b08-8bb0-70b099f47595
+status: experimental
+description: Detects Obfuscated Powershell via COMPRESS OBFUSCATION
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Timur Zinniatullin, oscd.community
 date: 2020/10/18
-description: Detects Obfuscated Powershell via COMPRESS OBFUSCATION
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Service Control Manager
-    SELECTION_3:
-        EventID: 7045
-    SELECTION_4:
-        ImagePath: '*new-object*'
-    SELECTION_5:
-        ImagePath: '*text.encoding]::ascii*'
-    SELECTION_6:
-        ImagePath: '*readtoend*'
-    SELECTION_7:
-        ImagePath:
-        - '*:system.io.compression.deflatestream*'
-        - '*system.io.streamreader*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Unknown
-id: 175997c5-803c-4b08-8bb0-70b099f47595
-level: medium
+modified: 2022/11/29
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
     product: windows
     service: system
-modified: 2022/11/29
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    system:
+        Channel: System
+    selection:
+        Provider_Name: Service Control Manager
+        EventID: 7045
+        ImagePath|contains|all:
+            - new-object
+            - text.encoding]::ascii
+            - readtoend
+        ImagePath|contains:
+            - :system.io.compression.deflatestream
+            - system.io.streamreader
+    condition: system and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

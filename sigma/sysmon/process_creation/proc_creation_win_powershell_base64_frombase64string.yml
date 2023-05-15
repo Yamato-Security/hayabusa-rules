@@ -1,36 +1,33 @@
 title: PowerShell Base64 Encoded FromBase64String Cmdlet
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2019/08/24
+id: fdb62a13-9a81-4e5c-a38f-ea93a16f6d7c
+status: test
 description: Detects usage of a base64 encoded "FromBase64String" cmdlet in a process
     command line
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine|base64offset|contains: ::FromBase64String
-    SELECTION_4:
-        CommandLine:
-        - '*OgA6AEYAcgBvAG0AQgBhAHMAZQA2ADQAUwB0AHIAaQBuAGcA*'
-        - '*oAOgBGAHIAbwBtAEIAYQBzAGUANgA0AFMAdAByAGkAbgBnA*'
-        - '*6ADoARgByAG8AbQBCAGEAcwBlADYANABTAHQAcgBpAG4AZw*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Unknown
-id: fdb62a13-9a81-4e5c-a38f-ea93a16f6d7c
-level: high
+references:
+    - Internal Research
+author: Florian Roth (Nextron Systems)
+date: 2019/08/24
+modified: 2023/04/06
+tags:
+    - attack.defense_evasion
+    - attack.t1140
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/04/06
-references:
-- Internal Research
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1140
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   CommandLine|base64offset|contains: ::FromBase64String
+        -   CommandLine|contains:
+                - OgA6AEYAcgBvAG0AQgBhAHMAZQA2ADQAUwB0AHIAaQBuAGcA
+                - oAOgBGAHIAbwBtAEIAYQBzAGUANgA0AFMAdAByAGkAbgBnA
+                - 6ADoARgByAG8AbQBCAGEAcwBlADYANABTAHQAcgBpAG4AZw
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

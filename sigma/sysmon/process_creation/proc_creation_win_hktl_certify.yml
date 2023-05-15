@@ -1,50 +1,45 @@
 title: HackTool - Certify Execution
-ruletype: Sigma
-author: pH-T (Nextron Systems)
-date: 2023/04/17
+id: 762f2482-ff21-4970-8939-0aa317a886bb
+status: experimental
 description: Detects Certify a tool for Active Directory certificate abuse based on
     PE metadata characteristics and common command line arguments.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\Certify.exe'
-    SELECTION_4:
-        OriginalFileName: Certify.exe
-    SELECTION_5:
-        Description: '*Certify*'
-    SELECTION_6:
-        CommandLine:
-        - '*.exe cas *'
-        - '*.exe find *'
-        - '*.exe pkiobjects *'
-        - '*.exe request *'
-        - '*.exe download *'
-    SELECTION_7:
-        CommandLine:
-        - '* /vulnerable*'
-        - '* /template:*'
-        - '* /altname:*'
-        - '* /domain:*'
-        - '* /path:*'
-        - '* /ca:*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or
-        SELECTION_5) or (SELECTION_6 and SELECTION_7)))
-falsepositives:
-- Unknown
-id: 762f2482-ff21-4970-8939-0aa317a886bb
-level: high
+references:
+    - https://github.com/GhostPack/Certify
+author: pH-T (Nextron Systems)
+date: 2023/04/17
+modified: 2023/04/25
+tags:
+    - attack.discovery
+    - attack.credential_access
+    - attack.t1649
 logsource:
     category: process_creation
     product: windows
-modified: 2023/04/25
-references:
-- https://github.com/GhostPack/Certify
-status: experimental
-tags:
-- attack.discovery
-- attack.credential_access
-- attack.t1649
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \Certify.exe
+        -   OriginalFileName: Certify.exe
+        -   Description|contains: Certify
+    selection_cli_commands:
+        CommandLine|contains:
+            - '.exe cas '
+            - '.exe find '
+            - '.exe pkiobjects '
+            - '.exe request '
+            - '.exe download '
+    selection_cli_options:
+        CommandLine|contains:
+            - ' /vulnerable'
+            - ' /template:'
+            - ' /altname:'
+            - ' /domain:'
+            - ' /path:'
+            - ' /ca:'
+    condition: process_creation and (selection_img or all of selection_cli_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

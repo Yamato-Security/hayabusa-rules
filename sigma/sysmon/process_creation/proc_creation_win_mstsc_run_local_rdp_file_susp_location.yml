@@ -1,46 +1,42 @@
 title: Suspicious Mstsc.EXE Execution With Local RDP File
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/04/18
+id: 6e22722b-dfb1-4508-a911-49ac840b40f8
+status: experimental
 description: Detects potential RDP connection via Mstsc using a local ".rdp" file
     located in suspicious locations.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\mstsc.exe'
-    SELECTION_4:
-        OriginalFileName: mstsc.exe
-    SELECTION_5:
-        CommandLine:
-        - '*.rdp'
-        - '*.rdp"'
-    SELECTION_6:
-        CommandLine:
-        - '*:\Users\Public\\*'
-        - '*:\Windows\System32\spool\drivers\color*'
-        - '*:\Windows\System32\Tasks_Migrated *'
-        - '*:\Windows\Tasks\\*'
-        - '*:\Windows\Temp\\*'
-        - '*:\Windows\Tracing\\*'
-        - '*\AppData\Local\Temp\\*'
-        - '*\Downloads\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- Likelihood is related to how often the paths are used in the environment
-id: 6e22722b-dfb1-4508-a911-49ac840b40f8
-level: high
+references:
+    - https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/
+    - https://blog.thickmints.dev/mintsights/detecting-rogue-rdp/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/04/18
+tags:
+    - attack.command_and_control
+    - attack.t1219
 logsource:
     category: process_creation
     product: windows
-references:
-- https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/
-- https://blog.thickmints.dev/mintsights/detecting-rogue-rdp/
-status: experimental
-tags:
-- attack.command_and_control
-- attack.t1219
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \mstsc.exe
+        -   OriginalFileName: mstsc.exe
+    selection_extension:
+        CommandLine|endswith:
+            - .rdp
+            - .rdp"
+    selection_paths:
+        CommandLine|contains:
+            - :\Users\Public\
+            - :\Windows\System32\spool\drivers\color
+            - ':\Windows\System32\Tasks_Migrated '
+            - :\Windows\Tasks\
+            - :\Windows\Temp\
+            - :\Windows\Tracing\
+            - \AppData\Local\Temp\
+            - \Downloads\
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Likelihood is related to how often the paths are used in the environment
+level: high
+ruletype: Sigma

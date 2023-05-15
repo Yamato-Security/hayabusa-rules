@@ -1,34 +1,32 @@
 title: Potential Iviewers.DLL Sideloading
-ruletype: Sigma
-author: X__Junior (Nextron Systems)
-date: 2023/03/21
+id: 4c21b805-4dd7-469f-b47d-7383a8fcb437
+status: experimental
 description: Detects potential DLL sideloading of "iviewers.dll" (OLE/COM Object Interface
     Viewer)
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ImageLoaded: '*\iviewers.dll'
-    SELECTION_4:
-        ImageLoaded:
-        - C:\Program Files (x86)\Windows Kits\\*
-        - C:\Program Files\Windows Kits\\*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: 4c21b805-4dd7-469f-b47d-7383a8fcb437
-level: high
+references:
+    - https://www.secureworks.com/research/shadowpad-malware-analysis
+author: X__Junior (Nextron Systems)
+date: 2023/03/21
+tags:
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1574.001
+    - attack.t1574.002
 logsource:
     category: image_load
     product: windows
-references:
-- https://www.secureworks.com/research/shadowpad-malware-analysis
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1574.001
-- attack.t1574.002
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ImageLoaded|endswith: \iviewers.dll
+    filter:
+        ImageLoaded|startswith:
+            - C:\Program Files (x86)\Windows Kits\
+            - C:\Program Files\Windows Kits\
+    condition: image_load and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,53 +1,48 @@
 title: Non-privileged Usage of Reg or Powershell
-ruletype: Sigma
-author: Teymur Kheirkhabarov (idea), Ryan Plas (rule), oscd.community
-date: 2020/10/05
+id: 8f02c935-effe-45b3-8fc9-ef8696a9e41d
+status: test
 description: Search for usage of reg or Powershell by non-privileged users to modify
     service configuration in registry
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*reg *'
-    SELECTION_4:
-        CommandLine: '*add*'
-    SELECTION_5:
-        CommandLine:
-        - '*powershell*'
-        - '*set-itemproperty*'
-        - '* sp *'
-        - '*new-itemproperty*'
-    SELECTION_6:
-        IntegrityLevel: Medium
-    SELECTION_7:
-        CommandLine: '*ControlSet*'
-    SELECTION_8:
-        CommandLine: '*Services*'
-    SELECTION_9:
-        CommandLine:
-        - '*ImagePath*'
-        - '*FailureCommand*'
-        - '*ServiceDLL*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        SELECTION_5) and (SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9))
-falsepositives:
-- Unknown
-fields:
-- EventID
-- IntegrityLevel
-- CommandLine
-id: 8f02c935-effe-45b3-8fc9-ef8696a9e41d
-level: high
+references:
+    - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-20-638.jpg
+author: Teymur Kheirkhabarov (idea), Ryan Plas (rule), oscd.community
+date: 2020/10/05
+modified: 2022/07/07
+tags:
+    - attack.defense_evasion
+    - attack.t1112
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/07
-references:
-- https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-20-638.jpg
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1112
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    reg:
+        CommandLine|contains|all:
+            - 'reg '
+            - add
+    powershell:
+        CommandLine|contains:
+            - powershell
+            - set-itemproperty
+            - ' sp '
+            - new-itemproperty
+    select_data:
+        IntegrityLevel: Medium
+        CommandLine|contains|all:
+            - ControlSet
+            - Services
+        CommandLine|contains:
+            - ImagePath
+            - FailureCommand
+            - ServiceDLL
+    condition: process_creation and ((reg or powershell) and select_data)
+fields:
+    - EventID
+    - IntegrityLevel
+    - CommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

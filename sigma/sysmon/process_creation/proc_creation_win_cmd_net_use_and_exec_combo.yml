@@ -1,47 +1,42 @@
 title: Suspicious File Execution From Internet Hosted WebDav Share
-ruletype: Sigma
-author: pH-T (Nextron Systems)
-date: 2022/09/01
+id: f0507c0f-a3a2-40f5-acc6-7f543c334993
+status: experimental
 description: Detects the execution of the "net use" command to mount a WebDAV server
     and then immediately execute some content in it. As seen being used in malicious
     LNK files
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\cmd.exe*'
-    SELECTION_4:
-        OriginalFileName: Cmd.EXE
-    SELECTION_5:
-        CommandLine: '* net use http*'
-    SELECTION_6:
-        CommandLine: '*& start /b *'
-    SELECTION_7:
-        CommandLine: '*\DavWWWRoot\\*'
-    SELECTION_8:
-        CommandLine:
-        - '*.exe *'
-        - '*.dll *'
-        - '*.bat *'
-        - '*.vbs *'
-        - '*.ps1 *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7) and SELECTION_8)
-falsepositives:
-- Unknown
-id: f0507c0f-a3a2-40f5-acc6-7f543c334993
-level: high
+references:
+    - https://twitter.com/ShadowChasing1/status/1552595370961944576
+    - https://www.virustotal.com/gui/file/a63376ee1dba76361df73338928e528ca5b20171ea74c24581605366dcaa0104/behavior
+author: pH-T (Nextron Systems)
+date: 2022/09/01
+modified: 2023/02/21
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
-references:
-- https://twitter.com/ShadowChasing1/status/1552595370961944576
-- https://www.virustotal.com/gui/file/a63376ee1dba76361df73338928e528ca5b20171ea74c24581605366dcaa0104/behavior
-status: experimental
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|contains: \cmd.exe
+        -   OriginalFileName: Cmd.EXE
+    selection_base:
+        CommandLine|contains|all:
+            - ' net use http'
+            - '& start /b '
+            - \DavWWWRoot\
+    selection_ext:
+        CommandLine|contains:
+            - '.exe '
+            - '.dll '
+            - '.bat '
+            - '.vbs '
+            - '.ps1 '
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,49 +1,44 @@
 title: Potential Binary Or Script Dropper Via PowerShell.EXE
-ruletype: Sigma
+id: 7047d730-036f-4f40-b9d8-1c63e36d5e62
+status: experimental
+description: Detects PowerShell creating a binary executable or script file.
+references:
+    - https://www.zscaler.com/blogs/security-research/onenote-growing-threat-malware-distribution
 author: frack113
 date: 2023/03/17
-description: Detects PowerShell creating a binary executable or script file.
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        TargetFilename:
-        - '*.bat'
-        - '*.com'
-        - '*.dll'
-        - '*.exe'
-        - '*.ocx'
-        - '*.ps1'
-        - '*.scr'
-        - '*.sys'
-        - '*.vbs'
-    SELECTION_5:
-        TargetFilename: '*__PSScriptPolicyTest_*'
-    SELECTION_6:
-        TargetFilename: C:\Users\\*
-    SELECTION_7:
-        TargetFilename: '*\AppData\Local\Temp\\*'
-    SELECTION_8:
-        TargetFilename: C:\Windows\Temp\\*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8)))
-falsepositives:
-- Depending on your environment accepted applications may leverage this at times.
-    It is recommended to search for anomalies inidicative of malware.
-id: 7047d730-036f-4f40-b9d8-1c63e36d5e62
-level: medium
-logsource:
-    category: file_event
-    product: windows
-references:
-- https://www.zscaler.com/blogs/security-research/onenote-growing-threat-malware-distribution
-status: experimental
 tags:
-- attack.persistence
-
+    - attack.persistence
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+        TargetFilename|endswith:
+            - .bat
+            - .com
+            - .dll
+            - .exe
+            - .ocx
+            - .ps1
+            - .scr
+            - .sys
+            - .vbs
+    filter_psscriptpolicytest:
+        TargetFilename|contains: __PSScriptPolicyTest_
+    filter_appdata:
+        TargetFilename|startswith: C:\Users\
+        TargetFilename|contains: \AppData\Local\Temp\
+    filter_windows_temp:
+        TargetFilename|startswith: C:\Windows\Temp\
+    condition: file_event and (selection and not 1 of filter_*)
+falsepositives:
+    - Depending on your environment accepted applications may leverage this at times.
+        It is recommended to search for anomalies inidicative of malware.
+level: medium
+ruletype: Sigma

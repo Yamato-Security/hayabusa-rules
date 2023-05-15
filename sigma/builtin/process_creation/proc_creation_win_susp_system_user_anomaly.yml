@@ -1,103 +1,91 @@
 title: Suspicious SYSTEM User Process Creation
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), David ANDRE (additional keywords)
-date: 2021/12/20
+id: 2617e7ed-adb7-40ba-b0f3-8f9945fe6c09
+status: test
 description: Detects a suspicious process creation as SYSTEM user (suspicious program
     or command line parameter)
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        ParentProcessName: C:\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\\*
-    SELECTION_11:
-        ParentProcessName: C:\Program Files (x86)\Java\\*
-    SELECTION_12:
-        ParentProcessName: '*\bin\javaws.exe'
-    SELECTION_13:
-        NewProcessName: C:\Program Files (x86)\Java\\*
-    SELECTION_14:
-        NewProcessName: '*\bin\jp2launcher.exe'
-    SELECTION_15:
-        CommandLine: '* -ma *'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        IntegrityLevel: System
-    SELECTION_4:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    SELECTION_5:
-        NewProcessName:
-        - '*\calc.exe'
-        - '*\wscript.exe'
-        - '*\cscript.exe'
-        - '*\hh.exe'
-        - '*\mshta.exe'
-        - '*\forfiles.exe'
-        - '*\ping.exe'
-    SELECTION_6:
-        CommandLine:
-        - '* -NoP *'
-        - '* -W Hidden *'
-        - '* -decode *'
-        - '* /decode *'
-        - '* /urlcache *'
-        - '* -urlcache *'
-        - '* -e* JAB*'
-        - '* -e* SUVYI*'
-        - '* -e* SQBFAFgA*'
-        - '* -e* aWV4I*'
-        - '* -e* IAB*'
-        - '* -e* PAA*'
-        - '* -e* aQBlAHgA*'
-        - '*vssadmin delete shadows*'
-        - '*reg SAVE HKLM*'
-        - '* -ma *'
-        - '*Microsoft\Windows\CurrentVersion\Run*'
-        - '*.downloadstring(*'
-        - '*.downloadfile(*'
-        - '* /ticket:*'
-        - '*dpapi::*'
-        - '*event::clear*'
-        - '*event::drop*'
-        - '*id::modify*'
-        - '*kerberos::*'
-        - '*lsadump::*'
-        - '*misc::*'
-        - '*privilege::*'
-        - '*rpc::*'
-        - '*sekurlsa::*'
-        - '*sid::*'
-        - '*token::*'
-        - '*vault::cred*'
-        - '*vault::list*'
-        - '* p::d *'
-        - '*;iex(*'
-        - '*MiniDump*'
-        - '*net user *'
-    SELECTION_7:
-        CommandLine: ping 127.0.0.1 -n 5
-    SELECTION_8:
-        NewProcessName: '*\PING.EXE'
-    SELECTION_9:
-        ParentCommandLine: '*\DismFoDInstall.cmd*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and
-        (SELECTION_5 or SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8 and
-        SELECTION_9) or (SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13
-        and SELECTION_14 and SELECTION_15)))
-falsepositives:
-- Administrative activity
-- Scripts and administrative tools used in the monitored environment
-- Monitoring activity
-id: 2617e7ed-adb7-40ba-b0f3-8f9945fe6c09
-level: high
+references:
+    - Internal Research
+    - https://tools.thehacker.recipes/mimikatz/modules
+author: Florian Roth (Nextron Systems), David ANDRE (additional keywords)
+date: 2021/12/20
+modified: 2023/01/19
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/19
-references:
-- Internal Research
-- https://tools.thehacker.recipes/mimikatz/modules
-status: test
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        IntegrityLevel: System
+        User|contains:
+            - AUTHORI
+            - AUTORI
+    selection_special:
+        -   NewProcessName|endswith:
+                - \calc.exe
+                - \wscript.exe
+                - \cscript.exe
+                - \hh.exe
+                - \mshta.exe
+                - \forfiles.exe
+                - \ping.exe
+        -   CommandLine|contains:
+                - ' -NoP '
+                - ' -W Hidden '
+                - ' -decode '
+                - ' /decode '
+                - ' /urlcache '
+                - ' -urlcache '
+                - ' -e* JAB'
+                - ' -e* SUVYI'
+                - ' -e* SQBFAFgA'
+                - ' -e* aWV4I'
+                - ' -e* IAB'
+                - ' -e* PAA'
+                - ' -e* aQBlAHgA'
+                - vssadmin delete shadows
+                - reg SAVE HKLM
+                - ' -ma '
+                - Microsoft\Windows\CurrentVersion\Run
+                - .downloadstring(
+                - .downloadfile(
+                - ' /ticket:'
+                - 'dpapi::'
+                - event::clear
+                - event::drop
+                - id::modify
+                - 'kerberos::'
+                - 'lsadump::'
+                - 'misc::'
+                - 'privilege::'
+                - 'rpc::'
+                - 'sekurlsa::'
+                - 'sid::'
+                - 'token::'
+                - vault::cred
+                - vault::list
+                - ' p::d '
+                - ;iex(
+                - MiniDump
+                - 'net user '
+    filter_ping:
+        CommandLine: ping 127.0.0.1 -n 5
+    filter_vs:
+        ParentCommandLine|contains: \DismFoDInstall.cmd
+        NewProcessName|endswith: \PING.EXE
+    filter_config_mgr:
+        ParentProcessName|startswith: C:\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\
+    filter_java:
+        CommandLine|contains: ' -ma '
+        ParentProcessName|startswith: C:\Program Files (x86)\Java\
+        ParentProcessName|endswith: \bin\javaws.exe
+        NewProcessName|startswith: C:\Program Files (x86)\Java\
+        NewProcessName|endswith: \bin\jp2launcher.exe
+    condition: process_creation and (all of selection* and not 1 of filter_*)
+falsepositives:
+    - Administrative activity
+    - Scripts and administrative tools used in the monitored environment
+    - Monitoring activity
+level: high
+ruletype: Sigma

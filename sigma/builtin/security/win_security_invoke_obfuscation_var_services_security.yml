@@ -1,44 +1,39 @@
 title: Invoke-Obfuscation VAR+ Launcher - Security
-ruletype: Sigma
+id: dcf2db1f-f091-425b-a821-c05875b8925a
+related:
+    -   id: 8ca7004b-e620-4ecb-870e-86129b5b8e75
+        type: derived
+status: experimental
+description: Detects Obfuscated use of Environment Variables to execute PowerShell
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Jonathan Cheong, oscd.community
 date: 2020/10/15
-description: Detects Obfuscated use of Environment Variables to execute PowerShell
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4697
-    SELECTION_3:
-        ServiceFileName: '*cmd*'
-    SELECTION_4:
-        ServiceFileName: '*"set*'
-    SELECTION_5:
-        ServiceFileName: '*-f*'
-    SELECTION_6:
-        ServiceFileName:
-        - '*/c*'
-        - '*/r*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: dcf2db1f-f091-425b-a821-c05875b8925a
-level: high
+modified: 2022/11/29
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
-    definition: The 'System Security Extension' audit subcategory need to be enabled
-        to log the EID 4697
     product: windows
     service: security
-modified: 2022/11/29
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-related:
--   id: 8ca7004b-e620-4ecb-870e-86129b5b8e75
-    type: derived
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+    definition: The 'System Security Extension' audit subcategory need to be enabled
+        to log the EID 4697
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 4697
+        ServiceFileName|contains|all:
+            - cmd
+            - '"set'
+            - -f
+        ServiceFileName|contains:
+            - /c
+            - /r
+    condition: security and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

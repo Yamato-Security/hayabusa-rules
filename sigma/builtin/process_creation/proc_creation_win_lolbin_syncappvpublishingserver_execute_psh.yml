@@ -1,42 +1,38 @@
 title: SyncAppvPublishingServer Execute Arbitrary PowerShell Code
-ruletype: Sigma
+id: fbd7c32d-db2a-4418-b92c-566eb8911133
+related:
+    -   id: fde7929d-8beb-4a4c-b922-be9974671667
+        type: obsoletes
+status: experimental
+description: Executes arbitrary PowerShell code using SyncAppvPublishingServer.exe.
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md
+    - https://lolbas-project.github.io/lolbas/Binaries/Syncappvpublishingserver/
 author: frack113
 date: 2021/07/12
-description: Executes arbitrary PowerShell code using SyncAppvPublishingServer.exe.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\SyncAppvPublishingServer.exe'
-    SELECTION_4:
-        OriginalFileName: syncappvpublishingserver.exe
-    SELECTION_5:
-        CommandLine: '*"n; *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- App-V clients
-fields:
-- ComputerName
-- User
-- CommandLine
-- ParentCommandLine
-id: fbd7c32d-db2a-4418-b92c-566eb8911133
-level: medium
+modified: 2022/10/04
+tags:
+    - attack.defense_evasion
+    - attack.t1218
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/04
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md
-- https://lolbas-project.github.io/lolbas/Binaries/Syncappvpublishingserver/
-related:
--   id: fde7929d-8beb-4a4c-b922-be9974671667
-    type: obsoletes
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1218
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \SyncAppvPublishingServer.exe
+        -   OriginalFileName: syncappvpublishingserver.exe
+    selection_cli:
+        CommandLine|contains: '"n; '
+    condition: process_creation and (all of selection_*)
+fields:
+    - ComputerName
+    - User
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - App-V clients
+level: medium
+ruletype: Sigma

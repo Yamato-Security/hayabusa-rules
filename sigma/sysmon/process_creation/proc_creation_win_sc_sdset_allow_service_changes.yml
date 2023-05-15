@@ -1,48 +1,44 @@
 title: Allow Service Access Using Security Descriptor Tampering Via Sc.EXE
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/02/28
+id: 6c8fbee5-dee8-49bc-851d-c3142d02aa47
+related:
+    -   id: a537cfc3-4297-4789-92b5-345bfd845ad0
+        type: similar
+status: experimental
 description: Detects suspicious DACL modifications to allow access to a service from
     a suspicious trustee. This can be used to override access restrictions set by
     previous ACLs.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\sc.exe'
-    SELECTION_4:
-        OriginalFileName: sc.exe
-    SELECTION_5:
-        CommandLine: '*sdset*'
-    SELECTION_6:
-        CommandLine: '*A;*'
-    SELECTION_7:
-        CommandLine:
-        - '*;IU*'
-        - '*;SU*'
-        - '*;BA*'
-        - '*;SY*'
-        - '*;WD*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6) and SELECTION_7)
-falsepositives:
-- Unknown
-id: 6c8fbee5-dee8-49bc-851d-c3142d02aa47
-level: high
+references:
+    - https://twitter.com/0gtweet/status/1628720819537936386
+    - https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/
+    - https://learn.microsoft.com/en-us/windows/win32/secauthz/sid-strings
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/28
+tags:
+    - attack.persistence
+    - attack.t1543.003
 logsource:
     category: process_creation
     product: windows
-references:
-- https://twitter.com/0gtweet/status/1628720819537936386
-- https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/
-- https://learn.microsoft.com/en-us/windows/win32/secauthz/sid-strings
-related:
--   id: a537cfc3-4297-4789-92b5-345bfd845ad0
-    type: similar
-status: experimental
-tags:
-- attack.persistence
-- attack.t1543.003
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_sc:
+        -   Image|endswith: \sc.exe
+        -   OriginalFileName: sc.exe
+    selection_sdset:
+        CommandLine|contains|all:
+            - sdset
+            - A;
+    selection_trustee:
+        CommandLine|contains:
+            - ;IU
+            - ;SU
+            - ;BA
+            - ;SY
+            - ;WD
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

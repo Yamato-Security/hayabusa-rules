@@ -1,46 +1,41 @@
 title: Suspicious File Characteristics Due to Missing Fields
-ruletype: Sigma
-author: Markus Neis, Sander Wiebing
-date: 2018/11/22
+id: 9637e8a5-7131-4f7f-bdc7-2b05d8670c43
+status: test
 description: Detects Executables in the Downloads folder without FileVersion,Description,Product,Company
     likely created with py2exe
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        Description: \?
-    SELECTION_4:
-        FileVersion: \?
-    SELECTION_5:
-        Description: \?
-    SELECTION_6:
-        Product: \?
-    SELECTION_7:
-        Description: \?
-    SELECTION_8:
-        Company: \?
-    SELECTION_9:
-        NewProcessName: '*\Downloads\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 and SELECTION_4)
-        or (SELECTION_5 and SELECTION_6)) or (SELECTION_7 and SELECTION_8)) and SELECTION_9)
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-- ParentCommandLine
-id: 9637e8a5-7131-4f7f-bdc7-2b05d8670c43
-level: medium
-logsource:
-    category: process_creation
-    product: windows
-modified: 2022/10/09
 references:
-- https://securelist.com/muddywater/88059/
-- https://www.virustotal.com/#/file/276a765a10f98cda1a38d3a31e7483585ca3722ecad19d784441293acf1b7beb/detection
-status: test
+    - https://securelist.com/muddywater/88059/
+    - https://www.virustotal.com/#/file/276a765a10f98cda1a38d3a31e7483585ca3722ecad19d784441293acf1b7beb/detection
+author: Markus Neis, Sander Wiebing
+date: 2018/11/22
+modified: 2022/10/09
 tags:
-- attack.execution
-- attack.t1059.006
-
+    - attack.execution
+    - attack.t1059.006
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection1:
+        Description: \?
+        FileVersion: \?
+    selection2:
+        Description: \?
+        Product: \?
+    selection3:
+        Description: \?
+        Company: \?
+    folder:
+        NewProcessName|contains: \Downloads\
+    condition: process_creation and ((selection1 or selection2 or selection3) and
+        folder)
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

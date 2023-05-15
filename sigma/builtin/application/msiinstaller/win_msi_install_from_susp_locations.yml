@@ -1,42 +1,38 @@
 title: MSI Installation From Suspicious Locations
-ruletype: Sigma
+id: c7c8aa1c-5aff-408e-828b-998e3620b341
+status: experimental
+description: Detects MSI package installation from suspicious locations
+references:
+    - https://www.trendmicro.com/en_us/research/22/h/ransomware-actor-abuses-genshin-impact-anti-cheat-driver-to-kill-antivirus.html
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/31
-description: Detects MSI package installation from suspicious locations
-detection:
-    SELECTION_1:
-        Channel: Application
-    SELECTION_2:
-        Provider_Name: MsiInstaller
-    SELECTION_3:
-        EventID: 1040
-    SELECTION_4:
-        EventID: 1042
-    SELECTION_5:
-        Data:
-        - '*\Users\Public\\*'
-        - '*\PerfLogs\\*'
-        - '*\Desktop\\*'
-        - '*C:\Windows\TEMP\\*'
-        - '*\\\\\*'
-    SELECTION_6:
-        Data: '*\AppData\Local\Temp\WinGet\\*'
-    SELECTION_7:
-        Data: '*C:\Windows\TEMP\UpdHealthTools.msi*'
-    condition: (SELECTION_1 and (SELECTION_2 and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7)))
-falsepositives:
-- False positives may occur if you allow installation from folders such as the desktop,
-    the public folder or remote shares
-id: c7c8aa1c-5aff-408e-828b-998e3620b341
-level: medium
+modified: 2022/10/18
+tags:
+    - attack.execution
 logsource:
     product: windows
     service: application
-modified: 2022/10/18
-references:
-- https://www.trendmicro.com/en_us/research/22/h/ransomware-actor-abuses-genshin-impact-anti-cheat-driver-to-kill-antivirus.html
-status: experimental
-tags:
-- attack.execution
-
+detection:
+    application:
+        Channel: Application
+    selection:
+        Provider_Name: MsiInstaller
+        EventID:
+            - 1040
+            - 1042
+        Data|contains:
+            - \Users\Public\
+            - \PerfLogs\
+            - \Desktop\
+            - C:\Windows\TEMP\
+            - \\\\
+    filter_winget:
+        Data|contains: \AppData\Local\Temp\WinGet\
+    filter_updhealthtools:
+        Data|contains: C:\Windows\TEMP\UpdHealthTools.msi
+    condition: application and (selection and not 1 of filter_*)
+falsepositives:
+    - False positives may occur if you allow installation from folders such as the
+        desktop, the public folder or remote shares
+level: medium
+ruletype: Sigma

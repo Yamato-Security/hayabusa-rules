@@ -1,41 +1,37 @@
 title: Monitoring Wuauclt.exe For Lolbas Execution Of DLL
-ruletype: Sigma
-author: Sreeman
-date: 2020/10/29
+id: ba1bb0cb-73da-42de-ad3a-de10c643a5d0
+status: experimental
 description: Adversaries can abuse wuauclt.exe (Windows Update client) to run code
     execution by specifying an arbitrary DLL.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*wuauclt.exe*'
-    SELECTION_4:
-        CommandLine: '*/UpdateDeploymentProvider*'
-    SELECTION_5:
-        CommandLine: '*/Runhandlercomserver*'
-    SELECTION_6:
-        CommandLine:
-        - '*wuaueng.dll*'
-        - '*UpdateDeploymentProvider.dll /ClassId*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6))
-falsepositives:
-- Wuaueng.dll which is a module belonging to Microsoft Windows Update.
-fields:
-- CommandLine
-id: ba1bb0cb-73da-42de-ad3a-de10c643a5d0
-level: medium
-logsource:
-    category: process_creation
-    product: windows
-modified: 2022/05/27
 references:
-- https://dtm.uk/wuauclt/
-status: experimental
+    - https://dtm.uk/wuauclt/
+author: Sreeman
+date: 2020/10/29
+modified: 2022/05/27
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains|all:
+            - wuauclt.exe
+            - /UpdateDeploymentProvider
+            - /Runhandlercomserver
+    filter:
+        CommandLine|contains:
+            - wuaueng.dll
+            - UpdateDeploymentProvider.dll /ClassId
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Wuaueng.dll which is a module belonging to Microsoft Windows Update.
+fields:
+    - CommandLine
+level: medium
 tags:
-- attack.defense_evasion
-- attack.execution
-- attack.t1218
-
+    - attack.defense_evasion
+    - attack.execution
+    - attack.t1218
+ruletype: Sigma

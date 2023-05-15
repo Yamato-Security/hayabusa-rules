@@ -1,38 +1,32 @@
 title: Remote Access Tool - ScreenConnect Suspicious Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/02/11
+id: 75bfe6e6-cd8e-429e-91d3-03921e1d7962
+status: test
 description: Detects ScreenConnect program starts that establish a remote access to
     that system (not meeting, not remote support)
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*e=Access&*'
-    SELECTION_4:
-        CommandLine: '*y=Guest&*'
-    SELECTION_5:
-        CommandLine: '*&p=*'
-    SELECTION_6:
-        CommandLine: '*&c=*'
-    SELECTION_7:
-        CommandLine: '*&k=*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Legitimate use by administrative staff
-id: 75bfe6e6-cd8e-429e-91d3-03921e1d7962
-level: high
+references:
+    - https://www.anomali.com/blog/probable-iranian-cyber-actors-static-kitten-conducting-cyberespionage-campaign-targeting-uae-and-kuwait-government-agencies
+author: Florian Roth (Nextron Systems)
+date: 2021/02/11
+modified: 2023/03/05
+tags:
+    - attack.initial_access
+    - attack.t1133
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/05
-references:
-- https://www.anomali.com/blog/probable-iranian-cyber-actors-static-kitten-conducting-cyberespionage-campaign-targeting-uae-and-kuwait-government-agencies
-status: test
-tags:
-- attack.initial_access
-- attack.t1133
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains|all:
+            - e=Access&
+            - y=Guest&
+            - '&p='
+            - '&c='
+            - '&k='
+    condition: process_creation and selection
+falsepositives:
+    - Legitimate use by administrative staff
+level: high
+ruletype: Sigma

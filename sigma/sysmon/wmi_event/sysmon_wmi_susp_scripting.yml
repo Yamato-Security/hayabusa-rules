@@ -1,62 +1,52 @@
 title: Suspicious Scripting in a WMI Consumer
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Jonhnathan Ribeiro
-date: 2019/04/15
+id: fe21810c-2a8c-478f-8dd3-5a287fb2a0e0
+status: experimental
 description: Detects suspicious commands that are related to scripting/powershell
     in WMI Event Consumers
-detection:
-    SELECTION_1:
-        EventID: 19
-    SELECTION_10:
-        Destination: '*.downloadfile*'
-    SELECTION_11:
-        Destination:
-        - '* iex(*'
-        - '*WScript.shell*'
-        - '* -nop *'
-        - '* -noprofile *'
-        - '* -decode *'
-        - '* -enc *'
-    SELECTION_12:
-        Destination:
-        - '*WScript.Shell*'
-        - '*System.Security.Cryptography.FromBase64Transform*'
-    SELECTION_2:
-        EventID: 20
-    SELECTION_3:
-        EventID: 21
-    SELECTION_4:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_5:
-        Destination: '*new-object*'
-    SELECTION_6:
-        Destination: '*net.webclient*'
-    SELECTION_7:
-        Destination: '*.downloadstring*'
-    SELECTION_8:
-        Destination: '*new-object*'
-    SELECTION_9:
-        Destination: '*net.webclient*'
-    condition: (((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4) and
-        ((SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10) or SELECTION_11 or SELECTION_12))
-falsepositives:
-- Legitimate administrative scripts
-fields:
-- User
-- Operation
-id: fe21810c-2a8c-478f-8dd3-5a287fb2a0e0
-level: high
-logsource:
-    category: wmi_event
-    product: windows
-modified: 2022/07/07
 references:
-- https://in.security/an-intro-into-abusing-and-identifying-wmi-event-subscriptions-for-persistence/
-- https://github.com/Neo23x0/signature-base/blob/615bf1f6bac3c1bdc417025c40c073e6c2771a76/yara/gen_susp_lnk_files.yar#L19
-- https://github.com/RiccardoAncarani/LiquidSnake
-status: experimental
+    - https://in.security/an-intro-into-abusing-and-identifying-wmi-event-subscriptions-for-persistence/
+    - https://github.com/Neo23x0/signature-base/blob/615bf1f6bac3c1bdc417025c40c073e6c2771a76/yara/gen_susp_lnk_files.yar#L19
+    - https://github.com/RiccardoAncarani/LiquidSnake
+author: Florian Roth (Nextron Systems), Jonhnathan Ribeiro
+date: 2019/04/15
+modified: 2022/07/07
 tags:
-- attack.execution
-- attack.t1059.005
-
+    - attack.execution
+    - attack.t1059.005
+logsource:
+    product: windows
+    category: wmi_event
+detection:
+    wmi_event:
+        EventID:
+            - 19
+            - 20
+            - 21
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_destination:
+        -   Destination|contains|all:
+                - new-object
+                - net.webclient
+                - .downloadstring
+        -   Destination|contains|all:
+                - new-object
+                - net.webclient
+                - .downloadfile
+        -   Destination|contains:
+                - ' iex('
+                - WScript.shell
+                - ' -nop '
+                - ' -noprofile '
+                - ' -decode '
+                - ' -enc '
+        -   Destination|contains:
+                - WScript.Shell
+                - System.Security.Cryptography.FromBase64Transform
+    condition: wmi_event and selection_destination
+fields:
+    - User
+    - Operation
+falsepositives:
+    - Legitimate administrative scripts
+level: high
+ruletype: Sigma

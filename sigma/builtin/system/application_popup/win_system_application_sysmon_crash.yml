@@ -1,27 +1,24 @@
 title: Sysmon Crash
-ruletype: Sigma
+id: 4d7f1827-1637-4def-8d8a-fd254f9454df
+status: experimental
+description: Detects application popup reporting a failure of the Sysmon service
 author: Tim Shelton
 date: 2022/04/26
-description: Detects application popup reporting a failure of the Sysmon service
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Application Popup
-    SELECTION_3:
-        EventID: 26
-    SELECTION_4:
-        Caption: sysmon64.exe - Application Error
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 4d7f1827-1637-4def-8d8a-fd254f9454df
-level: high
+tags:
+    - attack.defense_evasion
+    - attack.t1562
 logsource:
     product: windows
     service: system
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562
-
+detection:
+    system:
+        Channel: System
+    selection:
+        Provider_Name: Application Popup
+        EventID: 26
+        Caption: sysmon64.exe - Application Error
+    condition: system and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

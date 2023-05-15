@@ -1,34 +1,31 @@
 title: Service Installed By Unusual Client - System
-ruletype: Sigma
-author: Tim Rauch
-date: 2022/09/15
+id: 71c276aa-49cd-43d2-b920-2dcd3e6962d5
+related:
+    -   id: c4e92a97-a9ff-4392-9d2d-7a4c642768ca
+        type: similar
+status: experimental
 description: Detects a service installed by a client which has PID 0 or whose parent
     has PID 0
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Service Control Manager
-    SELECTION_3:
-        EventID: 7045
-    SELECTION_4:
-        ProcessId: 0
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 71c276aa-49cd-43d2-b920-2dcd3e6962d5
-level: high
+references:
+    - https://www.elastic.co/guide/en/security/current/windows-service-installed-via-an-unusual-client.html
+author: Tim Rauch
+date: 2022/09/15
+modified: 2023/01/04
+tags:
+    - attack.privilege_escalation
+    - attack.t1543
 logsource:
     product: windows
     service: system
-modified: 2023/01/04
-references:
-- https://www.elastic.co/guide/en/security/current/windows-service-installed-via-an-unusual-client.html
-related:
--   id: c4e92a97-a9ff-4392-9d2d-7a4c642768ca
-    type: similar
-status: experimental
-tags:
-- attack.privilege_escalation
-- attack.t1543
-
+detection:
+    system:
+        Channel: System
+    selection:
+        Provider_Name: Service Control Manager
+        EventID: 7045
+        ProcessId: 0
+    condition: system and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

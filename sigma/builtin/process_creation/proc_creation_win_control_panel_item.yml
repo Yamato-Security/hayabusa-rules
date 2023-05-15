@@ -1,51 +1,46 @@
 title: Control Panel Items
-ruletype: Sigma
+id: 0ba863e6-def5-4e50-9cea-4dd8c7dc46a4
+status: test
+description: Detects the malicious use of a control panel item
+references:
+    - https://ired.team/offensive-security/code-execution/code-execution-through-control-panel-add-ins
 author: Kyaw Min Thein, Furkan Caliskan (@caliskanfurkan_)
 date: 2020/06/22
-description: Detects the malicious use of a control panel item
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '* /s *'
-    SELECTION_11:
-        CommandLine: '*igfxCPL.cpl*'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\reg.exe'
-    SELECTION_4:
-        OriginalFileName: reg.exe
-    SELECTION_5:
-        CommandLine: '*add*'
-    SELECTION_6:
-        CommandLine: '*CurrentVersion\Control Panel\CPLs*'
-    SELECTION_7:
-        CommandLine: '*.cpl'
-    SELECTION_8:
-        CommandLine:
-        - '*\System32\\*'
-        - '*%System%*'
-    SELECTION_9:
-        CommandLine: '*regsvr32 *'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6)) or (SELECTION_7 and  not ((SELECTION_8) or
-        (SELECTION_9 and SELECTION_10 and SELECTION_11)))))
-falsepositives:
-- Unknown
-id: 0ba863e6-def5-4e50-9cea-4dd8c7dc46a4
-level: high
-logsource:
-    category: process_creation
-    product: windows
 modified: 2022/11/11
-references:
-- https://ired.team/offensive-security/code-execution/code-execution-through-control-panel-add-ins
-status: test
 tags:
-- attack.execution
-- attack.defense_evasion
-- attack.t1218.002
-- attack.persistence
-- attack.t1546
-
+    - attack.execution
+    - attack.defense_evasion
+    - attack.t1218.002
+    - attack.persistence
+    - attack.t1546
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_reg_img:
+        -   NewProcessName|endswith: \reg.exe
+        -   OriginalFileName: reg.exe
+    selection_reg_cli:
+        CommandLine|contains|all:
+            - add
+            - CurrentVersion\Control Panel\CPLs
+    selection_cpl:
+        CommandLine|endswith: .cpl
+    filter_cpl_sys:
+        CommandLine|contains:
+            - \System32\
+            - '%System%'
+    filter_cpl_igfx:
+        CommandLine|contains|all:
+            - 'regsvr32 '
+            - ' /s '
+            - igfxCPL.cpl
+    condition: process_creation and (all of selection_reg_* or (selection_cpl and
+        not 1 of filter_cpl_*))
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

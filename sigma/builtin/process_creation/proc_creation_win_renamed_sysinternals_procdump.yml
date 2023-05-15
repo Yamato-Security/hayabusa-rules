@@ -1,46 +1,44 @@
 title: Renamed ProcDump Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2019/11/18
+id: 4a0b2c7e-7cb2-495d-8b63-5f268e7bfd67
+related:
+    -   id: 03795938-1387-481b-9f4c-3f6241e604fe
+        type: obsoletes
+status: test
 description: Detects the execution of a renamed ProcDump executable often used by
     attackers or malware
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        OriginalFileName: procdump
-    SELECTION_4:
-        CommandLine:
-        - '* -ma *'
-        - '* /ma *'
-    SELECTION_5:
-        CommandLine:
-        - '* -accepteula *'
-        - '* /accepteula *'
-    SELECTION_6:
-        NewProcessName:
-        - '*\procdump.exe'
-        - '*\procdump64.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)) and  not (SELECTION_6))
-falsepositives:
-- Procdump illegaly bundled with legitimate software
-- Administrators who rename binaries (should be investigated)
-id: 4a0b2c7e-7cb2-495d-8b63-5f268e7bfd67
-level: high
-logsource:
-    category: process_creation
-    product: windows
-modified: 2022/12/08
 references:
-- https://docs.microsoft.com/en-us/sysinternals/downloads/procdump
-related:
--   id: 03795938-1387-481b-9f4c-3f6241e604fe
-    type: obsoletes
-status: test
+    - https://docs.microsoft.com/en-us/sysinternals/downloads/procdump
+author: Florian Roth (Nextron Systems)
+date: 2019/11/18
+modified: 2022/12/08
 tags:
-- attack.defense_evasion
-- attack.t1036.003
-
+    - attack.defense_evasion
+    - attack.t1036.003
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_org:
+        OriginalFileName: procdump
+    selection_args_ma:
+        CommandLine|contains:
+            - ' -ma '
+            - ' /ma '
+    selection_args_other:
+        CommandLine|contains:
+            - ' -accepteula '
+            - ' /accepteula '
+    filter:
+        NewProcessName|endswith:
+            - \procdump.exe
+            - \procdump64.exe
+    condition: process_creation and ((selection_org or all of selection_args_*) and
+        not filter)
+falsepositives:
+    - Procdump illegaly bundled with legitimate software
+    - Administrators who rename binaries (should be investigated)
+level: high
+ruletype: Sigma

@@ -1,45 +1,42 @@
 title: Direct Autorun Keys Modification
-ruletype: Sigma
-author: Victor Sergeev, Daniil Yugoslavskiy, oscd.community
-date: 2019/10/25
+id: 24357373-078f-44ed-9ac4-6d334a668a11
+status: test
 description: Detects direct modification of autostart extensibility point (ASEP) in
     registry using reg.exe.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\reg.exe'
-    SELECTION_4:
-        CommandLine: '*add*'
-    SELECTION_5:
-        CommandLine:
-        - '*\software\Microsoft\Windows\CurrentVersion\Run*'
-        - '*\software\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit*'
-        - '*\software\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell*'
-        - '*\software\Microsoft\Windows NT\CurrentVersion\Windows*'
-        - '*\software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders*'
-        - '*\system\CurrentControlSet\Control\SafeBoot\AlternateShell*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Legitimate software automatically (mostly, during installation) sets up autorun
-    keys for legitimate reasons.
-- Legitimate administrator sets up autorun keys for legitimate reasons.
-- Discord
-fields:
-- CommandLine
-- ParentCommandLine
-id: 24357373-078f-44ed-9ac4-6d334a668a11
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
+author: Victor Sergeev, Daniil Yugoslavskiy, oscd.community
+date: 2019/10/25
+modified: 2022/08/04
+tags:
+    - attack.persistence
+    - attack.t1547.001
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/04
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
-status: test
-tags:
-- attack.persistence
-- attack.t1547.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_1:
+        Image|endswith: \reg.exe
+        CommandLine|contains: add
+    selection_2:
+        CommandLine|contains:
+            - \software\Microsoft\Windows\CurrentVersion\Run
+            - \software\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit
+            - \software\Microsoft\Windows NT\CurrentVersion\Winlogon\Shell
+            - \software\Microsoft\Windows NT\CurrentVersion\Windows
+            - \software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders
+            - \system\CurrentControlSet\Control\SafeBoot\AlternateShell
+    condition: process_creation and (all of selection_*)
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Legitimate software automatically (mostly, during installation) sets up autorun
+        keys for legitimate reasons.
+    - Legitimate administrator sets up autorun keys for legitimate reasons.
+    - Discord
+level: medium
+ruletype: Sigma

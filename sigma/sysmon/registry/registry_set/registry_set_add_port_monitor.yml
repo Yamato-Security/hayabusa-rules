@@ -1,7 +1,6 @@
 title: Add Port Monitor Persistence in Registry
-ruletype: Sigma
-author: frack113
-date: 2021/12/30
+id: 944e8941-f6f6-4ee8-ac05-1c224e923c0e
+status: experimental
 description: 'Adversaries may use port monitors to run an attacker supplied DLL during
     system boot for persistence or privilege escalation.
 
@@ -9,51 +8,42 @@ description: 'Adversaries may use port monitors to run an attacker supplied DLL 
     at startup.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_10:
-        TargetObject: '*Control\Print\Monitors\MONVNC\Driver*'
-    SELECTION_11:
-        TargetObject: '*Control\Print\Environments\\*'
-    SELECTION_12:
-        TargetObject: '*\Drivers\\*'
-    SELECTION_13:
-        TargetObject: '*\VNC Printer*'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetObject: HKLM\System\CurrentControlSet\Control\Print\Monitors\\*
-    SELECTION_4:
-        Details: '*.dll'
-    SELECTION_5:
-        EventType: SetValue
-    SELECTION_6:
-        Image: C:\Windows\System32\spoolsv.exe
-    SELECTION_7:
-        TargetObject: '*\System\CurrentControlSet\Control\Print\Monitors\CutePDF Writer
-            Monitor v4.0\Driver*'
-    SELECTION_8:
-        Details: cpwmon64_v40.dll
-    SELECTION_9:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
-        or (SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13)))
-falsepositives:
-- Unknown
-id: 944e8941-f6f6-4ee8-ac05-1c224e923c0e
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.010/T1547.010.md
+author: frack113
+date: 2021/12/30
+modified: 2022/09/18
+tags:
+    - attack.persistence
+    - attack.t1547.010
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/18
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.010/T1547.010.md
-status: experimental
-tags:
-- attack.persistence
-- attack.t1547.010
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetObject|startswith: HKLM\System\CurrentControlSet\Control\Print\Monitors\
+        Details|endswith: .dll
+        EventType: SetValue
+    filter_cutepdf:
+        Image: C:\Windows\System32\spoolsv.exe
+        TargetObject|contains: \System\CurrentControlSet\Control\Print\Monitors\CutePDF
+            Writer Monitor v4.0\Driver
+        Details: cpwmon64_v40.dll
+        User|contains:
+            - AUTHORI
+            - AUTORI
+    filter_leg1:
+        TargetObject|contains: Control\Print\Monitors\MONVNC\Driver
+    filter_leg2:
+        TargetObject|contains|all:
+            - Control\Print\Environments\
+            - \Drivers\
+            - \VNC Printer
+    condition: registry_set and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

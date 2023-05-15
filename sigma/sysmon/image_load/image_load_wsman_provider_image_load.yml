@@ -1,82 +1,75 @@
 title: Suspicious WSMAN Provider Image Loads
-ruletype: Sigma
-author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
-date: 2020/06/24
+id: ad1f4bb9-8dfb-4765-adb6-2a7cfb6c0f94
+status: experimental
 description: Detects signs of potential use of the WSMAN provider from uncommon processes
     locally and remote execution.
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_10:
-        Image: '*\mscorsvw.exe'
-    SELECTION_11:
-        Image:
-        - C:\Windows\System32\Configure-SMRemoting.exe
-        - C:\Windows\System32\ServerManager.exe
-    SELECTION_12:
-        Image: C:\Windows\Temp\asgard2-agent\\*
-    SELECTION_13:
-        Image: C:\Program Files\Citrix\\*
-    SELECTION_14:
-        Image: '*\powershell_ise.exe'
-    SELECTION_15:
-        Image: C:\$WINDOWS.~BT\Sources\\*
-    SELECTION_16:
-        Image: '*\svchost.exe'
-    SELECTION_17:
-        CommandLine: null
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ImageLoaded:
-        - '*\WsmSvc.dll'
-        - '*\WsmAuto.dll'
-        - '*\Microsoft.WSMan.Management.ni.dll'
-    SELECTION_4:
-        OriginalFileName:
-        - WsmSvc.dll
-        - WSMANAUTOMATION.DLL
-        - Microsoft.WSMan.Management.dll
-    SELECTION_5:
-        Image: '*\svchost.exe'
-    SELECTION_6:
-        OriginalFileName: WsmWmiPl.dll
-    SELECTION_7:
-        Image:
-        - '*\powershell.exe'
-        - '*C:\Windows\System32\sdiagnhost.exe'
-        - '*C:\Windows\System32\services.exe'
-    SELECTION_8:
-        CommandLine:
-        - '*svchost.exe -k netsvcs -p -s BITS*'
-        - '*svchost.exe -k GraphicsPerfSvcGroup -s GraphicsPerfSvc*'
-        - '*svchost.exe -k NetworkService -p -s Wecsvc*'
-        - '*svchost.exe -k netsvcs*'
-    SELECTION_9:
-        Image:
-        - C:\Windows\Microsoft.NET\Framework64\v*
-        - C:\Windows\Microsoft.NET\Framework\v*
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) or
-        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7) or (SELECTION_8) or
-        (SELECTION_9 and SELECTION_10) or (SELECTION_11) or (SELECTION_12) or (SELECTION_13)
-        or (SELECTION_14) or (SELECTION_15))) and  not ((SELECTION_16 and SELECTION_17)))
-falsepositives:
-- Unknown
-id: ad1f4bb9-8dfb-4765-adb6-2a7cfb6c0f94
-level: medium
+references:
+    - https://twitter.com/chadtilbury/status/1275851297770610688
+    - https://bohops.com/2020/05/12/ws-management-com-another-approach-for-winrm-lateral-movement/
+    - https://docs.microsoft.com/en-us/windows/win32/winrm/windows-remote-management-architecture
+    - https://github.com/bohops/WSMan-WinRM
+author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+date: 2020/06/24
+modified: 2022/10/07
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - attack.lateral_movement
+    - attack.t1021.003
 logsource:
     category: image_load
     product: windows
-modified: 2022/10/07
-references:
-- https://twitter.com/chadtilbury/status/1275851297770610688
-- https://bohops.com/2020/05/12/ws-management-com-another-approach-for-winrm-lateral-movement/
-- https://docs.microsoft.com/en-us/windows/win32/winrm/windows-remote-management-architecture
-- https://github.com/bohops/WSMan-WinRM
-status: experimental
-tags:
-- attack.execution
-- attack.t1059.001
-- attack.lateral_movement
-- attack.t1021.003
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    request_client:
+        -   ImageLoaded|endswith:
+                - \WsmSvc.dll
+                - \WsmAuto.dll
+                - \Microsoft.WSMan.Management.ni.dll
+        -   OriginalFileName:
+                - WsmSvc.dll
+                - WSMANAUTOMATION.DLL
+                - Microsoft.WSMan.Management.dll
+    respond_server:
+        Image|endswith: \svchost.exe
+        OriginalFileName: WsmWmiPl.dll
+    filter_general:
+        Image|endswith:
+            - \powershell.exe
+            - C:\Windows\System32\sdiagnhost.exe
+            - C:\Windows\System32\services.exe
+    filter_svchost:
+        CommandLine|contains:
+            - svchost.exe -k netsvcs -p -s BITS
+            - svchost.exe -k GraphicsPerfSvcGroup -s GraphicsPerfSvc
+            - svchost.exe -k NetworkService -p -s Wecsvc
+            - svchost.exe -k netsvcs
+    filter_mscorsvw:
+        Image|startswith:
+            - C:\Windows\Microsoft.NET\Framework64\v
+            - C:\Windows\Microsoft.NET\Framework\v
+        Image|endswith: \mscorsvw.exe
+    filter_svr_2019:
+        Image:
+            - C:\Windows\System32\Configure-SMRemoting.exe
+            - C:\Windows\System32\ServerManager.exe
+    filter_nextron:
+        Image|startswith: C:\Windows\Temp\asgard2-agent\
+    filter_citrix:
+        Image|startswith: C:\Program Files\Citrix\
+    filter_ps_ise:
+        Image|endswith: \powershell_ise.exe
+    filter_upgrade:
+        Image|startswith: C:\$WINDOWS.~BT\Sources\
+    svchost:
+        Image|endswith: \svchost.exe
+    commandline_null:
+        CommandLine: null
+    condition: image_load and (( request_client or respond_server ) and not 1 of filter*
+        and not ( svchost and commandline_null ))
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

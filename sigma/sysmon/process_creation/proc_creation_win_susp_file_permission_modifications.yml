@@ -1,64 +1,57 @@
 title: File or Folder Permissions Modifications
-ruletype: Sigma
+id: 37ae075c-271b-459b-8d7b-55ad5f993dd8
+status: test
+description: Detects a file or folder's permissions being modified or tampered with.
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.001/T1222.001.md
+    - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh750728(v=ws.11)
+    - https://github.com/swagkarna/Defeat-Defender-V1.2.0
 author: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali
 date: 2019/10/23
-description: Detects a file or folder's permissions being modified or tampered with.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        CommandLine: '*S-1-5-19:F*'
-    SELECTION_11:
-        CommandLine: '*\AppData\Local\Programs\Microsoft VS Code*'
-    SELECTION_12:
-        ParentImage: '*\Microsoft VS Code\Code.exe'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\cacls.exe'
-        - '*\icacls.exe'
-        - '*\net.exe'
-        - '*\net1.exe'
-    SELECTION_4:
-        CommandLine:
-        - '*/grant*'
-        - '*/setowner*'
-        - '*/inheritance:r*'
-    SELECTION_5:
-        Image: '*\attrib.exe'
-    SELECTION_6:
-        CommandLine: '*-r*'
-    SELECTION_7:
-        Image: '*\takeown.exe'
-    SELECTION_8:
-        CommandLine: '*ICACLS C:\ProgramData\dynatrace\gateway\config\connectivity.history
-            /reset'
-    SELECTION_9:
-        CommandLine: '*ICACLS C:\ProgramData\dynatrace\gateway\config\config.properties
-            /grant :r *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6) or SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 or SELECTION_12)))
-falsepositives:
-- Users interacting with the files on their own (unlikely unless privileged users).
-- Dynatrace app
-fields:
-- ComputerName
-- User
-- CommandLine
-id: 37ae075c-271b-459b-8d7b-55ad5f993dd8
-level: medium
+modified: 2022/11/18
+tags:
+    - attack.defense_evasion
+    - attack.t1222.001
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/18
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1222.001/T1222.001.md
-- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/hh750728(v=ws.11)
-- https://github.com/swagkarna/Defeat-Defender-V1.2.0
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1222.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection1:
+        Image|endswith:
+            - \cacls.exe
+            - \icacls.exe
+            - \net.exe
+            - \net1.exe
+        CommandLine|contains:
+            - /grant
+            - /setowner
+            - /inheritance:r
+    selection2:
+        Image|endswith: \attrib.exe
+        CommandLine|contains: -r
+    selection3:
+        Image|endswith: \takeown.exe
+    filter_reset:
+        CommandLine|endswith: ICACLS C:\ProgramData\dynatrace\gateway\config\connectivity.history
+            /reset
+    filter_grant:
+        CommandLine|contains|all:
+            - 'ICACLS C:\ProgramData\dynatrace\gateway\config\config.properties /grant
+                :r '
+            - S-1-5-19:F
+    filter_programs:
+        -   CommandLine|contains: \AppData\Local\Programs\Microsoft VS Code
+        -   ParentImage|endswith: \Microsoft VS Code\Code.exe
+    condition: process_creation and (1 of selection* and not 1 of filter*)
+fields:
+    - ComputerName
+    - User
+    - CommandLine
+falsepositives:
+    - Users interacting with the files on their own (unlikely unless privileged users).
+    - Dynatrace app
+level: medium
+ruletype: Sigma

@@ -1,31 +1,30 @@
 title: VSSAudit Security Event Source Registration
-ruletype: Sigma
-author: Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)
-date: 2020/10/20
+id: e9faba72-4974-4ab2-a4c5-46e25ad59e9b
+status: experimental
 description: Detects the registration of the security event source VSSAudit. It would
     usually trigger when volume shadow copy operations happen.
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        AuditSourceName: VSSAudit
-    SELECTION_3:
-        EventID: 4904
-    SELECTION_4:
-        EventID: 4905
-    condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Legitimate use of VSSVC. Maybe backup operations. It would usually be done by C:\Windows\System32\VSSVC.exe.
-id: e9faba72-4974-4ab2-a4c5-46e25ad59e9b
-level: informational
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md#atomic-test-3---esentutlexe-sam-copy
+author: Roberto Rodriguez @Cyb3rWard0g, Open Threat Research (OTR)
+date: 2020/10/20
+modified: 2022/04/28
+tags:
+    - attack.credential_access
+    - attack.t1003.002
 logsource:
     product: windows
     service: security
-modified: 2022/04/28
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1003.002/T1003.002.md#atomic-test-3---esentutlexe-sam-copy
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1003.002
-
+detection:
+    security:
+        Channel: Security
+    selection:
+        AuditSourceName: VSSAudit
+        EventID:
+            - 4904
+            - 4905
+    condition: security and selection
+falsepositives:
+    - Legitimate use of VSSVC. Maybe backup operations. It would usually be done by
+        C:\Windows\System32\VSSVC.exe.
+level: informational
+ruletype: Sigma

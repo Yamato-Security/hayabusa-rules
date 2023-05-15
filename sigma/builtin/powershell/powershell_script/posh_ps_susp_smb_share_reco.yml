@@ -1,7 +1,6 @@
 title: Suspicious Get Information for SMB Share
-ruletype: Sigma
-author: frack113
-date: 2021/12/15
+id: 95f0643a-ed40-467c-806b-aac9542ec5ab
+status: test
 description: 'Adversaries may look for folders and drives shared on remote systems
     as a means of identifying sources of information to gather as
 
@@ -12,29 +11,28 @@ description: 'Adversaries may look for folders and drives shared on remote syste
     access file directories on various systems across a network.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*get-smbshare*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: 95f0643a-ed40-467c-806b-aac9542ec5ab
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.002/T1069.002.md
+author: frack113
+date: 2021/12/15
+modified: 2022/12/25
+tags:
+    - attack.discovery
+    - attack.t1069.001
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2022/12/25
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.002/T1069.002.md
-status: test
-tags:
-- attack.discovery
-- attack.t1069.001
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains: get-smbshare
+    condition: ps_script and selection
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

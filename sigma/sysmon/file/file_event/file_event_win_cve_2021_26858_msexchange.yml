@@ -1,42 +1,40 @@
 title: CVE-2021-26858 Exchange Exploitation
-ruletype: Sigma
-author: Bhabesh Raj
-date: 2021/03/03
+id: b06335b3-55ac-4b41-937e-16b7f5d57dfd
+status: test
 description: "Detects possible successful exploitation for vulnerability described\
     \ in CVE-2021-26858 by looking for \ncreation of non-standard files on disk by\
     \ Exchange Server\u2019s Unified Messaging service\nwhich could indicate dropping\
     \ web shells or other malicious content\n"
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*UMWorkerProcess.exe'
-    SELECTION_4:
-        TargetFilename:
-        - '*CacheCleanup.bin'
-        - '*.txt'
-        - '*.LOG'
-        - '*.cfg'
-        - '*cleanup.bin'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-fields:
-- ComputerName
-- TargetFilename
-id: b06335b3-55ac-4b41-937e-16b7f5d57dfd
-level: high
+references:
+    - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
+author: Bhabesh Raj
+date: 2021/03/03
+modified: 2022/10/09
+tags:
+    - attack.t1203
+    - attack.execution
+    - cve.2021.26858
 logsource:
     category: file_event
     product: windows
-modified: 2022/10/09
-references:
-- https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
-status: test
-tags:
-- attack.t1203
-- attack.execution
-- cve.2021.26858
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: UMWorkerProcess.exe
+    filter:
+        TargetFilename|endswith:
+            - CacheCleanup.bin
+            - .txt
+            - .LOG
+            - .cfg
+            - cleanup.bin
+    condition: file_event and (selection and not filter)
+fields:
+    - ComputerName
+    - TargetFilename
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

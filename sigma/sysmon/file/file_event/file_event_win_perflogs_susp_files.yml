@@ -1,47 +1,44 @@
 title: Suspicious File Created In PerfLogs
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/05/05
+id: bbb7e38c-0b41-4a11-b306-d2a457b7ac2b
+status: experimental
 description: Detects suspicious file based on their extension being created in "C:\PerfLogs\".
     Note that this directory mostly contains ".etl" files
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: C:\PerfLogs\\*
-    SELECTION_4:
-        TargetFilename:
-        - '*.7z'
-        - '*.bat'
-        - '*.bin'
-        - '*.chm'
-        - '*.dll'
-        - '*.exe'
-        - '*.hta'
-        - '*.lnk'
-        - '*.ps1'
-        - '*.psm1'
-        - '*.py'
-        - '*.scr'
-        - '*.sys'
-        - '*.vbe'
-        - '*.vbs'
-        - '*.zip'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unlikely
-id: bbb7e38c-0b41-4a11-b306-d2a457b7ac2b
-level: medium
+references:
+    - Internal Research
+    - https://labs.withsecure.com/publications/fin7-target-veeam-servers
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/05/05
+tags:
+    - attack.execution
+    - attack.t1059
 logsource:
     category: file_event
     product: windows
-references:
-- Internal Research
-- https://labs.withsecure.com/publications/fin7-target-veeam-servers
-status: experimental
-tags:
-- attack.execution
-- attack.t1059
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|startswith: C:\PerfLogs\
+        TargetFilename|endswith:
+            - .7z
+            - .bat
+            - .bin
+            - .chm
+            - .dll
+            - .exe
+            - .hta
+            - .lnk
+            - .ps1
+            - .psm1
+            - .py
+            - .scr
+            - .sys
+            - .vbe
+            - .vbs
+            - .zip
+    condition: file_event and selection
+falsepositives:
+    - Unlikely
+level: medium
+ruletype: Sigma

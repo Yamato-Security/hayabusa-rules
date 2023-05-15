@@ -1,31 +1,29 @@
 title: Base64 Encoded PowerShell Command Detected
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2020/01/29
+id: e32d4572-9826-4738-b651-95fa63747e8a
+status: test
 description: Detects usage of the "FromBase64String" function in the commandline which
     is used to decode a base64 encoded string
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*::FromBase64String(*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Administrative script libraries
-id: e32d4572-9826-4738-b651-95fa63747e8a
-level: high
+references:
+    - https://gist.github.com/Neo23x0/6af876ee72b51676c82a2db8d2cd3639
+author: Florian Roth (Nextron Systems)
+date: 2020/01/29
+modified: 2023/01/26
+tags:
+    - attack.t1027
+    - attack.defense_evasion
+    - attack.t1140
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/26
-references:
-- https://gist.github.com/Neo23x0/6af876ee72b51676c82a2db8d2cd3639
-status: test
-tags:
-- attack.t1027
-- attack.defense_evasion
-- attack.t1140
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains: ::FromBase64String(
+    condition: process_creation and selection
+falsepositives:
+    - Administrative script libraries
+level: high
+ruletype: Sigma

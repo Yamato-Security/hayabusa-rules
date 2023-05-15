@@ -1,40 +1,32 @@
 title: Add Debugger Entry To AeDebug For Persistence
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/21
+id: 092af964-4233-4373-b4ba-d86ea2890288
+status: experimental
 description: Detects when an attacker adds a new "Debugger" value to the "AeDebug"
     key in order to achieve persistence which will get invoked when an application
     crashes
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug\Debugger*'
-    SELECTION_6:
-        NewValue: '*.dll'
-    SELECTION_7:
-        NewValue: '"C:\WINDOWS\system32\vsjitdebugger.exe" -p %ld -e %ld -j 0x%p'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
-falsepositives:
-- Legitimate use of the key to setup a debugger. Which is often the case on developers
-    machines
-id: 092af964-4233-4373-b4ba-d86ea2890288
-level: medium
+references:
+    - https://persistence-info.github.io/Data/aedebug.html
+    - https://docs.microsoft.com/en-us/windows/win32/debug/configuring-automatic-debugging
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/21
+tags:
+    - attack.persistence
 logsource:
     category: registry_set
     product: windows
-references:
-- https://persistence-info.github.io/Data/aedebug.html
-- https://docs.microsoft.com/en-us/windows/win32/debug/configuring-automatic-debugging
-status: experimental
-tags:
-- attack.persistence
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug\Debugger
+        Details|endswith: .dll
+    filter:
+        Details: '"C:\WINDOWS\system32\vsjitdebugger.exe" -p %ld -e %ld -j 0x%p'
+    condition: registry_set and (selection and not filter)
+falsepositives:
+    - Legitimate use of the key to setup a debugger. Which is often the case on developers
+        machines
+level: medium
+ruletype: Sigma

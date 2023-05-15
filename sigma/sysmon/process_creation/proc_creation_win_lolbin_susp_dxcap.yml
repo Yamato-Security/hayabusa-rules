@@ -1,34 +1,30 @@
 title: Application Whitelisting Bypass via Dxcap.exe
-ruletype: Sigma
+id: 60f16a96-db70-42eb-8f76-16763e333590
+status: test
+description: Detects execution of of Dxcap.exe
+references:
+    - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Dxcap/
+    - https://twitter.com/harr0ey/status/992008180904419328
 author: Beyu Denis, oscd.community, Nasreddine Bencherchali (Nextron Systems)
 date: 2019/10/26
-description: Detects execution of of Dxcap.exe
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\DXCap.exe'
-    SELECTION_4:
-        OriginalFileName: DXCap.exe
-    SELECTION_5:
-        CommandLine: '* -c *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- Legitimate execution of dxcap.exe by legitimate user
-id: 60f16a96-db70-42eb-8f76-16763e333590
-level: medium
+modified: 2022/06/09
+tags:
+    - attack.defense_evasion
+    - attack.t1218
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/09
-references:
-- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Dxcap/
-- https://twitter.com/harr0ey/status/992008180904419328
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \DXCap.exe
+        -   OriginalFileName: DXCap.exe
+    selection_cli:
+        CommandLine|contains: ' -c '
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Legitimate execution of dxcap.exe by legitimate user
+level: medium
+ruletype: Sigma

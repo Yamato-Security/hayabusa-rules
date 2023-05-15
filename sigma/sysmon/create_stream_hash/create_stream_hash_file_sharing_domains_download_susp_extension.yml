@@ -1,70 +1,68 @@
 title: Suspicious File Download From File Sharing Websites
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/08/24
+id: 52182dfb-afb7-41db-b4bc-5336cb29b464
+related:
+    -   id: ae02ed70-11aa-4a22-b397-c0d0e8f6ea99
+        type: similar
+status: experimental
 description: Detects the download of suspicious file type from a well-known file and
     paste sharing domain
-detection:
-    SELECTION_1:
-        EventID: 15
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Contents:
-        - '*https://transfer.sh/*'
-        - '*raw.githubusercontent.com*'
-        - '*gist.githubusercontent.com*'
-        - '*pastebin.com*'
-        - '*cdn.discordapp.com/attachments/*'
-        - '*mediafire.com*'
-        - '*mega.nz*'
-        - '*ddns.net*'
-        - '*.paste.ee*'
-        - '*.hastebin.com*'
-        - '*.ghostbin.co/*'
-        - '*ufile.io*'
-        - '*storage.googleapis.com*'
-        - '*anonfiles.com*'
-        - '*send.exploit.in*'
-        - '*privatlab.net*'
-        - '*privatlab.com*'
-        - '*sendspace.com*'
-        - '*pastetext.net*'
-        - '*pastebin.pl*'
-        - '*paste.ee*'
-    SELECTION_4:
-        TargetFilename:
-        - '*.exe:Zone*'
-        - '*.vbs:Zone*'
-        - '*.vbe:Zone*'
-        - '*.dll:Zone*'
-        - '*.one:Zone*'
-        - '*.hta:Zone*'
-        - '*.lnk:Zone*'
-        - '*.xll:Zone*'
-        - '*.cpl:Zone*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-fields:
-- TargetFilename
-- Image
-id: 52182dfb-afb7-41db-b4bc-5336cb29b464
-level: high
+references:
+    - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=90015
+    - https://www.cisa.gov/uscert/ncas/alerts/aa22-321a
+author: Florian Roth (Nextron Systems)
+date: 2022/08/24
+modified: 2023/02/09
+tags:
+    - attack.defense_evasion
+    - attack.s0139
+    - attack.t1564.004
 logsource:
+    product: windows
     category: create_stream_hash
     definition: 'Requirements: Sysmon config with Imphash logging activated'
-    product: windows
-modified: 2023/02/09
-references:
-- https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=90015
-- https://www.cisa.gov/uscert/ncas/alerts/aa22-321a
-related:
--   id: ae02ed70-11aa-4a22-b397-c0d0e8f6ea99
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.s0139
-- attack.t1564.004
-
+detection:
+    create_stream_hash:
+        EventID: 15
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_domain:
+        Contents|contains:
+            - https://transfer.sh/
+            - raw.githubusercontent.com
+            - gist.githubusercontent.com
+            - pastebin.com
+            - cdn.discordapp.com/attachments/
+            - mediafire.com
+            - mega.nz
+            - ddns.net
+            - .paste.ee
+            - .hastebin.com
+            - .ghostbin.co/
+            - ufile.io
+            - storage.googleapis.com
+            - anonfiles.com
+            - send.exploit.in
+            - privatlab.net
+            - privatlab.com
+            - sendspace.com
+            - pastetext.net
+            - pastebin.pl
+            - paste.ee
+    selection_extension:
+        TargetFilename|contains:
+            - .exe:Zone
+            - .vbs:Zone
+            - .vbe:Zone
+            - .dll:Zone
+            - .one:Zone
+            - .hta:Zone
+            - .lnk:Zone
+            - .xll:Zone
+            - .cpl:Zone
+    condition: create_stream_hash and (all of selection*)
+fields:
+    - TargetFilename
+    - Image
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

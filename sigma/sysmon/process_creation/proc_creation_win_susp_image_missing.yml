@@ -1,47 +1,43 @@
 title: Execution Of Non-Existing File
-ruletype: Sigma
-author: Max Altgelt (Nextron Systems)
-date: 2021/12/09
+id: 71158e3f-df67-472b-930e-7d287acaa3e1
+status: experimental
 description: Checks whether the image specified in a process creation event is not
     a full, absolute path (caused by process ghosting or other unorthodox methods
     to start a process)
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\\*'
-    SELECTION_4:
-        Image: null
-    SELECTION_5:
-        Image:
-        - '-'
-        - ''
-    SELECTION_6:
-        Image:
-        - System
-        - Registry
-        - MemCompression
-        - vmmem
-    SELECTION_7:
-        CommandLine:
-        - Registry
-        - MemCompression
-        - vmmem
-    condition: ((SELECTION_1 and SELECTION_2) and  not (SELECTION_3) and  not ((SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6 or SELECTION_7)))
-falsepositives:
-- Unknown
-id: 71158e3f-df67-472b-930e-7d287acaa3e1
-level: high
+references:
+    - https://pentestlaboratories.com/2021/12/08/process-ghosting/
+author: Max Altgelt (Nextron Systems)
+date: 2021/12/09
+modified: 2022/12/14
+tags:
+    - attack.defense_evasion
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/14
-references:
-- https://pentestlaboratories.com/2021/12/08/process-ghosting/
-status: experimental
-tags:
-- attack.defense_evasion
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    image_absolute_path:
+        Image|contains: \
+    filter_null:
+        Image: null
+    filter_empty:
+        Image:
+            - '-'
+            - ''
+    filter_4688:
+        -   Image:
+                - System
+                - Registry
+                - MemCompression
+                - vmmem
+        -   CommandLine:
+                - Registry
+                - MemCompression
+                - vmmem
+    condition: process_creation and (not image_absolute_path and not 1 of filter*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

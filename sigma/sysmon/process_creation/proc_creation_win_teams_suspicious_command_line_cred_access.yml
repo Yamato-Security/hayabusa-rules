@@ -1,34 +1,32 @@
 title: Suspicious Command With Teams Objects Paths
-ruletype: Sigma
-author: '@SerkinValery'
-date: 2022/09/16
+id: d2eb17db-1d39-41dc-b57f-301f6512fa75
+status: experimental
 description: Detects an access to authentication tokens and accounts of Microsoft
     Teams desktop application.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine:
-        - '*\Microsoft\Teams\Cookies*'
-        - '*\Microsoft\Teams\Local Storage\leveldb*'
-    SELECTION_4:
-        Image: '*\Microsoft\Teams\current\Teams.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: d2eb17db-1d39-41dc-b57f-301f6512fa75
-level: high
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/02/05
 references:
-- https://www.bleepingcomputer.com/news/security/microsoft-teams-stores-auth-tokens-as-cleartext-in-windows-linux-macs/
-- https://www.vectra.ai/blogpost/undermining-microsoft-teams-security-by-mining-tokens
-status: experimental
+    - https://www.bleepingcomputer.com/news/security/microsoft-teams-stores-auth-tokens-as-cleartext-in-windows-linux-macs/
+    - https://www.vectra.ai/blogpost/undermining-microsoft-teams-security-by-mining-tokens
+author: '@SerkinValery'
+date: 2022/09/16
+modified: 2023/02/05
 tags:
-- attack.credential_access
-- attack.t1528
-
+    - attack.credential_access
+    - attack.t1528
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains:
+            - \Microsoft\Teams\Cookies
+            - \Microsoft\Teams\Local Storage\leveldb
+    filter:
+        Image|endswith: \Microsoft\Teams\current\Teams.exe
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

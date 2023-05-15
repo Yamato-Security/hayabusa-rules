@@ -1,42 +1,36 @@
 title: Unusually Long PowerShell CommandLine
-ruletype: Sigma
-author: oscd.community, Natalia Shornikova
-date: 2020/10/06
+id: d0d28567-4b9a-45e2-8bbc-fb1b66a1f7f6
+status: test
 description: Detects unusually long PowerShell command lines with a length of 1000
     characters or more
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_5:
-        Description: Windows Powershell
-    SELECTION_6:
-        Product: PowerShell Core 6
-    SELECTION_7:
-        CommandLine|re: .{1000,}
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-        or SELECTION_6) and SELECTION_7)
-falsepositives:
-- Unknown
-id: d0d28567-4b9a-45e2-8bbc-fb1b66a1f7f6
-level: low
+references:
+    - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
+author: oscd.community, Natalia Shornikova
+date: 2020/10/06
+modified: 2023/04/14
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/04/14
-references:
-- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
-status: test
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_powershell:
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+        -   Description: Windows Powershell
+        -   Product: PowerShell Core 6
+    selection_length:
+        CommandLine|re: .{1000,}
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

@@ -1,39 +1,35 @@
 title: Windows Internet Hosted WebDav Share Mount Via Net.EXE
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/02/21
+id: 7e6237fe-3ddb-438f-9381-9bf9de5af8d0
+status: experimental
 description: Detects when an internet hosted webdav share is mounted using the "net.exe"
     utility
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\net.exe'
-        - '*\net1.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - net.exe
-        - net1.exe
-    SELECTION_5:
-        CommandLine:
-        - '* use *'
-        - '* http*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- Unknown
-id: 7e6237fe-3ddb-438f-9381-9bf9de5af8d0
-level: high
+references:
+    - https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/21
+tags:
+    - attack.lateral_movement
+    - attack.t1021.002
 logsource:
     category: process_creation
     product: windows
-references:
-- https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
-status: experimental
-tags:
-- attack.lateral_movement
-- attack.t1021.002
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith:
+                - \net.exe
+                - \net1.exe
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
+    selection_cli:
+        CommandLine|contains:
+            - ' use '
+            - ' http'
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

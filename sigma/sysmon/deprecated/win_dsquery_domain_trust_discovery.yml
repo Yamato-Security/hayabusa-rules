@@ -1,37 +1,31 @@
 title: Domain Trust Discovery
-ruletype: Sigma
+id: 77815820-246c-47b8-9741-e0def3f57308
+status: deprecated
+description: Detects a discovery of domain trusts.
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1482/T1482.md
 author: Jakob Weinzettl, oscd.community
 date: 2019/10/23
-description: Detects a discovery of domain trusts.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\dsquery.exe'
-    SELECTION_4:
-        CommandLine: '*-filter*'
-    SELECTION_5:
-        CommandLine: '*trustedDomain*'
-    SELECTION_6:
-        Image: '*\nltest.exe'
-    SELECTION_7:
-        CommandLine: '*domain_trusts*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7)))
-falsepositives:
-- Administration of systems.
-id: 77815820-246c-47b8-9741-e0def3f57308
-level: medium
+modified: 2023/02/04
+tags:
+    - attack.discovery
+    - attack.t1482
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1482/T1482.md
-status: deprecated
-tags:
-- attack.discovery
-- attack.t1482
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|endswith: \dsquery.exe
+            CommandLine|contains|all:
+                - -filter
+                - trustedDomain
+        -   Image|endswith: \nltest.exe
+            CommandLine|contains: domain_trusts
+    condition: process_creation and selection
+falsepositives:
+    - Administration of systems.
+level: medium
+ruletype: Sigma

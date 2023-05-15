@@ -1,57 +1,53 @@
 title: Suspicious File Downloaded From Direct IP Via Certutil.EXE
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/02/15
+id: 13e6fe51-d478-4c7e-b0f2-6da9b400a829
+related:
+    -   id: 19b08b1c-861d-4e75-a1ef-ea0c1baf202b
+        type: similar
+    -   id: 42a5f1e7-9603-4f6d-97ae-3f37d130d794
+        type: similar
+status: experimental
 description: Detects the execution of certutil with certain flags that allow the utility
     to download files from direct IPs.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\certutil.exe'
-    SELECTION_4:
-        OriginalFileName: CertUtil.exe
-    SELECTION_5:
-        CommandLine:
-        - '*urlcache *'
-        - '*verifyctl *'
-    SELECTION_6:
-        CommandLine:
-        - '*://1*'
-        - '*://2*'
-        - '*://3*'
-        - '*://4*'
-        - '*://5*'
-        - '*://6*'
-        - '*://7*'
-        - '*://8*'
-        - '*://9*'
-    SELECTION_7:
-        CommandLine: '*://7-*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7)))
-falsepositives:
-- Unknown
-id: 13e6fe51-d478-4c7e-b0f2-6da9b400a829
-level: high
+references:
+    - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/certutil
+    - https://forensicitguy.github.io/agenttesla-vba-certutil-download/
+    - https://news.sophos.com/en-us/2021/04/13/compromised-exchange-server-hosting-cryptojacker-targeting-other-exchange-servers/
+    - https://twitter.com/egre55/status/1087685529016193025
+    - https://lolbas-project.github.io/lolbas/Binaries/Certutil/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/15
+tags:
+    - attack.defense_evasion
+    - attack.t1027
 logsource:
     category: process_creation
     product: windows
-references:
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/certutil
-- https://forensicitguy.github.io/agenttesla-vba-certutil-download/
-- https://news.sophos.com/en-us/2021/04/13/compromised-exchange-server-hosting-cryptojacker-targeting-other-exchange-servers/
-- https://twitter.com/egre55/status/1087685529016193025
-- https://lolbas-project.github.io/lolbas/Binaries/Certutil/
-related:
--   id: 19b08b1c-861d-4e75-a1ef-ea0c1baf202b
-    type: similar
--   id: 42a5f1e7-9603-4f6d-97ae-3f37d130d794
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \certutil.exe
+        -   OriginalFileName: CertUtil.exe
+    selection_flags:
+        CommandLine|contains:
+            - 'urlcache '
+            - 'verifyctl '
+    selection_http:
+        CommandLine|contains:
+            - ://1
+            - ://2
+            - ://3
+            - ://4
+            - ://5
+            - ://6
+            - ://7
+            - ://8
+            - ://9
+    filter_seven_zip:
+        CommandLine|contains: ://7-
+    condition: process_creation and (all of selection_* and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

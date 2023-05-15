@@ -1,33 +1,29 @@
 title: HackTool - CreateMiniDump Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2019/12/22
+id: 36d88494-1d43-4dc0-b3fa-35c8fea0ca9d
+status: test
 description: Detects the use of CreateMiniDump hack tool used to dump the LSASS process
     memory for credential extraction on the attacker's machine
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\CreateMiniDump.exe'
-    SELECTION_4:
-        Imphash: 4a07f944a83e8a7c2525efa35dd30e2f
-    SELECTION_5:
-        Hashes: '*IMPHASH=4a07f944a83e8a7c2525efa35dd30e2f*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- Unknown
-id: 36d88494-1d43-4dc0-b3fa-35c8fea0ca9d
-level: high
+references:
+    - https://ired.team/offensive-security/credential-access-and-credential-dumping/dumping-lsass-passwords-without-mimikatz-minidumpwritedump-av-signature-bypass
+author: Florian Roth (Nextron Systems)
+date: 2019/12/22
+modified: 2023/02/04
+tags:
+    - attack.credential_access
+    - attack.t1003.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://ired.team/offensive-security/credential-access-and-credential-dumping/dumping-lsass-passwords-without-mimikatz-minidumpwritedump-av-signature-bypass
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|endswith: \CreateMiniDump.exe
+        -   Imphash: 4a07f944a83e8a7c2525efa35dd30e2f
+        -   Hashes|contains: IMPHASH=4a07f944a83e8a7c2525efa35dd30e2f
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

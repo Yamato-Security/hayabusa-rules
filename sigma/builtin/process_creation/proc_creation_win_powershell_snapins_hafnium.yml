@@ -1,51 +1,46 @@
 title: Exchange PowerShell Snap-Ins Usage
-ruletype: Sigma
-author: FPT.EagleEye, Nasreddine Bencherchali (Nextron Systems)
-date: 2021/03/03
+id: 25676e10-2121-446e-80a4-71ff8506af47
+status: experimental
 description: Detects adding and using Exchange PowerShell snap-ins to export mailbox
     data. As seen used by HAFNIUM and APT27
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_5:
-        CommandLine: '*Add-PSSnapin*'
-    SELECTION_6:
-        CommandLine:
-        - '*Microsoft.Exchange.Powershell.Snapin*'
-        - '*Microsoft.Exchange.Management.PowerShell.SnapIn*'
-    SELECTION_7:
-        ParentProcessName: C:\Windows\System32\msiexec.exe
-    SELECTION_8:
-        CommandLine: '*$exserver=Get-ExchangeServer ([Environment]::MachineName) -ErrorVariable
-            exerr 2> $null*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Unknown
-id: 25676e10-2121-446e-80a4-71ff8506af47
-level: high
+references:
+    - https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/
+    - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
+    - https://www.intrinsec.com/apt27-analysis/
+author: FPT.EagleEye, Nasreddine Bencherchali (Nextron Systems)
+date: 2021/03/03
+modified: 2023/03/24
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - attack.collection
+    - attack.t1114
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/24
-references:
-- https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/
-- https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
-- https://www.intrinsec.com/apt27-analysis/
-status: experimental
-tags:
-- attack.execution
-- attack.t1059.001
-- attack.collection
-- attack.t1114
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    selection_cli:
+        CommandLine|contains: Add-PSSnapin
+    selection_module:
+        CommandLine|contains:
+            - Microsoft.Exchange.Powershell.Snapin
+            - Microsoft.Exchange.Management.PowerShell.SnapIn
+    filter_msiexec:
+        CommandLine|contains: $exserver=Get-ExchangeServer ([Environment]::MachineName)
+            -ErrorVariable exerr 2> $null
+        ParentProcessName: C:\Windows\System32\msiexec.exe
+    condition: process_creation and (all of selection_* and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,38 +1,32 @@
 title: Restricted Software Access By SRP
-ruletype: Sigma
-author: frack113
-date: 2023/01/12
+id: b4c8da4a-1c12-46b0-8a2b-0a8521d03442
+status: experimental
 description: Detects restricted access to applications by the Software Restriction
     Policies (SRP) policy
-detection:
-    SELECTION_1:
-        Channel: Application
-    SELECTION_2:
-        Provider_Name: Microsoft-Windows-SoftwareRestrictionPolicies
-    SELECTION_3:
-        EventID: 865
-    SELECTION_4:
-        EventID: 866
-    SELECTION_5:
-        EventID: 867
-    SELECTION_6:
-        EventID: 868
-    SELECTION_7:
-        EventID: 882
-    condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4 or SELECTION_5
-        or SELECTION_6 or SELECTION_7))
-falsepositives:
-- Unknown
-id: b4c8da4a-1c12-46b0-8a2b-0a8521d03442
-level: high
+references:
+    - https://learn.microsoft.com/en-us/windows-server/identity/software-restriction-policies/software-restriction-policies
+    - https://github.com/nasbench/EVTX-ETW-Resources/blob/7a806a148b3d9d381193d4a80356016e6e8b1ee8/ETWEventsList/CSV/Windows11/22H2/W11_22H2_Pro_20220920_22621.382/Providers/Microsoft-Windows-AppXDeployment-Server.csv
+author: frack113
+date: 2023/01/12
+tags:
+    - attack.defense_evasion
+    - attack.t1072
 logsource:
     product: windows
     service: application
-references:
-- https://learn.microsoft.com/en-us/windows-server/identity/software-restriction-policies/software-restriction-policies
-- https://github.com/nasbench/EVTX-ETW-Resources/blob/7a806a148b3d9d381193d4a80356016e6e8b1ee8/ETWEventsList/CSV/Windows11/22H2/W11_22H2_Pro_20220920_22621.382/Providers/Microsoft-Windows-AppXDeployment-Server.csv
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1072
-
+detection:
+    application:
+        Channel: Application
+    selection:
+        Provider_Name: Microsoft-Windows-SoftwareRestrictionPolicies
+        EventID:
+            - 865
+            - 866
+            - 867
+            - 868
+            - 882
+    condition: application and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

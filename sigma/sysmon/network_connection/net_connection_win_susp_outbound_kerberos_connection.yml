@@ -1,42 +1,38 @@
 title: Suspicious Outbound Kerberos Connection
-ruletype: Sigma
-author: Ilyas Ochkov, oscd.community
-date: 2019/10/24
+id: e54979bd-c5f9-4d6c-967b-a04b19ac4c74
+related:
+    -   id: eca91c7c-9214-47b9-b4c5-cb1d7e4f2350
+        type: similar
+status: test
 description: Detects suspicious outbound network activity via kerberos default port
     indicating possible lateral movement or first stage PrivEsc via delegation.
-detection:
-    SELECTION_1:
-        EventID: 3
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        DestinationPort: 88
-    SELECTION_4:
-        Initiated: 'true'
-    SELECTION_5:
-        Image:
-        - C:\Windows\System32\lsass.exe
-        - C:\Program Files\Google\Chrome\Application\chrome.exe
-        - C:\Program Files\Mozilla Firefox\firefox.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5)))
-falsepositives:
-- Web Browsers
-id: e54979bd-c5f9-4d6c-967b-a04b19ac4c74
-level: high
+references:
+    - https://github.com/GhostPack/Rubeus
+author: Ilyas Ochkov, oscd.community
+date: 2019/10/24
+modified: 2023/01/30
+tags:
+    - attack.credential_access
+    - attack.t1558
+    - attack.lateral_movement
+    - attack.t1550.003
 logsource:
     category: network_connection
     product: windows
-modified: 2023/01/30
-references:
-- https://github.com/GhostPack/Rubeus
-related:
--   id: eca91c7c-9214-47b9-b4c5-cb1d7e4f2350
-    type: similar
-status: test
-tags:
-- attack.credential_access
-- attack.t1558
-- attack.lateral_movement
-- attack.t1550.003
-
+detection:
+    network_connection:
+        EventID: 3
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        DestinationPort: 88
+        Initiated: 'true'
+    filter_exact:
+        Image:
+            - C:\Windows\System32\lsass.exe
+            - C:\Program Files\Google\Chrome\Application\chrome.exe
+            - C:\Program Files\Mozilla Firefox\firefox.exe
+    condition: network_connection and (selection and not 1 of filter_*)
+falsepositives:
+    - Web Browsers
+level: high
+ruletype: Sigma

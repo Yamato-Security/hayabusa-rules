@@ -1,7 +1,9 @@
 title: Disabled RestrictedAdminMode For RDS
-ruletype: Sigma
-author: frack113
-date: 2023/01/13
+id: d6ce7ebd-260b-4323-9768-a9631c8d4db2
+related:
+    -   id: 28ac00d6-22d9-4a3c-927f-bbd770104573
+        type: similar
+status: experimental
 description: 'Detect activation of DisableRestrictedAdmin to desable RestrictedAdmin
     mode.
 
@@ -12,37 +14,27 @@ description: 'Detect activation of DisableRestrictedAdmin to desable RestrictedA
     process if the remote server has been compromise
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*System\CurrentControlSet\Control\Lsa\DisableRestrictedAdmin'
-    SELECTION_6:
-        NewValue: DWORD (0x00000001)
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: d6ce7ebd-260b-4323-9768-a9631c8d4db2
-level: high
-logsource:
-    category: registry_set
-    product: windows
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/a8e3cf63e97b973a25903d3df9fd55da6252e564/atomics/T1112/T1112.md
-- https://social.technet.microsoft.com/wiki/contents/articles/32905.remote-desktop-services-enable-restricted-admin-mode.aspx
-related:
--   id: 28ac00d6-22d9-4a3c-927f-bbd770104573
-    type: similar
-status: experimental
+    - https://github.com/redcanaryco/atomic-red-team/blob/a8e3cf63e97b973a25903d3df9fd55da6252e564/atomics/T1112/T1112.md
+    - https://social.technet.microsoft.com/wiki/contents/articles/32905.remote-desktop-services-enable-restricted-admin-mode.aspx
+author: frack113
+date: 2023/01/13
 tags:
-- attack.defense_evasion
-- attack.t1112
-
+    - attack.defense_evasion
+    - attack.t1112
+logsource:
+    product: windows
+    category: registry_set
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|endswith: System\CurrentControlSet\Control\Lsa\DisableRestrictedAdmin
+        Details: DWORD (0x00000001)
+    condition: registry_set and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

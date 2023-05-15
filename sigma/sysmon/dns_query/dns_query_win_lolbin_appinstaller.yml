@@ -1,32 +1,29 @@
 title: AppX Package Installation Attempts Via AppInstaller
-ruletype: Sigma
-author: frack113
-date: 2021/11/24
+id: 7cff77e1-9663-46a3-8260-17f2e1aa9d0a
+status: test
 description: AppInstaller.exe is spawned by the default handler for the "ms-appinstaller"
     URI. It attempts to load/install a package from the referenced URL
-detection:
-    SELECTION_1:
-        EventID: 22
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: C:\Program Files\WindowsApps\Microsoft.DesktopAppInstaller_*
-    SELECTION_4:
-        Image: '*\AppInstaller.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 7cff77e1-9663-46a3-8260-17f2e1aa9d0a
-level: medium
-logsource:
-    category: dns_query
-    product: windows
-modified: 2023/01/12
 references:
-- https://twitter.com/notwhickey/status/1333900137232523264
-- https://lolbas-project.github.io/lolbas/Binaries/AppInstaller/
-status: test
+    - https://twitter.com/notwhickey/status/1333900137232523264
+    - https://lolbas-project.github.io/lolbas/Binaries/AppInstaller/
+author: frack113
+date: 2021/11/24
+modified: 2023/01/12
 tags:
-- attack.command_and_control
-- attack.t1105
-
+    - attack.command_and_control
+    - attack.t1105
+logsource:
+    product: windows
+    category: dns_query
+detection:
+    dns_query:
+        EventID: 22
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|startswith: C:\Program Files\WindowsApps\Microsoft.DesktopAppInstaller_
+        Image|endswith: \AppInstaller.exe
+    condition: dns_query and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

@@ -1,38 +1,30 @@
 title: SilentProcessExit Monitor Registration
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/02/26
+id: c81fe886-cac0-4913-a511-2822d72ff505
+status: deprecated
 description: Detects changes to the Registry in which a monitor program gets registered
     to monitor the exit of another process
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*Microsoft\Windows NT\CurrentVersion\SilentProcessExit*'
-    SELECTION_6:
-        NewValue: '*MonitorProcess*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: c81fe886-cac0-4913-a511-2822d72ff505
-level: high
+references:
+    - https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
+    - https://www.deepinstinct.com/2021/02/16/lsass-memory-dumps-are-stealthier-than-ever-before-part-2/
+author: Florian Roth (Nextron Systems)
+date: 2021/02/26
+modified: 2022/12/19
+tags:
+    - attack.persistence
+    - attack.t1546.012
 logsource:
     category: registry_set
     product: windows
-modified: 2022/12/19
-references:
-- https://oddvar.moe/2018/04/10/persistence-using-globalflags-in-image-file-execution-options-hidden-from-autoruns-exe/
-- https://www.deepinstinct.com/2021/02/16/lsass-memory-dumps-are-stealthier-than-ever-before-part-2/
-status: deprecated
-tags:
-- attack.persistence
-- attack.t1546.012
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|contains: Microsoft\Windows NT\CurrentVersion\SilentProcessExit
+        Details|contains: MonitorProcess
+    condition: registry_set and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

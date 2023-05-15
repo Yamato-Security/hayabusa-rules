@@ -1,33 +1,31 @@
 title: Suspicious Office Token Search Via CLI
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/10/25
+id: 6d3a3952-6530-44a3-8554-cf17c116c615
+status: experimental
 description: Detects possible search for office tokens via CLI by looking for the
     string "eyJ0eX". This string is used as an anchor to look for the start of the
     JWT token used by office and similar apps.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine:
-        - '*eyJ0eXAiOi*'
-        - '* eyJ0eX*'
-        - '* "eyJ0eX"*'
-        - '* ''eyJ0eX''*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: 6d3a3952-6530-44a3-8554-cf17c116c615
-level: medium
+references:
+    - https://mrd0x.com/stealing-tokens-from-office-applications/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/10/25
+tags:
+    - attack.credential_access
+    - attack.t1528
 logsource:
     category: process_creation
     product: windows
-references:
-- https://mrd0x.com/stealing-tokens-from-office-applications/
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1528
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains:
+            - eyJ0eXAiOi
+            - ' eyJ0eX'
+            - ' "eyJ0eX"'
+            - ' ''eyJ0eX'''
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

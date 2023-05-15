@@ -1,43 +1,38 @@
 title: Suspicious NTLM Authentication on the Printer Spooler Service
-ruletype: Sigma
-author: Elastic (idea), Tobias Michalski (Nextron Systems)
-date: 2022/05/04
+id: bb76d96b-821c-47cf-944b-7ce377864492
+status: experimental
 description: Detects a privilege elevation attempt by coercing NTLM authentication
     on the Printer Spooler service
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\rundll32.exe'
-    SELECTION_4:
-        OriginalFileName: RUNDLL32.EXE
-    SELECTION_5:
-        CommandLine: '*C:\windows\system32\davclnt.dll,DavSetCookie*'
-    SELECTION_6:
-        CommandLine: '*http*'
-    SELECTION_7:
-        CommandLine:
-        - '*spoolss*'
-        - '*srvsvc*'
-        - '*/print/pipe/*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
-falsepositives:
-- Unknown
-id: bb76d96b-821c-47cf-944b-7ce377864492
-level: high
+references:
+    - https://twitter.com/med0x2e/status/1520402518685200384
+    - https://github.com/elastic/detection-rules/blob/dd224fb3f81d0b4bf8593c5f02a029d647ba2b2d/rules/windows/credential_access_relay_ntlm_auth_via_http_spoolss.toml
+author: Elastic (idea), Tobias Michalski (Nextron Systems)
+date: 2022/05/04
+modified: 2023/02/09
+tags:
+    - attack.privilege_escalation
+    - attack.credential_access
+    - attack.t1212
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/09
-references:
-- https://twitter.com/med0x2e/status/1520402518685200384
-- https://github.com/elastic/detection-rules/blob/dd224fb3f81d0b4bf8593c5f02a029d647ba2b2d/rules/windows/credential_access_relay_ntlm_auth_via_http_spoolss.toml
-status: experimental
-tags:
-- attack.privilege_escalation
-- attack.credential_access
-- attack.t1212
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \rundll32.exe
+        -   OriginalFileName: RUNDLL32.EXE
+    selection_cli:
+        CommandLine|contains|all:
+            - C:\windows\system32\davclnt.dll,DavSetCookie
+            - http
+        CommandLine|contains:
+            - spoolss
+            - srvsvc
+            - /print/pipe/
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

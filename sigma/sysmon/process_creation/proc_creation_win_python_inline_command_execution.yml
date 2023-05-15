@@ -1,47 +1,42 @@
 title: Python Inline Command Execution
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/01/02
+id: 899133d5-4d7c-4a7f-94ee-27355c879d90
+status: experimental
 description: Detects execution of python using the "-c" flag. This is could be used
     as a way to launch a reverse shell or execute live python code.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        OriginalFileName: python.exe
-    SELECTION_4:
-        Image:
-        - '*python.exe'
-        - '*python3.exe'
-        - '*python2.exe'
-    SELECTION_5:
-        CommandLine: '* -c*'
-    SELECTION_6:
-        ParentImage: C:\Program Files\Python*
-    SELECTION_7:
-        ParentImage: '*\python.exe'
-    SELECTION_8:
-        ParentCommandLine: '*-E -s -m ensurepip -U --default-pip*'
-    SELECTION_9:
-        ParentImage: '*\AppData\Local\Programs\Microsoft VS Code\Code.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9)))
-falsepositives:
-- Python libraries that use a flag starting with "-c". Filter according to your environment
-id: 899133d5-4d7c-4a7f-94ee-27355c879d90
-level: medium
+references:
+    - https://docs.python.org/3/using/cmdline.html#cmdoption-c
+    - https://www.revshells.com/
+    - https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/01/02
+modified: 2023/02/17
+tags:
+    - attack.execution
+    - attack.t1059
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/17
-references:
-- https://docs.python.org/3/using/cmdline.html#cmdoption-c
-- https://www.revshells.com/
-- https://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
-status: experimental
-tags:
-- attack.execution
-- attack.t1059
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   OriginalFileName: python.exe
+        -   Image|endswith:
+                - python.exe
+                - python3.exe
+                - python2.exe
+    selection_cli:
+        CommandLine|contains: ' -c'
+    filter_python:
+        ParentImage|startswith: C:\Program Files\Python
+        ParentImage|endswith: \python.exe
+        ParentCommandLine|contains: -E -s -m ensurepip -U --default-pip
+    filter_vscode:
+        ParentImage|endswith: \AppData\Local\Programs\Microsoft VS Code\Code.exe
+    condition: process_creation and (all of selection_* and not 1 of filter_*)
+falsepositives:
+    - Python libraries that use a flag starting with "-c". Filter according to your
+        environment
+level: medium
+ruletype: Sigma

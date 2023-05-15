@@ -1,33 +1,31 @@
 title: NtdllPipe Like Activity Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/03/05
+id: bbc865e4-7fcd-45a6-8ff1-95ced28ec5b2
+status: test
 description: Detects command that type the content of ntdll.dll to a different file
     or a pipe in order to evade AV / EDR detection. As seen being used in the POC
     NtdllPipe
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine:
-        - '*type %windir%\system32\ntdll.dll*'
-        - '*type %systemroot%\system32\ntdll.dll*'
-        - '*type c:\windows\system32\ntdll.dll*'
-        - '*\\ntdll.dll > \\\\.\\pipe\\\*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: bbc865e4-7fcd-45a6-8ff1-95ced28ec5b2
-level: high
+references:
+    - https://web.archive.org/web/20220306121156/https://www.x86matthew.com/view_post?id=ntdll_pipe
+author: Florian Roth (Nextron Systems)
+date: 2022/03/05
+modified: 2023/03/07
+tags:
+    - attack.defense_evasion
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/07
-references:
-- https://web.archive.org/web/20220306121156/https://www.x86matthew.com/view_post?id=ntdll_pipe
-status: test
-tags:
-- attack.defense_evasion
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains:
+            - type %windir%\system32\ntdll.dll
+            - type %systemroot%\system32\ntdll.dll
+            - type c:\windows\system32\ntdll.dll
+            - \\ntdll.dll > \\\\.\\pipe\\
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

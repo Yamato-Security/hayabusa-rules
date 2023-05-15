@@ -1,46 +1,44 @@
 title: PUA - Suspicious ActiveDirectory Enumeration Via AdFind.EXE
-ruletype: Sigma
-author: frack113
-date: 2021/12/13
+id: 455b9d50-15a1-4b99-853f-8d37655a4c1b
+related:
+    -   id: 9a132afa-654e-11eb-ae93-0242ac130002
+        type: similar
+status: experimental
 description: Detects active directory enumeration activity using known AdFind CLI
     flags
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine:
-        - '*lockoutduration*'
-        - '*lockoutthreshold*'
-        - '*lockoutobservationwindow*'
-        - '*maxpwdage*'
-        - '*minpwdage*'
-        - '*minpwdlength*'
-        - '*pwdhistorylength*'
-        - '*pwdproperties*'
-    SELECTION_4:
-        CommandLine: '*-sc admincountdmp*'
-    SELECTION_5:
-        CommandLine: '*-sc exchaddresses*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- Authorized administrative activity
-id: 455b9d50-15a1-4b99-853f-8d37655a4c1b
-level: high
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/03/05
 references:
-- https://www.joeware.net/freetools/tools/adfind/
-- https://social.technet.microsoft.com/wiki/contents/articles/7535.adfind-command-examples.aspx
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1087.002/T1087.002.md
-related:
--   id: 9a132afa-654e-11eb-ae93-0242ac130002
-    type: similar
-status: experimental
+    - https://www.joeware.net/freetools/tools/adfind/
+    - https://social.technet.microsoft.com/wiki/contents/articles/7535.adfind-command-examples.aspx
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1087.002/T1087.002.md
+author: frack113
+date: 2021/12/13
+modified: 2023/03/05
 tags:
-- attack.discovery
-- attack.t1087.002
-
+    - attack.discovery
+    - attack.t1087.002
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_password:
+        CommandLine|contains:
+            - lockoutduration
+            - lockoutthreshold
+            - lockoutobservationwindow
+            - maxpwdage
+            - minpwdage
+            - minpwdlength
+            - pwdhistorylength
+            - pwdproperties
+    selection_enum_ad:
+        CommandLine|contains: -sc admincountdmp
+    selection_enum_exchange:
+        CommandLine|contains: -sc exchaddresses
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Authorized administrative activity
+level: high
+ruletype: Sigma

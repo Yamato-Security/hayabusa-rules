@@ -1,48 +1,45 @@
 title: WmiPrvSE Spawned A Process
-ruletype: Sigma
+id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
+related:
+    -   id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
+        type: similar
+    -   id: 692f0bec-83ba-4d04-af7e-e884a96059b6
+        type: similar
+status: stable
+description: Detects WmiPrvSE spawning a process
+references:
+    - https://threathunterplaybook.com/hunts/windows/190815-RemoteServiceInstallation/notebook.html
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/08/15
-description: Detects WmiPrvSE spawning a process
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: '*\WmiPrvSe.exe'
-    SELECTION_4:
-        LogonId:
-        - '0x3e7'
-        - 'null'
-    SELECTION_5:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    SELECTION_6:
-        Image: '*\WmiPrvSE.exe'
-    SELECTION_7:
-        Image: '*\WerFault.exe'
-    SELECTION_8:
-        LogonId: null
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
-falsepositives:
-- False positives are expected (e.g. in environments where WinRM is used legitimately)
-id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
-level: medium
+modified: 2023/03/23
+tags:
+    - attack.execution
+    - attack.t1047
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/23
-references:
-- https://threathunterplaybook.com/hunts/windows/190815-RemoteServiceInstallation/notebook.html
-related:
--   id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
-    type: similar
--   id: 692f0bec-83ba-4d04-af7e-e884a96059b6
-    type: similar
-status: stable
-tags:
-- attack.execution
-- attack.t1047
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ParentImage|endswith: \WmiPrvSe.exe
+    filter_logonid:
+        LogonId:
+            - '0x3e7'
+            - 'null'
+    filter_system_user:
+        User|contains:
+            - AUTHORI
+            - AUTORI
+    filter_wmiprvse:
+        Image|endswith: \WmiPrvSE.exe
+    filter_werfault:
+        Image|endswith: \WerFault.exe
+    filter_null:
+        LogonId: null
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - False positives are expected (e.g. in environments where WinRM is used legitimately)
+level: medium
+ruletype: Sigma

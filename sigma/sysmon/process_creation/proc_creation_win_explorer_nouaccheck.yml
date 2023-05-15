@@ -1,38 +1,33 @@
 title: Explorer NOUACCHECK Flag
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/02/23
+id: 534f2ef7-e8a2-4433-816d-c91bccde289b
+status: test
 description: Detects suspicious starts of explorer.exe that use the /NOUACCHECK flag
     that allows to run all sub processes of that newly started explorer.exe without
     any UAC checks
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\explorer.exe'
-    SELECTION_4:
-        CommandLine: '*/NOUACCHECK*'
-    SELECTION_5:
-        ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
-    SELECTION_6:
-        ParentImage: C:\Windows\System32\svchost.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 or SELECTION_6)))
-falsepositives:
-- Domain Controller User Logon
-- Unknown how many legitimate software products use that method
-id: 534f2ef7-e8a2-4433-816d-c91bccde289b
-level: high
+references:
+    - https://twitter.com/ORCA6665/status/1496478087244095491
+author: Florian Roth (Nextron Systems)
+date: 2022/02/23
+modified: 2022/04/21
+tags:
+    - attack.defense_evasion
+    - attack.t1548.002
 logsource:
     category: process_creation
     product: windows
-modified: 2022/04/21
-references:
-- https://twitter.com/ORCA6665/status/1496478087244095491
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1548.002
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \explorer.exe
+        CommandLine|contains: /NOUACCHECK
+    filter_dc_logon:
+        -   ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
+        -   ParentImage: C:\Windows\System32\svchost.exe
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - Domain Controller User Logon
+    - Unknown how many legitimate software products use that method
+level: high
+ruletype: Sigma

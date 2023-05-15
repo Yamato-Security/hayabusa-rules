@@ -1,36 +1,34 @@
 title: PowerShell Profile Modification
-ruletype: Sigma
-author: HieuTT35, Nasreddine Bencherchali
-date: 2019/10/24
+id: b5b78988-486d-4a80-b991-930eff3ff8bf
+status: test
 description: Detects the creation or modification of a powershell profile which could
     indicate suspicious activity as the profile can be used as a mean of persistence
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename:
-        - '*\Microsoft.PowerShell_profile.ps1'
-        - '*\WindowsPowerShell\profile.ps1'
-        - '*\PowerShell\profile.ps1'
-        - '*\Windows\System32\WindowsPowerShell\v1.0\profile.ps1'
-        - '*\Program Files\PowerShell\7\profile.ps1'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- System administrator creating Powershell profile manually
-id: b5b78988-486d-4a80-b991-930eff3ff8bf
-level: high
-logsource:
-    category: file_event
-    product: windows
-modified: 2022/08/24
 references:
-- https://www.welivesecurity.com/2019/05/29/turla-powershell-usage/
-- https://persistence-info.github.io/Data/powershellprofile.html
-status: test
+    - https://www.welivesecurity.com/2019/05/29/turla-powershell-usage/
+    - https://persistence-info.github.io/Data/powershellprofile.html
+author: HieuTT35, Nasreddine Bencherchali
+date: 2019/10/24
+modified: 2022/08/24
 tags:
-- attack.persistence
-- attack.privilege_escalation
-- attack.t1546.013
-
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1546.013
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|endswith:
+            - \Microsoft.PowerShell_profile.ps1
+            - \WindowsPowerShell\profile.ps1
+            - \PowerShell\profile.ps1
+            - \Windows\System32\WindowsPowerShell\v1.0\profile.ps1
+            - \Program Files\PowerShell\7\profile.ps1
+    condition: file_event and selection
+falsepositives:
+    - System administrator creating Powershell profile manually
+level: high
+ruletype: Sigma

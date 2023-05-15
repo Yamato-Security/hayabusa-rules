@@ -1,30 +1,27 @@
 title: WMI Persistence - Command Line Event Consumer
-ruletype: Sigma
+id: 05936ce2-ee05-4dae-9d03-9a391cf2d2c6
+status: test
+description: Detects WMI command line event consumers
+references:
+    - https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/
 author: Thomas Patzke
 date: 2018/03/07
-description: Detects WMI command line event consumers
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: C:\Windows\System32\wbem\WmiPrvSE.exe
-    SELECTION_4:
-        ImageLoaded: '*\wbemcons.dll'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown (data set is too small; further testing needed)
-id: 05936ce2-ee05-4dae-9d03-9a391cf2d2c6
-level: high
+modified: 2021/11/27
+tags:
+    - attack.t1546.003
+    - attack.persistence
 logsource:
     category: image_load
     product: windows
-modified: 2021/11/27
-references:
-- https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/
-status: test
-tags:
-- attack.t1546.003
-- attack.persistence
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image: C:\Windows\System32\wbem\WmiPrvSE.exe
+        ImageLoaded|endswith: \wbemcons.dll
+    condition: image_load and selection
+falsepositives:
+    - Unknown (data set is too small; further testing needed)
+level: high
+ruletype: Sigma

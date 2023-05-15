@@ -1,43 +1,40 @@
 title: Terminal Service Process Spawn
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2019/05/22
+id: 1012f107-b8f1-4271-af30-5aed2de89b39
+status: test
 description: Detects a process spawned by the terminal service server process (this
     could be an indicator for an exploitation of CVE-2019-0708)
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentCommandLine: '*\svchost.exe*'
-    SELECTION_4:
-        ParentCommandLine: '*termsvcs*'
-    SELECTION_5:
-        Image:
-        - '*\rdpclip.exe'
-        - '*:\Windows\System32\csrss.exe'
-        - '*:\Windows\System32\wininit.exe'
-        - '*:\Windows\System32\winlogon.exe'
-    SELECTION_6:
-        Image: null
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6)))
-falsepositives:
-- Unknown
-id: 1012f107-b8f1-4271-af30-5aed2de89b39
-level: high
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/01/25
 references:
-- https://securingtomorrow.mcafee.com/other-blogs/mcafee-labs/rdp-stands-for-really-do-patch-understanding-the-wormable-rdp-vulnerability-cve-2019-0708/
-status: test
+    - https://securingtomorrow.mcafee.com/other-blogs/mcafee-labs/rdp-stands-for-really-do-patch-understanding-the-wormable-rdp-vulnerability-cve-2019-0708/
+author: Florian Roth (Nextron Systems)
+date: 2019/05/22
+modified: 2023/01/25
 tags:
-- attack.initial_access
-- attack.t1190
-- attack.lateral_movement
-- attack.t1210
-- car.2013-07-002
-
+    - attack.initial_access
+    - attack.t1190
+    - attack.lateral_movement
+    - attack.t1210
+    - car.2013-07-002
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ParentCommandLine|contains|all:
+            - \svchost.exe
+            - termsvcs
+    filter_img:
+        Image|endswith:
+            - \rdpclip.exe
+            - :\Windows\System32\csrss.exe
+            - :\Windows\System32\wininit.exe
+            - :\Windows\System32\winlogon.exe
+    filter_null:
+        Image: null
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,97 +1,82 @@
 title: Potential Defense Evasion Via Raw Disk Access By Uncommon Tools
-ruletype: Sigma
-author: Teymur Kheirkhabarov, oscd.community
-date: 2019/10/22
+id: db809f10-56ce-4420-8c86-d6a7d793c79c
+status: test
 description: Detects raw disk access using uncommon tools, which could indicate possible
     defense evasion attempts
-detection:
-    SELECTION_1:
-        EventID: 9
-    SELECTION_10:
-        Image: '*\MsMpEng.exe'
-    SELECTION_11:
-        Image: '*C:\Users\\*'
-    SELECTION_12:
-        Image: '*\AppData\\*'
-    SELECTION_13:
-        Image: '*\Microsoft\\*'
-    SELECTION_14:
-        Image: C:\Windows\Temp\asgard2-agent\\*
-    SELECTION_15:
-        Image: '*\thor.exe'
-    SELECTION_16:
-        Image: C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost*
-    SELECTION_17:
-        Image: '*\StartMenuExperienceHost.exe'
-    SELECTION_18:
-        Image: C:\$WINDOWS.~BT\Sources\SetupHost.exe
-    SELECTION_19:
-        Image: C:\Windows\SoftwareDistribution\Download*
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        Image: '*\WindowsUpdateBox.exe'
-    SELECTION_21:
-        Image: C:\Users\\*
-    SELECTION_22:
-        Image: '*\AppData\Local\GitHubDesktop\app-*'
-    SELECTION_23:
-        Image: '*\resources\app\git\mingw64\bin\git.exe'
-    SELECTION_24:
-        Image: C:\Windows\Temp\\*
-    SELECTION_25:
-        Image:
-        - '*\HostMetadata\NVMEHostmetadata.exe'
-        - '*\Executables\SSDUpdate.exe'
-    SELECTION_3:
-        Device: '*floppy*'
-    SELECTION_4:
-        Image:
-        - C:\Program Files\\*
-        - C:\Program Files (x86)\\*
-        - C:\Windows\System32\\*
-        - C:\Windows\SystemApps\\*
-        - C:\Windows\WinSxS\\*
-        - C:\Windows\servicing\\*
-        - C:\Windows\CCM\\*
-        - C:\Windows\uus\\*
-    SELECTION_5:
-        ProcessId: 4
-    SELECTION_6:
-        Image:
-        - C:\Windows\UUS\amd64\MoUsoCoreWorker.exe
-        - C:\Windows\explorer.exe
-    SELECTION_7:
-        Image:
-        - System
-        - Registry
-    SELECTION_8:
-        Image: '*\Keybase\upd.exe'
-    SELECTION_9:
-        Image: C:\ProgramData\Microsoft\Windows Defender\Platform\\*
-    condition: ((SELECTION_1 and SELECTION_2) and  not ((SELECTION_3) or (SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13) or (SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17) or (SELECTION_18) or
-        (SELECTION_19 and SELECTION_20) or (SELECTION_21 and SELECTION_22 and SELECTION_23)
-        or (SELECTION_24 and SELECTION_25)))
-falsepositives:
-- Legitimate Administrator using tool for raw access or ongoing forensic investigation
-fields:
-- ComputerName
-- Image
-- ProcessID
-- Device
-id: db809f10-56ce-4420-8c86-d6a7d793c79c
-level: low
-logsource:
-    category: raw_access_thread
-    product: windows
-modified: 2023/01/18
 references:
-- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
-status: test
+    - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+author: Teymur Kheirkhabarov, oscd.community
+date: 2019/10/22
+modified: 2023/01/18
 tags:
-- attack.defense_evasion
-- attack.t1006
-
+    - attack.defense_evasion
+    - attack.t1006
+logsource:
+    product: windows
+    category: raw_access_thread
+detection:
+    raw_access_thread:
+        EventID: 9
+        Channel: Microsoft-Windows-Sysmon/Operational
+    filter_floppy:
+        Device|contains: floppy
+    filter_generic:
+        Image|startswith:
+            - C:\Program Files\
+            - C:\Program Files (x86)\
+            - C:\Windows\System32\
+            - C:\Windows\SystemApps\
+            - C:\Windows\WinSxS\
+            - C:\Windows\servicing\
+            - C:\Windows\CCM\
+            - C:\Windows\uus\
+    filter_system_process:
+        ProcessId: 4
+    filter_specific:
+        Image:
+            - C:\Windows\UUS\amd64\MoUsoCoreWorker.exe
+            - C:\Windows\explorer.exe
+    filter_system_images:
+        Image:
+            - System
+            - Registry
+    filter_Keybase:
+        Image|endswith: \Keybase\upd.exe
+    filter_windefender:
+        Image|startswith: C:\ProgramData\Microsoft\Windows Defender\Platform\
+        Image|endswith: \MsMpEng.exe
+    filter_microsoft_appdata:
+        Image|contains|all:
+            - C:\Users\
+            - \AppData\
+            - \Microsoft\
+    filter_nextron:
+        Image|startswith: C:\Windows\Temp\asgard2-agent\
+        Image|endswith: \thor.exe
+    filter_startmenu_xphost:
+        Image|startswith: C:\Windows\SystemApps\Microsoft.Windows.StartMenuExperienceHost
+        Image|endswith: \StartMenuExperienceHost.exe
+    filter_setuphost:
+        Image: C:\$WINDOWS.~BT\Sources\SetupHost.exe
+    filter_windows_update_box:
+        Image|startswith: C:\Windows\SoftwareDistribution\Download
+        Image|endswith: \WindowsUpdateBox.exe
+    filter_github_desktop:
+        Image|startswith: C:\Users\
+        Image|contains: \AppData\Local\GitHubDesktop\app-
+        Image|endswith: \resources\app\git\mingw64\bin\git.exe
+    filter_ssd_nvme:
+        Image|startswith: C:\Windows\Temp\
+        Image|endswith:
+            - \HostMetadata\NVMEHostmetadata.exe
+            - \Executables\SSDUpdate.exe
+    condition: raw_access_thread and (not 1 of filter_*)
+fields:
+    - ComputerName
+    - Image
+    - ProcessID
+    - Device
+falsepositives:
+    - Legitimate Administrator using tool for raw access or ongoing forensic investigation
+level: low
+ruletype: Sigma

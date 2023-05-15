@@ -1,35 +1,29 @@
 title: Potential Persistence Via Mpnotify
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/21
+id: 92772523-d9c1-4c93-9547-b0ca500baba3
+status: experimental
 description: Detects when an attacker register a new SIP provider for persistence
     and defense evasion
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\mpnotify*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Might trigger if a legitimate new SIP provider is registered. But this is not a
-    common occurrence in an environment and should be investigated either way
-id: 92772523-d9c1-4c93-9547-b0ca500baba3
-level: high
+references:
+    - https://persistence-info.github.io/Data/mpnotify.html
+    - https://www.youtube.com/watch?v=ggY3srD9dYs&ab_channel=GrzegorzTworek
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/21
+modified: 2023/01/10
+tags:
+    - attack.persistence
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
-references:
-- https://persistence-info.github.io/Data/mpnotify.html
-- https://www.youtube.com/watch?v=ggY3srD9dYs&ab_channel=GrzegorzTworek
-status: experimental
-tags:
-- attack.persistence
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\mpnotify
+    condition: registry_set and selection
+falsepositives:
+    - Might trigger if a legitimate new SIP provider is registered. But this is not
+        a common occurrence in an environment and should be investigated either way
+level: high
+ruletype: Sigma

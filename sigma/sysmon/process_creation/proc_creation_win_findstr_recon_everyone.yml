@@ -1,45 +1,40 @@
 title: Permission Misconfiguration Reconnaissance Via Findstr.EXE
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/08/12
+id: 47e4bab7-c626-47dc-967b-255608c9a920
+status: experimental
 description: Detects usage of findstr with the "EVERYONE" or "BUILTIN" keywords. This
     is seen being used in combination with "icacls" to look for misconfigured files
     or folders permissions
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\findstr.exe'
-    SELECTION_4:
-        OriginalFileName: FINDSTR.EXE
-    SELECTION_5:
-        CommandLine:
-        - '*"Everyone"*'
-        - '*''Everyone''*'
-        - '*"BUILTIN\\"*'
-        - '*''BUILTIN\''*'
-    SELECTION_6:
-        CommandLine: '*icacls *'
-    SELECTION_7:
-        CommandLine: '*findstr *'
-    SELECTION_8:
-        CommandLine: '*Everyone*'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Unknown
-id: 47e4bab7-c626-47dc-967b-255608c9a920
-level: medium
+references:
+    - https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/12
+modified: 2023/03/05
+tags:
+    - attack.credential_access
+    - attack.t1552.006
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/05
-references:
-- https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1552.006
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_findstr_img:
+        -   Image|endswith: \findstr.exe
+        -   OriginalFileName: FINDSTR.EXE
+    selection_findstr_cli:
+        CommandLine|contains:
+            - '"Everyone"'
+            - '''Everyone'''
+            - '"BUILTIN\\"'
+            - '''BUILTIN\'''
+    selection_special:
+        CommandLine|contains|all:
+            - 'icacls '
+            - 'findstr '
+            - Everyone
+    condition: process_creation and (all of selection_findstr_* or selection_special)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

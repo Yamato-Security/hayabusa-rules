@@ -1,144 +1,106 @@
 title: Suspicious Rundll32 Activity
-ruletype: Sigma
+id: e593cf51-88db-4ee1-b920-37e89012a3c9
+status: test
+description: Detects suspicious process related to rundll32 based on arguments
+references:
+    - http://www.hexacorn.com/blog/2017/05/01/running-programs-via-proxy-jumping-on-a-edr-bypass-trampoline/
+    - https://twitter.com/Hexacorn/status/885258886428725250
+    - https://gist.github.com/ryhanson/227229866af52e2d963cf941af135a52
+    - https://twitter.com/nas_bench/status/1433344116071583746
+    - https://twitter.com/eral4m/status/1479106975967240209
+    - https://twitter.com/eral4m/status/1479080793003671557
 author: juju4, Jonhnathan Ribeiro, oscd.community, Nasreddine Bencherchali
 date: 2019/01/16
-description: Detects suspicious process related to rundll32 based on arguments
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        CommandLine: '*FileProtocolHandler*'
-    SELECTION_11:
-        CommandLine: '*zipfldr.dll*'
-    SELECTION_12:
-        CommandLine: '*RouteTheCall*'
-    SELECTION_13:
-        CommandLine: '*shell32.dll*'
-    SELECTION_14:
-        CommandLine: '*Control_RunDLL*'
-    SELECTION_15:
-        CommandLine: '*shell32.dll*'
-    SELECTION_16:
-        CommandLine: '*ShellExec_RunDLL*'
-    SELECTION_17:
-        CommandLine: '*mshtml.dll*'
-    SELECTION_18:
-        CommandLine: '*PrintHTML*'
-    SELECTION_19:
-        CommandLine: '*advpack.dll*'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        CommandLine: '*LaunchINFSection*'
-    SELECTION_21:
-        CommandLine: '*advpack.dll*'
-    SELECTION_22:
-        CommandLine: '*RegisterOCX*'
-    SELECTION_23:
-        CommandLine: '*ieadvpack.dll*'
-    SELECTION_24:
-        CommandLine: '*LaunchINFSection*'
-    SELECTION_25:
-        CommandLine: '*ieadvpack.dll*'
-    SELECTION_26:
-        CommandLine: '*RegisterOCX*'
-    SELECTION_27:
-        CommandLine: '*ieframe.dll*'
-    SELECTION_28:
-        CommandLine: '*OpenURL*'
-    SELECTION_29:
-        CommandLine: '*shdocvw.dll*'
-    SELECTION_3:
-        CommandLine: '*javascript:*'
-    SELECTION_30:
-        CommandLine: '*OpenURL*'
-    SELECTION_31:
-        CommandLine: '*syssetup.dll*'
-    SELECTION_32:
-        CommandLine: '*SetupInfObjectInstallAction*'
-    SELECTION_33:
-        CommandLine: '*setupapi.dll*'
-    SELECTION_34:
-        CommandLine: '*InstallHinfSection*'
-    SELECTION_35:
-        CommandLine: '*pcwutl.dll*'
-    SELECTION_36:
-        CommandLine: '*LaunchApplication*'
-    SELECTION_37:
-        CommandLine: '*dfshim.dll*'
-    SELECTION_38:
-        CommandLine: '*ShOpenVerbApplication*'
-    SELECTION_39:
-        CommandLine: '*dfshim.dll*'
-    SELECTION_4:
-        CommandLine: '*.RegisterXLL*'
-    SELECTION_40:
-        CommandLine: '*ShOpenVerbShortcut*'
-    SELECTION_41:
-        CommandLine: '*scrobj.dll*'
-    SELECTION_42:
-        CommandLine: '*GenerateTypeLib*'
-    SELECTION_43:
-        CommandLine: '*http*'
-    SELECTION_44:
-        CommandLine: '*shimgvw.dll*'
-    SELECTION_45:
-        CommandLine: '*ImageView_Fullscreen*'
-    SELECTION_46:
-        CommandLine: '*http*'
-    SELECTION_47:
-        CommandLine: '*shell32.dll,Control_RunDLL desk.cpl,screensaver,@screensaver*'
-    SELECTION_48:
-        ParentImage: C:\Windows\System32\control.exe
-    SELECTION_49:
-        ParentCommandLine: '*.cpl*'
-    SELECTION_5:
-        CommandLine: '*url.dll*'
-    SELECTION_50:
-        ParentImage: C:\Windows\System32\control.exe
-    SELECTION_51:
-        CommandLine: '"C:\Windows\system32\rundll32.exe" Shell32.dll,Control_RunDLL
-            "C:\Windows\System32\\*'
-    SELECTION_52:
-        CommandLine: '*.cpl",'
-    SELECTION_6:
-        CommandLine: '*OpenURL*'
-    SELECTION_7:
-        CommandLine: '*url.dll*'
-    SELECTION_8:
-        CommandLine: '*OpenURLA*'
-    SELECTION_9:
-        CommandLine: '*url.dll*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
-        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)
-        or (SELECTION_19 and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23
-        and SELECTION_24) or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and
-        SELECTION_28) or (SELECTION_29 and SELECTION_30) or (SELECTION_31 and SELECTION_32)
-        or (SELECTION_33 and SELECTION_34) or (SELECTION_35 and SELECTION_36) or (SELECTION_37
-        and SELECTION_38) or (SELECTION_39 and SELECTION_40) or (SELECTION_41 and
-        SELECTION_42 and SELECTION_43) or (SELECTION_44 and SELECTION_45 and SELECTION_46))
-        and  not ((SELECTION_47) or (SELECTION_48 and SELECTION_49) or (SELECTION_50
-        and SELECTION_51 and SELECTION_52)))
-falsepositives:
-- False positives depend on scripts and administrative tools used in the monitored
-    environment
-id: e593cf51-88db-4ee1-b920-37e89012a3c9
-level: medium
+modified: 2022/11/22
+tags:
+    - attack.defense_evasion
+    - attack.t1218.011
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/22
-references:
-- http://www.hexacorn.com/blog/2017/05/01/running-programs-via-proxy-jumping-on-a-edr-bypass-trampoline/
-- https://twitter.com/Hexacorn/status/885258886428725250
-- https://gist.github.com/ryhanson/227229866af52e2d963cf941af135a52
-- https://twitter.com/nas_bench/status/1433344116071583746
-- https://twitter.com/eral4m/status/1479106975967240209
-- https://twitter.com/eral4m/status/1479080793003671557
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218.011
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   CommandLine|contains|all:
+                - 'javascript:'
+                - .RegisterXLL
+        -   CommandLine|contains|all:
+                - url.dll
+                - OpenURL
+        -   CommandLine|contains|all:
+                - url.dll
+                - OpenURLA
+        -   CommandLine|contains|all:
+                - url.dll
+                - FileProtocolHandler
+        -   CommandLine|contains|all:
+                - zipfldr.dll
+                - RouteTheCall
+        -   CommandLine|contains|all:
+                - shell32.dll
+                - Control_RunDLL
+        -   CommandLine|contains|all:
+                - shell32.dll
+                - ShellExec_RunDLL
+        -   CommandLine|contains|all:
+                - mshtml.dll
+                - PrintHTML
+        -   CommandLine|contains|all:
+                - advpack.dll
+                - LaunchINFSection
+        -   CommandLine|contains|all:
+                - advpack.dll
+                - RegisterOCX
+        -   CommandLine|contains|all:
+                - ieadvpack.dll
+                - LaunchINFSection
+        -   CommandLine|contains|all:
+                - ieadvpack.dll
+                - RegisterOCX
+        -   CommandLine|contains|all:
+                - ieframe.dll
+                - OpenURL
+        -   CommandLine|contains|all:
+                - shdocvw.dll
+                - OpenURL
+        -   CommandLine|contains|all:
+                - syssetup.dll
+                - SetupInfObjectInstallAction
+        -   CommandLine|contains|all:
+                - setupapi.dll
+                - InstallHinfSection
+        -   CommandLine|contains|all:
+                - pcwutl.dll
+                - LaunchApplication
+        -   CommandLine|contains|all:
+                - dfshim.dll
+                - ShOpenVerbApplication
+        -   CommandLine|contains|all:
+                - dfshim.dll
+                - ShOpenVerbShortcut
+        -   CommandLine|contains|all:
+                - scrobj.dll
+                - GenerateTypeLib
+                - http
+        -   CommandLine|contains|all:
+                - shimgvw.dll
+                - ImageView_Fullscreen
+                - http
+    filter:
+        CommandLine|contains: shell32.dll,Control_RunDLL desk.cpl,screensaver,@screensaver
+    filter_parent:
+        ParentImage: C:\Windows\System32\control.exe
+        ParentCommandLine|contains: .cpl
+    filter_startmenu:
+        ParentImage: C:\Windows\System32\control.exe
+        CommandLine|startswith: '"C:\Windows\system32\rundll32.exe" Shell32.dll,Control_RunDLL
+            "C:\Windows\System32\'
+        CommandLine|endswith: .cpl",
+    condition: process_creation and (selection and not 1 of filter*)
+falsepositives:
+    - False positives depend on scripts and administrative tools used in the monitored
+        environment
+level: medium
+ruletype: Sigma

@@ -1,37 +1,34 @@
 title: Potential PrintNightmare Exploitation Attempt
-ruletype: Sigma
-author: Bhabesh Raj
-date: 2021/07/01
+id: 5b2bbc47-dead-4ef7-8908-0cf73fcbecbf
+status: experimental
 description: Detect DLL deletions from Spooler Service driver folder. This might be
     a potential exploitation attempt of CVE-2021-1675
-detection:
-    SELECTION_1:
-        EventID: 23
-    SELECTION_2:
-        EventID: 26
-    SELECTION_3:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_4:
-        Image: '*\spoolsv.exe'
-    SELECTION_5:
-        TargetFilename: '*C:\Windows\System32\spool\drivers\x64\3\\*'
-    condition: ((SELECTION_1 or SELECTION_2) and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: 5b2bbc47-dead-4ef7-8908-0cf73fcbecbf
-level: high
+references:
+    - https://github.com/hhlxf/PrintNightmare
+    - https://github.com/cube0x0/CVE-2021-1675
+author: Bhabesh Raj
+date: 2021/07/01
+modified: 2023/02/17
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1574
+    - cve.2021.1675
 logsource:
     category: file_delete
     product: windows
-modified: 2023/02/17
-references:
-- https://github.com/hhlxf/PrintNightmare
-- https://github.com/cube0x0/CVE-2021-1675
-status: experimental
-tags:
-- attack.persistence
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1574
-- cve.2021.1675
-
+detection:
+    file_delete:
+        EventID:
+            - 23
+            - 26
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \spoolsv.exe
+        TargetFilename|contains: C:\Windows\System32\spool\drivers\x64\3\
+    condition: file_delete and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

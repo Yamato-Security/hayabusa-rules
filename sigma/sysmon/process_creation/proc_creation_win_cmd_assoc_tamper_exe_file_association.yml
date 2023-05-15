@@ -1,7 +1,9 @@
 title: Change Default File Association To Executable Via Assoc
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/06/28
+id: ae6f14e6-14de-45b0-9f44-c0986f50dc89
+related:
+    -   id: 3d3aa6cd-6272-44d6-8afc-7e88dfef7061
+        type: derived
+status: experimental
 description: 'Detects when a program changes the default file association of any extension
     to an executable.
 
@@ -13,38 +15,32 @@ description: 'Detects when a program changes the default file association of any
     an arbitrary program when a file with the given extension is opened.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\cmd.exe'
-    SELECTION_4:
-        OriginalFileName: Cmd.Exe
-    SELECTION_5:
-        CommandLine: '*assoc *'
-    SELECTION_6:
-        CommandLine: '*exefile*'
-    SELECTION_7:
-        CommandLine: '*.exe=exefile*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6)) and  not (SELECTION_7))
-falsepositives:
-- Unknown
-id: ae6f14e6-14de-45b0-9f44-c0986f50dc89
-level: high
+references:
+    - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/assoc
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/06/28
+modified: 2023/03/06
+tags:
+    - attack.persistence
+    - attack.t1546.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/06
-references:
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/assoc
-related:
--   id: 3d3aa6cd-6272-44d6-8afc-7e88dfef7061
-    type: derived
-status: experimental
-tags:
-- attack.persistence
-- attack.t1546.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \cmd.exe
+        -   OriginalFileName: Cmd.Exe
+    selection_cli:
+        CommandLine|contains|all:
+            - 'assoc '
+            - exefile
+    filter:
+        CommandLine|contains: .exe=exefile
+    condition: process_creation and (all of selection_* and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

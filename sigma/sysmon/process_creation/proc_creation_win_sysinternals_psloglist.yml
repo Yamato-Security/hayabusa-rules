@@ -1,57 +1,53 @@
 title: Suspicious Use of PsLogList
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2021/12/18
+id: aae1243f-d8af-40d8-ab20-33fc6d0c55bc
+status: experimental
 description: Detects usage of the PsLogList utility to dump event log in order to
     extract admin accounts and perform account discovery or delete events logs
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        OriginalFileName: psloglist.exe
-    SELECTION_4:
-        Image:
-        - '*\psloglist.exe'
-        - '*\psloglist64.exe'
-    SELECTION_5:
-        CommandLine:
-        - '* security*'
-        - '* application*'
-        - '* system*'
-    SELECTION_6:
-        CommandLine:
-        - '* -d*'
-        - '* /d*'
-        - '* -x*'
-        - '* /x*'
-        - '* -s*'
-        - '* /s*'
-        - '* -c*'
-        - '* /c*'
-        - '* -g*'
-        - '* /g*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- Another tool that uses the command line switches of PsLogList
-- Legitimate use of PsLogList by an administrator
-id: aae1243f-d8af-40d8-ab20-33fc6d0c55bc
-level: medium
+references:
+    - https://research.nccgroup.com/2021/01/12/abusing-cloud-services-to-fly-under-the-radar/
+    - https://www.cybereason.com/blog/deadringer-exposing-chinese-threat-actors-targeting-major-telcos
+    - https://github.com/3CORESec/MAL-CL/tree/master/Descriptors/Sysinternals/PsLogList
+    - https://twitter.com/EricaZelic/status/1614075109827874817
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2021/12/18
+modified: 2023/01/16
+tags:
+    - attack.discovery
+    - attack.t1087
+    - attack.t1087.001
+    - attack.t1087.002
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/16
-references:
-- https://research.nccgroup.com/2021/01/12/abusing-cloud-services-to-fly-under-the-radar/
-- https://www.cybereason.com/blog/deadringer-exposing-chinese-threat-actors-targeting-major-telcos
-- https://github.com/3CORESec/MAL-CL/tree/master/Descriptors/Sysinternals/PsLogList
-- https://twitter.com/EricaZelic/status/1614075109827874817
-status: experimental
-tags:
-- attack.discovery
-- attack.t1087
-- attack.t1087.001
-- attack.t1087.002
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   OriginalFileName: psloglist.exe
+        -   Image|endswith:
+                - \psloglist.exe
+                - \psloglist64.exe
+    selection_cli_eventlog:
+        CommandLine|contains:
+            - ' security'
+            - ' application'
+            - ' system'
+    selection_cli_flags:
+        CommandLine|contains:
+            - ' -d'
+            - ' /d'
+            - ' -x'
+            - ' /x'
+            - ' -s'
+            - ' /s'
+            - ' -c'
+            - ' /c'
+            - ' -g'
+            - ' /g'
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Another tool that uses the command line switches of PsLogList
+    - Legitimate use of PsLogList by an administrator
+level: medium
+ruletype: Sigma

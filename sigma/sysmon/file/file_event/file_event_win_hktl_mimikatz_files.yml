@@ -1,35 +1,33 @@
 title: Mimikatz Kirbi File Creation
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), David ANDRE
-date: 2021/11/08
+id: 9e099d99-44c2-42b6-a6d8-54c3545cab29
+related:
+    -   id: 034affe8-6170-11ec-844f-0f78aa0c4d66
+        type: obsoletes
+status: test
 description: Detects the creation of files created by mimikatz such as ".kirbi", "mimilsa.log",
     etc.
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename:
-        - '*.kirbi'
-        - '*mimilsa.log'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unlikely
-id: 9e099d99-44c2-42b6-a6d8-54c3545cab29
-level: critical
+references:
+    - https://cobalt.io/blog/kerberoast-attack-techniques
+    - https://pentestlab.blog/2019/10/21/persistence-security-support-provider/
+author: Florian Roth (Nextron Systems), David ANDRE
+date: 2021/11/08
+modified: 2023/02/16
+tags:
+    - attack.credential_access
+    - attack.t1558
 logsource:
     category: file_event
     product: windows
-modified: 2023/02/16
-references:
-- https://cobalt.io/blog/kerberoast-attack-techniques
-- https://pentestlab.blog/2019/10/21/persistence-security-support-provider/
-related:
--   id: 034affe8-6170-11ec-844f-0f78aa0c4d66
-    type: obsoletes
-status: test
-tags:
-- attack.credential_access
-- attack.t1558
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|endswith:
+            - .kirbi
+            - mimilsa.log
+    condition: file_event and selection
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

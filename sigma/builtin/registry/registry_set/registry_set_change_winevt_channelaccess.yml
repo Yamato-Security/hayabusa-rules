@@ -1,48 +1,39 @@
 title: Change Winevt Event Access Permission Via Registry
-ruletype: Sigma
-author: frack113
-date: 2022/09/17
+id: 7d9263bd-dc47-4a58-bc92-5474abab390c
+status: experimental
 description: Detects tampering with the "ChannelAccess" registry key in order to change
     access to windows event channel
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels\\*
-    SELECTION_6:
-        TargetObject: '*\ChannelAccess'
-    SELECTION_7:
-        NewValue:
-        - '*(A;;0x1;;;SY)*'
-        - '*(A;;0x5;;;BA)*'
-        - '*(A;;0x1;;;LA)*'
-    SELECTION_8:
-        NewProcessName: C:\Windows\servicing\TrustedInstaller.exe
-    SELECTION_9:
-        NewProcessName: '*\TiWorker.exe'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8) or (SELECTION_9)))
-falsepositives:
-- Unknown
-id: 7d9263bd-dc47-4a58-bc92-5474abab390c
-level: high
+references:
+    - https://app.any.run/tasks/77b2e328-8f36-46b2-b2e2-8a80398217ab/
+    - https://learn.microsoft.com/en-us/windows/win32/api/winevt/
+    - https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/
+author: frack113
+date: 2022/09/17
+modified: 2022/09/29
+tags:
+    - attack.defense_evasion
+    - attack.t1562.002
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/29
-references:
-- https://app.any.run/tasks/77b2e328-8f36-46b2-b2e2-8a80398217ab/
-- https://learn.microsoft.com/en-us/windows/win32/api/winevt/
-- https://itconnect.uw.edu/tools-services-support/it-systems-infrastructure/msinf/other-help/understanding-sddl-syntax/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562.002
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|startswith: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels\
+        TargetObject|endswith: \ChannelAccess
+        Details|contains:
+            - (A;;0x1;;;SY)
+            - (A;;0x5;;;BA)
+            - (A;;0x1;;;LA)
+    filter_trustedinstaller:
+        Image: C:\Windows\servicing\TrustedInstaller.exe
+    filter_ti_worker:
+        Image|endswith: \TiWorker.exe
+    condition: registry_set and (selection and not 1 of filter*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

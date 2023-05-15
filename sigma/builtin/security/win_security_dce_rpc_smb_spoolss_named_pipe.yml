@@ -1,34 +1,31 @@
 title: DCERPC SMB Spoolss Named Pipe
-ruletype: Sigma
-author: OTR (Open Threat Research)
-date: 2018/11/28
+id: 214e8f95-100a-4e04-bb31-ef6cba8ce07e
+status: test
 description: Detects the use of the spoolss named pipe over SMB. This can be used
     to trigger the authentication via NTLM of any machine that has the spoolservice
     enabled.
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 5145
-    SELECTION_3:
-        ShareName: \\\\\*\\IPC$
-    SELECTION_4:
-        RelativeTargetName: spoolss
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Domain Controllers acting as printer servers too? :)
-id: 214e8f95-100a-4e04-bb31-ef6cba8ce07e
-level: medium
+references:
+    - https://posts.specterops.io/hunting-in-active-directory-unconstrained-delegation-forests-trusts-71f2b33688e1
+    - https://dirkjanm.io/a-different-way-of-abusing-zerologon/
+    - https://twitter.com/_dirkjan/status/1309214379003588608
+author: OTR (Open Threat Research)
+date: 2018/11/28
+modified: 2022/08/11
+tags:
+    - attack.lateral_movement
+    - attack.t1021.002
 logsource:
     product: windows
     service: security
-modified: 2022/08/11
-references:
-- https://posts.specterops.io/hunting-in-active-directory-unconstrained-delegation-forests-trusts-71f2b33688e1
-- https://dirkjanm.io/a-different-way-of-abusing-zerologon/
-- https://twitter.com/_dirkjan/status/1309214379003588608
-status: test
-tags:
-- attack.lateral_movement
-- attack.t1021.002
-
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 5145
+        ShareName: \\\\\*\\IPC$
+        RelativeTargetName: spoolss
+    condition: security and selection
+falsepositives:
+    - Domain Controllers acting as printer servers too? :)
+level: medium
+ruletype: Sigma

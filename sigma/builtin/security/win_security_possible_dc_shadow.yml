@@ -1,28 +1,23 @@
 title: Possible DC Shadow Attack
-ruletype: Sigma
+id: 32e19d25-4aed-4860-a55a-be99cb0bf7ed
+related:
+    -   id: 611eab06-a145-4dfa-a295-3ccc5c20f59a
+        type: derived
+status: experimental
+description: Detects DCShadow via create new SPN
+references:
+    - https://twitter.com/gentilkiwi/status/1003236624925413376
+    - https://gist.github.com/gentilkiwi/dcc132457408cf11ad2061340dcb53c2
+    - https://blog.alsid.eu/dcshadow-explained-4510f52fc19d
 author: Ilyas Ochkov, oscd.community, Chakib Gzenayi (@Chak092), Hosni Mribah
 date: 2019/10/25
-description: Detects DCShadow via create new SPN
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4742
-    SELECTION_3:
-        ServicePrincipalNames: '*GC/*'
-    SELECTION_4:
-        EventID: 5136
-    SELECTION_5:
-        AttributeLDAPDisplayName: servicePrincipalName
-    SELECTION_6:
-        AttributeValue: GC/*
-    condition: (SELECTION_1 and ((SELECTION_2 and SELECTION_3) or (SELECTION_4 and
-        SELECTION_5 and SELECTION_6)))
-falsepositives:
-- Valid on domain controllers; exclude known DCs
-id: 32e19d25-4aed-4860-a55a-be99cb0bf7ed
-level: medium
+modified: 2022/10/17
+tags:
+    - attack.credential_access
+    - attack.t1207
 logsource:
+    product: windows
+    service: security
     definition: The "Audit Directory Service Changes" logging policy must be configured
         in order to receive events. Audit events are generated only for objects with
         configured system access control lists (SACLs). Audit events are generated
@@ -31,18 +26,18 @@ logsource:
         the following events ids - 5136, 5137, 5138, 5139, 5141. Note that the default
         policy does not cover User objects. For that a custom AuditRule need to be
         setup (See https://github.com/OTRF/Set-AuditRule)
-    product: windows
-    service: security
-modified: 2022/10/17
-references:
-- https://twitter.com/gentilkiwi/status/1003236624925413376
-- https://gist.github.com/gentilkiwi/dcc132457408cf11ad2061340dcb53c2
-- https://blog.alsid.eu/dcshadow-explained-4510f52fc19d
-related:
--   id: 611eab06-a145-4dfa-a295-3ccc5c20f59a
-    type: derived
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1207
-
+detection:
+    security:
+        Channel: Security
+    selection1:
+        EventID: 4742
+        ServicePrincipalNames|contains: GC/
+    selection2:
+        EventID: 5136
+        AttributeLDAPDisplayName: servicePrincipalName
+        AttributeValue|startswith: GC/
+    condition: security and (1 of selection*)
+falsepositives:
+    - Valid on domain controllers; exclude known DCs
+level: medium
+ruletype: Sigma

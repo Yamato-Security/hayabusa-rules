@@ -1,43 +1,38 @@
 title: Windows Update Client LOLBIN
-ruletype: Sigma
+id: d7825193-b70a-48a4-b992-8b5b3015cc11
+status: experimental
+description: Detects code execution via the Windows Update client (wuauclt)
+references:
+    - https://dtm.uk/wuauclt/
 author: FPT.EagleEye Team
 date: 2020/10/17
-description: Detects code execution via the Windows Update client (wuauclt)
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\wuauclt.exe'
-    SELECTION_4:
-        OriginalFileName: wuauclt.exe
-    SELECTION_5:
-        CommandLine: '*/UpdateDeploymentProvider*'
-    SELECTION_6:
-        CommandLine: '*/RunHandlerComServer*'
-    SELECTION_7:
-        CommandLine: '*.dll*'
-    SELECTION_8:
-        CommandLine:
-        - '* /ClassId *'
-        - '* wuaueng.dll *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7)) and  not (SELECTION_8))
-falsepositives:
-- Unknown
-id: d7825193-b70a-48a4-b992-8b5b3015cc11
-level: high
-logsource:
-    category: process_creation
-    product: windows
 modified: 2022/05/13
-references:
-- https://dtm.uk/wuauclt/
-status: experimental
 tags:
-- attack.command_and_control
-- attack.execution
-- attack.t1105
-- attack.t1218
-
+    - attack.command_and_control
+    - attack.execution
+    - attack.t1105
+    - attack.t1218
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \wuauclt.exe
+        -   OriginalFileName: wuauclt.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - /UpdateDeploymentProvider
+            - /RunHandlerComServer
+            - .dll
+    filter:
+        CommandLine|contains:
+            - ' /ClassId '
+            - ' wuaueng.dll '
+    condition: process_creation and (all of selection* and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma
