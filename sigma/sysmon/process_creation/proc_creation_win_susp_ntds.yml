@@ -1,79 +1,71 @@
 title: Suspicious Process Patterns NTDS.DIT Exfil
-ruletype: Sigma
+id: 8bc64091-6875-4881-aaf9-7bd25b5dda08
+status: experimental
+description: Detects suspicious process patterns used in NTDS.DIT exfiltration
+references:
+    - https://www.ired.team/offensive-security/credential-access-and-credential-dumping/ntds.dit-enumeration
+    - https://www.n00py.io/2022/03/manipulating-user-passwords-without-mimikatz/
+    - https://pentestlab.blog/tag/ntds-dit/
+    - https://github.com/samratashok/nishang/blob/414ee1104526d7057f9adaeee196d91ae447283e/Gather/Copy-VSS.ps1
+    - https://github.com/zcgonvh/NTDSDumpEx
+    - https://github.com/rapid7/metasploit-framework/blob/d297adcebb5c1df6fe30b12ca79b161deb71571c/data/post/powershell/NTDSgrab.ps1
+    - https://blog.talosintelligence.com/2022/08/recent-cyber-attack.html?m=1
 author: Florian Roth (Nextron Systems)
 date: 2022/03/11
-description: Detects suspicious process patterns used in NTDS.DIT exfiltration
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        CommandLine: '*\windows\ntds\ntds.dit*'
-    SELECTION_11:
-        CommandLine: '*activate instance ntds*'
-    SELECTION_12:
-        CommandLine: '*create full*'
-    SELECTION_13:
-        CommandLine: '*powershell*'
-    SELECTION_14:
-        CommandLine: '*ntds.dit*'
-    SELECTION_15:
-        CommandLine: '*ntds.dit*'
-    SELECTION_16:
-        ParentImage:
-        - '*\apache*'
-        - '*\tomcat*'
-        - '*\AppData\\*'
-        - '*\Temp\\*'
-        - '*\Public\\*'
-        - '*\PerfLogs\\*'
-    SELECTION_17:
-        Image:
-        - '*\apache*'
-        - '*\tomcat*'
-        - '*\AppData\\*'
-        - '*\Temp\\*'
-        - '*\Public\\*'
-        - '*\PerfLogs\\*'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\NTDSDump.exe'
-        - '*\NTDSDumpEx.exe'
-    SELECTION_4:
-        CommandLine: '*ntds.dit*'
-    SELECTION_5:
-        CommandLine: '*system.hiv*'
-    SELECTION_6:
-        CommandLine: '*NTDSgrab.ps1*'
-    SELECTION_7:
-        CommandLine: '*ac i ntds*'
-    SELECTION_8:
-        CommandLine: '*create full*'
-    SELECTION_9:
-        CommandLine: '*/c copy *'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or (SELECTION_4 and
-        SELECTION_5) or SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
-        SELECTION_14)) or (SELECTION_15 and (SELECTION_16 or SELECTION_17))))
-falsepositives:
-- Unknown
-id: 8bc64091-6875-4881-aaf9-7bd25b5dda08
-level: high
-logsource:
-    category: process_creation
-    product: windows
 modified: 2022/11/10
-references:
-- https://www.ired.team/offensive-security/credential-access-and-credential-dumping/ntds.dit-enumeration
-- https://www.n00py.io/2022/03/manipulating-user-passwords-without-mimikatz/
-- https://pentestlab.blog/tag/ntds-dit/
-- https://github.com/samratashok/nishang/blob/414ee1104526d7057f9adaeee196d91ae447283e/Gather/Copy-VSS.ps1
-- https://github.com/zcgonvh/NTDSDumpEx
-- https://github.com/rapid7/metasploit-framework/blob/d297adcebb5c1df6fe30b12ca79b161deb71571c/data/post/powershell/NTDSgrab.ps1
-- https://blog.talosintelligence.com/2022/08/recent-cyber-attack.html?m=1
-status: experimental
 tags:
-- attack.credential_access
-- attack.t1003.003
-
+    - attack.credential_access
+    - attack.t1003.003
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_tool:
+        -   Image|endswith:
+                - \NTDSDump.exe
+                - \NTDSDumpEx.exe
+        -   CommandLine|contains|all:
+                - ntds.dit
+                - system.hiv
+        -   CommandLine|contains: NTDSgrab.ps1
+    selection_oneliner_1:
+        CommandLine|contains|all:
+            - ac i ntds
+            - create full
+    selection_onliner_2:
+        CommandLine|contains|all:
+            - '/c copy '
+            - \windows\ntds\ntds.dit
+    selection_onliner_3:
+        CommandLine|contains|all:
+            - activate instance ntds
+            - create full
+    selection_powershell:
+        CommandLine|contains|all:
+            - powershell
+            - ntds.dit
+    set1_selection_ntds_dit:
+        CommandLine|contains: ntds.dit
+    set1_selection_image_folder:
+        -   ParentImage|contains:
+                - \apache
+                - \tomcat
+                - \AppData\
+                - \Temp\
+                - \Public\
+                - \PerfLogs\
+        -   Image|contains:
+                - \apache
+                - \tomcat
+                - \AppData\
+                - \Temp\
+                - \Public\
+                - \PerfLogs\
+    condition: process_creation and (1 of selection* or all of set1*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

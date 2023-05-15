@@ -1,36 +1,32 @@
 title: Fax Service DLL Search Order Hijack
-ruletype: Sigma
-author: NVISO
-date: 2020/05/04
+id: 828af599-4c53-4ed2-ba4a-a9f835c434ea
+status: test
 description: The Fax service attempts to load ualapi.dll, which is non-existent. An
     attacker can then (side)load their own malicious DLL using this service.
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\fxssvc.exe'
-    SELECTION_4:
-        ImageLoaded: '*ualapi.dll'
-    SELECTION_5:
-        ImageLoaded: C:\Windows\WinSxS\\*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Unlikely
-id: 828af599-4c53-4ed2-ba4a-a9f835c434ea
-level: high
+references:
+    - https://windows-internals.com/faxing-your-way-to-system/
+author: NVISO
+date: 2020/05/04
+modified: 2022/06/02
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.t1574.001
+    - attack.t1574.002
 logsource:
     category: image_load
     product: windows
-modified: 2022/06/02
-references:
-- https://windows-internals.com/faxing-your-way-to-system/
-status: test
-tags:
-- attack.persistence
-- attack.defense_evasion
-- attack.t1574.001
-- attack.t1574.002
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \fxssvc.exe
+        ImageLoaded|endswith: ualapi.dll
+    filter:
+        ImageLoaded|startswith: C:\Windows\WinSxS\
+    condition: image_load and (selection and not filter)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

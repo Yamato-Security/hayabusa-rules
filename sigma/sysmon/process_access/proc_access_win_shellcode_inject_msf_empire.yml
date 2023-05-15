@@ -1,80 +1,60 @@
 title: Potential Shellcode Injection
-ruletype: Sigma
-author: Bhabesh Raj
-date: 2022/03/11
+id: 250ae82f-736e-4844-a68b-0b5e8cc887da
+status: experimental
 description: Detects potential shellcode injection used by tools such as Metasploit's
     migrate and Empire's psinject
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_10:
-        TargetImage: C:\Windows\Explorer.EXE
-    SELECTION_11:
-        GrantedAccess: '0x1F3FFF'
-    SELECTION_12:
-        CallTrace: C:\Windows\System32\ntdll.dll*
-    SELECTION_13:
-        SourceImage:
-        - C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\PerfWatson2.exe
-        - C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\PerfWatson2.exe
-    SELECTION_14:
-        TargetImage:
-        - C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.exe
-        - C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.exe
-    SELECTION_15:
-        CallTrace: C:\Windows\System32\ntdll.dll*
-    SELECTION_16:
-        SourceImage: C:\Program Files\Microsoft Visual Studio\\*
-    SELECTION_17:
-        SourceImage: '*\MSBuild\Current\Bin\MSBuild.exe'
-    SELECTION_18:
-        TargetImage: C:\Program Files\Dell\DellDataVault\DDVDataCollector.exe
-    SELECTION_19:
-        SourceImage: C:\Windows\System32\Wbem\Wmiprvse.exe
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        TargetImage: C:\Windows\system32\lsass.exe
-    SELECTION_21:
-        CallTrace: C:\Windows\SYSTEM32\ntdll.dll*
-    SELECTION_22:
-        CallTrace: '*\System.ni.dll+*'
-    SELECTION_3:
-        GrantedAccess:
-        - '0x147a'
-        - '0x1f3fff'
-    SELECTION_4:
-        CallTrace: '*UNKNOWN*'
-    SELECTION_5:
-        SourceImage:
-        - C:\Program Files\Dell\\*
-        - C:\Program Files (x86)\Dell\\*
-    SELECTION_6:
-        TargetImage:
-        - C:\Program Files\Dell\\*
-        - C:\Program Files (x86)\Dell\\*
-    SELECTION_7:
-        GrantedAccess: '0x1F3FFF'
-    SELECTION_8:
-        CallTrace: C:\Windows\System32\ntdll.dll*
-    SELECTION_9:
-        SourceImage: C:\Program Files (x86)\Dell\UpdateService\ServiceShell.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19
-        and SELECTION_20 and SELECTION_21 and SELECTION_22)))
-falsepositives:
-- Unknown
-id: 250ae82f-736e-4844-a68b-0b5e8cc887da
-level: high
+author: Bhabesh Raj
+date: 2022/03/11
+modified: 2022/12/20
+tags:
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1055
 logsource:
     category: process_access
     product: windows
-modified: 2022/12/20
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1055
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        GrantedAccess:
+            - '0x147a'
+            - '0x1f3fff'
+        CallTrace|contains: UNKNOWN
+    filter_dell_folders:
+        SourceImage|startswith:
+            - C:\Program Files\Dell\
+            - C:\Program Files (x86)\Dell\
+        TargetImage|startswith:
+            - C:\Program Files\Dell\
+            - C:\Program Files (x86)\Dell\
+        GrantedAccess: '0x1F3FFF'
+        CallTrace|startswith: C:\Windows\System32\ntdll.dll
+    filter_dell_specifc:
+        SourceImage: C:\Program Files (x86)\Dell\UpdateService\ServiceShell.exe
+        TargetImage: C:\Windows\Explorer.EXE
+        GrantedAccess: '0x1F3FFF'
+        CallTrace|startswith: C:\Windows\System32\ntdll.dll
+    filter_visual_studio:
+        SourceImage:
+            - C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\PerfWatson2.exe
+            - C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\PerfWatson2.exe
+        TargetImage:
+            - C:\Program Files\Microsoft Visual Studio\2022\Community\Common7\IDE\devenv.exe
+            - C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\devenv.exe
+        CallTrace|startswith: C:\Windows\System32\ntdll.dll
+    filter_ddvdatacollector:
+        SourceImage|startswith: C:\Program Files\Microsoft Visual Studio\
+        SourceImage|endswith: \MSBuild\Current\Bin\MSBuild.exe
+        TargetImage: C:\Program Files\Dell\DellDataVault\DDVDataCollector.exe
+    filter_wmiprvese:
+        SourceImage: C:\Windows\System32\Wbem\Wmiprvse.exe
+        TargetImage: C:\Windows\system32\lsass.exe
+        CallTrace|startswith: C:\Windows\SYSTEM32\ntdll.dll
+        CallTrace|contains: \System.ni.dll+
+    condition: process_access and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

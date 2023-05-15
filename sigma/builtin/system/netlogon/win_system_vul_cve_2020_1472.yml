@@ -1,31 +1,29 @@
 title: Vulnerable Netlogon Secure Channel Connection Allowed
-ruletype: Sigma
-author: NVISO
-date: 2020/09/15
+id: a0cb7110-edf0-47a4-9177-541a4083128a
+status: test
 description: Detects that a vulnerable Netlogon secure channel connection was allowed,
     which could be an indicator of CVE-2020-1472.
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: NetLogon
-    SELECTION_3:
-        EventID: 5829
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-fields:
-- SAMAccountName
-id: a0cb7110-edf0-47a4-9177-541a4083128a
-level: high
+references:
+    - https://support.microsoft.com/en-us/help/4557222/how-to-manage-the-changes-in-netlogon-secure-channel-connections-assoc
+author: NVISO
+date: 2020/09/15
+modified: 2022/12/25
+tags:
+    - attack.privilege_escalation
+    - attack.t1548
 logsource:
     product: windows
     service: system
-modified: 2022/12/25
-references:
-- https://support.microsoft.com/en-us/help/4557222/how-to-manage-the-changes-in-netlogon-secure-channel-connections-assoc
-status: test
-tags:
-- attack.privilege_escalation
-- attack.t1548
-
+detection:
+    system:
+        Channel: System
+    selection:
+        Provider_Name: NetLogon
+        EventID: 5829
+    condition: system and selection
+falsepositives:
+    - Unknown
+fields:
+    - SAMAccountName
+level: high
+ruletype: Sigma

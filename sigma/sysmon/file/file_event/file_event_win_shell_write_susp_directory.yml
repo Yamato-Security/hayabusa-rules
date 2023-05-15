@@ -1,52 +1,47 @@
 title: Windows Shell/Scripting Application File Write to Suspicious Folder
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/11/20
+id: 1277f594-a7d1-4f28-a2d3-73af5cbeab43
+status: experimental
 description: Detects Windows shells and scripting applications that write files to
     suspicious folders
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\bash.exe'
-        - '*\cmd.exe'
-        - '*\cscript.exe'
-        - '*\msbuild.exe'
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-        - '*\sh.exe'
-        - '*\wscript.exe'
-    SELECTION_4:
-        TargetFilename:
-        - C:\PerfLogs\\*
-        - C:\Users\Public\\*
-    SELECTION_5:
-        Image:
-        - '*\certutil.exe'
-        - '*\forfiles.exe'
-        - '*\mshta.exe'
-        - '*\schtasks.exe'
-        - '*\scriptrunner.exe'
-        - '*\wmic.exe'
-    SELECTION_6:
-        TargetFilename:
-        - '*C:\PerfLogs\\*'
-        - '*C:\Users\Public\\*'
-        - '*C:\Windows\Temp\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6)))
-falsepositives:
-- Unknown
-id: 1277f594-a7d1-4f28-a2d3-73af5cbeab43
-level: high
+references:
+    - Internal Research
+author: Florian Roth (Nextron Systems)
+date: 2021/11/20
+modified: 2023/03/29
 logsource:
     category: file_event
     product: windows
-modified: 2023/03/29
-references:
-- Internal Research
-status: experimental
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_1:
+        Image|endswith:
+            - \bash.exe
+            - \cmd.exe
+            - \cscript.exe
+            - \msbuild.exe
+            - \powershell.exe
+            - \pwsh.exe
+            - \sh.exe
+            - \wscript.exe
+        TargetFilename|startswith:
+            - C:\PerfLogs\
+            - C:\Users\Public\
+    selection_2:
+        Image|endswith:
+            - \certutil.exe
+            - \forfiles.exe
+            - \mshta.exe
+            - \schtasks.exe
+            - \scriptrunner.exe
+            - \wmic.exe
+        TargetFilename|contains:
+            - C:\PerfLogs\
+            - C:\Users\Public\
+            - C:\Windows\Temp\
+    condition: file_event and (1 of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,40 +1,38 @@
 title: Rundll32 Execution Without Parameters
-ruletype: Sigma
-author: Bartlomiej Czyz, Relativity
-date: 2021/01/31
+id: 5bb68627-3198-40ca-b458-49f973db8752
+status: test
 description: Detects rundll32 execution without parameters as observed when running
     Metasploit windows/smb/psexec exploit module
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine:
-        - rundll32.exe
-        - rundll32
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- False positives may occur if a user called rundll32 from CLI with no options
-fields:
-- ComputerName
-- SubjectUserName
-- CommandLine
-- Image
-- ParentImage
-id: 5bb68627-3198-40ca-b458-49f973db8752
-level: high
+references:
+    - https://bczyz1.github.io/2021/01/30/psexec.html
+author: Bartlomiej Czyz, Relativity
+date: 2021/01/31
+modified: 2023/02/28
+tags:
+    - attack.lateral_movement
+    - attack.t1021.002
+    - attack.t1570
+    - attack.execution
+    - attack.t1569.002
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/28
-references:
-- https://bczyz1.github.io/2021/01/30/psexec.html
-status: test
-tags:
-- attack.lateral_movement
-- attack.t1021.002
-- attack.t1570
-- attack.execution
-- attack.t1569.002
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine:
+            - rundll32.exe
+            - rundll32
+    condition: process_creation and selection
+fields:
+    - ComputerName
+    - SubjectUserName
+    - CommandLine
+    - Image
+    - ParentImage
+falsepositives:
+    - False positives may occur if a user called rundll32 from CLI with no options
+level: high
+ruletype: Sigma

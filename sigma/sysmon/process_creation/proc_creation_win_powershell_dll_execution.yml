@@ -1,49 +1,45 @@
 title: Potential PowerShell Execution Via DLL
-ruletype: Sigma
-author: Markus Neis, Nasreddine Bencherchali
-date: 2018/08/25
+id: 6812a10b-60ea-420c-832f-dfcc33b646ba
+status: test
 description: Detects potential PowerShell execution from a DLL instead of the usual
     PowerShell process as seen used in PowerShdll
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\rundll32.exe'
-        - '*\regsvcs.exe'
-        - '*\InstallUtil.exe'
-        - '*\regasm.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - RUNDLL32.EXE
-        - RegSvcs.exe
-        - InstallUtil.exe
-        - RegAsm.exe
-    SELECTION_5:
-        CommandLine:
-        - '*Default.GetString*'
-        - '*FromBase64String*'
-        - '*Invoke-Expression*'
-        - '*IEX *'
-        - '*Invoke-Command*'
-        - '*ICM *'
-        - '*DownloadString*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- Unknown
-id: 6812a10b-60ea-420c-832f-dfcc33b646ba
-level: high
+references:
+    - https://github.com/p3nt4/PowerShdll/blob/62cfa172fb4e1f7f4ac00ca942685baeb88ff356/README.md
+author: Markus Neis, Nasreddine Bencherchali
+date: 2018/08/25
+modified: 2023/01/26
+tags:
+    - attack.defense_evasion
+    - attack.t1218.011
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/26
-references:
-- https://github.com/p3nt4/PowerShdll/blob/62cfa172fb4e1f7f4ac00ca942685baeb88ff356/README.md
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218.011
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith:
+                - \rundll32.exe
+                - \regsvcs.exe
+                - \InstallUtil.exe
+                - \regasm.exe
+        -   OriginalFileName:
+                - RUNDLL32.EXE
+                - RegSvcs.exe
+                - InstallUtil.exe
+                - RegAsm.exe
+    selection_cli:
+        CommandLine|contains:
+            - Default.GetString
+            - FromBase64String
+            - Invoke-Expression
+            - 'IEX '
+            - Invoke-Command
+            - 'ICM '
+            - DownloadString
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

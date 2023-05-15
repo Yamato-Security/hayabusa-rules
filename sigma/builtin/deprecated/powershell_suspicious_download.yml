@@ -1,29 +1,28 @@
 title: Suspicious PowerShell Download
-ruletype: Sigma
+id: 65531a81-a694-4e31-ae04-f8ba5bc33759
+status: deprecated
+description: Detects suspicious PowerShell download command
+tags:
+    - attack.execution
+    - attack.t1059.001
 author: Florian Roth (Nextron Systems)
 date: 2017/03/05
-description: Detects suspicious PowerShell download command
-detection:
-    SELECTION_1:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_2:
-    - System.Net.WebClient
-    SELECTION_3:
-    - .DownloadFile(
-    - .DownloadString(
-    condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3))
-falsepositives:
-- PowerShell scripts that download content from the Internet
-id: 65531a81-a694-4e31-ae04-f8ba5bc33759
-level: medium
+modified: 2022/04/11
 logsource:
     product: windows
     service: powershell
-modified: 2022/04/11
-status: deprecated
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    powershell:
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    webclient:
+        - System.Net.WebClient
+    download:
+        - .DownloadFile(
+        - .DownloadString(
+    condition: powershell and (webclient and download)
+falsepositives:
+    - PowerShell scripts that download content from the Internet
+level: medium
+ruletype: Sigma

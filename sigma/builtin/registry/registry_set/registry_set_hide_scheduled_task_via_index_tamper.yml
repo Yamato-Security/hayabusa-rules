@@ -1,7 +1,11 @@
 title: Hide Schedule Task Via Index Value Tamper
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/08/26
+id: 5b16df71-8615-4f7f-ac9b-6c43c0509e61
+related:
+    -   id: acd74772-5f88-45c7-956b-6a7b36c294d2
+        type: similar
+    -   id: 526cc8bc-1cdc-48ad-8b26-f19bff969cec
+        type: similar
+status: experimental
 description: 'Detects when the "index" value of a scheduled task is modified from
     the registry
 
@@ -9,40 +13,28 @@ description: 'Detects when the "index" value of a scheduled task is modified fro
     referenced link for more information about the effects of this technique)
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\\*'
-    SELECTION_6:
-        TargetObject: '*Index*'
-    SELECTION_7:
-        NewValue: DWORD (0x00000000)
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Unlikely
-id: 5b16df71-8615-4f7f-ac9b-6c43c0509e61
-level: high
+references:
+    - https://blog.qualys.com/vulnerabilities-threat-research/2022/06/20/defending-against-scheduled-task-attacks-in-windows-environments
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/26
+tags:
+    - attack.defense_evasion
+    - attack.t1562
 logsource:
     category: registry_set
     product: windows
-references:
-- https://blog.qualys.com/vulnerabilities-threat-research/2022/06/20/defending-against-scheduled-task-attacks-in-windows-environments
-related:
--   id: acd74772-5f88-45c7-956b-6a7b36c294d2
-    type: similar
--   id: 526cc8bc-1cdc-48ad-8b26-f19bff969cec
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|contains|all:
+            - \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\
+            - Index
+        Details: DWORD (0x00000000)
+    condition: registry_set and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

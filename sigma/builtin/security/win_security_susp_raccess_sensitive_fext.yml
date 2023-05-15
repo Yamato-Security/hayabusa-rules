@@ -1,47 +1,45 @@
 title: Suspicious Access to Sensitive File Extensions
-ruletype: Sigma
+id: 91c945bc-2ad1-4799-a591-4d00198a1215
+related:
+    -   id: 286b47ed-f6fe-40b3-b3a8-35129acd43bc
+        type: similar
+status: test
+description: Detects known sensitive file extensions accessed on a network share
 author: Samir Bousseaden
 date: 2019/04/03
-description: Detects known sensitive file extensions accessed on a network share
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 5145
-    SELECTION_3:
-        RelativeTargetName:
-        - '*.pst'
-        - '*.ost'
-        - '*.msg'
-        - '*.nst'
-        - '*.oab'
-        - '*.edb'
-        - '*.nsf'
-        - '*.bak'
-        - '*.dmp'
-        - '*.kirbi'
-        - '*\groups.xml'
-        - '*.rdp'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Help Desk operator doing backup or re-imaging end user machine or backup software
-- Users working with these data types or exchanging message files
-fields:
-- ComputerName
-- SubjectDomainName
-- SubjectUserName
-- RelativeTargetName
-id: 91c945bc-2ad1-4799-a591-4d00198a1215
-level: medium
+modified: 2022/10/09
+tags:
+    - attack.collection
+    - attack.t1039
 logsource:
     product: windows
     service: security
-modified: 2022/10/09
-related:
--   id: 286b47ed-f6fe-40b3-b3a8-35129acd43bc
-    type: similar
-status: test
-tags:
-- attack.collection
-- attack.t1039
-
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 5145
+        RelativeTargetName|endswith:
+            - .pst
+            - .ost
+            - .msg
+            - .nst
+            - .oab
+            - .edb
+            - .nsf
+            - .bak
+            - .dmp
+            - .kirbi
+            - \groups.xml
+            - .rdp
+    condition: security and selection
+fields:
+    - ComputerName
+    - SubjectDomainName
+    - SubjectUserName
+    - RelativeTargetName
+falsepositives:
+    - Help Desk operator doing backup or re-imaging end user machine or backup software
+    - Users working with these data types or exchanging message files
+level: medium
+ruletype: Sigma

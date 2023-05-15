@@ -1,28 +1,26 @@
 title: Suspicious Execution of Hostname
-ruletype: Sigma
+id: 7be5fb68-f9ef-476d-8b51-0256ebece19e
+status: test
+description: Use of hostname to get information
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1082/T1082.md#atomic-test-6---hostname-discovery-windows
+    - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/hostname
 author: frack113
 date: 2022/01/01
-description: Use of hostname to get information
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\HOSTNAME.EXE'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: 7be5fb68-f9ef-476d-8b51-0256ebece19e
-level: low
+tags:
+    - attack.discovery
+    - attack.t1082
 logsource:
     category: process_creation
     product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1082/T1082.md#atomic-test-6---hostname-discovery-windows
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/hostname
-status: test
-tags:
-- attack.discovery
-- attack.t1082
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        NewProcessName|endswith: \HOSTNAME.EXE
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

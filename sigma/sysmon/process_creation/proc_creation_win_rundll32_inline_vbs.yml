@@ -1,36 +1,31 @@
 title: Suspicious Rundll32 Invoking Inline VBScript
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/03/05
+id: 1cc50f3f-1fc8-4acf-b2e9-6f172e1fdebd
+status: test
 description: Detects suspicious process related to rundll32 based on command line
     that invokes inline VBScript as seen being used by UNC2452
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*rundll32.exe*'
-    SELECTION_4:
-        CommandLine: '*Execute*'
-    SELECTION_5:
-        CommandLine: '*RegRead*'
-    SELECTION_6:
-        CommandLine: '*window.close*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: 1cc50f3f-1fc8-4acf-b2e9-6f172e1fdebd
-level: high
+references:
+    - https://www.microsoft.com/security/blog/2021/03/04/goldmax-goldfinder-sibot-analyzing-nobelium-malware/
+author: Florian Roth (Nextron Systems)
+date: 2021/03/05
+modified: 2022/10/09
+tags:
+    - attack.defense_evasion
+    - attack.t1055
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
-references:
-- https://www.microsoft.com/security/blog/2021/03/04/goldmax-goldfinder-sibot-analyzing-nobelium-malware/
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1055
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains|all:
+            - rundll32.exe
+            - Execute
+            - RegRead
+            - window.close
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

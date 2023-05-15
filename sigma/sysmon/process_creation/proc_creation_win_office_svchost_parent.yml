@@ -1,7 +1,6 @@
 title: Suspicious New Instance Of An Office COM Object
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/10/13
+id: 9bdaf1e9-fdef-443b-8081-4341b74a7e28
+status: experimental
 description: 'Detects an svchost process spawning an instance of an office application.
     This happens when the initial word application creates an instance of one of the
     Office COM objects such as ''Word.Application'', ''Excel.Application'', etc.
@@ -10,36 +9,34 @@ description: 'Detects an svchost process spawning an instance of an office appli
     macros on the fly. (See vba2clr project in the references)
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: '*\svchost.exe'
-    SELECTION_4:
-        Image:
-        - '*\winword.exe'
-        - '*\excel.exe'
-        - '*\powerpnt.exe'
-        - '*\msaccess.exe'
-        - '*\mspub.exe'
-        - '*\eqnedt32.exe'
-        - '*\visio.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Legitimate usage of office automation via scripting
-id: 9bdaf1e9-fdef-443b-8081-4341b74a7e28
-level: medium
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/02/04
 references:
-- https://learn.microsoft.com/en-us/previous-versions/office/troubleshoot/office-developer/automate-word-create-file-using-visual-basic
-- https://github.com/med0x2e/vba2clr
-status: experimental
+    - https://learn.microsoft.com/en-us/previous-versions/office/troubleshoot/office-developer/automate-word-create-file-using-visual-basic
+    - https://github.com/med0x2e/vba2clr
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/10/13
+modified: 2023/02/04
 tags:
-- attack.execution
-- attack.defense_evasion
-
+    - attack.execution
+    - attack.defense_evasion
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ParentImage|endswith: \svchost.exe
+        Image|endswith:
+            - \winword.exe
+            - \excel.exe
+            - \powerpnt.exe
+            - \msaccess.exe
+            - \mspub.exe
+            - \eqnedt32.exe
+            - \visio.exe
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Legitimate usage of office automation via scripting
+level: medium
+ruletype: Sigma

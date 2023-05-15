@@ -1,7 +1,9 @@
 title: Potential Registry Persistence Attempt Via Windows Telemetry
-ruletype: Sigma
-author: Lednyov Alexey, oscd.community, Sreeman
-date: 2020/10/16
+id: 73a883d0-0348-4be4-a8d8-51031c2564f8
+related:
+    -   id: 4e8d5fd3-c959-441f-a941-f73d0cdcdca5
+        type: obsoletes
+status: test
 description: 'Detects potential persistence behaviour using the windows telemetry
     registry key.
 
@@ -15,55 +17,47 @@ description: 'Detects potential persistence behaviour using the windows telemetr
     or type.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\\*'
-    SELECTION_5:
-        TargetObject: '*\Command'
-    SELECTION_6:
-        Details:
-        - '*.sh*'
-        - '*.exe*'
-        - '*.dll*'
-        - '*.bin*'
-        - '*.bat*'
-        - '*.cmd*'
-        - '*.js*'
-        - '*.ps*'
-        - '*.vb*'
-        - '*.jar*'
-        - '*.hta*'
-        - '*.msi*'
-        - '*.vbs*'
-    SELECTION_7:
-        Details:
-        - '*\system32\CompatTelRunner.exe*'
-        - '*\system32\DeviceCensus.exe*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not (SELECTION_7))
-falsepositives:
-- Unknown
-id: 73a883d0-0348-4be4-a8d8-51031c2564f8
-level: high
+references:
+    - https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/
+author: Lednyov Alexey, oscd.community, Sreeman
+date: 2020/10/16
+modified: 2022/12/19
+tags:
+    - attack.persistence
+    - attack.t1053.005
 logsource:
     category: registry_set
+    product: windows
     definition: 'Requirements: Sysmon config that monitors \SOFTWARE\Microsoft\Windows
         NT\CurrentVersion\AppCompatFlags\TelemetryController subkey of the HKLM hives'
-    product: windows
-modified: 2022/12/19
-references:
-- https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/
-related:
--   id: 4e8d5fd3-c959-441f-a941-f73d0cdcdca5
-    type: obsoletes
-status: test
-tags:
-- attack.persistence
-- attack.t1053.005
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\
+        TargetObject|endswith: \Command
+        Details|contains:
+            - .sh
+            - .exe
+            - .dll
+            - .bin
+            - .bat
+            - .cmd
+            - .js
+            - .ps
+            - .vb
+            - .jar
+            - .hta
+            - .msi
+            - .vbs
+    filter:
+        Details|contains:
+            - \system32\CompatTelRunner.exe
+            - \system32\DeviceCensus.exe
+    condition: registry_set and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

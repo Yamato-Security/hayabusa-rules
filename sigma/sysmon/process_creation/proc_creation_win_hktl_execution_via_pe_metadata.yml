@@ -1,27 +1,25 @@
 title: Suspicious Hacktool Execution - PE Metadata
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/04/27
+id: 37c1333a-a0db-48be-b64b-7393b2386e3b
+status: experimental
 description: Detects the execution of different Windows based hacktools via PE metadata
     (company, product, etc.) even if the files have been renamed
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Company: Cube0x0
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unlikely
-id: 37c1333a-a0db-48be-b64b-7393b2386e3b
-level: high
+references:
+    - https://github.com/cube0x0
+    - https://www.virustotal.com/gui/search/metadata%253ACube0x0/files
+author: Florian Roth (Nextron Systems)
+date: 2022/04/27
+modified: 2023/02/04
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://github.com/cube0x0
-- https://www.virustotal.com/gui/search/metadata%253ACube0x0/files
-status: experimental
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Company: Cube0x0
+    condition: process_creation and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

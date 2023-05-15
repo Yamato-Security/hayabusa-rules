@@ -1,109 +1,81 @@
 title: Potential NT API Stub Patching
-ruletype: Sigma
+id: b916cba1-b38a-42da-9223-17114d846fd6
+status: experimental
+description: Detects potential NT API stub patching as seen used by the project PatchingAPI
+references:
+    - https://github.com/D1rkMtr/UnhookingPatch
+    - https://twitter.com/D1rkMtr/status/1611471891193298944?s=20
 author: frack113
 date: 2023/01/07
-description: Detects potential NT API stub patching as seen used by the project PatchingAPI
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_10:
-        SourceImage: '*\thor64.exe'
-    SELECTION_11:
-        SourceImage: C:\Users\\*
-    SELECTION_12:
-        SourceImage: '*\AppData\Local\GitHubDesktop\app-*'
-    SELECTION_13:
-        SourceImage:
-        - '*\GitHubDesktop.exe'
-        - '*\resources\app\git\usr\bin\sh.exe'
-    SELECTION_14:
-        TargetImage: C:\Users\\*
-    SELECTION_15:
-        TargetImage: '*\AppData\Local\GitHubDesktop\app-*'
-    SELECTION_16:
-        SourceImage:
-        - C:\Windows\Microsoft.NET\Framework\v*
-        - C:\Windows\Microsoft.NET\Framework64\v*
-    SELECTION_17:
-        SourceImage: '*\NGenTask.exe'
-    SELECTION_18:
-        TargetImage:
-        - C:\Windows\Microsoft.NET\Framework\v*
-        - C:\Windows\Microsoft.NET\Framework64\v*
-    SELECTION_19:
-        SourceImage:
-        - C:\WINDOWS\system32\taskhostw.exe
-        - C:\Windows\system32\taskhost.exe
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        TargetImage:
-        - C:\Windows\Microsoft.NET\Framework\v*
-        - C:\Windows\Microsoft.NET\Framework64\v*
-    SELECTION_21:
-        TargetImage: '*\NGenTask.exe'
-    SELECTION_22:
-        SourceImage: C:\Users\\*
-    SELECTION_23:
-        SourceImage: '*\AppData\Local\Microsoft\Teams\stage\Teams.exe'
-    SELECTION_24:
-        TargetImage: C:\Users\\*
-    SELECTION_25:
-        TargetImage: '*\AppData\Local\Microsoft\Teams\Update.exe'
-    SELECTION_26:
-        SourceImage: C:\Users\\*
-    SELECTION_27:
-        SourceImage: '*\AppData\Local\Microsoft\Teams\Update.exe'
-    SELECTION_28:
-        TargetImage: C:\WINDOWS\SysWOW64\regsvr32.exe
-    SELECTION_29:
-        SourceImage: C:\Users\\*
-    SELECTION_3:
-        GrantedAccess: '0x1FFFFF'
-    SELECTION_30:
-        SourceImage: '*\AppData\Local\Microsoft\Teams\Update.exe'
-    SELECTION_31:
-        TargetImage: '*\AppData\Local\Microsoft\Teams\stage\Teams.exe'
-    SELECTION_4:
-        CallTrace: C:\Windows\SYSTEM32\ntdll.dll+*
-    SELECTION_5:
-        CallTrace: '*|UNKNOWN(*'
-    SELECTION_6:
-        CallTrace: '*)'
-    SELECTION_7:
-        SourceImage:
-        - C:\Program Files\\*
-        - C:\Program Files (x86)\\*
-        - C:\Windows\System32\\*
-        - C:\Windows\SysWOW64\\*
-    SELECTION_8:
-        TargetImage:
-        - C:\Program Files\\*
-        - C:\Program Files (x86)\\*
-        - C:\Windows\System32\\*
-        - C:\Windows\SysWOW64\\*
-    SELECTION_9:
-        SourceImage: C:\Windows\Temp\asgard2-agent\\*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 or SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13 and SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18) or (SELECTION_19
-        and SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24
-        and SELECTION_25) or (SELECTION_26 and SELECTION_27 and SELECTION_28) or (SELECTION_29
-        and SELECTION_30 and SELECTION_31)))
-falsepositives:
-- Unknown
-id: b916cba1-b38a-42da-9223-17114d846fd6
-level: medium
+modified: 2023/01/25
+tags:
+    - attack.defense_evasion
+    - attack.t1562.002
 logsource:
     category: process_access
     product: windows
-modified: 2023/01/25
-references:
-- https://github.com/D1rkMtr/UnhookingPatch
-- https://twitter.com/D1rkMtr/status/1611471891193298944?s=20
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562.002
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        GrantedAccess: '0x1FFFFF'
+        CallTrace|startswith: C:\Windows\SYSTEM32\ntdll.dll+
+        CallTrace|contains: '|UNKNOWN('
+        CallTrace|endswith: )
+    filter_generic:
+        -   SourceImage|startswith:
+                - C:\Program Files\
+                - C:\Program Files (x86)\
+                - C:\Windows\System32\
+                - C:\Windows\SysWOW64\
+        -   TargetImage|startswith:
+                - C:\Program Files\
+                - C:\Program Files (x86)\
+                - C:\Windows\System32\
+                - C:\Windows\SysWOW64\
+    filter_thor:
+        SourceImage|startswith: C:\Windows\Temp\asgard2-agent\
+        SourceImage|endswith: \thor64.exe
+    filter_githubdesktop:
+        SourceImage|startswith: C:\Users\
+        SourceImage|contains: \AppData\Local\GitHubDesktop\app-
+        SourceImage|endswith:
+            - \GitHubDesktop.exe
+            - \resources\app\git\usr\bin\sh.exe
+        TargetImage|startswith: C:\Users\
+        TargetImage|contains: \AppData\Local\GitHubDesktop\app-
+    filter_dotnet:
+        SourceImage|startswith:
+            - C:\Windows\Microsoft.NET\Framework\v
+            - C:\Windows\Microsoft.NET\Framework64\v
+        SourceImage|endswith: \NGenTask.exe
+        TargetImage|startswith:
+            - C:\Windows\Microsoft.NET\Framework\v
+            - C:\Windows\Microsoft.NET\Framework64\v
+    filter_taskhost:
+        SourceImage:
+            - C:\WINDOWS\system32\taskhostw.exe
+            - C:\Windows\system32\taskhost.exe
+        TargetImage|startswith:
+            - C:\Windows\Microsoft.NET\Framework\v
+            - C:\Windows\Microsoft.NET\Framework64\v
+        TargetImage|endswith: \NGenTask.exe
+    filter_teams_to_update:
+        SourceImage|startswith: C:\Users\
+        SourceImage|endswith: \AppData\Local\Microsoft\Teams\stage\Teams.exe
+        TargetImage|startswith: C:\Users\
+        TargetImage|endswith: \AppData\Local\Microsoft\Teams\Update.exe
+    filter_teams_update_regsvr32:
+        SourceImage|startswith: C:\Users\
+        SourceImage|endswith: \AppData\Local\Microsoft\Teams\Update.exe
+        TargetImage: C:\WINDOWS\SysWOW64\regsvr32.exe
+    filter_teams_update_to_teams:
+        SourceImage|startswith: C:\Users\
+        SourceImage|endswith: \AppData\Local\Microsoft\Teams\Update.exe
+        TargetImage|endswith: \AppData\Local\Microsoft\Teams\stage\Teams.exe
+    condition: process_access and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

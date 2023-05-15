@@ -1,28 +1,26 @@
 title: Application Uninstalled
-ruletype: Sigma
+id: 570ae5ec-33dc-427c-b815-db86228ad43e
+status: experimental
+description: An application has been removed. Check if it is critical.
 author: frack113
 date: 2022/01/28
-description: An application has been removed. Check if it is critical.
-detection:
-    SELECTION_1:
-        Channel: Application
-    SELECTION_2:
-        Provider_Name: MsiInstaller
-    SELECTION_3:
-        EventID: 11724
-    SELECTION_4:
-        EventID: 1034
-    condition: (SELECTION_1 and SELECTION_2 and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Unknown
-id: 570ae5ec-33dc-427c-b815-db86228ad43e
-level: low
+modified: 2022/09/17
+tags:
+    - attack.impact
+    - attack.t1489
 logsource:
     product: windows
     service: application
-modified: 2022/09/17
-status: experimental
-tags:
-- attack.impact
-- attack.t1489
-
+detection:
+    application:
+        Channel: Application
+    selection:
+        Provider_Name: MsiInstaller
+        EventID:
+            - 11724
+            - 1034
+    condition: application and selection
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

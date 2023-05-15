@@ -1,79 +1,72 @@
 title: Suspicious Curl.EXE Download
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
-date: 2020/07/03
+id: e218595b-bbe7-4ee5-8a96-f32a24ad3468
+related:
+    -   id: bbeaed61-1990-4773-bf57-b81dbad7db2d
+        type: derived
+    -   id: 9a517fca-4ba3-4629-9278-a68694697b81
+        type: similar
+status: experimental
 description: Detects a suspicious curl process start on Windows and outputs the requested
     document to a local file
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '*gfw-httpget-*'
-    SELECTION_11:
-        CommandLine: '*AppData*'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\curl.exe'
-    SELECTION_4:
-        Product: The curl executable
-    SELECTION_5:
-        CommandLine:
-        - '*%AppData%*'
-        - '*%Public%*'
-        - '*%Temp%*'
-        - '*%tmp%*'
-        - '*\AppData\\*'
-        - '*\Desktop\\*'
-        - '*\Temp\\*'
-        - '*\Users\Public\\*'
-        - '*C:\PerfLogs\\*'
-        - '*C:\ProgramData\\*'
-        - '*C:\Windows\Temp\\*'
-    SELECTION_6:
-        CommandLine:
-        - '*.dll'
-        - '*.gif'
-        - '*.jpeg'
-        - '*.jpg'
-        - '*.png'
-        - '*.temp'
-        - '*.tmp'
-        - '*.txt'
-        - '*.vbe'
-        - '*.vbs'
-    SELECTION_7:
-        ParentProcessName: C:\Program Files\Git\usr\bin\sh.exe
-    SELECTION_8:
-        NewProcessName: C:\Program Files\Git\mingw64\bin\curl.exe
-    SELECTION_9:
-        CommandLine: '*--silent --show-error --output *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 or SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8 and SELECTION_9
-        and SELECTION_10 and SELECTION_11)))
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-- ParentCommandLine
-id: e218595b-bbe7-4ee5-8a96-f32a24ad3468
-level: high
+references:
+    - https://twitter.com/max_mal_/status/1542461200797163522
+    - https://web.archive.org/web/20200128160046/https://twitter.com/reegun21/status/1222093798009790464
+    - https://github.com/pr0xylife/Qakbot/blob/4f0795d79dabee5bc9dd69f17a626b48852e7869/Qakbot_AA_23.06.2022.txt
+    - https://www.volexity.com/blog/2022/07/28/sharptongue-deploys-clever-mail-stealing-browser-extension-sharpext/
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+date: 2020/07/03
+modified: 2023/02/21
+tags:
+    - attack.command_and_control
+    - attack.t1105
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
-references:
-- https://twitter.com/max_mal_/status/1542461200797163522
-- https://web.archive.org/web/20200128160046/https://twitter.com/reegun21/status/1222093798009790464
-- https://github.com/pr0xylife/Qakbot/blob/4f0795d79dabee5bc9dd69f17a626b48852e7869/Qakbot_AA_23.06.2022.txt
-- https://www.volexity.com/blog/2022/07/28/sharptongue-deploys-clever-mail-stealing-browser-extension-sharpext/
-related:
--   id: bbeaed61-1990-4773-bf57-b81dbad7db2d
-    type: derived
--   id: 9a517fca-4ba3-4629-9278-a68694697b81
-    type: similar
-status: experimental
-tags:
-- attack.command_and_control
-- attack.t1105
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_curl:
+        -   NewProcessName|endswith: \curl.exe
+        -   Product: The curl executable
+    selection_susp_locations:
+        CommandLine|contains:
+            - '%AppData%'
+            - '%Public%'
+            - '%Temp%'
+            - '%tmp%'
+            - \AppData\
+            - \Desktop\
+            - \Temp\
+            - \Users\Public\
+            - C:\PerfLogs\
+            - C:\ProgramData\
+            - C:\Windows\Temp\
+    selection_susp_extensions:
+        CommandLine|endswith:
+            - .dll
+            - .gif
+            - .jpeg
+            - .jpg
+            - .png
+            - .temp
+            - .tmp
+            - .txt
+            - .vbe
+            - .vbs
+    filter_git_windows:
+        CommandLine|contains|all:
+            - '--silent --show-error --output '
+            - gfw-httpget-
+            - AppData
+        ParentProcessName: C:\Program Files\Git\usr\bin\sh.exe
+        NewProcessName: C:\Program Files\Git\mingw64\bin\curl.exe
+    condition: process_creation and (selection_curl and 1 of selection_susp_* and
+        not 1 of filter_*)
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

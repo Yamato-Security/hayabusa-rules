@@ -1,49 +1,39 @@
 title: Run Once Task Configuration in Registry
-ruletype: Sigma
-author: Avneet Singh @v3t0_, oscd.community
-date: 2020/11/15
+id: c74d7efc-8826-45d9-b8bb-f04fac9e4eff
+status: test
 description: Rule to detect the configuration of Run Once registry key. Configured
     payload can be run by runonce.exe /AlternateShellStartup
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - New registry value created
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        TargetObject: HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components*
-    SELECTION_5:
-        TargetObject: '*\StubPath'
-    SELECTION_6:
-        NewValue: '"C:\Program Files\Google\Chrome\Application\\*'
-    SELECTION_7:
-        NewValue: '*\Installer\chrmstp.exe" --configure-user-settings --verbose-logging
-            --system-level*'
-    SELECTION_8:
-        NewValue:
-        - '"C:\Program Files (x86)\Microsoft\Edge\Application\\*'
-        - '"C:\Program Files\Microsoft\Edge\Application\\*'
-    SELECTION_9:
-        NewValue: '*\Installer\setup.exe" --configure-user-settings --verbose-logging
-            --system-level --msedge --channel=stable'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)))
-falsepositives:
-- Legitimate modification of the registry key by legitimate program
-id: c74d7efc-8826-45d9-b8bb-f04fac9e4eff
-level: medium
-logsource:
-    category: registry_event
-    product: windows
-modified: 2022/04/04
 references:
-- https://twitter.com/pabraeken/status/990717080805789697
-- https://lolbas-project.github.io/lolbas/Binaries/Runonce/
-status: test
+    - https://twitter.com/pabraeken/status/990717080805789697
+    - https://lolbas-project.github.io/lolbas/Binaries/Runonce/
+author: Avneet Singh @v3t0_, oscd.community
+date: 2020/11/15
+modified: 2022/04/04
 tags:
-- attack.defense_evasion
-- attack.t1112
-
+    - attack.defense_evasion
+    - attack.t1112
+logsource:
+    product: windows
+    category: registry_event
+detection:
+    registry_event:
+        EventID: 4657
+        Channel: Security
+    selection:
+        TargetObject|startswith: HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components
+        TargetObject|endswith: \StubPath
+    filter_chrome:
+        Details|startswith: '"C:\Program Files\Google\Chrome\Application\'
+        Details|contains: \Installer\chrmstp.exe" --configure-user-settings --verbose-logging
+            --system-level
+    filter_edge:
+        Details|startswith:
+            - '"C:\Program Files (x86)\Microsoft\Edge\Application\'
+            - '"C:\Program Files\Microsoft\Edge\Application\'
+        Details|endswith: \Installer\setup.exe" --configure-user-settings --verbose-logging
+            --system-level --msedge --channel=stable
+    condition: registry_event and (selection and not 1 of filter_*)
+falsepositives:
+    - Legitimate modification of the registry key by legitimate program
+level: medium
+ruletype: Sigma

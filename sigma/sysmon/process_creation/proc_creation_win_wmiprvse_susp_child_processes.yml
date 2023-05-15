@@ -1,67 +1,64 @@
 title: Suspicious WmiPrvSE Child Process
-ruletype: Sigma
+id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
+related:
+    -   id: 692f0bec-83ba-4d04-af7e-e884a96059b6
+        type: similar
+    -   id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
+        type: similar
+    -   id: 18cf6cf0-39b0-4c22-9593-e244bdc9a2d4
+        type: obsoletes
+status: test
+description: Detects suspicious and uncommon child processes of WmiPrvSE
+references:
+    - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
+    - https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/02bcbfc2bfb8b4da601bb30de0344ae453aa1afe/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml
+    - https://blog.osarmor.com/319/onenote-attachment-delivers-asyncrat-malware/
+    - https://twitter.com/ForensicITGuy/status/1334734244120309760
 author: Vadim Khrykov (ThreatIntel), Cyb3rEng, Florian Roth (Nextron Systems)
 date: 2021/08/23
-description: Detects suspicious and uncommon child processes of WmiPrvSE
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: '*\wbem\WmiPrvSE.exe'
-    SELECTION_4:
-        Image:
-        - '*\certutil.exe'
-        - '*\cscript.exe'
-        - '*\mshta.exe'
-        - '*\msiexec.exe'
-        - '*\regsvr32.exe'
-        - '*\rundll32.exe'
-        - '*\verclsid.exe'
-        - '*\wscript.exe'
-    SELECTION_5:
-        Image: '*\cmd.exe'
-    SELECTION_6:
-        CommandLine:
-        - '*cscript*'
-        - '*mshta*'
-        - '*powershell*'
-        - '*pwsh*'
-        - '*regsvr32*'
-        - '*rundll32*'
-        - '*wscript*'
-    SELECTION_7:
-        Image: '*\WerFault.exe'
-    SELECTION_8:
-        Image: '*\WmiPrvSE.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and (SELECTION_4 or
-        (SELECTION_5 and SELECTION_6))) and  not ((SELECTION_7) or (SELECTION_8)))
-falsepositives:
-- Unknown
-id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
-level: high
-logsource:
-    category: process_creation
-    product: windows
 modified: 2023/03/23
-references:
-- https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
-- https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/02bcbfc2bfb8b4da601bb30de0344ae453aa1afe/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml
-- https://blog.osarmor.com/319/onenote-attachment-delivers-asyncrat-malware/
-- https://twitter.com/ForensicITGuy/status/1334734244120309760
-related:
--   id: 692f0bec-83ba-4d04-af7e-e884a96059b6
-    type: similar
--   id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
-    type: similar
--   id: 18cf6cf0-39b0-4c22-9593-e244bdc9a2d4
-    type: obsoletes
-status: test
 tags:
-- attack.execution
-- attack.defense_evasion
-- attack.t1047
-- attack.t1204.002
-- attack.t1218.010
-
+    - attack.execution
+    - attack.defense_evasion
+    - attack.t1047
+    - attack.t1204.002
+    - attack.t1218.010
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_parent:
+        ParentImage|endswith: \wbem\WmiPrvSE.exe
+    selection_children_1:
+        Image|endswith:
+            - \certutil.exe
+            - \cscript.exe
+            - \mshta.exe
+            - \msiexec.exe
+            - \regsvr32.exe
+            - \rundll32.exe
+            - \verclsid.exe
+            - \wscript.exe
+    selection_children_2:
+        Image|endswith: \cmd.exe
+        CommandLine|contains:
+            - cscript
+            - mshta
+            - powershell
+            - pwsh
+            - regsvr32
+            - rundll32
+            - wscript
+    filter_werfault:
+        Image|endswith: \WerFault.exe
+    filter_wmiprvse:
+        Image|endswith: \WmiPrvSE.exe
+    condition: process_creation and (selection_parent and 1 of selection_children_*
+        and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

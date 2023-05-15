@@ -1,41 +1,38 @@
 title: VBA DLL Loaded Via Office Application
-ruletype: Sigma
-author: Antonlovesdnb
-date: 2020/02/19
+id: e6ce8457-68b1-485b-9bdd-3c2b5d679aa9
+status: test
 description: Detects VB DLL's loaded by an office application. Which could indicate
     the presence of VBA Macros.
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\excel.exe'
-        - '*\mspub.exe'
-        - '*\onenote.exe'
-        - '*\onenoteim.exe'
-        - '*\outlook.exe'
-        - '*\powerpnt.exe'
-        - '*\winword.exe'
-    SELECTION_4:
-        ImageLoaded:
-        - '*\VBE7.DLL'
-        - '*\VBEUI.DLL'
-        - '*\VBE7INTL.DLL'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Legitimate macro usage. Add the appropriate filter according to your environment
-id: e6ce8457-68b1-485b-9bdd-3c2b5d679aa9
-level: high
+references:
+    - https://medium.com/threatpunter/detecting-adversary-tradecraft-with-image-load-event-logging-and-eql-8de93338c16
+author: Antonlovesdnb
+date: 2020/02/19
+modified: 2023/02/10
+tags:
+    - attack.execution
+    - attack.t1204.002
 logsource:
     category: image_load
     product: windows
-modified: 2023/02/10
-references:
-- https://medium.com/threatpunter/detecting-adversary-tradecraft-with-image-load-event-logging-and-eql-8de93338c16
-status: test
-tags:
-- attack.execution
-- attack.t1204.002
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith:
+            - \excel.exe
+            - \mspub.exe
+            - \onenote.exe
+            - \onenoteim.exe
+            - \outlook.exe
+            - \powerpnt.exe
+            - \winword.exe
+        ImageLoaded|endswith:
+            - \VBE7.DLL
+            - \VBEUI.DLL
+            - \VBE7INTL.DLL
+    condition: image_load and selection
+falsepositives:
+    - Legitimate macro usage. Add the appropriate filter according to your environment
+level: high
+ruletype: Sigma

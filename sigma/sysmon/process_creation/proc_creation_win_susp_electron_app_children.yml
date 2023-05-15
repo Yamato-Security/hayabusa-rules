@@ -1,7 +1,6 @@
 title: Suspicious Electron Application Child Processes
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/10/21
+id: f26eb764-fd89-464b-85e2-dc4a8e6e77b8
+status: experimental
 description: 'Detects suspicious child processes of electron apps (teams, discord,
     slack...).
 
@@ -9,45 +8,41 @@ description: 'Detects suspicious child processes of electron apps (teams, discor
     for more information)
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage:
-        - '*\Teams.exe'
-        - '*\slack.exe'
-        - '*\discord.exe'
-    SELECTION_4:
-        Image:
-        - '*\cmd.exe'
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-        - '*\cscript.exe'
-        - '*\wscript.exe'
-        - '*\mshta.exe'
-    SELECTION_5:
-        ParentImage: '*\Discord.exe'
-    SELECTION_6:
-        CommandLine: '*\NVSMI\nvidia-smi.exe*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5 and SELECTION_6))
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-- ParentCommandLine
-id: f26eb764-fd89-464b-85e2-dc4a8e6e77b8
-level: medium
+references:
+    - https://taggart-tech.com/quasar-electron/
+    - https://github.com/mttaggart/quasar
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/10/21
+modified: 2022/11/09
+tags:
+    - attack.execution
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/09
-references:
-- https://taggart-tech.com/quasar-electron/
-- https://github.com/mttaggart/quasar
-status: experimental
-tags:
-- attack.execution
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ParentImage|endswith:
+            - \Teams.exe
+            - \slack.exe
+            - \discord.exe
+        Image|endswith:
+            - \cmd.exe
+            - \powershell.exe
+            - \pwsh.exe
+            - \cscript.exe
+            - \wscript.exe
+            - \mshta.exe
+    filter:
+        ParentImage|endswith: \Discord.exe
+        CommandLine|contains: \NVSMI\nvidia-smi.exe
+    condition: process_creation and (selection and not filter)
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

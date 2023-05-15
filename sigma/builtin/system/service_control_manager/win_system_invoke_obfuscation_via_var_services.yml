@@ -1,47 +1,40 @@
 title: Invoke-Obfuscation VAR++ LAUNCHER OBFUSCATION - System
-ruletype: Sigma
+id: 14bcba49-a428-42d9-b943-e2ce0f0f7ae6
+status: experimental
+description: Detects Obfuscated Powershell via VAR++ LAUNCHER
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Timur Zinniatullin, oscd.community
 date: 2020/10/13
-description: Detects Obfuscated Powershell via VAR++ LAUNCHER
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Service Control Manager
-    SELECTION_3:
-        EventID: 7045
-    SELECTION_4:
-        ImagePath: '*&&set*'
-    SELECTION_5:
-        ImagePath: '*cmd*'
-    SELECTION_6:
-        ImagePath: '*/c*'
-    SELECTION_7:
-        ImagePath: '*-f*'
-    SELECTION_8:
-        ImagePath:
-        - '*{0}*'
-        - '*{1}*'
-        - '*{2}*'
-        - '*{3}*'
-        - '*{4}*'
-        - '*{5}*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7 and SELECTION_8)
-falsepositives:
-- Unknown
-id: 14bcba49-a428-42d9-b943-e2ce0f0f7ae6
-level: high
+modified: 2022/11/29
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
     product: windows
     service: system
-modified: 2022/11/29
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    system:
+        Channel: System
+    selection:
+        Provider_Name: Service Control Manager
+        EventID: 7045
+        ImagePath|contains|all:
+            - '&&set'
+            - cmd
+            - /c
+            - -f
+        ImagePath|contains:
+            - '{0}'
+            - '{1}'
+            - '{2}'
+            - '{3}'
+            - '{4}'
+            - '{5}'
+    condition: system and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

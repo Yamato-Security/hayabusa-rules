@@ -1,38 +1,34 @@
 title: Certificate Exported Via Certutil.EXE
-ruletype: Sigma
+id: 3ffd6f51-e6c1-47b7-94b4-c1e61d4117c5
+status: test
+description: Detects the execution of the certutil with the "exportPFX" flag which
+    allows the utility to export certificates.
+references:
+    - https://www.splunk.com/en_us/blog/security/a-golden-saml-journey-solarwinds-continued.html
 author: Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community, Nasreddine
     Bencherchali (Nextron Systems)
 date: 2023/02/15
-description: Detects the execution of the certutil with the "exportPFX" flag which
-    allows the utility to export certificates.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\certutil.exe'
-    SELECTION_4:
-        OriginalFileName: CertUtil.exe
-    SELECTION_5:
-        CommandLine:
-        - '*-exportPFX *'
-        - '*/exportPFX *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- There legitimate reasons to export certificates. Investigate the activity to determine
-    if it's benign
-id: 3ffd6f51-e6c1-47b7-94b4-c1e61d4117c5
-level: medium
+modified: 2023/02/20
+tags:
+    - attack.defense_evasion
+    - attack.t1027
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/20
-references:
-- https://www.splunk.com/en_us/blog/security/a-golden-saml-journey-solarwinds-continued.html
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1027
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \certutil.exe
+        -   OriginalFileName: CertUtil.exe
+    selection_cli:
+        CommandLine|contains:
+            - '-exportPFX '
+            - '/exportPFX '
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - There legitimate reasons to export certificates. Investigate the activity to
+        determine if it's benign
+level: medium
+ruletype: Sigma

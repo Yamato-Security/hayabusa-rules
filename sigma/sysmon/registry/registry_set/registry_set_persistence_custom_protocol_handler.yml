@@ -1,41 +1,37 @@
 title: Potential Persistence Via Custom Protocol Handler
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/05/30
+id: fdbf0b9d-0182-4c43-893b-a1eaab92d085
+status: experimental
 description: Detects potential persistence activity via the registering of a new custom
     protocole handlers. While legitimate applications register protocole handlers
     often times during installation. And attacker can abuse this by setting a custom
     handler to be used as a persistence mechanism.
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetObject: HKCR\\*
-    SELECTION_4:
-        Details: URL:*
-    SELECTION_5:
-        Details: URL:ms-*
-    SELECTION_6:
-        Image:
-        - C:\Program Files\\*
-        - C:\Program Files (x86)*
-        - C:\Windows\\*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6)))
-falsepositives:
-- Legitimate applications registering a new custom protocol handler
-id: fdbf0b9d-0182-4c43-893b-a1eaab92d085
-level: medium
+references:
+    - https://ladydebug.com/blog/2019/06/21/custom-protocol-handler-cph/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/05/30
+modified: 2023/01/10
+tags:
+    - attack.defense_evasion
+    - attack.t1112
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
-references:
-- https://ladydebug.com/blog/2019/06/21/custom-protocol-handler-cph/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1112
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetObject|startswith: HKCR\
+        Details|startswith: 'URL:'
+    filter_ms_trusted:
+        Details|startswith: URL:ms-
+    filter_generic_locations:
+        Image|startswith:
+            - C:\Program Files\
+            - C:\Program Files (x86)
+            - C:\Windows\
+    condition: registry_set and (selection and not 1 of filter_*)
+falsepositives:
+    - Legitimate applications registering a new custom protocol handler
+level: medium
+ruletype: Sigma

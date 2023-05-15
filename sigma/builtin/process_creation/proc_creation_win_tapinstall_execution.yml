@@ -1,36 +1,33 @@
 title: Tap Installer Execution
-ruletype: Sigma
-author: Daniil Yugoslavskiy, Ian Davis, oscd.community
-date: 2019/10/24
+id: 99793437-3e16-439b-be0f-078782cf953d
+status: test
 description: Well-known TAP software installation. Possible preparation for data exfiltration
     using tunneling techniques
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\tapinstall.exe'
-    SELECTION_4:
-        NewProcessName:
-        - C:\Program Files\Avast Software\SecureLine VPN\tapinstall.exe
-        - C:\Program Files (x86)\Avast Software\SecureLine VPN\tapinstall.exe
-    SELECTION_5:
-        NewProcessName: C:\Program Files\OpenVPN Connect\drivers\tap\\*
-    SELECTION_6:
-        NewProcessName: C:\Program Files (x86)\Proton Technologies\ProtonVPNTap\installer\\*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6)))
-falsepositives:
-- Legitimate OpenVPN TAP insntallation
-id: 99793437-3e16-439b-be0f-078782cf953d
-level: medium
+author: Daniil Yugoslavskiy, Ian Davis, oscd.community
+date: 2019/10/24
+modified: 2023/02/13
+tags:
+    - attack.exfiltration
+    - attack.t1048
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-status: test
-tags:
-- attack.exfiltration
-- attack.t1048
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        NewProcessName|endswith: \tapinstall.exe
+    filter_avast:
+        NewProcessName:
+            - C:\Program Files\Avast Software\SecureLine VPN\tapinstall.exe
+            - C:\Program Files (x86)\Avast Software\SecureLine VPN\tapinstall.exe
+    filter_openvpn:
+        NewProcessName|startswith: C:\Program Files\OpenVPN Connect\drivers\tap\
+    filter_protonvpn:
+        NewProcessName|startswith: C:\Program Files (x86)\Proton Technologies\ProtonVPNTap\installer\
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - Legitimate OpenVPN TAP insntallation
+level: medium
+ruletype: Sigma

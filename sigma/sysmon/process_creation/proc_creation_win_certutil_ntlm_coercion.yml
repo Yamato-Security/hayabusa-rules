@@ -1,35 +1,31 @@
 title: Potential NTLM Coercion Via Certutil.EXE
-ruletype: Sigma
+id: 6c6d9280-e6d0-4b9d-80ac-254701b64916
+status: experimental
+description: Detects possible NTLM coercion via certutil using the 'syncwithWU' flag
+references:
+    - https://github.com/LOLBAS-Project/LOLBAS/issues/243
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/09/01
-description: Detects possible NTLM coercion via certutil using the 'syncwithWU' flag
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\certutil.exe'
-    SELECTION_4:
-        OriginalFileName: CertUtil.exe
-    SELECTION_5:
-        CommandLine: '* -syncwithWU *'
-    SELECTION_6:
-        CommandLine: '* \\\\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6))
-falsepositives:
-- Unknown
-id: 6c6d9280-e6d0-4b9d-80ac-254701b64916
-level: high
+modified: 2023/02/14
+tags:
+    - attack.defense_evasion
+    - attack.t1218
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/14
-references:
-- https://github.com/LOLBAS-Project/LOLBAS/issues/243
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1218
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \certutil.exe
+        -   OriginalFileName: CertUtil.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - ' -syncwithWU '
+            - ' \\\\'
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

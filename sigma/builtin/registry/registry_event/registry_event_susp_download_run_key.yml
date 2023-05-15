@@ -1,38 +1,31 @@
 title: Suspicious Run Key from Download
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2019/10/01
+id: 9c5037d1-c568-49b3-88c7-9846a5bdc2be
+status: test
 description: Detects the suspicious RUN keys created by software located in Download
     or temporary Outlook/Internet Explorer directories
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - New registry value created
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        NewProcessName:
-        - '*\Downloads\\*'
-        - '*\Temporary Internet Files\Content.Outlook\\*'
-        - '*\Local Settings\Temporary Internet Files\\*'
-    SELECTION_5:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\\*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Software installers downloaded and used by users
-id: 9c5037d1-c568-49b3-88c7-9846a5bdc2be
-level: high
+references:
+    - https://app.any.run/tasks/c5bef5b7-f484-4c43-9cf3-d5c5c7839def/
+author: Florian Roth (Nextron Systems)
+date: 2019/10/01
+modified: 2021/11/27
+tags:
+    - attack.persistence
+    - attack.t1547.001
 logsource:
     category: registry_event
     product: windows
-modified: 2021/11/27
-references:
-- https://app.any.run/tasks/c5bef5b7-f484-4c43-9cf3-d5c5c7839def/
-status: test
-tags:
-- attack.persistence
-- attack.t1547.001
-
+detection:
+    registry_event:
+        EventID: 4657
+        Channel: Security
+    selection:
+        Image|contains:
+            - \Downloads\
+            - \Temporary Internet Files\Content.Outlook\
+            - \Local Settings\Temporary Internet Files\
+        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
+    condition: registry_event and selection
+falsepositives:
+    - Software installers downloaded and used by users
+level: high
+ruletype: Sigma

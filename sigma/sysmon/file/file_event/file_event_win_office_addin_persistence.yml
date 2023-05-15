@@ -1,50 +1,42 @@
 title: Potential Persistence Via Microsoft Office Add-In
-ruletype: Sigma
-author: NVISO
-date: 2020/05/11
+id: 8e1cb247-6cf6-42fa-b440-3f27d57e9936
+status: test
 description: Detects potential persistence activity via startup add-ins that load
     when Microsoft Office starts (.wll/.xll are simply .dll fit for Word or Excel).
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_10:
-        TargetFilename:
-        - '*.xlam'
-        - '*.xla'
-        - '*.ppam'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*\Microsoft\Word\Startup\\*'
-    SELECTION_4:
-        TargetFilename: '*.wll'
-    SELECTION_5:
-        TargetFilename: '*\Microsoft\Excel\Startup\\*'
-    SELECTION_6:
-        TargetFilename: '*.xll'
-    SELECTION_7:
-        TargetFilename: '*Microsoft\Excel\XLSTART\\*'
-    SELECTION_8:
-        TargetFilename: '*.xlam'
-    SELECTION_9:
-        TargetFilename: '*\Microsoft\Addins\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10)))
-falsepositives:
-- Legitimate add-ins
-id: 8e1cb247-6cf6-42fa-b440-3f27d57e9936
-level: high
+references:
+    - Internal Research
+    - https://labs.withsecure.com/publications/add-in-opportunities-for-office-persistence
+    - https://github.com/redcanaryco/atomic-red-team/blob/4ae9580a1a8772db87a1b6cdb0d03e5af231e966/atomics/T1137.006/T1137.006.md
+author: NVISO
+date: 2020/05/11
+modified: 2023/02/08
+tags:
+    - attack.persistence
+    - attack.t1137.006
 logsource:
     category: file_event
     product: windows
-modified: 2023/02/08
-references:
-- Internal Research
-- https://labs.withsecure.com/publications/add-in-opportunities-for-office-persistence
-- https://github.com/redcanaryco/atomic-red-team/blob/4ae9580a1a8772db87a1b6cdb0d03e5af231e966/atomics/T1137.006/T1137.006.md
-status: test
-tags:
-- attack.persistence
-- attack.t1137.006
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_wlldropped:
+        TargetFilename|contains: \Microsoft\Word\Startup\
+        TargetFilename|endswith: .wll
+    selection_xlldropped:
+        TargetFilename|contains: \Microsoft\Excel\Startup\
+        TargetFilename|endswith: .xll
+    selection_xladropped:
+        TargetFilename|contains: Microsoft\Excel\XLSTART\
+        TargetFilename|endswith: .xlam
+    selection_generic:
+        TargetFilename|contains: \Microsoft\Addins\
+        TargetFilename|endswith:
+            - .xlam
+            - .xla
+            - .ppam
+    condition: file_event and (1 of selection_*)
+falsepositives:
+    - Legitimate add-ins
+level: high
+ruletype: Sigma

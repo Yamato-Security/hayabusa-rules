@@ -1,35 +1,32 @@
 title: Mshtml DLL RunHTMLApplication Abuse
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/08/14
+id: 4782eb5a-a513-4523-a0ac-f3082b26ac5c
+related:
+    -   id: 9f06447a-a33a-4cbe-a94f-a3f43184a7a3
+        type: derived
+status: experimental
 description: Detects suspicious command line using the "mshtml.dll" RunHTMLApplication
     export to run arbitrary code via different protocol handlers (vbscript, javascript,
     file, htpp...)
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*\..\\*'
-    SELECTION_4:
-        CommandLine: '*mshtml*'
-    SELECTION_5:
-        CommandLine: '*RunHTMLApplication*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unlikely
-id: 4782eb5a-a513-4523-a0ac-f3082b26ac5c
-level: high
+references:
+    - https://twitter.com/n1nj4sec/status/1421190238081277959
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/14
+tags:
+    - attack.defense_evasion
 logsource:
     category: process_creation
     product: windows
-references:
-- https://twitter.com/n1nj4sec/status/1421190238081277959
-related:
--   id: 9f06447a-a33a-4cbe-a94f-a3f43184a7a3
-    type: derived
-status: experimental
-tags:
-- attack.defense_evasion
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - \..\
+            - mshtml
+            - RunHTMLApplication
+    condition: process_creation and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

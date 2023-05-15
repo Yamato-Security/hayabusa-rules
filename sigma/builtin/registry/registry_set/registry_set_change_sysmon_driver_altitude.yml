@@ -1,38 +1,30 @@
 title: Disable Sysmon Event Logging Via Registry
-ruletype: Sigma
-author: B.Talebi
-date: 2022/07/28
+id: 4916a35e-bfc4-47d0-8e25-a003d7067061
+status: experimental
 description: Detects changes in Sysmon driver altitude. If the Sysmon driver is configured
     to load at an altitude of another registered service, it will fail to load at
     boot.
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: HKLM\SYSTEM\CurrentControlSet\\*
-    SELECTION_6:
-        TargetObject: '*\Instances\Sysmon Instance\Altitude'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Legitimate driver altitude change to hide sysmon
-id: 4916a35e-bfc4-47d0-8e25-a003d7067061
-level: high
+references:
+    - https://posts.specterops.io/shhmon-silencing-sysmon-via-driver-unload-682b5be57650
+    - https://youtu.be/zSihR3lTf7g
+author: B.Talebi
+date: 2022/07/28
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
     category: registry_set
     product: windows
-references:
-- https://posts.specterops.io/shhmon-silencing-sysmon-via-driver-unload-682b5be57650
-- https://youtu.be/zSihR3lTf7g
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|startswith: HKLM\SYSTEM\CurrentControlSet\
+        TargetObject|endswith: \Instances\Sysmon Instance\Altitude
+    condition: registry_set and selection
+falsepositives:
+    - Legitimate driver altitude change to hide sysmon
+level: high
+ruletype: Sigma

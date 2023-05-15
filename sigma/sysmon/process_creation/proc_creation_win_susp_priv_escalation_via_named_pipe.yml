@@ -1,45 +1,40 @@
 title: Privilege Escalation via Named Pipe Impersonation
-ruletype: Sigma
-author: Tim Rauch
-date: 2022/09/27
+id: 9bd04a79-dabe-4f1f-a5ff-92430265c96b
+related:
+    -   id: f35c5d71-b489-4e22-a115-f003df287317
+        type: derived
+status: experimental
 description: Detects a remote file copy attempt to a hidden network share. This may
     indicate lateral movement or data staging activity.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\cmd.exe'
-        - '*\powershell.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - Cmd.Exe
-        - PowerShell.EXE
-    SELECTION_5:
-        CommandLine: '*echo*'
-    SELECTION_6:
-        CommandLine: '*>*'
-    SELECTION_7:
-        CommandLine: '*\\\\.\\pipe\\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
-falsepositives:
-- Other programs that cause these patterns (please report)
-id: 9bd04a79-dabe-4f1f-a5ff-92430265c96b
-level: high
+references:
+    - https://www.elastic.co/guide/en/security/current/privilege-escalation-via-named-pipe-impersonation.html
+author: Tim Rauch
+date: 2022/09/27
+modified: 2022/12/30
+tags:
+    - attack.lateral_movement
+    - attack.t1021
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/30
-references:
-- https://www.elastic.co/guide/en/security/current/privilege-escalation-via-named-pipe-impersonation.html
-related:
--   id: f35c5d71-b489-4e22-a115-f003df287317
-    type: derived
-status: experimental
-tags:
-- attack.lateral_movement
-- attack.t1021
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_name:
+        -   Image|endswith:
+                - \cmd.exe
+                - \powershell.exe
+        -   OriginalFileName:
+                - Cmd.Exe
+                - PowerShell.EXE
+    selection_args:
+        CommandLine|contains|all:
+            - echo
+            - '>'
+            - \\\\.\\pipe\\
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Other programs that cause these patterns (please report)
+level: high
+ruletype: Sigma

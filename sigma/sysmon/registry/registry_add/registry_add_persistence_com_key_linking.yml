@@ -1,37 +1,32 @@
 title: Potential COM Object Hijacking Via TreatAs Subkey - Registry
-ruletype: Sigma
+id: 9b0f8a61-91b2-464f-aceb-0527e0a45020
+status: experimental
+description: Detects COM object hijacking via TreatAs subkey
+references:
+    - https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/
 author: Kutepov Anton, oscd.community
 date: 2019/10/23
-description: Detects COM object hijacking via TreatAs subkey
-detection:
-    SELECTION_1:
-        EventID: 12
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: CreateKey
-    SELECTION_4:
-        TargetObject: '*HKU\\*'
-    SELECTION_5:
-        TargetObject: '*Classes\CLSID\\*'
-    SELECTION_6:
-        TargetObject: '*\TreatAs*'
-    SELECTION_7:
-        Image: C:\WINDOWS\system32\svchost.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7)))
-falsepositives:
-- Maybe some system utilities in rare cases use linking keys for backward compatibility
-id: 9b0f8a61-91b2-464f-aceb-0527e0a45020
-level: medium
+modified: 2023/02/07
+tags:
+    - attack.persistence
+    - attack.t1546.015
 logsource:
     category: registry_add
     product: windows
-modified: 2023/02/07
-references:
-- https://bohops.com/2018/08/18/abusing-the-com-registry-structure-part-2-loading-techniques-for-evasion-and-persistence/
-status: experimental
-tags:
-- attack.persistence
-- attack.t1546.015
-
+detection:
+    registry_add:
+        EventID: 12
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: CreateKey
+        TargetObject|contains|all:
+            - HKU\
+            - Classes\CLSID\
+            - \TreatAs
+    filter_svchost:
+        Image: C:\WINDOWS\system32\svchost.exe
+    condition: registry_add and (selection and not 1 of filter_*)
+falsepositives:
+    - Maybe some system utilities in rare cases use linking keys for backward compatibility
+level: medium
+ruletype: Sigma

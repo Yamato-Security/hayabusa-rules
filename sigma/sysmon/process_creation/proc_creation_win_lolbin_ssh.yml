@@ -1,41 +1,37 @@
 title: Lolbin Ssh.exe Use As Proxy
-ruletype: Sigma
+id: 7d6d30b8-5b91-4b90-a891-46cccaf29598
+status: experimental
+description: Detect usage of the "ssh.exe" binary as a proxy to launch other programs
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Ssh/
+    - https://github.com/LOLBAS-Project/LOLBAS/pull/211/files
+    - https://gtfobins.github.io/gtfobins/ssh/
+    - https://man.openbsd.org/ssh_config#ProxyCommand
+    - https://man.openbsd.org/ssh_config#LocalCommand
 author: frack113, Nasreddine Bencherchali
 date: 2022/12/29
-description: Detect usage of the "ssh.exe" binary as a proxy to launch other programs
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: C:\Windows\System32\OpenSSH\sshd.exe
-    SELECTION_4:
-        Image: '*\ssh.exe'
-    SELECTION_5:
-        CommandLine: '*ProxyCommand=*'
-    SELECTION_6:
-        CommandLine: '*PermitLocalCommand*'
-    SELECTION_7:
-        CommandLine: '*LocalCommand*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        (SELECTION_5 or (SELECTION_6 and SELECTION_7)))))
-falsepositives:
-- Legitimate usage for administration purposes
-id: 7d6d30b8-5b91-4b90-a891-46cccaf29598
-level: medium
+modified: 2023/01/25
+tags:
+    - attack.defense_evasion
+    - attack.t1202
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/25
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Ssh/
-- https://github.com/LOLBAS-Project/LOLBAS/pull/211/files
-- https://gtfobins.github.io/gtfobins/ssh/
-- https://man.openbsd.org/ssh_config#ProxyCommand
-- https://man.openbsd.org/ssh_config#LocalCommand
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1202
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_parent:
+        ParentImage: C:\Windows\System32\OpenSSH\sshd.exe
+    selection_cli_img:
+        Image|endswith: \ssh.exe
+    selection_cli_flags:
+        -   CommandLine|contains: ProxyCommand=
+        -   CommandLine|contains|all:
+                - PermitLocalCommand
+                - LocalCommand
+    condition: process_creation and (selection_parent or all of selection_cli_*)
+falsepositives:
+    - Legitimate usage for administration purposes
+level: medium
+ruletype: Sigma

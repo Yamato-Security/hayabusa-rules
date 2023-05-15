@@ -1,38 +1,34 @@
 title: Stop Windows Service Via PowerShell Stop-Service
-ruletype: Sigma
+id: c49c5062-0966-4170-9efd-9968c913a6cf
+related:
+    -   id: eb87818d-db5d-49cc-a987-d5da331fbd90
+        type: obsoletes
+status: experimental
+description: Detects the stopping of a Windows service
 author: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali (Nextron Systems)
 date: 2023/03/05
-description: Detects the stopping of a Windows service
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_4:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_5:
-        CommandLine: '*Stop-Service *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- There are many legitimate reasons to stop a service. This rule isn't looking for
-    any suspicious behaviour in particular. Filter legitimate activity accordingly
-id: c49c5062-0966-4170-9efd-9968c913a6cf
-level: low
+tags:
+    - attack.impact
+    - attack.t1489
 logsource:
     category: process_creation
     product: windows
-related:
--   id: eb87818d-db5d-49cc-a987-d5da331fbd90
-    type: obsoletes
-status: experimental
-tags:
-- attack.impact
-- attack.t1489
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_sc_net_img:
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+    selection_cli:
+        CommandLine|contains: 'Stop-Service '
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - There are many legitimate reasons to stop a service. This rule isn't looking
+        for any suspicious behaviour in particular. Filter legitimate activity accordingly
+level: low
+ruletype: Sigma

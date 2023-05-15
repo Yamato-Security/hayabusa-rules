@@ -1,95 +1,74 @@
 title: HackTool - CrackMapExec Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/02/25
+id: 42a993dd-bb3e-48c8-b372-4d6684c4106c
+status: test
 description: This rule detect common flag combinations used by CrackMapExec in order
     to detect its use even if the binary has been replaced.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        CommandLine: '* -p *'
-    SELECTION_11:
-        CommandLine: '* -H ''NTHASH''*'
-    SELECTION_12:
-        CommandLine: '* mssql *'
-    SELECTION_13:
-        CommandLine: '* -u *'
-    SELECTION_14:
-        CommandLine: '* -p *'
-    SELECTION_15:
-        CommandLine: '* -M *'
-    SELECTION_16:
-        CommandLine: '* -d *'
-    SELECTION_17:
-        CommandLine: '* smb *'
-    SELECTION_18:
-        CommandLine: '* -u *'
-    SELECTION_19:
-        CommandLine: '* -H *'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        CommandLine: '* -M *'
-    SELECTION_21:
-        CommandLine: '* -o *'
-    SELECTION_22:
-        CommandLine: '* smb *'
-    SELECTION_23:
-        CommandLine: '* -u *'
-    SELECTION_24:
-        CommandLine: '* -p *'
-    SELECTION_25:
-        CommandLine: '* --local-auth*'
-    SELECTION_26:
-        CommandLine: '* --local-auth*'
-    SELECTION_27:
-        CommandLine: '* -u *'
-    SELECTION_28:
-        CommandLine: '* -p *'
-    SELECTION_29:
-        CommandLine: '* 10.*'
-    SELECTION_3:
-        Image: '*\crackmapexec.exe'
-    SELECTION_30:
-        CommandLine: '* 192.168.*'
-    SELECTION_31:
-        CommandLine: '*/24 *'
-    SELECTION_4:
-        CommandLine: '* -M pe_inject *'
-    SELECTION_5:
-        CommandLine: '* --local-auth*'
-    SELECTION_6:
-        CommandLine: '* -u *'
-    SELECTION_7:
-        CommandLine: '* -x *'
-    SELECTION_8:
-        CommandLine: '* --local-auth*'
-    SELECTION_9:
-        CommandLine: '* -u *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or
-        (SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13 and SELECTION_14
-        and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19
-        and SELECTION_20 and SELECTION_21) or (SELECTION_22 and SELECTION_23 and SELECTION_24
-        and SELECTION_25)) or (SELECTION_26 and SELECTION_27 and SELECTION_28 and
-        SELECTION_29 and SELECTION_30 and SELECTION_31)))
-falsepositives:
-- Unknown
-fields:
-- ComputerName
-- User
-- CommandLine
-id: 42a993dd-bb3e-48c8-b372-4d6684c4106c
-level: high
+references:
+    - https://mpgn.gitbook.io/crackmapexec/smb-protocol/authentication/checking-credentials-local
+    - https://www.mandiant.com/resources/telegram-malware-iranian-espionage
+    - https://www.infosecmatter.com/crackmapexec-module-library/?cmem=mssql-mimikatz
+    - https://www.infosecmatter.com/crackmapexec-module-library/?cmem=smb-pe_inject
+author: Florian Roth (Nextron Systems)
+date: 2022/02/25
+modified: 2023/03/08
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/08
-references:
-- https://mpgn.gitbook.io/crackmapexec/smb-protocol/authentication/checking-credentials-local
-- https://www.mandiant.com/resources/telegram-malware-iranian-espionage
-- https://www.infosecmatter.com/crackmapexec-module-library/?cmem=mssql-mimikatz
-- https://www.infosecmatter.com/crackmapexec-module-library/?cmem=smb-pe_inject
-status: test
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_binary:
+        Image|endswith: \crackmapexec.exe
+    selection_special:
+        CommandLine|contains: ' -M pe_inject '
+    selection_execute:
+        CommandLine|contains|all:
+            - ' --local-auth'
+            - ' -u '
+            - ' -x '
+    selection_hash:
+        CommandLine|contains|all:
+            - ' --local-auth'
+            - ' -u '
+            - ' -p '
+            - ' -H ''NTHASH'''
+    selection_module_mssql:
+        CommandLine|contains|all:
+            - ' mssql '
+            - ' -u '
+            - ' -p '
+            - ' -M '
+            - ' -d '
+    selection_module_smb1:
+        CommandLine|contains|all:
+            - ' smb '
+            - ' -u '
+            - ' -H '
+            - ' -M '
+            - ' -o '
+    selection_module_smb2:
+        CommandLine|contains|all:
+            - ' smb '
+            - ' -u '
+            - ' -p '
+            - ' --local-auth'
+    part_localauth_1:
+        CommandLine|contains|all:
+            - ' --local-auth'
+            - ' -u '
+            - ' -p '
+    part_localauth_2:
+        CommandLine|contains|all:
+            - ' 10.'
+            - ' 192.168.'
+            - '/24 '
+    condition: process_creation and (1 of selection_* or all of part_localauth*)
+fields:
+    - ComputerName
+    - User
+    - CommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

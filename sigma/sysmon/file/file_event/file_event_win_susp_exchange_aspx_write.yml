@@ -1,35 +1,32 @@
 title: Suspicious MSExchangeMailboxReplication ASPX Write
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/02/25
+id: 7280c9f3-a5af-45d0-916a-bc01cb4151c9
+status: test
 description: Detects suspicious activity in which the MSExchangeMailboxReplication
     process writes .asp and .apsx files to disk, which could be a sign of ProxyShell
     exploitation
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\MSExchangeMailboxReplication.exe'
-    SELECTION_4:
-        TargetFilename:
-        - '*.aspx'
-        - '*.asp'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 7280c9f3-a5af-45d0-916a-bc01cb4151c9
-level: high
-logsource:
-    category: file_event
-    product: windows
 references:
-- https://redcanary.com/blog/blackbyte-ransomware/
-status: test
+    - https://redcanary.com/blog/blackbyte-ransomware/
+author: Florian Roth (Nextron Systems)
+date: 2022/02/25
 tags:
-- attack.initial_access
-- attack.t1190
-- attack.persistence
-- attack.t1505.003
-
+    - attack.initial_access
+    - attack.t1190
+    - attack.persistence
+    - attack.t1505.003
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \MSExchangeMailboxReplication.exe
+        TargetFilename|endswith:
+            - .aspx
+            - .asp
+    condition: file_event and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

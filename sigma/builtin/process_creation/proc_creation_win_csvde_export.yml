@@ -1,36 +1,32 @@
 title: Active Directory Structure Export Via Csvde.EXE
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/03/14
+id: e5d36acd-acb4-4c6f-a13f-9eb203d50099
+status: experimental
 description: Detects the execution of "csvde.exe" in order to export organizational
     Active Directory structure.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\csvde.exe'
-    SELECTION_4:
-        OriginalFileName: csvde.exe
-    SELECTION_5:
-        CommandLine: '* -f*'
-    SELECTION_6:
-        CommandLine: '* -i*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) and  not ((SELECTION_6)))
-falsepositives:
-- Unknown
-id: e5d36acd-acb4-4c6f-a13f-9eb203d50099
-level: medium
+references:
+    - https://www.cybereason.com/blog/research/operation-ghostshell-novel-rat-targets-global-aerospace-and-telecoms-firms
+    - https://web.archive.org/web/20180725233601/https://www.pwc.co.uk/cyber-security/pdf/cloud-hopper-annex-b-final.pdf
+    - https://businessinsights.bitdefender.com/deep-dive-into-a-backdoordiplomacy-attack-a-study-of-an-attackers-toolkit
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/03/14
+tags:
+    - attack.exfiltration
 logsource:
     category: process_creation
     product: windows
-references:
-- https://www.cybereason.com/blog/research/operation-ghostshell-novel-rat-targets-global-aerospace-and-telecoms-firms
-- https://web.archive.org/web/20180725233601/https://www.pwc.co.uk/cyber-security/pdf/cloud-hopper-annex-b-final.pdf
-- https://businessinsights.bitdefender.com/deep-dive-into-a-backdoordiplomacy-attack-a-study-of-an-attackers-toolkit
-status: experimental
-tags:
-- attack.exfiltration
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \csvde.exe
+        -   OriginalFileName: csvde.exe
+    selection_remote:
+        CommandLine|contains: ' -f'
+    filter_import:
+        CommandLine|contains: ' -i'
+    condition: process_creation and (all of selection_* and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

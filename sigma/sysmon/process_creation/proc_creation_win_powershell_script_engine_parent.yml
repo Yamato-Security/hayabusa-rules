@@ -1,39 +1,35 @@
 title: Suspicious PowerShell Invocation From Script Engines
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2019/01/16
+id: 95eadcb2-92e4-4ed1-9031-92547773a6db
+status: test
 description: Detects suspicious powershell invocations from interpreters or unusual
     programs
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage:
-        - '*\wscript.exe'
-        - '*\cscript.exe'
-    SELECTION_4:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_5:
-        CurrentDirectory: '*\Health Service State\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5)))
-falsepositives:
-- Microsoft Operations Manager (MOM)
-- Other scripts
-id: 95eadcb2-92e4-4ed1-9031-92547773a6db
-level: medium
+references:
+    - https://www.securitynewspaper.com/2017/03/20/attackers-leverage-excel-powershell-dns-latest-non-malware-attack/
+author: Florian Roth (Nextron Systems)
+date: 2019/01/16
+modified: 2023/01/05
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/05
-references:
-- https://www.securitynewspaper.com/2017/03/20/attackers-leverage-excel-powershell-dns-latest-non-malware-attack/
-status: test
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ParentImage|endswith:
+            - \wscript.exe
+            - \cscript.exe
+        Image|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+    filter_health_service:
+        CurrentDirectory|contains: \Health Service State\
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - Microsoft Operations Manager (MOM)
+    - Other scripts
+level: medium
+ruletype: Sigma

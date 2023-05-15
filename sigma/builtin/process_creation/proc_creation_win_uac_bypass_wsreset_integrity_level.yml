@@ -1,35 +1,32 @@
 title: UAC Bypass WSReset
-ruletype: Sigma
+id: 89a9a0e0-f61a-42e5-8957-b1479565a658
+status: test
+description: Detects the pattern of UAC Bypass via WSReset usable by default sysmon-config
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Wsreset/
+    - https://github.com/hfiref0x/UACME
+    - https://medium.com/falconforce/falconfriday-detecting-uac-bypasses-0xff16-86c2a9107abf
 author: Christian Burkard (Nextron Systems)
 date: 2021/08/23
-description: Detects the pattern of UAC Bypass via WSReset usable by default sysmon-config
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\wsreset.exe'
-    SELECTION_4:
-        IntegrityLevel:
-        - High
-        - System
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 89a9a0e0-f61a-42e5-8957-b1479565a658
-level: high
+modified: 2022/10/09
+tags:
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1548.002
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Wsreset/
-- https://github.com/hfiref0x/UACME
-- https://medium.com/falconforce/falconfriday-detecting-uac-bypasses-0xff16-86c2a9107abf
-status: test
-tags:
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1548.002
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        IntegrityLevel:
+            - High
+            - System
+        NewProcessName|endswith: \wsreset.exe
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

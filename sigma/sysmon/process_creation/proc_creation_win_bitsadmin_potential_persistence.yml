@@ -1,55 +1,50 @@
 title: Monitoring For Persistence Via BITS
-ruletype: Sigma
-author: Sreeman
-date: 2020/10/29
+id: b9cbbc17-d00d-4e3d-a827-b06d03d2380d
+status: test
 description: BITS will allow you to schedule a command to execute after a successful
     download to notify you that the job is finished. When the job runs on the system
     the command specified in the BITS job will be executed. This can be abused by
     actors to create a backdoor within the system and for persistence. It will be
     chained in a BITS job to schedule the download of malware/additional binaries
     and execute the program after being downloaded
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*bitsadmin*'
-    SELECTION_4:
-        CommandLine: '*/SetNotifyCmdLine*'
-    SELECTION_5:
-        CommandLine:
-        - '*%COMSPEC%*'
-        - '*cmd.exe*'
-        - '*regsvr32.exe*'
-    SELECTION_6:
-        CommandLine: '*bitsadmin*'
-    SELECTION_7:
-        CommandLine: '*/Addfile*'
-    SELECTION_8:
-        CommandLine:
-        - '*http:*'
-        - '*https:*'
-        - '*ftp:*'
-        - '*ftps:*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-id: b9cbbc17-d00d-4e3d-a827-b06d03d2380d
-level: medium
-logsource:
-    category: process_creation
-    product: windows
-modified: 2022/03/07
 references:
-- https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html
-- http://0xthem.blogspot.com/2014/03/t-emporal-persistence-with-and-schtasks.html
-- https://isc.sans.edu/diary/Wipe+the+drive+Stealthy+Malware+Persistence+Mechanism+-+Part+1/15394
-status: test
+    - https://www.fireeye.com/blog/threat-research/2020/10/kegtap-and-singlemalt-with-a-ransomware-chaser.html
+    - http://0xthem.blogspot.com/2014/03/t-emporal-persistence-with-and-schtasks.html
+    - https://isc.sans.edu/diary/Wipe+the+drive+Stealthy+Malware+Persistence+Mechanism+-+Part+1/15394
+author: Sreeman
+date: 2020/10/29
+modified: 2022/03/07
 tags:
-- attack.defense_evasion
-- attack.t1197
-
+    - attack.defense_evasion
+    - attack.t1197
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_1:
+        CommandLine|contains|all:
+            - bitsadmin
+            - /SetNotifyCmdLine
+        CommandLine|contains:
+            - '%COMSPEC%'
+            - cmd.exe
+            - regsvr32.exe
+    selection_2:
+        CommandLine|contains|all:
+            - bitsadmin
+            - /Addfile
+        CommandLine|contains:
+            - 'http:'
+            - 'https:'
+            - 'ftp:'
+            - 'ftps:'
+    condition: process_creation and (1 of selection_*)
+fields:
+    - CommandLine
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

@@ -1,37 +1,34 @@
 title: Suspicious SSL Connection
-ruletype: Sigma
-author: frack113
-date: 2022/01/23
+id: 195626f3-5f1b-4403-93b7-e6cfd4d6a078
+status: test
 description: Adversaries may employ a known encryption algorithm to conceal command
     and control traffic rather than relying on any inherent protections provided by
     a communication protocol.
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*System.Net.Security.SslStream*'
-    SELECTION_4:
-        ScriptBlockText: '*Net.Security.RemoteCertificateValidationCallback*'
-    SELECTION_5:
-        ScriptBlockText: '*.AuthenticateAsClient*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Legitimate administrative script
-id: 195626f3-5f1b-4403-93b7-e6cfd4d6a078
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1573/T1573.md#atomic-test-1---openssl-c2
+    - https://medium.com/walmartglobaltech/openssl-server-reverse-shell-from-windows-client-aee2dbfa0926
+author: frack113
+date: 2022/01/23
+tags:
+    - attack.command_and_control
+    - attack.t1573
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1573/T1573.md#atomic-test-1---openssl-c2
-- https://medium.com/walmartglobaltech/openssl-server-reverse-shell-from-windows-client-aee2dbfa0926
-status: test
-tags:
-- attack.command_and_control
-- attack.t1573
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - System.Net.Security.SslStream
+            - Net.Security.RemoteCertificateValidationCallback
+            - .AuthenticateAsClient
+    condition: ps_script and selection
+falsepositives:
+    - Legitimate administrative script
+level: low
+ruletype: Sigma

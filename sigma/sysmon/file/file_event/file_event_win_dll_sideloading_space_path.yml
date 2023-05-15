@@ -1,7 +1,6 @@
 title: DLL Search Order Hijackig Via Additional Space in Path
-ruletype: Sigma
-author: frack113, Nasreddine Bencherchali
-date: 2022/07/30
+id: b6f91281-20aa-446a-b986-38a92813a18f
+status: experimental
 description: 'Detects when an attacker create a similar folder structure to windows
     system folders such as (Windows, Program Files...)
 
@@ -9,33 +8,31 @@ description: 'Detects when an attacker create a similar folder structure to wind
     Order Hijacking" attack
 
     '
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename:
-        - C:\Windows \\*
-        - C:\Program Files \\*
-        - C:\Program Files (x86) \\*
-    SELECTION_4:
-        TargetFilename: '*.dll'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: b6f91281-20aa-446a-b986-38a92813a18f
-level: high
+references:
+    - https://twitter.com/cyb3rops/status/1552932770464292864
+    - https://www.wietzebeukema.nl/blog/hijacking-dlls-in-windows
+author: frack113, Nasreddine Bencherchali
+date: 2022/07/30
+tags:
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.defense_evasion
+    - attack.t1574.002
 logsource:
     category: file_event
     product: windows
-references:
-- https://twitter.com/cyb3rops/status/1552932770464292864
-- https://www.wietzebeukema.nl/blog/hijacking-dlls-in-windows
-status: experimental
-tags:
-- attack.persistence
-- attack.privilege_escalation
-- attack.defense_evasion
-- attack.t1574.002
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|startswith:
+            - C:\Windows \
+            - C:\Program Files \
+            - C:\Program Files (x86) \
+        TargetFilename|endswith: .dll
+    condition: file_event and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

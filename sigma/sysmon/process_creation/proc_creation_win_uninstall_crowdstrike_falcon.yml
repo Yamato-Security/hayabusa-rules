@@ -1,34 +1,31 @@
 title: Uninstall Crowdstrike Falcon Sensor
-ruletype: Sigma
-author: frack113
-date: 2021/07/12
+id: f0f7be61-9cf5-43be-9836-99d6ef448a18
+status: test
 description: Adversaries may disable security tools to avoid possible detection of
     their tools and activities by uninstalling Crowdstrike Falcon
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*\WindowsSensor.exe*'
-    SELECTION_4:
-        CommandLine: '* /uninstall*'
-    SELECTION_5:
-        CommandLine: '* /quiet*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Administrator might leverage the same command line for debugging or other purposes.
-    However this action must be always investigated
-id: f0f7be61-9cf5-43be-9836-99d6ef448a18
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
+author: frack113
+date: 2021/07/12
+modified: 2023/03/09
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/09
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains|all:
+            - \WindowsSensor.exe
+            - ' /uninstall'
+            - ' /quiet'
+    condition: process_creation and selection
+falsepositives:
+    - Administrator might leverage the same command line for debugging or other purposes.
+        However this action must be always investigated
+level: high
+ruletype: Sigma

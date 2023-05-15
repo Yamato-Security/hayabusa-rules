@@ -1,35 +1,32 @@
 title: Suspicious PFX File Creation
-ruletype: Sigma
-author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
-date: 2020/05/02
+id: dca1b3e8-e043-4ec8-85d7-867f334b5724
+status: test
 description: A general detection for processes creating PFX files. This could be an
     indicator of an adversary exporting a local certificate to a PFX file.
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*.pfx'
-    SELECTION_4:
-        TargetFilename: '*\Templates\Windows\Windows_TemporaryKey.pfx*'
-    SELECTION_5:
-        TargetFilename: '*\CMake\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        and SELECTION_5)))
-falsepositives:
-- System administrators managing certififcates.
-id: dca1b3e8-e043-4ec8-85d7-867f334b5724
-level: medium
-logsource:
-    category: file_event
-    product: windows
-modified: 2022/07/07
 references:
-- https://github.com/OTRF/detection-hackathon-apt29/issues/14
-- https://github.com/OTRF/ThreatHunter-Playbook/blob/2d4257f630f4c9770f78d0c1df059f891ffc3fec/docs/evals/apt29/detections/6.B.1_6392C9F1-D975-4F75-8A70-433DEDD7F622.md
-status: test
+    - https://github.com/OTRF/detection-hackathon-apt29/issues/14
+    - https://github.com/OTRF/ThreatHunter-Playbook/blob/2d4257f630f4c9770f78d0c1df059f891ffc3fec/docs/evals/apt29/detections/6.B.1_6392C9F1-D975-4F75-8A70-433DEDD7F622.md
+author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+date: 2020/05/02
+modified: 2022/07/07
 tags:
-- attack.credential_access
-- attack.t1552.004
-
+    - attack.credential_access
+    - attack.t1552.004
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|endswith: .pfx
+    filter:
+        TargetFilename|contains|all:
+            - \Templates\Windows\Windows_TemporaryKey.pfx
+            - \CMake\
+    condition: file_event and (selection and not 1 of filter*)
+falsepositives:
+    - System administrators managing certififcates.
+level: medium
+ruletype: Sigma

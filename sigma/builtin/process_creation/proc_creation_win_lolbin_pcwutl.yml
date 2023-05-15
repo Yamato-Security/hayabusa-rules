@@ -1,37 +1,33 @@
 title: Code Execution via Pcwutl.dll
-ruletype: Sigma
-author: Julia Fomina, oscd.community
-date: 2020/10/05
+id: 9386d78a-7207-4048-9c9f-a93a7c2d1c05
+status: test
 description: Detects launch of executable by calling the LaunchApplication function
     from pcwutl.dll library.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\rundll32.exe'
-    SELECTION_4:
-        OriginalFileName: RUNDLL32.EXE
-    SELECTION_5:
-        CommandLine: '*pcwutl*'
-    SELECTION_6:
-        CommandLine: '*LaunchApplication*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6))
-falsepositives:
-- Use of Program Compatibility Troubleshooter Helper
-id: 9386d78a-7207-4048-9c9f-a93a7c2d1c05
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/Libraries/Pcwutl/
+    - https://twitter.com/harr0ey/status/989617817849876488
+author: Julia Fomina, oscd.community
+date: 2020/10/05
+modified: 2023/02/09
+tags:
+    - attack.defense_evasion
+    - attack.t1218.011
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/09
-references:
-- https://lolbas-project.github.io/lolbas/Libraries/Pcwutl/
-- https://twitter.com/harr0ey/status/989617817849876488
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1218.011
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \rundll32.exe
+        -   OriginalFileName: RUNDLL32.EXE
+    selection_cli:
+        CommandLine|contains|all:
+            - pcwutl
+            - LaunchApplication
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Use of Program Compatibility Troubleshooter Helper
+level: medium
+ruletype: Sigma

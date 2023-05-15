@@ -1,36 +1,33 @@
 title: New Outlook Macro Created
-ruletype: Sigma
+id: 8c31f563-f9a7-450c-bfa8-35f8f32f1f61
+related:
+    -   id: 117d3d3a-755c-4a61-b23e-9171146d094c
+        type: derived
+status: test
+description: Detects the creation of a macro file for Outlook.
+references:
+    - https://www.mdsec.co.uk/2020/11/a-fresh-outlook-on-mail-based-persistence/
 author: '@ScoubiMtl'
 date: 2021/04/05
-description: Detects the creation of a macro file for Outlook.
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\outlook.exe'
-    SELECTION_4:
-        TargetFilename: '*\Microsoft\Outlook\VbaProject.OTM'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- User genuinely creates a VB Macro for their email
-id: 8c31f563-f9a7-450c-bfa8-35f8f32f1f61
-level: medium
+modified: 2023/02/08
+tags:
+    - attack.persistence
+    - attack.command_and_control
+    - attack.t1137
+    - attack.t1008
+    - attack.t1546
 logsource:
     category: file_event
     product: windows
-modified: 2023/02/08
-references:
-- https://www.mdsec.co.uk/2020/11/a-fresh-outlook-on-mail-based-persistence/
-related:
--   id: 117d3d3a-755c-4a61-b23e-9171146d094c
-    type: derived
-status: test
-tags:
-- attack.persistence
-- attack.command_and_control
-- attack.t1137
-- attack.t1008
-- attack.t1546
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \outlook.exe
+        TargetFilename|endswith: \Microsoft\Outlook\VbaProject.OTM
+    condition: file_event and selection
+falsepositives:
+    - User genuinely creates a VB Macro for their email
+level: medium
+ruletype: Sigma

@@ -1,32 +1,29 @@
 title: Turla PNG Dropper Service
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2018/11/23
+id: 1228f8e2-7e79-4dea-b0ad-c91f1d5016c1
+status: test
 description: This method detects malicious services mentioned in Turla PNG dropper
     report by NCC Group in November 2018
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Service Control Manager
-    SELECTION_3:
-        EventID: 7045
-    SELECTION_4:
-        ServiceName: WerFaultSvc
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unlikely
-id: 1228f8e2-7e79-4dea-b0ad-c91f1d5016c1
-level: critical
+references:
+    - https://www.nccgroup.trust/uk/about-us/newsroom-and-events/blogs/2018/november/turla-png-dropper-is-back/
+author: Florian Roth (Nextron Systems)
+date: 2018/11/23
+modified: 2021/11/30
+tags:
+    - attack.persistence
+    - attack.g0010
+    - attack.t1543.003
 logsource:
     product: windows
     service: system
-modified: 2021/11/30
-references:
-- https://www.nccgroup.trust/uk/about-us/newsroom-and-events/blogs/2018/november/turla-png-dropper-is-back/
-status: test
-tags:
-- attack.persistence
-- attack.g0010
-- attack.t1543.003
-
+detection:
+    system:
+        Channel: System
+    selection:
+        Provider_Name: Service Control Manager
+        EventID: 7045
+        ServiceName: WerFaultSvc
+    condition: system and selection
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

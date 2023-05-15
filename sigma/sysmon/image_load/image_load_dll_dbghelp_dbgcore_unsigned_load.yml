@@ -1,7 +1,9 @@
 title: Suspicious Unsigned Dbghelp/Dbgcore DLL Loaded
-ruletype: Sigma
-author: Perez Diego (@darkquassar), oscd.community, Ecco
-date: 2019/10/27
+id: bdc64095-d59a-42a2-8588-71fd9c9d9abc
+related:
+    -   id: 0e277796-5f23-4e49-a490-483131d4f6e1
+        type: similar
+status: test
 description: 'Detects the load of dbghelp/dbgcore DLL (used to make memory dumps)
     by suspicious processes.
 
@@ -13,35 +15,30 @@ description: 'Detects the load of dbghelp/dbgcore DLL (used to make memory dumps
     attacker''s machine.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ImageLoaded:
-        - '*\dbghelp.dll'
-        - '*\dbgcore.dll'
-    SELECTION_4:
-        Signed: 'false'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: bdc64095-d59a-42a2-8588-71fd9c9d9abc
-level: high
+references:
+    - https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump
+    - https://www.pinvoke.net/default.aspx/dbghelp/MiniDumpWriteDump.html
+    - https://medium.com/@fsx30/bypass-edrs-memory-protection-introduction-to-hooking-2efb21acffd6
+author: Perez Diego (@darkquassar), oscd.community, Ecco
+date: 2019/10/27
+modified: 2022/12/09
+tags:
+    - attack.credential_access
+    - attack.t1003.001
 logsource:
     category: image_load
     product: windows
-modified: 2022/12/09
-references:
-- https://docs.microsoft.com/en-us/windows/win32/api/minidumpapiset/nf-minidumpapiset-minidumpwritedump
-- https://www.pinvoke.net/default.aspx/dbghelp/MiniDumpWriteDump.html
-- https://medium.com/@fsx30/bypass-edrs-memory-protection-introduction-to-hooking-2efb21acffd6
-related:
--   id: 0e277796-5f23-4e49-a490-483131d4f6e1
-    type: similar
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.001
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ImageLoaded|endswith:
+            - \dbghelp.dll
+            - \dbgcore.dll
+        Signed: 'false'
+    condition: image_load and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

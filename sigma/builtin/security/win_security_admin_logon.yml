@@ -1,30 +1,29 @@
 title: User with Privileges Logon
-ruletype: Sigma
-author: frack113
-date: 2022/10/14
+id: 94309181-d345-4cbf-b5fe-061769bdf9cb
+status: experimental
 description: Detects logon with "Special groups" and "Special Privileges" can be thought
     of as Administrator groups or privileges.
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4672
-    SELECTION_3:
-        EventID: 4964
-    SELECTION_4:
-        SubjectUserSid: S-1-5-18
-    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3) and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: 94309181-d345-4cbf-b5fe-061769bdf9cb
-level: low
-logsource:
-    product: windows
-    service: security
-modified: 2022/10/22
 references:
-- https://github.com/Yamato-Security/EnableWindowsLogSettings/blob/7f6d755d45ac7cc9fc35b0cbf498e6aa4ef19def/ConfiguringSecurityLogAuditPolicies.md
-- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4672
-- https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4964
-status: experimental
-
+    - https://github.com/Yamato-Security/EnableWindowsLogSettings/blob/7f6d755d45ac7cc9fc35b0cbf498e6aa4ef19def/ConfiguringSecurityLogAuditPolicies.md
+    - https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4672
+    - https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4964
+author: frack113
+date: 2022/10/14
+modified: 2022/10/22
+logsource:
+    service: security
+    product: windows
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID:
+            - 4672
+            - 4964
+    filter:
+        SubjectUserSid: S-1-5-18
+    condition: security and (selection and not filter)
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

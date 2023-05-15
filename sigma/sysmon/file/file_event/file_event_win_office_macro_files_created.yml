@@ -1,37 +1,35 @@
 title: Office Macro File Creation
-ruletype: Sigma
+id: 91174a41-dc8f-401b-be89-7bfc140612a0
+related:
+    -   id: 0e29e3a7-1ad8-40aa-b691-9f82ecd33d66
+        type: similar
+status: experimental
+description: Detects the creation of a new office macro files on the systems
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1566.001/T1566.001.md
+    - https://docs.microsoft.com/en-us/deployoffice/compat/office-file-format-reference
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/01/23
-description: Detects the creation of a new office macro files on the systems
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename:
-        - '*.docm'
-        - '*.dotm'
-        - '*.xlsm'
-        - '*.xltm'
-        - '*.potm'
-        - '*.pptm'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Very common in environments that rely heavily on macro documents
-id: 91174a41-dc8f-401b-be89-7bfc140612a0
-level: low
+tags:
+    - attack.initial_access
+    - attack.t1566.001
 logsource:
     category: file_event
     product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1566.001/T1566.001.md
-- https://docs.microsoft.com/en-us/deployoffice/compat/office-file-format-reference
-related:
--   id: 0e29e3a7-1ad8-40aa-b691-9f82ecd33d66
-    type: similar
-status: experimental
-tags:
-- attack.initial_access
-- attack.t1566.001
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|endswith:
+            - .docm
+            - .dotm
+            - .xlsm
+            - .xltm
+            - .potm
+            - .pptm
+    condition: file_event and selection
+falsepositives:
+    - Very common in environments that rely heavily on macro documents
+level: low
+ruletype: Sigma

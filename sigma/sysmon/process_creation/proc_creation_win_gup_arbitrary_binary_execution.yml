@@ -1,39 +1,34 @@
 title: Arbitrary Binary Execution Using GUP Utility
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/06/10
+id: d65aee4d-2292-4cea-b832-83accd6cfa43
+status: experimental
 description: Detects execution of the Notepad++ updater (gup) to launch other commands
     or executables
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: '*\gup.exe'
-    SELECTION_4:
-        Image: '*\explorer.exe'
-    SELECTION_5:
-        Image: '*\explorer.exe'
-    SELECTION_6:
-        CommandLine: '*\Notepad++\notepad++.exe*'
-    SELECTION_7:
-        ParentImage: '*\Notepad++\updater\\*'
-    SELECTION_8:
-        CommandLine: null
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 and SELECTION_6) or (SELECTION_7) or (SELECTION_8)))
-falsepositives:
-- Other parent binaries using GUP not currently identified
-id: d65aee4d-2292-4cea-b832-83accd6cfa43
-level: medium
+references:
+    - https://twitter.com/nas_bench/status/1535322445439180803
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/06/10
+modified: 2023/03/02
+tags:
+    - attack.execution
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/02
-references:
-- https://twitter.com/nas_bench/status/1535322445439180803
-status: experimental
-tags:
-- attack.execution
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ParentImage|endswith: \gup.exe
+        Image|endswith: \explorer.exe
+    filter:
+        Image|endswith: \explorer.exe
+        CommandLine|contains: \Notepad++\notepad++.exe
+    filter_parent:
+        ParentImage|contains: \Notepad++\updater\
+    filter_null:
+        CommandLine: null
+    condition: process_creation and (selection and not 1 of filter*)
+falsepositives:
+    - Other parent binaries using GUP not currently identified
+level: medium
+ruletype: Sigma

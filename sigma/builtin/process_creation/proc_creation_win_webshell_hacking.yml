@@ -1,107 +1,95 @@
 title: Webshell Hacking Activity Patterns
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/03/17
+id: 4ebc877f-4612-45cb-b3a5-8e3834db36c9
+status: experimental
 description: Detects certain parent child patterns found in cases in which a webshell
     is used to perform certain credential dumping or exfiltration activities on a
     compromised system
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '* -hp*'
-    SELECTION_11:
-        CommandLine: '* a *'
-    SELECTION_12:
-        CommandLine: '* -m*'
-    SELECTION_13:
-        CommandLine: '*net*'
-    SELECTION_14:
-        CommandLine: '* user *'
-    SELECTION_15:
-        CommandLine: '* /add*'
-    SELECTION_16:
-        CommandLine: '*net*'
-    SELECTION_17:
-        CommandLine: '* localgroup *'
-    SELECTION_18:
-        CommandLine: '* administrators *'
-    SELECTION_19:
-        CommandLine: '*/add*'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_20:
-        NewProcessName:
-        - '*\ntdsutil.exe'
-        - '*\ldifde.exe'
-        - '*\adfind.exe'
-        - '*\procdump.exe'
-        - '*\Nanodump.exe'
-        - '*\vssadmin.exe'
-        - '*\fsutil.exe'
-    SELECTION_21:
-        CommandLine:
-        - '* -NoP *'
-        - '* -W Hidden *'
-        - '* -decode *'
-        - '* /decode *'
-        - '*reg save *'
-        - '*.downloadstring(*'
-        - '*.downloadfile(*'
-        - '*FromBase64String*'
-        - '* /ticket:*'
-        - '* sekurlsa*'
-        - '*.dmp full*'
-        - '*process call create*'
-        - '*whoami /priv*'
-    SELECTION_3:
-        ParentProcessName:
-        - '*\w3wp.exe'
-        - '*\php-cgi.exe'
-        - '*\nginx.exe'
-        - '*\httpd.exe'
-        - '*\caddy.exe'
-        - '*\ws_tomcatservice.exe'
-    SELECTION_4:
-        ParentProcessName:
-        - '*\java.exe'
-        - '*\javaw.exe'
-    SELECTION_5:
-        ParentProcessName:
-        - '*-tomcat-*'
-        - '*\tomcat*'
-    SELECTION_6:
-        ParentProcessName:
-        - '*\java.exe'
-        - '*\javaw.exe'
-    SELECTION_7:
-        CommandLine:
-        - '*catalina.jar*'
-        - '*CATALINA_HOME*'
-    SELECTION_8:
-        CommandLine: '*rundll32*'
-    SELECTION_9:
-        CommandLine: '*comsvcs*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7)) and ((SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
-        and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18 and SELECTION_19)
-        or SELECTION_20 or SELECTION_21))
-falsepositives:
-- Unlikely
-id: 4ebc877f-4612-45cb-b3a5-8e3834db36c9
-level: high
+references:
+    - https://youtu.be/7aemGhaE9ds?t=641
+author: Florian Roth (Nextron Systems)
+date: 2022/03/17
+modified: 2022/08/04
+tags:
+    - attack.persistence
+    - attack.t1505.003
+    - attack.t1018
+    - attack.t1033
+    - attack.t1087
 logsource:
     category: process_creation
     product: windows
-modified: 2022/08/04
-references:
-- https://youtu.be/7aemGhaE9ds?t=641
-status: experimental
-tags:
-- attack.persistence
-- attack.t1505.003
-- attack.t1018
-- attack.t1033
-- attack.t1087
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_webserver_image:
+        ParentProcessName|endswith:
+            - \w3wp.exe
+            - \php-cgi.exe
+            - \nginx.exe
+            - \httpd.exe
+            - \caddy.exe
+            - \ws_tomcatservice.exe
+    selection_webserver_characteristics_tomcat1:
+        ParentProcessName|endswith:
+            - \java.exe
+            - \javaw.exe
+        ParentProcessName|contains:
+            - -tomcat-
+            - \tomcat
+    selection_webserver_characteristics_tomcat2:
+        CommandLine|contains:
+            - catalina.jar
+            - CATALINA_HOME
+        ParentProcessName|endswith:
+            - \java.exe
+            - \javaw.exe
+    selection_child_1:
+        CommandLine|contains|all:
+            - rundll32
+            - comsvcs
+    selection_child_2:
+        CommandLine|contains|all:
+            - ' -hp'
+            - ' a '
+            - ' -m'
+    selection_child_3:
+        CommandLine|contains|all:
+            - net
+            - ' user '
+            - ' /add'
+    selection_child_4:
+        CommandLine|contains|all:
+            - net
+            - ' localgroup '
+            - ' administrators '
+            - /add
+    selection_child_5:
+        NewProcessName|endswith:
+            - \ntdsutil.exe
+            - \ldifde.exe
+            - \adfind.exe
+            - \procdump.exe
+            - \Nanodump.exe
+            - \vssadmin.exe
+            - \fsutil.exe
+    selection_child_6:
+        CommandLine|contains:
+            - ' -NoP '
+            - ' -W Hidden '
+            - ' -decode '
+            - ' /decode '
+            - 'reg save '
+            - .downloadstring(
+            - .downloadfile(
+            - FromBase64String
+            - ' /ticket:'
+            - ' sekurlsa'
+            - .dmp full
+            - process call create
+            - whoami /priv
+    condition: process_creation and (1 of selection_webserver* and 1 of selection_child*)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

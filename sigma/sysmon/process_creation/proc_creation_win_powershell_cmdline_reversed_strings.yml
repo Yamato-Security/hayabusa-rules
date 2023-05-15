@@ -1,72 +1,67 @@
 title: Potential PowerShell Obfuscation Via Reversed Commands
-ruletype: Sigma
-author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
-date: 2020/10/11
+id: b6b49cd1-34d6-4ead-b1bf-176e9edba9a4
+status: test
 description: Detects the presence of reversed PowerShell commands in the CommandLine.
     This is often used as a method of obfuscation by attackers
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_5:
-        CommandLine:
-        - '*hctac*'
-        - '*kaerb*'
-        - '*dnammoc*'
-        - '*ekovn*'
-        - '*eliFd*'
-        - '*rahc*'
-        - '*etirw*'
-        - '*golon*'
-        - '*tninon*'
-        - '*eddih*'
-        - '*tpircS*'
-        - '*ssecorp*'
-        - '*llehsrewop*'
-        - '*esnopser*'
-        - '*daolnwod*'
-        - '*tneilCbeW*'
-        - '*tneilc*'
-        - '*ptth*'
-        - '*elifotevas*'
-        - '*46esab*'
-        - '*htaPpmeTteG*'
-        - '*tcejbO*'
-        - '*maerts*'
-        - '*hcaerof*'
-        - '*retupmoc*'
-    SELECTION_6:
-        ParentImage: C:\Windows\System32\cmd.exe
-    SELECTION_7:
-        CommandLine: '*-EncodedCommand*'
-    SELECTION_8:
-        CommandLine: '*rahc*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Unlikely
-id: b6b49cd1-34d6-4ead-b1bf-176e9edba9a4
-level: high
+references:
+    - https://2019.offzone.moscow/ru/report/hunting-for-powershell-abuses/
+    - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=66
+author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
+date: 2020/10/11
+modified: 2023/01/30
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/30
-references:
-- https://2019.offzone.moscow/ru/report/hunting-for-powershell-abuses/
-- https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=66
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    selection_cli:
+        CommandLine|contains:
+            - hctac
+            - kaerb
+            - dnammoc
+            - ekovn
+            - eliFd
+            - rahc
+            - etirw
+            - golon
+            - tninon
+            - eddih
+            - tpircS
+            - ssecorp
+            - llehsrewop
+            - esnopser
+            - daolnwod
+            - tneilCbeW
+            - tneilc
+            - ptth
+            - elifotevas
+            - 46esab
+            - htaPpmeTteG
+            - tcejbO
+            - maerts
+            - hcaerof
+            - retupmoc
+    filter_optional_ansible:
+        ParentImage: C:\Windows\System32\cmd.exe
+        CommandLine|contains|all:
+            - -EncodedCommand
+            - rahc
+    condition: process_creation and (all of selection_* and not 1 of filter_optional_*)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

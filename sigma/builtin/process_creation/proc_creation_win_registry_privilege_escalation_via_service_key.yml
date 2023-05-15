@@ -1,40 +1,35 @@
 title: Potential Privilege Escalation via Service Permissions Weakness
-ruletype: Sigma
-author: Teymur Kheirkhabarov
-date: 2019/10/26
+id: 0f9c21f1-6a73-4b0e-9809-cb562cb8d981
+status: test
 description: Detect modification of services configuration (ImagePath, FailureCommand
     and ServiceDLL) in registry by processes with Medium integrity level
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        IntegrityLevel: Medium
-    SELECTION_4:
-        CommandLine: '*ControlSet*'
-    SELECTION_5:
-        CommandLine: '*services*'
-    SELECTION_6:
-        CommandLine:
-        - '*\ImagePath*'
-        - '*\FailureCommand*'
-        - '*\ServiceDll*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: 0f9c21f1-6a73-4b0e-9809-cb562cb8d981
-level: high
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/01/30
 references:
-- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
-- https://pentestlab.blog/2017/03/31/insecure-registry-permissions/
-status: test
+    - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
+    - https://pentestlab.blog/2017/03/31/insecure-registry-permissions/
+author: Teymur Kheirkhabarov
+date: 2019/10/26
+modified: 2023/01/30
 tags:
-- attack.privilege_escalation
-- attack.t1574.011
-
+    - attack.privilege_escalation
+    - attack.t1574.011
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        IntegrityLevel: Medium
+        CommandLine|contains|all:
+            - ControlSet
+            - services
+        CommandLine|contains:
+            - \ImagePath
+            - \FailureCommand
+            - \ServiceDll
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

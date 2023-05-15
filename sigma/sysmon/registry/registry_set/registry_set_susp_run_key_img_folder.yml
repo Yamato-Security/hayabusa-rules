@@ -1,52 +1,47 @@
 title: New RUN Key Pointing to Suspicious Folder
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Markus Neis, Sander Wiebing
-date: 2018/08/25
+id: 02ee49e2-e294-4d0f-9278-f5b3212fc588
+status: experimental
 description: Detects suspicious new RUN key element pointing to an executable in a
     suspicious folder
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject:
-        - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\\*'
-        - '*\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\\*'
-    SELECTION_5:
-        Details:
-        - '*C:\Windows\Temp\\*'
-        - '*C:\$Recycle.bin\\*'
-        - '*C:\Temp\\*'
-        - '*C:\Users\Public\\*'
-        - '*C:\Users\Default\\*'
-        - '*C:\Users\Desktop\\*'
-        - '*\AppData\Local\Temp\\*'
-        - '*%temp%\\*'
-        - '*%tmp%\\*'
-    SELECTION_6:
-        Details:
-        - '%Public%\\*'
-        - wscript*
-        - cscript*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
-        (SELECTION_5 or SELECTION_6))
-falsepositives:
-- Software using weird folders for updates
-fields:
-- Image
-id: 02ee49e2-e294-4d0f-9278-f5b3212fc588
-level: high
+references:
+    - https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html
+author: Florian Roth (Nextron Systems), Markus Neis, Sander Wiebing
+date: 2018/08/25
+modified: 2022/09/13
+tags:
+    - attack.persistence
+    - attack.t1547.001
 logsource:
     category: registry_set
     product: windows
-modified: 2022/09/13
-references:
-- https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html
-status: experimental
-tags:
-- attack.persistence
-- attack.t1547.001
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_target:
+        EventType: SetValue
+        TargetObject|contains:
+            - \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
+            - \SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\
+    selection_details:
+        -   Details|contains:
+                - C:\Windows\Temp\
+                - C:\$Recycle.bin\
+                - C:\Temp\
+                - C:\Users\Public\
+                - C:\Users\Default\
+                - C:\Users\Desktop\
+                - \AppData\Local\Temp\
+                - '%temp%\'
+                - '%tmp%\'
+        -   Details|startswith:
+                - '%Public%\'
+                - wscript
+                - cscript
+    condition: registry_set and (all of selection_*)
+fields:
+    - Image
+falsepositives:
+    - Software using weird folders for updates
+level: high
+ruletype: Sigma

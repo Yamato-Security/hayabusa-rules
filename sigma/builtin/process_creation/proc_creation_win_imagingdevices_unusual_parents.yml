@@ -1,37 +1,33 @@
 title: ImagingDevices Unusual Parent/Child Processes
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/09/27
+id: f11f2808-adb4-46c0-802a-8660db50fa99
+status: experimental
 description: Detects unusual parent or children of the ImagingDevices.exe (Windows
     Contacts) process as seen being used with Bumblebee activity
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        ParentProcessName:
-        - '*\WmiPrvSE.exe'
-        - '*\svchost.exe'
-        - '*\dllhost.exe'
-    SELECTION_4:
-        NewProcessName: '*\ImagingDevices.exe'
-    SELECTION_5:
-        ParentProcessName: '*\ImagingDevices.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        SELECTION_5))
-falsepositives:
-- Unknown
-id: f11f2808-adb4-46c0-802a-8660db50fa99
-level: high
+references:
+    - https://thedfirreport.com/2022/09/26/bumblebee-round-two/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/09/27
+modified: 2022/12/29
+tags:
+    - attack.defense_evasion
+    - attack.execution
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/29
-references:
-- https://thedfirreport.com/2022/09/26/bumblebee-round-two/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.execution
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_parent:
+        ParentProcessName|endswith:
+            - \WmiPrvSE.exe
+            - \svchost.exe
+            - \dllhost.exe
+        NewProcessName|endswith: \ImagingDevices.exe
+    selection_child:
+        ParentProcessName|endswith: \ImagingDevices.exe
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

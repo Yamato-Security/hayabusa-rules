@@ -1,119 +1,104 @@
 title: Suspicious GrantedAccess Flags on LSASS Access
-ruletype: Sigma
+id: a18dd26b-6450-46de-8c91-9659150cf088
+related:
+    -   id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
+        type: obsoletes
+status: experimental
+description: Detects process access to LSASS memory with suspicious access flags
+references:
+    - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
+    - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
+    - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
+    - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+    - http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
 author: Florian Roth (Nextron Systems)
 date: 2021/11/22
-description: Detects process access to LSASS memory with suspicious access flags
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_10:
-        GrantedAccess: '0x1418'
-    SELECTION_11:
-        SourceImage: C:\Program Files\Microsoft Security Client\MsMpEng.exe
-    SELECTION_12:
-        GrantedAccess: '0x1418'
-    SELECTION_13:
-        SourceImage: C:\ProgramData\VMware\VMware Tools\\*
-    SELECTION_14:
-        SourceImage: '*\vmtoolsd.exe'
-    SELECTION_15:
-        SourceImage:
-        - C:\Program Files\\*
-        - C:\Program Files (x86)\\*
-    SELECTION_16:
-        SourceImage: '*Antivirus*'
-    SELECTION_17:
-        SourceImage: C:\WINDOWS\system32\MRT.exe
-    SELECTION_18:
-        GrantedAccess: '0x1418'
-    SELECTION_19:
-        SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        SourceImage: C:\Windows\Temp\asgard2-agent\\*
-    SELECTION_21:
-        SourceImage:
-        - '*\thor64.exe'
-        - '*\thor.exe'
-    SELECTION_22:
-        GrantedAccess: '0x1fffff'
-    SELECTION_3:
-        TargetImage: '*\lsass.exe'
-    SELECTION_4:
-        GrantedAccess:
-        - '*30'
-        - '*50'
-        - '*70'
-        - '*90'
-        - '*B0'
-        - '*D0'
-        - '*F0'
-        - '*18'
-        - '*38'
-        - '*58'
-        - '*78'
-        - '*98'
-        - '*B8'
-        - '*D8'
-        - '*F8'
-        - '*1A'
-        - '*3A'
-        - '*5A'
-        - '*7A'
-        - '*9A'
-        - '*BA'
-        - '*DA'
-        - '*FA'
-        - '*0x14C2'
-    SELECTION_5:
-        SourceImage:
-        - C:\WINDOWS\system32\taskmgr.exe
-        - C:\Program Files\Malwarebytes\Anti-Malware\MBAMService.exe
-        - C:\PROGRAMDATA\MALWAREBYTES\MBAMSERVICE\ctlrupdate\mbupdatr.exe
-        - C:\WINDOWS\system32\taskhostw.exe
-        - C:\Users\\*\AppData\Local\Programs\Microsoft VS Code\Code.exe
-        - C:\Program Files\Windows Defender\MsMpEng.exe
-        - C:\Windows\SysWOW64\msiexec.exe
-        - C:\Windows\System32\msiexec.exe
-        - C:\Windows\System32\lsass.exe
-        - C:\WINDOWS\System32\perfmon.exe
-        - C:\Windows\System32\MRT.exe
-        - C:\Program Files\Cisco\Cisco AnyConnect Secure Mobility Client\vpnagent.exe
-        - C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpnagent.exe
-    SELECTION_6:
-        SourceImage: C:\ProgramData\Microsoft\Windows Defender\\*
-    SELECTION_7:
-        SourceImage: '*\MsMpEng.exe'
-    SELECTION_8:
-        CallTrace: '*|C:\ProgramData\Microsoft\Windows Defender\Definition Updates\{*'
-    SELECTION_9:
-        CallTrace: '*}\mpengine.dll+*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
-        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)
-        or (SELECTION_19) or (SELECTION_20 and SELECTION_21 and SELECTION_22)))
-falsepositives:
-- Legitimate software such as AV and EDR
-id: a18dd26b-6450-46de-8c91-9659150cf088
-level: high
+modified: 2023/03/22
+tags:
+    - attack.credential_access
+    - attack.t1003.001
+    - attack.s0002
 logsource:
     category: process_access
     product: windows
-modified: 2023/03/22
-references:
-- https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
-- https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
-- https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
-- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
-- http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
-related:
--   id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
-    type: obsoletes
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1003.001
-- attack.s0002
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetImage|endswith: \lsass.exe
+        GrantedAccess|endswith:
+            - '30'
+            - '50'
+            - '70'
+            - '90'
+            - B0
+            - D0
+            - F0
+            - '18'
+            - '38'
+            - '58'
+            - '78'
+            - '98'
+            - B8
+            - D8
+            - F8
+            - 1A
+            - 3A
+            - 5A
+            - 7A
+            - 9A
+            - BA
+            - DA
+            - FA
+            - '0x14C2'
+    filter_absolute:
+        SourceImage:
+            - C:\WINDOWS\system32\taskmgr.exe
+            - C:\Program Files\Malwarebytes\Anti-Malware\MBAMService.exe
+            - C:\PROGRAMDATA\MALWAREBYTES\MBAMSERVICE\ctlrupdate\mbupdatr.exe
+            - C:\WINDOWS\system32\taskhostw.exe
+            - C:\Users\\*\AppData\Local\Programs\Microsoft VS Code\Code.exe
+            - C:\Program Files\Windows Defender\MsMpEng.exe
+            - C:\Windows\SysWOW64\msiexec.exe
+            - C:\Windows\System32\msiexec.exe
+            - C:\Windows\System32\lsass.exe
+            - C:\WINDOWS\System32\perfmon.exe
+            - C:\Windows\System32\MRT.exe
+            - C:\Program Files\Cisco\Cisco AnyConnect Secure Mobility Client\vpnagent.exe
+            - C:\Program Files (x86)\Cisco\Cisco AnyConnect Secure Mobility Client\vpnagent.exe
+    filter_windefend_1:
+        SourceImage|startswith: C:\ProgramData\Microsoft\Windows Defender\
+        SourceImage|endswith: \MsMpEng.exe
+    filter_windefend_2:
+        CallTrace|contains|all:
+            - '|C:\ProgramData\Microsoft\Windows Defender\Definition Updates\{'
+            - '}\mpengine.dll+'
+        GrantedAccess: '0x1418'
+    filter_windefend_3:
+        SourceImage: C:\Program Files\Microsoft Security Client\MsMpEng.exe
+        GrantedAccess: '0x1418'
+    filter_vmwaretools:
+        SourceImage|startswith: C:\ProgramData\VMware\VMware Tools\
+        SourceImage|endswith: \vmtoolsd.exe
+    filter_generic_av:
+        SourceImage|startswith:
+            - C:\Program Files\
+            - C:\Program Files (x86)\
+        SourceImage|contains: Antivirus
+    filter_mrt:
+        SourceImage: C:\WINDOWS\system32\MRT.exe
+        GrantedAccess: '0x1418'
+    filter_mcafee:
+        SourceImage: C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
+    filter_nextron:
+        SourceImage|startswith: C:\Windows\Temp\asgard2-agent\
+        SourceImage|endswith:
+            - \thor64.exe
+            - \thor.exe
+        GrantedAccess: '0x1fffff'
+    condition: process_access and (selection and not 1 of filter_*)
+falsepositives:
+    - Legitimate software such as AV and EDR
+level: high
+ruletype: Sigma

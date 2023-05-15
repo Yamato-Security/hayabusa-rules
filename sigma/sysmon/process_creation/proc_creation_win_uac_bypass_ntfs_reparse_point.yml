@@ -1,53 +1,43 @@
 title: UAC Bypass Using NTFS Reparse Point - Process
-ruletype: Sigma
-author: Christian Burkard (Nextron Systems)
-date: 2021/08/30
+id: 39ed3c80-e6a1-431b-9df3-911ac53d08a7
+status: test
 description: Detects the pattern of UAC Bypass using NTFS reparse point and wusa.exe
     DLL hijacking (UACMe 36)
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        CommandLine: '*\dismhost.exe {*'
-    SELECTION_11:
-        Image: '*\DismHost.exe'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '"C:\Windows\system32\wusa.exe"  /quiet C:\Users\\*'
-    SELECTION_4:
-        CommandLine: '*\AppData\Local\Temp\update.msu'
-    SELECTION_5:
-        IntegrityLevel:
-        - High
-        - System
-    SELECTION_6:
-        ParentCommandLine: '"C:\Windows\system32\dism.exe" /online /quiet /norestart
-            /add-package /packagepath:"C:\Windows\system32\pe386" /ignorecheck'
-    SELECTION_7:
-        IntegrityLevel:
-        - High
-        - System
-    SELECTION_8:
-        CommandLine: '*C:\Users\\*'
-    SELECTION_9:
-        CommandLine: '*\AppData\Local\Temp\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9
-        and SELECTION_10 and SELECTION_11)))
-falsepositives:
-- Unknown
-id: 39ed3c80-e6a1-431b-9df3-911ac53d08a7
-level: high
+references:
+    - https://github.com/hfiref0x/UACME
+author: Christian Burkard (Nextron Systems)
+date: 2021/08/30
+modified: 2022/10/09
+tags:
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1548.002
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
-references:
-- https://github.com/hfiref0x/UACME
-status: test
-tags:
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1548.002
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection1:
+        CommandLine|startswith: '"C:\Windows\system32\wusa.exe"  /quiet C:\Users\'
+        CommandLine|endswith: \AppData\Local\Temp\update.msu
+        IntegrityLevel:
+            - High
+            - System
+    selection2:
+        ParentCommandLine: '"C:\Windows\system32\dism.exe" /online /quiet /norestart
+            /add-package /packagepath:"C:\Windows\system32\pe386" /ignorecheck'
+        IntegrityLevel:
+            - High
+            - System
+        CommandLine|contains|all:
+            - C:\Users\
+            - \AppData\Local\Temp\
+            - \dismhost.exe {
+        Image|endswith: \DismHost.exe
+    condition: process_creation and (1 of selection*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

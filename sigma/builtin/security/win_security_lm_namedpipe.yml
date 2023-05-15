@@ -1,54 +1,53 @@
 title: First Time Seen Remote Named Pipe
-ruletype: Sigma
-author: Samir Bousseaden
-date: 2019/04/03
+id: 52d8b0c6-53d6-439a-9e41-52ad442ad9ad
+status: test
 description: This detection excludes known namped pipes accessible remotely and notify
     on newly observed ones, may help to detect lateral movement and remote exec using
     named pipes
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 5145
-    SELECTION_3:
-        ShareName: \\\\\*\\IPC$
-    SELECTION_4:
-        RelativeTargetName:
-        - atsvc
-        - samr
-        - lsarpc
-        - lsass
-        - winreg
-        - netlogon
-        - srvsvc
-        - protected_storage
-        - wkssvc
-        - browser
-        - netdfs
-        - svcctl
-        - spoolss
-        - ntsvcs
-        - LSM_API_service
-        - HydraLsPipe
-        - TermSrv_API_service
-        - MsFteWds
-        - sql\query
-        - eventlog
-    condition: (SELECTION_1 and (SELECTION_2 and SELECTION_3) and  not (SELECTION_4))
-falsepositives:
-- Update the excluded named pipe to filter out any newly observed legit named pipe
-id: 52d8b0c6-53d6-439a-9e41-52ad442ad9ad
-level: high
+references:
+    - https://twitter.com/menasec1/status/1104489274387451904
+author: Samir Bousseaden
+date: 2019/04/03
+modified: 2023/03/14
+tags:
+    - attack.lateral_movement
+    - attack.t1021.002
 logsource:
-    definition: The advanced audit policy setting "Object Access > Audit Detailed
-        File Share" must be configured for Success/Failure
     product: windows
     service: security
-modified: 2023/03/14
-references:
-- https://twitter.com/menasec1/status/1104489274387451904
-status: test
-tags:
-- attack.lateral_movement
-- attack.t1021.002
-
+    definition: The advanced audit policy setting "Object Access > Audit Detailed
+        File Share" must be configured for Success/Failure
+detection:
+    security:
+        Channel: Security
+    selection1:
+        EventID: 5145
+        ShareName: \\\\\*\\IPC$
+    false_positives:
+        RelativeTargetName:
+            - atsvc
+            - samr
+            - lsarpc
+            - lsass
+            - winreg
+            - netlogon
+            - srvsvc
+            - protected_storage
+            - wkssvc
+            - browser
+            - netdfs
+            - svcctl
+            - spoolss
+            - ntsvcs
+            - LSM_API_service
+            - HydraLsPipe
+            - TermSrv_API_service
+            - MsFteWds
+            - sql\query
+            - eventlog
+    condition: security and (selection1 and not false_positives)
+falsepositives:
+    - Update the excluded named pipe to filter out any newly observed legit named
+        pipe
+level: high
+ruletype: Sigma

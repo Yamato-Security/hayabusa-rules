@@ -1,45 +1,40 @@
 title: Shell32 DLL Execution in Suspicious Directory
-ruletype: Sigma
+id: 32b96012-7892-429e-b26c-ac2bf46066ff
+status: experimental
+description: Detects shell32.dll executing a DLL in a suspicious directory
+references:
+    - https://www.group-ib.com/resources/threat-research/red-curl-2.html
 author: Christian Burkard (Nextron Systems)
 date: 2021/11/24
-description: Detects shell32.dll executing a DLL in a suspicious directory
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\rundll32.exe'
-    SELECTION_4:
-        OriginalFileName: RUNDLL32.EXE
-    SELECTION_5:
-        CommandLine: '*shell32.dll*'
-    SELECTION_6:
-        CommandLine: '*Control_RunDLL*'
-    SELECTION_7:
-        CommandLine:
-        - '*%AppData%*'
-        - '*%LocalAppData%*'
-        - '*%Temp%*'
-        - '*%tmp%*'
-        - '*\AppData\\*'
-        - '*\Temp\\*'
-        - '*\Users\Public\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
-falsepositives:
-- Unknown
-id: 32b96012-7892-429e-b26c-ac2bf46066ff
-level: high
+modified: 2023/02/09
+tags:
+    - attack.defense_evasion
+    - attack.execution
+    - attack.t1218.011
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/09
-references:
-- https://www.group-ib.com/resources/threat-research/red-curl-2.html
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.execution
-- attack.t1218.011
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \rundll32.exe
+        -   OriginalFileName: RUNDLL32.EXE
+    selection_cli:
+        CommandLine|contains|all:
+            - shell32.dll
+            - Control_RunDLL
+        CommandLine|contains:
+            - '%AppData%'
+            - '%LocalAppData%'
+            - '%Temp%'
+            - '%tmp%'
+            - \AppData\
+            - \Temp\
+            - \Users\Public\
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

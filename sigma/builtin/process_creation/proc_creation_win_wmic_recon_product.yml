@@ -1,35 +1,31 @@
 title: Potential Product Reconnaissance Via Wmic.EXE
-ruletype: Sigma
-author: Nasreddine Bencherchali
-date: 2023/02/14
+id: 15434e33-5027-4914-88d5-3d4145ec25a9
+status: experimental
 description: Detects the execution of WMIC in order to get a list of firewall and
     antivirus products
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\wmic.exe'
-    SELECTION_4:
-        OriginalFileName: wmic.exe
-    SELECTION_5:
-        CommandLine: '*Product*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- Unknown
-id: 15434e33-5027-4914-88d5-3d4145ec25a9
-level: medium
+references:
+    - https://thedfirreport.com/2023/03/06/2022-year-in-review/
+    - https://www.yeahhub.com/list-installed-programs-version-path-windows/
+    - https://learn.microsoft.com/en-us/answers/questions/253555/software-list-inventory-wmic-product
+author: Nasreddine Bencherchali
+date: 2023/02/14
+tags:
+    - attack.execution
+    - attack.t1047
 logsource:
     category: process_creation
     product: windows
-references:
-- https://thedfirreport.com/2023/03/06/2022-year-in-review/
-- https://www.yeahhub.com/list-installed-programs-version-path-windows/
-- https://learn.microsoft.com/en-us/answers/questions/253555/software-list-inventory-wmic-product
-status: experimental
-tags:
-- attack.execution
-- attack.t1047
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \wmic.exe
+        -   OriginalFileName: wmic.exe
+    selection_cli:
+        CommandLine|contains: Product
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

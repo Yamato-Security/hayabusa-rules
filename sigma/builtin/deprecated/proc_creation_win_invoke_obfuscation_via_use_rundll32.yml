@@ -1,43 +1,37 @@
 title: Invoke-Obfuscation Via Use Rundll32
-ruletype: Sigma
+id: 36c5146c-d127-4f85-8e21-01bf62355d5a
+status: deprecated
+description: Detects Obfuscated Powershell via use Rundll32 in Scripts
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Nikita Nazarov, oscd.community
 date: 2019/10/08
-description: Detects Obfuscated Powershell via use Rundll32 in Scripts
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*&&*'
-    SELECTION_4:
-        CommandLine: '*rundll32*'
-    SELECTION_5:
-        CommandLine: '*shell32.dll*'
-    SELECTION_6:
-        CommandLine: '*shellexec_rundll*'
-    SELECTION_7:
-        CommandLine:
-        - '*value*'
-        - '*invoke*'
-        - '*comspec*'
-        - '*iex*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Unknown
-id: 36c5146c-d127-4f85-8e21-01bf62355d5a
-level: high
+modified: 2022/12/30
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/30
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-status: deprecated
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - '&&'
+            - rundll32
+            - shell32.dll
+            - shellexec_rundll
+        CommandLine|contains:
+            - value
+            - invoke
+            - comspec
+            - iex
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

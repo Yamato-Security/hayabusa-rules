@@ -1,30 +1,28 @@
 title: Suspicious GrpConv Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/05/19
+id: f14e169e-9978-4c69-acb3-1cff8200bc36
+status: experimental
 description: Detects the suspicious execution of a utility to convert Windows 3.x
     .grp files or for persistence purposes by malicious software or actors
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine:
-        - '*grpconv.exe -o*'
-        - '*grpconv -o*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: f14e169e-9978-4c69-acb3-1cff8200bc36
-level: high
+references:
+    - https://twitter.com/0gtweet/status/1526833181831200770
+author: Florian Roth (Nextron Systems)
+date: 2022/05/19
+tags:
+    - attack.persistence
+    - attack.t1547
 logsource:
     category: process_creation
     product: windows
-references:
-- https://twitter.com/0gtweet/status/1526833181831200770
-status: experimental
-tags:
-- attack.persistence
-- attack.t1547
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains:
+            - grpconv.exe -o
+            - grpconv -o
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,49 +1,44 @@
 title: Suspicious Cabinet File Expansion
-ruletype: Sigma
-author: Bhabesh Raj
-date: 2021/07/30
+id: 9f107a84-532c-41af-b005-8d12a607639f
+status: test
 description: Adversaries can use the built-in expand utility to decompress cab files
     as seen in recent Iranian MeteorExpress attack
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\expand.exe'
-    SELECTION_4:
-        CommandLine:
-        - '*.cab*'
-        - '*/F:*'
-        - '*-F:*'
-        - '*C:\ProgramData\\*'
-        - '*C:\Public\\*'
-        - '*\AppData\Local\Temp\\*'
-        - '*\AppData\Roaming\Temp\\*'
-    SELECTION_5:
-        ParentImage: C:\Program Files (x86)\Dell\UpdateService\ServiceShell.exe
-    SELECTION_6:
-        CommandLine: '*C:\ProgramData\Dell\UpdateService\Temp\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 and SELECTION_6)))
-falsepositives:
-- System administrator Usage
-fields:
-- ComputerName
-- User
-- CommandLine
-- ParentCommandLine
-id: 9f107a84-532c-41af-b005-8d12a607639f
-level: medium
+references:
+    - https://labs.sentinelone.com/meteorexpress-mysterious-wiper-paralyzes-iranian-trains-with-epic-troll
+    - https://blog.malwarebytes.com/threat-intelligence/2021/08/new-variant-of-konni-malware-used-in-campaign-targetting-russia/
+author: Bhabesh Raj
+date: 2021/07/30
+modified: 2023/02/07
+tags:
+    - attack.execution
+    - attack.t1218
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/07
-references:
-- https://labs.sentinelone.com/meteorexpress-mysterious-wiper-paralyzes-iranian-trains-with-epic-troll
-- https://blog.malwarebytes.com/threat-intelligence/2021/08/new-variant-of-konni-malware-used-in-campaign-targetting-russia/
-status: test
-tags:
-- attack.execution
-- attack.t1218
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \expand.exe
+        CommandLine|contains:
+            - .cab
+            - '/F:'
+            - '-F:'
+            - C:\ProgramData\
+            - C:\Public\
+            - \AppData\Local\Temp\
+            - \AppData\Roaming\Temp\
+    filter_dell:
+        ParentImage: C:\Program Files (x86)\Dell\UpdateService\ServiceShell.exe
+        CommandLine|contains: C:\ProgramData\Dell\UpdateService\Temp\
+    condition: process_creation and (selection and not 1 of filter_*)
+fields:
+    - ComputerName
+    - User
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - System administrator Usage
+level: medium
+ruletype: Sigma

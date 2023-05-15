@@ -1,45 +1,41 @@
 title: Suspicious Windows Trace ETW Session Tamper Via Logman.EXE
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/02/11
+id: cd1f961e-0b96-436b-b7c6-38da4583ec00
+status: test
 description: Detects the execution of "logman" utility in order to disable or delete
     Windows trace sessions
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\logman.exe'
-    SELECTION_4:
-        OriginalFileName: Logman.exe
-    SELECTION_5:
-        CommandLine:
-        - '*stop *'
-        - '*delete *'
-    SELECTION_6:
-        CommandLine:
-        - '*Circular Kernel Context Logger*'
-        - '*EventLog-*'
-        - '*SYSMON TRACE*'
-        - '*SysmonDnsEtwSession*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- Legitimate deactivation by administrative staff
-- Installer tools that disable services, e.g. before log collection agent installation
-id: cd1f961e-0b96-436b-b7c6-38da4583ec00
-level: high
+references:
+    - https://twitter.com/0gtweet/status/1359039665232306183?s=21
+    - https://ss64.com/nt/logman.html
+author: Florian Roth (Nextron Systems)
+date: 2021/02/11
+modified: 2023/02/21
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
+    - attack.t1070.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
-references:
-- https://twitter.com/0gtweet/status/1359039665232306183?s=21
-- https://ss64.com/nt/logman.html
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-- attack.t1070.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \logman.exe
+        -   OriginalFileName: Logman.exe
+    selection_action:
+        CommandLine|contains:
+            - 'stop '
+            - 'delete '
+    selection_service:
+        CommandLine|contains:
+            - Circular Kernel Context Logger
+            - EventLog-
+            - SYSMON TRACE
+            - SysmonDnsEtwSession
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Legitimate deactivation by administrative staff
+    - Installer tools that disable services, e.g. before log collection agent installation
+level: high
+ruletype: Sigma

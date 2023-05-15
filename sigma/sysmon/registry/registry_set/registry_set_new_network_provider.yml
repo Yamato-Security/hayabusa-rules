@@ -1,45 +1,41 @@
 title: Potential Credential Dumping Attempt Using New NetworkProvider - REG
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/08/23
+id: 0442defa-b4a2-41c9-ae2c-ea7042fc4701
+related:
+    -   id: baef1ec6-2ca9-47a3-97cc-4cf2bda10b77
+        type: similar
+status: experimental
 description: Detects when an attacker tries to add a new network provider in order
     to dump clear text credentials, similar to how the NPPSpy tool does it
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\System\CurrentControlSet\Services\\*'
-    SELECTION_5:
-        TargetObject: '*\NetworkProvider*'
-    SELECTION_6:
-        TargetObject:
-        - '*\System\CurrentControlSet\Services\WebClient\NetworkProvider*'
-        - '*\System\CurrentControlSet\Services\LanmanWorkstation\NetworkProvider*'
-        - '*\System\CurrentControlSet\Services\RDPNP\NetworkProvider*'
-    SELECTION_7:
-        Image: C:\Windows\System32\poqexec.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6) or (SELECTION_7)))
-falsepositives:
-- Other legitimate network providers used and not filtred in this rule
-id: 0442defa-b4a2-41c9-ae2c-ea7042fc4701
-level: medium
+references:
+    - https://docs.microsoft.com/en-us/troubleshoot/windows-client/deployment/network-provider-settings-removed-in-place-upgrade
+    - https://github.com/gtworek/PSBits/tree/master/PasswordStealing/NPPSpy
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/23
+modified: 2023/02/02
+tags:
+    - attack.credential_access
+    - attack.t1003
 logsource:
     category: registry_set
     product: windows
-modified: 2023/02/02
-references:
-- https://docs.microsoft.com/en-us/troubleshoot/windows-client/deployment/network-provider-settings-removed-in-place-upgrade
-- https://github.com/gtworek/PSBits/tree/master/PasswordStealing/NPPSpy
-related:
--   id: baef1ec6-2ca9-47a3-97cc-4cf2bda10b77
-    type: similar
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1003
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|contains|all:
+            - \System\CurrentControlSet\Services\
+            - \NetworkProvider
+    filter:
+        TargetObject|contains:
+            - \System\CurrentControlSet\Services\WebClient\NetworkProvider
+            - \System\CurrentControlSet\Services\LanmanWorkstation\NetworkProvider
+            - \System\CurrentControlSet\Services\RDPNP\NetworkProvider
+    filter_valid_procs:
+        Image: C:\Windows\System32\poqexec.exe
+    condition: registry_set and (selection and not 1 of filter*)
+falsepositives:
+    - Other legitimate network providers used and not filtred in this rule
+level: medium
+ruletype: Sigma

@@ -1,38 +1,30 @@
 title: FlowCloud Malware
-ruletype: Sigma
+id: 5118765f-6657-4ddb-a487-d7bd673abbf1
+status: test
+description: Detects FlowCloud malware from threat group TA410.
+references:
+    - https://www.proofpoint.com/us/blog/threat-insight/ta410-group-behind-lookback-attacks-against-us-utilities-sector-returns-new
 author: NVISO
 date: 2020/06/09
-description: Detects FlowCloud malware from threat group TA410.
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - New registry value created
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        TargetObject:
-        - HKLM\HARDWARE\{804423C2-F490-4ac3-BFA5-13DEDE63A71A}
-        - HKLM\HARDWARE\{A5124AF5-DF23-49bf-B0ED-A18ED3DEA027}
-        - HKLM\HARDWARE\{2DB80286-1784-48b5-A751-B6ED1F490303}
-    SELECTION_5:
-        TargetObject: HKLM\SYSTEM\Setup\PrintResponsor\\*
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 or
-        SELECTION_5))
-falsepositives:
-- Unknown
-id: 5118765f-6657-4ddb-a487-d7bd673abbf1
-level: critical
-logsource:
-    category: registry_event
-    product: windows
 modified: 2022/10/09
-references:
-- https://www.proofpoint.com/us/blog/threat-insight/ta410-group-behind-lookback-attacks-against-us-utilities-sector-returns-new
-status: test
 tags:
-- attack.persistence
-- attack.t1112
-
+    - attack.persistence
+    - attack.t1112
+logsource:
+    product: windows
+    category: registry_event
+detection:
+    registry_event:
+        EventID: 4657
+        Channel: Security
+    selection:
+        -   TargetObject:
+                - HKLM\HARDWARE\{804423C2-F490-4ac3-BFA5-13DEDE63A71A}
+                - HKLM\HARDWARE\{A5124AF5-DF23-49bf-B0ED-A18ED3DEA027}
+                - HKLM\HARDWARE\{2DB80286-1784-48b5-A751-B6ED1F490303}
+        -   TargetObject|startswith: HKLM\SYSTEM\Setup\PrintResponsor\
+    condition: registry_event and selection
+falsepositives:
+    - Unknown
+level: critical
+ruletype: Sigma

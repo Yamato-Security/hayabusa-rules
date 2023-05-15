@@ -1,42 +1,37 @@
 title: ISO File Created Within Temp Folders
-ruletype: Sigma
-author: '@sam0x90'
-date: 2022/07/30
+id: 2f9356ae-bf43-41b8-b858-4496d83b2acb
+status: experimental
 description: Detects the creation of a ISO file in the Outlook temp folder or in the
     Appdata temp folder. Typical of Qakbot TTP from end-July 2022.
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*\AppData\Local\Temp\\*'
-    SELECTION_4:
-        TargetFilename: '*.zip\\*'
-    SELECTION_5:
-        TargetFilename: '*.iso'
-    SELECTION_6:
-        TargetFilename: '*\AppData\Local\Microsoft\Windows\INetCache\Content.Outlook\\*'
-    SELECTION_7:
-        TargetFilename: '*.iso'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7)))
-falsepositives:
-- Potential FP by sysadmin opening a zip file containing a legitimate ISO file
-fields:
-- Image
-- ComputerName
-- TargetFileName
-id: 2f9356ae-bf43-41b8-b858-4496d83b2acb
-level: high
+references:
+    - https://twitter.com/Sam0x90/status/1552011547974696960
+    - https://securityaffairs.co/wordpress/133680/malware/dll-sideloading-spread-qakbot.html
+author: '@sam0x90'
+date: 2022/07/30
+tags:
+    - attack.initial_access
+    - attack.t1566.001
 logsource:
     category: file_event
     product: windows
-references:
-- https://twitter.com/Sam0x90/status/1552011547974696960
-- https://securityaffairs.co/wordpress/133680/malware/dll-sideloading-spread-qakbot.html
-status: experimental
-tags:
-- attack.initial_access
-- attack.t1566.001
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_1:
+        TargetFilename|contains|all:
+            - \AppData\Local\Temp\
+            - .zip\
+        TargetFilename|endswith: .iso
+    selection_2:
+        TargetFilename|contains: \AppData\Local\Microsoft\Windows\INetCache\Content.Outlook\
+        TargetFilename|endswith: .iso
+    condition: file_event and (1 of selection*)
+fields:
+    - Image
+    - ComputerName
+    - TargetFileName
+falsepositives:
+    - Potential FP by sysadmin opening a zip file containing a legitimate ISO file
+level: high
+ruletype: Sigma

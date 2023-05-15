@@ -1,113 +1,82 @@
 title: Direct Syscall of NtOpenProcess
-ruletype: Sigma
-author: Christian Burkard (Nextron Systems), Tim Shelton
-date: 2021/07/28
+id: 3f3f3506-1895-401b-9cc3-e86b16e630d0
+status: experimental
 description: Detects the usage of the direct syscall of NtOpenProcess which might
     be done from a CobaltStrike BOF.
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_10:
-        SourceImage: '*vcredist_x64.exe'
-    SELECTION_11:
-        TargetImage: C:\Windows\system32\systeminfo.exe
-    SELECTION_12:
-        SourceImage: '*setup64.exe'
-    SELECTION_13:
-        TargetImage: '*AmazonSSMAgentSetup.exe'
-    SELECTION_14:
-        SourceImage: '*AmazonSSMAgentSetup.exe'
-    SELECTION_15:
-        TargetImage: '*C:\Program Files\Mozilla Firefox\firefox.exe'
-    SELECTION_16:
-        SourceImage: '*C:\Program Files\Mozilla Firefox\firefox.exe'
-    SELECTION_17:
-        TargetImage: '*\AppData\Local\Programs\Microsoft VS Code\Code.exe'
-    SELECTION_18:
-        SourceImage: '*\AppData\Local\Programs\Microsoft VS Code\Code.exe'
-    SELECTION_19:
-        TargetImage: '*C:\Program Files\Google\Chrome\Application\chrome.exe'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        SourceImage: '*C:\Program Files\Google\Chrome\Application\chrome.exe'
-    SELECTION_21:
-        TargetImage: '*C:\Program Files (x86)\Google\Update\GoogleUpdate.exe'
-    SELECTION_22:
-        SourceImage: '*C:\Program Files (x86)\Google\Update\GoogleUpdate.exe'
-    SELECTION_23:
-        TargetImage: '*\AppData\Local\Microsoft\Teams\current\Teams.exe'
-    SELECTION_24:
-        SourceImage: '*\AppData\Local\Microsoft\Teams\current\Teams.exe'
-    SELECTION_25:
-        TargetImage: C:\Windows\System32\backgroundTaskHost.exe
-    SELECTION_26:
-        SourceImage: C:\Windows\System32\backgroundTaskHost.exe
-    SELECTION_27:
-        TargetImage: C:\Program Files (x86)\CCleaner Browser\Application\CCleanerBrowser.exe
-    SELECTION_28:
-        SourceImage: C:\Program Files (x86)\CCleaner Browser\Application\CCleanerBrowser.exe
-    SELECTION_29:
-        TargetImage: C:\Users\\*
-    SELECTION_3:
-        CallTrace: UNKNOWN*
-    SELECTION_30:
-        TargetImage: '*\AppData\Local\Discord\\*'
-    SELECTION_31:
-        TargetImage: '*\Discord.exe'
-    SELECTION_32:
-        TargetImage: C:\WINDOWS\system32\AUDIODG.EXE
-    SELECTION_33:
-        SourceImage: C:\Users\\*
-    SELECTION_34:
-        SourceImage: '*\AppData\Local\yammerdesktop\app-*'
-    SELECTION_35:
-        SourceImage: '*\Yammer.exe'
-    SELECTION_36:
-        TargetImage: C:\Users\\*
-    SELECTION_37:
-        TargetImage: '*\AppData\Local\yammerdesktop\app-*'
-    SELECTION_38:
-        TargetImage: '*\Yammer.exe'
-    SELECTION_39:
-        GrantedAccess: '0x1000'
-    SELECTION_4:
-        TargetImage: C:\Program Files\Cylance\Desktop\CylanceUI.exe
-    SELECTION_40:
-        Provider_Name: Microsoft-Windows-Kernel-Audit-API-Calls
-    SELECTION_41:
-        TargetImage: '*\Evernote\Evernote.exe'
-    SELECTION_5:
-        SourceImage: C:\Windows\Explorer.EXE
-    SELECTION_6:
-        TargetImage: C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe
-    SELECTION_7:
-        SourceImage: C:\Program Files (x86)\Microsoft\Temp\\*
-    SELECTION_8:
-        SourceImage: '*\MicrosoftEdgeUpdate.exe'
-    SELECTION_9:
-        TargetImage: '*vcredist_x64.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        and SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8) or (SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13 and
-        SELECTION_14) or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18)
-        or (SELECTION_19 and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23
-        and SELECTION_24) or (SELECTION_25 and SELECTION_26) or (SELECTION_27 and
-        SELECTION_28) or (SELECTION_29 and SELECTION_30 and SELECTION_31) or (SELECTION_32)
-        or (SELECTION_33 and SELECTION_34 and SELECTION_35 and SELECTION_36 and SELECTION_37
-        and SELECTION_38 and SELECTION_39) or (SELECTION_40) or (SELECTION_41)))
-falsepositives:
-- Unknown
-id: 3f3f3506-1895-401b-9cc3-e86b16e630d0
-level: high
+references:
+    - https://medium.com/falconforce/falconfriday-direct-system-calls-and-cobalt-strike-bofs-0xff14-741fa8e1bdd6
+author: Christian Burkard (Nextron Systems), Tim Shelton
+date: 2021/07/28
+modified: 2023/03/22
+tags:
+    - attack.execution
+    - attack.t1106
 logsource:
     category: process_access
     product: windows
-modified: 2023/03/22
-references:
-- https://medium.com/falconforce/falconfriday-direct-system-calls-and-cobalt-strike-bofs-0xff14-741fa8e1bdd6
-status: experimental
-tags:
-- attack.execution
-- attack.t1106
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CallTrace|startswith: UNKNOWN
+    falsepositive1:
+        TargetImage: C:\Program Files\Cylance\Desktop\CylanceUI.exe
+        SourceImage: C:\Windows\Explorer.EXE
+    falsepositive2:
+        TargetImage: C:\Program Files (x86)\Microsoft\EdgeUpdate\MicrosoftEdgeUpdate.exe
+        SourceImage|startswith: C:\Program Files (x86)\Microsoft\Temp\
+        SourceImage|endswith: \MicrosoftEdgeUpdate.exe
+    falsepositive3:
+        TargetImage|endswith: vcredist_x64.exe
+        SourceImage|endswith: vcredist_x64.exe
+    falsepositive4:
+        TargetImage: C:\Windows\system32\systeminfo.exe
+        SourceImage|endswith: setup64.exe
+    falsepositive5:
+        TargetImage|endswith: AmazonSSMAgentSetup.exe
+        SourceImage|endswith: AmazonSSMAgentSetup.exe
+    falsepositive6:
+        TargetImage|endswith: C:\Program Files\Mozilla Firefox\firefox.exe
+        SourceImage|endswith: C:\Program Files\Mozilla Firefox\firefox.exe
+    falsepositive7:
+        TargetImage|endswith: \AppData\Local\Programs\Microsoft VS Code\Code.exe
+        SourceImage|endswith: \AppData\Local\Programs\Microsoft VS Code\Code.exe
+    falsepositive8:
+        TargetImage|endswith: C:\Program Files\Google\Chrome\Application\chrome.exe
+        SourceImage|endswith: C:\Program Files\Google\Chrome\Application\chrome.exe
+    falsepositive9:
+        TargetImage|endswith: C:\Program Files (x86)\Google\Update\GoogleUpdate.exe
+        SourceImage|endswith: C:\Program Files (x86)\Google\Update\GoogleUpdate.exe
+    falsepositive10:
+        TargetImage|endswith: \AppData\Local\Microsoft\Teams\current\Teams.exe
+        SourceImage|endswith: \AppData\Local\Microsoft\Teams\current\Teams.exe
+    falsepositives11:
+        TargetImage: C:\Windows\System32\backgroundTaskHost.exe
+        SourceImage: C:\Windows\System32\backgroundTaskHost.exe
+    falsepositives12:
+        TargetImage: C:\Program Files (x86)\CCleaner Browser\Application\CCleanerBrowser.exe
+        SourceImage: C:\Program Files (x86)\CCleaner Browser\Application\CCleanerBrowser.exe
+    falsepositives13:
+        TargetImage|startswith: C:\Users\
+        TargetImage|contains: \AppData\Local\Discord\
+        TargetImage|endswith: \Discord.exe
+    falsepositives14:
+        TargetImage: C:\WINDOWS\system32\AUDIODG.EXE
+    falsepositives15:
+        SourceImage|startswith: C:\Users\
+        SourceImage|contains: \AppData\Local\yammerdesktop\app-
+        SourceImage|endswith: \Yammer.exe
+        TargetImage|startswith: C:\Users\
+        TargetImage|contains: \AppData\Local\yammerdesktop\app-
+        TargetImage|endswith: \Yammer.exe
+        GrantedAccess: '0x1000'
+    falsepositive_kerneltrace_edge:
+        Provider_Name: Microsoft-Windows-Kernel-Audit-API-Calls
+    falsepositives_mixed:
+        TargetImage|endswith: \Evernote\Evernote.exe
+    condition: process_access and (selection and not 1 of falsepositive*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

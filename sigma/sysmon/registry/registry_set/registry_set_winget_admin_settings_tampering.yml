@@ -1,37 +1,31 @@
 title: Winget Admin Settings Modification
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/04/17
+id: 6db5eaf9-88f7-4ed9-af7d-9ef2ad12f236
+status: experimental
 description: Detects changes to the AppInstaller (winget) admin settings. Such as
     enabling local manifest installations or disabling installer hash checks
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        Image: '*\winget.exe'
-    SELECTION_5:
-        TargetObject: \REGISTRY\A\\*
-    SELECTION_6:
-        TargetObject: '*\LocalState\admin_settings'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- The event doesn't contain information about the type of change. False positives
-    are expected with legitimate changes
-id: 6db5eaf9-88f7-4ed9-af7d-9ef2ad12f236
-level: low
-logsource:
-    category: registry_set
-    product: windows
 references:
-- https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget
-- https://github.com/microsoft/winget-cli/blob/02d2f93807c9851d73eaacb4d8811a76b64b7b01/src/AppInstallerCommonCore/Public/winget/AdminSettings.h#L13
-status: experimental
+    - https://github.com/nasbench/Misc-Research/tree/b9596e8109dcdb16ec353f316678927e507a5b8d/LOLBINs/Winget
+    - https://github.com/microsoft/winget-cli/blob/02d2f93807c9851d73eaacb4d8811a76b64b7b01/src/AppInstallerCommonCore/Public/winget/AdminSettings.h#L13
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/04/17
 tags:
-- attack.defense_evasion
-- attack.persistence
-
+    - attack.defense_evasion
+    - attack.persistence
+logsource:
+    product: windows
+    category: registry_set
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        Image|endswith: \winget.exe
+        TargetObject|startswith: \REGISTRY\A\
+        TargetObject|endswith: \LocalState\admin_settings
+    condition: registry_set and selection
+falsepositives:
+    - The event doesn't contain information about the type of change. False positives
+        are expected with legitimate changes
+level: low
+ruletype: Sigma

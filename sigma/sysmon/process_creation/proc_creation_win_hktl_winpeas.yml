@@ -1,57 +1,52 @@
 title: HackTool - winPEAS Execution
-ruletype: Sigma
-author: Georg Lauenstein (sure[secure])
-date: 2022/09/19
+id: 98b53e78-ebaf-46f8-be06-421aafd176d9
+status: experimental
 description: WinPEAS is a script that search for possible paths to escalate privileges
     on Windows hosts. The checks are explained on book.hacktricks.xyz
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        OriginalFileName: winPEAS.exe
-    SELECTION_4:
-        Image:
-        - '*\winPEASany.exe'
-        - '*\winPEASany_ofs.exe'
-        - '*\winPEASx64.exe'
-        - '*\winPEASx64_ofs.exe'
-        - '*\winPEASx86.exe'
-        - '*\winPEASx86_ofs.exe'
-    SELECTION_5:
-        CommandLine:
-        - '* applicationsinfo*'
-        - '* browserinfo*'
-        - '* eventsinfo*'
-        - '* fileanalysis*'
-        - '* filesinfo*'
-        - '* processinfo*'
-        - '* servicesinfo*'
-        - '* windowscreds*'
-    SELECTION_6:
-        CommandLine: '*https://github.com/carlospolop/PEASS-ng/releases/latest/download/*'
-    SELECTION_7:
-        ParentCommandLine: '* -linpeas'
-    SELECTION_8:
-        CommandLine: '* -linpeas'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-        or SELECTION_6 or SELECTION_7 or SELECTION_8))
-falsepositives:
-- Unlikely
-id: 98b53e78-ebaf-46f8-be06-421aafd176d9
-level: high
+references:
+    - https://github.com/carlospolop/PEASS-ng
+    - https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation
+author: Georg Lauenstein (sure[secure])
+date: 2022/09/19
+modified: 2023/03/23
+tags:
+    - attack.privilege_escalation
+    - attack.t1082
+    - attack.t1087
+    - attack.t1046
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/23
-references:
-- https://github.com/carlospolop/PEASS-ng
-- https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation
-status: experimental
-tags:
-- attack.privilege_escalation
-- attack.t1082
-- attack.t1087
-- attack.t1046
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   OriginalFileName: winPEAS.exe
+        -   Image|endswith:
+                - \winPEASany.exe
+                - \winPEASany_ofs.exe
+                - \winPEASx64.exe
+                - \winPEASx64_ofs.exe
+                - \winPEASx86.exe
+                - \winPEASx86_ofs.exe
+    selection_cli_option:
+        CommandLine|contains:
+            - ' applicationsinfo'
+            - ' browserinfo'
+            - ' eventsinfo'
+            - ' fileanalysis'
+            - ' filesinfo'
+            - ' processinfo'
+            - ' servicesinfo'
+            - ' windowscreds'
+    selection_cli_dl:
+        CommandLine|contains: https://github.com/carlospolop/PEASS-ng/releases/latest/download/
+    selection_cli_specific:
+        -   ParentCommandLine|endswith: ' -linpeas'
+        -   CommandLine|endswith: ' -linpeas'
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

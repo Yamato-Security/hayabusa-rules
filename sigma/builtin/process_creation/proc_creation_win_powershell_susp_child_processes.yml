@@ -1,50 +1,45 @@
 title: Suspicious PowerShell Child Processes
-ruletype: Sigma
+id: e4b6d2a7-d8a4-4f19-acbd-943c16d90647
+status: experimental
+description: Detects suspicious child processes spawned by PowerShell
+references:
+    - https://twitter.com/ankit_anubhav/status/1518835408502620162
 author: Florian Roth (Nextron Systems), Tim Shelton
 date: 2022/04/26
-description: Detects suspicious child processes spawned by PowerShell
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        ParentProcessName:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-        - '*\powershell_ise.exe'
-    SELECTION_4:
-        NewProcessName:
-        - '*\sh.exe'
-        - '*\bash.exe'
-        - '*\schtasks.exe'
-        - '*\certutil.exe'
-        - '*\bitsadmin.exe'
-        - '*\wscript.exe'
-        - '*\cscript.exe'
-        - '*\scrcons.exe'
-        - '*\regsvr32.exe'
-        - '*\hh.exe'
-        - '*\wmic.exe'
-        - '*\mshta.exe'
-        - '*\rundll32.exe'
-        - '*\forfiles.exe'
-        - '*\scriptrunner.exe'
-    SELECTION_5:
-        ParentCommandLine: '*\Program Files\Amazon\WorkspacesConfig\Scripts\\*'
-    SELECTION_6:
-        CommandLine: '*\Program Files\Amazon\WorkspacesConfig\Scripts\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5 and SELECTION_6)))
-falsepositives:
-- Unknown
-id: e4b6d2a7-d8a4-4f19-acbd-943c16d90647
-level: high
+modified: 2023/01/05
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/05
-references:
-- https://twitter.com/ankit_anubhav/status/1518835408502620162
-status: experimental
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        ParentProcessName|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+            - \powershell_ise.exe
+        NewProcessName|endswith:
+            - \sh.exe
+            - \bash.exe
+            - \schtasks.exe
+            - \certutil.exe
+            - \bitsadmin.exe
+            - \wscript.exe
+            - \cscript.exe
+            - \scrcons.exe
+            - \regsvr32.exe
+            - \hh.exe
+            - \wmic.exe
+            - \mshta.exe
+            - \rundll32.exe
+            - \forfiles.exe
+            - \scriptrunner.exe
+    filter_amazon:
+        ParentCommandLine|contains: \Program Files\Amazon\WorkspacesConfig\Scripts\
+        CommandLine|contains: \Program Files\Amazon\WorkspacesConfig\Scripts\
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

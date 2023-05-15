@@ -1,182 +1,144 @@
 title: LSASS Access From Program in Potentially Suspicious Folder
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/11/27
+id: fa34b441-961a-42fa-a100-ecc28c886725
+status: experimental
 description: Detects process access to LSASS memory with suspicious access flags and
     from a potentially suspicious folder
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_10:
-        SourceImage: C:\Windows\Temp\\*
-    SELECTION_11:
-        SourceImage: '*.tmp\DropboxUpdate.exe'
-    SELECTION_12:
-        GrantedAccess:
-        - '0x410'
-        - '0x1410'
-    SELECTION_13:
-        SourceImage: C:\Users\\*
-    SELECTION_14:
-        SourceImage: '*\AppData\Local\Temp\\*'
-    SELECTION_15:
-        SourceImage: '*.tmp\DropboxUpdate.exe'
-    SELECTION_16:
-        GrantedAccess: '0x1410'
-    SELECTION_17:
-        SourceImage:
-        - C:\Program Files (x86)\Dropbox\\*
-        - C:\Program Files\Dropbox\\*
-    SELECTION_18:
-        SourceImage: '*\DropboxUpdate.exe'
-    SELECTION_19:
-        GrantedAccess: '0x1410'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        SourceImage:
-        - C:\Windows\Temp\asgard2-agent\\*
-        - C:\Windows\Temp\asgard2-agent-sc\\*
-    SELECTION_21:
-        SourceImage:
-        - '*\thor64.exe'
-        - '*\thor.exe'
-        - '*\aurora-agent-64.exe'
-        - '*\aurora-agent.exe'
-    SELECTION_22:
-        GrantedAccess:
-        - '0x1fffff'
-        - '0x1010'
-        - '0x101010'
-    SELECTION_23:
-        SourceImage: C:\Users\\*
-    SELECTION_24:
-        SourceImage: '*\AppData\Local\Temp\\*'
-    SELECTION_25:
-        SourceImage: '*\vs_bootstrapper_*'
-    SELECTION_26:
-        GrantedAccess: '0x1410'
-    SELECTION_27:
-        SourceImage: C:\Program Files (x86)\Google\Temp\\*
-    SELECTION_28:
-        SourceImage: '*.tmp\GoogleUpdate.exe'
-    SELECTION_29:
-        GrantedAccess:
-        - '0x410'
-        - '0x1410'
-    SELECTION_3:
-        TargetImage: '*\lsass.exe'
-    SELECTION_30:
-        SourceImage: C:\Users\\*
-    SELECTION_31:
-        SourceImage: '*\AppData\Local\Keybase\keybase.exe'
-    SELECTION_32:
-        GrantedAccess: '0x1fffff'
-    SELECTION_33:
-        SourceImage: '*\AppData\Local\Temp\is-*'
-    SELECTION_34:
-        SourceImage: '*.tmp\avira_system_speedup.tmp'
-    SELECTION_35:
-        GrantedAccess: '0x1410'
-    SELECTION_36:
-        SourceImage: C:\Users\\*
-    SELECTION_37:
-        SourceImage: '*\AppData\Roaming\ViberPC\\*'
-    SELECTION_38:
-        SourceImage: '*\updater.exe'
-    SELECTION_39:
-        TargetImage: '*\winlogon.exe'
-    SELECTION_4:
-        GrantedAccess:
-        - '*10'
-        - '*30'
-        - '*50'
-        - '*70'
-        - '*90'
-        - '*B0'
-        - '*D0'
-        - '*F0'
-        - '*18'
-        - '*38'
-        - '*58'
-        - '*78'
-        - '*98'
-        - '*B8'
-        - '*D8'
-        - '*F8'
-        - '*1A'
-        - '*3A'
-        - '*5A'
-        - '*7A'
-        - '*9A'
-        - '*BA'
-        - '*DA'
-        - '*FA'
-        - '*0x14C2'
-        - '*FF'
-    SELECTION_40:
-        GrantedAccess: '0x1fffff'
-    SELECTION_41:
-        SourceImage:
-        - C:\Program Files\Common Files\Adobe\ARM\\*
-        - C:\Program Files (x86)\Common Files\Adobe\ARM\\*
-    SELECTION_42:
-        SourceImage: '*\AdobeARMHelper.exe'
-    SELECTION_43:
-        GrantedAccess: '0x1410'
-    SELECTION_5:
-        SourceImage:
-        - '*\Temp\\*'
-        - '*\Users\Public\\*'
-        - '*\PerfLogs\\*'
-        - '*\AppData\\*'
-        - '*\Temporary*'
-    SELECTION_6:
-        SourceImage: C:\Users\\*
-    SELECTION_7:
-        SourceImage: '*\AppData\Local\\*'
-    SELECTION_8:
-        SourceImage:
-        - '*\Microsoft VS Code\Code.exe'
-        - '*\software_reporter_tool.exe'
-        - '*\DropboxUpdate.exe'
-        - '*\MBAMInstallerService.exe'
-        - '*\WebexMTA.exe'
-        - '*\WebEx\WebexHost.exe'
-        - '*\JetBrains\Toolbox\bin\jetbrains-toolbox.exe'
-    SELECTION_9:
-        GrantedAccess: '0x410'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not ((SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11 and SELECTION_12) or (SELECTION_13 and SELECTION_14
-        and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19)
-        or (SELECTION_20 and SELECTION_21 and SELECTION_22) or (SELECTION_23 and SELECTION_24
-        and SELECTION_25 and SELECTION_26) or (SELECTION_27 and SELECTION_28 and SELECTION_29)
-        or (SELECTION_30 and SELECTION_31 and SELECTION_32) or (SELECTION_33 and SELECTION_34
-        and SELECTION_35) or (SELECTION_36 and SELECTION_37 and SELECTION_38 and SELECTION_39
-        and SELECTION_40) or (SELECTION_41 and SELECTION_42 and SELECTION_43)))
-falsepositives:
-- Updaters and installers are typical false positives. Apply custom filters depending
-    on your environment
-fields:
-- User
-- SourceImage
-- GrantedAccess
-id: fa34b441-961a-42fa-a100-ecc28c886725
-level: medium
+references:
+    - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
+    - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
+    - https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
+    - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+    - http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
+author: Florian Roth (Nextron Systems)
+date: 2021/11/27
+modified: 2023/05/05
+tags:
+    - attack.credential_access
+    - attack.t1003.001
+    - attack.s0002
 logsource:
     category: process_access
     product: windows
-modified: 2023/05/05
-references:
-- https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
-- https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
-- https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
-- https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
-- http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1003.001
-- attack.s0002
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetImage|endswith: \lsass.exe
+        GrantedAccess|endswith:
+            - '10'
+            - '30'
+            - '50'
+            - '70'
+            - '90'
+            - B0
+            - D0
+            - F0
+            - '18'
+            - '38'
+            - '58'
+            - '78'
+            - '98'
+            - B8
+            - D8
+            - F8
+            - 1A
+            - 3A
+            - 5A
+            - 7A
+            - 9A
+            - BA
+            - DA
+            - FA
+            - '0x14C2'
+            - FF
+        SourceImage|contains:
+            - \Temp\
+            - \Users\Public\
+            - \PerfLogs\
+            - \AppData\
+            - \Temporary
+    filter_optional_generic_appdata:
+        SourceImage|startswith: C:\Users\
+        SourceImage|contains: \AppData\Local\
+        SourceImage|endswith:
+            - \Microsoft VS Code\Code.exe
+            - \software_reporter_tool.exe
+            - \DropboxUpdate.exe
+            - \MBAMInstallerService.exe
+            - \WebexMTA.exe
+            - \WebEx\WebexHost.exe
+            - \JetBrains\Toolbox\bin\jetbrains-toolbox.exe
+        GrantedAccess: '0x410'
+    filter_optional_dropbox_1:
+        SourceImage|startswith: C:\Windows\Temp\
+        SourceImage|endswith: .tmp\DropboxUpdate.exe
+        GrantedAccess:
+            - '0x410'
+            - '0x1410'
+    filter_optional_dropbox_2:
+        SourceImage|startswith: C:\Users\
+        SourceImage|contains: \AppData\Local\Temp\
+        SourceImage|endswith: .tmp\DropboxUpdate.exe
+        GrantedAccess: '0x1410'
+    filter_optional_dropbox_3:
+        SourceImage|startswith:
+            - C:\Program Files (x86)\Dropbox\
+            - C:\Program Files\Dropbox\
+        SourceImage|endswith: \DropboxUpdate.exe
+        GrantedAccess: '0x1410'
+    filter_optional_nextron:
+        SourceImage|startswith:
+            - C:\Windows\Temp\asgard2-agent\
+            - C:\Windows\Temp\asgard2-agent-sc\
+        SourceImage|endswith:
+            - \thor64.exe
+            - \thor.exe
+            - \aurora-agent-64.exe
+            - \aurora-agent.exe
+        GrantedAccess:
+            - '0x1fffff'
+            - '0x1010'
+            - '0x101010'
+    filter_optional_ms_products:
+        SourceImage|startswith: C:\Users\
+        SourceImage|contains|all:
+            - \AppData\Local\Temp\
+            - \vs_bootstrapper_
+        GrantedAccess: '0x1410'
+    filter_optional_chrome_update:
+        SourceImage|startswith: C:\Program Files (x86)\Google\Temp\
+        SourceImage|endswith: .tmp\GoogleUpdate.exe
+        GrantedAccess:
+            - '0x410'
+            - '0x1410'
+    filter_optional_keybase:
+        SourceImage|startswith: C:\Users\
+        SourceImage|endswith: \AppData\Local\Keybase\keybase.exe
+        GrantedAccess: '0x1fffff'
+    filter_optional_avira:
+        SourceImage|contains: \AppData\Local\Temp\is-
+        SourceImage|endswith: .tmp\avira_system_speedup.tmp
+        GrantedAccess: '0x1410'
+    filter_optional_viberpc_updater:
+        SourceImage|startswith: C:\Users\
+        SourceImage|contains: \AppData\Roaming\ViberPC\
+        SourceImage|endswith: \updater.exe
+        TargetImage|endswith: \winlogon.exe
+        GrantedAccess: '0x1fffff'
+    filter_optional_adobe_arm_helper:
+        SourceImage|startswith:
+            - C:\Program Files\Common Files\Adobe\ARM\
+            - C:\Program Files (x86)\Common Files\Adobe\ARM\
+        SourceImage|endswith: \AdobeARMHelper.exe
+        GrantedAccess: '0x1410'
+    condition: process_access and (selection and not 1 of filter_optional_*)
+fields:
+    - User
+    - SourceImage
+    - GrantedAccess
+falsepositives:
+    - Updaters and installers are typical false positives. Apply custom filters depending
+        on your environment
+level: medium
+ruletype: Sigma

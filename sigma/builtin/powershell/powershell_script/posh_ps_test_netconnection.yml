@@ -1,7 +1,6 @@
 title: Testing Usage of Uncommonly Used Port
-ruletype: Sigma
-author: frack113
-date: 2022/01/23
+id: adf876b3-f1f8-4aa9-a4e4-a64106feec06
+status: test
 description: 'Adversaries may communicate using a protocol and port paring that are
     typically not associated.
 
@@ -9,38 +8,35 @@ description: 'Adversaries may communicate using a protocol and port paring that 
     Fortinet Agent Tesla April 2018) as opposed to the traditional port 443.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Test-NetConnection*'
-    SELECTION_4:
-        ScriptBlockText: '*-ComputerName *'
-    SELECTION_5:
-        ScriptBlockText: '*-port *'
-    SELECTION_6:
-        ScriptBlockText:
-        - '* 443 *'
-        - '* 80 *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6))
-falsepositives:
-- Legitimate administrative script
-id: adf876b3-f1f8-4aa9-a4e4-a64106feec06
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1571/T1571.md#atomic-test-1---testing-usage-of-uncommonly-used-port-with-powershell
+    - https://docs.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=windowsserver2022-ps
+author: frack113
+date: 2022/01/23
+tags:
+    - attack.command_and_control
+    - attack.t1571
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1571/T1571.md#atomic-test-1---testing-usage-of-uncommonly-used-port-with-powershell
-- https://docs.microsoft.com/en-us/powershell/module/nettcpip/test-netconnection?view=windowsserver2022-ps
-status: test
-tags:
-- attack.command_and_control
-- attack.t1571
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - Test-NetConnection
+            - '-ComputerName '
+            - '-port '
+    filter:
+        ScriptBlockText|contains:
+            - ' 443 '
+            - ' 80 '
+    condition: ps_script and (selection and not filter)
+falsepositives:
+    - Legitimate administrative script
+level: medium
+ruletype: Sigma

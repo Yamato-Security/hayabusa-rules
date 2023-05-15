@@ -1,41 +1,33 @@
 title: Credential Dumping by Pypykatz
-ruletype: Sigma
+id: 7186e989-4ed7-4f4e-a656-4674b9e3e48b
+status: test
+description: Detects LSASS process access by pypykatz for credential dumping.
+references:
+    - https://github.com/skelsec/pypykatz
 author: Bhabesh Raj
 date: 2021/08/03
-description: Detects LSASS process access by pypykatz for credential dumping.
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetImage: '*\lsass.exe'
-    SELECTION_4:
-        CallTrace: '*C:\Windows\SYSTEM32\ntdll.dll+*'
-    SELECTION_5:
-        CallTrace: '*C:\Windows\System32\KERNELBASE.dll+*'
-    SELECTION_6:
-        CallTrace: '*libffi-7.dll*'
-    SELECTION_7:
-        CallTrace: '*_ctypes.pyd+*'
-    SELECTION_8:
-        CallTrace: '*python3*.dll+*'
-    SELECTION_9:
-        GrantedAccess: '0x1FFFFF'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9)
-falsepositives:
-- Unknown
-id: 7186e989-4ed7-4f4e-a656-4674b9e3e48b
-level: critical
+modified: 2022/10/09
+tags:
+    - attack.credential_access
+    - attack.t1003.001
 logsource:
     category: process_access
     product: windows
-modified: 2022/10/09
-references:
-- https://github.com/skelsec/pypykatz
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.001
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetImage|endswith: \lsass.exe
+        CallTrace|contains|all:
+            - C:\Windows\SYSTEM32\ntdll.dll+
+            - C:\Windows\System32\KERNELBASE.dll+
+            - libffi-7.dll
+            - _ctypes.pyd+
+            - python3*.dll+
+        GrantedAccess: '0x1FFFFF'
+    condition: process_access and selection
+falsepositives:
+    - Unknown
+level: critical
+ruletype: Sigma

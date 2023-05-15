@@ -1,35 +1,31 @@
 title: UAC Bypass Using Windows Media Player - Registry
-ruletype: Sigma
-author: Christian Burkard (Nextron Systems)
-date: 2021/08/23
+id: 5f9db380-ea57-4d1e-beab-8a2d33397e93
+status: test
 description: Detects the pattern of UAC Bypass using Windows Media Player osksupport.dll
     (UACMe 32)
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility
-            Assistant\Store\C:\Program Files\Windows Media Player\osk.exe'
-    SELECTION_5:
-        Details: Binary Data
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: 5f9db380-ea57-4d1e-beab-8a2d33397e93
-level: high
+references:
+    - https://github.com/hfiref0x/UACME
+author: Christian Burkard (Nextron Systems)
+date: 2021/08/23
+modified: 2022/03/26
+tags:
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1548.002
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
-references:
-- https://github.com/hfiref0x/UACME
-status: test
-tags:
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1548.002
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|endswith: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Compatibility
+            Assistant\Store\C:\Program Files\Windows Media Player\osk.exe
+        Details: Binary Data
+    condition: registry_set and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

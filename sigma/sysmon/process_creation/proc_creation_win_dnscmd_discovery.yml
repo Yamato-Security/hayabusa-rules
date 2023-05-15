@@ -1,38 +1,36 @@
 title: Potential Discovery Activity Via Dnscmd.EXE
-ruletype: Sigma
-author: '@gott_cyber'
-date: 2022/07/31
+id: b6457d63-d2a2-4e29-859d-4e7affc153d1
+status: experimental
 description: Detects an attempt to leverage dnscmd.exe to enumerate the DNS zones
     of a domain. DNS zones used to host the DNS records for a particular domain.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\dnscmd.exe'
-    SELECTION_4:
-        CommandLine:
-        - '*/enumrecords*'
-        - '*/enumzones*'
-        - '*/ZonePrint*'
-        - '*/info*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Legitimate administration use
-id: b6457d63-d2a2-4e29-859d-4e7affc153d1
-level: medium
+references:
+    - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dnscmd
+    - https://docs.microsoft.com/en-us/azure/dns/dns-zones-records
+    - https://lolbas-project.github.io/lolbas/Binaries/Dnscmd/
+author: '@gott_cyber'
+date: 2022/07/31
+modified: 2023/02/04
+tags:
+    - attack.discovery
+    - attack.execution
+    - attack.t1543.003
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/dnscmd
-- https://docs.microsoft.com/en-us/azure/dns/dns-zones-records
-- https://lolbas-project.github.io/lolbas/Binaries/Dnscmd/
-status: experimental
-tags:
-- attack.discovery
-- attack.execution
-- attack.t1543.003
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        Image|endswith: \dnscmd.exe
+    selection_cli:
+        CommandLine|contains:
+            - /enumrecords
+            - /enumzones
+            - /ZonePrint
+            - /info
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Legitimate administration use
+level: medium
+ruletype: Sigma

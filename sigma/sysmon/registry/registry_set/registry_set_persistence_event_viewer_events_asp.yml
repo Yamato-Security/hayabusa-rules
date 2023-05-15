@@ -1,53 +1,45 @@
 title: Potential Persistence Via Event Viewer Events.asp
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/02/17
+id: a1e11042-a74a-46e6-b07c-c4ce8ecc239b
+status: test
 description: Detects potential registry persistence technique using the Event Viewer
     "Events.asp" technique
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_10:
-        Details: http://go.microsoft.com/fwlink/events.asp
-    SELECTION_11:
-        Details: (Empty)
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetObject:
-        - '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgram*'
-        - '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionURL*'
-    SELECTION_4:
-        Image: '*C:\WINDOWS\system32\svchost.exe'
-    SELECTION_5:
-        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgram'
-    SELECTION_6:
-        Details: '%%SystemRoot%%\PCHealth\HelpCtr\Binaries\HelpCtr.exe'
-    SELECTION_7:
-        Image: '*C:\WINDOWS\system32\svchost.exe'
-    SELECTION_8:
-        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgramCommandLineParameters'
-    SELECTION_9:
-        Details: -url hcp://services/centers/support?topic=%%s
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        and SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)
-        or (SELECTION_10) or (SELECTION_11)))
-falsepositives:
-- Unknown
-id: a1e11042-a74a-46e6-b07c-c4ce8ecc239b
-level: medium
+references:
+    - https://twitter.com/nas_bench/status/1626648985824788480
+    - https://admx.help/?Category=Windows_7_2008R2&Policy=Microsoft.Policies.InternetCommunicationManagement::EventViewer_DisableLinks
+    - https://www.hexacorn.com/blog/2019/02/15/beyond-good-ol-run-key-part-103/
+    - https://github.com/redcanaryco/atomic-red-team/blob/f296668303c29d3f4c07e42bdd2b28d8dd6625f9/atomics/T1112/T1112.md
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/02/17
+modified: 2023/03/05
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.t1112
 logsource:
     category: registry_set
     product: windows
-modified: 2023/03/05
-references:
-- https://twitter.com/nas_bench/status/1626648985824788480
-- https://admx.help/?Category=Windows_7_2008R2&Policy=Microsoft.Policies.InternetCommunicationManagement::EventViewer_DisableLinks
-- https://www.hexacorn.com/blog/2019/02/15/beyond-good-ol-run-key-part-103/
-- https://github.com/redcanaryco/atomic-red-team/blob/f296668303c29d3f4c07e42bdd2b28d8dd6625f9/atomics/T1112/T1112.md
-status: test
-tags:
-- attack.persistence
-- attack.defense_evasion
-- attack.t1112
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetObject|contains:
+            - \Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgram
+            - \Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionURL
+    filter_default_redirect_program:
+        Image|endswith: C:\WINDOWS\system32\svchost.exe
+        TargetObject|endswith: \Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgram
+        Details: '%%SystemRoot%%\PCHealth\HelpCtr\Binaries\HelpCtr.exe'
+    filter_default_redirect_program_cli:
+        Image|endswith: C:\WINDOWS\system32\svchost.exe
+        TargetObject|endswith: \Microsoft\Windows NT\CurrentVersion\Event Viewer\MicrosoftRedirectionProgramCommandLineParameters
+        Details: -url hcp://services/centers/support?topic=%%s
+    filter_url:
+        Details: http://go.microsoft.com/fwlink/events.asp
+    filter_cleaner:
+        Details: (Empty)
+    condition: registry_set and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

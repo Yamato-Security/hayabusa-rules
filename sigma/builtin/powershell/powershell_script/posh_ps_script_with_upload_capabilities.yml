@@ -1,40 +1,38 @@
 title: PowerShell Script With File Upload Capabilities
-ruletype: Sigma
-author: frack113
-date: 2022/01/07
+id: d2e3f2f6-7e09-4bf2-bc5d-90186809e7fb
+status: experimental
 description: Detects PowerShell scripts leveraging the "Invoke-WebRequest" cmdlet
     to send data via either "PUT" or "POST" method.
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText:
-        - '*Invoke-WebRequest*'
-        - '*iwr *'
-    SELECTION_4:
-        ScriptBlockText:
-        - '*-Method Put*'
-        - '*-Method Post*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: d2e3f2f6-7e09-4bf2-bc5d-90186809e7fb
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1020/T1020.md
+    - https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
+    - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.2
+author: frack113
+date: 2022/01/07
+modified: 2023/05/04
+tags:
+    - attack.exfiltration
+    - attack.t1020
 logsource:
+    product: windows
     category: ps_script
     definition: bade5735-5ab0-4aa7-a642-a11be0e40872
-    product: windows
-modified: 2023/05/04
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1020/T1020.md
-- https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html
-- https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-webrequest?view=powershell-7.2
-status: experimental
-tags:
-- attack.exfiltration
-- attack.t1020
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection_cmdlet:
+        ScriptBlockText|contains:
+            - Invoke-WebRequest
+            - 'iwr '
+    selection_flag:
+        ScriptBlockText|contains:
+            - -Method Put
+            - -Method Post
+    condition: ps_script and (all of selection_*)
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

@@ -1,43 +1,37 @@
 title: Curl Download And Execute Combination
-ruletype: Sigma
-author: Sreeman, Nasreddine Bencherchali (Nextron Systems)
-date: 2020/01/13
+id: 21dd6d38-2b18-4453-9404-a0fe4a0cc288
+status: test
 description: Adversaries can use curl to download payloads remotely and execute them.
     Curl is included by default in Windows 10 build 17063 and later.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '* /c *'
-    SELECTION_4:
-        CommandLine: '*curl *'
-    SELECTION_5:
-        CommandLine: '*http*'
-    SELECTION_6:
-        CommandLine: '*-o*'
-    SELECTION_7:
-        CommandLine: '*&*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Unknown
-fields:
-- ParentImage
-- CommandLine
-id: 21dd6d38-2b18-4453-9404-a0fe4a0cc288
-level: high
+references:
+    - https://medium.com/@reegun/curl-exe-is-the-new-rundll32-exe-lolbin-3f79c5f35983
+author: Sreeman, Nasreddine Bencherchali (Nextron Systems)
+date: 2020/01/13
+modified: 2023/03/06
+tags:
+    - attack.execution
+    - attack.t1218
+    - attack.command_and_control
+    - attack.t1105
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/06
-references:
-- https://medium.com/@reegun/curl-exe-is-the-new-rundll32-exe-lolbin-3f79c5f35983
-status: test
-tags:
-- attack.execution
-- attack.t1218
-- attack.command_and_control
-- attack.t1105
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - ' /c '
+            - 'curl '
+            - http
+            - -o
+            - '&'
+    condition: process_creation and selection
+fields:
+    - ParentProcessName
+    - CommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

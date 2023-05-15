@@ -1,7 +1,6 @@
 title: Potential Persistence Via LSA Extensions
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/21
+id: 41f6531d-af6e-4c6e-918f-b946f2b85a36
+status: experimental
 description: 'Detects when an attacker modifies the "REG_MULTI_SZ" value named "Extensions"
     to include a custom DLL to achieve persistence via lsass.
 
@@ -9,28 +8,26 @@ description: 'Detects when an attacker modifies the "REG_MULTI_SZ" value named "
     lsass.exe. Each DLL has its InitializeLsaExtension() method called after loading.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\SYSTEM\CurrentControlSet\Control\LsaExtensionConfig\LsaSrv\Extensions*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unlikely
-id: 41f6531d-af6e-4c6e-918f-b946f2b85a36
-level: high
+references:
+    - https://persistence-info.github.io/Data/lsaaextension.html
+    - https://twitter.com/0gtweet/status/1476286368385019906
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/21
+modified: 2023/01/10
+tags:
+    - attack.persistence
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
-references:
-- https://persistence-info.github.io/Data/lsaaextension.html
-- https://twitter.com/0gtweet/status/1476286368385019906
-status: experimental
-tags:
-- attack.persistence
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|contains: \SYSTEM\CurrentControlSet\Control\LsaExtensionConfig\LsaSrv\Extensions
+    condition: registry_set and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

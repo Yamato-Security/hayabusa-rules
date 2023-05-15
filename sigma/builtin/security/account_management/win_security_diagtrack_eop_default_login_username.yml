@@ -1,28 +1,25 @@
 title: DiagTrackEoP Default Login Username
-ruletype: Sigma
+id: 2111118f-7e46-4fc8-974a-59fd8ec95196
+status: experimental
+description: Detects the default "UserName" used by the DiagTrackEoP POC
+references:
+    - https://github.com/Wh04m1001/DiagTrackEoP/blob/3a2fc99c9700623eb7dc7d4b5f314fd9ce5ef51f/main.cpp#L46
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/03
-description: Detects the default "UserName" used by the DiagTrackEoP POC
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4624
-    SELECTION_3:
-        LogonType: 9
-    SELECTION_4:
-        TargetOutboundUserName: thisisnotvaliduser
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unlikely
-id: 2111118f-7e46-4fc8-974a-59fd8ec95196
-level: critical
+tags:
+    - attack.privilege_escalation
 logsource:
     product: windows
     service: security
-references:
-- https://github.com/Wh04m1001/DiagTrackEoP/blob/3a2fc99c9700623eb7dc7d4b5f314fd9ce5ef51f/main.cpp#L46
-status: experimental
-tags:
-- attack.privilege_escalation
-
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 4624
+        LogonType: 9
+        TargetOutboundUserName: thisisnotvaliduser
+    condition: security and selection
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

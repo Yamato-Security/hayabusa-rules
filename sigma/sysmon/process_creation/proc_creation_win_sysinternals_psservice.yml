@@ -1,34 +1,31 @@
 title: Sysinternals PsService Execution
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/06/16
+id: 3371f518-5fe3-4cf6-a14b-2a0ae3fd8a4f
+status: experimental
 description: Detects usage of Sysinternals PsService which can be abused for service
     reconnaissance and tampering
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        OriginalFileName: psservice.exe
-    SELECTION_4:
-        Image:
-        - '*\PsService.exe'
-        - '*\PsService64.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Legitimate use of PsService by an administrator
-id: 3371f518-5fe3-4cf6-a14b-2a0ae3fd8a4f
-level: medium
+references:
+    - https://docs.microsoft.com/en-us/sysinternals/downloads/psservice
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/06/16
+modified: 2023/02/24
+tags:
+    - attack.discovery
+    - attack.persistence
+    - attack.t1543.003
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/24
-references:
-- https://docs.microsoft.com/en-us/sysinternals/downloads/psservice
-status: experimental
-tags:
-- attack.discovery
-- attack.persistence
-- attack.t1543.003
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   OriginalFileName: psservice.exe
+        -   Image|endswith:
+                - \PsService.exe
+                - \PsService64.exe
+    condition: process_creation and selection
+falsepositives:
+    - Legitimate use of PsService by an administrator
+level: medium
+ruletype: Sigma

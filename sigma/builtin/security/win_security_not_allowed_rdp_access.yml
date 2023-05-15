@@ -1,7 +1,6 @@
 title: Denied Access To Remote Desktop
-ruletype: Sigma
-author: Pushkarev Dmitry
-date: 2020/06/27
+id: 8e5c03fa-b7f0-11ea-b242-07e0576828d9
+status: test
 description: 'This event is generated when an authenticated user who is not allowed
     to log on remotely attempts to connect to this computer through Remote Desktop.
 
@@ -9,28 +8,28 @@ description: 'This event is generated when an authenticated user who is not allo
     servers in the network.
 
     '
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4825
-    condition: (SELECTION_1 and SELECTION_2)
-falsepositives:
-- Valid user was not added to RDP group
-fields:
-- EventCode
-- AccountName
-- ClientAddress
-id: 8e5c03fa-b7f0-11ea-b242-07e0576828d9
-level: medium
+references:
+    - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=4825
+author: Pushkarev Dmitry
+date: 2020/06/27
+modified: 2021/11/27
+tags:
+    - attack.lateral_movement
+    - attack.t1021.001
 logsource:
     product: windows
     service: security
-modified: 2021/11/27
-references:
-- https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=4825
-status: test
-tags:
-- attack.lateral_movement
-- attack.t1021.001
-
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 4825
+    condition: security and selection
+fields:
+    - EventCode
+    - AccountName
+    - ClientAddress
+falsepositives:
+    - Valid user was not added to RDP group
+level: medium
+ruletype: Sigma

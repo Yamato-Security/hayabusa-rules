@@ -1,51 +1,48 @@
 title: Change PowerShell Policies to an Insecure Level - PowerShell
-ruletype: Sigma
+id: 61d0475c-173f-4844-86f7-f3eebae1c66b
+related:
+    -   id: cf2e938e-9a3e-4fe8-a347-411642b28a9f
+        type: similar
+    -   id: 87e3c4e8-a6a8-4ad9-bb4f-46e7ff99a180
+        type: similar
+    -   id: fad91067-08c5-4d1a-8d8c-d96a21b37814
+        type: similar
+status: experimental
+description: Detects use of Set-ExecutionPolicy to set insecure policies
+references:
+    - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.1
+    - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1
+    - https://adsecurity.org/?p=2604
 author: frack113
 date: 2021/10/20
-description: Detects use of Set-ExecutionPolicy to set insecure policies
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Set-ExecutionPolicy*'
-    SELECTION_4:
-        ScriptBlockText:
-        - '*Unrestricted*'
-        - '*bypass*'
-        - '*RemoteSigned*'
-    SELECTION_5:
-        ScriptBlockText:
-        - '*(New-Object System.Net.WebClient).DownloadString(''https://community.chocolatey.org/install.ps1'')*'
-        - '*(New-Object System.Net.WebClient).DownloadString(''https://chocolatey.org/install.ps1'')*'
-        - '*\AppData\Roaming\Code\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Administrator script
-id: 61d0475c-173f-4844-86f7-f3eebae1c66b
-level: medium
+modified: 2022/12/30
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2022/12/30
-references:
-- https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.security/set-executionpolicy?view=powershell-7.1
-- https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-7.1
-- https://adsecurity.org/?p=2604
-related:
--   id: cf2e938e-9a3e-4fe8-a347-411642b28a9f
-    type: similar
--   id: 87e3c4e8-a6a8-4ad9-bb4f-46e7ff99a180
-    type: similar
--   id: fad91067-08c5-4d1a-8d8c-d96a21b37814
-    type: similar
-status: experimental
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    cmdlet:
+        ScriptBlockText|contains: Set-ExecutionPolicy
+    option:
+        ScriptBlockText|contains:
+            - Unrestricted
+            - bypass
+            - RemoteSigned
+    filter:
+        ScriptBlockText|contains:
+            - (New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')
+            - (New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')
+            - \AppData\Roaming\Code\
+    condition: ps_script and (cmdlet and option and not filter)
+falsepositives:
+    - Administrator script
+level: medium
+ruletype: Sigma

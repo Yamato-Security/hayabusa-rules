@@ -1,39 +1,34 @@
 title: Run PowerShell Script from ADS
-ruletype: Sigma
+id: 45a594aa-1fbd-4972-a809-ff5a99dd81b8
+status: test
+description: Detects PowerShell script execution from Alternate Data Stream (ADS)
+references:
+    - https://github.com/p0shkatz/Get-ADS/blob/1c3a3562e713c254edce1995a7d9879c687c7473/Get-ADS.ps1
 author: Sergey Soldatov, Kaspersky Lab, oscd.community
 date: 2019/10/30
-description: Detects PowerShell script execution from Alternate Data Stream (ADS)
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_5:
-        CommandLine: '*Get-Content*'
-    SELECTION_6:
-        CommandLine: '*-Stream*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: 45a594aa-1fbd-4972-a809-ff5a99dd81b8
-level: high
+modified: 2022/07/14
+tags:
+    - attack.defense_evasion
+    - attack.t1564.004
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
-references:
-- https://github.com/p0shkatz/Get-ADS/blob/1c3a3562e713c254edce1995a7d9879c687c7473/Get-ADS.ps1
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1564.004
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ParentImage|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+        Image|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+        CommandLine|contains|all:
+            - Get-Content
+            - -Stream
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

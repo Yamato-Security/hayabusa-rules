@@ -1,36 +1,31 @@
 title: Suspicious Execution of InstallUtil Without Log
-ruletype: Sigma
-author: frack113
-date: 2022/01/23
+id: d042284c-a296-4988-9be5-f424fadcc28c
+status: test
 description: Uses the .NET InstallUtil.exe application in order to execute image without
     log
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\InstallUtil.exe'
-    SELECTION_4:
-        NewProcessName: '*Microsoft.NET\Framework*'
-    SELECTION_5:
-        CommandLine: '*/logfile= *'
-    SELECTION_6:
-        CommandLine: '*/LogToConsole=false*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: d042284c-a296-4988-9be5-f424fadcc28c
-level: medium
+references:
+    - https://securelist.com/moonbounce-the-dark-side-of-uefi-firmware/105468/
+    - https://docs.microsoft.com/en-us/dotnet/framework/tools/installutil-exe-installer-tool
+author: frack113
+date: 2022/01/23
+modified: 2022/02/04
+tags:
+    - attack.defense_evasion
 logsource:
     category: process_creation
     product: windows
-modified: 2022/02/04
-references:
-- https://securelist.com/moonbounce-the-dark-side-of-uefi-firmware/105468/
-- https://docs.microsoft.com/en-us/dotnet/framework/tools/installutil-exe-installer-tool
-status: test
-tags:
-- attack.defense_evasion
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - '/logfile= '
+            - /LogToConsole=false
+        NewProcessName|endswith: \InstallUtil.exe
+        NewProcessName|contains: Microsoft.NET\Framework
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

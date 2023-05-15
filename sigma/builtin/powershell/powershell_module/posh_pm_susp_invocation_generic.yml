@@ -1,47 +1,45 @@
 title: Suspicious PowerShell Invocations - Generic - PowerShell Module
-ruletype: Sigma
+id: bbb80e91-5746-4fbe-8898-122e2cafdbf4
+related:
+    -   id: 3d304fda-78aa-43ed-975c-d740798a49c1
+        type: derived
+    -   id: ed965133-513f-41d9-a441-e38076a0798f
+        type: similar
+status: experimental
+description: Detects suspicious PowerShell invocation command parameters
 author: Florian Roth (Nextron Systems)
 date: 2017/03/12
-description: Detects suspicious PowerShell invocation command parameters
-detection:
-    SELECTION_1:
-        EventID: 4103
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ContextInfo:
-        - '* -enc *'
-        - '* -EncodedCommand *'
-        - '* -ec *'
-    SELECTION_4:
-        ContextInfo:
-        - '* -w hidden *'
-        - '* -window hidden *'
-        - '* -windowstyle hidden *'
-        - '* -w 1 *'
-    SELECTION_5:
-        ContextInfo:
-        - '* -noni *'
-        - '* -noninteractive *'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Very special / sneaky PowerShell scripts
-id: bbb80e91-5746-4fbe-8898-122e2cafdbf4
-level: high
+modified: 2023/01/03
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
+    product: windows
     category: ps_module
     definition: 'Requirements: PowerShell Module Logging must be enabled'
-    product: windows
-modified: 2023/01/03
-related:
--   id: 3d304fda-78aa-43ed-975c-d740798a49c1
-    type: derived
--   id: ed965133-513f-41d9-a441-e38076a0798f
-    type: similar
-status: experimental
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    ps_module:
+        EventID: 4103
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection_encoded:
+        ContextInfo|contains:
+            - ' -enc '
+            - ' -EncodedCommand '
+            - ' -ec '
+    selection_hidden:
+        ContextInfo|contains:
+            - ' -w hidden '
+            - ' -window hidden '
+            - ' -windowstyle hidden '
+            - ' -w 1 '
+    selection_noninteractive:
+        ContextInfo|contains:
+            - ' -noni '
+            - ' -noninteractive '
+    condition: ps_module and (all of selection*)
+falsepositives:
+    - Very special / sneaky PowerShell scripts
+level: high
+ruletype: Sigma

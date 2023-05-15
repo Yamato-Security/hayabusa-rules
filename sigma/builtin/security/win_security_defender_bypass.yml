@@ -1,38 +1,33 @@
 title: Windows Defender Exclusion Set
-ruletype: Sigma
-author: '@BarryShooshooga'
-date: 2019/10/26
+id: e9c8808f-4cfb-4ba9-97d4-e5f3beaa244d
+status: test
 description: Detects scenarios where an windows defender exclusion was added in registry
     where an entity would want to bypass antivirus scanning from windows defender
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4657
-    SELECTION_3:
-        EventID: 4656
-    SELECTION_4:
-        EventID: 4660
-    SELECTION_5:
-        EventID: 4663
-    SELECTION_6:
-        ObjectName: '*\Microsoft\Windows Defender\Exclusions\\*'
-    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5)
-        and SELECTION_6)
-falsepositives:
-- Intended inclusions by administrator
-id: e9c8808f-4cfb-4ba9-97d4-e5f3beaa244d
-level: high
+references:
+    - https://www.bleepingcomputer.com/news/security/gootkit-malware-bypasses-windows-defender-by-setting-path-exclusions/
+author: '@BarryShooshooga'
+date: 2019/10/26
+modified: 2021/11/27
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
-    definition: 'Requirements: Audit Policy : Security Settings/Local Policies/Audit
-        Policy, Registry System Access Control (SACL): Auditing/User'
     product: windows
     service: security
-modified: 2021/11/27
-references:
-- https://www.bleepingcomputer.com/news/security/gootkit-malware-bypasses-windows-defender-by-setting-path-exclusions/
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+    definition: 'Requirements: Audit Policy : Security Settings/Local Policies/Audit
+        Policy, Registry System Access Control (SACL): Auditing/User'
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID:
+            - 4657
+            - 4656
+            - 4660
+            - 4663
+        ObjectName|contains: \Microsoft\Windows Defender\Exclusions\
+    condition: security and selection
+falsepositives:
+    - Intended inclusions by administrator
+level: high
+ruletype: Sigma

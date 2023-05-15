@@ -1,48 +1,43 @@
 title: Boot Configuration Tampering Via Bcdedit.EXE
-ruletype: Sigma
-author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
-date: 2019/10/24
+id: 1444443e-6757-43e4-9ea4-c8fc705f79a2
+status: stable
 description: Detects the use of the bcdedit command to tamper with the boot configuration
     data. This technique is often times used by malware or attackers as a destructive
     way before launching ransomware.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\bcdedit.exe'
-    SELECTION_4:
-        OriginalFileName: bcdedit.exe
-    SELECTION_5:
-        CommandLine: '*set*'
-    SELECTION_6:
-        CommandLine: '*bootstatuspolicy*'
-    SELECTION_7:
-        CommandLine: '*ignoreallfailures*'
-    SELECTION_8:
-        CommandLine: '*recoveryenabled*'
-    SELECTION_9:
-        CommandLine: '*no*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and ((SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9)))
-falsepositives:
-- Unlikely
-fields:
-- ComputerName
-- User
-- CommandLine
-id: 1444443e-6757-43e4-9ea4-c8fc705f79a2
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md
+    - https://eqllib.readthedocs.io/en/latest/analytics/c4732632-9c1d-4980-9fa8-1d98c93f918e.html
+author: E.M. Anhaus (originally from Atomic Blue Detections, Endgame), oscd.community
+date: 2019/10/24
+modified: 2023/02/15
+tags:
+    - attack.impact
+    - attack.t1490
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/15
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md
-- https://eqllib.readthedocs.io/en/latest/analytics/c4732632-9c1d-4980-9fa8-1d98c93f918e.html
-status: stable
-tags:
-- attack.impact
-- attack.t1490
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \bcdedit.exe
+        -   OriginalFileName: bcdedit.exe
+    selection_set:
+        CommandLine|contains: set
+    selection_cli:
+        -   CommandLine|contains|all:
+                - bootstatuspolicy
+                - ignoreallfailures
+        -   CommandLine|contains|all:
+                - recoveryenabled
+                - 'no'
+    condition: process_creation and (all of selection_*)
+fields:
+    - ComputerName
+    - User
+    - CommandLine
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

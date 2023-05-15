@@ -1,31 +1,29 @@
 title: HackTool - SILENTTRINITY Stager Execution
-ruletype: Sigma
+id: 03552375-cc2c-4883-bbe4-7958d5a980be
+related:
+    -   id: 75c505b1-711d-4f68-a357-8c3fe37dbf2d
+        type: derived
+status: test
+description: Detects SILENTTRINITY stager use via PE metadata
+references:
+    - https://github.com/byt3bl33d3r/SILENTTRINITY
 author: Aleksey Potapov, oscd.community
 date: 2019/10/22
-description: Detects SILENTTRINITY stager use via PE metadata
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        Description: '*st2stager*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unlikely
-id: 03552375-cc2c-4883-bbe4-7958d5a980be
-level: high
+modified: 2023/02/13
+tags:
+    - attack.command_and_control
+    - attack.t1071
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-references:
-- https://github.com/byt3bl33d3r/SILENTTRINITY
-related:
--   id: 75c505b1-711d-4f68-a357-8c3fe37dbf2d
-    type: derived
-status: test
-tags:
-- attack.command_and_control
-- attack.t1071
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        Description|contains: st2stager
+    condition: process_creation and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

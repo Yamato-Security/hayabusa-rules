@@ -1,49 +1,43 @@
 title: Invoke-Obfuscation Via Use Rundll32 - PowerShell Module
-ruletype: Sigma
+id: 88a22f69-62f9-4b8a-aa00-6b0212f2f05a
+related:
+    -   id: a5a30a6e-75ca-4233-8b8c-42e0f2037d3b
+        type: derived
+status: experimental
+description: Detects Obfuscated Powershell via use Rundll32 in Scripts
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Nikita Nazarov, oscd.community
 date: 2019/10/08
-description: Detects Obfuscated Powershell via use Rundll32 in Scripts
-detection:
-    SELECTION_1:
-        EventID: 4103
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        Payload: '*&&*'
-    SELECTION_4:
-        Payload: '*rundll32*'
-    SELECTION_5:
-        Payload: '*shell32.dll*'
-    SELECTION_6:
-        Payload: '*shellexec_rundll*'
-    SELECTION_7:
-        Payload:
-        - '*value*'
-        - '*invoke*'
-        - '*comspec*'
-        - '*iex*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Unknown
-id: 88a22f69-62f9-4b8a-aa00-6b0212f2f05a
-level: high
+modified: 2022/11/29
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
+    product: windows
     category: ps_module
     definition: 'Requirements: PowerShell Module Logging must be enabled'
-    product: windows
-modified: 2022/11/29
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-related:
--   id: a5a30a6e-75ca-4233-8b8c-42e0f2037d3b
-    type: derived
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    ps_module:
+        EventID: 4103
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection_4103:
+        Payload|contains|all:
+            - '&&'
+            - rundll32
+            - shell32.dll
+            - shellexec_rundll
+        Payload|contains:
+            - value
+            - invoke
+            - comspec
+            - iex
+    condition: ps_module and selection_4103
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

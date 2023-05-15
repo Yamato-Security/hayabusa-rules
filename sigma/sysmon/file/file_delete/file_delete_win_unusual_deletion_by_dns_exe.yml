@@ -1,38 +1,35 @@
 title: Unusual File Deletion by Dns.exe
-ruletype: Sigma
-author: Tim Rauch (Nextron Systems)
-date: 2022/09/27
+id: 8f0b1fb1-9bd4-4e74-8cdf-a8de4d2adfd0
+related:
+    -   id: 9f383dc0-fdeb-4d56-acbc-9f9f4f8f20f3
+        type: similar
+status: experimental
 description: Detects an unexpected file being deleted by dns.exe which my indicate
     activity related to remote code execution or other forms of exploitation as seen
     in CVE-2020-1350 (SigRed)
-detection:
-    SELECTION_1:
-        EventID: 23
-    SELECTION_2:
-        EventID: 26
-    SELECTION_3:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_4:
-        Image: '*\dns.exe'
-    SELECTION_5:
-        TargetFilename: '*\dns.log'
-    condition: (((SELECTION_1 or SELECTION_2) and SELECTION_3) and SELECTION_4 and  not
-        (SELECTION_5))
-falsepositives:
-- Unknown
-id: 8f0b1fb1-9bd4-4e74-8cdf-a8de4d2adfd0
-level: high
+references:
+    - https://www.elastic.co/guide/en/security/current/unusual-file-modification-by-dns.exe.html
+author: Tim Rauch (Nextron Systems)
+date: 2022/09/27
+modified: 2023/02/15
+tags:
+    - attack.initial_access
+    - attack.t1133
 logsource:
     category: file_delete
     product: windows
-modified: 2023/02/15
-references:
-- https://www.elastic.co/guide/en/security/current/unusual-file-modification-by-dns.exe.html
-related:
--   id: 9f383dc0-fdeb-4d56-acbc-9f9f4f8f20f3
-    type: similar
-status: experimental
-tags:
-- attack.initial_access
-- attack.t1133
-
+detection:
+    file_delete:
+        EventID:
+            - 23
+            - 26
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \dns.exe
+    filter:
+        TargetFilename|endswith: \dns.log
+    condition: file_delete and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

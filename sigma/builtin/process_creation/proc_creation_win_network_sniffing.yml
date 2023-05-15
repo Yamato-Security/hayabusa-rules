@@ -1,7 +1,6 @@
 title: Potential Network Sniffing Activity Using Network Tools
-ruletype: Sigma
-author: Timur Zinniatullin, oscd.community, Nasreddine Bencherchali (Nextron Systems)
-date: 2019/10/21
+id: ba1f7802-adc7-48b4-9ecb-81e227fddfd5
+status: test
 description: 'Detects potential network sniffing via use of network tools such as
     "tshark", "windump".
 
@@ -13,32 +12,29 @@ description: 'Detects potential network sniffing via use of network tools such a
     amount of data.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\tshark.exe'
-    SELECTION_4:
-        CommandLine: '*-i*'
-    SELECTION_5:
-        NewProcessName: '*\windump.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        SELECTION_5))
-falsepositives:
-- Legitimate administration activity to troubleshoot network issues
-id: ba1f7802-adc7-48b4-9ecb-81e227fddfd5
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1040/T1040.md
+author: Timur Zinniatullin, oscd.community, Nasreddine Bencherchali (Nextron Systems)
+date: 2019/10/21
+modified: 2023/02/20
+tags:
+    - attack.credential_access
+    - attack.discovery
+    - attack.t1040
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/20
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1040/T1040.md
-status: test
-tags:
-- attack.credential_access
-- attack.discovery
-- attack.t1040
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_tshark:
+        CommandLine|contains: -i
+        NewProcessName|endswith: \tshark.exe
+    selection_windump:
+        NewProcessName|endswith: \windump.exe
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Legitimate administration activity to troubleshoot network issues
+level: medium
+ruletype: Sigma

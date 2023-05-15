@@ -1,43 +1,33 @@
 title: Potential Persistence Using DebugPath
-ruletype: Sigma
+id: df4dc653-1029-47ba-8231-3c44238cc0ae
+status: experimental
+description: Detects potential persistence using Appx DebugPath
+references:
+    - https://oddvar.moe/2018/09/06/persistence-using-universal-windows-platform-apps-appx/
+    - https://github.com/rootm0s/WinPwnage
 author: frack113
 date: 2022/07/27
-description: Detects potential persistence using Appx DebugPath
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*Classes\ActivatableClasses\Package\Microsoft.*'
-    SELECTION_6:
-        TargetObject: '*\DebugPath'
-    SELECTION_7:
-        EventType: SetValue
-    SELECTION_8:
-        TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\PackagedAppXDebug\Microsoft.*'
-    SELECTION_9:
-        TargetObject: '*\(Default)'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and ((SELECTION_4 and
-        SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
-falsepositives:
-- Unknown
-id: df4dc653-1029-47ba-8231-3c44238cc0ae
-level: medium
+modified: 2023/01/10
+tags:
+    - attack.persistence
+    - attack.t1546.015
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
-references:
-- https://oddvar.moe/2018/09/06/persistence-using-universal-windows-platform-apps-appx/
-- https://github.com/rootm0s/WinPwnage
-status: experimental
-tags:
-- attack.persistence
-- attack.t1546.015
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection_debug:
+        EventType: SetValue
+        TargetObject|contains: Classes\ActivatableClasses\Package\Microsoft.
+        TargetObject|endswith: \DebugPath
+    selection_default:
+        EventType: SetValue
+        TargetObject|contains: \Software\Microsoft\Windows\CurrentVersion\PackagedAppXDebug\Microsoft.
+        TargetObject|endswith: \(Default)
+    condition: registry_set and (1 of selection_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

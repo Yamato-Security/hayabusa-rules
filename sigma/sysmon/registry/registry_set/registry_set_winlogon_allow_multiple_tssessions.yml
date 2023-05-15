@@ -1,7 +1,6 @@
 title: Winlogon AllowMultipleTSSessions Enable
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/09/09
+id: f7997770-92c3-4ec9-b112-774c4ef96f96
+status: experimental
 description: 'Detects when the ''AllowMultipleTSSessions'' value is enabled.
 
     Which allows for multiple Remote Desktop connection sessions to be opened at once.
@@ -10,30 +9,27 @@ description: 'Detects when the ''AllowMultipleTSSessions'' value is enabled.
     the other users
 
     '
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\Microsoft\Windows NT\CurrentVersion\Winlogon\AllowMultipleTSSessions'
-    SELECTION_5:
-        Details: '*DWORD (0x00000001)'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Legitimate use of the multi session functionality
-id: f7997770-92c3-4ec9-b112-774c4ef96f96
-level: medium
+references:
+    - http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/09/09
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.t1112
 logsource:
     category: registry_set
     product: windows
-references:
-- http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
-status: experimental
-tags:
-- attack.persistence
-- attack.defense_evasion
-- attack.t1112
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|endswith: \Microsoft\Windows NT\CurrentVersion\Winlogon\AllowMultipleTSSessions
+        Details|endswith: DWORD (0x00000001)
+    condition: registry_set and selection
+falsepositives:
+    - Legitimate use of the multi session functionality
+level: medium
+ruletype: Sigma

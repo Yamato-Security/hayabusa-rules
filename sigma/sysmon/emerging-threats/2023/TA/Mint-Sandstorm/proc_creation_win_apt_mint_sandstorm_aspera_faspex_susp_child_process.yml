@@ -1,138 +1,120 @@
 title: Mint Sandstorm - AsperaFaspex Suspicious Process Execution
-ruletype: Sigma
+id: 91048c0d-5b81-4b85-a099-c9ee4fb87979
+status: test
+description: Detects suspicious execution from AsperaFaspex as seen used by Mint Sandstorm
+references:
+    - https://www.microsoft.com/en-us/security/blog/2023/04/18/nation-state-threat-actor-mint-sandstorm-refines-tradecraft-to-attack-high-value-targets/
 author: Nasreddine Bencherchali (Nextron Systems), MSTIC (idea)
 date: 2023/04/20
-description: Detects suspicious execution from AsperaFaspex as seen used by Mint Sandstorm
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        Image: '*\wget.exe'
-    SELECTION_11:
-        CommandLine: '*http*'
-    SELECTION_12:
-        Image: '*\curl.exe'
-    SELECTION_13:
-        CommandLine: '*http*'
-    SELECTION_14:
-        CommandLine:
-        - '*E:jscript*'
-        - '*e:vbscript*'
-    SELECTION_15:
-        CommandLine: '*localgroup Administrators*'
-    SELECTION_16:
-        CommandLine: '*/add*'
-    SELECTION_17:
-        CommandLine: '*net*'
-    SELECTION_18:
-        CommandLine: '*user*'
-    SELECTION_19:
-        CommandLine: '*/add*'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        CommandLine: '*reg add*'
-    SELECTION_21:
-        CommandLine: '*DisableAntiSpyware*'
-    SELECTION_22:
-        CommandLine: '*\Microsoft\Windows Defender*'
-    SELECTION_23:
-        CommandLine: '*reg add*'
-    SELECTION_24:
-        CommandLine: '*DisableRestrictedAdmin*'
-    SELECTION_25:
-        CommandLine: '*CurrentControlSet\Control\Lsa*'
-    SELECTION_26:
-        CommandLine: '*wmic*'
-    SELECTION_27:
-        CommandLine: '*process call create*'
-    SELECTION_28:
-        CommandLine: '*wmic*'
-    SELECTION_29:
-        CommandLine: '*delete*'
-    SELECTION_3:
-        ParentImage: '*aspera*'
-    SELECTION_30:
-        CommandLine: '*shadowcopy*'
-    SELECTION_31:
-        CommandLine: '*vssadmin*'
-    SELECTION_32:
-        CommandLine: '*delete*'
-    SELECTION_33:
-        CommandLine: '*shadows*'
-    SELECTION_34:
-        CommandLine: '*wbadmin*'
-    SELECTION_35:
-        CommandLine: '*delete*'
-    SELECTION_36:
-        CommandLine: '*catalog*'
-    SELECTION_4:
-        ParentImage: '*\ruby*'
-    SELECTION_5:
-        Image:
-        - '*\powershell.exe'
-        - '*\powershell_ise.exe'
-    SELECTION_6:
-        CommandLine:
-        - '* echo *'
-        - '*-dumpmode*'
-        - '*-ssh*'
-        - '*.dmp*'
-        - '*add-MpPreference*'
-        - '*adscredentials*'
-        - '*bitsadmin*'
-        - '*certutil*'
-        - '*csvhost.exe*'
-        - '*DownloadFile*'
-        - '*DownloadString*'
-        - '*dsquery*'
-        - '*ekern.exe*'
-        - '*FromBase64String*'
-        - '*iex *'
-        - '*iex(*'
-        - '*Invoke-Expression*'
-        - '*Invoke-WebRequest*'
-        - '*localgroup administrators*'
-        - '*net group*'
-        - '*net user*'
-        - '*o365accountconfiguration*'
-        - '*query session*'
-        - '*samaccountname=*'
-        - '*set-MpPreference*'
-        - '*svhost.exe*'
-        - '*System.IO.Compression*'
-        - '*System.IO.MemoryStream*'
-        - '*usoprivate*'
-        - '*usoshared*'
-        - '*whoami*'
-    SELECTION_7:
-        CommandLine|re: "[-/\u2013][Ee^]{1,2}[ncodema^]*\\s[A-Za-z0-9+/=]{15,}"
-    SELECTION_8:
-        CommandLine: '*lsass*'
-    SELECTION_9:
-        CommandLine:
-        - '*procdump*'
-        - '*tasklist*'
-        - '*findstr*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
-        ((SELECTION_5 and (SELECTION_6 or SELECTION_7)) or (SELECTION_8 and SELECTION_9)
-        or (SELECTION_10 and SELECTION_11) or (SELECTION_12 and SELECTION_13) or SELECTION_14
-        or (SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18 and SELECTION_19)
-        or ((SELECTION_20 and SELECTION_21 and SELECTION_22) or (SELECTION_23 and
-        SELECTION_24 and SELECTION_25)) or (SELECTION_26 and SELECTION_27) or (SELECTION_28
-        and SELECTION_29 and SELECTION_30) or (SELECTION_31 and SELECTION_32 and SELECTION_33)
-        or (SELECTION_34 and SELECTION_35 and SELECTION_36)))
-falsepositives:
-- Unlikely
-id: 91048c0d-5b81-4b85-a099-c9ee4fb87979
-level: critical
+modified: 2023/04/25
+tags:
+    - attack.execution
 logsource:
     category: process_creation
     product: windows
-modified: 2023/04/25
-references:
-- https://www.microsoft.com/en-us/security/blog/2023/04/18/nation-state-threat-actor-mint-sandstorm-refines-tradecraft-to-attack-high-value-targets/
-status: test
-tags:
-- attack.execution
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_parent:
+        ParentImage|contains|all:
+            - aspera
+            - \ruby
+    selection_special_child_powershell_img:
+        Image|endswith:
+            - \powershell.exe
+            - \powershell_ise.exe
+    selection_special_child_powershell_cli:
+        -   CommandLine|contains:
+                - ' echo '
+                - -dumpmode
+                - -ssh
+                - .dmp
+                - add-MpPreference
+                - adscredentials
+                - bitsadmin
+                - certutil
+                - csvhost.exe
+                - DownloadFile
+                - DownloadString
+                - dsquery
+                - ekern.exe
+                - FromBase64String
+                - 'iex '
+                - iex(
+                - Invoke-Expression
+                - Invoke-WebRequest
+                - localgroup administrators
+                - net group
+                - net user
+                - o365accountconfiguration
+                - query session
+                - samaccountname=
+                - set-MpPreference
+                - svhost.exe
+                - System.IO.Compression
+                - System.IO.MemoryStream
+                - usoprivate
+                - usoshared
+                - whoami
+        -   CommandLine|re: "[-/\u2013][Ee^]{1,2}[ncodema^]*\\s[A-Za-z0-9+/=]{15,}"
+    selection_special_child_lsass_1:
+        CommandLine|contains: lsass
+    selection_special_child_lsass_2:
+        CommandLine|contains:
+            - procdump
+            - tasklist
+            - findstr
+    selection_child_wget:
+        Image|endswith: \wget.exe
+        CommandLine|contains: http
+    selection_child_curl:
+        Image|endswith: \curl.exe
+        CommandLine|contains: http
+    selection_child_script:
+        CommandLine|contains:
+            - E:jscript
+            - e:vbscript
+    selection_child_localgroup:
+        CommandLine|contains|all:
+            - localgroup Administrators
+            - /add
+    selection_child_net:
+        CommandLine|contains: net
+        CommandLine|contains|all:
+            - user
+            - /add
+    selection_child_reg:
+        -   CommandLine|contains|all:
+                - reg add
+                - DisableAntiSpyware
+                - \Microsoft\Windows Defender
+        -   CommandLine|contains|all:
+                - reg add
+                - DisableRestrictedAdmin
+                - CurrentControlSet\Control\Lsa
+    selection_child_wmic_1:
+        CommandLine|contains|all:
+            - wmic
+            - process call create
+    selection_child_wmic_2:
+        CommandLine|contains|all:
+            - wmic
+            - delete
+            - shadowcopy
+    selection_child_vssadmin:
+        CommandLine|contains|all:
+            - vssadmin
+            - delete
+            - shadows
+    selection_child_wbadmin:
+        CommandLine|contains|all:
+            - wbadmin
+            - delete
+            - catalog
+    condition: process_creation and (selection_parent and (all of selection_special_child_powershell_*
+        or all of selection_special_child_lsass_* or 1 of selection_child_*))
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

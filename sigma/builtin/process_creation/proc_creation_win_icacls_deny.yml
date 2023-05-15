@@ -1,37 +1,32 @@
 title: Use Icacls to Hide File to Everyone
-ruletype: Sigma
-author: frack113
-date: 2022/07/18
+id: 4ae81040-fc1c-4249-bfa3-938d260214d9
+status: experimental
 description: Detect use of icacls to deny access for everyone in Users folder sometimes
     used to hide malicious files
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        OriginalFileName: iCACLS.EXE
-    SELECTION_4:
-        NewProcessName: '*\icacls.exe'
-    SELECTION_5:
-        CommandLine: '*C:\Users\\*'
-    SELECTION_6:
-        CommandLine: '*/deny*'
-    SELECTION_7:
-        CommandLine: '*S-1-1-0:*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
-falsepositives:
-- Legitimate use
-id: 4ae81040-fc1c-4249-bfa3-938d260214d9
-level: medium
+references:
+    - https://app.any.run/tasks/1df999e6-1cb8-45e3-8b61-499d1b7d5a9b/
+author: frack113
+date: 2022/07/18
+tags:
+    - attack.defense_evasion
+    - attack.t1564.001
 logsource:
     category: process_creation
     product: windows
-references:
-- https://app.any.run/tasks/1df999e6-1cb8-45e3-8b61-499d1b7d5a9b/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1564.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_icacls:
+        -   OriginalFileName: iCACLS.EXE
+        -   NewProcessName|endswith: \icacls.exe
+    selection_cmd:
+        CommandLine|contains|all:
+            - C:\Users\
+            - /deny
+            - '*S-1-1-0:'
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Legitimate use
+level: medium
+ruletype: Sigma

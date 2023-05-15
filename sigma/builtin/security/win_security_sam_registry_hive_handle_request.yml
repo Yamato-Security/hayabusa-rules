@@ -1,38 +1,35 @@
 title: SAM Registry Hive Handle Request
-ruletype: Sigma
+id: f8748f2c-89dc-4d95-afb0-5a2dfdbad332
+status: test
+description: Detects handles requested to SAM registry hive
+references:
+    - https://threathunterplaybook.com/hunts/windows/190725-SAMRegistryHiveHandleRequest/notebook.html
 author: Roberto Rodriguez @Cyb3rWard0g
 date: 2019/08/12
-description: Detects handles requested to SAM registry hive
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4656
-    SELECTION_3:
-        ObjectType: Key
-    SELECTION_4:
-        ObjectName: '*\SAM'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-fields:
-- ComputerName
-- SubjectDomainName
-- SubjectUserName
-- ProcessName
-- ObjectName
-id: f8748f2c-89dc-4d95-afb0-5a2dfdbad332
-level: high
+modified: 2021/11/27
+tags:
+    - attack.discovery
+    - attack.t1012
+    - attack.credential_access
+    - attack.t1552.002
 logsource:
     product: windows
     service: security
-modified: 2021/11/27
-references:
-- https://threathunterplaybook.com/hunts/windows/190725-SAMRegistryHiveHandleRequest/notebook.html
-status: test
-tags:
-- attack.discovery
-- attack.t1012
-- attack.credential_access
-- attack.t1552.002
-
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 4656
+        ObjectType: Key
+        ObjectName|endswith: \SAM
+    condition: security and selection
+fields:
+    - ComputerName
+    - SubjectDomainName
+    - SubjectUserName
+    - ProcessName
+    - ObjectName
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

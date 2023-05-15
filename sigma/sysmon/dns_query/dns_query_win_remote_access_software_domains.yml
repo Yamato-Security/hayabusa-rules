@@ -1,7 +1,13 @@
 title: DNS Query To Remote Access Software Domain
-ruletype: Sigma
-author: frack113, Connor Martin
-date: 2022/07/11
+id: 4d07b1f4-cb00-4470-b9f8-b0191d48ff52
+related:
+    -   id: 71ba22cb-8a01-42e2-a6dd-5bf9b547498f
+        type: obsoletes
+    -   id: 7c4cf8e0-1362-48b2-a512-b606d2065d7d
+        type: obsoletes
+    -   id: ed785237-70fa-46f3-83b6-d264d1dc6eb4
+        type: obsoletes
+status: experimental
 description: 'An adversary may use legitimate desktop support and remote access software,
     such as Team Viewer, Go2Assist, LogMein, AmmyyAdmin, etc, to establish an interactive
     command and control channel to target systems within networks.
@@ -14,124 +20,110 @@ description: 'An adversary may use legitimate desktop support and remote access 
     Living off the Land)
 
     '
-detection:
-    SELECTION_1:
-        EventID: 22
-    SELECTION_10:
-        Image: '*\WindowsApps\MicrosoftEdge.exe'
-    SELECTION_11:
-        Image:
-        - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
-        - C:\Program Files\Microsoft\Edge\Application\msedge.exe
-    SELECTION_12:
-        Image:
-        - C:\Program Files (x86)\Microsoft\EdgeCore\\*
-        - C:\Program Files\Microsoft\EdgeCore\\*
-    SELECTION_13:
-        Image:
-        - '*\msedge.exe'
-        - '*\msedgewebview2.exe'
-    SELECTION_14:
-        Image: '*\opera.exe'
-    SELECTION_15:
-        Image: '*\safari.exe'
-    SELECTION_16:
-        Image: '*\seamonkey.exe'
-    SELECTION_17:
-        Image: '*\vivaldi.exe'
-    SELECTION_18:
-        Image: '*\whale.exe'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        QueryName:
-        - '*.getgo.com'
-        - '*.logmein.com'
-        - '*.ammyy.com'
-        - '*.netsupportsoftware.com'
-        - '*remoteutilities.com'
-        - '*.net.anydesk.com'
-        - '*api.playanext.com'
-        - '*.relay.splashtop.com'
-        - '*.api.splashtop.com'
-        - '*app.atera.com'
-        - '*.agentreporting.atera.com'
-        - '*.pubsub.atera.com'
-        - '*logmeincdn.http.internapcdn.net'
-        - '*logmein-gateway.com'
-        - '*client.teamviewer.com'
-        - '*integratedchat.teamviewer.com'
-        - '*static.remotepc.com'
-        - '*.n-able.com'
-        - '*comserver.corporate.beanywhere.com'
-        - '*.swi-rc.com'
-        - '*.swi-tc.com'
-        - '*telemetry.servers.qetqo.com'
-        - '*relay.screenconnect.com'
-        - '*control.connectwise.com'
-        - '*express.gotoassist.com'
-        - '*authentication.logmeininc.com'
-        - '*.services.vnc.com'
-        - '*.tmate.io'
-        - '*api.parsec.app'
-        - '*parsecusercontent.com'
-        - '*remotedesktop-pa.googleapis.com'
-        - '*.logmein-gateway.com'
-        - '*secure.logmeinrescue.com'
-        - '*join.zoho.com'
-        - '*assist.zoho.com'
-        - '*.zohoassist.com'
-        - '*downloads.zohocdn.com'
-        - '*agent.jumpcloud.com'
-        - '*kickstart.jumpcloud.com'
-        - '*cdn.kaseya.net'
-        - '*relay.kaseya.net'
-        - '*license.bomgar.com'
-        - '*.beyondtrustcloud.com'
-    SELECTION_4:
-        Image: '*\brave.exe'
-    SELECTION_5:
-        Image:
-        - C:\Program Files\Google\Chrome\Application\chrome.exe
-        - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
-    SELECTION_6:
-        Image:
-        - C:\Program Files\Mozilla Firefox\firefox.exe
-        - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
-    SELECTION_7:
-        Image:
-        - C:\Program Files (x86)\Internet Explorer\iexplore.exe
-        - C:\Program Files\Internet Explorer\iexplore.exe
-    SELECTION_8:
-        Image: '*\maxthon.exe'
-    SELECTION_9:
-        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4)
-        or (SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9
-        or SELECTION_10 or SELECTION_11) or (SELECTION_12 and SELECTION_13) or (SELECTION_14)
-        or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18)))
-falsepositives:
-- Likely with other browser software
-id: 4d07b1f4-cb00-4470-b9f8-b0191d48ff52
-level: medium
-logsource:
-    category: dns_query
-    product: windows
-modified: 2023/04/18
 references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-4---gotoassist-files-detected-test-on-windows
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-3---logmein-files-detected-test-on-windows
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-6---ammyy-admin-software-execution
-- https://redcanary.com/blog/misbehaving-rats/
-related:
--   id: 71ba22cb-8a01-42e2-a6dd-5bf9b547498f
-    type: obsoletes
--   id: 7c4cf8e0-1362-48b2-a512-b606d2065d7d
-    type: obsoletes
--   id: ed785237-70fa-46f3-83b6-d264d1dc6eb4
-    type: obsoletes
-status: experimental
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-4---gotoassist-files-detected-test-on-windows
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-3---logmein-files-detected-test-on-windows
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1219/T1219.md#atomic-test-6---ammyy-admin-software-execution
+    - https://redcanary.com/blog/misbehaving-rats/
+author: frack113, Connor Martin
+date: 2022/07/11
+modified: 2023/04/18
 tags:
-- attack.command_and_control
-- attack.t1219
-
+    - attack.command_and_control
+    - attack.t1219
+logsource:
+    product: windows
+    category: dns_query
+detection:
+    dns_query:
+        EventID: 22
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        QueryName|endswith:
+            - .getgo.com
+            - .logmein.com
+            - .ammyy.com
+            - .netsupportsoftware.com
+            - remoteutilities.com
+            - .net.anydesk.com
+            - api.playanext.com
+            - .relay.splashtop.com
+            - .api.splashtop.com
+            - app.atera.com
+            - .agentreporting.atera.com
+            - .pubsub.atera.com
+            - logmeincdn.http.internapcdn.net
+            - logmein-gateway.com
+            - client.teamviewer.com
+            - integratedchat.teamviewer.com
+            - static.remotepc.com
+            - .n-able.com
+            - comserver.corporate.beanywhere.com
+            - .swi-rc.com
+            - .swi-tc.com
+            - telemetry.servers.qetqo.com
+            - relay.screenconnect.com
+            - control.connectwise.com
+            - express.gotoassist.com
+            - authentication.logmeininc.com
+            - .services.vnc.com
+            - .tmate.io
+            - api.parsec.app
+            - parsecusercontent.com
+            - remotedesktop-pa.googleapis.com
+            - .logmein-gateway.com
+            - secure.logmeinrescue.com
+            - join.zoho.com
+            - assist.zoho.com
+            - .zohoassist.com
+            - downloads.zohocdn.com
+            - agent.jumpcloud.com
+            - kickstart.jumpcloud.com
+            - cdn.kaseya.net
+            - relay.kaseya.net
+            - license.bomgar.com
+            - .beyondtrustcloud.com
+    filter_optional_brave:
+        Image|endswith: \brave.exe
+    filter_optional_chrome:
+        Image:
+            - C:\Program Files\Google\Chrome\Application\chrome.exe
+            - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+    filter_optional_firefox:
+        Image:
+            - C:\Program Files\Mozilla Firefox\firefox.exe
+            - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+    filter_optional_ie:
+        Image:
+            - C:\Program Files (x86)\Internet Explorer\iexplore.exe
+            - C:\Program Files\Internet Explorer\iexplore.exe
+    filter_optional_maxthon:
+        Image|endswith: \maxthon.exe
+    filter_optional_edge_1:
+        -   Image|startswith: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\
+        -   Image|endswith: \WindowsApps\MicrosoftEdge.exe
+        -   Image:
+                - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+                - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+    filter_optional_edge_2:
+        Image|startswith:
+            - C:\Program Files (x86)\Microsoft\EdgeCore\
+            - C:\Program Files\Microsoft\EdgeCore\
+        Image|endswith:
+            - \msedge.exe
+            - \msedgewebview2.exe
+    filter_optional_opera:
+        Image|endswith: \opera.exe
+    filter_optional_safari:
+        Image|endswith: \safari.exe
+    filter_optional_seamonkey:
+        Image|endswith: \seamonkey.exe
+    filter_optional_vivaldi:
+        Image|endswith: \vivaldi.exe
+    filter_optional_whale:
+        Image|endswith: \whale.exe
+    condition: dns_query and (selection and not 1 of filter_optional_*)
+falsepositives:
+    - Likely with other browser software
+level: medium
+ruletype: Sigma

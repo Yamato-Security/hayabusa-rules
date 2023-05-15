@@ -1,39 +1,35 @@
 title: Winrar Execution in Non-Standard Folder
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Tigzy
-date: 2021/11/17
+id: 4ede543c-e098-43d9-a28f-dd784a13132f
+status: test
 description: Detects a suspicious winrar execution in a folder which is not the default
     installation folder
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\rar.exe'
-        - '*\winrar.exe'
-    SELECTION_4:
-        Description: Command line RAR
-    SELECTION_5:
-        Image:
-        - '*\WinRAR*'
-        - '*C:\Windows\Temp*'
-        - '*\UnRAR.exe*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Legitimate use of WinRAR in a folder of a software that bundles WinRAR
-id: 4ede543c-e098-43d9-a28f-dd784a13132f
-level: high
+references:
+    - https://twitter.com/cyb3rops/status/1460978167628406785
+author: Florian Roth (Nextron Systems), Tigzy
+date: 2021/11/17
+modified: 2022/12/25
+tags:
+    - attack.collection
+    - attack.t1560.001
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/25
-references:
-- https://twitter.com/cyb3rops/status/1460978167628406785
-status: test
-tags:
-- attack.collection
-- attack.t1560.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|endswith:
+                - \rar.exe
+                - \winrar.exe
+        -   Description: Command line RAR
+    filter:
+        Image|contains:
+            - \WinRAR
+            - C:\Windows\Temp
+            - \UnRAR.exe
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Legitimate use of WinRAR in a folder of a software that bundles WinRAR
+level: high
+ruletype: Sigma

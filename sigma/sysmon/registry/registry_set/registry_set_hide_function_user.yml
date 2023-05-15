@@ -1,47 +1,40 @@
 title: Registry Hide Function from User
-ruletype: Sigma
-author: frack113
-date: 2022/03/18
+id: 5a93eb65-dffa-4543-b761-94aa60098fb6
+status: test
 description: Detects registry modifications that hide internal tools or functions
     from the user (malware like Agent Tesla, Hermetic Wiper uses this technique)
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject:
-        - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideClock'
-        - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAHealth'
-        - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCANetwork'
-        - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAPower'
-        - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAVolume'
-    SELECTION_5:
-        Details: DWORD (0x00000001)
-    SELECTION_6:
-        EventType: SetValue
-    SELECTION_7:
-        TargetObject:
-        - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ShowInfoTip'
-        - '*SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ShowCompColor'
-    SELECTION_8:
-        Details: DWORD (0x00000000)
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Legitimate admin script
-id: 5a93eb65-dffa-4543-b761-94aa60098fb6
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.001/T1564.001.md
+author: frack113
+date: 2022/03/18
+modified: 2022/03/26
+tags:
+    - attack.defense_evasion
+    - attack.t1112
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.001/T1564.001.md
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1112
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_set_1:
+        EventType: SetValue
+        TargetObject|endswith:
+            - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideClock
+            - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAHealth
+            - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCANetwork
+            - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAPower
+            - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAVolume
+        Details: DWORD (0x00000001)
+    selection_set_0:
+        EventType: SetValue
+        TargetObject|endswith:
+            - SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ShowInfoTip
+            - SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ShowCompColor
+        Details: DWORD (0x00000000)
+    condition: registry_set and (1 of selection_set_*)
+falsepositives:
+    - Legitimate admin script
+level: medium
+ruletype: Sigma

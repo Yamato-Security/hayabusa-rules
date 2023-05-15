@@ -1,39 +1,34 @@
 title: Invoke-Obfuscation VAR+ Launcher
-ruletype: Sigma
+id: 27aec9c9-dbb0-4939-8422-1742242471d0
+status: test
+description: Detects Obfuscated use of Environment Variables to execute PowerShell
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Jonathan Cheong, oscd.community
 date: 2020/10/15
-description: Detects Obfuscated use of Environment Variables to execute PowerShell
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*cmd*'
-    SELECTION_4:
-        CommandLine: '*"set*'
-    SELECTION_5:
-        CommandLine: '*-f*'
-    SELECTION_6:
-        CommandLine:
-        - '*/c*'
-        - '*/r*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: 27aec9c9-dbb0-4939-8422-1742242471d0
-level: high
+modified: 2022/11/17
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/17
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - cmd
+            - '"set'
+            - -f
+        CommandLine|contains:
+            - /c
+            - /r
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

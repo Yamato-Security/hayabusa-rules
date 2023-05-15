@@ -1,35 +1,33 @@
 title: Suspicious TeamViewer Domain Access
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/01/30
+id: 778ba9a8-45e4-4b80-8e3e-34a419f0b85e
+status: test
 description: Detects DNS queries to a TeamViewer domain only resolved by a TeamViewer
     client by an image that isn't named TeamViewer (sometimes used by threat actors
     for obfuscation)
-detection:
-    SELECTION_1:
-        EventID: 22
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        QueryName:
-        - taf.teamviewer.com
-        - udp.ping.teamviewer.com
-    SELECTION_4:
-        Image: '*TeamViewer*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown binary names of TeamViewer
-- Other programs that also lookup the observed domain
-id: 778ba9a8-45e4-4b80-8e3e-34a419f0b85e
-level: medium
-logsource:
-    category: dns_query
-    product: windows
-modified: 2022/02/08
 references:
-- https://www.teamviewer.com/en-us/
-status: test
+    - https://www.teamviewer.com/en-us/
+author: Florian Roth (Nextron Systems)
+date: 2022/01/30
+modified: 2022/02/08
 tags:
-- attack.command_and_control
-- attack.t1219
-
+    - attack.command_and_control
+    - attack.t1219
+logsource:
+    product: windows
+    category: dns_query
+detection:
+    dns_query:
+        EventID: 22
+        Channel: Microsoft-Windows-Sysmon/Operational
+    dns_request:
+        QueryName:
+            - taf.teamviewer.com
+            - udp.ping.teamviewer.com
+    filter:
+        Image|contains: TeamViewer
+    condition: dns_query and (dns_request and not filter)
+falsepositives:
+    - Unknown binary names of TeamViewer
+    - Other programs that also lookup the observed domain
+level: medium
+ruletype: Sigma

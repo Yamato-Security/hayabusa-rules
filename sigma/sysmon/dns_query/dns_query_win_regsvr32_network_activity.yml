@@ -1,40 +1,38 @@
 title: Regsvr32 Network Activity - DNS
-ruletype: Sigma
+id: 36e037c4-c228-4866-b6a3-48eb292b9955
+related:
+    -   id: c7e91a02-d771-4a6d-a700-42587e0b1095
+        type: derived
+status: test
+description: Detects network connections and DNS queries initiated by Regsvr32.exe
+references:
+    - https://pentestlab.blog/2017/05/11/applocker-bypass-regsvr32/
+    - https://oddvar.moe/2017/12/13/applocker-case-study-how-insecure-is-it-really-part-1/
 author: Dmitriy Lifanov, oscd.community
 date: 2019/10/25
-description: Detects network connections and DNS queries initiated by Regsvr32.exe
-detection:
-    SELECTION_1:
-        EventID: 22
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\regsvr32.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-fields:
-- ComputerName
-- User
-- Image
-- DestinationIp
-- DestinationPort
-id: 36e037c4-c228-4866-b6a3-48eb292b9955
-level: high
+modified: 2022/11/28
+tags:
+    - attack.execution
+    - attack.t1559.001
+    - attack.defense_evasion
+    - attack.t1218.010
 logsource:
     category: dns_query
     product: windows
-modified: 2022/11/28
-references:
-- https://pentestlab.blog/2017/05/11/applocker-bypass-regsvr32/
-- https://oddvar.moe/2017/12/13/applocker-case-study-how-insecure-is-it-really-part-1/
-related:
--   id: c7e91a02-d771-4a6d-a700-42587e0b1095
-    type: derived
-status: test
-tags:
-- attack.execution
-- attack.t1559.001
-- attack.defense_evasion
-- attack.t1218.010
-
+detection:
+    dns_query:
+        EventID: 22
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \regsvr32.exe
+    condition: dns_query and selection
+fields:
+    - ComputerName
+    - User
+    - Image
+    - DestinationIp
+    - DestinationPort
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

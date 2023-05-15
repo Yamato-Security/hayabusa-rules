@@ -1,7 +1,6 @@
 title: Suspicious Where Execution
-ruletype: Sigma
-author: frack113, Nasreddine Bencherchali
-date: 2021/12/13
+id: 725a9768-0f5e-4cb3-aec2-bc5719c6831a
+status: experimental
 description: 'Adversaries may enumerate browser bookmarks to learn more about compromised
     hosts.
 
@@ -12,42 +11,39 @@ description: 'Adversaries may enumerate browser bookmarks to learn more about co
     infrastructure.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\where.exe'
-    SELECTION_4:
-        OriginalFileName: where.exe
-    SELECTION_5:
-        CommandLine:
-        - '*places.sqlite*'
-        - '*cookies.sqlite*'
-        - '*formhistory.sqlite*'
-        - '*logins.json*'
-        - '*key4.db*'
-        - '*key3.db*'
-        - '*sessionstore.jsonlz4*'
-        - '*History*'
-        - '*Bookmarks*'
-        - '*Cookies*'
-        - '*Login Data*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- Unknown
-id: 725a9768-0f5e-4cb3-aec2-bc5719c6831a
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1217/T1217.md
+author: frack113, Nasreddine Bencherchali
+date: 2021/12/13
+modified: 2022/06/29
+tags:
+    - attack.discovery
+    - attack.t1217
 logsource:
     category: process_creation
     product: windows
-modified: 2022/06/29
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1217/T1217.md
-status: experimental
-tags:
-- attack.discovery
-- attack.t1217
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    where_exe:
+        -   Image|endswith: \where.exe
+        -   OriginalFileName: where.exe
+    where_opt:
+        CommandLine|contains:
+            - places.sqlite
+            - cookies.sqlite
+            - formhistory.sqlite
+            - logins.json
+            - key4.db
+            - key3.db
+            - sessionstore.jsonlz4
+            - History
+            - Bookmarks
+            - Cookies
+            - Login Data
+    condition: process_creation and (all of where_*)
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

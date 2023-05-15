@@ -1,7 +1,6 @@
 title: NET NGenAssemblyUsageLog Registry Key Tamper
-ruletype: Sigma
-author: frack113
-date: 2022/11/18
+id: 28036918-04d3-423d-91c0-55ecf99fb892
+status: experimental
 description: 'Detects changes to the NGenAssemblyUsageLog registry key.
 
     .NET Usage Log output location can be controlled by setting the NGenAssemblyUsageLog
@@ -13,30 +12,25 @@ description: 'Detects changes to the NGenAssemblyUsageLog registry key.
     be created.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*SOFTWARE\Microsoft\.NETFramework\NGenAssemblyUsageLog'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: 28036918-04d3-423d-91c0-55ecf99fb892
-level: high
-logsource:
-    category: registry_set
-    product: windows
 references:
-- https://bohops.com/2021/03/16/investigating-net-clr-usage-log-tampering-techniques-for-edr-evasion/
-status: experimental
+    - https://bohops.com/2021/03/16/investigating-net-clr-usage-log-tampering-techniques-for-edr-evasion/
+author: frack113
+date: 2022/11/18
 tags:
-- attack.defense_evasion
-- attack.t1112
-
+    - attack.defense_evasion
+    - attack.t1112
+logsource:
+    product: windows
+    category: registry_set
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|endswith: SOFTWARE\Microsoft\.NETFramework\NGenAssemblyUsageLog
+    condition: registry_set and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

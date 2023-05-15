@@ -1,33 +1,31 @@
 title: Renamed Whoami Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/08/12
+id: f1086bf7-a0c4-4a37-9102-01e573caf4a0
+status: test
 description: Detects the execution of whoami that has been renamed to a different
     name to avoid detection
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        OriginalFileName: whoami.exe
-    SELECTION_4:
-        NewProcessName: '*\whoami.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: f1086bf7-a0c4-4a37-9102-01e573caf4a0
-level: critical
+references:
+    - https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/
+    - https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/
+author: Florian Roth (Nextron Systems)
+date: 2021/08/12
+modified: 2022/10/09
+tags:
+    - attack.discovery
+    - attack.t1033
+    - car.2016-03-001
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
-references:
-- https://brica.de/alerts/alert/public/1247926/agent-tesla-keylogger-delivered-inside-a-power-iso-daa-archive/
-- https://app.any.run/tasks/7eaba74e-c1ea-400f-9c17-5e30eee89906/
-status: test
-tags:
-- attack.discovery
-- attack.t1033
-- car.2016-03-001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        OriginalFileName: whoami.exe
+    filter:
+        NewProcessName|endswith: \whoami.exe
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Unknown
+level: critical
+ruletype: Sigma

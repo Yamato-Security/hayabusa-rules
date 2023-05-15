@@ -1,7 +1,6 @@
 title: Excel Proxy Executing Regsvr32 With Payload Alternate
-ruletype: Sigma
-author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule)
-date: 2021/08/23
+id: c0e1c3d5-4381-4f18-8145-2583f06a1fe5
+status: deprecated
 description: 'Excel called wmic to finally proxy execute regsvr32 with the payload.
 
     An attacker wanted to break suspicious parent-child chain (Office app spawns LOLBin).
@@ -13,51 +12,47 @@ description: 'Excel called wmic to finally proxy execute regsvr32 with the paylo
     with parent Office application processes.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine:
-        - '*regsvr32*'
-        - '*rundll32*'
-        - '*msiexec*'
-        - '*mshta*'
-        - '*verclsid*'
-    SELECTION_4:
-        Image: '*\wbem\WMIC.exe'
-    SELECTION_5:
-        CommandLine: '*wmic *'
-    SELECTION_6:
-        ParentImage:
-        - '*\winword.exe'
-        - '*\excel.exe'
-        - '*\powerpnt.exe'
-    SELECTION_7:
-        CommandLine: '*process*'
-    SELECTION_8:
-        CommandLine: '*create*'
-    SELECTION_9:
-        CommandLine: '*call*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and (SELECTION_4 or
-        SELECTION_5) and SELECTION_6 and (SELECTION_7 and SELECTION_8 and SELECTION_9))
-falsepositives:
-- Unknown
-id: c0e1c3d5-4381-4f18-8145-2583f06a1fe5
-level: high
-logsource:
-    category: process_creation
-    product: windows
-modified: 2022/12/02
 references:
-- https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
-- https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/02bcbfc2bfb8b4da601bb30de0344ae453aa1afe/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml
-status: deprecated
+    - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
+    - https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/02bcbfc2bfb8b4da601bb30de0344ae453aa1afe/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml
+author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule)
+date: 2021/08/23
+modified: 2022/12/02
 tags:
-- attack.t1204.002
-- attack.t1047
-- attack.t1218.010
-- attack.execution
-- attack.defense_evasion
-
+    - attack.t1204.002
+    - attack.t1047
+    - attack.t1218.010
+    - attack.execution
+    - attack.defense_evasion
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection1:
+        CommandLine|contains:
+            - regsvr32
+            - rundll32
+            - msiexec
+            - mshta
+            - verclsid
+    selection2:
+        -   Image|endswith: \wbem\WMIC.exe
+        -   CommandLine|contains: 'wmic '
+    selection3:
+        ParentImage|endswith:
+            - \winword.exe
+            - \excel.exe
+            - \powerpnt.exe
+    selection4:
+        CommandLine|contains|all:
+            - process
+            - create
+            - call
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

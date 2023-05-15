@@ -1,116 +1,90 @@
 title: Suspicious Elevated System Shell
-ruletype: Sigma
-author: frack113, Tim Shelton (update fp)
-date: 2022/12/05
+id: 178e615d-e666-498b-9630-9ed363038101
+status: experimental
 description: Detects when a shell program such as the windows Command Prompt or PowerShell
     is launched with system privileges.
+references:
+    - https://github.com/Wh04m1001/SysmonEoP
+author: frack113, Tim Shelton (update fp)
+date: 2022/12/05
+modified: 2023/03/20
+tags:
+    - attack.privilege_escalation
+    - attack.defense_evasion
+    - attack.execution
+    - attack.t1059
+logsource:
+    product: windows
+    category: process_creation
 detection:
-    SELECTION_1:
+    process_creation:
         EventID: 1
-    SELECTION_10:
-        Image: '*\cmd.exe'
-    SELECTION_11:
-        ParentImage: C:\Windows\SysWOW64\config\systemprofile\Citrix\UpdaterBinaries\\*
-    SELECTION_12:
-        ParentImage: '*\CitrixReceiverUpdater.exe'
-    SELECTION_13:
-        Image: '*\cmd.exe'
-    SELECTION_14:
-        CommandLine: C:\WINDOWS\system32\cmd.exe /c "*
-    SELECTION_15:
-        CurrentDirectory: '*C:\WINDOWS\Temp\asgard2-agent\\*'
-    SELECTION_16:
-        ParentImage: C:\Windows\Temp*
-    SELECTION_17:
-        ParentImage: '*\invcol.exe'
-    SELECTION_18:
-        ParentCommandLine: '*C:\ProgramData\Dell\UpdateService\\*'
-    SELECTION_19:
-        Image: '*\cmd.exe'
-    SELECTION_2:
         Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        ParentImage: C:\Windows\WinSxS\\*
-    SELECTION_21:
-        ParentImage: '*\CompatTelRunner.exe'
-    SELECTION_22:
-        ParentCommandLine: C:\Windows\system32\CompatTelRunner.exe -m:appraiser.dll
-            -f:DoScheduledTelemetryRun*
-    SELECTION_23:
-        ParentImage: C:\IBM\SpectrumProtect\webserver\scripts\\*
-    SELECTION_24:
-        CommandLine: '*C:\IBM\SpectrumProtect\webserver\scripts\\*'
-    SELECTION_25:
+    selection_shell:
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+                - \cmd.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+                - Cmd.Exe
+    selection_user:
+        User|contains:
+            - AUTHORI
+            - AUTORI
+        LogonId: '0x3e7'
+    filter_generic:
+        ParentImage|startswith:
+            - C:\Windows\System32\
+            - C:\Program Files (x86)\
+            - C:\Program Files\
+        Image|endswith:
+            - \cmd.exe
+            - \powershell.exe
+    filter_manageengine:
+        ParentImage: C:\ManageEngine\ADManager Plus\pgsql\bin\postgres.exe
+        Image|endswith: \cmd.exe
+    filter_citrix:
+        ParentImage|startswith: C:\Windows\SysWOW64\config\systemprofile\Citrix\UpdaterBinaries\
+        ParentImage|endswith: \CitrixReceiverUpdater.exe
+        Image|endswith: \cmd.exe
+    filter_asgard:
+        CommandLine|startswith: C:\WINDOWS\system32\cmd.exe /c "
+        CurrentDirectory|contains: C:\WINDOWS\Temp\asgard2-agent\
+    filter_dell_update:
+        ParentImage|startswith: C:\Windows\Temp
+        ParentImage|endswith: \invcol.exe
+        ParentCommandLine|contains: C:\ProgramData\Dell\UpdateService\
+        Image|endswith: \cmd.exe
+    filter_compattelrunner:
+        ParentImage|startswith: C:\Windows\WinSxS\
+        ParentImage|endswith: \CompatTelRunner.exe
+        ParentCommandLine|startswith: C:\Windows\system32\CompatTelRunner.exe -m:appraiser.dll
+            -f:DoScheduledTelemetryRun
+    filter_ibm_spectrumprotect:
+        ParentImage|startswith: C:\IBM\SpectrumProtect\webserver\scripts\
+        CommandLine|contains: C:\IBM\SpectrumProtect\webserver\scripts\
+    filter_empty_parent_1:
         CommandLine: 'powershell.exe -ExecutionPolicy Restricted -Command Write-Host
             ''Final result: 1'';'
-    SELECTION_26:
-        Image: '*\cmd.exe'
-    SELECTION_27:
-        CommandLine: '*/d /c C:\Windows\system32\silcollector.cmd*'
-    SELECTION_28:
-        Image: '*\cmd.exe'
-    SELECTION_29:
-        CommandLine:
-        - '*cmd.exe /c btool server list replication_port --no-log'
-        - '*cmd.exe /c btool server list general --no-log'
-    SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-        - '*\cmd.exe'
-    SELECTION_30:
-        Image: '*\cmd.exe'
-    SELECTION_31:
-        CommandLine: '*C:\Windows\system32\reg.exe query hklm\software\microsoft\windows\softwareinventorylogging
-            /v collectionstate /reg:64*'
-    SELECTION_32:
+    filter_empty_parent_2:
+        Image|endswith: \cmd.exe
+        CommandLine|contains: /d /c C:\Windows\system32\silcollector.cmd
+    filter_empty_parent_3:
+        Image|endswith: \cmd.exe
+        CommandLine|endswith:
+            - cmd.exe /c btool server list replication_port --no-log
+            - cmd.exe /c btool server list general --no-log
+    filter_empty_parent_4:
+        Image|endswith: \cmd.exe
+        CommandLine|contains: C:\Windows\system32\reg.exe query hklm\software\microsoft\windows\softwareinventorylogging
+            /v collectionstate /reg:64
+    filter_empty_parent_5:
         Image: C:\Windows\System32\cmd.exe
-    SELECTION_33:
         CommandLine: C:\Windows\system32\cmd.exe /c PAUSE
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-        - Cmd.Exe
-    SELECTION_5:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    SELECTION_6:
-        LogonId: '0x3e7'
-    SELECTION_7:
-        ParentImage:
-        - C:\Windows\System32\\*
-        - C:\Program Files (x86)\\*
-        - C:\Program Files\\*
-    SELECTION_8:
-        Image:
-        - '*\cmd.exe'
-        - '*\powershell.exe'
-    SELECTION_9:
-        ParentImage: C:\ManageEngine\ADManager Plus\pgsql\bin\postgres.exe
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6)) and  not ((SELECTION_7 and SELECTION_8) or
-        (SELECTION_9 and SELECTION_10) or (SELECTION_11 and SELECTION_12 and SELECTION_13)
-        or (SELECTION_14 and SELECTION_15) or (SELECTION_16 and SELECTION_17 and SELECTION_18
-        and SELECTION_19) or (SELECTION_20 and SELECTION_21 and SELECTION_22) or (SELECTION_23
-        and SELECTION_24) or (SELECTION_25) or (SELECTION_26 and SELECTION_27) or
-        (SELECTION_28 and SELECTION_29) or (SELECTION_30 and SELECTION_31) or (SELECTION_32
-        and SELECTION_33)))
+    condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
-- Unknown
-id: 178e615d-e666-498b-9630-9ed363038101
+    - Unknown
 level: high
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/03/20
-references:
-- https://github.com/Wh04m1001/SysmonEoP
-status: experimental
-tags:
-- attack.privilege_escalation
-- attack.defense_evasion
-- attack.execution
-- attack.t1059
-
+ruletype: Sigma

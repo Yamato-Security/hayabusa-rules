@@ -1,7 +1,6 @@
 title: AD Groups Or Users Enumeration Using PowerShell - ScriptBlock
-ruletype: Sigma
-author: frack113
-date: 2021/12/15
+id: 88f0884b-331d-403d-a3a1-b668cf035603
+status: test
 description: 'Adversaries may attempt to find domain-level groups and permission settings.
 
     The knowledge of domain-level permission groups can help adversaries determine
@@ -11,38 +10,34 @@ description: 'Adversaries may attempt to find domain-level groups and permission
     such as domain administrators.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*get-ADPrincipalGroupMembership*'
-    SELECTION_4:
-        ScriptBlockText: '*get-aduser*'
-    SELECTION_5:
-        ScriptBlockText: '*-f *'
-    SELECTION_6:
-        ScriptBlockText: '*-pr *'
-    SELECTION_7:
-        ScriptBlockText: '*DoesNotRequirePreAuth*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5 and SELECTION_6 and SELECTION_7)))
-falsepositives:
-- Unknown
-id: 88f0884b-331d-403d-a3a1-b668cf035603
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.002/T1069.002.md
+author: frack113
+date: 2021/12/15
+modified: 2022/12/25
+tags:
+    - attack.discovery
+    - attack.t1069.001
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2022/12/25
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.002/T1069.002.md
-status: test
-tags:
-- attack.discovery
-- attack.t1069.001
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    test_2:
+        ScriptBlockText|contains: get-ADPrincipalGroupMembership
+    test_7:
+        ScriptBlockText|contains|all:
+            - get-aduser
+            - '-f '
+            - '-pr '
+            - DoesNotRequirePreAuth
+    condition: ps_script and (1 of test_*)
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

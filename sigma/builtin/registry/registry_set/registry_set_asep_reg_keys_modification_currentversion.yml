@@ -1,197 +1,158 @@
 title: CurrentVersion Autorun Keys Modification
-ruletype: Sigma
+id: 20f0ee37-5942-4e45-b7d5-c5b5db9df5cd
+related:
+    -   id: 17f878b8-9968-4578-b814-c4217fc5768c
+        type: obsoletes
+status: experimental
+description: Detects modification of autostart extensibility point (ASEP) in registry.
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
+    - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
+    - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
+    - https://oddvar.moe/2018/03/21/persistence-using-runonceex-hidden-from-autoruns-exe/
 author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
     oscd.community, Tim Shelton, frack113 (split)
 date: 2019/10/25
-description: Detects modification of autostart extensibility point (ASEP) in registry.
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_10:
-        NewProcessName:
-        - C:\WINDOWS\system32\devicecensus.exe
-        - C:\Windows\system32\winsat.exe
-        - C:\Program Files\Microsoft OneDrive\StandaloneUpdater\OneDriveSetup.exe
-        - C:\Program Files\Microsoft OneDrive\Update\OneDriveSetup.exe
-        - C:\Program Files (x86)\Microsoft OneDrive\Update\OneDriveSetup.exe
-        - C:\Program Files\KeePass Password Safe 2\ShInstUtil.exe
-        - C:\Program Files\Everything\Everything.exe
-        - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
-    SELECTION_11:
-        NewProcessName: C:\Windows\system32\LogonUI.exe
-    SELECTION_12:
-        TargetObject:
-        - '*\Authentication\Credential Providers\{D6886603-9D2F-4EB2-B667-1971041FA96B}\\*'
-        - '*\Authentication\Credential Providers\{BEC09223-B018-416D-A0AC-523971B639F5}\\*'
-        - '*\Authentication\Credential Providers\{8AF662BF-65A0-4D0A-A540-A338A999D36F}\\*'
-        - '*\Authentication\Credential Providers\{27FBDB57-B613-4AF2-9D7E-4FA7A66C21AD}\\*'
-    SELECTION_13:
-        NewProcessName:
-        - C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\\*
-        - C:\Program Files (x86)\Microsoft\EdgeWebView\\*
-        - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe*
-    SELECTION_14:
-        NewProcessName: C:\Windows\system32\regsvr32.exe
-    SELECTION_15:
-        TargetObject: '*DropboxExt*'
-    SELECTION_16:
-        NewValue: '*A251-47B7-93E1-CDD82E34AF8B}'
-    SELECTION_17:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Opera Browser
-            Assistant'
-    SELECTION_18:
-        NewValue: C:\Program Files\Opera\assistant\browser_assistant.exe
-    SELECTION_19:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\iTunesHelper'
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_20:
-        NewValue: '"C:\Program Files\iTunes\iTunesHelper.exe"'
-    SELECTION_21:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\zoommsirepair'
-    SELECTION_22:
-        NewValue: '"C:\Program Files\Zoom\bin\installer.exe" /repair'
-    SELECTION_23:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Greenshot'
-    SELECTION_24:
-        NewValue: C:\Program Files\Greenshot\Greenshot.exe
-    SELECTION_25:
-        TargetObject: '*\Software\Microsoft\Windows\CurrentVersion\Run\GoogleDriveFS'
-    SELECTION_26:
-        NewValue: C:\Program Files\Google\Drive File Stream\\*
-    SELECTION_27:
-        NewValue: '*\GoogleDriveFS.exe*'
-    SELECTION_28:
-        TargetObject: '*GoogleDrive*'
-    SELECTION_29:
-        NewValue:
-        - '{CFE8B367-77A7-41D7-9C90-75D16D7DC6B6}'
-        - '{A8E52322-8734-481D-A7E2-27B309EF8D56}'
-        - '{C973DA94-CBDF-4E77-81D1-E5B794FBD146}'
-        - '{51EF1569-67EE-4AD6-9646-E726C3FFC8A2}'
-    SELECTION_3:
-        Channel: Security
-    SELECTION_30:
-        NewValue:
-        - C:\Windows\system32\cmd.exe /q /c rmdir /s /q "C:\Users\\*
-        - C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\\*
-    SELECTION_31:
-        NewValue: '*\AppData\Local\Microsoft\OneDrive\\*'
-    SELECTION_32:
-        TargetObject: '*\Microsoft\Windows\CurrentVersion\RunOnce\{*'
-    SELECTION_33:
-        NewValue: '*\AppData\Local\Package Cache\{*'
-    SELECTION_34:
-        NewValue: '*}\python-*'
-    SELECTION_35:
-        NewValue: '*.exe" /burn.runonce'
-    SELECTION_36:
-        NewProcessName:
-        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\\*
-        - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\\*
-    SELECTION_37:
-        NewProcessName: '*\OfficeClickToRun.exe'
-    SELECTION_38:
-        NewProcessName: C:\Program Files\Windows Defender\MsMpEng.exe
-    SELECTION_39:
-        NewProcessName: '*\Microsoft\Teams\current\Teams.exe'
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_40:
-        NewValue: '*\Microsoft\Teams\Update.exe --processStart *'
-    SELECTION_41:
-        NewProcessName: C:\Windows\system32\userinit.exe
-    SELECTION_42:
-        NewValue: ctfmon.exe /n
-    SELECTION_43:
-        NewProcessName: C:\Program Files\AVG\Antivirus\Setup\\*
-    SELECTION_44:
-        NewValue:
-        - '"C:\Program Files\AVG\Antivirus\AvLaunch.exe" /gui'
-        - '"C:\Program Files (x86)\AVG\Antivirus\AvLaunch.exe" /gui'
-        - '{472083B0-C522-11CF-8763-00608CC02F24}'
-    SELECTION_45:
-        NewProcessName:
-        - '*\aurora-agent-64.exe'
-        - '*\aurora-agent.exe'
-    SELECTION_46:
-        TargetObject: '*\Microsoft\Windows\CurrentVersion\Run\aurora-dashboard'
-    SELECTION_47:
-        NewValue: C:\Program Files\Aurora-Agent\tools\aurora-dashboard.exe
-    SELECTION_48:
-        TargetObject: '*\Microsoft\Windows\CurrentVersion\Run\Everything'
-    SELECTION_49:
-        NewValue: '*\Everything\Everything.exe" -startup'
-    SELECTION_5:
-        TargetObject: '*\SOFTWARE\Microsoft\Windows\CurrentVersion*'
-    SELECTION_6:
-        TargetObject:
-        - '*\ShellServiceObjectDelayLoad*'
-        - '*\Run\\*'
-        - '*\RunOnce\\*'
-        - '*\RunOnceEx\\*'
-        - '*\RunServices\\*'
-        - '*\RunServicesOnce\\*'
-        - '*\Policies\System\Shell*'
-        - '*\Policies\Explorer\Run*'
-        - '*\Group Policy\Scripts\Startup*'
-        - '*\Group Policy\Scripts\Shutdown*'
-        - '*\Group Policy\Scripts\Logon*'
-        - '*\Group Policy\Scripts\Logoff*'
-        - '*\Explorer\ShellServiceObjects*'
-        - '*\Explorer\ShellIconOverlayIdentifiers*'
-        - '*\Explorer\ShellExecuteHooks*'
-        - '*\Explorer\SharedTaskScheduler*'
-        - '*\Explorer\Browser Helper Objects*'
-        - '*\Authentication\PLAP Providers*'
-        - '*\Authentication\Credential Providers*'
-        - '*\Authentication\Credential Provider Filters*'
-    SELECTION_7:
-        NewValue: (Empty)
-    SELECTION_8:
-        TargetObject: '*\NgcFirst\ConsecutiveSwitchCount'
-    SELECTION_9:
-        NewProcessName:
-        - '*\AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe'
-        - '*\AppData\Roaming\Spotify\Spotify.exe'
-        - '*\AppData\Local\WebEx\WebexHost.exe'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6) and  not ((SELECTION_7 or SELECTION_8 or SELECTION_9
-        or SELECTION_10) or (SELECTION_11 and SELECTION_12) or (SELECTION_13) or (SELECTION_14
-        and SELECTION_15 and SELECTION_16) or (SELECTION_17 and SELECTION_18) or (SELECTION_19
-        and SELECTION_20) or (SELECTION_21 and SELECTION_22) or (SELECTION_23 and
-        SELECTION_24) or (SELECTION_25 and SELECTION_26 and SELECTION_27) or (SELECTION_28
-        and SELECTION_29) or (SELECTION_30 and SELECTION_31) or (SELECTION_32 and
-        SELECTION_33 and SELECTION_34 and SELECTION_35) or (SELECTION_36 and SELECTION_37)
-        or (SELECTION_38) or (SELECTION_39 and SELECTION_40) or (SELECTION_41 and
-        SELECTION_42) or (SELECTION_43 and SELECTION_44) or (SELECTION_45 and SELECTION_46
-        and SELECTION_47) or (SELECTION_48 and SELECTION_49)))
-falsepositives:
-- Legitimate software automatically (mostly, during installation) sets up autorun
-    keys for legitimate reason
-- Legitimate administrator sets up autorun keys for legitimate reason
-fields:
-- SecurityID
-- ObjectName
-- OldValueType
-- NewValueType
-id: 20f0ee37-5942-4e45-b7d5-c5b5db9df5cd
-level: medium
+modified: 2022/10/20
+tags:
+    - attack.persistence
+    - attack.t1547.001
 logsource:
     category: registry_set
     product: windows
-modified: 2022/10/20
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
-- https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
-- https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
-- https://oddvar.moe/2018/03/21/persistence-using-runonceex-hidden-from-autoruns-exe/
-related:
--   id: 17f878b8-9968-4578-b814-c4217fc5768c
-    type: obsoletes
-status: experimental
-tags:
-- attack.persistence
-- attack.t1547.001
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    current_version_base:
+        EventType: SetValue
+        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion
+    current_version_keys:
+        TargetObject|contains:
+            - \ShellServiceObjectDelayLoad
+            - \Run\
+            - \RunOnce\
+            - \RunOnceEx\
+            - \RunServices\
+            - \RunServicesOnce\
+            - \Policies\System\Shell
+            - \Policies\Explorer\Run
+            - \Group Policy\Scripts\Startup
+            - \Group Policy\Scripts\Shutdown
+            - \Group Policy\Scripts\Logon
+            - \Group Policy\Scripts\Logoff
+            - \Explorer\ShellServiceObjects
+            - \Explorer\ShellIconOverlayIdentifiers
+            - \Explorer\ShellExecuteHooks
+            - \Explorer\SharedTaskScheduler
+            - \Explorer\Browser Helper Objects
+            - \Authentication\PLAP Providers
+            - \Authentication\Credential Providers
+            - \Authentication\Credential Provider Filters
+    filter_all:
+        -   Details: (Empty)
+        -   TargetObject|endswith: \NgcFirst\ConsecutiveSwitchCount
+        -   Image|endswith:
+                - \AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe
+                - \AppData\Roaming\Spotify\Spotify.exe
+                - \AppData\Local\WebEx\WebexHost.exe
+        -   Image:
+                - C:\WINDOWS\system32\devicecensus.exe
+                - C:\Windows\system32\winsat.exe
+                - C:\Program Files\Microsoft OneDrive\StandaloneUpdater\OneDriveSetup.exe
+                - C:\Program Files\Microsoft OneDrive\Update\OneDriveSetup.exe
+                - C:\Program Files (x86)\Microsoft OneDrive\Update\OneDriveSetup.exe
+                - C:\Program Files\KeePass Password Safe 2\ShInstUtil.exe
+                - C:\Program Files\Everything\Everything.exe
+                - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+    filter_logonui:
+        Image: C:\Windows\system32\LogonUI.exe
+        TargetObject|contains:
+            - \Authentication\Credential Providers\{D6886603-9D2F-4EB2-B667-1971041FA96B}\
+            - \Authentication\Credential Providers\{BEC09223-B018-416D-A0AC-523971B639F5}\
+            - \Authentication\Credential Providers\{8AF662BF-65A0-4D0A-A540-A338A999D36F}\
+            - \Authentication\Credential Providers\{27FBDB57-B613-4AF2-9D7E-4FA7A66C21AD}\
+    filter_edge:
+        Image|startswith:
+            - C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\
+            - C:\Program Files (x86)\Microsoft\EdgeWebView\
+            - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+    filter_dropbox:
+        Image: C:\Windows\system32\regsvr32.exe
+        TargetObject|contains: DropboxExt
+        Details|endswith: A251-47B7-93E1-CDD82E34AF8B}
+    filter_opera:
+        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Opera
+            Browser Assistant
+        Details: C:\Program Files\Opera\assistant\browser_assistant.exe
+    filter_itunes:
+        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\iTunesHelper
+        Details: '"C:\Program Files\iTunes\iTunesHelper.exe"'
+    filter_zoom:
+        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\zoommsirepair
+        Details: '"C:\Program Files\Zoom\bin\installer.exe" /repair'
+    filter_greenshot:
+        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Greenshot
+        Details: C:\Program Files\Greenshot\Greenshot.exe
+    filter_googledrive1:
+        TargetObject|endswith: \Software\Microsoft\Windows\CurrentVersion\Run\GoogleDriveFS
+        Details|startswith: C:\Program Files\Google\Drive File Stream\
+        Details|contains: \GoogleDriveFS.exe
+    filter_googledrive2:
+        TargetObject|contains: GoogleDrive
+        Details:
+            - '{CFE8B367-77A7-41D7-9C90-75D16D7DC6B6}'
+            - '{A8E52322-8734-481D-A7E2-27B309EF8D56}'
+            - '{C973DA94-CBDF-4E77-81D1-E5B794FBD146}'
+            - '{51EF1569-67EE-4AD6-9646-E726C3FFC8A2}'
+    filter_onedrive:
+        Details|startswith:
+            - C:\Windows\system32\cmd.exe /q /c rmdir /s /q "C:\Users\
+            - C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\
+        Details|contains: \AppData\Local\Microsoft\OneDrive\
+    filter_python:
+        TargetObject|contains: \Microsoft\Windows\CurrentVersion\RunOnce\{
+        Details|contains|all:
+            - \AppData\Local\Package Cache\{
+            - '}\python-'
+        Details|endswith: .exe" /burn.runonce
+    filter_officeclicktorun:
+        Image|startswith:
+            - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
+            - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
+        Image|endswith: \OfficeClickToRun.exe
+    filter_defender:
+        Image: C:\Program Files\Windows Defender\MsMpEng.exe
+    filter_teams:
+        Image|endswith: \Microsoft\Teams\current\Teams.exe
+        Details|contains: '\Microsoft\Teams\Update.exe --processStart '
+    filter_ctfmon:
+        Image: C:\Windows\system32\userinit.exe
+        Details: ctfmon.exe /n
+    filter_AVG:
+        Image|startswith: C:\Program Files\AVG\Antivirus\Setup\
+        Details:
+            - '"C:\Program Files\AVG\Antivirus\AvLaunch.exe" /gui'
+            - '"C:\Program Files (x86)\AVG\Antivirus\AvLaunch.exe" /gui'
+            - '{472083B0-C522-11CF-8763-00608CC02F24}'
+    filter_aurora_dashboard:
+        Image|endswith:
+            - \aurora-agent-64.exe
+            - \aurora-agent.exe
+        TargetObject|endswith: \Microsoft\Windows\CurrentVersion\Run\aurora-dashboard
+        Details: C:\Program Files\Aurora-Agent\tools\aurora-dashboard.exe
+    filter_everything:
+        TargetObject|endswith: \Microsoft\Windows\CurrentVersion\Run\Everything
+        Details|endswith: \Everything\Everything.exe" -startup
+    condition: registry_set and (all of current_version_* and not 1 of filter_*)
+fields:
+    - SecurityID
+    - ObjectName
+    - OldValueType
+    - NewValueType
+falsepositives:
+    - Legitimate software automatically (mostly, during installation) sets up autorun
+        keys for legitimate reason
+    - Legitimate administrator sets up autorun keys for legitimate reason
+level: medium
+ruletype: Sigma

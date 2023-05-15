@@ -1,36 +1,33 @@
 title: MSSQL Disable Audit Settings
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/13
+id: 350dfb37-3706-4cdc-9e2e-5e24bc3a46df
+status: experimental
 description: Detects when an attacker calls the "ALTER SERVER AUDIT" or "DROP SERVER
     AUDIT" transaction in order to delete or disable audit logs on the server
-detection:
-    SELECTION_1:
-        Channel: Application
-    SELECTION_2:
-        Provider_Name: MSSQLSERVER
-    SELECTION_3:
-        EventID: 33205
-    SELECTION_4:
-        Data:
-        - '*statement:ALTER SERVER AUDIT*'
-        - '*statement:DROP SERVER AUDIT*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- This event should only fire when an administrator is modifying the audit policy.
-    Which should be a rare occurrence once it's set up
-id: 350dfb37-3706-4cdc-9e2e-5e24bc3a46df
-level: high
+references:
+    - https://www.netspi.com/blog/technical/network-penetration-testing/sql-server-persistence-part-1-startup-stored-procedures/
+    - https://docs.microsoft.com/en-us/sql/t-sql/statements/drop-server-audit-transact-sql?view=sql-server-ver16
+    - https://docs.microsoft.com/en-us/sql/t-sql/statements/alter-server-audit-transact-sql?view=sql-server-ver16
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/13
+tags:
+    - attack.defense_evasion
 logsource:
-    definition: MSSQL audit policy must be enabled in order to receive this event
-        in the application log
     product: windows
     service: application
-references:
-- https://www.netspi.com/blog/technical/network-penetration-testing/sql-server-persistence-part-1-startup-stored-procedures/
-- https://docs.microsoft.com/en-us/sql/t-sql/statements/drop-server-audit-transact-sql?view=sql-server-ver16
-- https://docs.microsoft.com/en-us/sql/t-sql/statements/alter-server-audit-transact-sql?view=sql-server-ver16
-status: experimental
-tags:
-- attack.defense_evasion
-
+    definition: MSSQL audit policy must be enabled in order to receive this event
+        in the application log
+detection:
+    application:
+        Channel: Application
+    selection:
+        Provider_Name: MSSQLSERVER
+        EventID: 33205
+        Data|contains:
+            - statement:ALTER SERVER AUDIT
+            - statement:DROP SERVER AUDIT
+    condition: application and selection
+falsepositives:
+    - This event should only fire when an administrator is modifying the audit policy.
+        Which should be a rare occurrence once it's set up
+level: high
+ruletype: Sigma

@@ -1,48 +1,46 @@
 title: Windows Pcap Drivers
-ruletype: Sigma
-author: Cian Heasley
-date: 2020/06/10
+id: 7b687634-ab20-11ea-bb37-0242ac130002
+status: test
 description: Detects Windows Pcap driver installation based on a list of associated
     .sys files.
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4697
-    SELECTION_3:
-        ServiceFileName:
-        - '*pcap*'
-        - '*npcap*'
-        - '*npf*'
-        - '*nm3*'
-        - '*ndiscap*'
-        - '*nmnt*'
-        - '*windivert*'
-        - '*USBPcap*'
-        - '*pktmon*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-fields:
-- EventID
-- ServiceFileName
-- Account_Name
-- Computer_Name
-- Originating_Computer
-- ServiceName
-id: 7b687634-ab20-11ea-bb37-0242ac130002
-level: medium
+references:
+    - https://ragged-lab.blogspot.com/2020/06/capturing-pcap-driver-installations.html#more
+author: Cian Heasley
+date: 2020/06/10
+modified: 2023/04/14
+tags:
+    - attack.discovery
+    - attack.credential_access
+    - attack.t1040
 logsource:
-    definition: The 'System Security Extension' audit subcategory need to be enabled
-        to log the EID 4697
     product: windows
     service: security
-modified: 2023/04/14
-references:
-- https://ragged-lab.blogspot.com/2020/06/capturing-pcap-driver-installations.html#more
-status: test
-tags:
-- attack.discovery
-- attack.credential_access
-- attack.t1040
-
+    definition: The 'System Security Extension' audit subcategory need to be enabled
+        to log the EID 4697
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 4697
+        ServiceFileName|contains:
+            - pcap
+            - npcap
+            - npf
+            - nm3
+            - ndiscap
+            - nmnt
+            - windivert
+            - USBPcap
+            - pktmon
+    condition: security and selection
+fields:
+    - EventID
+    - ServiceFileName
+    - Account_Name
+    - Computer_Name
+    - Originating_Computer
+    - ServiceName
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

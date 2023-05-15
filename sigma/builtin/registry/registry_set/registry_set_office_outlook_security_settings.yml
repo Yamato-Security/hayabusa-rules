@@ -1,40 +1,33 @@
 title: Outlook Security Settings Updated - Registry
-ruletype: Sigma
+id: c3cefdf4-6703-4e1c-bad8-bf422fc5015a
+related:
+    -   id: a166f74e-bf44-409d-b9ba-ea4b2dd8b3cd
+        type: similar
+status: test
+description: Detects changes to the registry values related to outlook security settings
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1137/T1137.md
+    - https://docs.microsoft.com/en-us/outlook/troubleshoot/security/information-about-email-security-settings
 author: frack113
 date: 2021/12/28
-description: Detects changes to the registry values related to outlook security settings
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        TargetObject: '*\SOFTWARE\Microsoft\Office\\*'
-    SELECTION_5:
-        TargetObject: '*\Outlook\Security\\*'
-    SELECTION_6:
-        EventType: SetValue
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Administrative activity
-id: c3cefdf4-6703-4e1c-bad8-bf422fc5015a
-level: medium
+modified: 2023/02/08
+tags:
+    - attack.persistence
+    - attack.t1137
 logsource:
     category: registry_set
     product: windows
-modified: 2023/02/08
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1137/T1137.md
-- https://docs.microsoft.com/en-us/outlook/troubleshoot/security/information-about-email-security-settings
-related:
--   id: a166f74e-bf44-409d-b9ba-ea4b2dd8b3cd
-    type: similar
-status: test
-tags:
-- attack.persistence
-- attack.t1137
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        TargetObject|contains|all:
+            - \SOFTWARE\Microsoft\Office\
+            - \Outlook\Security\
+        EventType: SetValue
+    condition: registry_set and selection
+falsepositives:
+    - Administrative activity
+level: medium
+ruletype: Sigma

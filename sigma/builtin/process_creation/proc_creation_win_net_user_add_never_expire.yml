@@ -1,45 +1,40 @@
 title: New User Created Via Net.EXE With Never Expire Option
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/12
+id: b9f0e6f5-09b4-4358-bae4-08408705bd5c
+related:
+    -   id: cd219ff3-fa99-45d4-8380-a7d15116c6dc
+        type: derived
+status: test
 description: Detects creation of local users via the net.exe command with the option
     "never expire"
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName:
-        - '*\net.exe'
-        - '*\net1.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - net.exe
-        - net1.exe
-    SELECTION_5:
-        CommandLine: '*user*'
-    SELECTION_6:
-        CommandLine: '*add*'
-    SELECTION_7:
-        CommandLine: '*expires:never*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
-falsepositives:
-- Unlikely
-id: b9f0e6f5-09b4-4358-bae4-08408705bd5c
-level: high
+references:
+    - https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/12
+modified: 2023/02/21
+tags:
+    - attack.persistence
+    - attack.t1136.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
-references:
-- https://thedfirreport.com/2022/07/11/select-xmrig-from-sqlserver/
-related:
--   id: cd219ff3-fa99-45d4-8380-a7d15116c6dc
-    type: derived
-status: test
-tags:
-- attack.persistence
-- attack.t1136.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith:
+                - \net.exe
+                - \net1.exe
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - user
+            - add
+            - expires:never
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

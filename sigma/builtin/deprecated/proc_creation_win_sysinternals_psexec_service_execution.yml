@@ -1,45 +1,42 @@
 title: PsExec Tool Execution
-ruletype: Sigma
+id: fa91cc36-24c9-41ce-b3c8-3bbc3f2f67ba
+related:
+    -   id: 42c575ea-e41e-41f1-b248-8093c3e82a28
+        type: derived
+status: deprecated
+description: Detects PsExec service execution via default service image name
+references:
+    - https://www.jpcert.or.jp/english/pub/sr/ir_research.html
+    - https://jpcertcc.github.io/ToolAnalysisResultSheet
 author: Thomas Patzke
 date: 2017/06/12
-description: Detects PsExec service execution via default service image name
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\PSEXESVC.exe'
-    SELECTION_4:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-fields:
-- EventID
-- CommandLine
-- ParentCommandLine
-- ServiceName
-- ServiceFileName
-- TargetFilename
-- PipeName
-id: fa91cc36-24c9-41ce-b3c8-3bbc3f2f67ba
-level: low
+modified: 2023/02/28
+tags:
+    - attack.execution
+    - attack.t1569.002
+    - attack.s0029
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/28
-references:
-- https://www.jpcert.or.jp/english/pub/sr/ir_research.html
-- https://jpcertcc.github.io/ToolAnalysisResultSheet
-related:
--   id: 42c575ea-e41e-41f1-b248-8093c3e82a28
-    type: derived
-status: deprecated
-tags:
-- attack.execution
-- attack.t1569.002
-- attack.s0029
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        User|contains:
+            - AUTHORI
+            - AUTORI
+        NewProcessName|endswith: \PSEXESVC.exe
+    condition: process_creation and selection
+fields:
+    - EventID
+    - CommandLine
+    - ParentCommandLine
+    - ServiceName
+    - ServiceFileName
+    - TargetFilename
+    - PipeName
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

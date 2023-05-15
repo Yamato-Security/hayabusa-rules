@@ -1,7 +1,6 @@
 title: Powerup Write Hijack DLL
-ruletype: Sigma
-author: Subhash Popuri (@pbssubhash)
-date: 2021/08/21
+id: 602a1f13-c640-4d73-b053-be9a2fa58b96
+status: test
 description: 'Powerup tool''s Write Hijack DLL exploits DLL hijacking for privilege
     escalation.
 
@@ -12,32 +11,30 @@ description: 'Powerup tool''s Write Hijack DLL exploits DLL hijacking for privil
     default).
 
     '
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        TargetFilename: '*.bat'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Any powershell script that creates bat files
-id: 602a1f13-c640-4d73-b053-be9a2fa58b96
-level: high
+references:
+    - https://powersploit.readthedocs.io/en/latest/Privesc/Write-HijackDll/
+author: Subhash Popuri (@pbssubhash)
+date: 2021/08/21
+modified: 2022/10/09
+tags:
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.defense_evasion
+    - attack.t1574.001
 logsource:
     category: file_event
     product: windows
-modified: 2022/10/09
-references:
-- https://powersploit.readthedocs.io/en/latest/Privesc/Write-HijackDll/
-status: test
-tags:
-- attack.persistence
-- attack.privilege_escalation
-- attack.defense_evasion
-- attack.t1574.001
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+        TargetFilename|endswith: .bat
+    condition: file_event and selection
+falsepositives:
+    - Any powershell script that creates bat files
+level: high
+ruletype: Sigma

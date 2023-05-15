@@ -1,36 +1,32 @@
 title: Potential MsiExec Masquerading
-ruletype: Sigma
+id: e22a6eb2-f8a5-44b5-8b44-a2dbd47b1144
+status: test
+description: Detects the execution of msiexec.exe from an uncommon directory
+references:
+    - https://twitter.com/200_okay_/status/1194765831911215104
 author: Florian Roth (Nextron Systems)
 date: 2019/11/14
-description: Detects the execution of msiexec.exe from an uncommon directory
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\msiexec.exe'
-    SELECTION_4:
-        OriginalFileName: \msiexec.exe
-    SELECTION_5:
-        NewProcessName:
-        - C:\Windows\System32\\*
-        - C:\Windows\SysWOW64\\*
-        - C:\Windows\WinSxS\\*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Unknown
-id: e22a6eb2-f8a5-44b5-8b44-a2dbd47b1144
-level: high
+modified: 2023/02/21
+tags:
+    - attack.defense_evasion
+    - attack.t1036.005
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/21
-references:
-- https://twitter.com/200_okay_/status/1194765831911215104
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1036.005
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   NewProcessName|endswith: \msiexec.exe
+        -   OriginalFileName: \msiexec.exe
+    filter:
+        NewProcessName|startswith:
+            - C:\Windows\System32\
+            - C:\Windows\SysWOW64\
+            - C:\Windows\WinSxS\
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

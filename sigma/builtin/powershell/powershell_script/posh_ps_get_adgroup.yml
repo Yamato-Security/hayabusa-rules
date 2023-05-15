@@ -1,34 +1,32 @@
 title: Active Directory Group Enumeration With Get-AdGroup
-ruletype: Sigma
-author: frack113
-date: 2022/03/17
+id: 8c3a6607-b7dc-4f0d-a646-ef38c00b76ee
+status: experimental
 description: Detects usage of the "Get-AdGroup" cmdlet to enumerate Groups within
     Active Directory
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Get-AdGroup *'
-    SELECTION_4:
-        ScriptBlockText: '*-Filter*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 8c3a6607-b7dc-4f0d-a646-ef38c00b76ee
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md
+author: frack113
+date: 2022/03/17
+modified: 2022/11/17
+tags:
+    - attack.discovery
+    - attack.t1069.002
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2022/11/17
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md
-status: experimental
-tags:
-- attack.discovery
-- attack.t1069.002
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - 'Get-AdGroup '
+            - -Filter
+    condition: ps_script and selection
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

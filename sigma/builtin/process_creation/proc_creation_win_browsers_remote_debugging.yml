@@ -1,37 +1,33 @@
 title: Browser Started with Remote Debugging
-ruletype: Sigma
-author: pH-T (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/27
+id: b3d34dc5-2efd-4ae3-845f-8ec14921f449
+status: experimental
 description: Detects browsers starting with the remote debugging flags. Which is a
     technique often used to perform browser injection attacks
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '* --remote-debugging-*'
-    SELECTION_4:
-        NewProcessName: '*\firefox.exe'
-    SELECTION_5:
-        CommandLine: '* -start-debugger-server*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)))
-falsepositives:
-- Unknown
-id: b3d34dc5-2efd-4ae3-845f-8ec14921f449
-level: medium
+references:
+    - https://yoroi.company/wp-content/uploads/2022/05/EternityGroup_report_compressed.pdf
+    - https://www.mdsec.co.uk/2022/10/analysing-lastpass-part-1/
+    - https://github.com/defaultnamehere/cookie_crimes/
+    - https://github.com/wunderwuzzi23/firefox-cookiemonster
+author: pH-T (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/27
+modified: 2022/12/23
+tags:
+    - attack.credential_access
+    - attack.t1185
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/23
-references:
-- https://yoroi.company/wp-content/uploads/2022/05/EternityGroup_report_compressed.pdf
-- https://www.mdsec.co.uk/2022/10/analysing-lastpass-part-1/
-- https://github.com/defaultnamehere/cookie_crimes/
-- https://github.com/wunderwuzzi23/firefox-cookiemonster
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1185
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_chromium_based:
+        CommandLine|contains: ' --remote-debugging-'
+    selection_firefox:
+        CommandLine|contains: ' -start-debugger-server'
+        NewProcessName|endswith: \firefox.exe
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

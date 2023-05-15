@@ -1,36 +1,32 @@
 title: UAC Bypass Using Disk Cleanup
-ruletype: Sigma
-author: Christian Burkard (Nextron Systems)
-date: 2021/08/30
+id: b697e69c-746f-4a86-9f59-7bfff8eab881
+status: test
 description: Detects the pattern of UAC Bypass using scheduled tasks and variable
     expansion of cleanmgr.exe (UACMe 34)
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*"\system32\cleanmgr.exe /autoclean /d C:'
-    SELECTION_4:
-        ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
-    SELECTION_5:
-        IntegrityLevel:
-        - High
-        - System
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: b697e69c-746f-4a86-9f59-7bfff8eab881
-level: high
+references:
+    - https://github.com/hfiref0x/UACME
+author: Christian Burkard (Nextron Systems)
+date: 2021/08/30
+modified: 2022/10/09
+tags:
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1548.002
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
-references:
-- https://github.com/hfiref0x/UACME
-status: test
-tags:
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1548.002
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|endswith: '"\system32\cleanmgr.exe /autoclean /d C:'
+        ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
+        IntegrityLevel:
+            - High
+            - System
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

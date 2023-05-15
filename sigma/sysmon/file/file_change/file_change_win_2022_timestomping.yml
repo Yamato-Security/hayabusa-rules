@@ -1,7 +1,6 @@
 title: File Creation Date Changed to Another Year
-ruletype: Sigma
-author: frack113, Florian Roth (Nextron Systems)
-date: 2022/08/12
+id: 558eebe5-f2ba-4104-b339-36f7902bcc1a
+status: experimental
 description: 'Attackers may change the file creation time of a backdoor to make it
     look like it was installed with the operating system.
 
@@ -9,51 +8,45 @@ description: 'Attackers may change the file creation time of a backdoor to make 
     not necessarily indicate malicious activity.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 2
-    SELECTION_10:
-        Image: C:\WINDOWS\\*
-    SELECTION_11:
-        Image: '*\TiWorker.exe'
-    SELECTION_12:
-        TargetFilename: '*.cab'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        PreviousCreationUtcTime: 2022*
-    SELECTION_4:
-        CreationUtcTime: 2022*
-    SELECTION_5:
-        PreviousCreationUtcTime: 202*
-    SELECTION_6:
-        CreationUtcTime: 202*
-    SELECTION_7:
-        Image:
-        - C:\Windows\system32\ProvTool.exe
-        - C:\Windows\System32\usocoreworker.exe
-        - C:\Windows\ImmersiveControlPanel\SystemSettings.exe
-    SELECTION_8:
-        TargetFilename: C:\ProgramData\USOPrivate\UpdateStore\\*
-    SELECTION_9:
-        TargetFilename:
-        - '*.tmp'
-        - '*.temp'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and  not (SELECTION_4))
-        or (SELECTION_5 and  not (SELECTION_6))) and  not ((SELECTION_7 or SELECTION_8
-        or SELECTION_9) or (SELECTION_10 and SELECTION_11 and SELECTION_12)))
-falsepositives:
-- Changes made to or by the local NTP service
-id: 558eebe5-f2ba-4104-b339-36f7902bcc1a
-level: high
+references:
+    - https://www.inversecos.com/2022/04/defence-evasion-technique-timestomping.html
+author: frack113, Florian Roth (Nextron Systems)
+date: 2022/08/12
+modified: 2022/10/25
+tags:
+    - attack.t1070.006
+    - attack.defense_evasion
 logsource:
     category: file_change
     product: windows
-modified: 2022/10/25
-references:
-- https://www.inversecos.com/2022/04/defence-evasion-technique-timestomping.html
-status: experimental
-tags:
-- attack.t1070.006
-- attack.defense_evasion
-
+detection:
+    file_change:
+        EventID: 2
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection1:
+        PreviousCreationUtcTime|startswith: '2022'
+    filter1:
+        CreationUtcTime|startswith: '2022'
+    selection2:
+        PreviousCreationUtcTime|startswith: '202'
+    filter2:
+        CreationUtcTime|startswith: '202'
+    gen_filter_updates:
+        -   Image:
+                - C:\Windows\system32\ProvTool.exe
+                - C:\Windows\System32\usocoreworker.exe
+                - C:\Windows\ImmersiveControlPanel\SystemSettings.exe
+        -   TargetFilename|startswith: C:\ProgramData\USOPrivate\UpdateStore\
+        -   TargetFilename|endswith:
+                - .tmp
+                - .temp
+    gen_filter_tiworker:
+        Image|startswith: C:\WINDOWS\
+        Image|endswith: \TiWorker.exe
+        TargetFilename|endswith: .cab
+    condition: file_change and ((( selection1 and not filter1 ) or ( selection2 and
+        not filter2 )) and not 1 of gen_filter*)
+falsepositives:
+    - Changes made to or by the local NTP service
+level: high
+ruletype: Sigma

@@ -1,75 +1,71 @@
 title: Tamper Windows Defender - ScriptBlockLogging
-ruletype: Sigma
-author: frack113, elhoim, Tim Shelton (fps, alias support)
-date: 2022/01/16
+id: 14c71865-6cd3-44ae-adaa-1db923fae5f2
+related:
+    -   id: ec19ebab-72dc-40e1-9728-4c0b805d722c
+        type: derived
+status: experimental
 description: Detects powershell scripts attempting to disable scheduled scanning and
     other parts of windows defender atp or set default actions to allow.
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Set-MpPreference*'
-    SELECTION_4:
-        ScriptBlockText:
-        - '*DisableRealtimeMonitoring 1*'
-        - '*DisableBehaviorMonitoring 1*'
-        - '*DisableScriptScanning 1*'
-        - '*DisableArchiveScanning 1*'
-        - '*DisableBlockAtFirstSeen 1*'
-        - '*DisableIOAVProtection 1*'
-        - '*DisableIntrusionPreventionSystem 1*'
-        - '*DisableRemovableDriveScanning 1*'
-        - '*DisableScanningMappedNetworkDrivesForFullScan 1*'
-        - '*DisableScanningNetworkFiles 1*'
-        - '*DisableRealtimeMonitoring $true*'
-        - '*DisableBehaviorMonitoring $true*'
-        - '*DisableScriptScanning $true*'
-        - '*DisableArchiveScanning $true*'
-        - '*DisableBlockAtFirstSeen $true*'
-        - '*DisableIOAVProtection $true*'
-        - '*DisableIntrusionPreventionSystem $true*'
-        - '*DisableRemovableDriveScanning $true*'
-        - '*DisableScanningMappedNetworkDrivesForFullScan $true*'
-        - '*DisableScanningNetworkFiles $true*'
-    SELECTION_5:
-        ScriptBlockText: '*Set-MpPreference*'
-    SELECTION_6:
-        ScriptBlockText: '*Allow*'
-    SELECTION_7:
-        ScriptBlockText:
-        - '*LowThreatDefaultAction*'
-        - '*ModerateThreatDefaultAction*'
-        - '*HighThreatDefaultAction*'
-    SELECTION_8:
-        ScriptBlockText:
-        - '*ltdefac *'
-        - '*mtdefac *'
-        - '*htdefac *'
-        - '*stdefac *'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        ((SELECTION_5 and SELECTION_6 and SELECTION_7) or SELECTION_8)))
-falsepositives:
-- Legitimate PowerShell scripts
-id: 14c71865-6cd3-44ae-adaa-1db923fae5f2
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
+    - https://docs.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2022-ps
+    - https://bidouillesecurity.com/disable-windows-defender-in-powershell/
+author: frack113, elhoim, Tim Shelton (fps, alias support)
+date: 2022/01/16
+modified: 2023/01/12
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2023/01/12
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
-- https://docs.microsoft.com/en-us/powershell/module/defender/set-mppreference?view=windowsserver2022-ps
-- https://bidouillesecurity.com/disable-windows-defender-in-powershell/
-related:
--   id: ec19ebab-72dc-40e1-9728-4c0b805d722c
-    type: derived
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection_options_disabling_preference:
+        ScriptBlockText|contains: Set-MpPreference
+    selection_options_disabling_function:
+        ScriptBlockText|contains:
+            - DisableRealtimeMonitoring 1
+            - DisableBehaviorMonitoring 1
+            - DisableScriptScanning 1
+            - DisableArchiveScanning 1
+            - DisableBlockAtFirstSeen 1
+            - DisableIOAVProtection 1
+            - DisableIntrusionPreventionSystem 1
+            - DisableRemovableDriveScanning 1
+            - DisableScanningMappedNetworkDrivesForFullScan 1
+            - DisableScanningNetworkFiles 1
+            - DisableRealtimeMonitoring $true
+            - DisableBehaviorMonitoring $true
+            - DisableScriptScanning $true
+            - DisableArchiveScanning $true
+            - DisableBlockAtFirstSeen $true
+            - DisableIOAVProtection $true
+            - DisableIntrusionPreventionSystem $true
+            - DisableRemovableDriveScanning $true
+            - DisableScanningMappedNetworkDrivesForFullScan $true
+            - DisableScanningNetworkFiles $true
+    selection_other_default_actions_allow:
+        ScriptBlockText|contains|all:
+            - Set-MpPreference
+            - Allow
+        ScriptBlockText|contains:
+            - LowThreatDefaultAction
+            - ModerateThreatDefaultAction
+            - HighThreatDefaultAction
+    selection_other_use_of_alias:
+        ScriptBlockText|contains:
+            - 'ltdefac '
+            - 'mtdefac '
+            - 'htdefac '
+            - 'stdefac '
+    condition: ps_script and (all of selection_options_disabling* or 1 of selection_other_*)
+falsepositives:
+    - Legitimate PowerShell scripts
+level: high
+ruletype: Sigma

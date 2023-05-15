@@ -1,22 +1,21 @@
 title: The Windows Defender Firewall Service Failed To Load Group Policy
-ruletype: Sigma
-author: frack113
-date: 2022/02/19
+id: 7ec15688-fd24-4177-ba43-1a950537ee39
+status: experimental
 description: Detects activity when The Windows Defender Firewall service failed to
     load Group Policy
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
-    SELECTION_2:
-        EventID: 2009
-    condition: (SELECTION_1 and SELECTION_2)
-id: 7ec15688-fd24-4177-ba43-1a950537ee39
-level: low
+references:
+    - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
+author: frack113
+date: 2022/02/19
+modified: 2023/01/17
 logsource:
     product: windows
     service: firewall-as
-modified: 2023/01/17
-references:
-- https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
-status: experimental
-
+detection:
+    firewall_as:
+        Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
+    selection:
+        EventID: 2009
+    condition: firewall_as and selection
+level: low
+ruletype: Sigma

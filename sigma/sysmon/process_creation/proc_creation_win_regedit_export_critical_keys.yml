@@ -1,51 +1,47 @@
 title: Exports Critical Registry Keys To a File
-ruletype: Sigma
+id: 82880171-b475-4201-b811-e9c826cd5eaa
+related:
+    -   id: f0e53e89-8d22-46ea-9db5-9d4796ee2f8a
+        type: similar
+status: test
+description: Detects the export of a crital Registry key to a file.
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Regedit/
+    - https://gist.github.com/api0cradle/cdd2d0d0ec9abb686f0e89306e277b8f
 author: Oddvar Moe, Sander Wiebing, oscd.community
 date: 2020/10/12
-description: Detects the export of a crital Registry key to a file.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\regedit.exe'
-    SELECTION_4:
-        OriginalFileName: REGEDIT.EXE
-    SELECTION_5:
-        CommandLine:
-        - '* /E *'
-        - '* -E *'
-    SELECTION_6:
-        CommandLine:
-        - '*hklm*'
-        - '*hkey_local_machine*'
-    SELECTION_7:
-        CommandLine:
-        - '*\system'
-        - '*\sam'
-        - '*\security'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Dumping hives for legitimate purpouse i.e. backup or forensic investigation
-fields:
-- ParentImage
-- CommandLine
-id: 82880171-b475-4201-b811-e9c826cd5eaa
-level: high
+modified: 2023/02/03
+tags:
+    - attack.exfiltration
+    - attack.t1012
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/03
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Regedit/
-- https://gist.github.com/api0cradle/cdd2d0d0ec9abb686f0e89306e277b8f
-related:
--   id: f0e53e89-8d22-46ea-9db5-9d4796ee2f8a
-    type: similar
-status: test
-tags:
-- attack.exfiltration
-- attack.t1012
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \regedit.exe
+        -   OriginalFileName: REGEDIT.EXE
+    selection_cli_1:
+        CommandLine|contains:
+            - ' /E '
+            - ' -E '
+    selection_cli_2:
+        CommandLine|contains:
+            - hklm
+            - hkey_local_machine
+    selection_cli_3:
+        CommandLine|endswith:
+            - \system
+            - \sam
+            - \security
+    condition: process_creation and (all of selection_*)
+fields:
+    - ParentImage
+    - CommandLine
+falsepositives:
+    - Dumping hives for legitimate purpouse i.e. backup or forensic investigation
+level: high
+ruletype: Sigma

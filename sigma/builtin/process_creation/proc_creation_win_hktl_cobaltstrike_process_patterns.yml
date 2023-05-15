@@ -1,51 +1,43 @@
 title: Potential CobaltStrike Process Patterns
-ruletype: Sigma
+id: f35c5d71-b489-4e22-a115-f003df287317
+status: experimental
+description: Detects potential process patterns related to Cobalt Strike beacon activity
+references:
+    - https://hausec.com/2021/07/26/cobalt-strike-and-tradecraft/
+    - https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/
 author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2021/07/27
-description: Detects potential process patterns related to Cobalt Strike beacon activity
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '*conhost.exe 0xffffffff -ForceV1'
-    SELECTION_11:
-        ParentCommandLine: '*/C whoami'
-    SELECTION_12:
-        CommandLine: '*conhost.exe 0xffffffff -ForceV1'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*cmd.exe /C whoami'
-    SELECTION_4:
-        ParentProcessName: C:\Temp\\*
-    SELECTION_5:
-        ParentProcessName:
-        - '*\runonce.exe'
-        - '*\dllhost.exe'
-    SELECTION_6:
-        CommandLine: '*cmd.exe /c echo*'
-    SELECTION_7:
-        CommandLine: '*> \\\\.\\pipe*'
-    SELECTION_8:
-        ParentCommandLine: '*cmd.exe /C echo*'
-    SELECTION_9:
-        ParentCommandLine: '* > \\\\.\\pipe*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and SELECTION_6 and SELECTION_7) or (SELECTION_8 and SELECTION_9
-        and SELECTION_10) or (SELECTION_11 and SELECTION_12)))
-falsepositives:
-- Unknown
-id: f35c5d71-b489-4e22-a115-f003df287317
-level: high
+modified: 2023/03/29
+tags:
+    - attack.execution
+    - attack.t1059
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/29
-references:
-- https://hausec.com/2021/07/26/cobalt-strike-and-tradecraft/
-- https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/
-status: experimental
-tags:
-- attack.execution
-- attack.t1059
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_generic_1:
+        CommandLine|endswith: cmd.exe /C whoami
+        ParentProcessName|startswith: C:\Temp\
+    selection_generic_2:
+        CommandLine|contains|all:
+            - cmd.exe /c echo
+            - '> \\\\.\\pipe'
+        ParentProcessName|endswith:
+            - \runonce.exe
+            - \dllhost.exe
+    selection_conhost_1:
+        ParentCommandLine|contains|all:
+            - cmd.exe /C echo
+            - ' > \\\\.\\pipe'
+        CommandLine|endswith: conhost.exe 0xffffffff -ForceV1
+    selection_conhost_2:
+        ParentCommandLine|endswith: /C whoami
+        CommandLine|endswith: conhost.exe 0xffffffff -ForceV1
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

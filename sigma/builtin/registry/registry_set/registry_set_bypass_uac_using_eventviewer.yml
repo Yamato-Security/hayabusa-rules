@@ -1,38 +1,31 @@
 title: Bypass UAC Using Event Viewer
-ruletype: Sigma
-author: frack113
-date: 2022/01/05
+id: 674202d0-b22a-4af4-ae5f-2eda1f3da1af
+status: experimental
 description: Bypasses User Account Control using Event Viewer and a relevant Windows
     Registry modification
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*_Classes\mscfile\shell\open\command\(Default)'
-    SELECTION_6:
-        NewValue: '%SystemRoot%\system32\mmc.exe "%1" %*'
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6))
-falsepositives:
-- Unknown
-id: 674202d0-b22a-4af4-ae5f-2eda1f3da1af
-level: high
+references:
+    - https://enigma0x3.net/2016/08/15/fileless-uac-bypass-using-eventvwr-exe-and-registry-hijacking/
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1548.002/T1548.002.md#atomic-test-1---bypass-uac-using-event-viewer-cmd
+author: frack113
+date: 2022/01/05
+modified: 2022/10/05
+tags:
+    - attack.persistence
+    - attack.t1547.010
 logsource:
     category: registry_set
     product: windows
-modified: 2022/10/05
-references:
-- https://enigma0x3.net/2016/08/15/fileless-uac-bypass-using-eventvwr-exe-and-registry-hijacking/
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1548.002/T1548.002.md#atomic-test-1---bypass-uac-using-event-viewer-cmd
-status: experimental
-tags:
-- attack.persistence
-- attack.t1547.010
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|endswith: _Classes\mscfile\shell\open\command\(Default)
+    filter:
+        Details|startswith: '%SystemRoot%\system32\mmc.exe "%1" %'
+    condition: registry_set and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

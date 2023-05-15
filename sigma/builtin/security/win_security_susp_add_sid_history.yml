@@ -1,37 +1,36 @@
 title: Addition of SID History to Active Directory Object
-ruletype: Sigma
+id: 2632954e-db1c-49cb-9936-67d1ef1d17d2
+status: stable
+description: An attacker can use the SID history attribute to gain additional privileges.
+references:
+    - https://adsecurity.org/?p=1772
 author: Thomas Patzke, @atc_project (improvements)
 date: 2017/02/19
-description: An attacker can use the SID history attribute to gain additional privileges.
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4765
-    SELECTION_3:
-        EventID: 4766
-    SELECTION_4:
-        EventID: 4738
-    SELECTION_5:
-        SidHistory:
-        - '-'
-        - '%%1793'
-    SELECTION_6:
-        SidHistory: null
-    condition: (SELECTION_1 and ((SELECTION_2 or SELECTION_3) or ((SELECTION_4 and  not
-        (SELECTION_5)) and  not (SELECTION_6))))
-falsepositives:
-- Migration of an account into a new domain
-id: 2632954e-db1c-49cb-9936-67d1ef1d17d2
-level: medium
+tags:
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1134.005
 logsource:
     product: windows
     service: security
-references:
-- https://adsecurity.org/?p=1772
-status: stable
-tags:
-- attack.persistence
-- attack.privilege_escalation
-- attack.t1134.005
-
+detection:
+    security:
+        Channel: Security
+    selection1:
+        EventID:
+            - 4765
+            - 4766
+    selection2:
+        EventID: 4738
+    selection3:
+        SidHistory:
+            - '-'
+            - '%%1793'
+    filter_null:
+        SidHistory: null
+    condition: security and (selection1 or (selection2 and not selection3 and not
+        filter_null))
+falsepositives:
+    - Migration of an account into a new domain
+level: medium
+ruletype: Sigma

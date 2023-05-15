@@ -1,51 +1,46 @@
 title: Windows Firewall Disabled via PowerShell
-ruletype: Sigma
+id: 12f6b752-042d-483e-bf9c-915a6d06ad75
+related:
+    -   id: 488b44e7-3781-4a71-888d-c95abfacf44d
+        type: similar
+status: experimental
+description: Detects attempts to disable the Windows Firewall using PowerShell
+references:
+    - https://www.elastic.co/guide/en/security/current/windows-firewall-disabled-via-powershell.html
 author: Tim Rauch
 date: 2022/09/14
-description: Detects attempts to disable the Windows Firewall using PowerShell
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-        - '*\powershell_ise.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_5:
-        CommandLine: '*Set-NetFirewallProfile *'
-    SELECTION_6:
-        CommandLine: '* -Enabled *'
-    SELECTION_7:
-        CommandLine: '* False*'
-    SELECTION_8:
-        CommandLine:
-        - '* -All *'
-        - '*Public*'
-        - '*Domain*'
-        - '*Private*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7) and SELECTION_8)
-falsepositives:
-- Unknown
-id: 12f6b752-042d-483e-bf9c-915a6d06ad75
-level: medium
+modified: 2023/02/13
+tags:
+    - attack.defense_evasion
+    - attack.t1562
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-references:
-- https://www.elastic.co/guide/en/security/current/windows-firewall-disabled-via-powershell.html
-related:
--   id: 488b44e7-3781-4a71-888d-c95abfacf44d
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_name:
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+                - \powershell_ise.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    selection_args:
+        CommandLine|contains|all:
+            - 'Set-NetFirewallProfile '
+            - ' -Enabled '
+            - ' False'
+    selection_opt:
+        CommandLine|contains:
+            - ' -All '
+            - Public
+            - Domain
+            - Private
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

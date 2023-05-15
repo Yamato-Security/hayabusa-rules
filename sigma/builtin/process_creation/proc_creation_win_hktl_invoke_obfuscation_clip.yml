@@ -1,41 +1,35 @@
 title: Invoke-Obfuscation CLIP+ Launcher
-ruletype: Sigma
+id: b222df08-0e07-11eb-adc1-0242ac120002
+status: test
+description: Detects Obfuscated use of Clip.exe to execute PowerShell
+references:
+    - https://github.com/SigmaHQ/sigma/issues/1009
 author: Jonathan Cheong, oscd.community
 date: 2020/10/13
-description: Detects Obfuscated use of Clip.exe to execute PowerShell
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*cmd*'
-    SELECTION_4:
-        CommandLine: '*&&*'
-    SELECTION_5:
-        CommandLine: '*clipboard]::*'
-    SELECTION_6:
-        CommandLine: '*-f*'
-    SELECTION_7:
-        CommandLine:
-        - '*/c*'
-        - '*/r*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Unknown
-id: b222df08-0e07-11eb-adc1-0242ac120002
-level: high
+modified: 2022/11/17
+tags:
+    - attack.defense_evasion
+    - attack.t1027
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2022/11/17
-references:
-- https://github.com/SigmaHQ/sigma/issues/1009
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1027
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - cmd
+            - '&&'
+            - 'clipboard]::'
+            - -f
+        CommandLine|contains:
+            - /c
+            - /r
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

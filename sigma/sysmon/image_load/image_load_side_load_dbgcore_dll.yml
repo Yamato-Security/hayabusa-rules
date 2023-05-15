@@ -1,44 +1,41 @@
 title: Potential DLL Sideloading Of DBGCORE.DLL
-ruletype: Sigma
+id: 9ca2bf31-0570-44d8-a543-534c47c33ed7
+status: experimental
+description: Detects DLL sideloading of "dbgcore.dll"
+references:
+    - https://hijacklibs.net/
 author: Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)
 date: 2022/10/25
-description: Detects DLL sideloading of "dbgcore.dll"
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ImageLoaded: '*\dbgcore.dll'
-    SELECTION_4:
-        ImageLoaded:
-        - C:\Program Files (x86)\\*
-        - C:\Program Files\\*
-        - C:\Windows\SoftwareDistribution\\*
-        - C:\Windows\System32\\*
-        - C:\Windows\SystemTemp\\*
-        - C:\Windows\SysWOW64\\*
-        - C:\Windows\WinSxS\\*
-    SELECTION_5:
-        ImageLoaded: '*\Steam\bin\cef\cef.win7x64\dbgcore.dll'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not ((SELECTION_4)))
-        and  not ((SELECTION_5)))
-falsepositives:
-- Legitimate applications loading their own versions of the DLL mentioned in this
-    rule
-id: 9ca2bf31-0570-44d8-a543-534c47c33ed7
-level: medium
+modified: 2023/05/05
+tags:
+    - attack.defense_evasion
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1574.001
+    - attack.t1574.002
 logsource:
     category: image_load
     product: windows
-modified: 2023/05/05
-references:
-- https://hijacklibs.net/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.persistence
-- attack.privilege_escalation
-- attack.t1574.001
-- attack.t1574.002
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ImageLoaded|endswith: \dbgcore.dll
+    filter_main_generic:
+        ImageLoaded|startswith:
+            - C:\Program Files (x86)\
+            - C:\Program Files\
+            - C:\Windows\SoftwareDistribution\
+            - C:\Windows\System32\
+            - C:\Windows\SystemTemp\
+            - C:\Windows\SysWOW64\
+            - C:\Windows\WinSxS\
+    filter_optional_steam:
+        ImageLoaded|endswith: \Steam\bin\cef\cef.win7x64\dbgcore.dll
+    condition: image_load and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
+falsepositives:
+    - Legitimate applications loading their own versions of the DLL mentioned in this
+        rule
+level: medium
+ruletype: Sigma

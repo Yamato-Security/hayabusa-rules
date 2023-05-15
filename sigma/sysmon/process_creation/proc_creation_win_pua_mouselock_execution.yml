@@ -1,40 +1,36 @@
 title: PUA - Mouse Lock Execution
-ruletype: Sigma
-author: Cian Heasley
-date: 2020/08/13
+id: c9192ad9-75e5-43eb-8647-82a0a5b493e3
+status: test
 description: In Kaspersky's 2020 Incident Response Analyst Report they listed legitimate
     tool "Mouse Lock" as being used for both credential access and collection in security
     incidents.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Product: '*Mouse Lock*'
-    SELECTION_4:
-        Company: '*Misc314*'
-    SELECTION_5:
-        CommandLine: '*Mouse Lock_*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- Legitimate uses of Mouse Lock software
-fields:
-- Product
-- Company
-- CommandLine
-id: c9192ad9-75e5-43eb-8647-82a0a5b493e3
-level: medium
-logsource:
-    category: process_creation
-    product: windows
-modified: 2023/02/21
 references:
-- https://github.com/klsecservices/Publications/blob/657deb6a6eb6e00669afd40173f425fb49682eaa/Incident-Response-Analyst-Report-2020.pdf
-- https://sourceforge.net/projects/mouselock/
-status: test
+    - https://github.com/klsecservices/Publications/blob/657deb6a6eb6e00669afd40173f425fb49682eaa/Incident-Response-Analyst-Report-2020.pdf
+    - https://sourceforge.net/projects/mouselock/
+author: Cian Heasley
+date: 2020/08/13
+modified: 2023/02/21
 tags:
-- attack.credential_access
-- attack.collection
-- attack.t1056.002
-
+    - attack.credential_access
+    - attack.collection
+    - attack.t1056.002
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Product|contains: Mouse Lock
+        -   Company|contains: Misc314
+        -   CommandLine|contains: Mouse Lock_
+    condition: process_creation and selection
+fields:
+    - Product
+    - Company
+    - CommandLine
+falsepositives:
+    - Legitimate uses of Mouse Lock software
+level: medium
+ruletype: Sigma

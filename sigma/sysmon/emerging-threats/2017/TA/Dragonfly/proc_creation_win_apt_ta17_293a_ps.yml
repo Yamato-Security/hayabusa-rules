@@ -1,33 +1,31 @@
 title: Ps.exe Renamed SysInternals Tool
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2017/10/22
+id: 18da1007-3f26-470f-875d-f77faf1cab31
+status: test
 description: Detects renamed SysInternals tool execution with a binary named ps.exe
     as used by Dragonfly APT group and documented in TA17-293A report
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*ps.exe -accepteula*'
-    SELECTION_4:
-        CommandLine: '*-s cmd /c netstat*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Renamed SysInternals tool
-id: 18da1007-3f26-470f-875d-f77faf1cab31
-level: high
+references:
+    - https://www.us-cert.gov/ncas/alerts/TA17-293A
+author: Florian Roth (Nextron Systems)
+date: 2017/10/22
+modified: 2023/05/02
+tags:
+    - attack.defense_evasion
+    - attack.g0035
+    - attack.t1036.003
+    - car.2013-05-009
 logsource:
     category: process_creation
     product: windows
-modified: 2023/05/02
-references:
-- https://www.us-cert.gov/ncas/alerts/TA17-293A
-status: test
-tags:
-- attack.defense_evasion
-- attack.g0035
-- attack.t1036.003
-- car.2013-05-009
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains|all:
+            - ps.exe -accepteula
+            - -s cmd /c netstat
+    condition: process_creation and selection
+falsepositives:
+    - Renamed SysInternals tool
+level: high
+ruletype: Sigma

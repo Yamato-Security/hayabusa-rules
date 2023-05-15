@@ -1,38 +1,34 @@
 title: Suspicious Execution of Taskkill
-ruletype: Sigma
-author: frack113
-date: 2021/12/26
+id: 86085955-ea48-42a2-9dd3-85d4c36b167d
+status: experimental
 description: Adversaries may stop services or processes in order to conduct Data Destruction
     or Data Encrypted for Impact on the data stores of services like Exchange and
     SQL Server.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\taskkill.exe'
-    SELECTION_4:
-        OriginalFileName: taskkill.exe
-    SELECTION_5:
-        CommandLine: '* /f*'
-    SELECTION_6:
-        CommandLine: '* /im *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6))
-falsepositives:
-- Expected FP with some processes using this techniques to terminate one of their
-    processes during installations and updates
-id: 86085955-ea48-42a2-9dd3-85d4c36b167d
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1489/T1489.md#atomic-test-3---windows---stop-service-by-killing-process
+author: frack113
+date: 2021/12/26
+modified: 2022/05/17
+tags:
+    - attack.impact
+    - attack.t1489
 logsource:
     category: process_creation
     product: windows
-modified: 2022/05/17
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1489/T1489.md#atomic-test-3---windows---stop-service-by-killing-process
-status: experimental
-tags:
-- attack.impact
-- attack.t1489
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \taskkill.exe
+        -   OriginalFileName: taskkill.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - ' /f'
+            - ' /im '
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Expected FP with some processes using this techniques to terminate one of their
+        processes during installations and updates
+level: low
+ruletype: Sigma

@@ -1,73 +1,67 @@
 title: PowerShell Core DLL Loaded By Non PowerShell Process
-ruletype: Sigma
-author: Tom Kern, oscd.community, Natalia Shornikova, Tim Shelton
-date: 2019/11/14
+id: 092bc4b9-3d1d-43b4-a6b4-8c8acd83522f
+related:
+    -   id: 867613fb-fa60-4497-a017-a82df74a172c
+        type: obsoletes
+status: experimental
 description: Detects loading of essential DLLs used by PowerShell, but not by the
     process powershell.exe. Detects behaviour similar to meterpreter's "load powershell"
     extension.
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ImageLoaded:
-        - '*\System.Management.Automation.Dll'
-        - '*\System.Management.Automation.ni.Dll'
-    SELECTION_4:
-        Image:
-        - C:\Windows\System32\dsac.exe
-        - C:\Program Files\PowerShell\7\pwsh.exe
-    SELECTION_5:
-        Image:
-        - '*\powershell.exe'
-        - '*\powershell_ise.exe'
-        - '*\WINDOWS\System32\sdiagnhost.exe'
-        - '*\mscorsvw.exe'
-        - '*\WINDOWS\System32\RemoteFXvGPUDisablement.exe'
-        - '*\sqlps.exe'
-        - '*\wsmprovhost.exe'
-        - '*\winrshost.exe'
-        - '*\syncappvpublishingserver.exe'
-        - '*\runscripthelper.exe'
-        - '*\ServerManager.exe'
-        - '*\Microsoft SQL Server Management Studio *\Common*\IDE\Ssms.exe'
-        - '*\IDE\devenv.exe'
-        - '*\ServiceHub.VSDetouredHost.exe'
-        - '*\ServiceHub.SettingsHost.exe'
-        - '*\ServiceHub.Host.CLR.x86.exe'
-        - '*\Citrix\ConfigSync\ConfigSyncRun.exe'
-    SELECTION_6:
-        Image:
-        - C:\Program Files (x86)\Microsoft Visual Studio\\*
-        - C:\Program Files\Microsoft Visual Studio\\*
-    SELECTION_7:
-        Image: C:\Windows\Temp\asgard2-agent\\*
-    SELECTION_8:
-        Image:
-        - '*\thor64.exe'
-        - '*\thor.exe'
-    SELECTION_9:
-        Image: null
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not ((SELECTION_4
-        or SELECTION_5 or SELECTION_6) or (SELECTION_7 and SELECTION_8) or (SELECTION_9)))
-falsepositives:
-- Used by some .NET binaries, minimal on user workstation.
-- Used by Microsoft SQL Server Management Studio
-id: 092bc4b9-3d1d-43b4-a6b4-8c8acd83522f
-level: medium
+references:
+    - https://adsecurity.org/?p=2921
+    - https://github.com/p3nt4/PowerShdll
+author: Tom Kern, oscd.community, Natalia Shornikova, Tim Shelton
+date: 2019/11/14
+modified: 2023/02/17
+tags:
+    - attack.t1059.001
+    - attack.execution
 logsource:
     category: image_load
     product: windows
-modified: 2023/02/17
-references:
-- https://adsecurity.org/?p=2921
-- https://github.com/p3nt4/PowerShdll
-related:
--   id: 867613fb-fa60-4497-a017-a82df74a172c
-    type: obsoletes
-status: experimental
-tags:
-- attack.t1059.001
-- attack.execution
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ImageLoaded|endswith:
+            - \System.Management.Automation.Dll
+            - \System.Management.Automation.ni.Dll
+    filter_generic:
+        -   Image:
+                - C:\Windows\System32\dsac.exe
+                - C:\Program Files\PowerShell\7\pwsh.exe
+        -   Image|endswith:
+                - \powershell.exe
+                - \powershell_ise.exe
+                - \WINDOWS\System32\sdiagnhost.exe
+                - \mscorsvw.exe
+                - \WINDOWS\System32\RemoteFXvGPUDisablement.exe
+                - \sqlps.exe
+                - \wsmprovhost.exe
+                - \winrshost.exe
+                - \syncappvpublishingserver.exe
+                - \runscripthelper.exe
+                - \ServerManager.exe
+                - \Microsoft SQL Server Management Studio *\Common*\IDE\Ssms.exe
+                - \IDE\devenv.exe
+                - \ServiceHub.VSDetouredHost.exe
+                - \ServiceHub.SettingsHost.exe
+                - \ServiceHub.Host.CLR.x86.exe
+                - \Citrix\ConfigSync\ConfigSyncRun.exe
+        -   Image|startswith:
+                - C:\Program Files (x86)\Microsoft Visual Studio\
+                - C:\Program Files\Microsoft Visual Studio\
+    filter_nextron:
+        Image|startswith: C:\Windows\Temp\asgard2-agent\
+        Image|endswith:
+            - \thor64.exe
+            - \thor.exe
+    filter_aurora:
+        Image: null
+    condition: image_load and (selection and not 1 of filter_*)
+falsepositives:
+    - Used by some .NET binaries, minimal on user workstation.
+    - Used by Microsoft SQL Server Management Studio
+level: medium
+ruletype: Sigma

@@ -1,36 +1,33 @@
 title: Create Volume Shadow Copy with Powershell
-ruletype: Sigma
-author: frack113
-date: 2022/01/12
+id: afd12fed-b0ec-45c9-a13d-aa86625dac81
+status: test
 description: Adversaries may attempt to access or create a copy of the Active Directory
     domain database in order to steal credential information
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*win32_shadowcopy*'
-    SELECTION_4:
-        ScriptBlockText: '*).Create(*'
-    SELECTION_5:
-        ScriptBlockText: '*ClientAccessible*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Legitimate PowerShell scripts
-id: afd12fed-b0ec-45c9-a13d-aa86625dac81
-level: high
+references:
+    - https://attack.mitre.org/datasources/DS0005/
+    - https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject?view=powershell-5.1&viewFallbackFrom=powershell-7
+author: frack113
+date: 2022/01/12
+tags:
+    - attack.credential_access
+    - attack.t1003.003
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://attack.mitre.org/datasources/DS0005/
-- https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.management/get-wmiobject?view=powershell-5.1&viewFallbackFrom=powershell-7
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.003
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - win32_shadowcopy
+            - ).Create(
+            - ClientAccessible
+    condition: ps_script and selection
+falsepositives:
+    - Legitimate PowerShell scripts
+level: high
+ruletype: Sigma

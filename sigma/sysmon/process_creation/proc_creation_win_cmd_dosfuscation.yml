@@ -1,44 +1,42 @@
 title: Potential Dosfuscation Activity
-ruletype: Sigma
+id: a77c1610-fc73-4019-8e29-0f51efc04a51
+status: experimental
+description: Detects possible payload obfuscation via the commandline
+references:
+    - https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf
+    - https://github.com/danielbohannon/Invoke-DOSfuscation
 author: frack113, Nasreddine Bencherchali (Nextron Systems)
 date: 2022/02/15
-description: Detects possible payload obfuscation via the commandline
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine:
-        - '*^^*'
-        - '*^|^*'
-        - '*,;,*'
-        - '*;;;;*'
-        - '*;; ;;*'
-        - '*(,(,*'
-        - '*%COMSPEC:~*'
-        - '* c^m^d*'
-        - '*^c^m^d*'
-        - '* c^md*'
-        - '* cm^d*'
-        - '*^cm^d*'
-        - '* s^et *'
-        - '* s^e^t *'
-        - '* se^t *'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: a77c1610-fc73-4019-8e29-0f51efc04a51
-level: medium
+modified: 2023/03/06
+tags:
+    - attack.execution
+    - attack.t1059
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/06
-references:
-- https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/dosfuscation-report.pdf
-- https://github.com/danielbohannon/Invoke-DOSfuscation
-status: experimental
-tags:
-- attack.execution
-- attack.t1059
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains:
+            - ^^
+            - ^|^
+            - ',;,'
+            - ;;;;
+            - ;; ;;
+            - (,(,
+            - '%COMSPEC:~'
+            - ' c^m^d'
+            - ^c^m^d
+            - ' c^md'
+            - ' cm^d'
+            - ^cm^d
+            - ' s^et '
+            - ' s^e^t '
+            - ' se^t '
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

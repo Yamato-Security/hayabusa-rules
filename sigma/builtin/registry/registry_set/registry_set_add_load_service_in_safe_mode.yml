@@ -1,48 +1,38 @@
 title: Registry Persitence via Service in Safe Mode
-ruletype: Sigma
-author: frack113
-date: 2022/04/04
+id: 1547e27c-3974-43e2-a7d7-7f484fb928ec
+status: experimental
 description: Detects the modification of the registry to allow a driver or service
     to persist in Safe Mode.
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: Setvalue
-    SELECTION_5:
-        TargetObject:
-        - HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\\*
-        - HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\\*
-    SELECTION_6:
-        TargetObject: '*\(Default)'
-    SELECTION_7:
-        NewValue: Service
-    SELECTION_8:
-        NewProcessName: C:\WINDOWS\system32\msiexec.exe
-    SELECTION_9:
-        TargetObject:
-        - HKLM\System\CurrentControlSet\Control\SafeBoot\Minimal\SAVService\(Default)
-        - HKLM\System\CurrentControlSet\Control\SafeBoot\Network\SAVService\(Default)
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8 and SELECTION_9)))
-falsepositives:
-- Unknown
-id: 1547e27c-3974-43e2-a7d7-7f484fb928ec
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-33---windows-add-registry-value-to-load-service-in-safe-mode-without-network
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-34---windows-add-registry-value-to-load-service-in-safe-mode-with-network
+author: frack113
+date: 2022/04/04
+modified: 2022/06/26
+tags:
+    - attack.defense_evasion
+    - attack.t1564.001
 logsource:
     category: registry_set
     product: windows
-modified: 2022/06/26
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-33---windows-add-registry-value-to-load-service-in-safe-mode-without-network
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md#atomic-test-34---windows-add-registry-value-to-load-service-in-safe-mode-with-network
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1564.001
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: Setvalue
+        TargetObject|startswith:
+            - HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\
+            - HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\
+        TargetObject|endswith: \(Default)
+        Details: Service
+    filter_sophos:
+        Image: C:\WINDOWS\system32\msiexec.exe
+        TargetObject:
+            - HKLM\System\CurrentControlSet\Control\SafeBoot\Minimal\SAVService\(Default)
+            - HKLM\System\CurrentControlSet\Control\SafeBoot\Network\SAVService\(Default)
+    condition: registry_set and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

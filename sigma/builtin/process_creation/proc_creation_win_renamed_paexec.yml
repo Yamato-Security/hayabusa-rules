@@ -1,57 +1,49 @@
 title: Renamed PAExec Execution
-ruletype: Sigma
+id: c4e49831-1496-40cf-8ce1-b53f942b02f9
+related:
+    -   id: 7b0666ad-3e38-4e3d-9bab-78b06de85f7b
+        type: obsoletes
+status: test
+description: Detects execution of renamed version of PAExec. Often used by attackers
+references:
+    - https://www.poweradmin.com/paexec/
+    - https://summit.fireeye.com/content/dam/fireeye-www/summit/cds-2018/presentations/cds18-technical-s05-att&cking-fin7.pdf
 author: Florian Roth (Nextron Systems), Jason Lynch
 date: 2021/05/22
-description: Detects execution of renamed version of PAExec. Often used by attackers
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        Description: PAExec Application
-    SELECTION_4:
-        OriginalFileName: PAExec.exe
-    SELECTION_5:
-        Product: '*PAExec*'
-    SELECTION_6:
-        Imphash:
-        - 11D40A7B7876288F919AB819CC2D9802
-        - 6444f8a34e99b8f7d9647de66aabe516
-        - dfd6aa3f7b2b1035b76b718f1ddc689f
-        - 1a6cca4d5460b1710a12dea39e4a592c
-    SELECTION_7:
-        Hashes:
-        - '*IMPHASH=11D40A7B7876288F919AB819CC2D9802*'
-        - '*IMPHASH=6444f8a34e99b8f7d9647de66aabe516*'
-        - '*IMPHASH=dfd6aa3f7b2b1035b76b718f1ddc689f*'
-        - '*IMPHASH=1a6cca4d5460b1710a12dea39e4a592c*'
-    SELECTION_8:
-        NewProcessName: '*\paexec.exe'
-    SELECTION_9:
-        NewProcessName: C:\Windows\PAExec-*
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-        or SELECTION_6 or SELECTION_7) and  not (SELECTION_8 or SELECTION_9))
-falsepositives:
-- Weird admins that rename their tools
-- Software companies that bundle PAExec with their software and rename it, so that
-    it is less embarrassing
-- When executed with the "-s" flag. PAExec will copy itself to the "C:\Windows\" directory
-    with a different name. Usually like this "PAExec-[XXXXX]-[ComputerName]"
-id: c4e49831-1496-40cf-8ce1-b53f942b02f9
-level: high
+modified: 2023/02/14
+tags:
+    - attack.defense_evasion
+    - attack.t1202
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/14
-references:
-- https://www.poweradmin.com/paexec/
-- https://summit.fireeye.com/content/dam/fireeye-www/summit/cds-2018/presentations/cds18-technical-s05-att&cking-fin7.pdf
-related:
--   id: 7b0666ad-3e38-4e3d-9bab-78b06de85f7b
-    type: obsoletes
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1202
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   Description: PAExec Application
+        -   OriginalFileName: PAExec.exe
+        -   Product|contains: PAExec
+        -   Imphash:
+                - 11D40A7B7876288F919AB819CC2D9802
+                - 6444f8a34e99b8f7d9647de66aabe516
+                - dfd6aa3f7b2b1035b76b718f1ddc689f
+                - 1a6cca4d5460b1710a12dea39e4a592c
+        -   Hashes|contains:
+                - IMPHASH=11D40A7B7876288F919AB819CC2D9802
+                - IMPHASH=6444f8a34e99b8f7d9647de66aabe516
+                - IMPHASH=dfd6aa3f7b2b1035b76b718f1ddc689f
+                - IMPHASH=1a6cca4d5460b1710a12dea39e4a592c
+    filter:
+        -   NewProcessName|endswith: \paexec.exe
+        -   NewProcessName|startswith: C:\Windows\PAExec-
+    condition: process_creation and (selection and not filter)
+falsepositives:
+    - Weird admins that rename their tools
+    - Software companies that bundle PAExec with their software and rename it, so
+        that it is less embarrassing
+    - When executed with the "-s" flag. PAExec will copy itself to the "C:\Windows\"
+        directory with a different name. Usually like this "PAExec-[XXXXX]-[ComputerName]"
+level: high
+ruletype: Sigma

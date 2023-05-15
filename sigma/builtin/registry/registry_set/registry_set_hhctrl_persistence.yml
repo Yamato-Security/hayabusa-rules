@@ -1,36 +1,29 @@
 title: Persistence Via Hhctrl.ocx
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/21
+id: f10ed525-97fe-4fed-be7c-2feecca941b1
+status: experimental
 description: Detects when an attacker modifies the registry value of the "hhctrl"
     to point to a custom binary
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*\CLSID\{52A2AAAE-085D-4187-97EA-8C30DB990436}\InprocServer32\(Default)*'
-    SELECTION_6:
-        NewValue: C:\Windows\System32\hhctrl.ocx
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6))
-falsepositives:
-- Unlikely
-id: f10ed525-97fe-4fed-be7c-2feecca941b1
-level: high
+references:
+    - https://persistence-info.github.io/Data/hhctrl.html
+    - https://www.hexacorn.com/blog/2018/04/23/beyond-good-ol-run-key-part-77/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/21
+tags:
+    - attack.persistence
 logsource:
     category: registry_set
     product: windows
-references:
-- https://persistence-info.github.io/Data/hhctrl.html
-- https://www.hexacorn.com/blog/2018/04/23/beyond-good-ol-run-key-part-77/
-status: experimental
-tags:
-- attack.persistence
-
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection:
+        EventType: SetValue
+        TargetObject|contains: \CLSID\{52A2AAAE-085D-4187-97EA-8C30DB990436}\InprocServer32\(Default)
+    filter:
+        Details: C:\Windows\System32\hhctrl.ocx
+    condition: registry_set and (selection and not filter)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

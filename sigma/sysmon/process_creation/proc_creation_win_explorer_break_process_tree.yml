@@ -1,8 +1,6 @@
 title: Explorer Process Tree Break
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems),
-    @gott_cyber
-date: 2019/06/29
+id: 949f1ffb-6e85-4f00-ae1e-c3c5b190d605
+status: test
 description: 'Detects a command line process that uses explorer.exe to launch arbitrary
     commands or binaries,
 
@@ -10,34 +8,32 @@ description: 'Detects a command line process that uses explorer.exe to launch ar
     parent a new instance of explorer spawning from "svchost"
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*/factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}*'
-    SELECTION_4:
-        CommandLine: '*explorer.exe*'
-    SELECTION_5:
-        CommandLine: '* /root,*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)))
-falsepositives:
-- Unknown
-id: 949f1ffb-6e85-4f00-ae1e-c3c5b190d605
-level: medium
+references:
+    - https://twitter.com/CyberRaiju/status/1273597319322058752
+    - https://twitter.com/bohops/status/1276357235954909188?s=12
+    - https://twitter.com/nas_bench/status/1535322450858233858
+    - https://securityboulevard.com/2019/09/deobfuscating-ostap-trickbots-34000-line-javascript-downloader/
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems),
+    @gott_cyber
+date: 2019/06/29
+modified: 2022/09/20
+tags:
+    - attack.defense_evasion
+    - attack.t1036
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/20
-references:
-- https://twitter.com/CyberRaiju/status/1273597319322058752
-- https://twitter.com/bohops/status/1276357235954909188?s=12
-- https://twitter.com/nas_bench/status/1535322450858233858
-- https://securityboulevard.com/2019/09/deobfuscating-ostap-trickbots-34000-line-javascript-downloader/
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1036
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   CommandLine|contains: /factory,{75dff2b7-6936-4c06-a8bb-676a7b00b24b}
+        -   CommandLine|contains|all:
+                - explorer.exe
+                - ' /root,'
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

@@ -1,32 +1,29 @@
 title: HackTool - Dumpert Process Dumper Execution
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2020/02/04
+id: 2704ab9e-afe2-4854-a3b1-0c0706d03578
+status: test
 description: Detects the use of Dumpert process dumper, which dumps the lsass.exe
     process memory
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Hashes: '*09D278F9DE118EF09163C6140255C690*'
-    SELECTION_4:
-        CommandLine: '*Dumpert.dll*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Very unlikely
-id: 2704ab9e-afe2-4854-a3b1-0c0706d03578
-level: critical
+references:
+    - https://github.com/outflanknl/Dumpert
+    - https://unit42.paloaltonetworks.com/actors-still-exploiting-sharepoint-vulnerability/
+author: Florian Roth (Nextron Systems)
+date: 2020/02/04
+modified: 2023/02/04
+tags:
+    - attack.credential_access
+    - attack.t1003.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://github.com/outflanknl/Dumpert
-- https://unit42.paloaltonetworks.com/actors-still-exploiting-sharepoint-vulnerability/
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Hashes|contains: 09D278F9DE118EF09163C6140255C690
+        -   CommandLine|contains: Dumpert.dll
+    condition: process_creation and selection
+falsepositives:
+    - Very unlikely
+level: critical
+ruletype: Sigma

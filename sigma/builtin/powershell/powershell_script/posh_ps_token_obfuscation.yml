@@ -1,49 +1,42 @@
 title: Powershell Token Obfuscation - Powershell
-ruletype: Sigma
+id: f3a98ce4-6164-4dd4-867c-4d83de7eca51
+related:
+    -   id: deb9b646-a508-44ee-b7c9-d8965921c6b6
+        type: similar
+status: experimental
+description: Detects TOKEN OBFUSCATION technique from Invoke-Obfuscation
+references:
+    - https://github.com/danielbohannon/Invoke-Obfuscation
 author: frack113
 date: 2022/12/27
-description: Detects TOKEN OBFUSCATION technique from Invoke-Obfuscation
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText|re: \w+`(\w+|-|.)`[\w+|\s]
-    SELECTION_4:
-        ScriptBlockText|re: '"(\{\d\}){2,}"\s*-f'
-    SELECTION_5:
-        ScriptBlockText|re: \$\{((e|n|v)*`(e|n|v)*)+:path\}|\$\{((e|n|v)*`(e|n|v)*)+:((p|a|t|h)*`(p|a|t|h)*)+\}|\$\{env:((p|a|t|h)*`(p|a|t|h)*)+\}
-    SELECTION_6:
-        ScriptBlockText:
-        - '*it will return true or false instead*'
-        - '*The function also prevents `Get-ItemProperty` from failing*'
-    SELECTION_7:
-        Path: C:\Program Files\Microsoft\Exchange Server\\*
-    SELECTION_8:
-        Path: '*\bin\servicecontrol.ps1'
-    SELECTION_9:
-        ScriptBlockText: '*`r`n*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
-        and  not ((SELECTION_6) or (SELECTION_7 and SELECTION_8 and SELECTION_9)))
-falsepositives:
-- Unknown
-id: f3a98ce4-6164-4dd4-867c-4d83de7eca51
-level: high
+modified: 2023/03/24
+tags:
+    - attack.defense_evasion
+    - attack.t1027.009
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2023/03/24
-references:
-- https://github.com/danielbohannon/Invoke-Obfuscation
-related:
--   id: deb9b646-a508-44ee-b7c9-d8965921c6b6
-    type: similar
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1027.009
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        -   ScriptBlockText|re: \w+`(\w+|-|.)`[\w+|\s]
+        -   ScriptBlockText|re: '"(\{\d\}){2,}"\s*-f'
+        -   ScriptBlockText|re: \$\{((e|n|v)*`(e|n|v)*)+:path\}|\$\{((e|n|v)*`(e|n|v)*)+:((p|a|t|h)*`(p|a|t|h)*)+\}|\$\{env:((p|a|t|h)*`(p|a|t|h)*)+\}
+    filter_chocolatey:
+        ScriptBlockText|contains:
+            - it will return true or false instead
+            - The function also prevents `Get-ItemProperty` from failing
+    filter_exchange:
+        Path|startswith: C:\Program Files\Microsoft\Exchange Server\
+        Path|endswith: \bin\servicecontrol.ps1
+        ScriptBlockText|contains: '`r`n'
+    condition: ps_script and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

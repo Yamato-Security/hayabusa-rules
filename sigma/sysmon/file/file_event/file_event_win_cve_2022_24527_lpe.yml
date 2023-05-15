@@ -1,33 +1,31 @@
 title: CVE-2022-24527 Microsoft Connected Cache LPE
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/04/13
+id: e0a41412-c69a-446f-8e6e-0e6d7483dad7
+status: experimental
 description: Detects files created during the local privilege exploitation of CVE-2022-24527
     Microsoft Connected Cache
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*WindowsPowerShell\Modules\webAdministration\webAdministration.psm1'
-    SELECTION_4:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: e0a41412-c69a-446f-8e6e-0e6d7483dad7
-level: high
+references:
+    - https://www.rapid7.com/blog/post/2022/04/12/cve-2022-24527-microsoft-connected-cache-local-privilege-escalation-fixed/
+author: Florian Roth (Nextron Systems)
+date: 2022/04/13
+tags:
+    - attack.privilege_escalation
+    - attack.t1059.001
+    - cve.2022.24527
 logsource:
     category: file_event
     product: windows
-references:
-- https://www.rapid7.com/blog/post/2022/04/12/cve-2022-24527-microsoft-connected-cache-local-privilege-escalation-fixed/
-status: experimental
-tags:
-- attack.privilege_escalation
-- attack.t1059.001
-- cve.2022.24527
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|endswith: WindowsPowerShell\Modules\webAdministration\webAdministration.psm1
+    filter:
+        User|contains:
+            - AUTHORI
+            - AUTORI
+    condition: file_event and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

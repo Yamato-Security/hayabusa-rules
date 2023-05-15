@@ -1,49 +1,45 @@
 title: Use of Forfiles For Execution
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/06/14
+id: 9aa5106d-bce3-4b13-86df-3a20f1d5cf0b
+related:
+    -   id: a85cf4e3-56ee-4e79-adeb-789f8fb209a8
+        type: obsoletes
+    -   id: fa47597e-90e9-41cd-ab72-c3b74cfb0d02
+        type: obsoletes
+status: experimental
 description: Execute commands and binaries from the context of "forfiles". This is
     used as a LOLBIN for example to bypass application whitelisting.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\forfiles.exe'
-    SELECTION_4:
-        OriginalFileName: forfiles.exe
-    SELECTION_5:
-        CommandLine:
-        - '* /p *'
-        - '* -p *'
-    SELECTION_6:
-        CommandLine:
-        - '* /m *'
-        - '* -m *'
-    SELECTION_7:
-        CommandLine:
-        - '* /c *'
-        - '* -c *'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Legitimate use via a batch script or by an administrator.
-id: 9aa5106d-bce3-4b13-86df-3a20f1d5cf0b
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/Binaries/Forfiles/
+    - https://pentestlab.blog/2020/07/06/indirect-command-execution/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/06/14
+tags:
+    - attack.execution
+    - attack.t1059
 logsource:
     category: process_creation
     product: windows
-references:
-- https://lolbas-project.github.io/lolbas/Binaries/Forfiles/
-- https://pentestlab.blog/2020/07/06/indirect-command-execution/
-related:
--   id: a85cf4e3-56ee-4e79-adeb-789f8fb209a8
-    type: obsoletes
--   id: fa47597e-90e9-41cd-ab72-c3b74cfb0d02
-    type: obsoletes
-status: experimental
-tags:
-- attack.execution
-- attack.t1059
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \forfiles.exe
+        -   OriginalFileName: forfiles.exe
+    selection_cli_p:
+        CommandLine|contains:
+            - ' /p '
+            - ' -p '
+    selection_cli_m:
+        CommandLine|contains:
+            - ' /m '
+            - ' -m '
+    selection_cli_c:
+        CommandLine|contains:
+            - ' /c '
+            - ' -c '
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - Legitimate use via a batch script or by an administrator.
+level: medium
+ruletype: Sigma

@@ -1,38 +1,33 @@
 title: Potential SPN Enumeration Via Setspn.EXE
-ruletype: Sigma
+id: 1eeed653-dbc8-4187-ad0c-eeebb20e6599
+status: test
+description: Detects service principal name (SPN) enumeration used for Kerberoasting
+references:
+    - https://web.archive.org/web/20200329173843/https://p16.praetorian.com/blog/how-to-use-kerberoasting-t1208-for-privilege-escalation
+    - https://www.praetorian.com/blog/how-to-use-kerberoasting-t1208-for-privilege-escalation/?edition=2019
 author: Markus Neis, keepwatch
 date: 2018/11/14
-description: Detects service principal name (SPN) enumeration used for Kerberoasting
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\setspn.exe'
-    SELECTION_4:
-        OriginalFileName: setspn.exe
-    SELECTION_5:
-        Description: '*Query or reset the computer*'
-    SELECTION_6:
-        Description: '*SPN attribute*'
-    SELECTION_7:
-        CommandLine: '*-q*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or (SELECTION_5
-        and SELECTION_6)) and SELECTION_7)
-falsepositives:
-- Administration activity
-id: 1eeed653-dbc8-4187-ad0c-eeebb20e6599
-level: medium
+modified: 2023/02/13
+tags:
+    - attack.credential_access
+    - attack.t1558.003
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-references:
-- https://web.archive.org/web/20200329173843/https://p16.praetorian.com/blog/how-to-use-kerberoasting-t1208-for-privilege-escalation
-- https://www.praetorian.com/blog/how-to-use-kerberoasting-t1208-for-privilege-escalation/?edition=2019
-status: test
-tags:
-- attack.credential_access
-- attack.t1558.003
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_pe:
+        -   NewProcessName|endswith: \setspn.exe
+        -   OriginalFileName: setspn.exe
+        -   Description|contains|all:
+                - Query or reset the computer
+                - SPN attribute
+    selection_cli:
+        CommandLine|contains: -q
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Administration activity
+level: medium
+ruletype: Sigma

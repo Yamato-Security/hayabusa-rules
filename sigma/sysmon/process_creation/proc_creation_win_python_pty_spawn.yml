@@ -1,40 +1,37 @@
 title: Python Spawning Pretty TTY on Windows
-ruletype: Sigma
+id: 480e7e51-e797-47e3-8d72-ebfce65b6d8d
+related:
+    -   id: 899133d5-4d7c-4a7f-94ee-27355c879d90
+        type: derived
+status: experimental
+description: Detects python spawning a pretty tty
+references:
+    - https://www.volexity.com/blog/2022/06/02/zero-day-exploitation-of-atlassian-confluence/
 author: Nextron Systems
 date: 2022/06/03
-description: Detects python spawning a pretty tty
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*python.exe'
-        - '*python3.exe'
-        - '*python2.exe'
-    SELECTION_4:
-        CommandLine: '*import pty*'
-    SELECTION_5:
-        CommandLine: '*.spawn(*'
-    SELECTION_6:
-        CommandLine: '*from pty import spawn*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and ((SELECTION_4 and
-        SELECTION_5) or SELECTION_6))
-falsepositives:
-- Unknown
-id: 480e7e51-e797-47e3-8d72-ebfce65b6d8d
-level: high
+tags:
+    - attack.execution
+    - attack.t1059
 logsource:
     category: process_creation
     product: windows
-references:
-- https://www.volexity.com/blog/2022/06/02/zero-day-exploitation-of-atlassian-confluence/
-related:
--   id: 899133d5-4d7c-4a7f-94ee-27355c879d90
-    type: derived
-status: experimental
-tags:
-- attack.execution
-- attack.t1059
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        Image|endswith:
+            - python.exe
+            - python3.exe
+            - python2.exe
+    selection_cli_1:
+        CommandLine|contains|all:
+            - import pty
+            - .spawn(
+    selection_cli_2:
+        CommandLine|contains: from pty import spawn
+    condition: process_creation and (selection_img and 1 of selection_cli_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

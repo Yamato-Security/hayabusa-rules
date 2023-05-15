@@ -1,31 +1,29 @@
 title: Execution via CL_Invocation.ps1
-ruletype: Sigma
+id: a0459f02-ac51-4c09-b511-b8c9203fc429
+status: test
+description: Detects Execution via SyncInvoke in CL_Invocation.ps1 module
+references:
+    - https://lolbas-project.github.io/lolbas/Scripts/Cl_invocation/
+    - https://twitter.com/bohops/status/948061991012327424
 author: oscd.community, Natalia Shornikova
 date: 2020/10/14
-description: Detects Execution via SyncInvoke in CL_Invocation.ps1 module
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*CL_Invocation.ps1*'
-    SELECTION_4:
-        CommandLine: '*SyncInvoke*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: a0459f02-ac51-4c09-b511-b8c9203fc429
-level: high
+modified: 2022/10/09
+tags:
+    - attack.defense_evasion
+    - attack.t1216
 logsource:
     category: process_creation
     product: windows
-modified: 2022/10/09
-references:
-- https://lolbas-project.github.io/lolbas/Scripts/Cl_invocation/
-- https://twitter.com/bohops/status/948061991012327424
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1216
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - CL_Invocation.ps1
+            - SyncInvoke
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,45 +1,42 @@
 title: Abuse of Service Permissions to Hide Services Via Set-Service - PS
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/10/17
+id: 953945c5-22fe-4a92-9f8a-a9edc1e522da
+related:
+    -   id: 514e4c3a-c77d-4cde-a00f-046425e2301e
+        type: similar
+status: experimental
 description: Detects usage of the "Set-Service" powershell cmdlet to configure a new
     SecurityDescriptor that allows a service to be hidden from other utilities such
     as "sc.exe", "Get-Service"...etc. (Works only in powershell 7)
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Set-Service *'
-    SELECTION_4:
-        ScriptBlockText: '*DCLCWPDTSD*'
-    SELECTION_5:
-        ScriptBlockText:
-        - '*-SecurityDescriptorSddl *'
-        - '*-sd *'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Rare intended use of hidden services
-- Rare FP could occur due to the non linearity of the ScriptBlockText log
-id: 953945c5-22fe-4a92-9f8a-a9edc1e522da
-level: high
+references:
+    - https://twitter.com/Alh4zr3d/status/1580925761996828672
+    - https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-service?view=powershell-7.2
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/10/17
+tags:
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1574.011
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://twitter.com/Alh4zr3d/status/1580925761996828672
-- https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.management/set-service?view=powershell-7.2
-related:
--   id: 514e4c3a-c77d-4cde-a00f-046425e2301e
-    type: similar
-status: experimental
-tags:
-- attack.persistence
-- attack.defense_evasion
-- attack.privilege_escalation
-- attack.t1574.011
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - 'Set-Service '
+            - DCLCWPDTSD
+        ScriptBlockText|contains:
+            - '-SecurityDescriptorSddl '
+            - '-sd '
+    condition: ps_script and selection
+falsepositives:
+    - Rare intended use of hidden services
+    - Rare FP could occur due to the non linearity of the ScriptBlockText log
+level: high
+ruletype: Sigma

@@ -1,34 +1,31 @@
 title: TeamViewer Remote Session
-ruletype: Sigma
+id: 162ab1e4-6874-4564-853c-53ec3ab8be01
+status: test
+description: Detects the creation of log files during a TeamViewer remote session
+references:
+    - https://www.teamviewer.com/en-us/
 author: Florian Roth (Nextron Systems)
 date: 2022/01/30
-description: Detects the creation of log files during a TeamViewer remote session
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename:
-        - '*\TeamViewer\RemotePrinting\tvprint.db'
-        - '*\TeamViewer\TVNetwork.log'
-    SELECTION_4:
-        TargetFilename: '*\TeamViewer*'
-    SELECTION_5:
-        TargetFilename: '*_Logfile.log*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5)))
-falsepositives:
-- Legitimate uses of TeamViewer in an organisation
-id: 162ab1e4-6874-4564-853c-53ec3ab8be01
-level: medium
-logsource:
-    category: file_event
-    product: windows
-references:
-- https://www.teamviewer.com/en-us/
-status: test
 tags:
-- attack.command_and_control
-- attack.t1219
-
+    - attack.command_and_control
+    - attack.t1219
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection1:
+        TargetFilename|endswith:
+            - \TeamViewer\RemotePrinting\tvprint.db
+            - \TeamViewer\TVNetwork.log
+    selection2:
+        TargetFilename|contains|all:
+            - \TeamViewer
+            - _Logfile.log
+    condition: file_event and (1 of selection*)
+falsepositives:
+    - Legitimate uses of TeamViewer in an organisation
+level: medium
+ruletype: Sigma

@@ -1,7 +1,6 @@
 title: SystemStateBackup Deleted Using Wbadmin.EXE
-ruletype: Sigma
-author: frack113
-date: 2021/12/13
+id: 89f75308-5b1b-4390-b2d8-d6b2340efaf8
+status: test
 description: 'Deletes the Windows systemstatebackup using wbadmin.exe.
 
     This technique is used by numerous ransomware families.
@@ -9,35 +8,31 @@ description: 'Deletes the Windows systemstatebackup using wbadmin.exe.
     This may only be successful on server platforms that have Windows Backup enabled.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\wbadmin.exe'
-    SELECTION_4:
-        OriginalFileName: WBADMIN.EXE
-    SELECTION_5:
-        CommandLine: '*delete *'
-    SELECTION_6:
-        CommandLine: '*systemstatebackup *'
-    SELECTION_7:
-        CommandLine: '*-keepVersions:0*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
-falsepositives:
-- Unknown
-id: 89f75308-5b1b-4390-b2d8-d6b2340efaf8
-level: high
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-5---windows---delete-volume-shadow-copies-via-wmi-with-powershell
+author: frack113
+date: 2021/12/13
+modified: 2023/02/04
+tags:
+    - attack.impact
+    - attack.t1490
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-5---windows---delete-volume-shadow-copies-via-wmi-with-powershell
-status: test
-tags:
-- attack.impact
-- attack.t1490
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \wbadmin.exe
+        -   OriginalFileName: WBADMIN.EXE
+    selection_cli:
+        CommandLine|contains|all:
+            - 'delete '
+            - 'systemstatebackup '
+            - -keepVersions:0
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

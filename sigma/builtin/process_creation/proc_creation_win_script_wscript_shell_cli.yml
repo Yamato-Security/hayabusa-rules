@@ -1,32 +1,29 @@
 title: Wscript Shell Run In CommandLine
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/08/31
+id: 2c28c248-7f50-417a-9186-a85b223010ee
+status: experimental
 description: Detects the presence of the keywords "Wscript", "Shell" and "Run" in
     the command, which could indicate a suspicious activity
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*Wscript.*'
-    SELECTION_4:
-        CommandLine: '*.Shell*'
-    SELECTION_5:
-        CommandLine: '*.Run*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Rare legitimate inline scripting by some administrators
-id: 2c28c248-7f50-417a-9186-a85b223010ee
-level: high
+references:
+    - http://blog.talosintelligence.com/2022/08/modernloader-delivers-multiple-stealers.html
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/31
+tags:
+    - attack.execution
+    - attack.t1059
 logsource:
     category: process_creation
     product: windows
-references:
-- http://blog.talosintelligence.com/2022/08/modernloader-delivers-multiple-stealers.html
-status: experimental
-tags:
-- attack.execution
-- attack.t1059
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - Wscript.
+            - .Shell
+            - .Run
+    condition: process_creation and selection
+falsepositives:
+    - Rare legitimate inline scripting by some administrators
+level: high
+ruletype: Sigma

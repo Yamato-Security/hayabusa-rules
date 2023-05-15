@@ -1,7 +1,6 @@
 title: Suspicious PowerShell WindowStyle Option
-ruletype: Sigma
-author: frack113, Tim Shelton (fp AWS)
-date: 2021/10/20
+id: 313fbb0a-a341-4682-848d-6d6f8c4fab7c
+status: test
 description: 'Adversaries may use hidden windows to conceal malicious activity from
     the plain sight of users.
 
@@ -9,38 +8,35 @@ description: 'Adversaries may use hidden windows to conceal malicious activity f
     out an operation can be hidden
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*powershell*'
-    SELECTION_4:
-        ScriptBlockText: '*WindowStyle*'
-    SELECTION_5:
-        ScriptBlockText: '*Hidden*'
-    SELECTION_6:
-        ScriptBlockText: '*:\Program Files\Amazon\WorkSpacesConfig\Scripts\\*'
-    SELECTION_7:
-        ScriptBlockText: '*$PSScriptRoot\Module\WorkspaceScriptModule\WorkspaceScriptModule*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5) and  not (SELECTION_6 and SELECTION_7))
-falsepositives:
-- Unknown
-id: 313fbb0a-a341-4682-848d-6d6f8c4fab7c
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.003/T1564.003.md
+author: frack113, Tim Shelton (fp AWS)
+date: 2021/10/20
+modified: 2023/01/03
+tags:
+    - attack.defense_evasion
+    - attack.t1564.003
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2023/01/03
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1564.003/T1564.003.md
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1564.003
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - powershell
+            - WindowStyle
+            - Hidden
+    filter:
+        ScriptBlockText|contains|all:
+            - :\Program Files\Amazon\WorkSpacesConfig\Scripts\
+            - $PSScriptRoot\Module\WorkspaceScriptModule\WorkspaceScriptModule
+    condition: ps_script and (selection and not filter)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

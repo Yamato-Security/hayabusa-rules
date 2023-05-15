@@ -1,33 +1,30 @@
 title: Wmiprvse Wbemcomn DLL Hijack
-ruletype: Sigma
-author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
-date: 2020/10/12
+id: 7707a579-e0d8-4886-a853-ce47e4575aaa
+status: test
 description: Detects a threat actor creating a file named `wbemcomn.dll` in the `C:\Windows\System32\wbem\`
     directory over the network and loading it for a WMI DLL Hijack scenario.
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\wmiprvse.exe'
-    SELECTION_4:
-        ImageLoaded: '*\wbem\wbemcomn.dll'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 7707a579-e0d8-4886-a853-ce47e4575aaa
-level: high
-logsource:
-    category: image_load
-    product: windows
-modified: 2022/10/09
 references:
-- https://threathunterplaybook.com/hunts/windows/201009-RemoteWMIWbemcomnDLLHijack/notebook.html
-status: test
+    - https://threathunterplaybook.com/hunts/windows/201009-RemoteWMIWbemcomnDLLHijack/notebook.html
+author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
+date: 2020/10/12
+modified: 2022/10/09
 tags:
-- attack.execution
-- attack.t1047
-- attack.lateral_movement
-- attack.t1021.002
-
+    - attack.execution
+    - attack.t1047
+    - attack.lateral_movement
+    - attack.t1021.002
+logsource:
+    product: windows
+    category: image_load
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \wmiprvse.exe
+        ImageLoaded|endswith: \wbem\wbemcomn.dll
+    condition: image_load and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

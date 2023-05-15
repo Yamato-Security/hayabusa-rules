@@ -1,48 +1,39 @@
 title: Suspicious Windows Defender Folder Exclusion Added Via Reg.EXE
-ruletype: Sigma
-author: frack113
-date: 2022/02/13
+id: 48917adc-a28e-4f5d-b729-11e75da8941f
+status: experimental
 description: Detects the usage of "reg.exe" to add Defender folder exclusions. Qbot
     has been seen using this technique to add exlcusions for folders within AppData
     and ProgramData.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '*0*'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\reg.exe'
-    SELECTION_4:
-        CommandLine:
-        - '*SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths*'
-        - '*SOFTWARE\Microsoft\Microsoft Antimalware\Exclusions\Paths*'
-    SELECTION_5:
-        CommandLine: '*ADD *'
-    SELECTION_6:
-        CommandLine: '*/t *'
-    SELECTION_7:
-        CommandLine: '*REG_DWORD *'
-    SELECTION_8:
-        CommandLine: '*/v *'
-    SELECTION_9:
-        CommandLine: '*/d *'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9 and SELECTION_10)
-falsepositives:
-- Legitimate use
-id: 48917adc-a28e-4f5d-b729-11e75da8941f
-level: medium
+references:
+    - https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/
+    - https://redcanary.com/threat-detection-report/threats/qbot/
+author: frack113
+date: 2022/02/13
+modified: 2023/02/04
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/
-- https://redcanary.com/threat-detection-report/threats/qbot/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains:
+            - SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths
+            - SOFTWARE\Microsoft\Microsoft Antimalware\Exclusions\Paths
+        CommandLine|contains|all:
+            - 'ADD '
+            - '/t '
+            - 'REG_DWORD '
+            - '/v '
+            - '/d '
+            - '0'
+        NewProcessName|endswith: \reg.exe
+    condition: process_creation and selection
+falsepositives:
+    - Legitimate use
+level: medium
+ruletype: Sigma

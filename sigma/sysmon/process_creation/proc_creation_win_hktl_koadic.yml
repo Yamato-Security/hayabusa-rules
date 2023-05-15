@@ -1,44 +1,39 @@
 title: HackTool - Koadic Execution
-ruletype: Sigma
+id: 5cddf373-ef00-4112-ad72-960ac29bac34
+status: test
+description: Detects command line parameters used by Koadic hack tool
+references:
+    - https://unit42.paloaltonetworks.com/unit42-sofacy-groups-parallel-attacks/
+    - https://github.com/offsecginger/koadic/blob/457f9a3ff394c989cdb4c599ab90eb34fb2c762c/data/stager/js/stdlib.js
+    - https://blog.f-secure.com/hunting-for-koadic-a-com-based-rootkit/
 author: wagga, Jonhnathan Ribeiro, oscd.community
 date: 2020/01/12
-description: Detects command line parameters used by Koadic hack tool
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\cmd.exe'
-    SELECTION_4:
-        OriginalFileName: Cmd.Exe
-    SELECTION_5:
-        CommandLine: '*/q*'
-    SELECTION_6:
-        CommandLine: '*/c*'
-    SELECTION_7:
-        CommandLine: '*chcp*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-- ParentCommandLine
-id: 5cddf373-ef00-4112-ad72-960ac29bac34
-level: high
+modified: 2023/02/11
+tags:
+    - attack.execution
+    - attack.t1059.003
+    - attack.t1059.005
+    - attack.t1059.007
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/11
-references:
-- https://unit42.paloaltonetworks.com/unit42-sofacy-groups-parallel-attacks/
-- https://github.com/offsecginger/koadic/blob/457f9a3ff394c989cdb4c599ab90eb34fb2c762c/data/stager/js/stdlib.js
-- https://blog.f-secure.com/hunting-for-koadic-a-com-based-rootkit/
-status: test
-tags:
-- attack.execution
-- attack.t1059.003
-- attack.t1059.005
-- attack.t1059.007
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \cmd.exe
+        -   OriginalFileName: Cmd.Exe
+    selection_cli:
+        CommandLine|contains|all:
+            - /q
+            - /c
+            - chcp
+    condition: process_creation and (all of selection_*)
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,33 +1,29 @@
 title: Suspicious Dropbox API Usage
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/04/20
+id: 25eabf56-22f0-4915-a1ed-056b8dae0a68
+status: experimental
 description: Detects an executable that isn't dropbox but communicates with the Dropbox
     API
-detection:
-    SELECTION_1:
-        EventID: 3
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Initiated: 'true'
-    SELECTION_4:
-        DestinationHostname:
-        - '*api.dropboxapi.com'
-        - '*content.dropboxapi.com'
-    SELECTION_5:
-        Image: '*\Dropbox*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        (SELECTION_5))
-falsepositives:
-- Legitimate use of the API with a tool that the author wasn't aware of
-id: 25eabf56-22f0-4915-a1ed-056b8dae0a68
-level: high
+references:
+    - https://app.any.run/tasks/7e906adc-9d11-447f-8641-5f40375ecebb
+    - https://www.zscaler.com/blogs/security-research/new-espionage-attack-molerats-apt-targeting-users-middle-east
+author: Florian Roth (Nextron Systems)
+date: 2022/04/20
 logsource:
     category: network_connection
     product: windows
-references:
-- https://app.any.run/tasks/7e906adc-9d11-447f-8641-5f40375ecebb
-- https://www.zscaler.com/blogs/security-research/new-espionage-attack-molerats-apt-targeting-users-middle-east
-status: experimental
-
+detection:
+    network_connection:
+        EventID: 3
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Initiated: 'true'
+        DestinationHostname|endswith:
+            - api.dropboxapi.com
+            - content.dropboxapi.com
+    filter:
+        Image|contains: \Dropbox
+    condition: network_connection and (selection and not filter)
+falsepositives:
+    - Legitimate use of the API with a tool that the author wasn't aware of
+level: high
+ruletype: Sigma

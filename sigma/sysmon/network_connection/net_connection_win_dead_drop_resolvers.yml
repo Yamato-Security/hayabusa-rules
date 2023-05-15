@@ -1,108 +1,99 @@
 title: Potential Dead Drop Resolvers
-ruletype: Sigma
-author: Sorina Ionescu
-date: 2022/08/17
+id: 297ae038-edc2-4b2e-bb3e-7c5fc94dd5c7
+status: test
 description: Detects an executable, which is not an internet browser, making DNS request
     to legit popular websites, which were seen to be used as dead drop resolvers in
     previous attacks.
-detection:
-    SELECTION_1:
-        EventID: 3
-    SELECTION_10:
-        Image: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\\*
-    SELECTION_11:
-        Image: '*\WindowsApps\MicrosoftEdge.exe'
-    SELECTION_12:
-        Image:
-        - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
-        - C:\Program Files\Microsoft\Edge\Application\msedge.exe
-    SELECTION_13:
-        Image:
-        - C:\Program Files (x86)\Microsoft\EdgeCore\\*
-        - C:\Program Files\Microsoft\EdgeCore\\*
-    SELECTION_14:
-        Image:
-        - '*\msedge.exe'
-        - '*\msedgewebview2.exe'
-    SELECTION_15:
-        Image: '*\opera.exe'
-    SELECTION_16:
-        Image: '*\safari.exe'
-    SELECTION_17:
-        Image: '*\seamonkey.exe'
-    SELECTION_18:
-        Image: '*\vivaldi.exe'
-    SELECTION_19:
-        Image: '*\whale.exe'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_20:
-        Image:
-        - '*\MsMpEng.exe'
-        - '*\MsSense.exe'
-    SELECTION_21:
-        Image: '*\PRTG Probe.exe'
-    SELECTION_22:
-        Image: '*\Engine.exe'
-    SELECTION_3:
-        Initiated: 'true'
-    SELECTION_4:
-        DestinationHostname:
-        - '*.cloudflare.com'
-        - '*.githubusercontent.com'
-        - '*cdn.discordapp.com'
-        - '*docs.google.com'
-        - '*facebook.com'
-        - '*feeds.rapidfeeds.com'
-        - '*fotolog.com'
-        - '*imgur.com'
-        - '*livejournal.com'
-        - '*paste.ee'
-        - '*pastebin.com'
-        - '*pastebin.pl'
-        - '*pastetext.net'
-        - '*reddit.com'
-        - '*steamcommunity.com'
-        - '*technet.microsoft.com'
-        - '*twitter.com'
-        - '*youtube.com'
-    SELECTION_5:
-        Image: '*\brave.exe'
-    SELECTION_6:
-        Image:
-        - C:\Program Files\Google\Chrome\Application\chrome.exe
-        - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
-    SELECTION_7:
-        Image:
-        - C:\Program Files\Mozilla Firefox\firefox.exe
-        - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
-    SELECTION_8:
-        Image:
-        - C:\Program Files (x86)\Internet Explorer\iexplore.exe
-        - C:\Program Files\Internet Explorer\iexplore.exe
-    SELECTION_9:
-        Image: '*\maxthon.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5) or (SELECTION_6) or (SELECTION_7) or (SELECTION_8) or (SELECTION_9)
-        or (SELECTION_10 or SELECTION_11 or SELECTION_12) or (SELECTION_13 and SELECTION_14)
-        or (SELECTION_15) or (SELECTION_16) or (SELECTION_17) or (SELECTION_18) or
-        (SELECTION_19))) and  not ((SELECTION_20) or (SELECTION_21) or (SELECTION_22)))
-falsepositives:
-- One might need to exclude other internet browsers found in it's network or other
-    applications like ones mentioned above from Microsoft Defender.
-id: 297ae038-edc2-4b2e-bb3e-7c5fc94dd5c7
-level: high
+references:
+    - https://content.fireeye.com/apt-41/rpt-apt41
+    - https://securelist.com/the-tetrade-brazilian-banking-malware/97779/
+    - https://blog.bushidotoken.net/2021/04/dead-drop-resolvers-espionage-inspired.html
+author: Sorina Ionescu
+date: 2022/08/17
+modified: 2023/04/18
+tags:
+    - attack.command_and_control
+    - attack.t1102
+    - attack.t1102.001
 logsource:
     category: network_connection
     product: windows
-modified: 2023/04/18
-references:
-- https://content.fireeye.com/apt-41/rpt-apt41
-- https://securelist.com/the-tetrade-brazilian-banking-malware/97779/
-- https://blog.bushidotoken.net/2021/04/dead-drop-resolvers-espionage-inspired.html
-status: test
-tags:
-- attack.command_and_control
-- attack.t1102
-- attack.t1102.001
-
+detection:
+    network_connection:
+        EventID: 3
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Initiated: 'true'
+        DestinationHostname|endswith:
+            - .cloudflare.com
+            - .githubusercontent.com
+            - cdn.discordapp.com
+            - docs.google.com
+            - facebook.com
+            - feeds.rapidfeeds.com
+            - fotolog.com
+            - imgur.com
+            - livejournal.com
+            - paste.ee
+            - pastebin.com
+            - pastebin.pl
+            - pastetext.net
+            - reddit.com
+            - steamcommunity.com
+            - technet.microsoft.com
+            - twitter.com
+            - youtube.com
+    filter_main_brave:
+        Image|endswith: \brave.exe
+    filter_main_chrome:
+        Image:
+            - C:\Program Files\Google\Chrome\Application\chrome.exe
+            - C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
+    filter_main_firefox:
+        Image:
+            - C:\Program Files\Mozilla Firefox\firefox.exe
+            - C:\Program Files (x86)\Mozilla Firefox\firefox.exe
+    filter_main_ie:
+        Image:
+            - C:\Program Files (x86)\Internet Explorer\iexplore.exe
+            - C:\Program Files\Internet Explorer\iexplore.exe
+    filter_main_maxthon:
+        Image|endswith: \maxthon.exe
+    filter_main_edge_1:
+        -   Image|startswith: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\
+        -   Image|endswith: \WindowsApps\MicrosoftEdge.exe
+        -   Image:
+                - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+                - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+    filter_main_edge_2:
+        Image|startswith:
+            - C:\Program Files (x86)\Microsoft\EdgeCore\
+            - C:\Program Files\Microsoft\EdgeCore\
+        Image|endswith:
+            - \msedge.exe
+            - \msedgewebview2.exe
+    filter_main_opera:
+        Image|endswith: \opera.exe
+    filter_main_safari:
+        Image|endswith: \safari.exe
+    filter_main_seamonkey:
+        Image|endswith: \seamonkey.exe
+    filter_main_vivaldi:
+        Image|endswith: \vivaldi.exe
+    filter_main_whale:
+        Image|endswith: \whale.exe
+    filter_optional_defender:
+        Image|endswith:
+            - \MsMpEng.exe
+            - \MsSense.exe
+    filter_optional_prtg:
+        Image|endswith: \PRTG Probe.exe
+    filter_optional_qlik:
+        Image|endswith: \Engine.exe
+    condition: network_connection and (selection and not 1 of filter_main_* and not
+        1 of filter_optional_*)
+falsepositives:
+    - One might need to exclude other internet browsers found in it's network or other
+        applications like ones mentioned above from Microsoft Defender.
+level: high
+ruletype: Sigma

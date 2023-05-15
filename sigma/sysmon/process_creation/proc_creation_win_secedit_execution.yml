@@ -1,58 +1,54 @@
 title: Potential Suspicious Activity Using SeCEdit
-ruletype: Sigma
-author: Janantha Marasinghe
-date: 2022/11/18
+id: c2c76b77-32be-4d1f-82c9-7e544bdfe0eb
+status: experimental
 description: Detects potential suspicious behaviour using secedit.exe. Such as exporting
     or modifying the security policy
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\secedit.exe'
-    SELECTION_4:
-        OriginalFileName: SeCEdit
-    SELECTION_5:
-        CommandLine: '*/export*'
-    SELECTION_6:
-        CommandLine: '*/cfg*'
-    SELECTION_7:
-        CommandLine: '*/configure*'
-    SELECTION_8:
-        CommandLine: '*/db*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        ((SELECTION_5 and SELECTION_6) or (SELECTION_7 and SELECTION_8)))
-falsepositives:
-- Legitimate administrative use
-id: c2c76b77-32be-4d1f-82c9-7e544bdfe0eb
-level: medium
+references:
+    - https://blueteamops.medium.com/secedit-and-i-know-it-595056dee53d
+    - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/secedit
+author: Janantha Marasinghe
+date: 2022/11/18
+modified: 2022/12/30
+tags:
+    - attack.discovery
+    - attack.persistence
+    - attack.defense_evasion
+    - attack.credential_access
+    - attack.privilege_escalation
+    - attack.t1562.002
+    - attack.t1547.001
+    - attack.t1505.005
+    - attack.t1556.002
+    - attack.t1562
+    - attack.t1574.007
+    - attack.t1564.002
+    - attack.t1546.008
+    - attack.t1546.007
+    - attack.t1547.014
+    - attack.t1547.010
+    - attack.t1547.002
+    - attack.t1557
+    - attack.t1082
 logsource:
     category: process_creation
     product: windows
-modified: 2022/12/30
-references:
-- https://blueteamops.medium.com/secedit-and-i-know-it-595056dee53d
-- https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/secedit
-status: experimental
-tags:
-- attack.discovery
-- attack.persistence
-- attack.defense_evasion
-- attack.credential_access
-- attack.privilege_escalation
-- attack.t1562.002
-- attack.t1547.001
-- attack.t1505.005
-- attack.t1556.002
-- attack.t1562
-- attack.t1574.007
-- attack.t1564.002
-- attack.t1546.008
-- attack.t1546.007
-- attack.t1547.014
-- attack.t1547.010
-- attack.t1547.002
-- attack.t1557
-- attack.t1082
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \secedit.exe
+        -   OriginalFileName: SeCEdit
+    selection_flags_discovery:
+        CommandLine|contains|all:
+            - /export
+            - /cfg
+    selection_flags_configure:
+        CommandLine|contains|all:
+            - /configure
+            - /db
+    condition: process_creation and (selection_img and (1 of selection_flags_*))
+falsepositives:
+    - Legitimate administrative use
+level: medium
+ruletype: Sigma

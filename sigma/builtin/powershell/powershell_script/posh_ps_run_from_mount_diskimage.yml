@@ -1,43 +1,36 @@
 title: Suspicious Invoke-Item From Mount-DiskImage
-ruletype: Sigma
-author: frack113
-date: 2022/02/01
+id: 902cedee-0398-4e3a-8183-6f3a89773a96
+status: test
 description: Adversaries may abuse container files such as disk image (.iso, .vhd)
     file formats to deliver malicious payloads that may not be tagged with MOTW.
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Mount-DiskImage *'
-    SELECTION_4:
-        ScriptBlockText: '*-ImagePath *'
-    SELECTION_5:
-        ScriptBlockText: '*Get-Volume*'
-    SELECTION_6:
-        ScriptBlockText: '*.DriveLetter*'
-    SELECTION_7:
-        ScriptBlockText: '*invoke-item *'
-    SELECTION_8:
-        ScriptBlockText: '*):\\*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7 and SELECTION_8)
-falsepositives:
-- Legitimate PowerShell scripts
-id: 902cedee-0398-4e3a-8183-6f3a89773a96
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1553.005/T1553.005.md#atomic-test-2---mount-an-iso-image-and-run-executable-from-the-iso
+    - https://docs.microsoft.com/en-us/powershell/module/storage/mount-diskimage?view=windowsserver2022-ps
+author: frack113
+date: 2022/02/01
+tags:
+    - attack.defense_evasion
+    - attack.t1553.005
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1553.005/T1553.005.md#atomic-test-2---mount-an-iso-image-and-run-executable-from-the-iso
-- https://docs.microsoft.com/en-us/powershell/module/storage/mount-diskimage?view=windowsserver2022-ps
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1553.005
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - 'Mount-DiskImage '
+            - '-ImagePath '
+            - Get-Volume
+            - .DriveLetter
+            - 'invoke-item '
+            - ):\
+    condition: ps_script and selection
+falsepositives:
+    - Legitimate PowerShell scripts
+level: medium
+ruletype: Sigma

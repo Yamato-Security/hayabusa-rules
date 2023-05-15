@@ -1,33 +1,29 @@
 title: Password Dumper Activity on LSASS
-ruletype: Sigma
-author: sigma
-date: 2017/02/12
+id: aa1697b7-d611-4f9a-9cb2-5125b4ccfd5c
+status: test
 description: Detects process handle on LSASS process with certain access mask and
     object type SAM_DOMAIN
-detection:
-    SELECTION_1:
-        Channel: Security
-    SELECTION_2:
-        EventID: 4656
-    SELECTION_3:
-        ProcessName: '*\lsass.exe'
-    SELECTION_4:
-        AccessMask: '0x705'
-    SELECTION_5:
-        ObjectType: SAM_DOMAIN
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: aa1697b7-d611-4f9a-9cb2-5125b4ccfd5c
-level: high
+references:
+    - https://twitter.com/jackcr/status/807385668833968128
+author: sigma
+date: 2017/02/12
+modified: 2022/10/09
+tags:
+    - attack.credential_access
+    - attack.t1003.001
 logsource:
     product: windows
     service: security
-modified: 2022/10/09
-references:
-- https://twitter.com/jackcr/status/807385668833968128
-status: test
-tags:
-- attack.credential_access
-- attack.t1003.001
-
+detection:
+    security:
+        Channel: Security
+    selection:
+        EventID: 4656
+        ProcessName|endswith: \lsass.exe
+        AccessMask: '0x705'
+        ObjectType: SAM_DOMAIN
+    condition: security and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

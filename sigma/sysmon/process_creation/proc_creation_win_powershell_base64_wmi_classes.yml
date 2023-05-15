@@ -1,80 +1,76 @@
 title: PowerShell Base64 Encoded WMI Classes
-ruletype: Sigma
-author: Christian Burkard (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
-date: 2023/01/30
+id: 1816994b-42e1-4fb1-afd2-134d88184f71
+related:
+    -   id: 47688f1b-9f51-4656-b013-3cc49a166a36
+        type: obsoletes
+status: experimental
 description: Detects calls to base64 encoded WMI class such as "Win32_Shadowcopy",
     "Win32_ScheduledJob", etc.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image:
-        - '*\powershell.exe'
-        - '*\pwsh.exe'
-    SELECTION_4:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_5:
-        CommandLine:
-        - '*VwBpAG4AMwAyAF8AUwBoAGEAZABvAHcAYwBvAHAAeQ*'
-        - '*cAaQBuADMAMgBfAFMAaABhAGQAbwB3AGMAbwBwAHkA*'
-        - '*XAGkAbgAzADIAXwBTAGgAYQBkAG8AdwBjAG8AcAB5A*'
-        - '*V2luMzJfU2hhZG93Y29we*'
-        - '*dpbjMyX1NoYWRvd2NvcH*'
-        - '*XaW4zMl9TaGFkb3djb3B5*'
-    SELECTION_6:
-        CommandLine:
-        - '*VwBpAG4AMwAyAF8AUwBjAGgAZQBkAHUAbABlAGQASgBvAGIA*'
-        - '*cAaQBuADMAMgBfAFMAYwBoAGUAZAB1AGwAZQBkAEoAbwBiA*'
-        - '*XAGkAbgAzADIAXwBTAGMAaABlAGQAdQBsAGUAZABKAG8AYg*'
-        - '*V2luMzJfU2NoZWR1bGVkSm9i*'
-        - '*dpbjMyX1NjaGVkdWxlZEpvY*'
-        - '*XaW4zMl9TY2hlZHVsZWRKb2*'
-    SELECTION_7:
-        CommandLine:
-        - '*VwBpAG4AMwAyAF8AUAByAG8AYwBlAHMAcw*'
-        - '*cAaQBuADMAMgBfAFAAcgBvAGMAZQBzAHMA*'
-        - '*XAGkAbgAzADIAXwBQAHIAbwBjAGUAcwBzA*'
-        - '*V2luMzJfUHJvY2Vzc*'
-        - '*dpbjMyX1Byb2Nlc3*'
-        - '*XaW4zMl9Qcm9jZXNz*'
-    SELECTION_8:
-        CommandLine:
-        - '*VwBpAG4AMwAyAF8AVQBzAGUAcgBBAGMAYwBvAHUAbgB0A*'
-        - '*cAaQBuADMAMgBfAFUAcwBlAHIAQQBjAGMAbwB1AG4AdA*'
-        - '*XAGkAbgAzADIAXwBVAHMAZQByAEEAYwBjAG8AdQBuAHQA*'
-        - '*V2luMzJfVXNlckFjY291bn*'
-        - '*dpbjMyX1VzZXJBY2NvdW50*'
-        - '*XaW4zMl9Vc2VyQWNjb3Vud*'
-    SELECTION_9:
-        CommandLine:
-        - '*VwBpAG4AMwAyAF8ATABvAGcAZwBlAGQATwBuAFUAcwBlAHIA*'
-        - '*cAaQBuADMAMgBfAEwAbwBnAGcAZQBkAE8AbgBVAHMAZQByA*'
-        - '*XAGkAbgAzADIAXwBMAG8AZwBnAGUAZABPAG4AVQBzAGUAcg*'
-        - '*V2luMzJfTG9nZ2VkT25Vc2Vy*'
-        - '*dpbjMyX0xvZ2dlZE9uVXNlc*'
-        - '*XaW4zMl9Mb2dnZWRPblVzZX*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 or SELECTION_6 or SELECTION_7 or SELECTION_8 or SELECTION_9))
-falsepositives:
-- Unknown
-id: 1816994b-42e1-4fb1-afd2-134d88184f71
-level: high
+references:
+    - https://github.com/Neo23x0/Raccine/blob/20a569fa21625086433dcce8bb2765d0ea08dcb6/yara/mal_revil.yar
+author: Christian Burkard (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+date: 2023/01/30
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - attack.defense_evasion
+    - attack.t1027
 logsource:
     category: process_creation
     product: windows
-references:
-- https://github.com/Neo23x0/Raccine/blob/20a569fa21625086433dcce8bb2765d0ea08dcb6/yara/mal_revil.yar
-related:
--   id: 47688f1b-9f51-4656-b013-3cc49a166a36
-    type: obsoletes
-status: experimental
-tags:
-- attack.execution
-- attack.t1059.001
-- attack.defense_evasion
-- attack.t1027
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    selection_cli_shadowcopy:
+        CommandLine|contains:
+            - VwBpAG4AMwAyAF8AUwBoAGEAZABvAHcAYwBvAHAAeQ
+            - cAaQBuADMAMgBfAFMAaABhAGQAbwB3AGMAbwBwAHkA
+            - XAGkAbgAzADIAXwBTAGgAYQBkAG8AdwBjAG8AcAB5A
+            - V2luMzJfU2hhZG93Y29we
+            - dpbjMyX1NoYWRvd2NvcH
+            - XaW4zMl9TaGFkb3djb3B5
+    selection_cli_scheduledJob:
+        CommandLine|contains:
+            - VwBpAG4AMwAyAF8AUwBjAGgAZQBkAHUAbABlAGQASgBvAGIA
+            - cAaQBuADMAMgBfAFMAYwBoAGUAZAB1AGwAZQBkAEoAbwBiA
+            - XAGkAbgAzADIAXwBTAGMAaABlAGQAdQBsAGUAZABKAG8AYg
+            - V2luMzJfU2NoZWR1bGVkSm9i
+            - dpbjMyX1NjaGVkdWxlZEpvY
+            - XaW4zMl9TY2hlZHVsZWRKb2
+    selection_cli_process:
+        CommandLine|contains:
+            - VwBpAG4AMwAyAF8AUAByAG8AYwBlAHMAcw
+            - cAaQBuADMAMgBfAFAAcgBvAGMAZQBzAHMA
+            - XAGkAbgAzADIAXwBQAHIAbwBjAGUAcwBzA
+            - V2luMzJfUHJvY2Vzc
+            - dpbjMyX1Byb2Nlc3
+            - XaW4zMl9Qcm9jZXNz
+    selection_cli_useraccount:
+        CommandLine|contains:
+            - VwBpAG4AMwAyAF8AVQBzAGUAcgBBAGMAYwBvAHUAbgB0A
+            - cAaQBuADMAMgBfAFUAcwBlAHIAQQBjAGMAbwB1AG4AdA
+            - XAGkAbgAzADIAXwBVAHMAZQByAEEAYwBjAG8AdQBuAHQA
+            - V2luMzJfVXNlckFjY291bn
+            - dpbjMyX1VzZXJBY2NvdW50
+            - XaW4zMl9Vc2VyQWNjb3Vud
+    selection_cli_loggedonuser:
+        CommandLine|contains:
+            - VwBpAG4AMwAyAF8ATABvAGcAZwBlAGQATwBuAFUAcwBlAHIA
+            - cAaQBuADMAMgBfAEwAbwBnAGcAZQBkAE8AbgBVAHMAZQByA
+            - XAGkAbgAzADIAXwBMAG8AZwBnAGUAZABPAG4AVQBzAGUAcg
+            - V2luMzJfTG9nZ2VkT25Vc2Vy
+            - dpbjMyX0xvZ2dlZE9uVXNlc
+            - XaW4zMl9Mb2dnZWRPblVzZX
+    condition: process_creation and (selection_img and 1 of selection_cli_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

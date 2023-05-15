@@ -1,36 +1,33 @@
 title: HackTool - Hydra Password Bruteforce Execution
-ruletype: Sigma
-author: Vasiliy Burov
-date: 2020/10/05
+id: aaafa146-074c-11eb-adc1-0242ac120002
+status: test
 description: Detects command line parameters used by Hydra password guessing hack
     tool
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*-u *'
-    SELECTION_4:
-        CommandLine: '*-p *'
-    SELECTION_5:
-        CommandLine:
-        - '*^USER^*'
-        - '*^PASS^*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Software that uses the caret encased keywords PASS and USER in its command line
-id: aaafa146-074c-11eb-adc1-0242ac120002
-level: high
+references:
+    - https://github.com/vanhauser-thc/thc-hydra
+author: Vasiliy Burov
+date: 2020/10/05
+modified: 2023/02/04
+tags:
+    - attack.credential_access
+    - attack.t1110
+    - attack.t1110.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://github.com/vanhauser-thc/thc-hydra
-status: test
-tags:
-- attack.credential_access
-- attack.t1110
-- attack.t1110.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        CommandLine|contains|all:
+            - '-u '
+            - '-p '
+        CommandLine|contains:
+            - ^USER^
+            - ^PASS^
+    condition: process_creation and selection
+falsepositives:
+    - Software that uses the caret encased keywords PASS and USER in its command line
+level: high
+ruletype: Sigma

@@ -1,34 +1,31 @@
 title: Suspicious PowerShell Mailbox SMTP Forward Rule
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/10/26
+id: 15b7abbb-8b40-4d01-9ee2-b51994b1d474
+status: experimental
 description: Detects usage of the powerShell Set-Mailbox Cmdlet to set-up an SMTP
     forwarding rule.
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Set-Mailbox *'
-    SELECTION_4:
-        ScriptBlockText: '* -DeliverToMailboxAndForward *'
-    SELECTION_5:
-        ScriptBlockText: '* -ForwardingSmtpAddress *'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Legitimate usage of the cmdlet to forward emails
-id: 15b7abbb-8b40-4d01-9ee2-b51994b1d474
-level: medium
+references:
+    - https://m365internals.com/2022/10/07/hunting-in-on-premises-exchange-server-logs/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/10/26
+tags:
+    - attack.exfiltration
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://m365internals.com/2022/10/07/hunting-in-on-premises-exchange-server-logs/
-status: experimental
-tags:
-- attack.exfiltration
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - 'Set-Mailbox '
+            - ' -DeliverToMailboxAndForward '
+            - ' -ForwardingSmtpAddress '
+    condition: ps_script and selection
+falsepositives:
+    - Legitimate usage of the cmdlet to forward emails
+level: medium
+ruletype: Sigma

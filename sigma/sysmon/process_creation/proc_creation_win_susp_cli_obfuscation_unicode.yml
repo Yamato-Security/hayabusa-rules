@@ -1,7 +1,9 @@
 title: Potential Commandline Obfuscation Using Unicode Characters
-ruletype: Sigma
-author: frack113, Florian Roth (Nextron Systems)
-date: 2022/01/15
+id: e0552b19-5a83-4222-b141-b36184bb8d79
+related:
+    -   id: 2c0d2d7b-30d6-4d14-9751-7b9113042ab9
+        type: obsoletes
+status: test
 description: 'Detects potential commandline obfuscation using unicode characters.
 
     Adversaries may attempt to make an executable or file difficult to discover or
@@ -9,51 +11,46 @@ description: 'Detects potential commandline obfuscation using unicode characters
     system or in transit.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine:
-        - "*\u02E3*"
-        - "*\u02EA*"
-        - "*\u02E2*"
-    SELECTION_4:
-        CommandLine:
-        - "*\u2215*"
-        - "*\u2044*"
-    SELECTION_5:
-        CommandLine:
-        - "*\u2015*"
-        - "*\u2014*"
-    SELECTION_6:
-        CommandLine:
-        - "*\xE2*"
-        - "*\u20AC*"
-        - "*\xA3*"
-        - "*\xAF*"
-        - "*\xAE*"
-        - "*\xB5*"
-        - "*\xB6*"
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5
-        or SELECTION_6))
-falsepositives:
-- Unknown
-id: e0552b19-5a83-4222-b141-b36184bb8d79
-level: high
+references:
+    - https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1027/T1027.md#atomic-test-6---dlp-evasion-via-sensitive-data-in-vba-macro-over-http
+author: frack113, Florian Roth (Nextron Systems)
+date: 2022/01/15
+modified: 2023/03/03
+tags:
+    - attack.defense_evasion
+    - attack.t1027
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/03
-references:
-- https://www.wietzebeukema.nl/blog/windows-command-line-obfuscation
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1027/T1027.md#atomic-test-6---dlp-evasion-via-sensitive-data-in-vba-macro-over-http
-related:
--   id: 2c0d2d7b-30d6-4d14-9751-7b9113042ab9
-    type: obsoletes
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1027
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_spacing_modifiers:
+        CommandLine|contains:
+            - "\u02E3"
+            - "\u02EA"
+            - "\u02E2"
+    selection_unicode_slashes:
+        CommandLine|contains:
+            - "\u2215"
+            - "\u2044"
+    selection_unicode_hyphens:
+        CommandLine|contains:
+            - "\u2015"
+            - "\u2014"
+    selection_other:
+        CommandLine|contains:
+            - "\xE2"
+            - "\u20AC"
+            - "\xA3"
+            - "\xAF"
+            - "\xAE"
+            - "\xB5"
+            - "\xB6"
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

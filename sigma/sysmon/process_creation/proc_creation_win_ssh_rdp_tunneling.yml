@@ -1,34 +1,31 @@
 title: Potential RDP Tunneling Via SSH
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/10/12
+id: f7d7ebd5-a016-46e2-9c54-f9932f2d386d
+related:
+    -   id: f38ce0b9-5e97-4b47-a211-7dc8d8b871da
+        type: similar
+status: experimental
 description: Execution of ssh.exe to perform data exfiltration and tunneling through
     RDP
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\ssh.exe'
-    SELECTION_4:
-        CommandLine: '*:3389*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Administrative activity
-id: f7d7ebd5-a016-46e2-9c54-f9932f2d386d
-level: high
+references:
+    - https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/10/12
+modified: 2023/01/25
+tags:
+    - attack.command_and_control
+    - attack.t1572
 logsource:
     category: process_creation
     product: windows
-modified: 2023/01/25
-references:
-- https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
-related:
--   id: f38ce0b9-5e97-4b47-a211-7dc8d8b871da
-    type: similar
-status: experimental
-tags:
-- attack.command_and_control
-- attack.t1572
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \ssh.exe
+        CommandLine|contains: :3389
+    condition: process_creation and selection
+falsepositives:
+    - Administrative activity
+level: high
+ruletype: Sigma

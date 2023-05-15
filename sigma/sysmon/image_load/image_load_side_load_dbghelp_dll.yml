@@ -1,50 +1,47 @@
 title: Potential DLL Sideloading Of DBGHELP.DLL
-ruletype: Sigma
+id: 6414b5cd-b19d-447e-bb5e-9f03940b5784
+status: experimental
+description: Detects DLL sideloading of "dbghelp.dll"
+references:
+    - https://hijacklibs.net/
 author: Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)
 date: 2022/10/25
-description: Detects DLL sideloading of "dbghelp.dll"
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ImageLoaded: '*\dbghelp.dll'
-    SELECTION_4:
-        ImageLoaded:
-        - C:\Program Files (x86)\\*
-        - C:\Program Files\\*
-        - C:\Windows\SoftwareDistribution\\*
-        - C:\Windows\System32\\*
-        - C:\Windows\SystemTemp\\*
-        - C:\Windows\SysWOW64\\*
-        - C:\Windows\WinSxS\\*
-    SELECTION_5:
-        ImageLoaded:
-        - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\amd64\dbghelp.dll'
-        - '*\Anaconda3\Lib\site-packages\vtrace\platforms\windll\i386\dbghelp.dll'
-    SELECTION_6:
-        ImageLoaded:
-        - '*\Epic Games\Launcher\Engine\Binaries\ThirdParty\DbgHelp\dbghelp.dll'
-        - '*\Epic Games\MagicLegends\x86\dbghelp.dll'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and  not ((SELECTION_4)))
-        and  not ((SELECTION_5) or (SELECTION_6)))
-falsepositives:
-- Legitimate applications loading their own versions of the DLL mentioned in this
-    rule
-id: 6414b5cd-b19d-447e-bb5e-9f03940b5784
-level: medium
+modified: 2023/05/05
+tags:
+    - attack.defense_evasion
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1574.001
+    - attack.t1574.002
 logsource:
     category: image_load
     product: windows
-modified: 2023/05/05
-references:
-- https://hijacklibs.net/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.persistence
-- attack.privilege_escalation
-- attack.t1574.001
-- attack.t1574.002
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        ImageLoaded|endswith: \dbghelp.dll
+    filter_main_generic:
+        ImageLoaded|startswith:
+            - C:\Program Files (x86)\
+            - C:\Program Files\
+            - C:\Windows\SoftwareDistribution\
+            - C:\Windows\System32\
+            - C:\Windows\SystemTemp\
+            - C:\Windows\SysWOW64\
+            - C:\Windows\WinSxS\
+    filter_optional_anaconda:
+        ImageLoaded|endswith:
+            - \Anaconda3\Lib\site-packages\vtrace\platforms\windll\amd64\dbghelp.dll
+            - \Anaconda3\Lib\site-packages\vtrace\platforms\windll\i386\dbghelp.dll
+    filter_optional_epicgames:
+        ImageLoaded|endswith:
+            - \Epic Games\Launcher\Engine\Binaries\ThirdParty\DbgHelp\dbghelp.dll
+            - \Epic Games\MagicLegends\x86\dbghelp.dll
+    condition: image_load and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
+falsepositives:
+    - Legitimate applications loading their own versions of the DLL mentioned in this
+        rule
+level: medium
+ruletype: Sigma

@@ -1,36 +1,32 @@
 title: Process Monitor Driver Creation By Non-Sysinternals Binary
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/05/05
+id: a05baa88-e922-4001-bc4d-8738135f27de
+status: experimental
 description: Detects creation of the Process Monitor driver by processes other than
     Process Monitor (procmon) itself.
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*\procmon*'
-    SELECTION_4:
-        TargetFilename: '*.sys'
-    SELECTION_5:
-        Image:
-        - '*\procmon.exe'
-        - '*\procmon64.exe'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and  not
-        ((SELECTION_5)))
-falsepositives:
-- Some false positives may occur with legitimate renamed process monitor binaries
-id: a05baa88-e922-4001-bc4d-8738135f27de
-level: medium
-logsource:
-    category: file_event
-    product: windows
 references:
-- Internal Research
-status: experimental
+    - Internal Research
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2023/05/05
 tags:
-- attack.persistence
-- attack.privilege_escalation
-- attack.t1068
-
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1068
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|contains: \procmon
+        TargetFilename|endswith: .sys
+    filter_main_process_explorer:
+        Image|endswith:
+            - \procmon.exe
+            - \procmon64.exe
+    condition: file_event and (selection and not 1 of filter_main_*)
+falsepositives:
+    - Some false positives may occur with legitimate renamed process monitor binaries
+level: medium
+ruletype: Sigma

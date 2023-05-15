@@ -1,38 +1,36 @@
 title: Suspicious Rundll32 Script in CommandLine
-ruletype: Sigma
+id: 73fcad2e-ff14-4c38-b11d-4172c8ac86c7
+status: experimental
+description: Detects suspicious process related to rundll32 based on arguments
+references:
+    - https://gist.github.com/ryhanson/227229866af52e2d963cf941af135a52
+    - https://github.com/redcanaryco/atomic-red-team/blob/cd3690b100a495885c407282d0c94c85f48a8a2e/atomics/T1218.011/T1218.011.md
 author: frack113, Zaw Min Htun (ZETA)
 date: 2021/12/04
-description: Detects suspicious process related to rundll32 based on arguments
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine: '*rundll32*'
-    SELECTION_4:
-        CommandLine:
-        - '*mshtml,RunHTMLApplication*'
-        - '*mshtml,#135*'
-    SELECTION_5:
-        CommandLine:
-        - '*javascript:*'
-        - '*vbscript:*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- False positives depend on scripts and administrative tools used in the monitored
-    environment
-id: 73fcad2e-ff14-4c38-b11d-4172c8ac86c7
-level: medium
+modified: 2023/02/03
+tags:
+    - attack.defense_evasion
+    - attack.t1218.011
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/03
-references:
-- https://gist.github.com/ryhanson/227229866af52e2d963cf941af135a52
-- https://github.com/redcanaryco/atomic-red-team/blob/cd3690b100a495885c407282d0c94c85f48a8a2e/atomics/T1218.011/T1218.011.md
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1218.011
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection1:
+        CommandLine|contains: rundll32
+    selection2:
+        CommandLine|contains:
+            - mshtml,RunHTMLApplication
+            - mshtml,#135
+    selection3:
+        CommandLine|contains:
+            - 'javascript:'
+            - 'vbscript:'
+    condition: process_creation and (all of selection*)
+falsepositives:
+    - False positives depend on scripts and administrative tools used in the monitored
+        environment
+level: medium
+ruletype: Sigma

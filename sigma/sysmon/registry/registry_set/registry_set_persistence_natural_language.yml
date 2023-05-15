@@ -1,38 +1,35 @@
 title: Potential Persistence Via DLLPathOverride
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/07/21
+id: a1b1fd53-9c4a-444c-bae0-34a330fc7aa8
+status: experimental
 description: Detects when an attacker adds a new "DLLPathOverride" value to the "Natural
     Language" key in order to achieve persistence which will get invoked by "SearchIndexer.exe"
     process
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\SYSTEM\CurrentControlSet\Control\ContentIndex\Language\\*'
-    SELECTION_5:
-        TargetObject:
-        - '*\StemmerDLLPathOverride*'
-        - '*\WBDLLPathOverride*'
-        - '*\StemmerClass*'
-        - '*\WBreakerClass*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: a1b1fd53-9c4a-444c-bae0-34a330fc7aa8
-level: high
+references:
+    - https://persistence-info.github.io/Data/naturallanguage6.html
+    - https://www.hexacorn.com/blog/2018/12/30/beyond-good-ol-run-key-part-98/
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/07/21
+modified: 2023/01/10
+tags:
+    - attack.persistence
 logsource:
     category: registry_set
     product: windows
-modified: 2023/01/10
-references:
-- https://persistence-info.github.io/Data/naturallanguage6.html
-- https://www.hexacorn.com/blog/2018/12/30/beyond-good-ol-run-key-part-98/
-status: experimental
-tags:
-- attack.persistence
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_root:
+        EventType: SetValue
+        TargetObject|contains: \SYSTEM\CurrentControlSet\Control\ContentIndex\Language\
+    selection_values:
+        TargetObject|contains:
+            - \StemmerDLLPathOverride
+            - \WBDLLPathOverride
+            - \StemmerClass
+            - \WBreakerClass
+    condition: registry_set and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

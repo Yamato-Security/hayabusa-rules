@@ -1,56 +1,51 @@
 title: HackTool - Certipy Execution
-ruletype: Sigma
-author: pH-T (Nextron Systems)
-date: 2023/04/17
+id: 6938366d-8954-4ddc-baff-c830b3ba8fcd
+status: experimental
 description: Detects Certipy a tool for Active Directory Certificate Services enumeration
     and abuse based on PE metadata characteristics and common command line arguments.
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\Certipy.exe'
-    SELECTION_4:
-        OriginalFileName: Certipy.exe
-    SELECTION_5:
-        Description: '*Certipy*'
-    SELECTION_6:
-        CommandLine:
-        - '* auth *'
-        - '* find *'
-        - '* forge *'
-        - '* relay *'
-        - '* req *'
-        - '* shadow *'
-    SELECTION_7:
-        CommandLine:
-        - '* -bloodhound*'
-        - '* -ca-pfx *'
-        - '* -dc-ip *'
-        - '* -kirbi*'
-        - '* -old-bloodhound*'
-        - '* -pfx *'
-        - '* -target*'
-        - '* -username *'
-        - '* -vulnerable*'
-        - '*auth -pfx*'
-        - '*shadow auto*'
-        - '*shadow list*'
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 or SELECTION_4 or
-        SELECTION_5) or (SELECTION_6 and SELECTION_7)))
-falsepositives:
-- Unlikely
-id: 6938366d-8954-4ddc-baff-c830b3ba8fcd
-level: high
+references:
+    - https://github.com/ly4k/Certipy
+author: pH-T (Nextron Systems)
+date: 2023/04/17
+tags:
+    - attack.discovery
+    - attack.credential_access
+    - attack.t1649
 logsource:
     category: process_creation
     product: windows
-references:
-- https://github.com/ly4k/Certipy
-status: experimental
-tags:
-- attack.discovery
-- attack.credential_access
-- attack.t1649
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        -   NewProcessName|endswith: \Certipy.exe
+        -   OriginalFileName: Certipy.exe
+        -   Description|contains: Certipy
+    selection_cli_commands:
+        CommandLine|contains:
+            - ' auth '
+            - ' find '
+            - ' forge '
+            - ' relay '
+            - ' req '
+            - ' shadow '
+    selection_cli_flags:
+        CommandLine|contains:
+            - ' -bloodhound'
+            - ' -ca-pfx '
+            - ' -dc-ip '
+            - ' -kirbi'
+            - ' -old-bloodhound'
+            - ' -pfx '
+            - ' -target'
+            - ' -username '
+            - ' -vulnerable'
+            - auth -pfx
+            - shadow auto
+            - shadow list
+    condition: process_creation and (selection_img or all of selection_cli_*)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

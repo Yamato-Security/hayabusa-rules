@@ -1,30 +1,28 @@
 title: New BITS Job Created Via Bitsadmin
-ruletype: Sigma
+id: 1ff315dc-2a3a-4b71-8dde-873818d25d39
+status: test
+description: Detects the creation of a new bits job by Bitsadmin
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md
 author: frack113
 date: 2022/03/01
-description: Detects the creation of a new bits job by Bitsadmin
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-Bits-Client/Operational
-    SELECTION_2:
-        EventID: 3
-    SELECTION_3:
-        processPath: '*\bitsadmin.exe'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Many legitimate applications or scripts could leverage "bitsadmin". This event is
-    best correlated with EID 16403 via the JobID field
-id: 1ff315dc-2a3a-4b71-8dde-873818d25d39
-level: low
+modified: 2023/03/27
+tags:
+    - attack.defense_evasion
+    - attack.persistence
+    - attack.t1197
 logsource:
     product: windows
     service: bits-client
-modified: 2023/03/27
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1197/T1197.md
-status: test
-tags:
-- attack.defense_evasion
-- attack.persistence
-- attack.t1197
-
+detection:
+    bits_client:
+        Channel: Microsoft-Windows-Bits-Client/Operational
+    selection:
+        EventID: 3
+        processPath|endswith: \bitsadmin.exe
+    condition: bits_client and selection
+falsepositives:
+    - Many legitimate applications or scripts could leverage "bitsadmin". This event
+        is best correlated with EID 16403 via the JobID field
+level: low
+ruletype: Sigma

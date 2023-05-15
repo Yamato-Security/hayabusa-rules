@@ -1,34 +1,31 @@
 title: HackTool - PurpleSharp Execution
-ruletype: Sigma
+id: ff23ffbc-3378-435e-992f-0624dcf93ab4
+status: test
+description: Detects the execution of the PurpleSharp adversary simulation tool
+references:
+    - https://github.com/mvelazc0/PurpleSharp
 author: Florian Roth (Nextron Systems)
 date: 2021/06/18
-description: Detects the execution of the PurpleSharp adversary simulation tool
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\purplesharp*'
-    SELECTION_4:
-        OriginalFileName: PurpleSharp.exe
-    SELECTION_5:
-        CommandLine:
-        - '*xyz123456.exe*'
-        - '*PurpleSharp*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- Unlikely
-id: ff23ffbc-3378-435e-992f-0624dcf93ab4
-level: critical
+modified: 2023/02/05
+tags:
+    - attack.t1587
+    - attack.resource_development
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/05
-references:
-- https://github.com/mvelazc0/PurpleSharp
-status: test
-tags:
-- attack.t1587
-- attack.resource_development
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|contains: \purplesharp
+        -   OriginalFileName: PurpleSharp.exe
+    selection_cli:
+        CommandLine|contains:
+            - xyz123456.exe
+            - PurpleSharp
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

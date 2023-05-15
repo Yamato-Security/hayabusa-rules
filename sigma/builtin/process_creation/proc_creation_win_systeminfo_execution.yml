@@ -1,31 +1,28 @@
 title: Suspicious Execution of Systeminfo
-ruletype: Sigma
+id: 0ef56343-059e-4cb6-adc1-4c3c967c5e46
+status: experimental
+description: Detects usage of the "systeminfo" command to retrieve information
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1082/T1082.md#atomic-test-1---system-information-discovery
+    - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/systeminfo
 author: frack113
 date: 2022/01/01
-description: Detects usage of the "systeminfo" command to retrieve information
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\systeminfo.exe'
-    SELECTION_4:
-        OriginalFileName: sysinfo.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Unknown
-id: 0ef56343-059e-4cb6-adc1-4c3c967c5e46
-level: low
+modified: 2022/07/14
+tags:
+    - attack.discovery
+    - attack.t1082
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/14
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1082/T1082.md#atomic-test-1---system-information-discovery
-- https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/systeminfo
-status: experimental
-tags:
-- attack.discovery
-- attack.t1082
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   NewProcessName|endswith: \systeminfo.exe
+        -   OriginalFileName: sysinfo.exe
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

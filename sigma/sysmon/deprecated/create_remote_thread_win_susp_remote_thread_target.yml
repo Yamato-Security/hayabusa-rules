@@ -1,7 +1,6 @@
 title: Suspicious Remote Thread Target
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/08/25
+id: f016c716-754a-467f-a39e-63c06f773987
+status: deprecated
 description: 'Offensive tradecraft is switching away from using APIs like "CreateRemoteThread",
     however, this is still largely observed in the wild.
 
@@ -13,37 +12,33 @@ description: 'Offensive tradecraft is switching away from using APIs like "Creat
     range of processes.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 8
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetImage:
-        - '*\spoolsv.exe'
-        - '*\notepad.exe'
-    SELECTION_4:
-        SourceImage: '*\csrss.exe'
-    SELECTION_5:
-        SourceImage: '*unknown process*'
-    SELECTION_6:
-        StartFunction: EtwpNotificationThread
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4
-        or SELECTION_5 or SELECTION_6))
-falsepositives:
-- Unknown
-fields:
-- ComputerName
-- User
-- SourceImage
-- TargetImage
-id: f016c716-754a-467f-a39e-63c06f773987
-level: medium
-logsource:
-    category: create_remote_thread
-    product: windows
-modified: 2023/05/05
 references:
-- https://www.microsoft.com/security/blog/2022/08/24/looking-for-the-sliver-lining-hunting-for-emerging-command-and-control-frameworks/
-status: deprecated
-
+    - https://www.microsoft.com/security/blog/2022/08/24/looking-for-the-sliver-lining-hunting-for-emerging-command-and-control-frameworks/
+author: Florian Roth (Nextron Systems)
+date: 2022/08/25
+modified: 2023/05/05
+logsource:
+    product: windows
+    category: create_remote_thread
+detection:
+    create_remote_thread:
+        EventID: 8
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetImage|endswith:
+            - \spoolsv.exe
+            - \notepad.exe
+    filter:
+        -   SourceImage|endswith: \csrss.exe
+        -   SourceImage|contains: unknown process
+        -   StartFunction: EtwpNotificationThread
+    condition: create_remote_thread and (selection and not filter)
+fields:
+    - ComputerName
+    - User
+    - SourceImage
+    - TargetImage
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

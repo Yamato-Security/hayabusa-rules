@@ -1,27 +1,25 @@
 title: NTDS.DIT Created
-ruletype: Sigma
+id: 0b8baa3f-575c-46ee-8715-d6f28cc7d33c
+status: experimental
+description: Detects creation of a file named "ntds.dit" (Active Directory Database)
+references:
+    - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/05/05
-description: Detects creation of a file named "ntds.dit" (Active Directory Database)
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*ntds.dit'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unknown
-id: 0b8baa3f-575c-46ee-8715-d6f28cc7d33c
-level: low
-logsource:
-    category: file_event
-    product: windows
-references:
-- Internal Research
-status: experimental
 tags:
-- attack.credential_access
-- attack.t1003.003
-
+    - attack.credential_access
+    - attack.t1003.003
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|endswith: ntds.dit
+    condition: file_event and selection
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

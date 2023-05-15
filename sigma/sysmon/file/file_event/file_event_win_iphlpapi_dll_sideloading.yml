@@ -1,33 +1,31 @@
 title: Malicious DLL File Dropped in the Teams or OneDrive Folder
-ruletype: Sigma
-author: frack113
-date: 2022/08/12
+id: 1908fcc1-1b92-4272-8214-0fbaf2fa5163
+status: experimental
 description: "Detects creation of a malicious DLL file in the location where the OneDrive\
     \ or Team applications\nUpon execution of the Teams or OneDrive application, the\
     \ dropped malicious DLL file (\u201Ciphlpapi.dll\u201D) is sideloaded\n"
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename: '*iphlpapi.dll*'
-    SELECTION_4:
-        TargetFilename: '*\AppData\Local\Microsoft*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: 1908fcc1-1b92-4272-8214-0fbaf2fa5163
-level: high
+references:
+    - https://blog.cyble.com/2022/07/27/targeted-attacks-being-carried-out-via-dll-sideloading/
+author: frack113
+date: 2022/08/12
+tags:
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.defense_evasion
+    - attack.t1574.002
 logsource:
     category: file_event
     product: windows
-references:
-- https://blog.cyble.com/2022/07/27/targeted-attacks-being-carried-out-via-dll-sideloading/
-status: experimental
-tags:
-- attack.persistence
-- attack.privilege_escalation
-- attack.defense_evasion
-- attack.t1574.002
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|contains|all:
+            - iphlpapi.dll
+            - \AppData\Local\Microsoft
+    condition: file_event and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

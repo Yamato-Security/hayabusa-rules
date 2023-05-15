@@ -1,44 +1,39 @@
 title: DLL Load via LSASS
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2019/10/16
+id: b3503044-60ce-4bf4-bbcb-e3db98788823
+status: test
 description: Detects a method to load DLL via LSASS process using an undocumented
     Registry key
-detection:
-    SELECTION_1:
-        EventID: 12
-    SELECTION_2:
-        EventID: 13
-    SELECTION_3:
-        EventID: 14
-    SELECTION_4:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_5:
-        TargetObject:
-        - '*\CurrentControlSet\Services\NTDS\DirectoryServiceExtPt*'
-        - '*\CurrentControlSet\Services\NTDS\LsaDbExtPt*'
-    SELECTION_6:
-        Image: C:\Windows\system32\lsass.exe
-    SELECTION_7:
-        Details:
-        - '%%systemroot%%\system32\ntdsa.dll'
-        - '%%systemroot%%\system32\lsadb.dll'
-    condition: (((SELECTION_1 or SELECTION_2 or SELECTION_3) and SELECTION_4) and
-        SELECTION_5 and  not ((SELECTION_6 and SELECTION_7)))
-falsepositives:
-- Unknown
-id: b3503044-60ce-4bf4-bbcb-e3db98788823
-level: high
+references:
+    - https://blog.xpnsec.com/exploring-mimikatz-part-1/
+    - https://twitter.com/SBousseaden/status/1183745981189427200
+author: Florian Roth (Nextron Systems)
+date: 2019/10/16
+modified: 2022/04/21
+tags:
+    - attack.execution
+    - attack.persistence
+    - attack.t1547.008
 logsource:
     category: registry_event
     product: windows
-modified: 2022/04/21
-references:
-- https://blog.xpnsec.com/exploring-mimikatz-part-1/
-- https://twitter.com/SBousseaden/status/1183745981189427200
-status: test
-tags:
-- attack.execution
-- attack.persistence
-- attack.t1547.008
-
+detection:
+    registry_event:
+        EventID:
+            - 12
+            - 13
+            - 14
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetObject|contains:
+            - \CurrentControlSet\Services\NTDS\DirectoryServiceExtPt
+            - \CurrentControlSet\Services\NTDS\LsaDbExtPt
+    filter_domain_controller:
+        Image: C:\Windows\system32\lsass.exe
+        Details:
+            - '%%systemroot%%\system32\ntdsa.dll'
+            - '%%systemroot%%\system32\lsadb.dll'
+    condition: registry_event and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

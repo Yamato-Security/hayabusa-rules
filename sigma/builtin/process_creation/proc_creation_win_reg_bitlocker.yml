@@ -1,48 +1,41 @@
 title: Suspicious Reg Add BitLocker
-ruletype: Sigma
-author: frack113
-date: 2021/11/15
+id: 0e0255bf-2548-47b8-9582-c0955c9283f5
+status: experimental
 description: Detects suspicious addition to BitLocker related registry keys via the
     reg.exe utility
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*REG*'
-    SELECTION_4:
-        CommandLine: '*ADD*'
-    SELECTION_5:
-        CommandLine: '*\SOFTWARE\Policies\Microsoft\FVE*'
-    SELECTION_6:
-        CommandLine: '*/v*'
-    SELECTION_7:
-        CommandLine: '*/f*'
-    SELECTION_8:
-        CommandLine:
-        - '*EnableBDEWithNoTPM*'
-        - '*UseAdvancedStartup*'
-        - '*UseTPM*'
-        - '*UseTPMKey*'
-        - '*UseTPMKeyPIN*'
-        - '*RecoveryKeyMessageSource*'
-        - '*UseTPMPIN*'
-        - '*RecoveryKeyMessage*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7 and SELECTION_8)
-falsepositives:
-- Unlikely
-id: 0e0255bf-2548-47b8-9582-c0955c9283f5
-level: high
+references:
+    - https://thedfirreport.com/2021/11/15/exchange-exploit-leads-to-domain-wide-ransomware/
+author: frack113
+date: 2021/11/15
+modified: 2022/09/09
+tags:
+    - attack.impact
+    - attack.t1486
 logsource:
     category: process_creation
     product: windows
-modified: 2022/09/09
-references:
-- https://thedfirreport.com/2021/11/15/exchange-exploit-leads-to-domain-wide-ransomware/
-status: experimental
-tags:
-- attack.impact
-- attack.t1486
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        CommandLine|contains|all:
+            - REG
+            - ADD
+            - \SOFTWARE\Policies\Microsoft\FVE
+            - /v
+            - /f
+        CommandLine|contains:
+            - EnableBDEWithNoTPM
+            - UseAdvancedStartup
+            - UseTPM
+            - UseTPMKey
+            - UseTPMKeyPIN
+            - RecoveryKeyMessageSource
+            - UseTPMPIN
+            - RecoveryKeyMessage
+    condition: process_creation and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

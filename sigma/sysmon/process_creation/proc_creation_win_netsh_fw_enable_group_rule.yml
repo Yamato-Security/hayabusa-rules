@@ -1,48 +1,38 @@
 title: Netsh Allow Group Policy on Microsoft Defender Firewall
-ruletype: Sigma
-author: frack113
-date: 2022/01/09
+id: 347906f3-e207-4d18-ae5b-a9403d6bcdef
+status: test
 description: Adversaries may modify system firewalls in order to bypass controls limiting
     network usage
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_10:
-        CommandLine: '*new*'
-    SELECTION_11:
-        CommandLine: '*enable=Yes*'
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\netsh.exe'
-    SELECTION_4:
-        OriginalFileName: netsh.exe
-    SELECTION_5:
-        CommandLine: '*advfirewall*'
-    SELECTION_6:
-        CommandLine: '*firewall*'
-    SELECTION_7:
-        CommandLine: '*set*'
-    SELECTION_8:
-        CommandLine: '*rule*'
-    SELECTION_9:
-        CommandLine: '*group=*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7 and SELECTION_8 and SELECTION_9
-        and SELECTION_10 and SELECTION_11))
-falsepositives:
-- Legitimate administration activity
-id: 347906f3-e207-4d18-ae5b-a9403d6bcdef
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.004/T1562.004.md#atomic-test-3---allow-smb-and-rdp-on-microsoft-defender-firewall
+    - https://docs.microsoft.com/en-us/troubleshoot/windows-server/networking/netsh-advfirewall-firewall-control-firewall-behavior
+author: frack113
+date: 2022/01/09
+modified: 2023/02/14
+tags:
+    - attack.defense_evasion
+    - attack.t1562.004
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/14
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.004/T1562.004.md#atomic-test-3---allow-smb-and-rdp-on-microsoft-defender-firewall
-- https://docs.microsoft.com/en-us/troubleshoot/windows-server/networking/netsh-advfirewall-firewall-control-firewall-behavior
-status: test
-tags:
-- attack.defense_evasion
-- attack.t1562.004
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \netsh.exe
+        -   OriginalFileName: netsh.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - advfirewall
+            - firewall
+            - set
+            - rule
+            - group=
+            - new
+            - enable=Yes
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Legitimate administration activity
+level: medium
+ruletype: Sigma

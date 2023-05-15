@@ -1,39 +1,34 @@
 title: Service Started/Stopped Via Wmic.EXE
-ruletype: Sigma
+id: 0b7163dc-7eee-4960-af17-c0cd517f92da
+status: experimental
+description: Detects usage of wmic to start or stop a service
+references:
+    - https://sushant747.gitbooks.io/total-oscp-guide/content/privilege_escalation_windows.html
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/06/20
-description: Detects usage of wmic to start or stop a service
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        OriginalFileName: wmic.exe
-    SELECTION_4:
-        Image: '*\WMIC.exe'
-    SELECTION_5:
-        CommandLine: '* service *'
-    SELECTION_6:
-        CommandLine: '* call *'
-    SELECTION_7:
-        CommandLine:
-        - '*stopservice*'
-        - '*startservice*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6 and SELECTION_7))
-falsepositives:
-- Unknown
-id: 0b7163dc-7eee-4960-af17-c0cd517f92da
-level: medium
+modified: 2023/02/14
+tags:
+    - attack.execution
+    - attack.t1047
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/14
-references:
-- https://sushant747.gitbooks.io/total-oscp-guide/content/privilege_escalation_windows.html
-status: experimental
-tags:
-- attack.execution
-- attack.t1047
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   OriginalFileName: wmic.exe
+        -   Image|endswith: \WMIC.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - ' service '
+            - ' call '
+        CommandLine|contains:
+            - stopservice
+            - startservice
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

@@ -1,33 +1,31 @@
 title: USB Device Plugged
-ruletype: Sigma
+id: 1a4bd6e3-4c6e-405d-a9a3-53a116e341d4
+status: test
+description: Detects plugged/unplugged USB devices
+references:
+    - https://df-stream.com/2014/01/the-windows-7-event-log-and-usb-device/
+    - https://www.techrepublic.com/article/how-to-track-down-usb-flash-drive-usage-in-windows-10s-event-viewer/
 author: Florian Roth (Nextron Systems)
 date: 2017/11/09
-description: Detects plugged/unplugged USB devices
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-DriverFrameworks-UserMode/Operational
-    SELECTION_2:
-        EventID: 2003
-    SELECTION_3:
-        EventID: 2100
-    SELECTION_4:
-        EventID: 2102
-    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4))
-falsepositives:
-- Legitimate administrative activity
-id: 1a4bd6e3-4c6e-405d-a9a3-53a116e341d4
-level: low
+modified: 2021/11/30
+tags:
+    - attack.initial_access
+    - attack.t1200
 logsource:
-    definition: Requires enabling and collection of the Microsoft-Windows-DriverFrameworks-UserMode/Operational
-        eventlog
     product: windows
     service: driver-framework
-modified: 2021/11/30
-references:
-- https://df-stream.com/2014/01/the-windows-7-event-log-and-usb-device/
-- https://www.techrepublic.com/article/how-to-track-down-usb-flash-drive-usage-in-windows-10s-event-viewer/
-status: test
-tags:
-- attack.initial_access
-- attack.t1200
-
+    definition: Requires enabling and collection of the Microsoft-Windows-DriverFrameworks-UserMode/Operational
+        eventlog
+detection:
+    driver_framework:
+        Channel: Microsoft-Windows-DriverFrameworks-UserMode/Operational
+    selection:
+        EventID:
+            - 2003
+            - 2100
+            - 2102
+    condition: driver_framework and selection
+falsepositives:
+    - Legitimate administrative activity
+level: low
+ruletype: Sigma

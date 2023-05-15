@@ -1,36 +1,32 @@
 title: VeeamBackup Database Credentials Dump Via Sqlcmd.EXE
-ruletype: Sigma
+id: b57ba453-b384-4ab9-9f40-1038086b4e53
+status: test
+description: Detects dump of credentials in VeeamBackup dbo
+references:
+    - https://thedfirreport.com/2021/12/13/diavol-ransomware/
+    - https://forums.veeam.com/veeam-backup-replication-f2/recover-esxi-password-in-veeam-t34630.html
 author: frack113
 date: 2021/12/20
-description: Detects dump of credentials in VeeamBackup dbo
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\sqlcmd.exe'
-    SELECTION_4:
-        CommandLine: '*SELECT*'
-    SELECTION_5:
-        CommandLine: '*TOP*'
-    SELECTION_6:
-        CommandLine: '*[VeeamBackup].[dbo].[Credentials]*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6)
-falsepositives:
-- Unknown
-id: b57ba453-b384-4ab9-9f40-1038086b4e53
-level: high
+modified: 2023/02/13
+tags:
+    - attack.collection
+    - attack.t1005
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/13
-references:
-- https://thedfirreport.com/2021/12/13/diavol-ransomware/
-- https://forums.veeam.com/veeam-backup-replication-f2/recover-esxi-password-in-veeam-t34630.html
-status: test
-tags:
-- attack.collection
-- attack.t1005
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_tools:
+        Image|endswith: \sqlcmd.exe
+    selection_query:
+        CommandLine|contains|all:
+            - SELECT
+            - TOP
+            - '[VeeamBackup].[dbo].[Credentials]'
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

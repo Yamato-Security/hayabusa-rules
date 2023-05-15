@@ -1,35 +1,31 @@
 title: Adwind RAT / JRAT - Registry
-ruletype: Sigma
+id: 42f0e038-767e-4b85-9d96-2c6335bad0b5
+related:
+    -   id: 1fac1481-2dbc-48b2-9096-753c49b4ec71
+        type: derived
+status: experimental
+description: Detects javaw.exe in AppData folder as used by Adwind / JRAT
+references:
+    - https://www.hybrid-analysis.com/sample/ba86fa0d4b6af2db0656a88b1dd29f36fe362473ae8ad04255c4e52f214a541c?environmentId=100
+    - https://www.first.org/resources/papers/conf2017/Advanced-Incident-Detection-and-Threat-Hunting-using-Sysmon-and-Splunk.pdf
 author: Florian Roth (Nextron Systems), Tom Ueltschi, Jonhnathan Ribeiro, oscd.community
 date: 2017/11/10
-description: Detects javaw.exe in AppData folder as used by Adwind / JRAT
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run*
-    SELECTION_5:
-        Details: '%AppData%\Roaming\Oracle\bin\\*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-id: 42f0e038-767e-4b85-9d96-2c6335bad0b5
-level: high
+modified: 2022/11/26
+tags:
+    - attack.execution
+    - attack.t1059.005
+    - attack.t1059.007
 logsource:
     category: registry_set
     product: windows
-modified: 2022/11/26
-references:
-- https://www.hybrid-analysis.com/sample/ba86fa0d4b6af2db0656a88b1dd29f36fe362473ae8ad04255c4e52f214a541c?environmentId=100
-- https://www.first.org/resources/papers/conf2017/Advanced-Incident-Detection-and-Threat-Hunting-using-Sysmon-and-Splunk.pdf
-related:
--   id: 1fac1481-2dbc-48b2-9096-753c49b4ec71
-    type: derived
-status: experimental
-tags:
-- attack.execution
-- attack.t1059.005
-- attack.t1059.007
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|startswith: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+        Details|startswith: '%AppData%\Roaming\Oracle\bin\'
+    condition: registry_set and selection
+level: high
+ruletype: Sigma

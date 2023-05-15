@@ -1,37 +1,33 @@
 title: smbexec.py Service Installation
-ruletype: Sigma
+id: 52a85084-6989-40c3-8f32-091e12e13f09
+status: test
+description: Detects the use of smbexec.py tool by detecting a specific service installation
+references:
+    - https://blog.ropnop.com/using-credentials-to-own-windows-boxes-part-2-psexec-and-services/
 author: Omer Faruk Celik
 date: 2018/03/20
-description: Detects the use of smbexec.py tool by detecting a specific service installation
-detection:
-    SELECTION_1:
-        Channel: System
-    SELECTION_2:
-        Provider_Name: Service Control Manager
-    SELECTION_3:
-        EventID: 7045
-    SELECTION_4:
-        ServiceName: BTOBTO
-    SELECTION_5:
-        ImagePath: '*\execute.bat'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-fields:
-- ServiceName
-- ServiceFileName
-id: 52a85084-6989-40c3-8f32-091e12e13f09
-level: critical
+modified: 2022/03/21
+tags:
+    - attack.lateral_movement
+    - attack.execution
+    - attack.t1021.002
+    - attack.t1569.002
 logsource:
     product: windows
     service: system
-modified: 2022/03/21
-references:
-- https://blog.ropnop.com/using-credentials-to-own-windows-boxes-part-2-psexec-and-services/
-status: test
-tags:
-- attack.lateral_movement
-- attack.execution
-- attack.t1021.002
-- attack.t1569.002
-
+detection:
+    system:
+        Channel: System
+    selection:
+        Provider_Name: Service Control Manager
+        EventID: 7045
+        ServiceName: BTOBTO
+        ImagePath|endswith: \execute.bat
+    condition: system and selection
+fields:
+    - ServiceName
+    - ServiceFileName
+falsepositives:
+    - Unknown
+level: critical
+ruletype: Sigma

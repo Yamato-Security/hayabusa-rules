@@ -1,78 +1,73 @@
 title: Cmd.EXE Missing Space Characters Execution Anomaly
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/08/23
+id: a16980c2-0c56-4de0-9a79-17971979efdd
+status: experimental
 description: 'Detects Windows command lines that miss a space before or after the
     /c flag when running a command using the cmd.exe.
 
     This could be a sign of obfuscation of a fat finger problem (typo by the developer).
 
     '
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        CommandLine:
-        - '*cmd.exe/c*'
-        - '*\cmd/c*'
-        - '*"cmd/c*'
-        - '*cmd.exe/k*'
-        - '*\cmd/k*'
-        - '*"cmd/k*'
-        - '*cmd.exe/r*'
-        - '*\cmd/r*'
-        - '*"cmd/r*'
-    SELECTION_4:
-        CommandLine:
-        - '*/cwhoami*'
-        - '*/cpowershell*'
-        - '*/cschtasks*'
-        - '*/cbitsadmin*'
-        - '*/ccertutil*'
-        - '*/kwhoami*'
-        - '*/kpowershell*'
-        - '*/kschtasks*'
-        - '*/kbitsadmin*'
-        - '*/kcertutil*'
-    SELECTION_5:
-        CommandLine:
-        - '*cmd.exe /c*'
-        - '*cmd /c*'
-        - '*cmd.exe /k*'
-        - '*cmd /k*'
-        - '*cmd.exe /r*'
-        - '*cmd /r*'
-    SELECTION_6:
-        CommandLine:
-        - '*cmd.exe /c *'
-        - '*cmd /c *'
-        - '*cmd.exe /k *'
-        - '*cmd /k *'
-        - '*cmd.exe /r *'
-        - '*cmd /r *'
-    SELECTION_7:
-        CommandLine: '*AppData\Local\Programs\Microsoft VS Code\resources\app\node_modules*'
-    SELECTION_8:
-        CommandLine: '*cmd.exe/c .'
-    SELECTION_9:
-        CommandLine: cmd.exe /c
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5)
-        and  not ((SELECTION_6) or (SELECTION_7 or SELECTION_8 or SELECTION_9)))
-falsepositives:
-- Unknown
-id: a16980c2-0c56-4de0-9a79-17971979efdd
-level: high
+references:
+    - https://twitter.com/cyb3rops/status/1562072617552678912
+    - https://ss64.com/nt/cmd.html
+author: Florian Roth (Nextron Systems)
+date: 2022/08/23
+modified: 2023/03/06
+tags:
+    - attack.execution
+    - attack.t1059.001
 logsource:
     category: process_creation
     product: windows
-modified: 2023/03/06
-references:
-- https://twitter.com/cyb3rops/status/1562072617552678912
-- https://ss64.com/nt/cmd.html
-status: experimental
-tags:
-- attack.execution
-- attack.t1059.001
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection1:
+        CommandLine|contains:
+            - cmd.exe/c
+            - \cmd/c
+            - '"cmd/c'
+            - cmd.exe/k
+            - \cmd/k
+            - '"cmd/k'
+            - cmd.exe/r
+            - \cmd/r
+            - '"cmd/r'
+    selection2:
+        CommandLine|contains:
+            - /cwhoami
+            - /cpowershell
+            - /cschtasks
+            - /cbitsadmin
+            - /ccertutil
+            - /kwhoami
+            - /kpowershell
+            - /kschtasks
+            - /kbitsadmin
+            - /kcertutil
+    selection3:
+        CommandLine|contains:
+            - cmd.exe /c
+            - cmd /c
+            - cmd.exe /k
+            - cmd /k
+            - cmd.exe /r
+            - cmd /r
+    filter_generic:
+        CommandLine|contains:
+            - 'cmd.exe /c '
+            - 'cmd /c '
+            - 'cmd.exe /k '
+            - 'cmd /k '
+            - 'cmd.exe /r '
+            - 'cmd /r '
+    filter_fp:
+        -   CommandLine|contains: AppData\Local\Programs\Microsoft VS Code\resources\app\node_modules
+        -   CommandLine|endswith: cmd.exe/c .
+        -   CommandLine: cmd.exe /c
+    condition: process_creation and (1 of selection* and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

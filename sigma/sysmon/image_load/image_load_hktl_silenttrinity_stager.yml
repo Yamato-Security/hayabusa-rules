@@ -1,31 +1,29 @@
 title: HackTool - SILENTTRINITY Stager DLL Load
-ruletype: Sigma
+id: 75c505b1-711d-4f68-a357-8c3fe37dbf2d
+related:
+    -   id: 03552375-cc2c-4883-bbe4-7958d5a980be
+        type: derived
+status: test
+description: Detects SILENTTRINITY stager dll loading activity
+references:
+    - https://github.com/byt3bl33d3r/SILENTTRINITY
 author: Aleksey Potapov, oscd.community
 date: 2019/10/22
-description: Detects SILENTTRINITY stager dll loading activity
-detection:
-    SELECTION_1:
-        EventID: 7
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Description: '*st2stager*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Unlikely
-id: 75c505b1-711d-4f68-a357-8c3fe37dbf2d
-level: high
+modified: 2023/02/17
+tags:
+    - attack.command_and_control
+    - attack.t1071
 logsource:
     category: image_load
     product: windows
-modified: 2023/02/17
-references:
-- https://github.com/byt3bl33d3r/SILENTTRINITY
-related:
--   id: 03552375-cc2c-4883-bbe4-7958d5a980be
-    type: derived
-status: test
-tags:
-- attack.command_and_control
-- attack.t1071
-
+detection:
+    image_load:
+        EventID: 7
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Description|contains: st2stager
+    condition: image_load and selection
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

@@ -1,47 +1,44 @@
 title: Suspicious WERMGR Process Patterns
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/10/14
+id: 396f6630-f3ac-44e3-bfc8-1b161bc00c4e
+status: experimental
 description: Detects suspicious Windows Error Reporting manager (wermgr.exe) process
     patterns - suspicious parents / children, execution folders, command lines etc.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        ParentImage: '*\wermgr.exe'
-    SELECTION_4:
-        Image:
-        - '*\nslookup.exe'
-        - '*\ipconfig.exe'
-        - '*\net.exe'
-        - '*\net1.exe'
-        - '*\whoami.exe'
-        - '*\netstat.exe'
-        - '*\systeminfo.exe'
-        - '*\cmd.exe'
-        - '*\powershell.exe'
-    SELECTION_5:
-        Image: '*\wermgr.exe'
-    SELECTION_6:
-        Image:
-        - C:\Windows\System32\\*
-        - C:\Windows\SysWOW64\\*
-        - C:\Windows\WinSxS\\*
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        (SELECTION_5 and  not (SELECTION_6))))
-falsepositives:
-- Unknown
-id: 396f6630-f3ac-44e3-bfc8-1b161bc00c4e
-level: high
+references:
+    - https://www.trendmicro.com/en_us/research/22/j/black-basta-infiltrates-networks-via-qakbot-brute-ratel-and-coba.html
+    - https://www.echotrail.io/insights/search/wermgr.exe
+    - https://github.com/binderlabs/DirCreate2System
+author: Florian Roth (Nextron Systems)
+date: 2022/10/14
+modified: 2023/02/06
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/06
-references:
-- https://www.trendmicro.com/en_us/research/22/j/black-basta-infiltrates-networks-via-qakbot-brute-ratel-and-coba.html
-- https://www.echotrail.io/insights/search/wermgr.exe
-- https://github.com/binderlabs/DirCreate2System
-status: experimental
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_susp_parent:
+        ParentImage|endswith: \wermgr.exe
+        Image|endswith:
+            - \nslookup.exe
+            - \ipconfig.exe
+            - \net.exe
+            - \net1.exe
+            - \whoami.exe
+            - \netstat.exe
+            - \systeminfo.exe
+            - \cmd.exe
+            - \powershell.exe
+    selection_img:
+        Image|endswith: \wermgr.exe
+    filter_img_location:
+        Image|startswith:
+            - C:\Windows\System32\
+            - C:\Windows\SysWOW64\
+            - C:\Windows\WinSxS\
+    condition: process_creation and (1 of selection_susp* or (selection_img and not
+        filter_img_location))
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,70 +1,67 @@
 title: Suspicious Parent Double Extension File Execution
-ruletype: Sigma
+id: 5e6a80c8-2d45-4633-9ef4-fa2671a39c5c
+related:
+    -   id: 1cdd9a09-06c9-4769-99ff-626e2b3991b8
+        type: derived
+status: experimental
+description: Detect execution of suspicious double extension files in ParentCommandLine
+references:
+    - https://www.virustotal.com/gui/file/7872d8845a332dce517adae9c3389fde5313ff2fed38c2577f3b498da786db68/behavior
+    - https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/bluebottle-banks-targeted-africa
 author: frack113, Nasreddine Bencherchali (Nextron Systems)
 date: 2023/01/06
-description: Detect execution of suspicious double extension files in ParentCommandLine
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        ParentProcessName:
-        - '*.doc.lnk'
-        - '*.docx.lnk'
-        - '*.xls.lnk'
-        - '*.xlsx.lnk'
-        - '*.ppt.lnk'
-        - '*.pptx.lnk'
-        - '*.rtf.lnk'
-        - '*.pdf.lnk'
-        - '*.txt.lnk'
-        - '*.doc.js'
-        - '*.docx.js'
-        - '*.xls.js'
-        - '*.xlsx.js'
-        - '*.ppt.js'
-        - '*.pptx.js'
-        - '*.rtf.js'
-        - '*.pdf.js'
-        - '*.txt.js'
-    SELECTION_4:
-        ParentCommandLine:
-        - '*.doc.lnk*'
-        - '*.docx.lnk*'
-        - '*.xls.lnk*'
-        - '*.xlsx.lnk*'
-        - '*.ppt.lnk*'
-        - '*.pptx.lnk*'
-        - '*.rtf.lnk*'
-        - '*.pdf.lnk*'
-        - '*.txt.lnk*'
-        - '*.doc.js*'
-        - '*.docx.js*'
-        - '*.xls.js*'
-        - '*.xlsx.js*'
-        - '*.ppt.js*'
-        - '*.pptx.js*'
-        - '*.rtf.js*'
-        - '*.pdf.js*'
-        - '*.txt.js*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Unknown
-id: 5e6a80c8-2d45-4633-9ef4-fa2671a39c5c
-level: high
+modified: 2023/02/28
+tags:
+    - attack.defense_evasion
+    - attack.t1036.007
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/28
-references:
-- https://www.virustotal.com/gui/file/7872d8845a332dce517adae9c3389fde5313ff2fed38c2577f3b498da786db68/behavior
-- https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/bluebottle-banks-targeted-africa
-related:
--   id: 1cdd9a09-06c9-4769-99ff-626e2b3991b8
-    type: derived
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1036.007
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        -   ParentProcessName|endswith:
+                - .doc.lnk
+                - .docx.lnk
+                - .xls.lnk
+                - .xlsx.lnk
+                - .ppt.lnk
+                - .pptx.lnk
+                - .rtf.lnk
+                - .pdf.lnk
+                - .txt.lnk
+                - .doc.js
+                - .docx.js
+                - .xls.js
+                - .xlsx.js
+                - .ppt.js
+                - .pptx.js
+                - .rtf.js
+                - .pdf.js
+                - .txt.js
+        -   ParentCommandLine|contains:
+                - .doc.lnk
+                - .docx.lnk
+                - .xls.lnk
+                - .xlsx.lnk
+                - .ppt.lnk
+                - .pptx.lnk
+                - .rtf.lnk
+                - .pdf.lnk
+                - .txt.lnk
+                - .doc.js
+                - .docx.js
+                - .xls.js
+                - .xlsx.js
+                - .ppt.js
+                - .pptx.js
+                - .rtf.js
+                - .pdf.js
+                - .txt.js
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

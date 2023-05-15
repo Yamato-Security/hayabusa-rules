@@ -1,7 +1,6 @@
 title: ISO or Image Mount Indicator in Recent Files
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/02/11
+id: 4358e5a5-7542-4dcb-b9f3-87667371839b
+status: test
 description: 'Detects the creation of recent element file that points to an .ISO,
     .IMG, .VHD or .VHDX file as often used in phishing attacks.
 
@@ -9,31 +8,29 @@ description: 'Detects the creation of recent element file that points to an .ISO
     rarely mount .iso or .img files.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename:
-        - '*.iso.lnk'
-        - '*.img.lnk'
-        - '*.vhd.lnk'
-        - '*.vhdx.lnk'
-    SELECTION_4:
-        TargetFilename: '*\Microsoft\Windows\Recent\\*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Cases in which a user mounts an image file for legitimate reasons
-id: 4358e5a5-7542-4dcb-b9f3-87667371839b
-level: medium
-logsource:
-    category: file_event
-    product: windows
 references:
-- https://www.microsoft.com/security/blog/2021/05/27/new-sophisticated-email-based-attack-from-nobelium/
-- https://www.trendmicro.com/vinfo/us/security/news/cybercrime-and-digital-threats/malicious-spam-campaign-uses-iso-image-files-to-deliver-lokibot-and-nanocore
-- https://blog.emsisoft.com/en/32373/beware-new-wave-of-malware-spreads-via-iso-file-email-attachments/
-- https://insights.sei.cmu.edu/blog/the-dangers-of-vhd-and-vhdx-files/
-status: test
-
+    - https://www.microsoft.com/security/blog/2021/05/27/new-sophisticated-email-based-attack-from-nobelium/
+    - https://www.trendmicro.com/vinfo/us/security/news/cybercrime-and-digital-threats/malicious-spam-campaign-uses-iso-image-files-to-deliver-lokibot-and-nanocore
+    - https://blog.emsisoft.com/en/32373/beware-new-wave-of-malware-spreads-via-iso-file-email-attachments/
+    - https://insights.sei.cmu.edu/blog/the-dangers-of-vhd-and-vhdx-files/
+author: Florian Roth (Nextron Systems)
+date: 2022/02/11
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|endswith:
+            - .iso.lnk
+            - .img.lnk
+            - .vhd.lnk
+            - .vhdx.lnk
+        TargetFilename|contains: \Microsoft\Windows\Recent\
+    condition: file_event and selection
+falsepositives:
+    - Cases in which a user mounts an image file for legitimate reasons
+level: medium
+ruletype: Sigma

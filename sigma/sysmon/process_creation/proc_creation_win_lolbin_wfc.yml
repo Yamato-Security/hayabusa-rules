@@ -1,31 +1,28 @@
 title: Use of Wfc.exe
-ruletype: Sigma
-author: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io
-date: 2022/06/01
+id: 49be8799-7b4d-4fda-ad23-cafbefdebbc5
+status: experimental
 description: The Workflow Command-line Compiler can be used for AWL bypass and is
     listed in Microsoft's recommended block rules.
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\wfc.exe'
-    SELECTION_4:
-        OriginalFileName: wfc.exe
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4))
-falsepositives:
-- Legitimate use by a software developer
-id: 49be8799-7b4d-4fda-ad23-cafbefdebbc5
-level: medium
+references:
+    - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Wfc/
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-block-rules
+author: Christopher Peacock @SecurePeacock, SCYTHE @scythe_io
+date: 2022/06/01
+tags:
+    - attack.defense_evasion
+    - attack.t1127
 logsource:
     category: process_creation
     product: windows
-references:
-- https://lolbas-project.github.io/lolbas/OtherMSBinaries/Wfc/
-- https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/microsoft-recommended-block-rules
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1127
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        -   Image|endswith: \wfc.exe
+        -   OriginalFileName: wfc.exe
+    condition: process_creation and selection
+falsepositives:
+    - Legitimate use by a software developer
+level: medium
+ruletype: Sigma

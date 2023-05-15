@@ -1,7 +1,6 @@
 title: Powershell File and Directory Discovery
-ruletype: Sigma
-author: frack113
-date: 2021/12/15
+id: d23f2ba5-9da0-4463-8908-8ee47f614bb9
+status: test
 description: 'Adversaries may enumerate files and directories or may search in specific
     locations of a host or network share for certain information within a file system.
 
@@ -12,34 +11,33 @@ description: 'Adversaries may enumerate files and directories or may search in s
     specific actions.
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText:
-        - '*ls*'
-        - '*get-childitem*'
-        - '*gci*'
-    SELECTION_4:
-        ScriptBlockText: '*-recurse*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Unknown
-id: d23f2ba5-9da0-4463-8908-8ee47f614bb9
-level: low
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1083/T1083.md
+author: frack113
+date: 2021/12/15
+modified: 2022/12/25
+tags:
+    - attack.discovery
+    - attack.t1083
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-modified: 2022/12/25
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1083/T1083.md
-status: test
-tags:
-- attack.discovery
-- attack.t1083
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains:
+            - ls
+            - get-childitem
+            - gci
+    recurse:
+        ScriptBlockText|contains: -recurse
+    condition: ps_script and (selection and recurse)
+falsepositives:
+    - Unknown
+level: low
+ruletype: Sigma

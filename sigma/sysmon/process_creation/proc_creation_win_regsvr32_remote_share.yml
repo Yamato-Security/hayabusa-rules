@@ -1,32 +1,28 @@
 title: Suspicious Regsvr32 Execution From Remote Share
-ruletype: Sigma
+id: 88a87a10-384b-4ad7-8871-2f9bf9259ce5
+status: experimental
+description: Detects REGSVR32.exe to execute DLL hosted on remote shares
+references:
+    - https://thedfirreport.com/2022/10/31/follina-exploit-leads-to-domain-compromise/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/10/31
-description: Detects REGSVR32.exe to execute DLL hosted on remote shares
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\regsvr32.exe'
-    SELECTION_4:
-        OriginalFileName: \REGSVR32.EXE
-    SELECTION_5:
-        CommandLine: '* \\\\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5)
-falsepositives:
-- Unknown
-id: 88a87a10-384b-4ad7-8871-2f9bf9259ce5
-level: high
+tags:
+    - attack.defense_evasion
+    - attack.t1218.010
 logsource:
     category: process_creation
     product: windows
-references:
-- https://thedfirreport.com/2022/10/31/follina-exploit-leads-to-domain-compromise/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1218.010
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \regsvr32.exe
+        -   OriginalFileName: \REGSVR32.EXE
+    selection_cli:
+        CommandLine|contains: ' \\\\'
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

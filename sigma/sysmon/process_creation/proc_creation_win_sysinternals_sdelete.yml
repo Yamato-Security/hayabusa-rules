@@ -1,39 +1,37 @@
 title: Potential File Overwrite Via Sysinternals SDelete
-ruletype: Sigma
+id: a4824fca-976f-4964-b334-0621379e84c4
+status: experimental
+description: Detects the use of SDelete to erase a file not the free space
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1485/T1485.md
 author: frack113
 date: 2021/06/03
-description: Detects the use of SDelete to erase a file not the free space
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        OriginalFileName: sdelete.exe
-    SELECTION_4:
-        CommandLine:
-        - '* -h*'
-        - '* -c*'
-        - '* -z*'
-        - '* /\?*'
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-fields:
-- ComputerName
-- User
-- CommandLine
-- ParentCommandLine
-id: a4824fca-976f-4964-b334-0621379e84c4
-level: high
+modified: 2023/02/28
+tags:
+    - attack.impact
+    - attack.t1485
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/28
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1485/T1485.md
-status: experimental
-tags:
-- attack.impact
-- attack.t1485
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        OriginalFileName: sdelete.exe
+    filter:
+        CommandLine|contains:
+            - ' -h'
+            - ' -c'
+            - ' -z'
+            - ' /\?'
+    condition: process_creation and (selection and not filter)
+fields:
+    - ComputerName
+    - User
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,45 +1,40 @@
 title: Registry Persistence via Explorer Run Key
-ruletype: Sigma
-author: Florian Roth (Nextron Systems), oscd.community
-date: 2018/07/18
+id: b7916c2a-fa2f-4795-9477-32b731f70f11
+status: test
 description: Detects a possible persistence mechanism using RUN key for Windows Explorer
     and pointing to a suspicious folder
-detection:
-    SELECTION_1:
-        EventID: 13
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        EventType: SetValue
-    SELECTION_4:
-        TargetObject: '*\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run'
-    SELECTION_5:
-        Details:
-        - C:\Windows\Temp\\*
-        - C:\ProgramData\\*
-        - C:\$Recycle.bin\\*
-        - C:\Temp\\*
-        - C:\Users\Public\\*
-        - C:\Users\Default\\*
-    SELECTION_6:
-        Details: '*\AppData\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4) and
-        (SELECTION_5 or SELECTION_6))
-falsepositives:
-- Unknown
-fields:
-- Image
-- ParentImage
-id: b7916c2a-fa2f-4795-9477-32b731f70f11
-level: high
+references:
+    - https://researchcenter.paloaltonetworks.com/2018/07/unit42-upatre-continues-evolve-new-anti-analysis-techniques/
+author: Florian Roth (Nextron Systems), oscd.community
+date: 2018/07/18
+modified: 2022/03/26
+tags:
+    - attack.persistence
+    - attack.t1547.001
 logsource:
     category: registry_set
     product: windows
-modified: 2022/03/26
-references:
-- https://researchcenter.paloaltonetworks.com/2018/07/unit42-upatre-continues-evolve-new-anti-analysis-techniques/
-status: test
-tags:
-- attack.persistence
-- attack.t1547.001
-
+detection:
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        EventType: SetValue
+        TargetObject|endswith: \Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+    selection2:
+        -   Details|startswith:
+                - C:\Windows\Temp\
+                - C:\ProgramData\
+                - C:\$Recycle.bin\
+                - C:\Temp\
+                - C:\Users\Public\
+                - C:\Users\Default\
+        -   Details|contains: \AppData\
+    condition: registry_set and (selection and selection2)
+fields:
+    - Image
+    - ParentImage
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

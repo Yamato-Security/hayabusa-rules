@@ -1,66 +1,61 @@
 title: Webshell Recon Detection Via CommandLine & Processes
-ruletype: Sigma
-author: Cian Heasley, Florian Roth
-date: 2020/07/22
+id: f64e5c19-879c-4bae-b471-6d84c8339677
+status: test
 description: Detects processes spawned from web servers (php, tomcat, iis...etc) that
     perform reconnaissance looking for the existence of popular scripting tools (perl,
     python, wget) on the system via the help commands
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        ParentProcessName:
-        - '*\w3wp.exe'
-        - '*\php-cgi.exe'
-        - '*\nginx.exe'
-        - '*\httpd.exe'
-        - '*\caddy.exe'
-        - '*\ws_tomcatservice.exe'
-    SELECTION_4:
-        ParentProcessName:
-        - '*\java.exe'
-        - '*\javaw.exe'
-    SELECTION_5:
-        ParentProcessName:
-        - '*-tomcat-*'
-        - '*\tomcat*'
-    SELECTION_6:
-        ParentProcessName:
-        - '*\java.exe'
-        - '*\javaw.exe'
-    SELECTION_7:
-        CommandLine:
-        - '*catalina.jar*'
-        - '*CATALINA_HOME*'
-    SELECTION_8:
-        CommandLine:
-        - '*perl --help*'
-        - '*python --help*'
-        - '*python -h*'
-        - '*python3 --help*'
-        - '*python3 -h*'
-        - '*wget --help*'
-        - '*perl -h*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or (SELECTION_4 and
-        SELECTION_5) or (SELECTION_6 and SELECTION_7)) and SELECTION_8)
-falsepositives:
-- Unknown
-fields:
-- Image
-- CommandLine
-- ParentCommandLine
-id: f64e5c19-879c-4bae-b471-6d84c8339677
-level: high
+references:
+    - https://ragged-lab.blogspot.com/2020/07/webshells-automating-reconnaissance.html
+author: Cian Heasley, Florian Roth
+date: 2020/07/22
+modified: 2022/07/27
+tags:
+    - attack.persistence
+    - attack.t1505.003
 logsource:
     category: process_creation
     product: windows
-modified: 2022/07/27
-references:
-- https://ragged-lab.blogspot.com/2020/07/webshells-automating-reconnaissance.html
-status: test
-tags:
-- attack.persistence
-- attack.t1505.003
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_webserver_image:
+        ParentProcessName|endswith:
+            - \w3wp.exe
+            - \php-cgi.exe
+            - \nginx.exe
+            - \httpd.exe
+            - \caddy.exe
+            - \ws_tomcatservice.exe
+    selection_webserver_characteristics_tomcat1:
+        ParentProcessName|endswith:
+            - \java.exe
+            - \javaw.exe
+        ParentProcessName|contains:
+            - -tomcat-
+            - \tomcat
+    selection_webserver_characteristics_tomcat2:
+        CommandLine|contains:
+            - catalina.jar
+            - CATALINA_HOME
+        ParentProcessName|endswith:
+            - \java.exe
+            - \javaw.exe
+    recon:
+        CommandLine|contains:
+            - perl --help
+            - python --help
+            - python -h
+            - python3 --help
+            - python3 -h
+            - wget --help
+            - perl -h
+    condition: process_creation and (1 of selection* and recon)
+fields:
+    - NewProcessName
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,70 +1,61 @@
 title: Suspicious Environment Variable Has Been Registered
-ruletype: Sigma
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/12/20
+id: 966315ef-c5e1-4767-ba25-fce9c8de3660
+status: test
 description: Detects the creation of user-specific or system-wide environment variables
     via the registry. Which contains suspicious commands and strings
-detection:
-    SELECTION_1:
-        EventID: 4657
-    SELECTION_2:
-        OperationType:
-        - Existing registry value modified
-    SELECTION_3:
-        Channel: Security
-    SELECTION_4:
-        EventType: SetValue
-    SELECTION_5:
-        TargetObject: '*\Environment\\*'
-    SELECTION_6:
-        NewValue:
-        - powershell
-        - pwsh
-    SELECTION_7:
-        NewValue:
-        - '*\AppData\Local\Temp\\*'
-        - '*C:\Users\Public\\*'
-        - '*TVqQAAMAAAAEAAAA*'
-        - '*TVpQAAIAAAAEAA8A*'
-        - '*TVqAAAEAAAAEABAA*'
-        - '*TVoAAAAAAAAAAAAA*'
-        - '*TVpTAQEAAAAEAAAA*'
-        - '*SW52b2tlL*'
-        - '*ludm9rZS*'
-        - '*JbnZva2Ut*'
-        - '*SQBuAHYAbwBrAGUALQ*'
-        - '*kAbgB2AG8AawBlAC0A*'
-        - '*JAG4AdgBvAGsAZQAtA*'
-    SELECTION_8:
-        NewValue:
-        - SUVY*
-        - SQBFAF*
-        - SQBuAH*
-        - cwBhA*
-        - aWV4*
-        - aQBlA*
-        - R2V0*
-        - dmFy*
-        - dgBhA*
-        - dXNpbm*
-        - H4sIA*
-        - Y21k*
-        - cABhAH*
-        - Qzpc*
-        - Yzpc*
-    condition: ((SELECTION_1 and SELECTION_2 and SELECTION_3) and (SELECTION_4 and
-        SELECTION_5) and (SELECTION_6 or SELECTION_7 or SELECTION_8))
-falsepositives:
-- Unknown
-id: 966315ef-c5e1-4767-ba25-fce9c8de3660
-level: high
-logsource:
-    category: registry_set
-    product: windows
 references:
-- https://infosec.exchange/@sbousseaden/109542254124022664
-status: test
+    - https://infosec.exchange/@sbousseaden/109542254124022664
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/12/20
 tags:
-- attack.defense_evasion
-- attack.persistence
-
+    - attack.defense_evasion
+    - attack.persistence
+logsource:
+    product: windows
+    category: registry_set
+detection:
+    registry_set:
+        EventID: 4657
+        Channel: Security
+    selection_main:
+        EventType: SetValue
+        TargetObject|contains: \Environment\
+    selection_details:
+        -   Details:
+                - powershell
+                - pwsh
+        -   Details|contains:
+                - \AppData\Local\Temp\
+                - C:\Users\Public\
+                - TVqQAAMAAAAEAAAA
+                - TVpQAAIAAAAEAA8A
+                - TVqAAAEAAAAEABAA
+                - TVoAAAAAAAAAAAAA
+                - TVpTAQEAAAAEAAAA
+                - SW52b2tlL
+                - ludm9rZS
+                - JbnZva2Ut
+                - SQBuAHYAbwBrAGUALQ
+                - kAbgB2AG8AawBlAC0A
+                - JAG4AdgBvAGsAZQAtA
+        -   Details|startswith:
+                - SUVY
+                - SQBFAF
+                - SQBuAH
+                - cwBhA
+                - aWV4
+                - aQBlA
+                - R2V0
+                - dmFy
+                - dgBhA
+                - dXNpbm
+                - H4sIA
+                - Y21k
+                - cABhAH
+                - Qzpc
+                - Yzpc
+    condition: registry_set and (all of selection_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

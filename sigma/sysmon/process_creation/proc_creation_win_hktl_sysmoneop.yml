@@ -1,37 +1,34 @@
 title: HackTool - SysmonEOP Execution
-ruletype: Sigma
+id: 8a7e90c5-fe6e-45dc-889e-057fe4378bd9
+status: experimental
+description: Detects the execution of the PoC that can be used to exploit Sysmon CVE-2022-41120
+references:
+    - https://github.com/Wh04m1001/SysmonEoP
 author: Florian Roth (Nextron Systems)
 date: 2022/12/04
-description: Detects the execution of the PoC that can be used to exploit Sysmon CVE-2022-41120
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\SysmonEOP.exe'
-    SELECTION_4:
-        Hashes:
-        - IMPHASH=22F4089EB8ABA31E1BB162C6D9BF72E5
-        - IMPHASH=5123FA4C4384D431CD0D893EEB49BBEC
-    SELECTION_5:
-        Imphash:
-        - 22f4089eb8aba31e1bb162c6d9bf72e5
-        - 5123fa4c4384d431cd0d893eeb49bbec
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- Unlikely
-id: 8a7e90c5-fe6e-45dc-889e-057fe4378bd9
-level: critical
+modified: 2023/02/04
+tags:
+    - cve.2022.41120
+    - attack.t1068
+    - attack.privilege_escalation
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/04
-references:
-- https://github.com/Wh04m1001/SysmonEoP
-status: experimental
-tags:
-- cve.2022.41120
-- attack.t1068
-- attack.privilege_escalation
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        Image|endswith: \SysmonEOP.exe
+    selection_hash:
+        -   Hashes:
+                - IMPHASH=22F4089EB8ABA31E1BB162C6D9BF72E5
+                - IMPHASH=5123FA4C4384D431CD0D893EEB49BBEC
+        -   Imphash:
+                - 22f4089eb8aba31e1bb162c6d9bf72e5
+                - 5123fa4c4384d431cd0d893eeb49bbec
+    condition: process_creation and (1 of selection_*)
+falsepositives:
+    - Unlikely
+level: critical
+ruletype: Sigma

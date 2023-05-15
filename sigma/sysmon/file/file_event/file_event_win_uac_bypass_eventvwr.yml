@@ -1,36 +1,34 @@
 title: UAC Bypass Using EventVwr
-ruletype: Sigma
+id: 63e4f530-65dc-49cc-8f80-ccfa95c69d43
+status: experimental
+description: Detects the pattern of a UAC bypass using Windows Event Viewer
+references:
+    - https://twitter.com/orange_8361/status/1518970259868626944?s=20&t=RFXqZjtA7tWM3HxqEH78Aw
+    - https://twitter.com/splinter_code/status/1519075134296006662?s=12&t=DLUXH86WtcmG_AZ5gY3C6g
+    - https://lolbas-project.github.io/lolbas/Binaries/Eventvwr/#execute
 author: Antonio Cocomazzi (idea), Florian Roth (Nextron Systems)
 date: 2022/04/27
-description: Detects the pattern of a UAC bypass using Windows Event Viewer
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename:
-        - '*\Microsoft\Event Viewer\RecentViews'
-        - '*\Microsoft\EventV~1\RecentViews'
-    SELECTION_4:
-        Image:
-        - C:\Windows\System32\\*
-        - C:\Windows\SysWOW64\\*
-    condition: ((SELECTION_1 and SELECTION_2) and SELECTION_3 and  not (SELECTION_4))
-falsepositives:
-- Unknown
-id: 63e4f530-65dc-49cc-8f80-ccfa95c69d43
-level: high
+modified: 2022/11/22
+tags:
+    - attack.defense_evasion
+    - attack.privilege_escalation
 logsource:
     category: file_event
     product: windows
-modified: 2022/11/22
-references:
-- https://twitter.com/orange_8361/status/1518970259868626944?s=20&t=RFXqZjtA7tWM3HxqEH78Aw
-- https://twitter.com/splinter_code/status/1519075134296006662?s=12&t=DLUXH86WtcmG_AZ5gY3C6g
-- https://lolbas-project.github.io/lolbas/Binaries/Eventvwr/#execute
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.privilege_escalation
-
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename|endswith:
+            - \Microsoft\Event Viewer\RecentViews
+            - \Microsoft\EventV~1\RecentViews
+    filter:
+        Image|startswith:
+            - C:\Windows\System32\
+            - C:\Windows\SysWOW64\
+    condition: file_event and (selection and not filter)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

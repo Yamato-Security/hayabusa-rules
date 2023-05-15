@@ -1,77 +1,70 @@
 title: Copy from Admin Share
-ruletype: Sigma
+id: 855bc8b5-2ae8-402e-a9ed-b889e6df1900
+status: test
+description: Detects a suspicious copy command to or from an Admin share or remote
+references:
+    - https://twitter.com/SBousseaden/status/1211636381086339073
+    - https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
+    - https://www.elastic.co/guide/en/security/current/remote-file-copy-to-a-hidden-share.html
+    - https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/
 author: Florian Roth (Nextron Systems), oscd.community, Teymur Kheirkhabarov @HeirhabarovT,
     Zach Stanford @svch0st, Nasreddine Bencherchali
 date: 2019/12/30
-description: Detects a suspicious copy command to or from an Admin share or remote
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_10:
-        CommandLine: '*copy*'
-    SELECTION_11:
-        NewProcessName:
-        - '*\powershell.exe*'
-        - '*\pwsh.exe*'
-    SELECTION_12:
-        OriginalFileName:
-        - PowerShell.EXE
-        - pwsh.dll
-    SELECTION_13:
-        CommandLine:
-        - '*copy-item*'
-        - '*copy *'
-        - '*cpi *'
-        - '* cp *'
-        - '*move *'
-        - '*move-item*'
-        - '* mi *'
-        - '* mv *'
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        CommandLine: '*\\\\\*'
-    SELECTION_4:
-        CommandLine: '*$*'
-    SELECTION_5:
-        CommandLine: '*\Sysvol\\*'
-    SELECTION_6:
-        NewProcessName:
-        - '*\robocopy.exe'
-        - '*\xcopy.exe'
-    SELECTION_7:
-        OriginalFileName:
-        - robocopy.exe
-        - XCOPY.EXE
-    SELECTION_8:
-        NewProcessName: '*\cmd.exe'
-    SELECTION_9:
-        OriginalFileName: Cmd.Exe
-    condition: ((SELECTION_1 and SELECTION_2) and ((SELECTION_3 and SELECTION_4) or
-        SELECTION_5) and (((SELECTION_6 or SELECTION_7) or ((SELECTION_8 or SELECTION_9)
-        and SELECTION_10)) or ((SELECTION_11 or SELECTION_12) and SELECTION_13)))
-falsepositives:
-- Administrative scripts
-fields:
-- CommandLine
-- ParentCommandLine
-id: 855bc8b5-2ae8-402e-a9ed-b889e6df1900
-level: high
+modified: 2023/02/02
+tags:
+    - attack.lateral_movement
+    - attack.collection
+    - attack.exfiltration
+    - attack.t1039
+    - attack.t1048
+    - attack.t1021.002
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/02
-references:
-- https://twitter.com/SBousseaden/status/1211636381086339073
-- https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
-- https://www.elastic.co/guide/en/security/current/remote-file-copy-to-a-hidden-share.html
-- https://www.microsoft.com/en-us/security/blog/2022/10/18/defenders-beware-a-case-for-post-ransomware-investigations/
-status: test
-tags:
-- attack.lateral_movement
-- attack.collection
-- attack.exfiltration
-- attack.t1039
-- attack.t1048
-- attack.t1021.002
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_other_tools:
+        -   NewProcessName|endswith:
+                - \robocopy.exe
+                - \xcopy.exe
+        -   OriginalFileName:
+                - robocopy.exe
+                - XCOPY.EXE
+    selection_cmd_img:
+        -   NewProcessName|endswith: \cmd.exe
+        -   OriginalFileName: Cmd.Exe
+    selection_cmd_cli:
+        CommandLine|contains: copy
+    selection_pwsh_img:
+        -   NewProcessName|contains:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+    selection_pwsh_cli:
+        CommandLine|contains:
+            - copy-item
+            - 'copy '
+            - 'cpi '
+            - ' cp '
+            - 'move '
+            - move-item
+            - ' mi '
+            - ' mv '
+    selection_target:
+        -   CommandLine|contains|all:
+                - \\\\
+                - $
+        -   CommandLine|contains: \Sysvol\
+    condition: process_creation and (selection_target and (selection_other_tools or
+        all of selection_cmd_* or all of selection_pwsh_*))
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Administrative scripts
+level: high
+ruletype: Sigma

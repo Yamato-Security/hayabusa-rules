@@ -1,52 +1,48 @@
 title: File Download Via Bitsadmin To An Uncommon Target Folder
-ruletype: Sigma
+id: 6e30c82f-a9f8-4aab-b79c-7c12bce6f248
+status: experimental
+description: Detects usage of bitsadmin downloading a file to uncommon target folder
+references:
+    - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
+    - https://isc.sans.edu/diary/22264
+    - https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/
+    - https://blog.talosintelligence.com/breaking-the-silence-recent-truebot-activity/
 author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2022/06/28
-description: Detects usage of bitsadmin downloading a file to uncommon target folder
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\bitsadmin.exe'
-    SELECTION_4:
-        OriginalFileName: bitsadmin.exe
-    SELECTION_5:
-        CommandLine:
-        - '* /transfer *'
-        - '* /create *'
-        - '* /addfile *'
-    SELECTION_6:
-        CommandLine:
-        - '*%AppData%*'
-        - '*%temp%*'
-        - '*%tmp%*'
-        - '*\AppData\Local\\*'
-        - '*C:\Windows\Temp\\*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        SELECTION_5 and SELECTION_6)
-falsepositives:
-- Unknown
-fields:
-- CommandLine
-- ParentCommandLine
-id: 6e30c82f-a9f8-4aab-b79c-7c12bce6f248
-level: medium
+modified: 2023/02/15
+tags:
+    - attack.defense_evasion
+    - attack.persistence
+    - attack.t1197
+    - attack.s0190
+    - attack.t1036.003
 logsource:
     category: process_creation
     product: windows
-modified: 2023/02/15
-references:
-- https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
-- https://isc.sans.edu/diary/22264
-- https://lolbas-project.github.io/lolbas/Binaries/Bitsadmin/
-- https://blog.talosintelligence.com/breaking-the-silence-recent-truebot-activity/
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.persistence
-- attack.t1197
-- attack.s0190
-- attack.t1036.003
-
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \bitsadmin.exe
+        -   OriginalFileName: bitsadmin.exe
+    selection_flags:
+        CommandLine|contains:
+            - ' /transfer '
+            - ' /create '
+            - ' /addfile '
+    selection_folder:
+        CommandLine|contains:
+            - '%AppData%'
+            - '%temp%'
+            - '%tmp%'
+            - \AppData\Local\
+            - C:\Windows\Temp\
+    condition: process_creation and (all of selection_*)
+fields:
+    - CommandLine
+    - ParentCommandLine
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

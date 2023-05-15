@@ -1,7 +1,6 @@
 title: Powershell Execute Batch Script
-ruletype: Sigma
-author: frack113
-date: 2022/01/02
+id: b5522a23-82da-44e5-9c8b-e10ed8955f88
+status: test
 description: 'Adversaries may abuse the Windows command shell for execution.
 
     The Windows command shell ([cmd](https://attack.mitre.org/software/S0106)) is
@@ -18,32 +17,31 @@ description: 'Adversaries may abuse the Windows command shell for execution.
     the same set of commands on multiple system
 
     '
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*Start-Process*'
-    SELECTION_4:
-        ScriptBlockText:
-        - '*.cmd*'
-        - '*.bat*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4)
-falsepositives:
-- Legitimate administration script
-id: b5522a23-82da-44e5-9c8b-e10ed8955f88
-level: medium
+references:
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.003/T1059.003.md#atomic-test-1---create-and-execute-batch-script
+author: frack113
+date: 2022/01/02
+tags:
+    - attack.execution
+    - attack.t1059.003
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1059.003/T1059.003.md#atomic-test-1---create-and-execute-batch-script
-status: test
-tags:
-- attack.execution
-- attack.t1059.003
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection_start:
+        ScriptBlockText|contains: Start-Process
+    selection_batch:
+        ScriptBlockText|contains:
+            - .cmd
+            - .bat
+    condition: ps_script and (all of selection_*)
+falsepositives:
+    - Legitimate administration script
+level: medium
+ruletype: Sigma

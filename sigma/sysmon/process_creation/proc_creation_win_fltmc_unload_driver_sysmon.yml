@@ -1,40 +1,36 @@
 title: Sysmon Driver Unloaded Via Fltmc.EXE
-ruletype: Sigma
+id: 4d7cda18-1b12-4e52-b45c-d28653210df8
+related:
+    -   id: 4931188c-178e-4ee7-a348-39e8a7a56821
+        type: similar
+status: test
+description: Detects possible Sysmon filter driver unloaded via fltmc.exe
+references:
+    - https://www.darkoperator.com/blog/2018/10/5/operating-offensively-against-sysmon
 author: Kirill Kiryanov, oscd.community
 date: 2019/10/23
-description: Detects possible Sysmon filter driver unloaded via fltmc.exe
-detection:
-    SELECTION_1:
-        EventID: 1
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        Image: '*\fltMC.exe'
-    SELECTION_4:
-        OriginalFileName: fltMC.exe
-    SELECTION_5:
-        CommandLine: '*unload*'
-    SELECTION_6:
-        CommandLine: '*sysmon*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 or SELECTION_4) and
-        (SELECTION_5 and SELECTION_6))
-falsepositives:
-- Unlikely
-id: 4d7cda18-1b12-4e52-b45c-d28653210df8
-level: high
-logsource:
-    category: process_creation
-    product: windows
 modified: 2023/02/13
-references:
-- https://www.darkoperator.com/blog/2018/10/5/operating-offensively-against-sysmon
-related:
--   id: 4931188c-178e-4ee7-a348-39e8a7a56821
-    type: similar
-status: test
 tags:
-- attack.defense_evasion
-- attack.t1070
-- attack.t1562
-- attack.t1562.002
-
+    - attack.defense_evasion
+    - attack.t1070
+    - attack.t1562
+    - attack.t1562.002
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_img:
+        -   Image|endswith: \fltMC.exe
+        -   OriginalFileName: fltMC.exe
+    selection_cli:
+        CommandLine|contains|all:
+            - unload
+            - sysmon
+    condition: process_creation and (all of selection_*)
+falsepositives:
+    - Unlikely
+level: high
+ruletype: Sigma

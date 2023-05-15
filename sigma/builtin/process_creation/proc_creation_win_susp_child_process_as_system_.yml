@@ -1,56 +1,48 @@
 title: Suspicious Child Process Created as System
-ruletype: Sigma
+id: 590a5f4c-6c8c-4f10-8307-89afe9453a9d
+status: test
+description: Detection of child processes spawned with SYSTEM privileges by parents
+    with LOCAL SERVICE or NETWORK SERVICE accounts
+references:
+    - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
+    - https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/
+    - https://github.com/antonioCoco/RogueWinRM
+    - https://twitter.com/Cyb3rWard0g/status/1453123054243024897
 author: Teymur Kheirkhabarov, Roberto Rodriguez (@Cyb3rWard0g), Open Threat Research
     (OTR)
 date: 2019/10/26
-description: Detection of child processes spawned with SYSTEM privileges by parents
-    with LOCAL SERVICE or NETWORK SERVICE accounts
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        ParentUser:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    SELECTION_4:
-        ParentUser:
-        - '*\NETWORK SERVICE'
-        - '*\LOCAL SERVICE'
-    SELECTION_5:
-        User:
-        - '*AUTHORI*'
-        - '*AUTORI*'
-    SELECTION_6:
-        User:
-        - '*\SYSTEM'
-        - "*\\Syst\xE8me"
-        - "*\\\u0421\u0418\u0421\u0422\u0415\u041C\u0410"
-    SELECTION_7:
-        IntegrityLevel: System
-    SELECTION_8:
-        NewProcessName: '*\rundll32.exe'
-    SELECTION_9:
-        CommandLine: '*DavSetCookie*'
-    condition: ((SELECTION_1 and SELECTION_2) and (SELECTION_3 and SELECTION_4 and
-        SELECTION_5 and SELECTION_6 and SELECTION_7) and  not ((SELECTION_8 and SELECTION_9)))
-falsepositives:
-- Unknown
-id: 590a5f4c-6c8c-4f10-8307-89afe9453a9d
-level: high
+modified: 2022/12/15
+tags:
+    - attack.privilege_escalation
+    - attack.t1134.002
 logsource:
     category: process_creation
-    definition: 'Requirements: ParentUser field needs sysmon >= 13.30'
     product: windows
-modified: 2022/12/15
-references:
-- https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
-- https://foxglovesecurity.com/2016/09/26/rotten-potato-privilege-escalation-from-service-accounts-to-system/
-- https://github.com/antonioCoco/RogueWinRM
-- https://twitter.com/Cyb3rWard0g/status/1453123054243024897
-status: test
-tags:
-- attack.privilege_escalation
-- attack.t1134.002
-
+    definition: 'Requirements: ParentUser field needs sysmon >= 13.30'
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection:
+        ParentUser|contains:
+            - AUTHORI
+            - AUTORI
+        ParentUser|endswith:
+            - \NETWORK SERVICE
+            - \LOCAL SERVICE
+        User|contains:
+            - AUTHORI
+            - AUTORI
+        User|endswith:
+            - \SYSTEM
+            - "\\Syst\xE8me"
+            - "\\\u0421\u0418\u0421\u0422\u0415\u041C\u0410"
+        IntegrityLevel: System
+    filter_rundll32:
+        CommandLine|contains: DavSetCookie
+        NewProcessName|endswith: \rundll32.exe
+    condition: process_creation and (selection and not 1 of filter_*)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

@@ -1,36 +1,35 @@
 title: NTLM Brute Force
-ruletype: Sigma
+id: 9c8acf1a-cbf9-4db6-b63c-74baabe03e59
+status: test
+description: Detects common NTLM brute force device names
+references:
+    - https://www.varonis.com/blog/investigate-ntlm-brute-force
 author: Jerry Shockley '@jsh0x'
 date: 2022/02/02
-description: Detects common NTLM brute force device names
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-NTLM/Operational
-    SELECTION_2:
-        EventID: 8004
-    SELECTION_3:
-        WorkstationName:
-        - Rdesktop
-        - Remmina
-        - Freerdp
-        - Windows7
-        - Windows8
-        - Windows2012
-        - Windows2016
-        - Windows2019
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Systems with names equal to the spoofed ones used by the brute force tools
-id: 9c8acf1a-cbf9-4db6-b63c-74baabe03e59
-level: medium
+tags:
+    - attack.credential_access
+    - attack.t1110
 logsource:
-    definition: Requires events from Microsoft-Windows-NTLM/Operational
     product: windows
     service: ntlm
-references:
-- https://www.varonis.com/blog/investigate-ntlm-brute-force
-status: test
-tags:
-- attack.credential_access
-- attack.t1110
-
+    definition: Requires events from Microsoft-Windows-NTLM/Operational
+detection:
+    ntlm:
+        Channel: Microsoft-Windows-NTLM/Operational
+    selection:
+        EventID: 8004
+    devicename:
+        WorkstationName:
+            - Rdesktop
+            - Remmina
+            - Freerdp
+            - Windows7
+            - Windows8
+            - Windows2012
+            - Windows2016
+            - Windows2019
+    condition: ntlm and (selection and devicename)
+falsepositives:
+    - Systems with names equal to the spoofed ones used by the brute force tools
+level: medium
+ruletype: Sigma

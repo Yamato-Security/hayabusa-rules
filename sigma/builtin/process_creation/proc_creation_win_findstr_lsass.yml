@@ -1,41 +1,37 @@
 title: Findstr LSASS
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/08/12
+id: fe63010f-8823-4864-a96b-a7b4a0f7b929
+status: experimental
 description: Detects findstring commands that include the keyword lsass, which indicates
     recon actviity for the LSASS process PID
-detection:
-    SELECTION_1:
-        EventID: 4688
-    SELECTION_2:
-        Channel: Security
-    SELECTION_3:
-        NewProcessName: '*\findstr.exe'
-    SELECTION_4:
-        OriginalFileName: FINDSTR.EXE
-    SELECTION_5:
-        CommandLine: '*lsass*'
-    SELECTION_6:
-        CommandLine:
-        - '* /i lsass.exe*'
-        - '* /i "lsass*'
-        - '*findstr lsass*'
-        - '*findstr.exe lsass*'
-        - '*findstr "lsass*'
-        - '*findstr.exe "lsass*'
-    condition: ((SELECTION_1 and SELECTION_2) and (((SELECTION_3 or SELECTION_4) and
-        SELECTION_5) or SELECTION_6))
-falsepositives:
-- Unknown
-id: fe63010f-8823-4864-a96b-a7b4a0f7b929
-level: high
+references:
+    - https://blog.talosintelligence.com/2022/08/recent-cyber-attack.html?m=1
+author: Florian Roth (Nextron Systems)
+date: 2022/08/12
+tags:
+    - attack.credential_access
+    - attack.t1552.006
 logsource:
     category: process_creation
     product: windows
-references:
-- https://blog.talosintelligence.com/2022/08/recent-cyber-attack.html?m=1
-status: experimental
-tags:
-- attack.credential_access
-- attack.t1552.006
-
+detection:
+    process_creation:
+        EventID: 4688
+        Channel: Security
+    selection_findstr_img:
+        -   NewProcessName|endswith: \findstr.exe
+        -   OriginalFileName: FINDSTR.EXE
+    selection_findstr_cli:
+        CommandLine|contains: lsass
+    selection_special:
+        CommandLine|contains:
+            - ' /i lsass.exe'
+            - ' /i "lsass'
+            - findstr lsass
+            - findstr.exe lsass
+            - findstr "lsass
+            - findstr.exe "lsass
+    condition: process_creation and (all of selection_findstr_* or selection_special)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

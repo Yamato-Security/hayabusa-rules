@@ -1,39 +1,33 @@
 title: HandleKatz Duplicating LSASS Handle
-ruletype: Sigma
-author: Bhabesh Raj (rule), @thefLinkk
-date: 2022/06/27
+id: b1bd3a59-c1fd-4860-9f40-4dd161a7d1f5
+status: experimental
 description: Detects HandleKatz opening LSASS to duplicate its handle to later dump
     the memory without opening any new handles
-detection:
-    SELECTION_1:
-        EventID: 10
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetImage: '*\lsass.exe'
-    SELECTION_4:
-        GrantedAccess: '0x1440'
-    SELECTION_5:
-        CallTrace: C:\Windows\System32\ntdll.dll+*
-    SELECTION_6:
-        CallTrace: '*|UNKNOWN(*'
-    SELECTION_7:
-        CallTrace: '*)'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5
-        and SELECTION_6 and SELECTION_7)
-falsepositives:
-- Unknown
-id: b1bd3a59-c1fd-4860-9f40-4dd161a7d1f5
-level: high
+references:
+    - https://github.com/codewhitesec/HandleKatz
+author: Bhabesh Raj (rule), @thefLinkk
+date: 2022/06/27
+tags:
+    - attack.execution
+    - attack.t1106
+    - attack.defense_evasion
+    - attack.t1003.001
 logsource:
     category: process_access
     product: windows
-references:
-- https://github.com/codewhitesec/HandleKatz
-status: experimental
-tags:
-- attack.execution
-- attack.t1106
-- attack.defense_evasion
-- attack.t1003.001
-
+detection:
+    process_access:
+        EventID: 10
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetImage|endswith: \lsass.exe
+        GrantedAccess: '0x1440'
+    call_trace:
+        CallTrace|startswith: C:\Windows\System32\ntdll.dll+
+        CallTrace|contains: '|UNKNOWN('
+        CallTrace|endswith: )
+    condition: process_access and (selection and call_trace)
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

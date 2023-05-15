@@ -1,29 +1,27 @@
 title: Suspicious Interactive PowerShell as SYSTEM
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2021/12/07
+id: 5b40a734-99b6-4b98-a1d0-1cea51a08ab2
+status: experimental
 description: Detects the creation of files that indicator an interactive use of PowerShell
     in the SYSTEM user context
-detection:
-    SELECTION_1:
-        EventID: 11
-    SELECTION_2:
-        Channel: Microsoft-Windows-Sysmon/Operational
-    SELECTION_3:
-        TargetFilename:
-        - C:\Windows\System32\config\systemprofile\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
-        - C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Windows\PowerShell\StartupProfileData-Interactive
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Administrative activity
-- PowerShell scripts running as SYSTEM user
-id: 5b40a734-99b6-4b98-a1d0-1cea51a08ab2
-level: high
-logsource:
-    category: file_event
-    product: windows
-modified: 2022/08/13
 references:
-- https://jpcertcc.github.io/ToolAnalysisResultSheet/details/PowerSploit_Invoke-Mimikatz.htm
-status: experimental
-
+    - https://jpcertcc.github.io/ToolAnalysisResultSheet/details/PowerSploit_Invoke-Mimikatz.htm
+author: Florian Roth (Nextron Systems)
+date: 2021/12/07
+modified: 2022/08/13
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        TargetFilename:
+            - C:\Windows\System32\config\systemprofile\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history.txt
+            - C:\Windows\System32\config\systemprofile\AppData\Local\Microsoft\Windows\PowerShell\StartupProfileData-Interactive
+    condition: file_event and selection
+falsepositives:
+    - Administrative activity
+    - PowerShell scripts running as SYSTEM user
+level: high
+ruletype: Sigma

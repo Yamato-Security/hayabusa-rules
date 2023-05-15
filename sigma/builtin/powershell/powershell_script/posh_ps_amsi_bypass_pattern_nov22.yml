@@ -1,37 +1,34 @@
 title: AMSI Bypass Pattern Assembly GetType
-ruletype: Sigma
-author: Florian Roth (Nextron Systems)
-date: 2022/11/09
+id: e0d6c087-2d1c-47fd-8799-3904103c5a98
+status: experimental
 description: Detects code fragments found in small and obfuscated AMSI bypass PowerShell
     scripts
-detection:
-    SELECTION_1:
-        EventID: 4104
-    SELECTION_2:
-        Channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
-    SELECTION_3:
-        ScriptBlockText: '*[Ref].Assembly.GetType*'
-    SELECTION_4:
-        ScriptBlockText: '*SetValue($null,$true)*'
-    SELECTION_5:
-        ScriptBlockText: '*NonPublic,Static*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3 and SELECTION_4 and SELECTION_5)
-falsepositives:
-- Unknown
-id: e0d6c087-2d1c-47fd-8799-3904103c5a98
-level: high
+references:
+    - https://www.mdsec.co.uk/2018/06/exploring-powershell-amsi-and-logging-evasion/
+    - https://twitter.com/cyb3rops/status/1588574518057979905?s=20&t=A7hh93ONM7ni1Rj1jO5OaA
+author: Florian Roth (Nextron Systems)
+date: 2022/11/09
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
+    - attack.execution
 logsource:
+    product: windows
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
-    product: windows
-references:
-- https://www.mdsec.co.uk/2018/06/exploring-powershell-amsi-and-logging-evasion/
-- https://twitter.com/cyb3rops/status/1588574518057979905?s=20&t=A7hh93ONM7ni1Rj1jO5OaA
-status: experimental
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-- attack.execution
-
+detection:
+    ps_script:
+        EventID: 4104
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
+    selection:
+        ScriptBlockText|contains|all:
+            - '[Ref].Assembly.GetType'
+            - SetValue($null,$true)
+            - NonPublic,Static
+    condition: ps_script and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma

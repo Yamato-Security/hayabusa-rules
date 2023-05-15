@@ -1,28 +1,26 @@
 title: Windows Defender Exclusions Added
-ruletype: Sigma
+id: 1321dc4e-a1fe-481d-a016-52c45f0c8b4f
+status: stable
+description: Detects the Setting of Windows Defender Exclusions
+references:
+    - https://twitter.com/_nullbind/status/1204923340810543109
 author: Christian Burkard (Nextron Systems)
 date: 2021/07/06
-description: Detects the Setting of Windows Defender Exclusions
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-Windows Defender/Operational
-    SELECTION_2:
-        EventID: 5007
-    SELECTION_3:
-        NewValue: '*\Microsoft\Windows Defender\Exclusions*'
-    condition: (SELECTION_1 and SELECTION_2 and SELECTION_3)
-falsepositives:
-- Administrator actions
-id: 1321dc4e-a1fe-481d-a016-52c45f0c8b4f
-level: medium
+modified: 2022/12/06
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
     product: windows
     service: windefend
-modified: 2022/12/06
-references:
-- https://twitter.com/_nullbind/status/1204923340810543109
-status: stable
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+detection:
+    windefend:
+        Channel: Microsoft-Windows-Windows Defender/Operational
+    selection:
+        EventID: 5007
+        NewValue|contains: \Microsoft\Windows Defender\Exclusions
+    condition: windefend and selection
+falsepositives:
+    - Administrator actions
+level: medium
+ruletype: Sigma

@@ -1,34 +1,31 @@
 title: Windows Defender Threat Detection Disabled
-ruletype: Sigma
+id: fe34868f-6e0e-4882-81f6-c43aa8f15b62
+status: stable
+description: Detects disabling Windows Defender threat protection
+references:
+    - https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-antivirus/troubleshoot-windows-defender-antivirus
+    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
 author: "J\xE1n Tren\u010Dansk\xFD, frack113"
 date: 2020/07/28
-description: Detects disabling Windows Defender threat protection
-detection:
-    SELECTION_1:
-        Channel: Microsoft-Windows-Windows Defender/Operational
-    SELECTION_2:
-        EventID: 5001
-    SELECTION_3:
-        EventID: 5010
-    SELECTION_4:
-        EventID: 5012
-    SELECTION_5:
-        EventID: 5101
-    condition: (SELECTION_1 and (SELECTION_2 or SELECTION_3 or SELECTION_4 or SELECTION_5))
-falsepositives:
-- Administrator actions (should be investigated)
-- Seen being triggered occasionally during Windows 8 Defender Updates
-id: fe34868f-6e0e-4882-81f6-c43aa8f15b62
-level: high
+modified: 2022/12/06
+tags:
+    - attack.defense_evasion
+    - attack.t1562.001
 logsource:
     product: windows
     service: windefend
-modified: 2022/12/06
-references:
-- https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-defender-antivirus/troubleshoot-windows-defender-antivirus
-- https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
-status: stable
-tags:
-- attack.defense_evasion
-- attack.t1562.001
-
+detection:
+    windefend:
+        Channel: Microsoft-Windows-Windows Defender/Operational
+    selection:
+        EventID:
+            - 5001
+            - 5010
+            - 5012
+            - 5101
+    condition: windefend and selection
+falsepositives:
+    - Administrator actions (should be investigated)
+    - Seen being triggered occasionally during Windows 8 Defender Updates
+level: high
+ruletype: Sigma
