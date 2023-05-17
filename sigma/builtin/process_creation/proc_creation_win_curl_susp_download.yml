@@ -54,7 +54,7 @@ detection:
             - .txt
             - .vbe
             - .vbs
-    filter_git_windows:
+    filter_optional_git_windows:
         CommandLine|contains|all:
             - '--silent --show-error --output '
             - gfw-httpget-
@@ -62,10 +62,7 @@ detection:
         ParentProcessName: C:\Program Files\Git\usr\bin\sh.exe
         NewProcessName: C:\Program Files\Git\mingw64\bin\curl.exe
     condition: process_creation and (selection_curl and 1 of selection_susp_* and
-        not 1 of filter_*)
-fields:
-    - CommandLine
-    - ParentCommandLine
+        not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: high
