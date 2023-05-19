@@ -233,3 +233,13 @@ logsources:
         service: appmodel-runtime
         conditions:
             Channel: 'Microsoft-Windows-AppModel-Runtime/Admin'
+    windows-capi2:
+        product: windows
+        service: capi2
+        conditions:
+            Channel: 'Microsoft-Windows-CAPI2/Operational'
+    windows-certificateservicesclient-lifecycle:
+        product: windows
+        service: certificateservicesclient-lifecycle-system
+        conditions:
+            Channel: 'Microsoft-Windows-CertificateServicesClient-Lifecycle-System/Operational'
