@@ -6,6 +6,7 @@ references:
     - https://www.ncsc.gov.uk/static-assets/documents/malware-analysis-reports/goofy-guineapig/NCSC-MAR-Goofy-Guineapig.pdf
 author: X__Junior (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2023/05/15
+modified: 2023/05/20
 tags:
     - attack.defense_evasion
     - attack.privilege_escalation
@@ -20,19 +21,10 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         ImageLoaded|endswith: \goopdate.dll
-    filter_main_paths:
-        Image|endswith: \GoogleUpdate.exe
+    filter_main_generic:
         ImageLoaded|startswith:
-            - C:\Program Files (x86)\Google\
-            - C:\Program Files\Google\
-    filter_optional_user_paths:
-        Image|endswith: \GoogleUpdate.exe
-        ImageLoaded|contains: \AppData\Local\Google\Update\
-    filter_optional_dropbox:
-        Image|contains: \Dropbox
-        ImageLoaded|startswith:
-            - C:\Program Files (x86)\Dropbox\Update\
-            - C:\Program Files\Dropbox\Update\
+            - C:\Program Files (x86)\
+            - C:\Program Files\
     filter_optional_dropbox_installer_temp:
         Image|contains|all:
             - \AppData\Local\Temp\GUM
@@ -44,5 +36,6 @@ detection:
 falsepositives:
     - False positives are expected from Google Chrome installations running from user
         locations (AppData) and other custom locations. Apply additional filters accordingly.
+    - Other third party chromium browsers located in AppData
 level: medium
 ruletype: Sigma
