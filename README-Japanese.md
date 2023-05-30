@@ -476,6 +476,15 @@ detection:
 - `|startswith`: 指定された文字列で始まることをチェックします。
 - `|endswith`: 指定された文字列で終わることをチェックします。
 - `|contains`: 指定された文字列が含まれることをチェックします。
+- `|contains|all`: 指定された複数の文字列が含まれることをチェックします。
+
+この例では、`ForEach``Xor`という文字列の両方が`CommandLine`フィールドに存在する必要があります:
+```
+CommandLine|contains|all:
+    - ForEach
+    - Xor
+```
+
 - `|re`: 正規表現を使用します。(正規表現の書き方については <https://docs.rs/regex/latest/regex/#syntax> を参照してください)。
   > 注意: SigmaルールとHayabusaルールは正規表現の記法に一部差異があります。そのため、HayabusaではSigmaルールを正しく検知できない場合があります。
 - `|equalsfield`: 指定されたイベントキーと合致することをチェックします。2つのフィールドの値が一致しないことをチェックしたい場合は`condition`で`not`を使ってください。
