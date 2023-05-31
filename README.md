@@ -489,6 +489,17 @@ CommandLine|contains|all:
 - `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
 - `|endswithfield`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` if they are different.
 - `|base64offset|contains`: Data will be encoded to base64 in three different ways depending on its position in the encoded string. This modifier will encoded a string to all three variations and check if the string is encoded somewhere in the base64 string.
+- `'|all':`: This pipe modifier is different from those above because it does not get applied to a certain field but to all fields.
+
+In this example, both strings `Keyword-1` and `Keyword-2` need to exist but can exist anywhere in any field:
+```
+detection:
+    keywords:
+        '|all':
+            - 'Keyword-1'
+            - 'Keyword-2'
+    condition: keywords
+```
 
 ## Wildcards
 
