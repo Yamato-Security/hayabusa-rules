@@ -8,7 +8,7 @@ references:
     - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=66
 author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
 date: 2020/10/11
-modified: 2023/01/30
+modified: 2023/05/31
 tags:
     - attack.defense_evasion
     - attack.t1027
@@ -55,12 +55,11 @@ detection:
             - maerts
             - hcaerof
             - retupmoc
-    filter_optional_ansible:
-        CommandLine|contains|all:
-            - -EncodedCommand
-            - rahc
-        ParentProcessName: C:\Windows\System32\cmd.exe
-    condition: process_creation and (all of selection_* and not 1 of filter_optional_*)
+    filter_main_encoded_keyword:
+        CommandLine|contains:
+            - ' -EncodedCommand '
+            - ' -enc '
+    condition: process_creation and (all of selection_* and not 1 of filter_main_*)
 falsepositives:
     - Unlikely
 level: high

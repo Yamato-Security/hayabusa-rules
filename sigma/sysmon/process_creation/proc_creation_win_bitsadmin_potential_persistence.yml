@@ -42,8 +42,6 @@ detection:
             - 'ftp:'
             - 'ftps:'
     condition: process_creation and (1 of selection_*)
-fields:
-    - CommandLine
 falsepositives:
     - Unknown
 level: medium
