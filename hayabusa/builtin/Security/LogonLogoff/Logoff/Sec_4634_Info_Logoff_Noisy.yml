@@ -13,7 +13,7 @@ logsource:
     product: windows
     service: security
 detection:
-    select_basic:
+    selection:
         Channel: Security
         EventID: 4634
     selection_noisy:
