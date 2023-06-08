@@ -1,8 +1,8 @@
 author: Zach Mathis
-date: 2021/12/17
+date: 2023/06/08
 modified: 2023/06/08
 
-title: Explicit Logon
+title: Explicit Logon (Noisy)
 description: |
     (From ultimatewindowsecurity.com)
     This log is generated when
@@ -14,7 +14,7 @@ description: |
        Unfortunately the Subject does not identify the end user.
     4. Logging on interactively to a server with a domain account. (Two 4624 events will also be generated.)
 
-id: 8c1899fe-493d-4faf-aae1-0853a33a3278
+id: a5b3ebf0-141a-4264-b2ff-400c0d515fca
 level: informational
 status: stable
 logsource:
@@ -24,16 +24,16 @@ detection:
     selection_basic:
         Channel: Security
         EventID: 4648
-    filter_ComputerAccounts:
+    selection_system_noise_1:
         - TargetUserName|endswith: '$'
         - SubjectUserName|endswith: '$'
-    filter_SystemAccounts:
+    selection_system_noise_2:
         TargetUserName|re: '(DWM|UMFD)-([0-9]|1[0-3])$' #Filter out default Desktop Windows Manager and User Mode Driver Framework accounts
-        IpAddress: '-'                                  #Don't filter if the IP address is remote to catch attackers who created backdoor accounts that look like DWM-12, etc..
+        IpAddress: '-'
     filter_SuspiciousProcess:
         - ProcessName|endswith: 'powershell.exe'
         - ProcessName|endswith: 'WMIC.exe'
-    condition: selection_basic and not 1 of filter*
+    condition: selection_basic and not filter_SuspiciousProcess and 1 of selection_system_noise*
 falsepositives:
     - normal system usage
 tags:
@@ -47,8 +47,8 @@ sample-message: |
     A logon was attempted using explicit credentials.
 
     Subject:
-        Security ID:		S-1-5-21-2977773840-2930198165-1551093962-1000
-        Account Name:		SEC504STUDENT
+        Security ID:		SYSTEM
+        Account Name:		SEC504STUDENT$
         Account Domain:		SEC504
         Logon ID:		0x3E7
         Logon GUID:		{00000000-0000-0000-0000-000000000000}
@@ -90,8 +90,8 @@ sample-evtx: |
             <Security />
         </System>
         <EventData>
-            <Data Name="SubjectUserSid">S-1-5-21-2977773840-2930198165-1551093962-1000</Data>
-            <Data Name="SubjectUserName">SEC504STUDENT</Data>
+            <Data Name="SubjectUserSid">S-1-5-18</Data>
+            <Data Name="SubjectUserName">SEC504STUDENT$</Data>
             <Data Name="SubjectDomainName">SEC504</Data>
             <Data Name="SubjectLogonId">0x3e7</Data>
             <Data Name="LogonGuid">{00000000-0000-0000-0000-000000000000}</Data>

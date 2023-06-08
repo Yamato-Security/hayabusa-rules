@@ -1,28 +1,28 @@
 author: Zach Mathis
-date: 2020/11/08
-modified: 2023/12/16
+date: 2023/06/08
+modified: 2023/06/08
 
-title: 'Logon (Network)'
-description: 'Prints logon information'
+title: 'Logon (Network) (Noisy)'
+description: 'Outputs system noise'
 
-id: c7b22878-e5d8-4c30-b245-e51fd354359e
+id: 0266af4f-8825-495e-959c-bff801094349
 level: informational
 status: stable
 logsource:
     product: windows
     service: security
 detection:
-    selection:
+    select_basic:
         Channel: Security
         EventID: 4624
         LogonType: 3
-    filter_local_ip_address:
+    selection_local_ip_address:
         - IpAddress: "-"
         - IpAddress: "127.0.0.1"
         - IpAddress: "::1"
-    filter_computer_accounts:
+    selection_target_computer:
         TargetUserName|endswith: '$'
-    condition: selection and not 1 of filter*
+    condition: select_basic and 1 of selection*
 falsepositives:
     - normal system usage
 tags:

@@ -1,11 +1,11 @@
 author: Zach Mathis
-date: 2020/11/08
-modified: 2022/12/16
+date: 2022/06/08
+modified: 2023/06/08
 
-title: 'Logon (Service)'
-description: 'Prints logon type 5 service logons.'
+title: 'Logon (Service) (Noisy)'
+description: 'System Noise'
 
-id: 408e1304-51d7-4d3e-ab31-afd07192400b
+id: 84e5ff02-5f8f-48c4-a7e9-88aa1fb888f7
 level: info
 status: stable
 logsource:
@@ -16,12 +16,12 @@ detection:
         Channel: Security
         EventID: 4624
         LogonType: 5
-    filter:
+    selection_system_noise:
         TargetUserName:
             - "SYSTEM"
             - "NETWORK SERVICE"
             - "LOCAL SERVICE"
-    condition: selection and not filter
+    condition: selection and selection_system_noise
 falsepositives:
     - normal system usage
 tags:
