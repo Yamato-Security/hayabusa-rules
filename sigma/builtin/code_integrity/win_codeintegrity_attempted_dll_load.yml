@@ -1,15 +1,21 @@
-title: Code Integrity Attempted DLL Load
+title: CodeIntegrity - Unmet Signing Level Requirements By File Under Validation
 id: f8931561-97f5-4c46-907f-0a4a592e47a7
-description: Detects attempted DLL load events that didn't meet anti-malware or Windows
-    signing level requirements. It often means the file's signature is revoked or
-    expired
-author: Florian Roth (Nextron Systems), Nasreddine Bencherchali
 status: experimental
+description: 'Detects attempted file load events that did not meet the signing level
+    requirements. It often means the file''s signature is revoked or a signature with
+    the Lifetime Signing EKU has expired.
+
+    This event is best correlated with EID 3089 to determine the error of the validation.
+
+    '
 references:
     - https://twitter.com/SBousseaden/status/1483810148602814466
     - https://github.com/MicrosoftDocs/windows-itpro-docs/blob/40fe118976734578f83e5e839b9c63ae7a4af82d/windows/security/threat-protection/windows-defender-application-control/event-id-explanations.md#windows-codeintegrity-operational-log
+    - https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/event-tag-explanations
+    - https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/event-id-explanations
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2022/01/20
-modified: 2023/04/27
+modified: 2023/06/06
 tags:
     - attack.execution
 logsource:
@@ -19,25 +25,27 @@ detection:
     codeintegrity_operational:
         Channel: Microsoft-Windows-CodeIntegrity/Operational
     selection:
-        EventID: 3033
-    filter_dtrace:
+        EventID:
+            - 3033
+            - 3034
+    filter_optional_dtrace:
         FileNameBuffer|endswith: \Program Files\DTrace\dtrace.dll
         ProcessNameBuffer|endswith: \Windows\System32\svchost.exe
         RequestedPolicy: 12
         ValidatedPolicy: 1
-    filter_msmpeng:
+    filter_optional_av_generic:
         FileNameBuffer|contains: \Windows\System32\DriverStore\FileRepository\
         FileNameBuffer|endswith: \igd10iumd64.dll
         RequestedPolicy: 7
         ValidatedPolicy: 1
-    filter_electron_based_app:
+    filter_optional_electron_based_app:
         FileNameBuffer|endswith: \Windows\System32\nvspcap64.dll
         ProcessNameBuffer|endswith:
             - \AppData\Local\Keybase\Gui\Keybase.exe
             - \Microsoft\Teams\stage\Teams.exe
         RequestedPolicy: 8
         ValidatedPolicy: 1
-    filter_bonjour:
+    filter_optional_bonjour:
         FileNameBuffer|endswith: \Program Files\Bonjour\mdnsNSP.dll
         ProcessNameBuffer|endswith:
             - \Windows\System32\svchost.exe
@@ -46,25 +54,25 @@ detection:
             - 8
             - 12
         ValidatedPolicy: 1
-    filter_msoffice:
+    filter_optional_msoffice:
         FileNameBuffer|contains: \Microsoft Office\root\vfs\ProgramFilesCommonX64\Microsoft
             Shared\OFFICE
         FileNameBuffer|endswith: \MSOXMLMF.DLL
         RequestedPolicy: 7
         ValidatedPolicy: 1
-    filter_slack:
+    filter_optional_slack:
         FileNameBuffer|endswith: \Windows\System32\nvspcap64.dll
         ProcessNameBuffer|contains: \AppData\Local\slack\app-
         ProcessNameBuffer|endswith: \slack.exe
         RequestedPolicy: 8
         ValidatedPolicy: 1
-    filter_firefox:
+    filter_optional_firefox:
         FileNameBuffer|endswith:
             - \Mozilla Firefox\mozavcodec.dll
             - \Mozilla Firefox\mozavutil.dll
         ProcessNameBuffer|endswith: \Mozilla Firefox\firefox.exe
         RequestedPolicy: 8
-    filter_avast:
+    filter_optional_avast:
         FileNameBuffer|endswith:
             - \Program Files\Avast Software\Avast\aswAMSI.dll
             - \Program Files (x86)\Avast Software\Avast\aswAMSI.dll
@@ -72,7 +80,7 @@ detection:
             - 8
             - 12
         ValidatedPolicy: 1
-    filter_gac:
+    filter_main_gac:
         FileNameBuffer|contains: \Windows\assembly\GAC\
         ProcessNameBuffer|endswith: \mscorsvw.exe
         ProcessNameBuffer|contains: \Windows\Microsoft.NET\
@@ -80,14 +88,15 @@ detection:
         ValidatedPolicy:
             - 1
             - 2
-    filter_google_drive:
+    filter_optional_google_drive:
         FileNameBuffer|contains: \Program Files\Google\Drive File Stream\
         FileNameBuffer|endswith: \crashpad_handler.exe
         ProcessNameBuffer|endswith: \Windows\ImmersiveControlPanel\SystemSettings.exe
         RequestedPolicy: 8
         ValidatedPolicy: 1
-    condition: codeintegrity_operational and (selection and not 1 of filter_*)
+    condition: codeintegrity_operational and (selection and not 1 of filter_main_*
+        and not 1 of filter_optional_*)
 falsepositives:
-    - Antivirus products
+    - Antivirus and other third party products. Apply additional filters accordingly
 level: high
 ruletype: Sigma

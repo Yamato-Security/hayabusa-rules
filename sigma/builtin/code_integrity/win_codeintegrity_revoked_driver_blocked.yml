@@ -1,10 +1,12 @@
-title: Block Load Of Revoked Driver
+title: CodeIntegrity - Blocked Driver Load With Revoked Certificate
 id: 9b72b82d-f1c5-4632-b589-187159bc6ec1
-description: Detects blocked load attempts of revoked drivers
-author: Nasreddine Bencherchali (Nextron Systems)
 status: experimental
+description: Detects blocked load attempts of revoked drivers
 references:
-    - https://twitter.com/wdormann/status/1590434950335320065
+    - https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/event-id-explanations
+    - https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/event-tag-explanations
+    - Internal Research
+author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/11/10
 tags:
     - attack.privilege_escalation
