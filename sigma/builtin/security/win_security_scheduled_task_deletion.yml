@@ -27,9 +27,9 @@ detection:
         Channel: Security
     selection:
         EventID: 4699
-    filter_exact:
+    filter_main_generic:
         TaskName: \Microsoft\Windows\RemovalTools\MRT_ERROR_HB
-    filter_contains:
+    filter_main_firefox:
         TaskName|contains: '\Mozilla\Firefox Default Browser Agent '
     condition: security and (selection and not 1 of filter_*)
 falsepositives:
