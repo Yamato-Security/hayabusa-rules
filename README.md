@@ -62,7 +62,8 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
 # About creating rule files
 
 Hayabusa detection rules are written in [YAML](https://en.wikipedia.org/wiki/YAML) format with a file extension of `.yml`. (`.yaml` files will be ignored.)
-They are a subset of sigma rules with some additions. We are trying to make them as close to sigma rules as possible so that it is easy to convert Hayabusa rules back to sigma to give back to the community.
+They are a subset of sigma rules but also contain some added features.
+We are trying to make them as close to sigma rules as possible so that it is easy to convert Hayabusa rules back to sigma to give back to the community.
 Hayabusa rules can express complex detection rules by combining not only simple string matching but also regular expressions, `AND`, `OR`, and other conditions.
 In this section, we will explain how to write Hayabusa detection rules.
 
@@ -80,9 +81,9 @@ modified: 2022/04/17
 title: Possible Timestomping
 details: 'Path: %TargetFilename% ¦ Process: %Image% ¦ User: %User% ¦ CreationTime: %CreationUtcTime% ¦ PreviousTime: %PreviousCreationUtcTime% ¦ PID: %PID% ¦ PGUID: %ProcessGuid%'
 description: |
-    The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
-    This event helps tracking the real creation time of a file. 
-    Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system. 
+    The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process.
+    This event helps tracking the real creation time of a file.
+    Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system.
     Note that many processes legitimately change the creation time of a file; it does not necessarily indicate malicious activity.
 
 #Rule section
@@ -123,31 +124,31 @@ sample-message: |
 sample-evtx: |
     <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
         <System>
-            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" /> 
-            <EventID>2</EventID> 
-            <Version>5</Version> 
-            <Level>4</Level> 
-            <Task>2</Task> 
-            <Opcode>0</Opcode> 
-            <Keywords>0x8000000000000000</Keywords> 
-            <TimeCreated SystemTime="2022-04-12T22:52:00.689654600Z" /> 
-            <EventRecordID>8946</EventRecordID> 
-            <Correlation /> 
-            <Execution ProcessID="3408" ThreadID="4276" /> 
-            <Channel>Microsoft-Windows-Sysmon/Operational</Channel> 
-            <Computer>Zach-log-test</Computer> 
-            <Security UserID="S-1-5-18" /> 
+            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" />
+            <EventID>2</EventID>
+            <Version>5</Version>
+            <Level>4</Level>
+            <Task>2</Task>
+            <Opcode>0</Opcode>
+            <Keywords>0x8000000000000000</Keywords>
+            <TimeCreated SystemTime="2022-04-12T22:52:00.689654600Z" />
+            <EventRecordID>8946</EventRecordID>
+            <Correlation />
+            <Execution ProcessID="3408" ThreadID="4276" />
+            <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+            <Computer>Zach-log-test</Computer>
+            <Security UserID="S-1-5-18" />
         </System>
         <EventData>
-            <Data Name="RuleName">technique_id=T1099,technique_name=Timestomp</Data> 
-            <Data Name="UtcTime">2022-04-12 22:52:00.688</Data> 
-            <Data Name="ProcessGuid">{43199d79-0290-6256-3704-000000001400}</Data> 
-            <Data Name="ProcessId">9752</Data> 
-            <Data Name="Image">C:\TMP\mim.exe</Data> 
-            <Data Name="TargetFilename">C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1</Data> 
-            <Data Name="CreationUtcTime">2016-05-16 09:13:50.950</Data> 
-            <Data Name="PreviousCreationUtcTime">2022-04-12 22:52:00.563</Data> 
-            <Data Name="User">ZACH-LOG-TEST\IEUser</Data> 
+            <Data Name="RuleName">technique_id=T1099,technique_name=Timestomp</Data>
+            <Data Name="UtcTime">2022-04-12 22:52:00.688</Data>
+            <Data Name="ProcessGuid">{43199d79-0290-6256-3704-000000001400}</Data>
+            <Data Name="ProcessId">9752</Data>
+            <Data Name="Image">C:\TMP\mim.exe</Data>
+            <Data Name="TargetFilename">C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1</Data>
+            <Data Name="CreationUtcTime">2016-05-16 09:13:50.950</Data>
+            <Data Name="PreviousCreationUtcTime">2022-04-12 22:52:00.563</Data>
+            <Data Name="User">ZACH-LOG-TEST\IEUser</Data>
         </EventData>
     </Event>
 ```
@@ -286,7 +287,7 @@ detection:
     selection:
         - Event.System.EventID: 7040
         - Event.System.Channel: System
-    condition: selection 
+    condition: selection
 ```
 
 We can also combine `AND` and `OR` logic as shown below.
@@ -298,7 +299,7 @@ In this case, the rule matches when the following two conditions are both true.
 ```yaml
 detection:
     selection:
-        Event.System.EventID: 
+        Event.System.EventID:
           - 7040
           - 7041
         Event.System.Channel: System
@@ -307,7 +308,10 @@ detection:
 
 ### Eventkeys
 
-The following is an excerpt of a Windows event log, formatted in the original XML. The `Event.System.Channel` field in the rule file example above refers to the original XML tag: `<Event><System><Channel>System<Channel><System></Event>`. Nested XML tags are replaced by tag names seperated by dots (`.`). In hayabusa rules, these field strings connected together with dots are refered to as  `eventkeys`.
+The following is an excerpt of a Windows event log, formatted in the original XML.
+The `Event.System.Channel` field in the rule file example above refers to the original XML tag: `<Event><System><Channel>System<Channel><System></Event>`
+Nested XML tags are replaced by tag names seperated by dots (`.`).
+In hayabusa rules, these field strings connected together with dots are refered to as  `eventkeys`.
 
 ```xml
 <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
@@ -489,6 +493,17 @@ CommandLine|contains|all:
 - `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
 - `|endswithfield`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` if they are different.
 - `|base64offset|contains`: Data will be encoded to base64 in three different ways depending on its position in the encoded string. This modifier will encoded a string to all three variations and check if the string is encoded somewhere in the base64 string.
+- `'|all':`: This pipe modifier is different from those above because it does not get applied to a certain field but to all fields.
+
+In this example, both strings `Keyword-1` and `Keyword-2` need to exist but can exist anywhere in any field:
+```
+detection:
+    keywords:
+        '|all':
+            - 'Keyword-1'
+            - 'Keyword-2'
+    condition: keywords
+```
 
 ## Wildcards
 
@@ -546,7 +561,7 @@ Currently, the following keywords can be specified:
 Hayabusa has two built-in regular expression files used for the `./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemProcess-WindowsService_MaliciousServiceInstalled.yml` file:
 - `./rules/config/regex/detectlist_suspicous_services.txt`: to detect suspicious service names
 - `./rules/config/regex/allowlist_legitimate_services.txt`: to allow legitimate services
-  
+
 Files defined in `regexes` and `allowlist` can be edited to change the behavior of all rules that reference them without having to change any rule file itself.
 
 You can also use different detectlist and allowlist textfiles that you create.
@@ -613,7 +628,7 @@ detection:
     selection:
         Channel: Security
         EventID: 4673
-    filter: 
+    filter:
         - ProcessName: C:\Windows\System32\net.exe
         - ProcessName: C:\Windows\System32\lsass.exe
         - ProcessName: C:\Windows\System32\audiodg.exe
@@ -646,14 +661,14 @@ detection:
 ```
 
 Aggregation conditions can be defined in the following format:
-- `count() {operator} {number}`: For log events that match the first condition before the pipe, the condition will match if the number of matched logs satisfies the condition expression specified by `{operator}` and `{number}`.  
+- `count() {operator} {number}`: For log events that match the first condition before the pipe, the condition will match if the number of matched logs satisfies the condition expression specified by `{operator}` and `{number}`.
 
 `{operator}` can be one of the following:
 - `==`: If the value is equal to the specified value, it is treated as matching the condition.
 - `>=`: If the value is greater than or equal to the specified value, the condition is considered to have been met.
 - `>`: If the value is greater than the specified value, the condition is considered to have been met.
 - `<=`: If the value is less than or equal to the specified value, the condition is considered to have been met.
-- `<`: If the value is less than the specified value, it will be treated as if the condition is met.  
+- `<`: If the value is less than the specified value, it will be treated as if the condition is met.
 
 `{number}` must be a number.
 
@@ -758,17 +773,17 @@ detection:
         Channel: Security
         EventID: 4648
     Naruto:
-        TargetUserName|endswith: "$"  
+        TargetUserName|endswith: "$"
         IpAddress: "-"
-    Sushi: 
+    Sushi:
         SubjectUserName|endswith: "$"
         TargetUserName|endswith: "$"
         TargetInfo|endswith: "$"
     Godzilla:
-        SubjectUserName|endswith: "$" 
+        SubjectUserName|endswith: "$"
     Ninja:
-        TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" 
-        IpAddress: "-"                                  
+        TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$"
+        IpAddress: "-"
     Daisuki:
         - ProcessName|endswith: "powershell.exe"
         - ProcessName|endswith: "WMIC.exe"
@@ -783,21 +798,21 @@ detection:
         Channel: Security
         EventID: 4648
     selection_TargetUserIsComputerAccount:
-        TargetUserName|endswith: "$"  
+        TargetUserName|endswith: "$"
         IpAddress: "-"
     filter_UsersAndTargetServerAreComputerAccounts:     #Filter system noise
         SubjectUserName|endswith: "$"
         TargetUserName|endswith: "$"
         TargetInfo|endswith: "$"
     filter_SubjectUserIsComputerAccount:
-        SubjectUserName|endswith: "$" 
+        SubjectUserName|endswith: "$"
     filter_SystemAccounts:
         TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" #Filter out default Desktop Windows Manager and User Mode Driver Framework accounts
         IpAddress: "-"                                  #Don't filter if the IP address is remote to catch attackers who created backdoor accounts that look like DWM-12, etc..
     selection_SuspiciousProcess:
         - ProcessName|endswith: "powershell.exe"
         - ProcessName|endswith: "WMIC.exe"
-    condition: selection_basic and selection_SuspiciousProcess and not (selection_TargetUserIsComputerAccount 
+    condition: selection_basic and selection_SuspiciousProcess and not (selection_TargetUserIsComputerAccount
                and not filter_SubjectUserIsComputerAccount) and not filter_SystemAccounts and not filter_UsersAndTargetServerAreComputerAccounts
 ```
 
