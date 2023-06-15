@@ -36,7 +36,7 @@
     - [EventData](#eventdata)
     - [EventDataの例外的なパターン](#eventdataの例外的なパターン)
       - [同じ名前の複数のフィールド名からフィールドデータを出力する](#同じ名前の複数のフィールド名からフィールドデータを出力する)
-  - [パイプ修飾子 (Modifiers)](#パイプ修飾子-modifiers)
+  - [パイプ修飾子 (Pipe Modifiers)](#パイプ修飾子-pipe-modifiers)
   - [ワイルドカード](#ワイルドカード)
   - [イベントキー内のキーワードのネスト](#イベントキー内のキーワードのネスト)
     - [regexesとallowlistキーワード](#regexesとallowlistキーワード)
@@ -62,6 +62,8 @@
 # ルールファイル作成について
 
 Hayabusaの検知ルールは[YAML](https://en.wikipedia.org/wiki/YAML)形式で記述され、ファイル拡張子は必ず`.yml`にしてください。(`.yaml`ファイルは無視されます。)
+Sigmaルールのサブセットでありながら、いくつかの付加的な機能を含んでいます。
+HayabusaのルールをSigmaに修正し、コミュニティに還元しやすいように、できるだけSigmaルールに近いものを作ろうとしています。
 単純な文字列のマッチングだけでなく、正規表現や`AND`、`OR`などの条件を組み合わせて複雑な検知ルールを表現することができます。
 本節ではHayabusaの検知ルールの書き方について説明します。
 
@@ -79,9 +81,9 @@ modified: 2022/04/17
 title: Possible Timestomping
 details: 'Path: %TargetFilename% ¦ Process: %Image% ¦ CreationTime: %CreationUtcTime% ¦ PreviousTime: %PreviousCreationUtcTime% ¦ PID: %PID% ¦ PGUID: %ProcessGuid%'
 description: |
-    The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process. 
-    This event helps tracking the real creation time of a file. 
-    Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system. 
+    The Change File Creation Time Event is registered when a file creation time is explicitly modified by a process.
+    This event helps tracking the real creation time of a file.
+    Attackers may change the file creation time of a backdoor to make it look like it was installed with the operating system.
     Note that many processes legitimately change the creation time of a file; it does not necessarily indicate malicious activity.
 
 #ルールセクション
@@ -122,31 +124,31 @@ sample-message: |
 sample-evtx: |
     <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
         <System>
-            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" /> 
-            <EventID>2</EventID> 
-            <Version>5</Version> 
-            <Level>4</Level> 
-            <Task>2</Task> 
-            <Opcode>0</Opcode> 
-            <Keywords>0x8000000000000000</Keywords> 
-            <TimeCreated SystemTime="2022-04-12T22:52:00.689654600Z" /> 
-            <EventRecordID>8946</EventRecordID> 
-            <Correlation /> 
-            <Execution ProcessID="3408" ThreadID="4276" /> 
-            <Channel>Microsoft-Windows-Sysmon/Operational</Channel> 
-            <Computer>Zach-log-test</Computer> 
-            <Security UserID="S-1-5-18" /> 
+            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385f-c22a-43e0-bf4c-06f5698ffbd9}" />
+            <EventID>2</EventID>
+            <Version>5</Version>
+            <Level>4</Level>
+            <Task>2</Task>
+            <Opcode>0</Opcode>
+            <Keywords>0x8000000000000000</Keywords>
+            <TimeCreated SystemTime="2022-04-12T22:52:00.689654600Z" />
+            <EventRecordID>8946</EventRecordID>
+            <Correlation />
+            <Execution ProcessID="3408" ThreadID="4276" />
+            <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+            <Computer>Zach-log-test</Computer>
+            <Security UserID="S-1-5-18" />
         </System>
         <EventData>
-            <Data Name="RuleName">technique_id=T1099,technique_name=Timestomp</Data> 
-            <Data Name="UtcTime">2022-04-12 22:52:00.688</Data> 
-            <Data Name="ProcessGuid">{43199d79-0290-6256-3704-000000001400}</Data> 
-            <Data Name="ProcessId">9752</Data> 
-            <Data Name="Image">C:\TMP\mim.exe</Data> 
-            <Data Name="TargetFilename">C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1</Data> 
-            <Data Name="CreationUtcTime">2016-05-16 09:13:50.950</Data> 
-            <Data Name="PreviousCreationUtcTime">2022-04-12 22:52:00.563</Data> 
-            <Data Name="User">ZACH-LOG-TEST\IEUser</Data> 
+            <Data Name="RuleName">technique_id=T1099,technique_name=Timestomp</Data>
+            <Data Name="UtcTime">2022-04-12 22:52:00.688</Data>
+            <Data Name="ProcessGuid">{43199d79-0290-6256-3704-000000001400}</Data>
+            <Data Name="ProcessId">9752</Data>
+            <Data Name="Image">C:\TMP\mim.exe</Data>
+            <Data Name="TargetFilename">C:\Users\IEUser\AppData\Local\Temp\Quest Software\PowerGUI\51f5c69c-5d16-47e1-9864-038c8510d919\mk.ps1</Data>
+            <Data Name="CreationUtcTime">2016-05-16 09:13:50.950</Data>
+            <Data Name="PreviousCreationUtcTime">2022-04-12 22:52:00.563</Data>
+            <Data Name="User">ZACH-LOG-TEST\IEUser</Data>
         </EventData>
     </Event>
 ```
@@ -251,7 +253,7 @@ sample-evtx: |
 - `PID` -> Process ID
 - `PGUID` -> Process GUID (Global Unique ID)
 - `Ver` -> Version
-  
+
 # detectionフィールド
 
 ## selectionの基礎知識
@@ -285,7 +287,7 @@ detection:
     selection:
         - Event.System.EventID: 7040
         - Event.System.Channel: System
-    condition: selection 
+    condition: selection
 ```
 
 また、以下のように「AND」と「OR」を組み合わせることも可能です。
@@ -297,7 +299,7 @@ detection:
 ```yaml
 detection:
     selection:
-        Event.System.EventID: 
+        Event.System.EventID:
           - 7040
           - 7041
         Event.System.Channel: System
@@ -307,6 +309,9 @@ detection:
 ### イベントキー
 
 WindowsイベントログをXML形式で出力すると下記のようになります。
+上記のルールファイルの例にある`Event.System.Channel`フィールドは、元々のXMLタグを参照しています： `<Event><System><Channel>System<Channel><System></Event>`
+ネストされたXMLタグはドット(`.`)で区切られたタグ名で置き換えられます。
+Hayabusaのルールでは、このドットでつながれた文字列のことをイベントキーと呼んでいます。
 
 ```xml
 <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
@@ -320,10 +325,6 @@ WindowsイベントログをXML形式で出力すると下記のようになり�
     </EventData>
 </Event>
 ```
-
-論理和の例で示したルールの `Event.System.Channel` フィールドは、下記のXMLタグで囲まれた値を参照しています。 ネストされたXMLタグはドット(`.`)で区切られたタグ名で置き換えられます。Hayabusaのルールでは、このドットでつながれた文字列のことをイベントキーと呼んでいます。
-
-`<Event><System><Channel>System<Channel><System></Event>`
 
 #### イベントキーエイリアス
 
@@ -385,7 +386,8 @@ detection:
 
 ### EventData
 
-Windowsのイベントログは、基本データ（イベントID、タイムスタンプ、レコードID、ログ名（チャンネル））が書き込まれる`System`タグと、イベントIDに応じて任意のデータが書き込まれる`EventData`もしくは`UserData`タグの2つに分けられます。その内、`EventData`もしくは`UserData`タグはネストされたタグの名前がすべて`Data`であり、これまで説明したイベントキーでは`SubjectUserSid`と`SubjectUserName`を区別できません。
+Windowsのイベントログは、基本データ（イベントID、タイムスタンプ、レコードID、ログ名（チャンネル））が書き込まれる`System`タグと、イベントIDに応じて任意のデータが書き込まれる`EventData`もしくは`UserData`タグの2つに分けられます。
+その内、`EventData`もしくは`UserData`タグはネストされたタグの名前がすべて`Data`であり、これまで説明したイベントキーでは`SubjectUserSid`と`SubjectUserName`を区別できません。
 
 ```xml
 <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
@@ -436,7 +438,8 @@ detection:
 </Event>
 ```
 
-上記のようなイベントログを検知するには、`Data`というイベントキーを指定します。この場合、`EventData`にネストされたタグの内、`Data`フィールドが`None`になっている場合は、条件にマッチすることになります。
+上記のようなイベントログを検知するには、`Data`というイベントキーを指定します。
+この場合、`EventData`にネストされたタグの内、`Data`フィールドが`None`になっている場合は、条件にマッチすることになります。
 
 ```yaml
 detection:
@@ -457,7 +460,7 @@ detection:
 
 もし、最初の`Data`フィールドのデータだけを出力したい場合は、`details:`に `%Data[1]%` を指定すると `rundll32.exe`のみが出力されます。
 
-## パイプ修飾子 (Modifiers)
+## パイプ修飾子 (Pipe Modifiers)
 
 イベントキーにはパイプ修飾子を指定することができます。ここまで説明した書き方では完全一致しか表現できませんでしたが、パイプを使うことでより柔軟な検知ルールを記載できるようになります。以下の例では、ある`Data`フィールドの値に`EngineVersion=2`という文字列が入っている場合、条件にマッチすることになります。
 
@@ -478,7 +481,7 @@ detection:
 - `|contains`: 指定された文字列が含まれることをチェックします。
 - `|contains|all`: 指定された複数の文字列が含まれることをチェックします。
 
-この例では、`ForEach``Xor`という文字列の両方が`CommandLine`フィールドに存在する必要があります:
+この例では、`ForEach`と`Xor`という文字列の両方が`CommandLine`フィールドに存在する必要があります:
 ```
 CommandLine|contains|all:
     - ForEach
@@ -490,6 +493,17 @@ CommandLine|contains|all:
 - `|equalsfield`: 指定されたイベントキーと合致することをチェックします。2つのフィールドの値が一致しないことをチェックしたい場合は`condition`で`not`を使ってください。
 - `|endswithfield`: 指定されたイベントキーが指定された文字列で終わることをチェックします。指定されたイベントキーが指定された文字列で終わらないことをチェックしたい場合は`condition`で`not`を使ってください。
 - `|base64offset|contains`: データは、エンコードされた文字列内の位置によって、3つの異なる方法でbase64にエンコードされます。この修飾子は、文字列を3つのバリエーションにエンコードし、その文字列がbase64文字列のどこかにエンコードされているかどうかをチェックします。
+- `'|all':`: このパイプ修飾子は、特定のフィールドに適用されるのではなく、すべてのフィールドに適用されるため、上記の修飾子とは異なります。
+
+この例では、`Keyword-1`と`Keyword-2`という文字列の両方が存在する必要がありますが、任意のフィールドのどこにでも存在できます:
+```
+detection:
+    keywords:
+        '|all':
+            - 'Keyword-1'
+            - 'Keyword-2'
+    condition: keywords
+```
 
 ## ワイルドカード
 
@@ -546,7 +560,7 @@ Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemPro
 
 - `./rules/config/regex/detectlist_suspicous_services.txt`: 怪しいサービス名を検知するためのものです。
 - `./rules/config/regex/allowlist_legitimate_services.txt`: 正規のサービスを許可するためのものです。
-  
+
 `regexes` と `allowlist` で定義されたファイルの正規表現を変更すると、それらを参照するすべてのルールの動作を一度に変更できます。
 
 また、`regexes` と `allowlist` にはユーザーが独自で作成したファイルを指定することも可能です。
@@ -611,7 +625,7 @@ detection:
     selection:
         Channel: Security
         EventID: 4673
-    filter: 
+    filter:
         - ProcessName: C:\Windows\System32\net.exe
         - ProcessName: C:\Windows\System32\lsass.exe
         - ProcessName: C:\Windows\System32\audiodg.exe
@@ -729,9 +743,9 @@ detection:
     SELECTION_3:
         LogonType: 3
     FILTER_1:
-        SubStatus: "0xc0000064" 
+        SubStatus: "0xc0000064"
     FILTER_2:
-        SubStatus: "0xc000006a"  
+        SubStatus: "0xc000006a"
     condition: SELECTION_1 and SELECTION_2 and SELECTION_3 and not (FILTER_1 or FILTER_2)
 ```
 
@@ -759,17 +773,17 @@ detection:
         Channel: Security
         EventID: 4648
     Naruto:
-        TargetUserName|endswith: "$"  
+        TargetUserName|endswith: "$"
         IpAddress: "-"
-    Sushi: 
+    Sushi:
         SubjectUserName|endswith: "$"
         TargetUserName|endswith: "$"
         TargetInfo|endswith: "$"
     Godzilla:
-        SubjectUserName|endswith: "$" 
+        SubjectUserName|endswith: "$"
     Ninja:
-        TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" 
-        IpAddress: "-"                                  
+        TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$"
+        IpAddress: "-"
     Daisuki:
         - ProcessName|endswith: "powershell.exe"
         - ProcessName|endswith: "WMIC.exe"
@@ -784,21 +798,21 @@ detection:
         Channel: Security
         EventID: 4648
     selection_TargetUserIsComputerAccount:
-        TargetUserName|endswith: "$"  
+        TargetUserName|endswith: "$"
         IpAddress: "-"
     filter_UsersAndTargetServerAreComputerAccounts:     #Filter system noise
         SubjectUserName|endswith: "$"
         TargetUserName|endswith: "$"
         TargetInfo|endswith: "$"
     filter_SubjectUserIsComputerAccount:
-        SubjectUserName|endswith: "$" 
+        SubjectUserName|endswith: "$"
     filter_SystemAccounts:
         TargetUserName|re: "(DWM|UMFD)-([0-9]|1[0-2])$" #Filter out default Desktop Windows Manager and User Mode Driver Framework accounts
         IpAddress: "-"                                  #Don't filter if the IP address is remote to catch attackers who created backdoor accounts that look like DWM-12, etc..
     selection_SuspiciousProcess:
         - ProcessName|endswith: "powershell.exe"
         - ProcessName|endswith: "WMIC.exe"
-    condition: selection_basic and selection_SuspiciousProcess and not (selection_TargetUserIsComputerAccount 
+    condition: selection_basic and selection_SuspiciousProcess and not (selection_TargetUserIsComputerAccount
                and not filter_SubjectUserIsComputerAccount) and not filter_SystemAccounts and not filter_UsersAndTargetServerAreComputerAccounts
 ```
 
