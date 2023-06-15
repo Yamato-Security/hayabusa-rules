@@ -27,7 +27,7 @@ references:
     - https://redcanary.com/blog/misbehaving-rats/
 author: frack113, Connor Martin
 date: 2022/07/11
-modified: 2023/04/18
+modified: 2023/06/14
 tags:
     - attack.command_and_control
     - attack.t1219
@@ -38,7 +38,7 @@ detection:
     dns_query:
         EventID: 22
         Channel: Microsoft-Windows-Sysmon/Operational
-    selection:
+    selection_name:
         QueryName|endswith:
             - .getgo.com
             - .logmein.com
@@ -83,6 +83,9 @@ detection:
             - relay.kaseya.net
             - license.bomgar.com
             - .beyondtrustcloud.com
+    selection_rustdesk:
+        QueryName|endswith: .rustdesk.com
+        QueryName|startswith: rs-
     filter_optional_brave:
         Image|endswith: \brave.exe
     filter_optional_chrome:
@@ -122,7 +125,7 @@ detection:
         Image|endswith: \vivaldi.exe
     filter_optional_whale:
         Image|endswith: \whale.exe
-    condition: dns_query and (selection and not 1 of filter_optional_*)
+    condition: dns_query and (1 of selection_* and not 1 of filter_optional_*)
 falsepositives:
     - Likely with other browser software
 level: medium
