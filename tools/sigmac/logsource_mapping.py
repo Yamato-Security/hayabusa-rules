@@ -105,10 +105,6 @@ class LogsourceConverter:
         """
         if isinstance(obj, dict):
             for field_name, val in list(obj.items()):
-                if field_name == "|all":
-                    # TODO Hayabusa側でフィールド名なしの'|all'に対応したらこの分岐は削除
-                    msg = f"Unsupported value-modifier '|all' found. Skip conversion."
-                    raise Exception(msg)
                 if not need_field_conversion:
                     return obj
                 self.transform_field(obj, field_name)
