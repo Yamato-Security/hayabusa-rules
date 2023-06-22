@@ -10,6 +10,7 @@ references:
     - https://redcanary.com/blog/misbehaving-rats/
 author: Connor Martin, Nasreddine Bencherchali
 date: 2022/12/23
+modified: 2023/06/22
 tags:
     - attack.persistence
     - attack.t1543.003
@@ -26,26 +27,27 @@ detection:
             - 7045
             - 7036
         ServiceName|contains:
-            - SSUService
-            - SplashtopRemoteService
-            - Atera
-            - LogMeIn
-            - LMIGuardianSvc
-            - TeamViewer
-            - RPCService
-            - RPCPerformanceService
-            - BASupportExpressStandaloneService
-            - BASupportExpressSrvcUpdater
-            - GoToMyPC
-            - monblanking
-            - RManService
-            - GoToAssist
             - AmmyyAdmin
-            - vncserver
-            - Parsec
+            - Atera
+            - BASupportExpressSrvcUpdater
+            - BASupportExpressStandaloneService
             - chromoting
-            - Zoho
+            - GoToAssist
+            - GoToMyPC
             - jumpcloud
+            - LMIGuardianSvc
+            - LogMeIn
+            - monblanking
+            - Parsec
+            - RManService
+            - RPCPerformanceService
+            - RPCService
+            - SplashtopRemoteService
+            - SSUService
+            - TeamViewer
+            - TightVNC
+            - vncserver
+            - Zoho
     condition: system and selection
 falsepositives:
     - Unknown
