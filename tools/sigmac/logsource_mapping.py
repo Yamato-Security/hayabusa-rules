@@ -19,6 +19,22 @@ FORMAT = '[%(levelname)-2s:%(filename)s:%(lineno)d] %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
 
+WINDOWS_SYSMON_PROCESS_CREATION_FIELDS = ["RuleName", "UtcTime", "ProcessGuid", "ProcessId", "Image", "FileVersion", "Description", "Product", "Company", "OriginalFileName", "CommandLine", "CurrentDirectory", "User", "LogonGuid", "LogonId", "TerminalSessionId", "IntegrityLevel", "Hashes", "ParentProcessGuid", "ParentProcessId", "ParentImage", "ParentCommandLine", "ParentUser"]
+WINDOWS_SECURITY_PROCESS_CREATION_FIELDS = ["SubjectUserSid", "SubjectUserName", "SubjectDomainName", "SubjectLogonId", "NewProcessId", "NewProcessName", "TokenElevationType", "ProcessId", "CommandLine", "TargetUserSid", "TargetUserName", "TargetDomainName", "TargetLogonId", "ParentProcessName", "MandatoryLabel"]
+
+
+def get_terminal_keys_recursive(dictionary, keys=[]):
+    for key, value in dictionary.items():
+        if isinstance(value, dict):
+            get_terminal_keys_recursive(value, keys)
+        elif isinstance(value, list):
+            for item in value:
+                if isinstance(item, dict):
+                    get_terminal_keys_recursive(item, keys)
+        else:
+            keys.append(key)
+    return keys
+
 
 @dataclass(frozen=True)
 class LogSource:
@@ -68,6 +84,17 @@ class LogSource:
         if self.category == "process_creation" and self.event_id == 4688:
             return True
         return False
+
+    def validate(self, obj) -> bool:
+        keys = get_terminal_keys_recursive(obj, [])
+        keys = [re.sub(r"\|.*", "", k) for k in keys]
+        if self.category != "process_creation":
+            return True
+        if self.event_id == 4688:
+            return all([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys if k not in ["condition", "EventID", "Channel"]])
+        elif self.event_id == 1:
+            return all([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys if k not in ["condition", "EventID", "Channel"]])
+        return True
 
 
 class IndentDumper(yaml.Dumper):
@@ -161,6 +188,9 @@ class LogsourceConverter:
                 key = re.sub(r"\.", "_", key)  # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
                 val = self.transform_field_recursive(val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
+            if not ls.validate(new_obj['detection']):
+                LOGGER.warning(f"This rule has incompatible field.{new_obj['detection']}. skip conversion.")
+                return
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
                                                                  list(detection.keys()), self.field_map)
             if ls.need_field_conversion() and "fields" in new_obj:
