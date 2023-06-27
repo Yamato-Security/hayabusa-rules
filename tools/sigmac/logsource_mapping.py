@@ -23,7 +23,10 @@ WINDOWS_SYSMON_PROCESS_CREATION_FIELDS = ["RuleName", "UtcTime", "ProcessGuid", 
 WINDOWS_SECURITY_PROCESS_CREATION_FIELDS = ["SubjectUserSid", "SubjectUserName", "SubjectDomainName", "SubjectLogonId", "NewProcessId", "NewProcessName", "TokenElevationType", "ProcessId", "CommandLine", "TargetUserSid", "TargetUserName", "TargetDomainName", "TargetLogonId", "ParentProcessName", "MandatoryLabel"]
 
 
-def get_terminal_keys_recursive(dictionary, keys=[]):
+def get_terminal_keys_recursive(dictionary, keys=[]) -> list[str]:
+    """
+    dictの末端キーを再帰的にリストアップ
+    """
     for key, value in dictionary.items():
         if isinstance(value, dict):
             get_terminal_keys_recursive(value, keys)
@@ -80,7 +83,7 @@ class LogSource:
             return f"{self.get_identifier_for_detection(keys)} and {condition_str}"
         return f"{self.get_identifier_for_detection(keys)} and ({condition_str})"
 
-    def need_field_conversion(self):
+    def need_field_conversion(self) -> bool:
         if self.category == "process_creation" and self.event_id == 4688:
             return True
         return False
@@ -90,10 +93,11 @@ class LogSource:
         keys = [re.sub(r"\|.*", "", k) for k in keys]
         if self.category != "process_creation":
             return True
+        common_fields = ["CommandLine", "ProcessId"]
         if self.event_id == 4688:
-            return not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys if k not in ["CommandLine", "ProcessId"]])
+            return not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys if k not in common_fields])
         elif self.event_id == 1:
-            return not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys if k not in ["CommandLine", "ProcessId"]])
+            return not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys if k not in common_fields])
         return True
 
 
