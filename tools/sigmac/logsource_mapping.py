@@ -91,9 +91,9 @@ class LogSource:
         if self.category != "process_creation":
             return True
         if self.event_id == 4688:
-            return all([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys if k not in ["condition", "EventID", "Channel"]])
+            return not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys if k not in ["CommandLine", "ProcessId"]])
         elif self.event_id == 1:
-            return all([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys if k not in ["condition", "EventID", "Channel"]])
+            return not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys if k not in ["CommandLine", "ProcessId"]])
         return True
 
 
