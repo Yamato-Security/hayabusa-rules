@@ -193,7 +193,7 @@ class LogsourceConverter:
                 val = self.transform_field_recursive(val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
             if not ls.validate(new_obj['detection']):
-                LOGGER.warning(f"This rule has incompatible field.{new_obj['detection']}. skip conversion.")
+                LOGGER.error(f"This rule has incompatible field.{new_obj['detection']}. skip conversion.")
                 return
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
                                                                  list(detection.keys()), self.field_map)
