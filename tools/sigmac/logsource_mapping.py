@@ -22,6 +22,12 @@ LOGGER = logging.getLogger(__name__)
 WINDOWS_SYSMON_PROCESS_CREATION_FIELDS = ["RuleName", "UtcTime", "ProcessGuid", "ProcessId", "Image", "FileVersion", "Description", "Product", "Company", "OriginalFileName", "CommandLine", "CurrentDirectory", "User", "LogonGuid", "LogonId", "TerminalSessionId", "IntegrityLevel", "Hashes", "ParentProcessGuid", "ParentProcessId", "ParentImage", "ParentCommandLine", "ParentUser"]
 WINDOWS_SECURITY_PROCESS_CREATION_FIELDS = ["SubjectUserSid", "SubjectUserName", "SubjectDomainName", "SubjectLogonId", "NewProcessId", "NewProcessName", "TokenElevationType", "ProcessId", "CommandLine", "TargetUserSid", "TargetUserName", "TargetDomainName", "TargetLogonId", "ParentProcessName", "MandatoryLabel"]
 
+VALUE_MAP = {
+    "LOW": "S-1-16-4096",
+    "MEDIUM": "S-1-16-8192",
+    "HIGH": "S-1-16-12288",
+    "SYSTEM": "S-1-16-16384"
+    }
 
 def get_terminal_keys_recursive(dictionary, keys=[]) -> list[str]:
     """
