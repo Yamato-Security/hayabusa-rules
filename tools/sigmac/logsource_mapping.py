@@ -155,6 +155,13 @@ class LogsourceConverter:
                 new_key = self.field_map[rewrite_filed] + original_field.replace(rewrite_filed, "")
                 val = convert_special_val(self.field_map[rewrite_filed], obj.pop(original_field))
                 obj[new_key] = val
+        for k, v in obj.copy().items():
+            if k == "SubjectUserName":
+                obj[k] = re.sub(r".*\\", "", v)
+                obj["SubjectDomainName"] = re.sub(r"\\.*", "", v)
+            else:
+                obj[k] = v
+
 
     def transform_field_recursive(self, obj: dict, need_field_conversion: bool) -> dict:
         """
