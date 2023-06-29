@@ -55,7 +55,7 @@ def get_terminal_keys_recursive(dictionary, keys=[]) -> list[str]:
 
 def convert_special_val(key: str, value: str | list[str]) -> str | list[str]:
     if key == "ProcessId" or key == "NewProcessId":
-        return str(hex(int(value))) if isinstance(value, str) else [str(hex(int(v))) for v in value]
+        return str(hex(int(value))) if isinstance(value, int) else [str(hex(int(v))) for v in value]
     elif key == "MandatoryLabel":
         return str(VALUE_MAP.get(value.upper())) if isinstance(value, str) else [str(VALUE_MAP.get(v.upper())) for v in
                                                                                  value]
@@ -438,7 +438,7 @@ if __name__ == '__main__':
                 file_cnt += 1
                 LOGGER.debug(f"Converted to [{out_path}] done.")
         except Exception as err:
-            LOGGER.error(f"Error while converting rule [{sigma_file}]: {err}")
+            LOGGER.error(f"Error while converting rule [{sigma_file}]: {err}", exc_info=True)
     end_time = time.perf_counter()
     LOGGER.info(f"[{file_cnt}] files created successfully. Created files were saved under [{args.output}].")
     LOGGER.info(f"Script took [{'{:.2f}'.format(end_time - start_time)}] seconds.")
