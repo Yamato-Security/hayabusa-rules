@@ -148,14 +148,12 @@ class LogsourceConverter:
         """
         for rewrite_filed in self.field_map.keys():
             if original_field == rewrite_filed:
-                val = obj.pop(original_field)
                 new_key = self.field_map[original_field]
-                val = convert_special_val(new_key, val)
+                val = convert_special_val(new_key, obj.pop(original_field))
                 obj[new_key] = val
             elif original_field.startswith(rewrite_filed) and original_field.replace(rewrite_filed, "")[0] == "|":
-                val = obj.pop(original_field)
-                val = convert_special_val(self.field_map[rewrite_filed], val)
                 new_key = self.field_map[rewrite_filed] + original_field.replace(rewrite_filed, "")
+                val = convert_special_val(self.field_map[rewrite_filed], obj.pop(original_field))
                 obj[new_key] = val
 
     def transform_field_recursive(self, obj: dict, need_field_conversion: bool) -> dict:
