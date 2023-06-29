@@ -56,7 +56,7 @@ def get_terminal_keys_recursive(dictionary, keys=[]) -> list[str]:
 def convert_special_val(key: str, value: str | list[str]) -> str | list[str]:
     if key == "ProcessId" or key == "NewProcessId" or key == "SubjectLogonId":
         return str(hex(int(value))) if isinstance(value, str) else [str(hex(int(v))) for v in value]
-    elif key == "MandatoryLevel":
+    elif key == "MandatoryLabel":
         return str(VALUE_MAP.get(value.upper())) if isinstance(value, str) else [str(VALUE_MAP.get(v.upper())) for v in
                                                                                  value]
     return value
