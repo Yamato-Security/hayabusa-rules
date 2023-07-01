@@ -119,7 +119,7 @@ class LogSource:
             return True
         return False
 
-    def validate(self, obj: dict) -> bool:
+    def is_convertible(self, obj: dict) -> bool:
         """
         process_creationルールのSysmon/Securityイベント用変換後フィールドの妥当性チェック
         """
@@ -130,15 +130,16 @@ class LogSource:
             if key in ["condition", "process_creation", "timeframe"]:
                 continue
             val_obj = obj[key]
+            is_convertible = True
             if isinstance(val_obj, dict):
                 keys = [re.sub(r"\|.*", "", k) for k in val_obj.keys()]
                 keys = [k for k in keys if k not in common_fields]
                 if not keys:
-                    continue
-                if self.event_id == 4688:
-                    return not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
+                    is_convertible = True
+                elif self.event_id == 4688:
+                    is_convertible = not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
                 elif self.event_id == 1:
-                    return not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
+                    is_convertible = not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
             elif isinstance(val_obj, list):
                 if not [v for v in val_obj if isinstance(v, dict)]:
                     continue
@@ -147,11 +148,13 @@ class LogSource:
                 keys = [re.sub(r"\|.*", "", k) for k in keys]
                 keys = [k for k in keys if k not in common_fields]
                 if not keys:
-                    continue
-                if self.event_id == 4688:
-                    return not all([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
+                    is_convertible = True
+                elif self.event_id == 4688:
+                    is_convertible = not all([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
                 elif self.event_id == 1:
-                    return not all([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
+                    is_convertible = not all([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
+            if not is_convertible:
+                return False
         return True
 
 
@@ -255,7 +258,7 @@ class LogsourceConverter:
                 key = re.sub(r"\.", "_", key)  # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
                 val = self.transform_field_recursive(val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
-            if not ls.validate(new_obj['detection']):
+            if not ls.is_convertible(new_obj['detection']):
                 LOGGER.error(f"This rule has incompatible field.{new_obj['detection']}. skip conversion.")
                 return
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
