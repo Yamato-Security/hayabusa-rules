@@ -9,6 +9,7 @@ import sys
 import time
 from collections import defaultdict
 from dataclasses import dataclass, field
+from functools import reduce
 from io import StringIO
 from pathlib import Path
 from typing import Union, Optional
@@ -24,12 +25,13 @@ WINDOWS_SYSMON_PROCESS_CREATION_FIELDS = ["RuleName", "UtcTime", "ProcessGuid", 
                                           "CurrentDirectory", "User", "LogonGuid", "LogonId", "TerminalSessionId",
                                           "IntegrityLevel", "Hashes", "ParentProcessGuid", "ParentProcessId",
                                           "ParentImage", "ParentCommandLine", "ParentUser"]
+
 WINDOWS_SECURITY_PROCESS_CREATION_FIELDS = ["SubjectUserSid", "SubjectUserName", "SubjectDomainName", "SubjectLogonId",
                                             "NewProcessId", "NewProcessName", "TokenElevationType", "ProcessId",
                                             "CommandLine", "TargetUserSid", "TargetUserName", "TargetDomainName",
                                             "TargetLogonId", "ParentProcessName", "MandatoryLabel"]
 
-VALUE_MAP = {
+INTEGRITY_LEVEL_VALUES = {
     "LOW": "S-1-16-4096",
     "MEDIUM": "S-1-16-8192",
     "HIGH": "S-1-16-12288",
@@ -54,11 +56,14 @@ def get_terminal_keys_recursive(dictionary, keys=[]) -> list[str]:
 
 
 def convert_special_val(key: str, value: str | list[str]) -> str | list[str]:
+    """
+    ProcessIdとIntegrityLevelはValueの形式が違うため、変換する
+    """
     if key == "ProcessId" or key == "NewProcessId":
         return str(hex(int(value))) if isinstance(value, int) else [str(hex(int(v))) for v in value]
     elif key == "MandatoryLabel":
-        return str(VALUE_MAP.get(value.upper())) if isinstance(value, str) else [str(VALUE_MAP.get(v.upper())) for v in
-                                                                                 value]
+        return str(INTEGRITY_LEVEL_VALUES.get(value.upper())) if isinstance(value, str) else [
+            str(INTEGRITY_LEVEL_VALUES.get(v.upper())) for v in value]
     return value
 
 
@@ -107,20 +112,46 @@ class LogSource:
         return f"{self.get_identifier_for_detection(keys)} and ({condition_str})"
 
     def need_field_conversion(self) -> bool:
+        """
+        process_creationルールのSysmon/Securityイベント用のフィールド変換要否を判定
+        """
         if self.category == "process_creation" and self.event_id == 4688:
             return True
         return False
 
-    def validate(self, obj) -> bool:
-        keys = get_terminal_keys_recursive(obj, [])
-        keys = [re.sub(r"\|.*", "", k) for k in keys]
+    def validate(self, obj: dict) -> bool:
+        """
+        process_creationルールのSysmon/Securityイベント用変換後フィールドの妥当性チェック
+        """
         if self.category != "process_creation":
             return True
         common_fields = ["CommandLine", "ProcessId"]
-        if self.event_id == 4688:
-            return not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys if k not in common_fields])
-        elif self.event_id == 1:
-            return not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys if k not in common_fields])
+        for key in obj.keys():
+            if key in ["condition", "process_creation", "timeframe"]:
+                continue
+            val_obj = obj[key]
+            if isinstance(val_obj, dict):
+                keys = [re.sub(r"\|.*", "", k) for k in val_obj.keys()]
+                keys = [k for k in keys if k not in common_fields]
+                if not keys:
+                    continue
+                if self.event_id == 4688:
+                    return not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
+                elif self.event_id == 1:
+                    return not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
+            elif isinstance(val_obj, list):
+                if not [v for v in val_obj if isinstance(v, dict)]:
+                    continue
+                keys = [list(k.keys()) for k in val_obj]
+                keys = reduce(lambda a, b: a + b, keys)
+                keys = [re.sub(r"\|.*", "", k) for k in keys]
+                keys = [k for k in keys if k not in common_fields]
+                if not keys:
+                    continue
+                if self.event_id == 4688:
+                    return not all([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
+                elif self.event_id == 1:
+                    return not all([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
         return True
 
 
@@ -161,7 +192,6 @@ class LogsourceConverter:
                 obj["SubjectDomainName"] = re.sub(r"\\.*", "", v)
             else:
                 obj[k] = v
-
 
     def transform_field_recursive(self, obj: dict, need_field_conversion: bool) -> dict:
         """
