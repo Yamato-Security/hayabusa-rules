@@ -42,7 +42,9 @@ logsources:
             service: security
 fieldmappings:
     Image: NewProcessName
+    ProcessId: NewProcessId
     ParentImage: ParentProcessName
-    Details: NewValue
-    #CommandLine: ProcessCommandLine  # No need to map, as real name of ProcessCommandLine is already CommandLine
+    ParentProcessId: ProcessId
     LogonId: SubjectLogonId
+    IntegrityLevel: MandatoryLabel
+    User: SubjectUserName

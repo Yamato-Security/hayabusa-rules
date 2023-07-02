@@ -9,6 +9,7 @@ import sys
 import time
 from collections import defaultdict
 from dataclasses import dataclass, field
+from functools import reduce
 from io import StringIO
 from pathlib import Path
 from typing import Union, Optional
@@ -18,6 +19,52 @@ import oyaml as yaml
 FORMAT = '[%(levelname)-2s:%(filename)s:%(lineno)d] %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.INFO)
 LOGGER = logging.getLogger(__name__)
+
+WINDOWS_SYSMON_PROCESS_CREATION_FIELDS = ["RuleName", "UtcTime", "ProcessGuid", "ProcessId", "Image", "FileVersion",
+                                          "Description", "Product", "Company", "OriginalFileName", "CommandLine",
+                                          "CurrentDirectory", "User", "LogonGuid", "LogonId", "TerminalSessionId",
+                                          "IntegrityLevel", "Hashes", "ParentProcessGuid", "ParentProcessId",
+                                          "ParentImage", "ParentCommandLine", "ParentUser"]
+
+WINDOWS_SECURITY_PROCESS_CREATION_FIELDS = ["SubjectUserSid", "SubjectUserName", "SubjectDomainName", "SubjectLogonId",
+                                            "NewProcessId", "NewProcessName", "TokenElevationType", "ProcessId",
+                                            "CommandLine", "TargetUserSid", "TargetUserName", "TargetDomainName",
+                                            "TargetLogonId", "ParentProcessName", "MandatoryLabel"]
+
+INTEGRITY_LEVEL_VALUES = {
+    "LOW": "S-1-16-4096",
+    "MEDIUM": "S-1-16-8192",
+    "HIGH": "S-1-16-12288",
+    "SYSTEM": "S-1-16-16384"
+}
+
+
+def get_terminal_keys_recursive(dictionary, keys=[]) -> list[str]:
+    """
+    dictの末端キーを再帰的にリストアップ
+    """
+    for key, value in dictionary.items():
+        if isinstance(value, dict):
+            get_terminal_keys_recursive(value, keys)
+        elif isinstance(value, list):
+            for item in value:
+                if isinstance(item, dict):
+                    get_terminal_keys_recursive(item, keys)
+        else:
+            keys.append(key)
+    return keys
+
+
+def convert_special_val(key: str, value: str | list[str]) -> str | list[str]:
+    """
+    ProcessIdとIntegrityLevelはValueの形式が違うため、変換する
+    """
+    if key == "ProcessId" or key == "NewProcessId":
+        return str(hex(int(value))) if isinstance(value, int) else [str(hex(int(v))) for v in value]
+    elif key == "MandatoryLabel":
+        return str(INTEGRITY_LEVEL_VALUES.get(value.upper())) if isinstance(value, str) else [
+            str(INTEGRITY_LEVEL_VALUES.get(v.upper())) for v in value]
+    return value
 
 
 @dataclass(frozen=True)
@@ -64,10 +111,51 @@ class LogSource:
             return f"{self.get_identifier_for_detection(keys)} and {condition_str}"
         return f"{self.get_identifier_for_detection(keys)} and ({condition_str})"
 
-    def need_field_conversion(self):
+    def need_field_conversion(self) -> bool:
+        """
+        process_creationルールのSysmon/Securityイベント用のフィールド変換要否を判定
+        """
         if self.category == "process_creation" and self.event_id == 4688:
             return True
         return False
+
+    def is_convertible(self, obj: dict) -> bool:
+        """
+        process_creationルールのSysmon/Securityイベント用変換後フィールドの妥当性チェック
+        """
+        if self.category != "process_creation":
+            return True
+        common_fields = ["CommandLine", "ProcessId"]
+        for key in obj.keys():
+            if key in ["condition", "process_creation", "timeframe"]:
+                continue
+            val_obj = obj[key]
+            is_convertible = True
+            if isinstance(val_obj, dict):
+                keys = [re.sub(r"\|.*", "", k) for k in val_obj.keys()]
+                keys = [k for k in keys if k not in common_fields]
+                if not keys:
+                    is_convertible = True
+                elif self.event_id == 4688:
+                    is_convertible = not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
+                elif self.event_id == 1:
+                    is_convertible = not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
+            elif isinstance(val_obj, list):
+                if not [v for v in val_obj if isinstance(v, dict)]:
+                    continue
+                keys = [list(k.keys()) for k in val_obj]
+                keys = reduce(lambda a, b: a + b, keys)
+                keys = [re.sub(r"\|.*", "", k) for k in keys]
+                keys = [k for k in keys if k not in common_fields]
+                if not keys:
+                    is_convertible = True
+                elif self.event_id == 4688:
+                    is_convertible = not all([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
+                elif self.event_id == 1:
+                    is_convertible = not all([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
+            if not is_convertible:
+                return False
+        return True
 
 
 class IndentDumper(yaml.Dumper):
@@ -94,10 +182,19 @@ class LogsourceConverter:
         """
         for rewrite_filed in self.field_map.keys():
             if original_field == rewrite_filed:
-                obj[self.field_map[original_field]] = obj.pop(original_field)
+                new_key = self.field_map[original_field]
+                val = convert_special_val(new_key, obj.pop(original_field))
+                obj[new_key] = val
             elif original_field.startswith(rewrite_filed) and original_field.replace(rewrite_filed, "")[0] == "|":
                 new_key = self.field_map[rewrite_filed] + original_field.replace(rewrite_filed, "")
-                obj[new_key] = obj.pop(original_field)
+                val = convert_special_val(self.field_map[rewrite_filed], obj.pop(original_field))
+                obj[new_key] = val
+        for k, v in obj.copy().items():
+            if k == "SubjectUserName":
+                obj[k] = re.sub(r".*\\", "", v)
+                obj["SubjectDomainName"] = re.sub(r"\\.*", "", v)
+            else:
+                obj[k] = v
 
     def transform_field_recursive(self, obj: dict, need_field_conversion: bool) -> dict:
         """
@@ -161,6 +258,9 @@ class LogsourceConverter:
                 key = re.sub(r"\.", "_", key)  # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
                 val = self.transform_field_recursive(val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
+            if " of " not in new_obj['detection']['condition'] and not ls.is_convertible(new_obj['detection']):
+                LOGGER.error(f"This rule has incompatible field.{new_obj['detection']}. skip conversion.")
+                return
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
                                                                  list(detection.keys()), self.field_map)
             if ls.need_field_conversion() and "fields" in new_obj:

@@ -5,7 +5,7 @@ from logsource_mapping import *
 class TestLogSourceMapper(TestCase):
     def test_create_service_map(self):
         res = create_service_map(create_obj(os.path.dirname(os.path.abspath(__file__)), "windows-services.yaml"))
-        self.assertEquals(len(res.keys()), 36)
+        self.assertEquals(len(res.keys()), 38)
 
     def test_create_category_map(self):
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -14,7 +14,7 @@ class TestLogSourceMapper(TestCase):
         s2 = create_category_map(create_obj(script_dir, 'windows-audit.yaml'), service_to_channels)
         s3 = create_category_map(create_obj(script_dir, 'windows-services.yaml'), service_to_channels)
         s4 = merge_category_map(service_to_channels, [s1, s2, s3])
-        self.assertEquals(len(s4), 66)
+        self.assertEquals(len(s4), 68)
         self.assertEquals(len(s4["process_creation"]), 2)
 
     def test_build_out_path(self):
@@ -84,3 +84,21 @@ class TestLogSourceMapper(TestCase):
         lc = LogsourceConverter("", all_category_map, process_creation_field_map, [])
         with self.assertRaises(Exception):
             lc.get_logsources({"logsource": {"service": "file_rename"}})
+
+    def test_logsource_validate_security_4688(self):
+        ls = LogSource(category="process_creation", event_id=4688, service="", channel="")
+        self.assertFalse(ls.is_convertible({"selection": {"Image": "a.exe"}}))
+        self.assertFalse(ls.is_convertible({"selection": {"ParentImage": "b.exe"}}))
+        self.assertTrue(ls.is_convertible({"selection": {"NewProcessName": "a.exe" }}))
+        self.assertTrue(ls.is_convertible({"selection": {"ParentProcessName": "b.exe" }}))
+        self.assertTrue(ls.is_convertible({"selection": {"NewProcessName|contains": "c.exe" }}))
+        self.assertTrue(ls.is_convertible({"selection": {'ParentProcessName|endswith': '\\winword.exe', 'NewProcessName|contains': '/l'}, 'condition': 'selection'}))
+
+    def test_logsource_validate_sysmon_1(self):
+        ls = LogSource(category="process_creation", event_id=1, service="", channel="")
+        self.assertFalse(ls.is_convertible({"selection": {"NewProcessName": "a.exe"}}))
+        self.assertFalse(ls.is_convertible({"selection": {"ParentProcessName": "b.exe"}}))
+        self.assertTrue(ls.is_convertible({"selection": {"Image": "a.exe" }}))
+        self.assertTrue(ls.is_convertible({"selection": {"ParentImage": "b.exe" }}))
+        self.assertTrue(ls.is_convertible({"selection": {"Image|contains": "c.exe" }}))
+        self.assertTrue(ls.is_convertible({'selection': {'Image|endswith': '\\winword.exe', 'CommandLine|contains': '/l'}, 'condition': 'selection'}))
