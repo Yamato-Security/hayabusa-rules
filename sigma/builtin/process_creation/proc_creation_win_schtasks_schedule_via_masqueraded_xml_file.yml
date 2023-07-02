@@ -35,7 +35,7 @@ detection:
     filter_main_extension_xml:
         CommandLine|contains: .xml
     filter_main_system_process:
-        IntegrityLevel: System
+        MandatoryLabel: S-1-16-16384
     filter_main_rundll32:
         ParentCommandLine|contains|all:
             - :\WINDOWS\Installer\MSI

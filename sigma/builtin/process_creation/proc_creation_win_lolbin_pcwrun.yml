@@ -24,8 +24,8 @@ detection:
         ParentProcessName|endswith: \pcwrun.exe
     condition: process_creation and selection
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - ParentCommandLine
     - CommandLine
 falsepositives:

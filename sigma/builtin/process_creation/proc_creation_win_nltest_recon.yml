@@ -50,7 +50,7 @@ detection:
     condition: process_creation and (selection_nltest and 1 of selection_recon*)
 fields:
     - NewProcessName
-    - User
+    - SubjectUserName
     - CommandLine
     - ParentCommandLine
 falsepositives:

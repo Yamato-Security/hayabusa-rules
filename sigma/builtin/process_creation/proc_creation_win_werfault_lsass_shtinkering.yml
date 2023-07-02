@@ -26,13 +26,13 @@ detection:
         ParentUser|contains:
             - AUTHORI
             - AUTORI
-        User|contains:
-            - AUTHORI
-            - AUTORI
         CommandLine|contains|all:
             - ' -u -p '
             - ' -ip '
             - ' -s '
+        SubjectUserName|contains:
+            - AUTHORI
+            - AUTORI
     filter_lsass:
         ParentProcessName: C:\Windows\System32\lsass.exe
     condition: process_creation and (all of selection_* and not 1 of filter_*)

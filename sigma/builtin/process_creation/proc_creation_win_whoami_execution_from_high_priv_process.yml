@@ -27,7 +27,7 @@ detection:
         -   OriginalFileName: whoami.exe
         -   NewProcessName|endswith: \whoami.exe
     selection_user:
-        User|contains:
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
             - TrustedInstaller

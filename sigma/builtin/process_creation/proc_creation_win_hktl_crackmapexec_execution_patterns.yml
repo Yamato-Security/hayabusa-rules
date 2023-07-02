@@ -31,8 +31,8 @@ detection:
             - 'powershell.exe -noni -nop -w 1 -enc '
     condition: process_creation and selection
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
 falsepositives:
     - Unknown

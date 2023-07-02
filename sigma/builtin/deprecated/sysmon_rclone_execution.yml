@@ -15,9 +15,9 @@ references:
     - https://labs.sentinelone.com/egregor-raas-continues-the-chaos-with-cobalt-strike-and-rclone
     - https://www.splunk.com/en_us/blog/security/darkside-ransomware-splunk-threat-update-and-detections.html
 fields:
-    - NewValue
     - CommandLine
     - ParentCommandLine
+    - Details
 falsepositives:
     - Legitimate RClone use
 level: high

@@ -47,8 +47,8 @@ detection:
         -   ParentProcessName|endswith: \Microsoft VS Code\Code.exe
     condition: process_creation and (1 of selection* and not 1 of filter*)
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
 falsepositives:
     - Users interacting with the files on their own (unlikely unless privileged users).

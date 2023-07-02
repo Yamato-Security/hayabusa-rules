@@ -46,9 +46,9 @@ detection:
             - \VMware\VMware Tools\suspend-vm-default.bat
     condition: process_creation and (all of selection* and not filter)
 fields:
-    - NewValue
     - CommandLine
     - ParentCommandLine
+    - Details
 falsepositives:
     - Legitimate use by administrator
 level: high

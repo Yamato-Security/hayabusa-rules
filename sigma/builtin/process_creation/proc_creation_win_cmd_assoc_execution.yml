@@ -37,8 +37,8 @@ detection:
     condition: process_creation and (all of selection_*)
 fields:
     - NewProcessName
+    - SubjectUserName
     - CommandLine
-    - User
     - LogonGuid
     - Hashes
     - ParentProcessGuid

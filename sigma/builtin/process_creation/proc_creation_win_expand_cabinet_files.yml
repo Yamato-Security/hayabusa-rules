@@ -34,8 +34,8 @@ detection:
         ParentProcessName: C:\Program Files (x86)\Dell\UpdateService\ServiceShell.exe
     condition: process_creation and (selection and not 1 of filter_*)
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
     - ParentCommandLine
 falsepositives:

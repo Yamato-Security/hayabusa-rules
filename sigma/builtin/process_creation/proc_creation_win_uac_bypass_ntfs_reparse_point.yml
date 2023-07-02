@@ -22,19 +22,19 @@ detection:
     selection1:
         CommandLine|startswith: '"C:\Windows\system32\wusa.exe"  /quiet C:\Users\'
         CommandLine|endswith: \AppData\Local\Temp\update.msu
-        IntegrityLevel:
-            - High
-            - System
+        MandatoryLabel:
+            - S-1-16-12288
+            - S-1-16-16384
     selection2:
         ParentCommandLine: '"C:\Windows\system32\dism.exe" /online /quiet /norestart
             /add-package /packagepath:"C:\Windows\system32\pe386" /ignorecheck'
-        IntegrityLevel:
-            - High
-            - System
         CommandLine|contains|all:
             - C:\Users\
             - \AppData\Local\Temp\
             - \dismhost.exe {
+        MandatoryLabel:
+            - S-1-16-12288
+            - S-1-16-16384
         NewProcessName|endswith: \DismHost.exe
     condition: process_creation and (1 of selection*)
 falsepositives:

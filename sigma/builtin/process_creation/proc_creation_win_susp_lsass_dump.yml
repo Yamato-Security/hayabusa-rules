@@ -33,8 +33,8 @@ detection:
         NewProcessName|endswith: \werfault.exe
     condition: process_creation and (selection and not filter)
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
 falsepositives:
     - Unlikely

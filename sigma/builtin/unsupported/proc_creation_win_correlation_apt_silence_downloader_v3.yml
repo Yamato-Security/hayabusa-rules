@@ -34,9 +34,9 @@ detection:
             /v "WinNetworkSecurity" /t REG_SZ /d
     condition: process_creation and (selection_recon | near selection_persistence)
 fields:
+    - SubjectUserName
     - NewProcessName
     - ComputerName
-    - User
     - CommandLine
 falsepositives:
     - Unknown

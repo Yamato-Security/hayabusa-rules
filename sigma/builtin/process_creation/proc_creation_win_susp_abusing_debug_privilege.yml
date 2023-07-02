@@ -18,9 +18,6 @@ detection:
         EventID: 4688
         Channel: Security
     selection_parent:
-        User|contains:
-            - AUTHORI
-            - AUTORI
         ParentProcessName|endswith:
             - \winlogon.exe
             - \services.exe
@@ -30,6 +27,9 @@ detection:
             - \wininit.exe
             - \spoolsv.exe
             - \searchindexer.exe
+        SubjectUserName|contains:
+            - AUTHORI
+            - AUTORI
     selection_img:
         -   NewProcessName|endswith:
                 - \powershell.exe
@@ -47,7 +47,7 @@ detection:
 fields:
     - ParentProcessName
     - NewProcessName
-    - User
+    - SubjectUserName
     - CommandLine
 falsepositives:
     - Unknown

@@ -85,9 +85,9 @@ detection:
         NewProcessName|endswith: \wsl.exe
     condition: process_creation and (selection and not 1 of filter_*)
 fields:
+    - SubjectUserName
     - NewProcessName
     - ComputerName
-    - User
 falsepositives:
     - Exotic software
 level: high

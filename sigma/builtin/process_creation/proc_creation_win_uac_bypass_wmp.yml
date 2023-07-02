@@ -20,17 +20,17 @@ detection:
         EventID: 4688
         Channel: Security
     selection1:
-        IntegrityLevel:
-            - High
-            - System
         NewProcessName: C:\Program Files\Windows Media Player\osk.exe
+        MandatoryLabel:
+            - S-1-16-12288
+            - S-1-16-16384
     selection2:
         ParentCommandLine: '"C:\Windows\system32\mmc.exe" "C:\Windows\system32\eventvwr.msc"
             /s'
-        IntegrityLevel:
-            - High
-            - System
         NewProcessName: C:\Windows\System32\cmd.exe
+        MandatoryLabel:
+            - S-1-16-12288
+            - S-1-16-16384
     condition: process_creation and (1 of selection*)
 falsepositives:
     - Unknown

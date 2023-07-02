@@ -19,7 +19,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection_user:
-        User|contains:
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
     selection_image_1:
@@ -28,8 +28,8 @@ detection:
             - msi
         NewProcessName|endswith: tmp
     selection_image_2:
-        IntegrityLevel: System
         NewProcessName|endswith: \msiexec.exe
+        MandatoryLabel: S-1-16-16384
     filter_installer:
         ParentProcessName: C:\Windows\System32\services.exe
     filter_repair:

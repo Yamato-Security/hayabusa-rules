@@ -26,8 +26,8 @@ detection:
             - \pwsh.exe
     condition: process_creation and selection
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
 falsepositives:
     - Unknown

@@ -21,8 +21,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        IntegrityLevel: High
         NewProcessName|endswith: sdclt.exe
+        MandatoryLabel: S-1-16-12288
     condition: process_creation and selection
 falsepositives:
     - Unknown

@@ -25,9 +25,9 @@ detection:
         ParentProcessName|endswith: \cmstp.exe
     condition: process_creation and selection
 fields:
-    - NewValue
     - CommandLine
     - ParentCommandLine
+    - Details
 falsepositives:
     - Legitimate CMSTP use (unlikely in modern enterprise environments)
 level: high

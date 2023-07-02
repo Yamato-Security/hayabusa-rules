@@ -30,14 +30,14 @@ detection:
         ParentUser|endswith:
             - \NETWORK SERVICE
             - \LOCAL SERVICE
-        User|contains:
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
-        User|endswith:
+        SubjectUserName|endswith:
             - \SYSTEM
             - "\\Syst\xE8me"
             - "\\\u0421\u0418\u0421\u0422\u0415\u041C\u0410"
-        IntegrityLevel: System
+        MandatoryLabel: S-1-16-16384
     filter_rundll32:
         CommandLine|contains: DavSetCookie
         NewProcessName|endswith: \rundll32.exe

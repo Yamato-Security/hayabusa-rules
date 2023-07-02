@@ -28,9 +28,9 @@ detection:
             - ' -l'
     condition: process_creation and (all of selection*)
 fields:
+    - SubjectUserName
     - CommandLine
     - ParentCommandLine
-    - User
 falsepositives:
     - Legitimate administrative tasks
 level: high
