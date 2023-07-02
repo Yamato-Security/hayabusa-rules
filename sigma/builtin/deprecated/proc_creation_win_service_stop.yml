@@ -35,14 +35,14 @@ detection:
         CommandLine:
             - sc  stop KSCWebConsoleMessageQueue
             - sc  stop LGHUBUpdaterService
-        User|contains:
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
     condition: process_creation and ((all of selection_sc_net* and not filter) or
         selection_pwsh)
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
 falsepositives:
     - Administrator shutting down the service due to upgrade or removal purposes

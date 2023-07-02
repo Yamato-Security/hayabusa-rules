@@ -35,8 +35,8 @@ detection:
             - -ni
     condition: process_creation and (all of selection*)
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
 falsepositives:
     - Legitimate use of cmstp.exe utility by legitimate user

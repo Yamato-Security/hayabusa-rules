@@ -47,8 +47,8 @@ detection:
     filter_system_temp:
         ParentProcessName|startswith: C:\Windows\Temp\
     filter_ccm:
-        IntegrityLevel: System
         ParentProcessName: C:\Windows\CCM\Ccm32BitLauncher.exe
+        MandatoryLabel: S-1-16-16384
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
     - WindowsApps installing updates via the quiet flag

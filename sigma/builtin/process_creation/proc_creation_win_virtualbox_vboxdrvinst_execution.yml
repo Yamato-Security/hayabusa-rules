@@ -32,8 +32,8 @@ detection:
         NewProcessName|endswith: \VBoxDrvInst.exe
     condition: process_creation and selection
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
     - ParentCommandLine
 falsepositives:

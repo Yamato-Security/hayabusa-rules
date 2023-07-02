@@ -29,7 +29,7 @@ detection:
             - 'cmd /c '
             - 'cmd /r '
             - 'cmd /k '
-        User|contains:
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
     selection_lsass_dump2:

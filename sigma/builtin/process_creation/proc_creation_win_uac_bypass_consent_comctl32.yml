@@ -20,11 +20,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        IntegrityLevel:
-            - High
-            - System
         ParentProcessName|endswith: \consent.exe
         NewProcessName|endswith: \werfault.exe
+        MandatoryLabel:
+            - S-1-16-12288
+            - S-1-16-16384
     condition: process_creation and selection
 falsepositives:
     - Unknown

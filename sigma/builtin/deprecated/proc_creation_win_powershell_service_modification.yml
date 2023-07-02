@@ -37,8 +37,8 @@ detection:
             - Symantec
     condition: process_creation and (all of selection*)
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
     - ParentCommandLine
 falsepositives:

@@ -40,8 +40,8 @@ detection:
     condition: process_creation and (selection_img and 1 of selection_technique_*
         and not 1 of filter_*)
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
 falsepositives:
     - Commandlines containing components like cmd accidentally

@@ -26,7 +26,7 @@ detection:
         CommandLine:
             - sc  stop KSCWebConsoleMessageQueue
             - sc  stop LGHUBUpdaterService
-        User|contains:
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
     condition: process_creation and (all of selection_* and not 1 of filter_*)

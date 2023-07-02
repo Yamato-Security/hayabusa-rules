@@ -22,8 +22,8 @@ detection:
         EventID: 4688
         Channel: Security
     scbynonadmin:
-        IntegrityLevel: Medium
         NewProcessName|endswith: \sc.exe
+        MandatoryLabel: S-1-16-8192
     selection_binpath:
         CommandLine|contains|all:
             - config

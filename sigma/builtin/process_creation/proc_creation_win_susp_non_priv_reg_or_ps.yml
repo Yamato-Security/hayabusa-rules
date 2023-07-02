@@ -29,7 +29,6 @@ detection:
             - ' sp '
             - new-itemproperty
     select_data:
-        IntegrityLevel: Medium
         CommandLine|contains|all:
             - ControlSet
             - Services
@@ -37,10 +36,11 @@ detection:
             - ImagePath
             - FailureCommand
             - ServiceDLL
+        MandatoryLabel: S-1-16-8192
     condition: process_creation and ((reg or powershell) and select_data)
 fields:
+    - MandatoryLabel
     - EventID
-    - IntegrityLevel
     - CommandLine
 falsepositives:
     - Unknown

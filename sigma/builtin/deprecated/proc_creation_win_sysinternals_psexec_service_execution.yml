@@ -23,10 +23,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        User|contains:
+        NewProcessName|endswith: \PSEXESVC.exe
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
-        NewProcessName|endswith: \PSEXESVC.exe
     condition: process_creation and selection
 fields:
     - EventID

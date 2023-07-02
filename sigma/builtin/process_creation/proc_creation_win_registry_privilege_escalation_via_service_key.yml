@@ -20,7 +20,6 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        IntegrityLevel: Medium
         CommandLine|contains|all:
             - ControlSet
             - services
@@ -28,6 +27,7 @@ detection:
             - \ImagePath
             - \FailureCommand
             - \ServiceDll
+        MandatoryLabel: S-1-16-8192
     condition: process_creation and selection
 falsepositives:
     - Unknown

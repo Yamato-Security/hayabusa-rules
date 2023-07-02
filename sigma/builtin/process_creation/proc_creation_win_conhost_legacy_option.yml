@@ -21,11 +21,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        IntegrityLevel: High
         CommandLine|contains|all:
             - conhost.exe
             - '0xffffffff'
             - -ForceV1
+        MandatoryLabel: S-1-16-12288
     condition: process_creation and selection
 falsepositives:
     - Very Likely, including launching cmd.exe via Run As Administrator

@@ -17,8 +17,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        IntegrityLevel: System
-        User|contains:
+        MandatoryLabel: S-1-16-16384
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
     selection_special:

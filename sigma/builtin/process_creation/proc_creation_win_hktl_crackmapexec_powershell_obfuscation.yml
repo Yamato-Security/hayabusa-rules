@@ -38,8 +38,8 @@ detection:
             - '[1,3]+''x''-Join'''')'
     condition: process_creation and (all of selection_*)
 fields:
+    - SubjectUserName
     - ComputerName
-    - User
     - CommandLine
 falsepositives:
     - Unknown
