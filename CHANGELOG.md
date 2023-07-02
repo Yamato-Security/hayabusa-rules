@@ -3,7 +3,7 @@
 ## v2.6.0 [2023/07/02]
 
 There is now a field mapping check for `process_creation` rules.
-There were about 125 `process_creation` rules that were being generated for `Security 4688` events, however, they were looking for fields that only exist in `Sysmon 1` so there was no need for them.
+There were about 60 `process_creation` rules that were being generated for `Security 4688` events, however, they were looking for fields that only exist in `Sysmon 1` so there was no need for them.
 These incompatible `Security 4688` rules are no longer being created which will speed up processing time.
 Also, `IntegrityLevel`, `User` and other fields are now being mapped to the correct field name and data type providing more accurate results.
 This was all done thanks to Fukusuke Takahashi.
