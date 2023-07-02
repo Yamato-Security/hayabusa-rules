@@ -258,7 +258,7 @@ class LogsourceConverter:
                 key = re.sub(r"\.", "_", key)  # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
                 val = self.transform_field_recursive(val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
-            if not ls.is_convertible(new_obj['detection']):
+            if " of " not in new_obj['detection']['condition'] and not ls.is_convertible(new_obj['detection']):
                 LOGGER.error(f"This rule has incompatible field.{new_obj['detection']}. skip conversion.")
                 return
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
