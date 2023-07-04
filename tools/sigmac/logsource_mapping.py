@@ -249,6 +249,12 @@ class LogsourceConverter:
             return  # ログソースマッピングにないcategory/serviceのため、変換処理はスキップ
         for ls in logsources:
             new_obj = copy.deepcopy(obj)
+            if ls.service == "sysmon":
+                if "tags" in new_obj:
+                    if "sysmon" not in new_obj["tags"]:
+                        new_obj["tags"].append("sysmon")
+                else:
+                    new_obj["tags"] = ["sysmon"]
             detection = copy.deepcopy(new_obj['detection'])
             # 出力時に順番を logsource -> selection -> conditionにしたいので一旦クリア
             new_obj['detection'] = dict()
