@@ -250,8 +250,9 @@ class LogsourceConverter:
         for ls in logsources:
             new_obj = copy.deepcopy(obj)
             if ls.service == "sysmon":
-                if "tags" in new_obj and "sysmon" not in new_obj["tags"]:
-                    new_obj["tags"].append("sysmon")
+                if "tags" in new_obj:
+                    if "sysmon" not in new_obj["tags"]:
+                        new_obj["tags"].append("sysmon")
                 else:
                     new_obj["tags"] = ["sysmon"]
             detection = copy.deepcopy(new_obj['detection'])
