@@ -257,6 +257,9 @@ class LogsourceConverter:
                         new_obj["tags"].append("sysmon")
                 else:
                     new_obj["tags"] = ["sysmon"]
+            if ls.category == "antivirus":
+                new_obj['logsource']["product"] = "windows"
+                new_obj['logsource']["service"] = ls.service
             detection = copy.deepcopy(new_obj['detection'])
             # 出力時に順番を logsource -> selection -> conditionにしたいので一旦クリア
             new_obj['detection'] = dict()
