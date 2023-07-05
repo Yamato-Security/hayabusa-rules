@@ -1,0 +1,51 @@
+title: Antivirus PrinterNightmare CVE-2021-34527 Exploit Detection
+id: 6fe1719e-ecdf-4caf-bffe-4f501cb0a561
+status: stable
+description: Detects the suspicious file that is created from PoC code against Windows
+    Print Spooler Remote Code Execution Vulnerability CVE-2021-34527 (PrinterNightmare),
+    CVE-2021-1675 .
+references:
+    - https://twitter.com/mvelazco/status/1410291741241102338
+    - https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-1675
+    - https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34527
+author: Sittikorn S, Nuttakorn T, Tim Shelton
+date: 2021/07/01
+modified: 2022/03/22
+tags:
+    - attack.privilege_escalation
+    - attack.t1055
+logsource:
+    category: antivirus
+    product: windows
+    service: windefend
+detection:
+    antivirus:
+        EventID:
+            - 1006
+            - 1007
+            - 1008
+            - 1009
+            - 1010
+            - 1011
+            - 1012
+            - 1115
+            - 1116
+            - 1017
+            - 1018
+            - 1019
+            - 1115
+            - 1116
+        Channel: Microsoft-Windows-Windows Defender/Operational
+    selection:
+        Path|contains: C:\Windows\System32\spool\drivers\x64\
+    keywords:
+        - File submitted to Symantec
+    condition: antivirus and (selection and not keywords)
+fields:
+    - ThreatName
+    - Path
+    - ComputerName
+falsepositives:
+    - Unlikely, or pending PSP analysis
+level: critical
+ruletype: Sigma
