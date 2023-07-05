@@ -115,6 +115,8 @@ class LogSource:
         """
         process_creationルールのSysmon/Securityイベント用のフィールド変換要否を判定
         """
+        if self.category == "antivirus":
+            return True
         if self.category == "process_creation" and self.event_id == 4688:
             return True
         return False
@@ -173,21 +175,21 @@ class IndentDumper(yaml.Dumper):
 class LogsourceConverter:
     sigma_path: str
     logsource_map: dict[str, list[LogSource]]
-    field_map: dict[str, str]
+    field_map: dict[str, dict[str, str]]
     sigma_converted: list[tuple[bool, dict]] = field(default_factory=list)
 
-    def transform_field(self, obj: dict, original_field):
+    def transform_field(self, category: str, obj: dict, original_field):
         """
-        field_mapの内容でfiled名を変換する(category=process_creation以外は変換されない)
+        field_mapの内容でfiled名を変換する(category=process_creation/antivirus以外は変換されない)
         """
-        for rewrite_filed in self.field_map.keys():
+        for rewrite_filed in self.field_map[category].keys():
             if original_field == rewrite_filed:
-                new_key = self.field_map[original_field]
+                new_key = self.field_map[category][original_field]
                 val = convert_special_val(new_key, obj.pop(original_field))
                 obj[new_key] = val
             elif original_field.startswith(rewrite_filed) and original_field.replace(rewrite_filed, "")[0] == "|":
-                new_key = self.field_map[rewrite_filed] + original_field.replace(rewrite_filed, "")
-                val = convert_special_val(self.field_map[rewrite_filed], obj.pop(original_field))
+                new_key = self.field_map[category][rewrite_filed] + original_field.replace(rewrite_filed, "")
+                val = convert_special_val(self.field_map[category][rewrite_filed], obj.pop(original_field))
                 obj[new_key] = val
         for k, v in obj.copy().items():
             if k == "SubjectUserName":
@@ -196,7 +198,7 @@ class LogsourceConverter:
             else:
                 obj[k] = v
 
-    def transform_field_recursive(self, obj: dict, need_field_conversion: bool) -> dict:
+    def transform_field_recursive(self, category: str, obj: dict, need_field_conversion: bool) -> dict:
         """
         dictを再帰的に探索し、field_mapの内容でfiled名を変換する(category=process_creation以外は変換されない)
         """
@@ -204,15 +206,15 @@ class LogsourceConverter:
             for field_name, val in list(obj.items()):
                 if not need_field_conversion:
                     return obj
-                self.transform_field(obj, field_name)
+                self.transform_field(category, obj, field_name)
                 if isinstance(val, dict):
-                    self.transform_field_recursive(val, need_field_conversion)
+                    self.transform_field_recursive(category, val, need_field_conversion)
                 elif isinstance(val, list):
                     for item in val:
-                        self.transform_field_recursive(item, need_field_conversion)
+                        self.transform_field_recursive(category, item, need_field_conversion)
         elif isinstance(obj, list):
             for item in obj:
-                self.transform_field_recursive(item, need_field_conversion)
+                self.transform_field_recursive(category, item, need_field_conversion)
         return obj
 
     def get_logsources(self, obj: dict) -> list[LogSource]:
@@ -262,17 +264,18 @@ class LogsourceConverter:
             new_obj['detection'][ls.get_identifier_for_detection(list(detection.keys()))] = ls.get_detection()
             for key, val in detection.items():
                 key = re.sub(r"\.", "_", key)  # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
-                val = self.transform_field_recursive(val, ls.need_field_conversion())
+                val = self.transform_field_recursive(ls.category, val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
             if " of " not in new_obj['detection']['condition'] and not ls.is_convertible(new_obj['detection']):
                 LOGGER.error(f"This rule has incompatible field.{new_obj['detection']}. skip conversion.")
                 return
+            field_map = self.field_map[ls.category] if ls.category in self.field_map else dict()
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
-                                                                 list(detection.keys()), self.field_map)
+                                                                 list(detection.keys()), field_map)
             if ls.need_field_conversion() and "fields" in new_obj:
                 fields = new_obj['fields']
-                converted_fields = [self.field_map[f] for f in fields if f in self.field_map]
-                not_converted_fields = [f for f in fields if f not in self.field_map]
+                converted_fields = [field_map[f] for f in fields if f in field_map]
+                not_converted_fields = [f for f in fields if f not in field_map]
                 new_obj['fields'] = converted_fields + not_converted_fields
             new_obj['ruletype'] = 'Sigma'
             condition_str = new_obj['detection']['condition']
@@ -416,7 +419,8 @@ def find_windows_sigma_rule_files(root: str, rule_pattern: str):
             try:
                 with open(filepath, encoding="utf-8") as f:
                     data = yaml.safe_load(f)
-                if data.get('logsource', {}).get('product') != 'windows':
+                if data.get('logsource', {}).get('category') != "antivirus" \
+                        and data.get('logsource', {}).get('product') != 'windows':
                     LOGGER.debug(f"[{filepath}] has no windows rule. skip conversion.")
                 else:
                     yield filepath
@@ -456,8 +460,12 @@ if __name__ == '__main__':
     sysmon_map = create_category_map(create_obj(script_dir, 'sysmon.yaml'), service2channel)
     win_audit_map = create_category_map(create_obj(script_dir, 'windows-audit.yaml'), service2channel)
     win_service_map = create_category_map(create_obj(script_dir, 'windows-services.yaml'), service2channel)
-    all_category_map = merge_category_map(service2channel, [sysmon_map, win_audit_map, win_service_map])
+    win_antivirus_map = create_category_map(create_obj(script_dir, 'windows-antivirus.yml'), service2channel)
+    all_category_map = merge_category_map(service2channel,
+                                          [sysmon_map, win_audit_map, win_service_map, win_antivirus_map])
     process_creation_field_map = create_field_map(create_obj(script_dir, 'windows-audit.yaml'))
+    antivirus_field_map = create_field_map(create_obj(script_dir, 'windows-antivirus.yml'))
+    field_map = {"process_creation": process_creation_field_map} | {"antivirus": antivirus_field_map}
     LOGGER.info(f"Loading logsource mapping yaml(sysmon/windows-audit/windows-services) done.")
 
     # Sigmaディレクトリから対象ファイルをリストアップ
@@ -466,7 +474,7 @@ if __name__ == '__main__':
     file_cnt = 0
     for sigma_file in sigma_files:
         try:
-            lc = LogsourceConverter(sigma_file, all_category_map, process_creation_field_map)
+            lc = LogsourceConverter(sigma_file, all_category_map, field_map)
             lc.convert()  # Sigmaルールをマッピングデータにもとづき変換
             base_dir = args.rule_path if Path(args.rule_path).is_dir() else ""
             for out_path, parsed_yaml in lc.dump_yml(base_dir, args.output):  # dictをyml形式の文字列に変換
