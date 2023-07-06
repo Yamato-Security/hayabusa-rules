@@ -463,11 +463,11 @@ if __name__ == '__main__':
     sysmon_map = create_category_map(create_obj(script_dir, 'sysmon.yaml'), service2channel)
     win_audit_map = create_category_map(create_obj(script_dir, 'windows-audit.yaml'), service2channel)
     win_service_map = create_category_map(create_obj(script_dir, 'windows-services.yaml'), service2channel)
-    win_antivirus_map = create_category_map(create_obj(script_dir, 'windows-antivirus.yml'), service2channel)
+    win_antivirus_map = create_category_map(create_obj(script_dir, 'windows-antivirus.yaml'), service2channel)
     all_category_map = merge_category_map(service2channel,
                                           [sysmon_map, win_audit_map, win_service_map, win_antivirus_map])
     process_creation_field_map = create_field_map(create_obj(script_dir, 'windows-audit.yaml'))
-    antivirus_field_map = create_field_map(create_obj(script_dir, 'windows-antivirus.yml'))
+    antivirus_field_map = create_field_map(create_obj(script_dir, 'windows-antivirus.yaml'))
     field_map = {"process_creation": process_creation_field_map} | {"antivirus": antivirus_field_map}
     LOGGER.info(f"Loading logsource mapping yaml(sysmon/windows-audit/windows-services) done.")
 
