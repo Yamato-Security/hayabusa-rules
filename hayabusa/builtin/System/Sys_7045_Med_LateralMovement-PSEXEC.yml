@@ -20,11 +20,11 @@ detection:
         Service: PSEXESVC
     selection_PSEXESVC_in_path:
         ImagePath|contains: PSEXESVC
-    condition: selection and (selection_PSEXESVC_in_service or selection_PSEXESVC_in_path) 
+    condition: selection and (selection_PSEXESVC_in_service or selection_PSEXESVC_in_path)
 falsepositives:
     - systems admin
 tags:
-    - attack.lateralmovement
+    - attack.lateral_movement
     - attack.s0029
     - attack.t1136.002
     - attack.t1543.003

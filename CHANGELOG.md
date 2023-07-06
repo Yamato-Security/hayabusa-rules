@@ -1,5 +1,9 @@
 # Changes
 
+## v2.6.0 [2023/07/06]
+
+Added support for `category: antivirus`. (#456) (@fukusuket)
+
 ## v2.6.0 [2023/07/02]
 
 There is now a field mapping check for `process_creation` rules.
