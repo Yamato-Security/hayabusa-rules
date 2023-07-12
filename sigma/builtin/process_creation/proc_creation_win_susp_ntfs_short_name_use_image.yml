@@ -12,7 +12,7 @@ references:
     - https://twitter.com/jonasLyk/status/1555914501802921984
 author: frack113, Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/06
-modified: 2022/12/12
+modified: 2023/07/05
 tags:
     - attack.defense_evasion
     - attack.t1564.004
@@ -44,12 +44,13 @@ detection:
             - ~2.js
             - ~2.hta
     filter:
+        -   ParentProcessName: C:\Windows\explorer.exe
         -   ParentProcessName|endswith:
                 - \WebEx\WebexHost.exe
                 - \thor\thor64.exe
                 - -installer.exe
+        -   NewProcessName: C:\PROGRA~1\WinZip\WZPREL~1.EXE
         -   NewProcessName|contains: \vcredi
-        -   ParentProcessName: C:\Windows\explorer.exe
     condition: process_creation and (selection and not filter)
 falsepositives:
     - Unknown
