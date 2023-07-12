@@ -7,7 +7,7 @@ references:
     - https://github.com/Wh04m1001/SysmonEoP
 author: frack113, Tim Shelton (update fp)
 date: 2022/12/05
-modified: 2023/03/20
+modified: 2023/07/04
 tags:
     - attack.privilege_escalation
     - attack.defense_evasion
@@ -65,6 +65,10 @@ detection:
     filter_ibm_spectrumprotect:
         CommandLine|contains: C:\IBM\SpectrumProtect\webserver\scripts\
         ParentProcessName|startswith: C:\IBM\SpectrumProtect\webserver\scripts\
+    filter_msiexec:
+        ParentCommandLine|startswith: C:\Windows\syswow64\MsiExec.exe -Embedding
+        CommandLine|contains: \RegisterMicrosoftUpdate.ps1
+        ParentProcessName: C:\Windows\SysWOW64\msiexec.exe
     filter_empty_parent_1:
         CommandLine: 'powershell.exe -ExecutionPolicy Restricted -Command Write-Host
             ''Final result: 1'';'
