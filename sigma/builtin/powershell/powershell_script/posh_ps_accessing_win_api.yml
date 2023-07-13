@@ -9,7 +9,7 @@ references:
     - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 author: Nikita Nazarov, oscd.community, Tim Shelton
 date: 2020/10/06
-modified: 2023/01/09
+modified: 2023/06/20
 tags:
     - attack.execution
     - attack.t1059.001
@@ -28,7 +28,6 @@ detection:
         ScriptBlockText|contains:
             - AddSecurityPackage
             - AdjustTokenPrivileges
-            - Advapi32
             - CloseHandle
             - CreateProcessWithToken
             - CreateRemoteThread
@@ -69,10 +68,13 @@ detection:
             - WriteInt32
             - WriteProcessMemory
             - ZeroFreeGlobalAllocUnicode
-    filter_amazon:
+    filter_optional_amazon:
         ScriptBlockText|startswith: '# Copyright 2016 Amazon.com, Inc. or its affiliates.'
-        ScriptBlockText|contains: 'function Import-SerialPortUtil '
-    condition: ps_script and (selection and not 1 of filter_*)
+        ScriptBlockText|contains:
+            - 'function Import-SerialPortUtil '
+            - CloseHandle
+            - DllImport("KernelBase.dll"
+    condition: ps_script and (selection and not 1 of filter_optional_*)
 falsepositives:
     - Carbon PowerShell Module (https://github.com/webmd-health-services/Carbon)
 level: high
