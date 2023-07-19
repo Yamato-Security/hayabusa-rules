@@ -1,3 +1,4 @@
+Title: 'Failed Logon'
 Channel: Security
 EventID: 4625
 RewriteFieldData:
@@ -15,12 +16,18 @@ RewriteFieldData:
         - '12': '12 - CACHED REMOTE INTERACTIVE'
         - '13': '13 - CACHED UNLOCK'
     FailureReason:
+        - '%%2304': 'ERROR'
         - '%%2305': 'ACCOUNT EXPIRED'
+        - '%%2306': 'NETLOGON NOT ACTIVE'
+        - '%%2307': 'ACCOUNT LOCKOUT'
+        - '%%2308': 'USER NOT GRANTED REQUESTED LOGON TYPE'
         - '%%2309': 'PW EXPIRED'
         - '%%2310': 'ACCOUNT DISABLED'
         - '%%2311': 'OUTSIDE AUTHORIZED HOURS'
         - '%%2312': 'UNAUTHORIZED COMPUTER'
         - '%%2313': 'BAD USER OR PW'
+        - '%%2314': 'DOMAIN_SID_INCONSISTENT'
+        - '%%2315': 'SMARTCARD_LOGON_REQUIRED'
     Status:
         - '0x0': 'SUCCESS'
         - '0xc000005e': 'NO LOGON SERVER'
@@ -42,8 +49,11 @@ RewriteFieldData:
         - '0xc00002ee': 'UNFINISHED CONTEXT DELETED'
         - '0xc0000413': 'BLOCKED BY AUTHENTICATION FIREWALL'
     SubStatus:
+        - '0x0': 'SUCCESS'
         - '0xc0000064': 'UNKNOWN USER'
         - '0xc000006a': 'WRONG PW'
+        - '0xc0000073': 'NO TRANSLATIONS'
+HexToDecimal: 'ProcessId'
 
 sample-evtx: |
     <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">

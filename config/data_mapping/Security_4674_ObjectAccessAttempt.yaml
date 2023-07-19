@@ -1,7 +1,9 @@
+Title: 'Object Access Attempt'
 Channel: Security
 EventID: 4674
 RewriteFieldData:
     AccessMask:
+        - '%%1537': 'DELETE'
         - '%%1538': 'READ_CONTROL'
         - '%%1539': 'WRITE_DAC'
         - '%%1540': 'WRITE_OWNER'
@@ -17,7 +19,12 @@ RewriteFieldData:
         - '%%4423': 'READ_ATTRIBUTES'
         - '%%4424': 'WRITE_ATTRIBUTES'
         - '%%4432': 'QUERY_KEY_VALUE'
+        - '%%4433': 'SET_KEY_VALUE'
+        - '%%4434': 'CREATE_SUBKEY'
         - '%%4435': 'ENUMERATE_SUBKEYS'
+        - '%%4436': 'KEY_CHANGES_NOTIFICATION'
+        - '%%4437': 'CREATE_LINK'
+HexToDecimal: 'ProcessId'
 
 sample-evtx: |
     <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
