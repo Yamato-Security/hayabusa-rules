@@ -32,9 +32,6 @@ detection:
                 - \Sam.save
         -   TargetFilename: C:\windows\temp\sam
     condition: file_event and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Files that accidentally contain these strings
 level: high
