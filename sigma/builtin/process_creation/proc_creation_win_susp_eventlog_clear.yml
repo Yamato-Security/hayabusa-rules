@@ -12,7 +12,7 @@ references:
     - https://jdhnet.wordpress.com/2017/12/19/changing-the-location-of-the-windows-event-logs/
 author: Ecco, Daniil Yugoslavskiy, oscd.community, D3F7A5105
 date: 2019/09/26
-modified: 2023/05/31
+modified: 2023/07/13
 tags:
     - attack.defense_evasion
     - attack.t1070.001
@@ -42,9 +42,12 @@ detection:
         NewProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
-    selection_other_wmic:
+    selection_other_wmi:
         CommandLine|contains: ClearEventLog
-        NewProcessName|endswith: \wmic.exe
+        NewProcessName|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+            - \wmic.exe
     filter_msiexec:
         CommandLine|contains: ' sl '
         ParentProcessName:

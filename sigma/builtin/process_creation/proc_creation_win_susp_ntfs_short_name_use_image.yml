@@ -12,7 +12,7 @@ references:
     - https://twitter.com/jonasLyk/status/1555914501802921984
 author: frack113, Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/06
-modified: 2023/07/05
+modified: 2023/07/20
 tags:
     - attack.defense_evasion
     - attack.t1564.004
@@ -25,34 +25,39 @@ detection:
         Channel: Security
     selection:
         NewProcessName|contains:
-            - ~1.exe
             - ~1.bat
+            - ~1.dll
+            - ~1.exe
+            - ~1.hta
+            - ~1.js
             - ~1.msi
+            - ~1.ps1
+            - ~1.tmp
             - ~1.vbe
             - ~1.vbs
-            - ~1.dll
-            - ~1.ps1
-            - ~1.js
-            - ~1.hta
-            - ~2.exe
             - ~2.bat
+            - ~2.dll
+            - ~2.exe
+            - ~2.hta
+            - ~2.js
             - ~2.msi
+            - ~2.ps1
+            - ~2.tmp
             - ~2.vbe
             - ~2.vbs
-            - ~2.dll
-            - ~2.ps1
-            - ~2.js
-            - ~2.hta
-    filter:
-        -   ParentProcessName: C:\Windows\explorer.exe
-        -   ParentProcessName|endswith:
-                - \WebEx\WebexHost.exe
-                - \thor\thor64.exe
-                - -installer.exe
-        -   NewProcessName: C:\PROGRA~1\WinZip\WZPREL~1.EXE
-        -   NewProcessName|contains: \vcredi
-    condition: process_creation and (selection and not filter)
+    filter_main_generic_parent:
+        ParentProcessName: C:\Windows\explorer.exe
+    filter_optional_webex:
+        ParentProcessName|endswith: \WebEx\WebexHost.exe
+    filter_optional_thor:
+        ParentProcessName|endswith: \thor\thor64.exe
+    filter_optional_winzip:
+        NewProcessName: C:\PROGRA~1\WinZip\WZPREL~1.EXE
+    filter_optional_vcred:
+        NewProcessName|endswith: \VCREDI~1.EXE
+    condition: process_creation and (selection and not 1 of filter_main_* and not
+        1 of filter_optional_*)
 falsepositives:
-    - Unknown
-level: high
+    - Software Installers
+level: medium
 ruletype: Sigma
