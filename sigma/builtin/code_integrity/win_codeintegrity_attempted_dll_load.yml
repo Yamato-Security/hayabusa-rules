@@ -15,7 +15,7 @@ references:
     - https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/event-id-explanations
 author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2022/01/20
-modified: 2023/06/20
+modified: 2023/07/25
 tags:
     - attack.execution
 logsource:
@@ -32,19 +32,16 @@ detection:
         FileNameBuffer|endswith: \Program Files\DTrace\dtrace.dll
         ProcessNameBuffer|endswith: \Windows\System32\svchost.exe
         RequestedPolicy: 12
-        ValidatedPolicy: 1
     filter_optional_av_generic:
         FileNameBuffer|contains: \Windows\System32\DriverStore\FileRepository\
         FileNameBuffer|endswith: \igd10iumd64.dll
         RequestedPolicy: 7
-        ValidatedPolicy: 1
     filter_optional_electron_based_app:
         FileNameBuffer|endswith: \Windows\System32\nvspcap64.dll
         ProcessNameBuffer|endswith:
             - \AppData\Local\Keybase\Gui\Keybase.exe
             - \Microsoft\Teams\stage\Teams.exe
         RequestedPolicy: 8
-        ValidatedPolicy: 1
     filter_optional_bonjour:
         FileNameBuffer|endswith: \Program Files\Bonjour\mdnsNSP.dll
         ProcessNameBuffer|endswith:
@@ -53,19 +50,16 @@ detection:
         RequestedPolicy:
             - 8
             - 12
-        ValidatedPolicy: 1
     filter_optional_msoffice:
         FileNameBuffer|contains: \Microsoft Office\root\vfs\ProgramFilesCommonX64\Microsoft
             Shared\OFFICE
         FileNameBuffer|endswith: \MSOXMLMF.DLL
         RequestedPolicy: 7
-        ValidatedPolicy: 1
     filter_optional_slack:
         FileNameBuffer|endswith: \Windows\System32\nvspcap64.dll
         ProcessNameBuffer|contains: \AppData\Local\slack\app-
         ProcessNameBuffer|endswith: \slack.exe
         RequestedPolicy: 8
-        ValidatedPolicy: 1
     filter_optional_firefox:
         FileNameBuffer|endswith:
             - \Mozilla Firefox\mozavcodec.dll
@@ -79,28 +73,32 @@ detection:
         RequestedPolicy:
             - 8
             - 12
-        ValidatedPolicy: 1
     filter_main_gac:
         FileNameBuffer|contains: \Windows\assembly\GAC\
         ProcessNameBuffer|endswith: \mscorsvw.exe
         ProcessNameBuffer|contains: \Windows\Microsoft.NET\
         RequestedPolicy: 8
-        ValidatedPolicy:
-            - 1
-            - 2
     filter_optional_google_drive:
         FileNameBuffer|contains: \Program Files\Google\Drive File Stream\
         FileNameBuffer|endswith: \crashpad_handler.exe
         ProcessNameBuffer|endswith: \Windows\ImmersiveControlPanel\SystemSettings.exe
         RequestedPolicy: 8
-        ValidatedPolicy: 1
     filter_optional_trend_micro:
         FileNameBuffer|endswith: \Trend Micro\Client Server Security Agent\perficrcperfmonmgr.dll
         RequestedPolicy: 8
-        ValidatedPolicy: 1
+    filter_optional_mdns_responder:
+        FileNameBuffer|endswith: '\Program Files\National Instruments\Shared\mDNS
+            Responder\nimdnsNSP.dll '
+    filter_optional_mcafee:
+        FileNameBuffer|endswith:
+            - \Program Files\McAfee\Endpoint Security\Threat Prevention\MfeAmsiProvider.dll
+            - \Program Files\McAfee\MfeAV\AMSIExt.dll
+    filter_optional_eset:
+        FileNameBuffer|endswith: \Program Files\ESET\ESET Security\eamsi.dll
     condition: codeintegrity_operational and (selection and not 1 of filter_main_*
         and not 1 of filter_optional_*)
 falsepositives:
-    - Antivirus and other third party products. Apply additional filters accordingly
-level: high
+    - Antivirus and other third party products are known to trigger this rule quite
+        a lot. Initial filters and tuning is required before using this rule.
+level: medium
 ruletype: Sigma
