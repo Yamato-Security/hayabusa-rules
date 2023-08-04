@@ -1,12 +1,13 @@
-title: Use of Mftrace.exe
+title: Potential Mftrace.EXE Abuse
 id: 3d48c9d3-1aa6-418d-98d3-8fd3c01a564e
 status: experimental
-description: The "Trace log generation tool for Media Foundation Tools" (Mftrace.exe)
-    can be used to execute arbitrary binaries
+description: Detects child processes of the "Trace log generation tool for Media Foundation
+    Tools" (Mftrace.exe) which can abused to execute arbitrary binaries.
 references:
     - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Mftrace/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/06/09
+modified: 2023/08/03
 tags:
     - attack.defense_evasion
     - attack.t1127
@@ -18,15 +19,9 @@ detection:
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
-    selection_img:
-        -   Image|endswith: \mftrace.exe
-        -   OriginalFileName: mftrace.exe
-    selection_cli:
-        CommandLine|contains: '.exe '
-        CommandLine|endswith: .exe
-    parent:
+    selection:
         ParentImage|endswith: \mftrace.exe
-    condition: process_creation and (all of selection* or parent)
+    condition: process_creation and selection
 falsepositives:
     - Legitimate use for tracing purposes
 level: medium

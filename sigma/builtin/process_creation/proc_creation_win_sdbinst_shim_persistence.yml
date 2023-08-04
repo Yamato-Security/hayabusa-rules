@@ -1,13 +1,20 @@
-title: Possible Shim Database Persistence via sdbinst.exe
+title: Potential Shim Database Persistence via Sdbinst.EXE
 id: 517490a7-115a-48c6-8862-1a481504d5a8
+related:
+    -   id: 18ee686c-38a3-4f65-9f44-48a077141f42
+        type: similar
 status: test
-description: Detects installation of a new shim using sdbinst.exe. A shim can be used
-    to load malicious DLLs into applications.
+description: 'Detects installation of a new shim using sdbinst.exe.
+
+    Adversaries may establish persistence and/or elevate privileges by executing malicious
+    content triggered by application shims
+
+    '
 references:
-    - https://www.fireeye.com/blog/threat-research/2017/05/fin7-shim-databases-persistence.html
+    - https://www.mandiant.com/resources/blog/fin7-shim-databases-persistence
 author: Markus Neis
 date: 2019/01/16
-modified: 2022/10/09
+modified: 2023/08/01
 tags:
     - attack.persistence
     - attack.privilege_escalation
@@ -19,13 +26,16 @@ detection:
     process_creation:
         EventID: 4688
         Channel: Security
-    selection:
+    selection_img:
+        -   NewProcessName|endswith: \sdbinst.exe
+        -   OriginalFileName: sdbinst.exe
+    selection_cli:
         CommandLine|contains: .sdb
-        NewProcessName|endswith: \sdbinst.exe
-    filter:
+    filter_optional_iis:
         CommandLine|contains: iisexpressshim.sdb
-    condition: process_creation and (selection and not filter)
+        ParentProcessName|endswith: \msiexec.exe
+    condition: process_creation and (all of selection_* and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
-level: high
+level: medium
 ruletype: Sigma
