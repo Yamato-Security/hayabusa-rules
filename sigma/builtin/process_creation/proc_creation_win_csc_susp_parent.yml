@@ -1,13 +1,14 @@
-title: Suspicious Parent of Csc.exe
+title: Csc.EXE Execution Form Potentially Suspicious Parent
 id: b730a276-6b63-41b8-bcf8-55930c8fc6ee
 status: test
-description: Detects a suspicious parent of csc.exe, which could by a sign of payload
-    delivery
+description: Detects a potentially suspicious parent of "csc.exe", which could be
+    a sign of payload delivery.
 references:
-    - https://twitter.com/SBousseaden/status/1094924091256176641
-author: Florian Roth (Nextron Systems)
+    - https://www.uptycs.com/blog/warzonerat-can-now-evade-with-process-hollowing
+    - https://reaqta.com/2017/11/short-journey-darkvnc/
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2019/02/11
-modified: 2022/01/07
+modified: 2023/08/02
 tags:
     - attack.execution
     - attack.t1059.005
@@ -22,13 +23,47 @@ detection:
     process_creation:
         EventID: 4688
         Channel: Security
-    selection:
-        NewProcessName|endswith: \csc.exe
+    selection_img:
+        -   NewProcessName|endswith: \csc.exe
+        -   OriginalFileName: csc.exe
+    selection_parent_generic:
         ParentProcessName|endswith:
-            - \wscript.exe
             - \cscript.exe
             - \mshta.exe
-    condition: process_creation and selection
+            - \winword.exe
+            - \wscript.exe
+    selection_parent_powershell:
+        ParentCommandLine|contains:
+            - '-Encoded '
+            - FromBase64String
+        ParentProcessName|endswith:
+            - \powershell.exe
+            - \pwsh.exe
+    selection_parent_susp_location:
+        -   ParentCommandLine|re: ([Pp]rogram[Dd]ata|%([Ll]ocal)?[Aa]pp[Dd]ata%|\\[Aa]pp[Dd]ata\\([Ll]ocal(Ll]ow)?|[Rr]oaming))\\[^\\]{1,256}$
+        -   ParentCommandLine|contains:
+                - :\Users\Public\
+                - :\PerfLogs\
+                - \Temporary Internet
+        -   ParentCommandLine|contains|all:
+                - :\Users\
+                - \Favorites\
+        -   ParentCommandLine|contains|all:
+                - :\Users\
+                - \Favourites\
+        -   ParentCommandLine|contains|all:
+                - :\Users\
+                - \Contacts\
+        -   ParentCommandLine|contains|all:
+                - :\Users\
+                - \Pictures\
+    filter_optional_ansible:
+        ParentCommandLine|contains:
+            - JwB7ACIAZgBhAGkAbABlAGQAIgA6AHQAcgB1AGUALAAiAG0AcwBnACIAOgAiAEEAbgBzAGkAYgBsAGUAIAByAGUAcQB1AGkAcgBlAHMAIABQAG8AdwBlAHIAUwBoAGUAbABsACAAdgAzAC4AMAAgAG8AcgAgAG4AZQB3AGUAcgAiAH0AJw
+            - cAewAiAGYAYQBpAGwAZQBkACIAOgB0AHIAdQBlACwAIgBtAHMAZwAiADoAIgBBAG4AcwBpAGIAbABlACAAcgBlAHEAdQBpAHIAZQBzACAAUABvAHcAZQByAFMAaABlAGwAbAAgAHYAMwAuADAAIABvAHIAIABuAGUAdwBlAHIAIgB9ACcA
+            - nAHsAIgBmAGEAaQBsAGUAZAAiADoAdAByAHUAZQAsACIAbQBzAGcAIgA6ACIAQQBuAHMAaQBiAGwAZQAgAHIAZQBxAHUAaQByAGUAcwAgAFAAbwB3AGUAcgBTAGgAZQBsAGwAIAB2ADMALgAwACAAbwByACAAbgBlAHcAZQByACIAfQAnA
+    condition: process_creation and (selection_img and 1 of selection_parent_* and
+        not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: high

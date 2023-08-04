@@ -8,7 +8,7 @@ references:
 author: Roberto Rodriguez, Teymur Kheirkhabarov, Dimitrios Slamaris, Mark Russinovich,
     Aleksey Potapov, oscd.community (update)
 date: 2019/11/01
-modified: 2023/07/31
+modified: 2023/08/03
 tags:
     - attack.credential_access
     - car.2019-04-004
@@ -43,32 +43,33 @@ detection:
             - '4416'
     filter_specific:
         ProcessName|endswith:
-            - \wmiprvse.exe
-            - \taskmgr.exe
-            - \procexp64.exe
-            - \procexp.exe
-            - \lsm.exe
             - \csrss.exe
-            - \wininit.exe
-            - \vmtoolsd.exe
+            - \GamingServices.exe
+            - \lsm.exe
+            - \MicrosoftEdgeUpdate.exe
             - \minionhost.exe
-            - \VsTskMgr.exe
+            - \MRT.exe
+            - \MsMpEng.exe
+            - \perfmon.exe
+            - \procexp.exe
+            - \procexp64.exe
+            - \svchost.exe
+            - \taskmgr.exe
             - \thor.exe
             - \thor64.exe
-            - \MicrosoftEdgeUpdate.exe
-            - \GamingServices.exe
-            - \svchost.exe
-            - \MsMpEng.exe
-            - \MRT.exe
+            - \vmtoolsd.exe
+            - \VsTskMgr.exe
+            - \wininit.exe
+            - \wmiprvse.exe
             - RtkAudUService64
         ProcessName|startswith:
+            - C:\Program Files (x86)\
+            - C:\Program Files\
+            - C:\ProgramData\Microsoft\Windows Defender\Platform\
+            - C:\Windows\SysNative\
             - C:\Windows\System32\
             - C:\Windows\SysWow64\
-            - C:\Windows\SysNative\
-            - C:\Program Files\
-            - C:\Program Files (x86)\
             - C:\Windows\Temp\asgard2-agent\
-            - C:\ProgramData\Microsoft\Windows Defender\Platform\
     filter_generic:
         ProcessName|startswith: C:\Program Files
     filter_exact:
