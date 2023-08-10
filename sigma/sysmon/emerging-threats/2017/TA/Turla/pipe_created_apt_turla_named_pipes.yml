@@ -1,19 +1,17 @@
-title: Cred Dump-Tools Named Pipes
-id: 961d0ba2-3eea-4303-a930-2cf78bbfcc5e
+title: Turla Group Named Pipes
+id: 739915e4-1e70-4778-8b8a-17db02f66db1
 status: test
-description: Detects well-known credential dumping tools execution via specific named
-    pipes
+description: Detects a named pipe used by Turla group samples
 references:
-    - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
-author: Teymur Kheirkhabarov, oscd.community
-date: 2019/11/01
+    - Internal Research
+    - https://attack.mitre.org/groups/G0010/
+author: Markus Neis
+date: 2017/11/06
 modified: 2021/11/27
 tags:
-    - attack.credential_access
-    - attack.t1003.001
-    - attack.t1003.002
-    - attack.t1003.004
-    - attack.t1003.005
+    - attack.g0010
+    - attack.execution
+    - attack.t1106
     - sysmon
 logsource:
     product: windows
@@ -31,12 +29,14 @@ detection:
             - 18
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        PipeName|contains:
-            - \lsadump
-            - \cachedump
-            - \wceservicepipe
+        PipeName:
+            - \atctl
+            - \comnap
+            - \iehelper
+            - \sdlrpc
+            - \userpipe
     condition: pipe_created and selection
 falsepositives:
-    - Legitimate Administrator using tool for password recovery
+    - Unlikely
 level: critical
 ruletype: Sigma

@@ -1,17 +1,15 @@
-title: Turla Group Named Pipes
-id: 739915e4-1e70-4778-8b8a-17db02f66db1
-status: test
-description: Detects a named pipe used by Turla group samples
+title: HackTool - DiagTrackEoP Default Named Pipe
+id: 1f7025a6-e747-4130-aac4-961eb47015f1
+status: experimental
+description: Detects creation of default named pipe used by the DiagTrackEoP POC,
+    a tool that abuses "SeImpersonate" privilege.
 references:
-    - Internal Research
-    - https://attack.mitre.org/groups/G0010/
-author: Markus Neis
-date: 2017/11/06
-modified: 2021/11/27
+    - https://github.com/Wh04m1001/DiagTrackEoP/blob/3a2fc99c9700623eb7dc7d4b5f314fd9ce5ef51f/main.cpp#L22
+author: Nasreddine Bencherchali (Nextron Systems)
+date: 2022/08/03
+modified: 2023/08/07
 tags:
-    - attack.g0010
-    - attack.execution
-    - attack.t1106
+    - attack.privilege_escalation
     - sysmon
 logsource:
     product: windows
@@ -29,14 +27,9 @@ detection:
             - 18
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        PipeName:
-            - \atctl
-            - \userpipe
-            - \iehelper
-            - \sdlrpc
-            - \comnap
+        PipeName|contains: thisispipe
     condition: pipe_created and selection
 falsepositives:
-    - Unknown
+    - Unlikely
 level: critical
 ruletype: Sigma

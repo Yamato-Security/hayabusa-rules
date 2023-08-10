@@ -33,13 +33,13 @@ detection:
     selection:
         EventID: 4697
         ServiceFileName|contains:
-            - fgexec
-            - dumpsvc
             - cachedump
-            - mimidrv
+            - dumpsvc
+            - fgexec
             - gsecdump
-            - servpw
+            - mimidrv
             - pwdump
+            - servpw
     condition: security and selection
 falsepositives:
     - Legitimate Administrator using credential dumping tool for password recovery

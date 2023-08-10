@@ -27,14 +27,6 @@ detection:
     selection:
         TargetFilename|endswith: \PSEXESVC.exe
     condition: file_event and selection
-fields:
-    - EventID
-    - CommandLine
-    - ParentCommandLine
-    - ServiceName
-    - ServiceFileName
-    - TargetFilename
-    - PipeName
 falsepositives:
     - Unknown
 level: low

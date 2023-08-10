@@ -32,13 +32,13 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         ImageLoaded|contains:
-            - fgexec
-            - dumpsvc
             - cachedump
-            - mimidrv
+            - dumpsvc
+            - fgexec
             - gsecdump
-            - servpw
+            - mimidrv
             - pwdump
+            - servpw
     condition: driver_load and selection
 falsepositives:
     - Legitimate Administrator using credential dumping tool for password recovery

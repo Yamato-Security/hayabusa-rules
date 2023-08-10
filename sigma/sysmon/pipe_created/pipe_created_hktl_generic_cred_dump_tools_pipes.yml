@@ -1,13 +1,20 @@
-title: DiagTrackEoP Default Named Pipe
-id: 1f7025a6-e747-4130-aac4-961eb47015f1
-status: experimental
-description: Detects creation of default named pipe used by the DiagTrackEoP POC
+title: HackTool - Credential Dumping Tools Named Pipe Created
+id: 961d0ba2-3eea-4303-a930-2cf78bbfcc5e
+status: test
+description: Detects well-known credential dumping tools execution via specific named
+    pipe creation
 references:
-    - https://github.com/Wh04m1001/DiagTrackEoP/blob/3a2fc99c9700623eb7dc7d4b5f314fd9ce5ef51f/main.cpp#L22
-author: Nasreddine Bencherchali (Nextron Systems)
-date: 2022/08/03
+    - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
+    - https://image.slidesharecdn.com/zeronights2017kheirkhabarov-171118103000/75/hunting-for-credentials-dumping-in-windows-environment-57-2048.jpg?cb=1666035799
+author: Teymur Kheirkhabarov, oscd.community
+date: 2019/11/01
+modified: 2023/08/07
 tags:
-    - attack.privilege_escalation
+    - attack.credential_access
+    - attack.t1003.001
+    - attack.t1003.002
+    - attack.t1003.004
+    - attack.t1003.005
     - sysmon
 logsource:
     product: windows
@@ -25,9 +32,12 @@ detection:
             - 18
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        PipeName|contains: thisispipe
+        PipeName|contains:
+            - \cachedump
+            - \lsadump
+            - \wceservicepipe
     condition: pipe_created and selection
 falsepositives:
-    - Unlikely
+    - Legitimate Administrator using tool for password recovery
 level: critical
 ruletype: Sigma
