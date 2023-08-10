@@ -10,7 +10,7 @@ references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
 author: "J\xE1n Tren\u010Dansk\xFD, frack113"
 date: 2020/07/28
-modified: 2022/08/01
+modified: 2023/08/08
 tags:
     - attack.defense_evasion
     - attack.t1562.001
@@ -26,10 +26,12 @@ detection:
         param1:
             - Windows Defender Antivirus Service
             - Service antivirus Microsoft Defender
-        param2: stopped
+        param2:
+            - stopped
+            - "arr\xEAt\xE9"
     condition: system and selection
 falsepositives:
     - Administrator actions
     - Auto updates of Windows Defender causes restarts
-level: low
+level: medium
 ruletype: Sigma

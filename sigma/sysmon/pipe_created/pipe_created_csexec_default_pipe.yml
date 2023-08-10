@@ -1,17 +1,20 @@
-title: EfsPotato Named Pipe
-id: 637f689e-b4a5-4a86-be0e-0100a0a33ba2
-status: experimental
-description: Detects the pattern of a pipe name as used by the tool EfsPotato
+title: CSExec Default Named Pipe
+id: f318b911-ea88-43f4-9281-0de23ede628e
+related:
+    -   id: 9e77ed63-2ecf-4c7b-b09d-640834882028
+        type: obsoletes
+status: test
+description: Detects default CSExec pipe creation
 references:
-    - https://twitter.com/SBousseaden/status/1429530155291193354?s=20
-    - https://github.com/zcgonvh/EfsPotato
-author: Florian Roth (Nextron Systems)
-date: 2021/08/23
-modified: 2022/06/20
+    - https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
+    - https://github.com/malcomvetter/CSExec
+author: Nikita Nazarov, oscd.community, Nasreddine Bencherchali (Nextron Systems)
+date: 2023/08/07
 tags:
-    - attack.defense_evasion
-    - attack.privilege_escalation
-    - attack.t1055
+    - attack.lateral_movement
+    - attack.t1021.002
+    - attack.execution
+    - attack.t1569.002
     - sysmon
 logsource:
     product: windows
@@ -29,13 +32,9 @@ detection:
             - 18
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        PipeName|contains:
-            - \pipe\
-            - \pipe\srvsvc
-    filter:
-        PipeName|contains: \CtxShare
-    condition: pipe_created and (selection and not filter)
+        PipeName|contains: \csexecsvc
+    condition: pipe_created and selection
 falsepositives:
-    - Unknown
-level: high
+    - Legitimate Administrator activity
+level: medium
 ruletype: Sigma
