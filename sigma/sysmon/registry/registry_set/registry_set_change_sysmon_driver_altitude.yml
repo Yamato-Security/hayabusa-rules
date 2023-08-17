@@ -9,6 +9,7 @@ references:
     - https://youtu.be/zSihR3lTf7g
 author: B.Talebi
 date: 2022/07/28
+modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.001
@@ -21,7 +22,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|startswith: HKLM\SYSTEM\CurrentControlSet\
         TargetObject|endswith: \Instances\Sysmon Instance\Altitude
     condition: registry_set and selection

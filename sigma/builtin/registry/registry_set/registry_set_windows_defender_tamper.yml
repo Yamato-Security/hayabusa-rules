@@ -19,7 +19,7 @@ references:
 author: "AlertIQ, J\xE1n Tren\u010Dansk\xFD, frack113, Nasreddine Bencherchali, Swachchhanda\
     \ Shrawan Poudel"
 date: 2022/08/01
-modified: 2023/05/10
+modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.001
@@ -31,7 +31,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection_main:
-        EventType: SetValue
         TargetObject|contains:
             - \SOFTWARE\Microsoft\Windows Defender\
             - \SOFTWARE\Policies\Microsoft\Windows Defender Security Center\

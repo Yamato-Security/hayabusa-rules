@@ -8,7 +8,7 @@ references:
     - https://www.trustwave.com/en-us/resources/blogs/spiderlabs-blog/blackbyte-ransomware-pt-1-in-depth-analysis/
 author: frack113
 date: 2022/01/24
-modified: 2022/03/26
+modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1112
@@ -20,7 +20,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: SetValue
         TargetObject:
             - HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy
             - HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLinkedConnections

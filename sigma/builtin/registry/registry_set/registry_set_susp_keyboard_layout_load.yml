@@ -9,7 +9,7 @@ references:
     - https://github.com/SwiftOnSecurity/sysmon-config/pull/92/files
 author: Florian Roth (Nextron Systems)
 date: 2019/10/12
-modified: 2022/03/26
+modified: 2023/08/17
 tags:
     - attack.resource_development
     - attack.t1588.002
@@ -23,7 +23,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection_registry:
-        EventType: SetValue
         TargetObject|contains:
             - \Keyboard Layout\Preload\
             - \Keyboard Layout\Substitutes\

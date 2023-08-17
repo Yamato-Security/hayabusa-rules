@@ -25,7 +25,7 @@ references:
 author: Samir Bousseaden, David ANDRE, Roberto Rodriguez @Cyb3rWard0g, Nasreddine
     Bencherchali
 date: 2022/08/06
-modified: 2022/09/29
+modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.persistence
@@ -38,7 +38,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection_shadow:
-        EventType: SetValue
         TargetObject|contains:
             - SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\
             - \Control\Terminal Server\
@@ -49,7 +48,6 @@ detection:
             - DWORD (0x00000003)
             - DWORD (0x00000004)
     selection_terminal_services_key:
-        EventType: SetValue
         TargetObject|contains:
             - \Control\Terminal Server\
             - SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\
@@ -59,7 +57,6 @@ detection:
             - \fAllowUnsolicitedFullControl
         Details: DWORD (0x00000001)
     selection_tamper_only:
-        EventType: SetValue
         TargetObject|contains:
             - \services\TermService\Parameters\ServiceDll
             - \Control\Terminal Server\WinStations\RDP-Tcp\InitialProgram

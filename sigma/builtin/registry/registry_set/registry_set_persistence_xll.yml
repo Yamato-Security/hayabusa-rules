@@ -8,6 +8,7 @@ references:
     - https://labs.withsecure.com/publications/add-in-opportunities-for-office-persistence
 author: frack113
 date: 2023/01/15
+modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1137.006
@@ -19,7 +20,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: SetValue
         TargetObject|contains: Software\Microsoft\Office\
         TargetObject|endswith: \Excel\Options
         Details|startswith: '/R '
