@@ -6,6 +6,7 @@ references:
     - https://www.hexacorn.com/blog/2020/08/23/odbcconf-lolbin-trifecta/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/05/23
+modified: 2023/08/17
 tags:
     - attack.persistence
     - sysmon
@@ -17,7 +18,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|contains: \SOFTWARE\ODBC\ODBCINST.INI\
         TargetObject|endswith: \Driver
     filter_main_sqlserver:

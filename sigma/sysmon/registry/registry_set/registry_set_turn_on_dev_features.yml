@@ -12,6 +12,7 @@ references:
     - https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/01/12
+modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - sysmon
@@ -23,7 +24,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|contains:
             - \Microsoft\Windows\CurrentVersion\AppModelUnlock
             - \Policies\Microsoft\Windows\Appx\

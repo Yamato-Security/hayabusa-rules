@@ -7,7 +7,7 @@ references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.004/T1562.004.md#atomic-test-2---disable-microsoft-defender-firewall-via-registry
 author: frack113
 date: 2022/01/09
-modified: 2022/03/26
+modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.004
@@ -20,7 +20,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|startswith: HKLM\System\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy\
         TargetObject|endswith: \EnableFirewall
         Details: DWORD (0x00000000)

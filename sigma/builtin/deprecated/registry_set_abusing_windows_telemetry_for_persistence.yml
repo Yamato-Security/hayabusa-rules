@@ -15,7 +15,7 @@ references:
     - https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/
 author: Sreeman
 date: 2020/09/29
-modified: 2022/12/19
+modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.persistence
@@ -29,7 +29,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: SetValue
         TargetObject|contains: HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\
         Details|endswith:
             - .sh

@@ -8,7 +8,7 @@ references:
     - https://www.microsoft.com/en-us/wdsi/threats/malware-encyclopedia-description?name=TrojanSpy%3aMSIL%2fHakey.A
 author: frack113
 date: 2022/01/22
-modified: 2022/03/26
+modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1137
@@ -20,11 +20,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection_HideFileExt:
-        EventType: SetValue
         TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\HideFileExt
         Details: DWORD (0x00000001)
     selection_Hidden:
-        EventType: SetValue
         TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Hidden
         Details: DWORD (0x00000002)
     condition: registry_set and (1 of selection_*)

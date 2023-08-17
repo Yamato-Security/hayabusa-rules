@@ -12,7 +12,7 @@ references:
     - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/24
-modified: 2023/05/16
+modified: 2023/08/17
 tags:
     - attack.resource_development
     - attack.t1588.002
@@ -24,7 +24,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: SetValue
         TargetObject|contains:
             - \PsExec
             - \ProcDump

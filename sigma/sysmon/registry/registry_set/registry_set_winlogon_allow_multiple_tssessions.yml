@@ -13,6 +13,7 @@ references:
     - http://blog.talosintelligence.com/2022/09/lazarus-three-rats.html
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/09/09
+modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.defense_evasion
@@ -26,7 +27,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|endswith: \Microsoft\Windows NT\CurrentVersion\Winlogon\AllowMultipleTSSessions
         Details|endswith: DWORD (0x00000001)
     condition: registry_set and selection

@@ -10,7 +10,7 @@ references:
     - https://docs.microsoft.com/en-us/troubleshoot/developer/browsers/security-privacy/ie-security-zones-registry-entries
 author: frack113
 date: 2022/01/22
-modified: 2022/04/04
+modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1137
@@ -22,7 +22,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection_domains:
-        EventType: SetValue
         TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Internet
             Settings\ZoneMap\Domains\
     filter:

@@ -8,7 +8,7 @@ references:
     - https://labs.f-secure.com/blog/scheduled-task-tampering/
 author: Syed Hasan (@syedhasan009)
 date: 2021/06/18
-modified: 2022/10/21
+modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1053
@@ -22,7 +22,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|contains: SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\
     filter:
         TargetObject|contains:

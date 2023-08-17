@@ -8,7 +8,7 @@ references:
         (idea)
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/07/28
-modified: 2023/01/10
+modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1546.015
@@ -21,7 +21,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|startswith:
             - HKCR\CLSID\
             - HKEY_CLASSES_ROOT\CLSID\
