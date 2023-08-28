@@ -8,6 +8,12 @@ references:
 author: pH-T (Nextron Systems)
 date: 2022/07/15
 modified: 2023/02/03
+tags:
+    - attack.execution
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1053.005
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -36,6 +42,4 @@ detection:
 falsepositives:
     - Software installation
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

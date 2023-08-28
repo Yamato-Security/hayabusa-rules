@@ -7,6 +7,10 @@ references:
 author: Florian Roth (Nextron Systems), Tim Shelton
 date: 2022/04/26
 modified: 2023/05/30
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -44,6 +48,4 @@ falsepositives:
         use of additional binaries such as "mshta", "bitsadmin", etc. Apply additional
         filters for those scripts when needed.
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

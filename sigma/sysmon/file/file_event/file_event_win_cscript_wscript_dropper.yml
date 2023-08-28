@@ -11,6 +11,11 @@ references:
 author: Tim Shelton
 date: 2022/01/10
 modified: 2022/12/02
+tags:
+    - attack.execution
+    - attack.t1059.005
+    - attack.t1059.007
+    - sysmon
 logsource:
     category: file_event
     product: windows
@@ -38,6 +43,4 @@ fields:
 falsepositives:
     - Unknown
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

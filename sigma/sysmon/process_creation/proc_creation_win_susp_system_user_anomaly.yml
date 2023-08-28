@@ -9,6 +9,14 @@ references:
 author: Florian Roth (Nextron Systems), David ANDRE (additional keywords)
 date: 2021/12/20
 modified: 2023/01/19
+tags:
+    - attack.credential_access
+    - attack.defense_evasion
+    - attack.privilege_escalation
+    - attack.t1134
+    - attack.t1003
+    - attack.t1027
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -88,6 +96,4 @@ falsepositives:
     - Scripts and administrative tools used in the monitored environment
     - Monitoring activity
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

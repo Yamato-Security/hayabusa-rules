@@ -11,6 +11,10 @@ references:
     - https://learn.microsoft.com/en-us/dotnet/api/microsoft.hpc.scheduler.store.cx509enrollmentwebclassfactoryclass?view=hpc-sdk-5.1.6115
 author: frack113
 date: 2022/12/23
+tags:
+    - attack.defense_evasion
+    - attack.t1553.004
+    - sysmon
 logsource:
     product: windows
     category: process_creation
@@ -26,6 +30,4 @@ detection:
 falsepositives:
     - Legitimate administrative script
 level: medium
-tags:
-    - sysmon
 ruletype: Sigma

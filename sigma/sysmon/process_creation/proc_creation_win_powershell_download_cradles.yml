@@ -7,6 +7,12 @@ references:
 author: Florian Roth (Nextron Systems)
 date: 2022/03/24
 modified: 2023/01/05
+tags:
+    - attack.command_and_control
+    - attack.execution
+    - attack.t1059.001
+    - attack.t1105
+    - sysmon
 logsource:
     product: windows
     category: process_creation
@@ -24,6 +30,4 @@ detection:
 falsepositives:
     - Scripts or tools that download files
 level: medium
-tags:
-    - sysmon
 ruletype: Sigma

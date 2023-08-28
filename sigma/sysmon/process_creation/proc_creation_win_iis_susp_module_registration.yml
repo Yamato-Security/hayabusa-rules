@@ -8,6 +8,10 @@ references:
 author: Florian Roth (Nextron Systems), Microsoft (idea)
 date: 2022/08/04
 modified: 2023/01/23
+tags:
+    - attack.persistence
+    - attack.t1505.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -30,6 +34,4 @@ detection:
 falsepositives:
     - Administrative activity
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

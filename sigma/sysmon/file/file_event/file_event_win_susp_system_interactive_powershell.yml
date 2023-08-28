@@ -8,6 +8,10 @@ references:
 author: Florian Roth (Nextron Systems)
 date: 2021/12/07
 modified: 2022/08/13
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - sysmon
 logsource:
     product: windows
     category: file_event
@@ -24,6 +28,4 @@ falsepositives:
     - Administrative activity
     - PowerShell scripts running as SYSTEM user
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

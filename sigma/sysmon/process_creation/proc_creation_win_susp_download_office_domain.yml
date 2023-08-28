@@ -9,6 +9,11 @@ references:
 author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2021/12/27
 modified: 2022/08/02
+tags:
+    - attack.command_and_control
+    - attack.t1105
+    - attack.t1608
+    - sysmon
 logsource:
     product: windows
     category: process_creation
@@ -37,6 +42,4 @@ falsepositives:
     - Scripts or tools that download attachments from these domains (OneNote, Outlook
         365)
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

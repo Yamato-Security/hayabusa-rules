@@ -6,6 +6,10 @@ references:
     - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=50
 author: frack113
 date: 2022/12/25
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation
@@ -30,6 +34,4 @@ detection:
 falsepositives:
     - Unknown
 level: medium
-tags:
-    - sysmon
 ruletype: Sigma

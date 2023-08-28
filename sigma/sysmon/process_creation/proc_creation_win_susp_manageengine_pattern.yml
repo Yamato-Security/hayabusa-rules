@@ -10,6 +10,10 @@ references:
 author: Florian Roth (Nextron Systems)
 date: 2023/01/18
 modified: 2023/01/21
+tags:
+    - attack.command_and_control
+    - attack.t1102
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -56,6 +60,4 @@ fields:
 falsepositives:
     - Legitimate sub processes started by Manage Engine ServiceDesk Pro
 level: high
-tags:
-    - sysmon
 ruletype: Sigma
