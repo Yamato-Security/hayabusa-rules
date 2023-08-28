@@ -14,6 +14,15 @@ references:
 author: Florian Roth (Nextron Systems)
 date: 2022/10/10
 modified: 2023/05/08
+tags:
+    - attack.defense_evasion
+    - attack.discovery
+    - attack.persistence
+    - attack.privilege_escalation
+    - attack.t1622
+    - attack.t1564
+    - attack.t1543
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -57,6 +66,4 @@ falsepositives:
     - While sometimes 'Process Hacker is used by legitimate administrators, the execution
         of Process Hacker must be investigated and allowed on a case by case basis
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

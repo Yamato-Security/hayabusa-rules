@@ -7,6 +7,10 @@ references:
 author: Florian Roth (Nextron Systems)
 date: 2022/03/24
 modified: 2022/11/28
+tags:
+    - attack.execution
+    - attack.t1059.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation
@@ -40,6 +44,4 @@ detection:
 falsepositives:
     - Legitimate scripts that use IEX
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

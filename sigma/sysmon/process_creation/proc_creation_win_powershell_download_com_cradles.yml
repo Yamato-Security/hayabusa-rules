@@ -11,6 +11,10 @@ references:
     - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=57
 author: frack113
 date: 2022/12/25
+tags:
+    - attack.command_and_control
+    - attack.t1105
+    - sysmon
 logsource:
     product: windows
     category: process_creation
@@ -36,6 +40,4 @@ detection:
 falsepositives:
     - Legitimate use of the library
 level: medium
-tags:
-    - sysmon
 ruletype: Sigma

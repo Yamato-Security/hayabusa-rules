@@ -8,6 +8,10 @@ references:
     - https://docs.microsoft.com/en-us/windows-hardware/drivers/devtest/dtrace
 author: Florian Roth (Nextron Systems)
 date: 2021/12/28
+tags:
+    - attack.discovery
+    - attack.t1082
+    - sysmon
 logsource:
     product: windows
     category: process_creation
@@ -26,6 +30,4 @@ detection:
 falsepositives:
     - Unknown
 level: high
-tags:
-    - sysmon
 ruletype: Sigma

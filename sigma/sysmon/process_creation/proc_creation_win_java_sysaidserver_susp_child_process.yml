@@ -7,6 +7,10 @@ references:
     - https://www.microsoft.com/security/blog/2022/08/25/mercury-leveraging-log4j-2-vulnerabilities-in-unpatched-systems-to-target-israeli-organizations/
 author: Florian Roth (Nextron Systems)
 date: 2022/08/26
+tags:
+    - attack.lateral_movement
+    - attack.t1210
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -23,6 +27,4 @@ detection:
 falsepositives:
     - Unknown
 level: medium
-tags:
-    - sysmon
 ruletype: Sigma
