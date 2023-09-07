@@ -7,7 +7,7 @@ references:
     - https://github.com/RiccardoAncarani/TaskShell/
 author: frack113, Tim Shelton (fps)
 date: 2022/07/14
-modified: 2022/07/18
+modified: 2023/09/01
 tags:
     - attack.lateral_movement
     - sysmon
@@ -22,11 +22,15 @@ detection:
         Protocol: tcp
         Initiated: 'true'
         DestinationPort: 135
-    filter:
+    filter_image:
         Image|startswith:
             - C:\Windows\
             - C:\ProgramData\Amazon\SSM\Update\amazon-ssm-agent-updater
-    condition: network_connection and (selection and not filter)
+    filter_image_null1:
+        Image: null
+    filter_image_null2:
+        Image: ''
+    condition: network_connection and (selection and not 1 of filter_*)
 falsepositives:
     - Unknown
 level: high

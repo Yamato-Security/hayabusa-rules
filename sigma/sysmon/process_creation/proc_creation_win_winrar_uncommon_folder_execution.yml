@@ -7,29 +7,34 @@ references:
     - https://twitter.com/cyb3rops/status/1460978167628406785
 author: Florian Roth (Nextron Systems), Tigzy
 date: 2021/11/17
-modified: 2022/12/25
+modified: 2023/08/31
 tags:
     - attack.collection
     - attack.t1560.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows
 detection:
     process_creation:
-        EventID: 4688
-        Channel: Security
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   NewProcessName|endswith:
+        -   Image|endswith:
                 - \rar.exe
                 - \winrar.exe
         -   Description: Command line RAR
-    filter:
-        NewProcessName|contains:
-            - \WinRAR
-            - C:\Windows\Temp
-            - \UnRAR.exe
-    condition: process_creation and (selection and not filter)
+    filter_main_unrar:
+        Image|endswith: \UnRAR.exe
+    filter_main_path:
+        Image|contains:
+            - :\Program Files (x86)\WinRAR\
+            - :\Program Files\WinRAR\
+    filter_optional_temp:
+        Image|contains: :\Windows\Temp\
+    condition: process_creation and (selection and not 1 of filter_main_* and not
+        1 of filter_optional_*)
 falsepositives:
     - Legitimate use of WinRAR in a folder of a software that bundles WinRAR
-level: high
+level: medium
 ruletype: Sigma
