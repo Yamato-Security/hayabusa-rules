@@ -68,10 +68,10 @@ detection:
             - WriteInt32
             - WriteProcessMemory
             - ZeroFreeGlobalAllocUnicode
-    filter_mpcmdrun:
+    filter_optional_mpcmdrun:
         CommandLine|contains: GetLoadLibraryWAddress32
         NewProcessName|endswith: \MpCmdRun.exe
-    condition: process_creation and (selection and not 1 of filter_*)
+    condition: process_creation and (selection and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: high
