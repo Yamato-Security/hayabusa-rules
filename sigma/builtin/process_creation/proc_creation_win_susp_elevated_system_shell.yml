@@ -7,7 +7,7 @@ references:
     - https://github.com/Wh04m1001/SysmonEoP
 author: frack113, Tim Shelton (update fp)
 date: 2022/12/05
-modified: 2023/07/04
+modified: 2023/09/08
 tags:
     - attack.privilege_escalation
     - attack.defense_evasion
@@ -69,9 +69,13 @@ detection:
         ParentCommandLine|startswith: C:\Windows\syswow64\MsiExec.exe -Embedding
         CommandLine|contains: \RegisterMicrosoftUpdate.ps1
         ParentProcessName: C:\Windows\SysWOW64\msiexec.exe
-    filter_empty_parent_1:
+    filter_empty_parent_1a:
         CommandLine: 'powershell.exe -ExecutionPolicy Restricted -Command Write-Host
             ''Final result: 1'';'
+    filter_empty_parent_2b:
+        CommandLine|startswith: powershell.exe -ExecutionPolicy Restricted -Command
+            $Res = 0;
+        CommandLine|endswith: Write-Host 'Final result:', $Res;
     filter_empty_parent_2:
         CommandLine|contains: /d /c C:\Windows\system32\silcollector.cmd
         NewProcessName|endswith: \cmd.exe
