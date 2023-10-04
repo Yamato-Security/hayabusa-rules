@@ -1,0 +1,85 @@
+title: Creation of an Executable by an Executable
+id: 297afac9-5d02-4138-8c58-b977bac60556
+status: experimental
+description: Detects the creation of an executable by another executable
+references:
+    - Malware Sandbox
+author: frack113
+date: 2022/03/09
+modified: 2023/09/06
+tags:
+    - attack.resource_development
+    - attack.t1587.001
+    - sysmon
+logsource:
+    product: windows
+    category: file_event
+detection:
+    file_event:
+        EventID: 11
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: .exe
+        TargetFilename|endswith: .exe
+    filter_main_generic_1:
+        Image:
+            - C:\Windows\System32\msiexec.exe
+            - C:\Windows\system32\cleanmgr.exe
+            - C:\Windows\explorer.exe
+            - C:\WINDOWS\system32\dxgiadaptercache.exe
+            - C:\WINDOWS\system32\Dism.exe
+            - C:\Windows\System32\wuauclt.exe
+    filter_main_update:
+        Image: C:\WINDOWS\system32\svchost.exe
+        TargetFilename|startswith: C:\Windows\SoftwareDistribution\Download\
+    filter_main_upgrade:
+        Image: C:\Windows\system32\svchost.exe
+        TargetFilename|contains|all:
+            - :\WUDownloadCache\
+            - \WindowsUpdateBox.exe
+    filter_windows_update_box:
+        Image|startswith: C:\WINDOWS\SoftwareDistribution\Download\
+        Image|endswith: \WindowsUpdateBox.Exe
+        TargetFilename|startswith: C:\$WINDOWS.~BT\Sources\
+    filter_main_tiworker:
+        Image|startswith: C:\Windows\WinSxS\
+        Image|endswith: \TiWorker.exe
+    filter_main_programfiles:
+        -   Image|startswith:
+                - C:\Program Files\
+                - C:\Program Files (x86)\
+        -   TargetFilename|startswith:
+                - C:\Program Files\
+                - C:\Program Files (x86)\
+    filter_main_defender:
+        Image|startswith:
+            - C:\ProgramData\Microsoft\Windows Defender\
+            - C:\Program Files\Windows Defender\
+    filter_main_windows_apps:
+        TargetFilename|contains: \AppData\Local\Microsoft\WindowsApps\
+    filter_main_teams:
+        Image|endswith: \AppData\Local\Microsoft\Teams\Update.exe
+        TargetFilename|endswith:
+            - \AppData\Local\Microsoft\Teams\stage\Teams.exe
+            - \AppData\Local\Microsoft\Teams\stage\Squirrel.exe
+            - \AppData\Local\Microsoft\SquirrelTemp\tempb\
+    filter_main_mscorsvw:
+        Image|startswith: C:\Windows\Microsoft.NET\Framework\
+        Image|endswith: \mscorsvw.exe
+        TargetFilename|startswith: C:\Windows\assembly\NativeImages_
+    filter_main_vscode:
+        Image|contains: \AppData\Local\
+        Image|endswith: \Microsoft VS Code\Code.exe
+        TargetFilename|contains: \.vscode\extensions\
+    filter_main_githubdesktop:
+        Image|endswith: \AppData\Local\GitHubDesktop\Update.exe
+        TargetFilename|contains: \AppData\Local\SquirrelTemp\
+    filter_main_windows_temp:
+        TargetFilename|startswith: C:\WINDOWS\TEMP\
+    condition: file_event and (selection and not 1 of filter_*)
+falsepositives:
+    - Software installers
+    - Update utilities
+    - 32bit applications launching their 64bit versions
+level: low
+ruletype: Sigma

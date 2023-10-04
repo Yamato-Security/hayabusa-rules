@@ -8,7 +8,7 @@ references:
     - https://blog.osarmor.com/319/onenote-attachment-delivers-asyncrat-malware/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/01/22
-modified: 2023/02/10
+modified: 2023/09/19
 tags:
     - attack.defense_evasion
     - sysmon
@@ -24,11 +24,14 @@ detection:
             - \AppData\Local\Temp\
             - \Users\Public\
             - \Windows\Temp\
-            - C:\Temp\
+            - :\Temp\
         TargetFilename|endswith:
             - .one
             - .onepkg
-    condition: file_event and selection
+    filter_main_onenote:
+        Image|contains: :\Program Files\Microsoft Office\
+        Image|endswith: \ONENOTE.EXE
+    condition: file_event and (selection and not 1 of filter_main_*)
 falsepositives:
     - Legitimate usage of ".one" or ".onepkg" files from those locations
 level: medium
