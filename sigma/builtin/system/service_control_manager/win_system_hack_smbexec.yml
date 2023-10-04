@@ -24,9 +24,6 @@ detection:
         ServiceName: BTOBTO
         ImagePath|endswith: \execute.bat
     condition: system and selection
-fields:
-    - ServiceName
-    - ServiceFileName
 falsepositives:
     - Unknown
 level: critical

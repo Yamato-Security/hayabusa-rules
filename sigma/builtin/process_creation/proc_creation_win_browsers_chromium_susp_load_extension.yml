@@ -9,7 +9,7 @@ references:
     - https://www.mandiant.com/resources/blog/lnk-between-browsers
 author: Aedan Russell, frack113, X__Junior (Nextron Systems)
 date: 2022/06/19
-modified: 2023/05/02
+modified: 2023/09/28
 tags:
     - attack.persistence
     - attack.t1176
@@ -21,9 +21,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        CommandLine|contains|all:
-            - --load-extension=
-            - \AppData\Local\
+        CommandLine|contains: --load-extension=
         ParentProcessName|endswith:
             - \cmd.exe
             - \cscript.exe

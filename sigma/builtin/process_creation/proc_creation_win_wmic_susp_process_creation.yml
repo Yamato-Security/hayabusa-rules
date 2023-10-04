@@ -53,9 +53,6 @@ detection:
             - '%comspec%'
             - '%localappdata%'
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: high
