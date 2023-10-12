@@ -7,7 +7,7 @@ references:
     - https://twitter.com/mrd0x/status/1481630810495139841?s=12
 author: Tim Shelton, Florian Roth (Nextron Systems), Yassine Oukessou (fix + fp)
 date: 2022/01/13
-modified: 2023/10/06
+modified: 2023/10/11
 tags:
     - attack.defense_evasion
     - attack.t1218.011
@@ -48,7 +48,6 @@ detection:
         -   CommandLine|startswith: C:\Windows\system32\rundll32.exe" /uninstall /longpath
                 "C:\Program Files\McAfee\MSC\mscrem.inf
     filter_edge_update:
-        ParentCommandLine|contains: \setup.exe" --install-archive="C:\Users\
         ParentProcessName|startswith: C:\Users\
         ParentProcessName|contains: \AppData\Local\Microsoft\EdgeUpdate\Install\{
         ParentProcessName|endswith: \setup.exe
