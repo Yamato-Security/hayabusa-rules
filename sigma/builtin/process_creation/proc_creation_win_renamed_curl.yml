@@ -7,6 +7,7 @@ references:
     - https://twitter.com/Kostastsale/status/1700965142828290260
 author: X__Junior (Nextron Systems)
 date: 2023/09/11
+modified: 2023/10/12
 tags:
     - attack.execution
     - attack.t1059
@@ -23,7 +24,7 @@ detection:
         -   OriginalFileName: curl.exe
         -   Description: The curl executable
     filter_main_img:
-        NewProcessName|endswith: \curl.exe
+        NewProcessName|contains: \curl
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

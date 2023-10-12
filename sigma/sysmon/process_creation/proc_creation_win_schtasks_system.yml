@@ -8,7 +8,7 @@ references:
     - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/07/28
-modified: 2023/03/14
+modified: 2023/10/11
 tags:
     - attack.execution
     - attack.persistence
@@ -32,18 +32,17 @@ detection:
         CommandLine|contains:
             - NT AUT
             - ' SYSTEM '
-    filter_teamviewer:
-        ParentImage|contains|all:
-            - \AppData\Local\Temp\
-            - TeamViewer_.exe
+    filter_optional_teamviewer:
         Image|endswith: \schtasks.exe
-        CommandLine|contains: /TN TVInstallRestore
-    filter_avira:
+        CommandLine|contains|all:
+            - /TN TVInstallRestore
+            - \TeamViewer_.exe
+    filter_optional_avira:
         CommandLine|contains:
             - '/Create /F /RU System /SC WEEKLY /TN AviraSystemSpeedupVerify /TR '
-            - C:\Program Files (x86)\Avira\System Speedup\setup\avira_speedup_setup.exe
+            - :\Program Files (x86)\Avira\System Speedup\setup\avira_speedup_setup.exe
             - /VERIFY /VERYSILENT /NOSTART /NODOTNET /NORESTART" /RL HIGHEST
-    condition: process_creation and (all of selection_* and not 1 of filter_*)
+    condition: process_creation and (all of selection_* and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: high
