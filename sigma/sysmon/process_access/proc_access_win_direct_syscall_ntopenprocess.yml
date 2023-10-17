@@ -83,7 +83,7 @@ detection:
         TargetImage: C:\Windows\system32\svchost.exe
         GrantedAccess: '0x1000'
     condition: process_access and (selection and not 1 of filter_main_*)
-filter_main_:
+falsepositives:
     - Unknown
 level: high
 ruletype: Sigma
