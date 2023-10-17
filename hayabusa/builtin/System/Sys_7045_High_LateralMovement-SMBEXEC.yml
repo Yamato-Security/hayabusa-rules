@@ -1,0 +1,37 @@
+author: longmd - n0n$la$
+date: 2023/10/16
+modified: 2022/10/16
+
+title: SMBExec Lateral Movement
+details: 'Svc: %ServiceName% ¦ Path: %ImagePath% ¦ Acct: %AccountName% ¦ StartType: %StartType%'
+description: SMBExec is a Impacket tool often abused for lateral movement.
+
+level: high
+status: stable
+logsource:
+    product: windows
+    service: system
+detection:
+    selection:
+        Channel: System
+        EventID: 7045
+    selection_SMBExec_in_service:
+        Service: BTOBTO
+    selection_SMBExec_in_path:
+        ImagePath|contains:
+            - '.bat & del'
+            - '__output 2^>^&1 >'
+    condition: selection and (selection_SMBExec_in_service or selection_SMBExec_in_path)
+falsepositives:
+    - systems admin
+tags:
+    - attack.lateral_movement
+    - attack.s0029
+    - attack.t1136.002
+    - attack.t1543.003
+    - attack.t1570
+    - attack.t1021.002
+    - attack.t1569.002
+references:
+    - https://attack.mitre.org/software/S0029/
+ruletype: Hayabusa
