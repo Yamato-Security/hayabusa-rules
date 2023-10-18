@@ -144,11 +144,6 @@ detection:
         TargetObject|endswith: \Microsoft\Windows\CurrentVersion\Run\Everything
         Details|endswith: \Everything\Everything.exe" -startup
     condition: registry_set and (all of current_version_* and not 1 of filter_*)
-fields:
-    - SecurityID
-    - ObjectName
-    - OldValueType
-    - NewValueType
 falsepositives:
     - Legitimate software automatically (mostly, during installation) sets up autorun
         keys for legitimate reason
