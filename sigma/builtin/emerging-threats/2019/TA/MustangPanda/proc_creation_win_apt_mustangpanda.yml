@@ -34,9 +34,6 @@ detection:
     selection_img:
         NewProcessName|endswith: Temp\winwsh.exe
     condition: process_creation and (1 of selection_*)
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unlikely
 level: high

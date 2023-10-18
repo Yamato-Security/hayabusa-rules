@@ -35,10 +35,5 @@ detection:
     condition: registry_event and (selection and not filter)
 falsepositives:
     - Unknown
-fields:
-    - EventID
-    - Image
-    - TargetObject
-    - NewName
 level: medium
 ruletype: Sigma
