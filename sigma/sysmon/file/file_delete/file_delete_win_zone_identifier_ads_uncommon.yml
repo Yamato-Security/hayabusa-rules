@@ -12,6 +12,7 @@ references:
     - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/09/04
+modified: 2023/10/18
 tags:
     - attack.defense_evasion
     - attack.t1070.004
@@ -29,6 +30,7 @@ detection:
         TargetFilename|endswith: :Zone.Identifier
     filter_main_generic:
         Image|endswith:
+            - :\Program Files\PowerShell\7-preview\pwsh.exe
             - :\Program Files\PowerShell\7\pwsh.exe
             - :\Windows\explorer.exe
             - :\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
