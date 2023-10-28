@@ -1,4 +1,4 @@
-title: VsCode Child Process Anomaly
+title: Potentially Suspicious Child Process Of VsCode
 id: 5a3164f2-b373-4152-93cf-090b13c12d27
 status: experimental
 description: Detects uncommon or suspicious child processes spawning from a VsCode
@@ -9,6 +9,7 @@ references:
     - https://twitter.com/nas_bench/status/1618021415852335105
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/01/26
+modified: 2023/10/25
 tags:
     - attack.execution
     - attack.defense_evasion
@@ -47,9 +48,9 @@ detection:
             - \cmd.exe
     selection_children_paths:
         NewProcessName|contains:
-            - C:\Users\Public\
-            - C:\Windows\Temp\
-            - C:\Temp\
+            - :\Users\Public\
+            - :\Windows\Temp\
+            - :\Temp\
     condition: process_creation and (selection_parent and 1 of selection_children_*)
 falsepositives:
     - In development environment where VsCode is used heavily. False positives may
