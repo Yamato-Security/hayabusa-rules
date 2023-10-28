@@ -6,25 +6,27 @@ references:
     - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 author: Harish Segar, frack113
 date: 2020/06/29
-modified: 2021/10/16
+modified: 2023/10/27
 tags:
     - attack.execution
     - attack.t1059.001
 logsource:
     product: windows
     category: ps_classic_start
-    definition: fields have to be extract from event
 detection:
     ps_classic_start:
         EventID: 400
         Channel: Windows PowerShell
     selection:
-        HostName: ConsoleHost
-    filter:
-        HostApplication|startswith:
-            - powershell.exe
-            - C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe
-    condition: ps_classic_start and (selection and not filter)
+        Data|contains: HostName=ConsoleHost
+    filter_main_ps:
+        Data|contains:
+            - HostApplication=powershell
+            - HostApplication=C:\Windows\System32\WindowsPowerShell\v1.0\powershell
+            - HostApplication=C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell
+            - HostApplication=C:/Windows/System32/WindowsPowerShell/v1.0/powershell
+            - HostApplication=C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell
+    condition: ps_classic_start and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown
 level: low

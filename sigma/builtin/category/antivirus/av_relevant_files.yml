@@ -7,7 +7,7 @@ references:
     - https://www.nextron-systems.com/?s=antivirus
 author: Florian Roth (Nextron Systems), Arnim Rupp
 date: 2018/09/09
-modified: 2023/05/19
+modified: 2023/10/23
 tags:
     - attack.resource_development
     - attack.t1588
@@ -35,11 +35,11 @@ detection:
         Channel: Microsoft-Windows-Windows Defender/Operational
     selection_path:
         Path|contains:
-            - C:\Windows\
-            - C:\Temp\
-            - C:\PerfLogs\
-            - C:\Users\Public\
-            - C:\Users\Default\
+            - :\Windows\
+            - :\Temp\
+            - :\PerfLogs\
+            - :\Users\Public\
+            - :\Users\Default\
             - \Client\
             - \tsclient\
             - \inetpub\
