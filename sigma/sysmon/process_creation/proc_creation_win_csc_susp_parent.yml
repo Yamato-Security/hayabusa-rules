@@ -6,9 +6,11 @@ description: Detects a potentially suspicious parent of "csc.exe", which could b
 references:
     - https://www.uptycs.com/blog/warzonerat-can-now-evade-with-process-hollowing
     - https://reaqta.com/2017/11/short-journey-darkvnc/
-author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
+    - https://www.pwc.com/gx/en/issues/cybersecurity/cyber-threat-intelligence/yellow-liderc-ships-its-scripts-delivers-imaploader-malware.html
+author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems),
+    X__Junior (Nextron Systems)
 date: 2019/02/11
-modified: 2023/08/02
+modified: 2023/10/27
 tags:
     - attack.execution
     - attack.t1059.005
@@ -30,7 +32,11 @@ detection:
     selection_parent_generic:
         ParentImage|endswith:
             - \cscript.exe
+            - \excel.exe
             - \mshta.exe
+            - \onenote.exe
+            - \outlook.exe
+            - \powerpnt.exe
             - \winword.exe
             - \wscript.exe
     selection_parent_powershell:
@@ -43,8 +49,9 @@ detection:
     selection_parent_susp_location:
         -   ParentCommandLine|re: ([Pp]rogram[Dd]ata|%([Ll]ocal)?[Aa]pp[Dd]ata%|\\[Aa]pp[Dd]ata\\([Ll]ocal(Ll]ow)?|[Rr]oaming))\\[^\\]{1,256}$
         -   ParentCommandLine|contains:
-                - :\Users\Public\
                 - :\PerfLogs\
+                - :\Users\Public\
+                - :\Windows\Temp\
                 - \Temporary Internet
         -   ParentCommandLine|contains|all:
                 - :\Users\
@@ -58,13 +65,26 @@ detection:
         -   ParentCommandLine|contains|all:
                 - :\Users\
                 - \Pictures\
+    filter_main_programfiles:
+        ParentImage|startswith:
+            - C:\Program Files (x86)\
+            - C:\Program Files\
+    filter_main_sdiagnhost:
+        ParentImage: C:\Windows\System32\sdiagnhost.exe
+    filter_main_w3p:
+        ParentImage: C:\Windows\System32\inetsrv\w3wp.exe
+    filter_optional_chocolatey:
+        ParentImage: C:\ProgramData\chocolatey\choco.exe
+    filter_optional_defender:
+        ParentCommandLine|contains: \ProgramData\Microsoft\Windows Defender Advanced
+            Threat Protection
     filter_optional_ansible:
         ParentCommandLine|contains:
             - JwB7ACIAZgBhAGkAbABlAGQAIgA6AHQAcgB1AGUALAAiAG0AcwBnACIAOgAiAEEAbgBzAGkAYgBsAGUAIAByAGUAcQB1AGkAcgBlAHMAIABQAG8AdwBlAHIAUwBoAGUAbABsACAAdgAzAC4AMAAgAG8AcgAgAG4AZQB3AGUAcgAiAH0AJw
             - cAewAiAGYAYQBpAGwAZQBkACIAOgB0AHIAdQBlACwAIgBtAHMAZwAiADoAIgBBAG4AcwBpAGIAbABlACAAcgBlAHEAdQBpAHIAZQBzACAAUABvAHcAZQByAFMAaABlAGwAbAAgAHYAMwAuADAAIABvAHIAIABuAGUAdwBlAHIAIgB9ACcA
             - nAHsAIgBmAGEAaQBsAGUAZAAiADoAdAByAHUAZQAsACIAbQBzAGcAIgA6ACIAQQBuAHMAaQBiAGwAZQAgAHIAZQBxAHUAaQByAGUAcwAgAFAAbwB3AGUAcgBTAGgAZQBsAGwAIAB2ADMALgAwACAAbwByACAAbgBlAHcAZQByACIAfQAnA
     condition: process_creation and (selection_img and 1 of selection_parent_* and
-        not 1 of filter_optional_*)
+        not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: high
