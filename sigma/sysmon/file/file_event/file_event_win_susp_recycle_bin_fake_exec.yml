@@ -8,8 +8,10 @@ description: Detects file write event from/to a fake recycle bin folder that is 
     used as a staging directory for malware
 references:
     - https://www.mandiant.com/resources/blog/infected-usb-steal-secrets
+    - https://unit42.paloaltonetworks.com/cloaked-ursa-phishing/
 author: X__Junior (Nextron Systems)
 date: 2023/07/12
+modified: 2023/11/06
 tags:
     - attack.persistence
     - attack.defense_evasion
@@ -23,13 +25,13 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         -   Image|contains:
-                - :\RECYCLERS.BIN\
-                - :\RECYCLER.BIN\
-                - :\RECYCLE.BIN\
+                - RECYCLERS.BIN\
+                - RECYCLER.BIN\
+                - RECYCLE.BIN\
         -   TargetFilename|contains:
-                - :\RECYCLERS.BIN\
-                - :\RECYCLER.BIN\
-                - :\RECYCLE.BIN\
+                - RECYCLERS.BIN\
+                - RECYCLER.BIN\
+                - RECYCLE.BIN\
     condition: file_event and selection
 falsepositives:
     - Unknown

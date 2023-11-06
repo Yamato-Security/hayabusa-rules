@@ -6,7 +6,7 @@ references:
     - https://github.com/byt3bl33d3r/CrackMapExec
 author: Thomas Patzke
 date: 2020/05/22
-modified: 2023/02/22
+modified: 2023/11/06
 tags:
     - attack.execution
     - attack.t1047
@@ -22,18 +22,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        CommandLine|endswith:
+        CommandLine|contains:
             - cmd.exe /Q /c * 1> \\\\*\\*\\* 2>&1
             - cmd.exe /C * > \\\\*\\*\\* 2>&1
             - cmd.exe /C * > *\\Temp\\* 2>&1
-        CommandLine|contains:
             - powershell.exe -exec bypass -noni -nop -w 1 -C "
             - 'powershell.exe -noni -nop -w 1 -enc '
     condition: process_creation and selection
-fields:
-    - SubjectUserName
-    - ComputerName
-    - CommandLine
 falsepositives:
     - Unknown
 level: high
