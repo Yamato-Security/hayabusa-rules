@@ -33,7 +33,7 @@ detection:
             - '&dir&echo'
             - '&echo [E]'
             - '&echo [S]'
-    condition: process_creation and (all of selection*)
+    condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown
 level: high

@@ -10,10 +10,11 @@ references:
     - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 author: Nikita Nazarov, oscd.community
 date: 2020/10/06
-modified: 2023/03/28
+modified: 2023/11/10
 tags:
     - attack.execution
     - attack.t1059.001
+    - detection.threat_hunting
     - sysmon
 logsource:
     product: windows
@@ -27,7 +28,7 @@ detection:
             - \powershell.exe
             - \pwsh.exe
     filter_main_compattelrunner:
-        SourceParentImage: C:\Windows\System32\CompatTelRunner.exe
+        SourceParentImage|endswith: :\Windows\System32\CompatTelRunner.exe
     condition: create_remote_thread and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown
