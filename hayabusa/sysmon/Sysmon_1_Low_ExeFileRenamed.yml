@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2022/12/23
-modified: 2022/12/23
+modified: 2023/11/09
 
 title: 'Renamed Exe File'
 description: 'This is to detect when an .exe file was renamed. Attackers will often rename malware and lolbas tools in order not to be detected. %OriginalFileName% is the original filename in the PE header when the .exe was compiled.'
@@ -20,7 +20,7 @@ detection:
     FileNameAndOriginalNameAreSame:
         Image|endswithfield: OriginalFileName
     FilterUnknown:
-        - OriginalFileName: '?'
+        - OriginalFileName: '\?'
         - OriginalFileName: '-'
         - OriginalFileName: null
     FilterVSCode:
