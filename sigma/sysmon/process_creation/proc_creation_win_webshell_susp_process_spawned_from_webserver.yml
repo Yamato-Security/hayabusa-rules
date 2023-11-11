@@ -10,7 +10,7 @@ references:
 author: Thomas Patzke, Florian Roth (Nextron Systems), Zach Stanford @svch0st, Tim
     Shelton, Nasreddine Bencherchali (Nextron Systems)
 date: 2019/01/16
-modified: 2023/11/09
+modified: 2023/11/11
 tags:
     - attack.persistence
     - attack.t1505.003
@@ -90,7 +90,7 @@ detection:
             - sc query
             - ADManager Plus
     condition: process_creation and (1 of selection_webserver_* and selection_anomaly_children
-        and not 1 of filter_main_**)
+        and not 1 of filter_main_*)
 falsepositives:
     - Particular web applications may spawn a shell process legitimately
 level: high
