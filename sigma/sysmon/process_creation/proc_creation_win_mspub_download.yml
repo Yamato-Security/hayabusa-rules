@@ -25,10 +25,10 @@ detection:
         -   OriginalFileName: MSPUB.exe
     selection_cli:
         CommandLine|contains:
+            - ftp://
             - http://
             - https://
-            - ftp://
-    condition: process_creation and (all of selection*)
+    condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown
 level: medium
