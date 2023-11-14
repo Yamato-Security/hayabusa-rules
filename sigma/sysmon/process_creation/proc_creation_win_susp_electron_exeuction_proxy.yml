@@ -16,6 +16,7 @@ references:
     - https://chromium.googlesource.com/chromium/chromium/+/master/content/public/common/content_switches.cc
 author: frack113, Nasreddine Bencherchali (Nextron Systems)
 date: 2023/09/05
+modified: 2023/11/09
 tags:
     - attack.execution
     - sysmon
@@ -26,24 +27,38 @@ detection:
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
-    selection:
-        Image|endswith:
-            - \chrome.exe
-            - \code.exe
-            - \discord.exe
-            - \GitHubDesktop.exe
-            - \keybase.exe
-            - \msedge.exe
-            - \msedgewebview2.exe
-            - \msteams.exe
-            - \slack.exe
-            - \Teams.exe
+    selection_img:
+        -   Image|endswith:
+                - \chrome.exe
+                - \code.exe
+                - \discord.exe
+                - \GitHubDesktop.exe
+                - \keybase.exe
+                - \msedge_proxy.exe
+                - \msedge.exe
+                - \msedgewebview2.exe
+                - \msteams.exe
+                - \slack.exe
+                - \Teams.exe
+        -   OriginalFileName:
+                - chrome.exe
+                - code.exe
+                - discord.exe
+                - GitHubDesktop.exe
+                - keybase.exe
+                - msedge_proxy.exe
+                - msedge.exe
+                - msedgewebview2.exe
+                - msteams.exe
+                - slack.exe
+                - Teams.exe
+    selection_cli:
         CommandLine|contains:
             - --browser-subprocess-path
             - --gpu-launcher
             - --renderer-cmd-prefix
             - --utility-cmd-prefix
-    condition: process_creation and selection
+    condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate usage for debugging purposes
 level: medium
