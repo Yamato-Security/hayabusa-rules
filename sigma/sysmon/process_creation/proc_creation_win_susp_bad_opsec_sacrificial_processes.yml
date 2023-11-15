@@ -25,7 +25,7 @@ references:
 author: Oleg Kolesnikov @securonix invrep_de, oscd.community, Florian Roth (Nextron
     Systems), Christian Burkard (Nextron Systems)
 date: 2020/10/23
-modified: 2023/11/10
+modified: 2023/11/14
 tags:
     - attack.defense_evasion
     - attack.t1218.011
@@ -56,8 +56,16 @@ detection:
         ParentImage|contains|all:
             - :\Users\
             - \AppData\Local\Microsoft\EdgeUpdate\Install\{
-        ParentImage|endswith: \setup.exe
-    condition: process_creation and (1 of selection_* and not 1 of filter_main_*)
+    filter_optional_chrome_installer:
+        ParentImage|contains|all:
+            - :\Users\
+            - \AppData\Local\Google\Chrome\Application\
+        ParentImage|endswith: \Installer\setup.exe
+        ParentCommandLine|contains: --uninstall --channel=stable
+        Image|endswith: \rundll32.exe
+        CommandLine|endswith: rundll32.exe
+    condition: process_creation and (1 of selection_* and not 1 of filter_main_* and
+        1 of filter_optional_*)
 falsepositives:
     - Unlikely
 level: high
