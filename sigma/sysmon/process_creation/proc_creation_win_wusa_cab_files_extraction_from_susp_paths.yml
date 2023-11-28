@@ -1,4 +1,4 @@
-title: Wusa Extracting Cab Files From Suspicious Paths
+title: Wusa.EXE Extracting Cab Files From Suspicious Paths
 id: c74c0390-3e20-41fd-a69a-128f0275a5ea
 status: test
 description: Detects usage of the "wusa.exe" (Windows Update Standalone Installer)
@@ -8,6 +8,7 @@ references:
     - https://www.echotrail.io/insights/search/wusa.exe/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/05
+modified: 2023/11/28
 tags:
     - attack.execution
     - sysmon
@@ -23,12 +24,10 @@ detection:
         CommandLine|contains: '/extract:'
     selection_paths:
         CommandLine|contains:
-            - C:\Users\Public\
-            - \Desktop\
-            - \Downloads\
+            - :\PerfLogs\
+            - :\Users\Public\
+            - :\Windows\Temp\
             - \Appdata\Local\Temp\
-            - \Windows\Temp\
-            - \PerfLogs\
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown
