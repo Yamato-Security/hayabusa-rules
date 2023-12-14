@@ -29,10 +29,10 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: debug1
-        run: cd hayabusa && ls -la ../hayabusa-rules
+        run: ls -la
 
       - name: debug2
-        run: cd hayabusa && ls -la ../hayabusa-rules
+        run: cd hayabusa && ls -la ../hayabusa-rules/config
 
       - name: run csv-timeline
         run: cd hayabusa && cargo run --release -- csv-timeline -d ../hayabusa-sample-evtx -r ../hayabusa-rules -w -o timeline.csv | grep "Rule parsing error" | wc -l | grep 1
