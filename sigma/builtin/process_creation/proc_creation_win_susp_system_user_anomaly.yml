@@ -8,7 +8,7 @@ references:
     - https://tools.thehacker.recipes/mimikatz/modules
 author: Florian Roth (Nextron Systems), David ANDRE (additional keywords)
 date: 2021/12/20
-modified: 2023/01/19
+modified: 2023/12/14
 tags:
     - attack.credential_access
     - attack.defense_evasion
@@ -82,12 +82,16 @@ detection:
         ParentCommandLine|contains: \DismFoDInstall.cmd
         NewProcessName|endswith: \PING.EXE
     filter_config_mgr:
-        ParentProcessName|startswith: C:\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\
+        ParentProcessName|contains: :\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\
     filter_java:
         CommandLine|contains: ' -ma '
-        ParentProcessName|startswith: C:\Program Files (x86)\Java\
+        ParentProcessName|contains:
+            - :\Program Files (x86)\Java\
+            - :\Program Files\Java\
         ParentProcessName|endswith: \bin\javaws.exe
-        NewProcessName|startswith: C:\Program Files (x86)\Java\
+        NewProcessName|contains:
+            - :\Program Files (x86)\Java\
+            - :\Program Files\Java\
         NewProcessName|endswith: \bin\jp2launcher.exe
     condition: process_creation and (all of selection* and not 1 of filter_*)
 falsepositives:
