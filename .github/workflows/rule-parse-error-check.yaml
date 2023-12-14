@@ -7,19 +7,19 @@ jobs:
   rule-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main
+      - name: Checkout hayabusa-rules
         uses: actions/checkout@v3
         with:
           repository: Yamato-Security/hayabusa-rules
           path: rules
 
-      - name: Checkout hayabusa-sample-evtx repo
+      - name: Checkout hayabusa
         uses: actions/checkout@v3
         with:
           repository: Yamato-Security/hayabusa
           path: hayabusa
 
-      - name: Checkout hayabusa-sample-evtx repo
+      - name: Checkout hayabusa-sample-evtx
         uses: actions/checkout@v3
         with:
           repository: Yamato-Security/hayabusa-sample-evtx
