@@ -7,11 +7,10 @@ jobs:
   rule-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout hayabusa-rules
+      - name: clone hayabusa rule repo
         uses: actions/checkout@v3
         with:
-          repository: Yamato-Security/hayabusa-rules
-          path: rules
+          path: hayabusa-rules
 
       - name: Checkout hayabusa
         uses: actions/checkout@v3
@@ -30,4 +29,4 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
 
       - name: run csv-timeline
-        run: cd hayabusa && cargo run --release -- csv-timeline -d ../hayabusa-sample-evtx -r ../rules -w | grep "Rule parsing error" | wc -l | grep 1
+        run: cd hayabusa && cargo run --release -- csv-timeline -d ../hayabusa-sample-evtx -r ../hayabusa-rules -w -o timeline.csv | grep "Rule parsing error" | wc -l | grep 1
