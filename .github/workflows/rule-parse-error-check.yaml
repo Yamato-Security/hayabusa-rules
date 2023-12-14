@@ -29,11 +29,5 @@ jobs:
         if: ${{ steps.skip_check.outputs.should_skip != 'true' }}
         uses: dtolnay/rust-toolchain@stable
 
-      - name: debug1
-        run: ls -la
-
-      - name: debug2
-        run: cd hayabusa && ls -la ../hayabusa-rules/config
-
       - name: run csv-timeline
         run: cd hayabusa && cargo run --release -- csv-timeline -d ../hayabusa-sample-evtx -r ../hayabusa-rules -w -o timeline.csv  | grep "Rule parsing error" | wc -l | grep 0
