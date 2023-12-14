@@ -12,14 +12,14 @@ jobs:
         with:
           path: hayabusa-rules
 
-      - name: Checkout hayabusa
+      - name: clone hayabusa
         uses: actions/checkout@v3
         with:
           repository: Yamato-Security/hayabusa
           submodules: recursive
           path: hayabusa
 
-      - name: Checkout hayabusa-sample-evtx
+      - name: clone hayabusa-sample-evtx
         uses: actions/checkout@v3
         with:
           repository: Yamato-Security/hayabusa-sample-evtx
