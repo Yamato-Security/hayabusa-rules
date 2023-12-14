@@ -1,0 +1,37 @@
+name: Rule parse error check
+
+on:
+  workflow_dispatch:
+
+env:
+  CARGO_INCREMENTAL: 0
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v3
+        with:
+          repository: Yamato-Security/hayabusa-rules
+          path: rules
+
+      - name: Checkout hayabusa-sample-evtx repo
+        uses: actions/checkout@v3
+        with:
+          repository: Yamato-Security/hayabusa
+          path: hayabusa
+
+      - name: Checkout hayabusa-sample-evtx repo
+        uses: actions/checkout@v3
+        with:
+          repository: Yamato-Security/hayabusa-sample-evtx
+          path: hayabusa-sample-evtx
+
+      - name: Set up Rust toolchain
+        if: ${{ steps.skip_check.outputs.should_skip != 'true' }}
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: run csv-timeline
+        run: cd hayabusa && cargo run --release -- csv-timeline -d ../hayabusa-sample-evtx -r ../rules -w | grep "Rule parsing error" | wc -l | grep 1
