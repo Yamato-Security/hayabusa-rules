@@ -1,0 +1,34 @@
+name: Rule parse error check
+
+on:
+  pull_request:
+
+jobs:
+  rule-parse-error-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: clone hayabusa rule repo
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          path: hayabusa-rules
+
+      - name: clone hayabusa
+        uses: actions/checkout@v3
+        with:
+          repository: Yamato-Security/hayabusa
+          submodules: recursive
+          path: hayabusa
+
+      - name: clone hayabusa-sample-evtx
+        uses: actions/checkout@v3
+        with:
+          repository: Yamato-Security/hayabusa-sample-evtx
+          path: hayabusa-sample-evtx
+
+      - name: Set up Rust toolchain
+        if: ${{ steps.skip_check.outputs.should_skip != 'true' }}
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: run csv-timeline
+        run: cd hayabusa && cargo run --release -- csv-timeline -d ../hayabusa-sample-evtx -r ../hayabusa-rules -w -o timeline.csv  | grep "Rule parsing error" | wc -l | grep 0
