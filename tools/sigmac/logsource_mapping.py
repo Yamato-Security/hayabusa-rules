@@ -76,6 +76,11 @@ def convert_special_val(key: str, value: str | list[str]) -> str | list[str]:
             str(INTEGRITY_LEVEL_VALUES.get(v.upper())) for v in value]
     elif key == "OperationType":
         return OPERATION_TYPE_VALUES.get(value)
+    elif key == "ObjectName":
+        if isinstance(value, str):
+            return value.replace("HKLM", r"\REGISTRY\MACHINE").replace("HKU", r"\REGISTRY\USER")
+        elif isinstance(value, list):
+            return [x.replace("HKLM", r"\REGISTRY\MACHINE").replace("HKU", r"\REGISTRY\USER") for x in value]
     return value
 
 
