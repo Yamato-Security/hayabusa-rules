@@ -166,17 +166,18 @@ class LogSource:
             if key in ["condition", "process_creation", "timeframe", "registry_set", "registry_add", "registry_event", "registry_delete"]:
                 continue
             val_obj = obj[key]
+            is_detectable = True
             if isinstance(val_obj, dict):
                 keys = val_obj.keys()
-                if not self.is_detectable_fields(keys):
-                    return False
+                is_detectable = self.is_detectable_fields(keys)
             elif isinstance(val_obj, list):
                 if not [v for v in val_obj if isinstance(v, dict)]:
                     continue
                 keys = [list(k.keys()) for k in val_obj]
                 keys = reduce(lambda a, b: a + b, keys)
-                if not self.is_detectable_fields(keys):
-                    return False
+                is_detectable = self.is_detectable_fields(keys)
+            if not is_detectable:
+                return False
         return True
 
 
