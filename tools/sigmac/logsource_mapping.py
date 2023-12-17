@@ -136,7 +136,7 @@ class LogSource:
         return False
 
     def is_detectable_fields(self, keys) -> bool:
-        common_fields = ["CommandLine", "ProcessId"]
+        common_fields = ["CommandLine", "ProcessId", "OriginalFileName"]
         keys = [re.sub(r"\|.*", "", k) for k in keys]
         keys = [k for k in keys if k not in common_fields]
         if not keys:
