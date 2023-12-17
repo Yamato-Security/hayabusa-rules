@@ -31,11 +31,21 @@ WINDOWS_SECURITY_PROCESS_CREATION_FIELDS = ["SubjectUserSid", "SubjectUserName",
                                             "CommandLine", "TargetUserSid", "TargetUserName", "TargetDomainName",
                                             "TargetLogonId", "ParentProcessName", "MandatoryLabel"]
 
+WINDOWS_SYSMON_REGISTRY_EVENT_FIELDS = ["EventType", "UtcTime", "ProcessId", "ProcessGuid", "Image", "TargetObject", "Details", "NewName"]
+WINDOWS_SECURITY_REGISTRY_EVENT_FIELDS = ["SubjectUserSid", "SubjectUserName", "SubjectDomainName", "SubjectLogonId", "ObjectName", "ObjectValueName", "HandleId", "OperationType", "OldValueType", "OldValue", "NewValueType", "NewValue", "ProcessId", "ProcessName"]
+
 INTEGRITY_LEVEL_VALUES = {
     "LOW": "S-1-16-4096",
     "MEDIUM": "S-1-16-8192",
     "HIGH": "S-1-16-12288",
     "SYSTEM": "S-1-16-16384"
+}
+
+OPERATION_TYPE_VALUES = {
+    "CreateKey": "%%1904",
+    "SetValue": "%%1905",
+    "DeleteValue": "%%1906",
+    "RenameKey" : "%%1905"
 }
 
 
@@ -57,13 +67,15 @@ def get_terminal_keys_recursive(dictionary, keys=[]) -> list[str]:
 
 def convert_special_val(key: str, value: str | list[str]) -> str | list[str]:
     """
-    ProcessIdとIntegrityLevelはValueの形式が違うため、変換する
+    ProcessIdとIntegrityLevelとOperationTypeはValueの形式が違うため、変換する
     """
     if key == "ProcessId" or key == "NewProcessId":
         return str(hex(int(value))) if isinstance(value, int) else [str(hex(int(v))) for v in value]
     elif key == "MandatoryLabel":
         return str(INTEGRITY_LEVEL_VALUES.get(value.upper())) if isinstance(value, str) else [
             str(INTEGRITY_LEVEL_VALUES.get(v.upper())) for v in value]
+    elif key == "OperationType":
+        return OPERATION_TYPE_VALUES.get(value)
     return value
 
 
@@ -113,50 +125,53 @@ class LogSource:
 
     def need_field_conversion(self) -> bool:
         """
-        process_creationルールのSysmon/Securityイベント用のフィールド変換要否を判定
+        process_creation/registry_xxルールのSysmon/Securityイベント用のフィールド変換要否を判定
         """
         if self.category == "antivirus":
             return True
         if self.category == "process_creation" and self.event_id == 4688:
             return True
+        if (self.category == "registry_set" or self.category == "registry_add" or self.category == "registry_event" or self.category == "registry_delete") and self.event_id == 4657:
+            return True
         return False
 
-    def is_convertible(self, obj: dict) -> bool:
-        """
-        process_creationルールのSysmon/Securityイベント用変換後フィールドの妥当性チェック
-        """
-        if self.category != "process_creation":
-            return True
+    def is_detectable_fields(self, keys) -> bool:
         common_fields = ["CommandLine", "ProcessId"]
+        keys = [re.sub(r"\|.*", "", k) for k in keys]
+        keys = [k for k in keys if k not in common_fields]
+        if not keys:
+            return True
+        elif self.event_id == 4688:
+            return not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
+        elif self.event_id == 1:
+            return not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
+        elif self.event_id == 4657:
+            return not all([k in WINDOWS_SYSMON_REGISTRY_EVENT_FIELDS for k in keys])
+        elif self.event_id == 12 or self.event_id == 13 or self.event_id == 14:
+            return not all([k in WINDOWS_SECURITY_REGISTRY_EVENT_FIELDS for k in keys])
+        return True
+
+    def is_detectable(self, obj: dict) -> bool:
+        """
+        process_creation/registry_xxルールののSysmon/Securityイベント用変換後フィールドの妥当性チェック
+        """
+        if self.category != "process_creation" and self.category != "registry_set" and self.category != "registry_add" and self.category != "registry_event" and self.category == "registry_delete" :
+            return True
         for key in obj.keys():
-            if key in ["condition", "process_creation", "timeframe"]:
+            if key in ["condition", "process_creation", "timeframe", "registry_set", "registry_add", "registry_event", "registry_delete"]:
                 continue
             val_obj = obj[key]
-            is_convertible = True
             if isinstance(val_obj, dict):
-                keys = [re.sub(r"\|.*", "", k) for k in val_obj.keys()]
-                keys = [k for k in keys if k not in common_fields]
-                if not keys:
-                    is_convertible = True
-                elif self.event_id == 4688:
-                    is_convertible = not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
-                elif self.event_id == 1:
-                    is_convertible = not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
+                keys = val_obj.keys()
+                if not self.is_detectable_fields(keys):
+                    return False
             elif isinstance(val_obj, list):
                 if not [v for v in val_obj if isinstance(v, dict)]:
                     continue
                 keys = [list(k.keys()) for k in val_obj]
                 keys = reduce(lambda a, b: a + b, keys)
-                keys = [re.sub(r"\|.*", "", k) for k in keys]
-                keys = [k for k in keys if k not in common_fields]
-                if not keys:
-                    is_convertible = True
-                elif self.event_id == 4688:
-                    is_convertible = not all([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
-                elif self.event_id == 1:
-                    is_convertible = not all([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
-            if not is_convertible:
-                return False
+                if not self.is_detectable_fields(keys):
+                    return False
         return True
 
 
@@ -269,7 +284,7 @@ class LogsourceConverter:
                 key = re.sub(r"\.", "_", key)  # Hayabusa側でSearch-identifierにドットを含むルールに対応していないため、変換
                 val = self.transform_field_recursive(ls.category, val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
-            if " of " not in new_obj['detection']['condition'] and not ls.is_convertible(new_obj['detection']):
+            if " of " not in new_obj['detection']['condition'] and not ls.is_detectable(new_obj['detection']):
                 LOGGER.error(f"This rule has incompatible field.{new_obj['detection']}. skip conversion.")
                 return
             field_map = self.field_map[ls.category] if ls.category in self.field_map else dict()
@@ -347,14 +362,14 @@ def create_obj(base_dir: Optional[str], file_name: str) -> dict:
         sys.exit(1)
 
 
-def create_field_map(obj: dict) -> dict[str, str]:
+def create_field_map(key:str, obj: dict) -> dict[str, str]:
     """
     カテゴリcreate_process用のフィールド名をマッピングするdict作成
     """
-    if 'fieldmappings' not in obj:
-        LOGGER.error("invalid yaml. key[fieldmappings] not found.")
+    if key not in obj:
+        LOGGER.error(f"invalid yaml. key[{key}] not found.")
         sys.exit(1)
-    field_map = obj['fieldmappings']
+    field_map = obj[key]
     return field_map
 
 
@@ -466,9 +481,10 @@ if __name__ == '__main__':
     win_antivirus_map = create_category_map(create_obj(script_dir, 'windows-antivirus.yaml'), service2channel)
     all_category_map = merge_category_map(service2channel,
                                           [sysmon_map, win_audit_map, win_service_map, win_antivirus_map])
-    process_creation_field_map = create_field_map(create_obj(script_dir, 'windows-audit.yaml'))
-    antivirus_field_map = create_field_map(create_obj(script_dir, 'windows-antivirus.yaml'))
-    field_map = {"process_creation": process_creation_field_map} | {"antivirus": antivirus_field_map}
+    process_creation_field_map = create_field_map("fieldmappings_process", create_obj(script_dir, 'windows-audit.yaml'))
+    registry_field_map = create_field_map("fieldmappings_registry", create_obj(script_dir, 'windows-audit.yaml'))
+    antivirus_field_map = create_field_map("fieldmappings", create_obj(script_dir, 'windows-antivirus.yaml'))
+    field_map = {"process_creation": process_creation_field_map} | {"antivirus": antivirus_field_map} | {"registry_set": registry_field_map}| {"registry_add": registry_field_map}| {"registry_event": registry_field_map}| {"registry_delete": registry_field_map}
     LOGGER.info(f"Loading logsource mapping yaml(sysmon/windows-audit/windows-services) done.")
 
     # Sigmaディレクトリから対象ファイルをリストアップ
