@@ -140,20 +140,20 @@ class LogSource:
             return True
         return False
 
-    def is_detectable_fields(self, keys) -> bool:
+    def is_detectable_fields(self, keys, func) -> bool:
         common_fields = ["CommandLine", "ProcessId"]
         keys = [re.sub(r"\|.*", "", k) for k in keys]
         keys = [k for k in keys if k not in common_fields]
         if not keys:
             return True
         elif self.event_id == 4688:
-            return not any([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
+            return not func([k in WINDOWS_SYSMON_PROCESS_CREATION_FIELDS for k in keys])
         elif self.event_id == 1:
-            return not any([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
+            return not func([k in WINDOWS_SECURITY_PROCESS_CREATION_FIELDS for k in keys])
         elif self.event_id == 4657:
-            return not all([k in WINDOWS_SYSMON_REGISTRY_EVENT_FIELDS for k in keys])
+            return not func([k in WINDOWS_SYSMON_REGISTRY_EVENT_FIELDS for k in keys])
         elif self.event_id == 12 or self.event_id == 13 or self.event_id == 14:
-            return not all([k in WINDOWS_SECURITY_REGISTRY_EVENT_FIELDS for k in keys])
+            return not func([k in WINDOWS_SECURITY_REGISTRY_EVENT_FIELDS for k in keys])
         return True
 
     def is_detectable(self, obj: dict) -> bool:
@@ -169,13 +169,13 @@ class LogSource:
             is_detectable = True
             if isinstance(val_obj, dict):
                 keys = val_obj.keys()
-                is_detectable = self.is_detectable_fields(keys)
+                is_detectable = self.is_detectable_fields(keys, any)
             elif isinstance(val_obj, list):
                 if not [v for v in val_obj if isinstance(v, dict)]:
                     continue
                 keys = [list(k.keys()) for k in val_obj]
                 keys = reduce(lambda a, b: a + b, keys)
-                is_detectable = self.is_detectable_fields(keys)
+                is_detectable = self.is_detectable_fields(keys, all)
             if not is_detectable:
                 return False
         return True
