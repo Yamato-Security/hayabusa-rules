@@ -21,12 +21,12 @@ detection:
         EventID:
             - 12
             - 13
-        TargetObject|contains: SYSTEM\
-        TargetObject|endswith: \services\localNETService
+        ObjectName|contains: SYSTEM\
+        ObjectName|endswith: \services\localNETService
     condition: registry_event and selection
 fields:
-    - Image
-    - TargetObject
+    - ProcessName
+    - ObjectName
     - TargetDetails
 falsepositives:
     - Unknown

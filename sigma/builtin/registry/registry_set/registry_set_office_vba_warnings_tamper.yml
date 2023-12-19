@@ -24,8 +24,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Security\VBAWarnings
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: \Security\VBAWarnings
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Unlikely

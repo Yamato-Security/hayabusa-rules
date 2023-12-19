@@ -20,11 +20,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters\
-        TargetObject|endswith:
+        ObjectName|startswith: \REGISTRY\MACHINE\System\CurrentControlSet\Services\LanmanServer\Parameters\
+        ObjectName|endswith:
             - AutoShareWks
             - AutoShareServer
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

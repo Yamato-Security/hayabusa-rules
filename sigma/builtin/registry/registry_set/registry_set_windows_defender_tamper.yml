@@ -31,12 +31,12 @@ detection:
         EventID: 4657
         Channel: Security
     selection_main:
-        TargetObject|contains:
+        ObjectName|contains:
             - \SOFTWARE\Microsoft\Windows Defender\
             - \SOFTWARE\Policies\Microsoft\Windows Defender Security Center\
             - \SOFTWARE\Policies\Microsoft\Windows Defender\
     selection_dword_1:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \DisableAntiSpyware
             - \DisableAntiVirus
             - \Real-Time Protection\DisableBehaviorMonitoring
@@ -48,9 +48,9 @@ detection:
             - \Real-Time Protection\DisableScriptScanning
             - \Reporting\DisableEnhancedNotifications
             - \SpyNet\DisableBlockAtFirstSeen
-        Details: DWORD (0x00000001)
+        NewValue: DWORD (0x00000001)
     selection_dword_0:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \App and Browser protection\DisallowExploitProtectionOverride
             - \Features\TamperProtection
             - \MpEngine\MpEnablePus
@@ -59,7 +59,7 @@ detection:
             - \SpyNet\SpynetReporting
             - \SpyNet\SubmitSamplesConsent
             - \Windows Defender Exploit Guard\Controlled Folder Access\EnableControlledFolderAccess
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and (selection_main and 1 of selection_dword_*)
 falsepositives:
     - Administrator actions via the Windows Defender interface

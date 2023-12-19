@@ -21,9 +21,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Software\Microsoft\WAB\DLLPath
+        ObjectName|endswith: \Software\Microsoft\WAB\DLLPath
     filter:
-        Details: '%CommonProgramFiles%\System\wab32.dll'
+        NewValue: '%CommonProgramFiles%\System\wab32.dll'
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Unknown

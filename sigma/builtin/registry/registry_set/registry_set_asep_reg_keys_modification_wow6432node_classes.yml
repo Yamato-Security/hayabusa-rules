@@ -24,9 +24,9 @@ detection:
         EventID: 4657
         Channel: Security
     wow_classes_base:
-        TargetObject|contains: \Software\Wow6432Node\Classes
+        ObjectName|contains: \Software\Wow6432Node\Classes
     wow_classes:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Folder\ShellEx\ExtShellFolderViews
             - \Folder\ShellEx\DragDropHandlers
             - \Folder\ShellEx\ColumnHandlers
@@ -40,7 +40,7 @@ detection:
             - \ShellEx\PropertySheetHandlers
             - \ShellEx\ContextMenuHandlers
     filter:
-        Details: (Empty)
+        NewValue: (Empty)
     condition: registry_set and (wow_classes_base and wow_classes and not filter)
 fields:
     - SecurityID

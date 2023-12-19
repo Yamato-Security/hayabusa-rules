@@ -18,9 +18,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Services\
-        TargetObject|endswith: \ImagePath
-        Details|contains:
+        ObjectName|contains: \Services\
+        ObjectName|endswith: \ImagePath
+        NewValue|contains:
             - powershell
             - pwsh
     condition: registry_set and selection

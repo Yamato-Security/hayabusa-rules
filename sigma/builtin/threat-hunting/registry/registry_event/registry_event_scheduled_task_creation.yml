@@ -23,7 +23,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\
             - \Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\
     condition: registry_event and selection

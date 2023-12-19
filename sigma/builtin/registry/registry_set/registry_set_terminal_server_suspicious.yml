@@ -34,11 +34,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \fDenyTSConnections
             - \fSingleSessionPerUser
             - \UserAuthentication
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Some of the keys mentioned here could be modified by an administrator while

@@ -19,10 +19,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection1:
-        TargetObject|contains: \Services\HybridConnectionManager
+        ObjectName|contains: \Services\HybridConnectionManager
     selection2:
-        EventType: SetValue
-        Details|contains: Microsoft.HybridConnectionManager.Listener.exe
+        OperationType: '%%1905'
+        NewValue|contains: Microsoft.HybridConnectionManager.Listener.exe
     condition: registry_event and (selection1 or selection2)
 falsepositives:
     - Unknown

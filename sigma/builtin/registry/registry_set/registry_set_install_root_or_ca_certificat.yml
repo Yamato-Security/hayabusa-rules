@@ -20,7 +20,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\
             - \SOFTWARE\Policies\Microsoft\SystemCertificates\Root\Certificates\
             - \SOFTWARE\Microsoft\EnterpriseCertificates\Root\Certificates\
@@ -30,8 +30,8 @@ detection:
             - \SOFTWARE\Microsoft\SystemCertificates\AuthRoot\Certificates\
             - \SOFTWARE\Policies\Microsoft\SystemCertificates\AuthRoot\Certificates\
             - \SOFTWARE\Microsoft\EnterpriseCertificates\AuthRoot\Certificates\
-        TargetObject|endswith: \Blob
-        Details: Binary Data
+        ObjectName|endswith: \Blob
+        NewValue: Binary Data
     condition: registry_set and selection
 falsepositives:
     - Unknown

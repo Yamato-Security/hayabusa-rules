@@ -22,9 +22,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \CLSID\{c90250f3-4d7d-4991-9b69-a5c5bc1c2ae6}\InProcServer32\(Default)
+        ObjectName|endswith: \CLSID\{c90250f3-4d7d-4991-9b69-a5c5bc1c2ae6}\InProcServer32\(Default)
     filter_main:
-        Details:
+        NewValue:
             - '%windir%\System32\ActXPrxy.dll'
             - C:\Windows\System32\ActXPrxy.dll
     condition: registry_set and (selection and not filter_main)

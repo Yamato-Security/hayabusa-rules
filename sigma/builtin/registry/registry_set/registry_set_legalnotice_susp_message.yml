@@ -20,10 +20,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LegalNoticeCaption
             - \SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LegalNoticeText
-        Details|contains:
+        NewValue|contains:
             - encrypted
             - Unlock-Password
             - paying

@@ -20,7 +20,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Software\Classes\Folder\shell\open\command\DelegateExecute
+        ObjectName|contains: \Software\Classes\Folder\shell\open\command\DelegateExecute
     condition: registry_set and selection
 falsepositives:
     - Unknown

@@ -27,15 +27,15 @@ detection:
         EventID: 4657
         Channel: Security
     root:
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\
     selection_autorun:
-        TargetObject|contains: \Autorun
-        Details: DWORD (0x00000001)
+        ObjectName|contains: \Autorun
+        NewValue: DWORD (0x00000001)
     selection_pre_after:
-        TargetObject|contains:
+        ObjectName|contains:
             - \CleanupString
             - \PreCleanupString
-        Details|contains:
+        NewValue|contains:
             - cmd
             - powershell
             - rundll32

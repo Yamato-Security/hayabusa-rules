@@ -19,10 +19,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject:
-            - HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ShowSuperHidden
-            - HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Hidden
-        Details: DWORD (0x00000000)
+        ObjectName:
+            - \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ShowSuperHidden
+            - \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\Hidden
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

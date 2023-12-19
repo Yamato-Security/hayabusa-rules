@@ -30,14 +30,14 @@ detection:
         EventID: 4657
         Channel: Security
     selection_edge:
-        TargetObject|endswith: \SOFTWARE\Policies\Microsoft\Edge\BuiltInDnsClientEnabled
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: \SOFTWARE\Policies\Microsoft\Edge\BuiltInDnsClientEnabled
+        NewValue: DWORD (0x00000001)
     selection_chrome:
-        TargetObject|endswith: \SOFTWARE\Google\Chrome\DnsOverHttpsMode
-        Details: secure
+        ObjectName|endswith: \SOFTWARE\Google\Chrome\DnsOverHttpsMode
+        NewValue: secure
     selection_firefox:
-        TargetObject|endswith: \SOFTWARE\Policies\Mozilla\Firefox\DNSOverHTTPS\Enabled
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: \SOFTWARE\Policies\Mozilla\Firefox\DNSOverHTTPS\Enabled
+        NewValue: DWORD (0x00000001)
     condition: registry_set and (1 of selection_*)
 falsepositives:
     - Unlikely

@@ -28,7 +28,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: SOFTWARE\Microsoft\.NETFramework\NGenAssemblyUsageLog
+        ObjectName|endswith: SOFTWARE\Microsoft\.NETFramework\NGenAssemblyUsageLog
     condition: registry_set and selection
 falsepositives:
     - Unknown

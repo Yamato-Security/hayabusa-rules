@@ -20,7 +20,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \AppCompatFlags\Compatibility Assistant\Store\
+        ObjectName|contains: \AppCompatFlags\Compatibility Assistant\Store\
     condition: registry_set and selection
 falsepositives:
     - This rule is to explore new applications on an endpoint. False positives depends

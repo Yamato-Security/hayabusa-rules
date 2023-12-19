@@ -21,7 +21,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \mscfile\shell\open\command
+        ObjectName|endswith: \mscfile\shell\open\command
     condition: registry_set and selection
 falsepositives:
     - Unknown

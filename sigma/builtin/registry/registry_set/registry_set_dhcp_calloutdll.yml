@@ -23,7 +23,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \Services\DHCPServer\Parameters\CalloutDlls
             - \Services\DHCPServer\Parameters\CalloutEnabled
     condition: registry_set and selection

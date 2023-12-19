@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: Software\Microsoft\Windows\CurrentVersion
-        Details|contains:
+        ObjectName|contains: Software\Microsoft\Windows\CurrentVersion
+        NewValue|contains:
             - 'vbscript:'
             - 'jscript:'
             - mshtml,
@@ -29,11 +29,11 @@ detection:
             - CreateObject
             - window.close
     filter:
-        TargetObject|contains: Software\Microsoft\Windows\CurrentVersion\Run
+        ObjectName|contains: Software\Microsoft\Windows\CurrentVersion\Run
     filter_dotnet:
-        Image|endswith: \msiexec.exe
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\
-        Details|contains:
+        ProcessName|endswith: \msiexec.exe
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Installer\UserData\
+        NewValue|contains:
             - \Microsoft.NET\Primary Interop Assemblies\Microsoft.mshtml.dll
             - <\Microsoft.mshtml,fileVersion=
             - _mshtml_dll_

@@ -20,10 +20,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug\Debugger
-        Details|endswith: .dll
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AeDebug\Debugger
+        NewValue|endswith: .dll
     filter:
-        Details: '"C:\WINDOWS\system32\vsjitdebugger.exe" -p %ld -e %ld -j 0x%p'
+        NewValue: '"C:\WINDOWS\system32\vsjitdebugger.exe" -p %ld -e %ld -j 0x%p'
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Legitimate use of the key to setup a debugger. Which is often the case on developers

@@ -23,9 +23,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection_value:
-        TargetObject|contains: \Security\Trusted Documents\TrustRecords
+        ObjectName|contains: \Security\Trusted Documents\TrustRecords
     selection_paths:
-        TargetObject|contains:
+        ObjectName|contains:
             - /AppData/Local/Microsoft/Windows/INetCache/
             - /AppData/Local/Temp/
             - /PerfLogs/

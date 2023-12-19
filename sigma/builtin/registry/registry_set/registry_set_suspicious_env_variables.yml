@@ -19,12 +19,12 @@ detection:
         EventID: 4657
         Channel: Security
     selection_main:
-        TargetObject|contains: \Environment\
+        ObjectName|contains: \Environment\
     selection_details:
-        -   Details:
+        -   NewValue:
                 - powershell
                 - pwsh
-        -   Details|contains:
+        -   NewValue|contains:
                 - \AppData\Local\Temp\
                 - C:\Users\Public\
                 - TVqQAAMAAAAEAAAA
@@ -38,7 +38,7 @@ detection:
                 - SQBuAHYAbwBrAGUALQ
                 - kAbgB2AG8AawBlAC0A
                 - JAG4AdgBvAGsAZQAtA
-        -   Details|startswith:
+        -   NewValue|startswith:
                 - SUVY
                 - SQBFAF
                 - SQBuAH

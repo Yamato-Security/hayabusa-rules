@@ -20,29 +20,29 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels\
-        TargetObject|endswith: \Enabled
-        Details: DWORD (0x00000000)
+        ObjectName|startswith: \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels\
+        ObjectName|endswith: \Enabled
+        NewValue: DWORD (0x00000000)
     filter_main_wevutil:
-        Image|endswith: \Windows\system32\wevtutil.exe
+        ProcessName|endswith: \Windows\system32\wevtutil.exe
     filter_main_iis:
-        Image|startswith: C:\Windows\winsxs\
-        Image|endswith: \TiWorker.exe
+        ProcessName|startswith: C:\Windows\winsxs\
+        ProcessName|endswith: \TiWorker.exe
     filter_main_svchost:
-        Image: C:\Windows\System32\svchost.exe
-        TargetObject|contains:
+        ProcessName: C:\Windows\System32\svchost.exe
+        ObjectName|contains:
             - \Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-FileInfoMinifilter
             - \Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-ASN1\
             - \Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Kernel-AppCompat\
             - \Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Runtime\Error\
             - \Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-CAPI2/Operational\
     filter_main_trusted_installer:
-        Image: C:\Windows\servicing\TrustedInstaller.exe
-        TargetObject|contains: \Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Compat-Appraiser
+        ProcessName: C:\Windows\servicing\TrustedInstaller.exe
+        ObjectName|contains: \Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Compat-Appraiser
     filter_optional_empty:
-        Image: ''
+        ProcessName: ''
     filter_optional_null:
-        Image: null
+        ProcessName: null
     condition: registry_set and (selection and not 1 of filter_main_* and not 1 of
         filter_optional_*)
 falsepositives:

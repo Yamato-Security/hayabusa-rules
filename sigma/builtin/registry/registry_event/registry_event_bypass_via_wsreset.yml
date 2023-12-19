@@ -22,13 +22,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \AppX82a6gwre4fdg3bt635tn5ctqjf8msdd2\Shell\open\command
+        ObjectName|endswith: \AppX82a6gwre4fdg3bt635tn5ctqjf8msdd2\Shell\open\command
     condition: registry_event and selection
 fields:
+    - ProcessName
+    - OperationType
+    - ObjectName
     - ComputerName
-    - Image
-    - EventType
-    - TargetObject
 falsepositives:
     - Unknown
 level: high

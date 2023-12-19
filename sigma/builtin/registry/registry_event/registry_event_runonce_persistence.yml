@@ -20,17 +20,18 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\SOFTWARE\Microsoft\Active Setup\Installed Components
-        TargetObject|endswith: \StubPath
+        ObjectName|startswith: \REGISTRY\MACHINE\SOFTWARE\Microsoft\Active Setup\Installed
+            Components
+        ObjectName|endswith: \StubPath
     filter_chrome:
-        Details|startswith: '"C:\Program Files\Google\Chrome\Application\'
-        Details|contains: \Installer\chrmstp.exe" --configure-user-settings --verbose-logging
+        NewValue|startswith: '"C:\Program Files\Google\Chrome\Application\'
+        NewValue|contains: \Installer\chrmstp.exe" --configure-user-settings --verbose-logging
             --system-level
     filter_edge:
-        Details|startswith:
+        NewValue|startswith:
             - '"C:\Program Files (x86)\Microsoft\Edge\Application\'
             - '"C:\Program Files\Microsoft\Edge\Application\'
-        Details|endswith: \Installer\setup.exe" --configure-user-settings --verbose-logging
+        NewValue|endswith: \Installer\setup.exe" --configure-user-settings --verbose-logging
             --system-level --msedge --channel=stable
     condition: registry_event and (selection and not 1 of filter_*)
 falsepositives:

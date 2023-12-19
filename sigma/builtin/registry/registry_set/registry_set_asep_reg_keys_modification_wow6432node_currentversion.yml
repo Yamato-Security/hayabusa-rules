@@ -24,14 +24,14 @@ detection:
         EventID: 4657
         Channel: Security
     wow_nt_current_version_base:
-        TargetObject|contains: \SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion
+        ObjectName|contains: \SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion
     wow_nt_current_version:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Windows\Appinit_Dlls
             - \Image File Execution Options
             - \Drivers32
     filter:
-        Details:
+        NewValue:
             - (Empty)
             - \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image
                 File Execution Options

@@ -21,16 +21,16 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\System\CurrentControlSet\Services\
-        TargetObject|endswith: \Parameters\ServiceDll
+        ObjectName|startswith: \REGISTRY\MACHINE\System\CurrentControlSet\Services\
+        ObjectName|endswith: \Parameters\ServiceDll
     filter_printextensionmanger:
-        Details: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
+        NewValue: C:\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
     filter_domain_controller:
-        Image: C:\Windows\system32\lsass.exe
-        TargetObject|endswith: \CurrentControlSet\Services\NTDS\Parameters\ServiceDll
-        Details: '%%systemroot%%\system32\ntdsa.dll'
+        ProcessName: C:\Windows\system32\lsass.exe
+        ObjectName|endswith: \CurrentControlSet\Services\NTDS\Parameters\ServiceDll
+        NewValue: '%%systemroot%%\system32\ntdsa.dll'
     filter_poqexec:
-        Image: C:\Windows\System32\poqexec.exe
+        ProcessName: C:\Windows\System32\poqexec.exe
     condition: registry_set and (selection and not 1 of filter*)
 falsepositives:
     - Administrative scripts

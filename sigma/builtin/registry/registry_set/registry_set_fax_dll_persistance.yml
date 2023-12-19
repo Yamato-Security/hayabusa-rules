@@ -19,11 +19,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \Software\Microsoft\Fax\Device Providers\
             - \ImageName
     filter:
-        Details: '%systemroot%\system32\fxst30.dll'
+        NewValue: '%systemroot%\system32\fxst30.dll'
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Unknown

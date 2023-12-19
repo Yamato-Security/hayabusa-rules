@@ -21,7 +21,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection2:
-        TargetObject|contains: \Microsoft\Windows Defender\Exclusions
+        ObjectName|contains: \Microsoft\Windows Defender\Exclusions
     condition: registry_set and selection2
 falsepositives:
     - Administrator actions

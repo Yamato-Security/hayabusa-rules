@@ -25,9 +25,9 @@ detection:
         EventID: 4657
         Channel: Security
     session_manager_base:
-        TargetObject|contains: \System\CurrentControlSet\Control\Session Manager
+        ObjectName|contains: \System\CurrentControlSet\Control\Session Manager
     session_manager:
-        TargetObject|contains:
+        ObjectName|contains:
             - \SetupExecute
             - \S0InitialCommand
             - \KnownDlls
@@ -35,7 +35,7 @@ detection:
             - \BootExecute
             - \AppCertDlls
     filter:
-        Details: (Empty)
+        NewValue: (Empty)
     condition: registry_set and (session_manager_base and session_manager and not
         filter)
 fields:

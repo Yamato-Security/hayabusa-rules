@@ -19,7 +19,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Software\Microsoft\Office test\Special\Perf
+        ObjectName|contains: \Software\Microsoft\Office test\Special\Perf
     condition: registry_event and selection
 falsepositives:
     - Unlikely

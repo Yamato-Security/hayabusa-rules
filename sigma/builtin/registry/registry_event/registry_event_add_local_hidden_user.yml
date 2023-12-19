@@ -18,9 +18,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SAM\SAM\Domains\Account\Users\Names\
-        TargetObject|endswith: $
-        Image|endswith: \lsass.exe
+        ObjectName|contains: \SAM\SAM\Domains\Account\Users\Names\
+        ObjectName|endswith: $
+        ProcessName|endswith: \lsass.exe
     condition: registry_event and selection
 falsepositives:
     - Unknown

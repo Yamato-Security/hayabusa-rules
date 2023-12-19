@@ -25,11 +25,11 @@ detection:
         -   OriginalFileName: wmic.exe
     selection_cli:
         CommandLine|contains: process
-    filter:
+    filter_main_creation:
         CommandLine|contains|all:
             - call
             - create
-    condition: process_creation and (all of selection* and not filter)
+    condition: process_creation and (all of selection* and not 1 of filter_*)
 falsepositives:
     - Unknown
 level: medium

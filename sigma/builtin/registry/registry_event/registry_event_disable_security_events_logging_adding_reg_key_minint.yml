@@ -20,14 +20,14 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        -   TargetObject: HKLM\SYSTEM\CurrentControlSet\Control\MiniNt
-            EventType: CreateKey
+        -   ObjectName: \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\Control\MiniNt
+            OperationType: '%%1904'
         -   NewName: HKLM\SYSTEM\CurrentControlSet\Control\MiniNt
     condition: registry_event and selection
 fields:
+    - ProcessName
+    - ObjectName
     - EventID
-    - Image
-    - TargetObject
     - NewName
 falsepositives:
     - Unknown

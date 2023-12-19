@@ -21,12 +21,12 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \CurrentControlSet\Services\NTDS\DirectoryServiceExtPt
             - \CurrentControlSet\Services\NTDS\LsaDbExtPt
     filter_domain_controller:
-        Image: C:\Windows\system32\lsass.exe
-        Details:
+        ProcessName: C:\Windows\system32\lsass.exe
+        NewValue:
             - '%%systemroot%%\system32\ntdsa.dll'
             - '%%systemroot%%\system32\lsadb.dll'
     condition: registry_event and (selection and not 1 of filter_*)

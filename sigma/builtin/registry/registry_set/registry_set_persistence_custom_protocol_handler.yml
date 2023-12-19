@@ -21,12 +21,12 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKCR\
-        Details|startswith: 'URL:'
+        ObjectName|startswith: HKCR\
+        NewValue|startswith: 'URL:'
     filter_main_ms_trusted:
-        Details|startswith: URL:ms-
+        NewValue|startswith: URL:ms-
     filter_main_generic_locations:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Program Files (x86)
             - C:\Program Files\
             - C:\Windows\System32\

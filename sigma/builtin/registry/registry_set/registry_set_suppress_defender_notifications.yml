@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: SOFTWARE\Policies\Microsoft\Windows Defender\UX Configuration\Notification_Suppress
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: SOFTWARE\Policies\Microsoft\Windows Defender\UX Configuration\Notification_Suppress
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Unknown

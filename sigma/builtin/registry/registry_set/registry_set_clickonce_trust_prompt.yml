@@ -20,14 +20,14 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel\
-        TargetObject|endswith:
+        ObjectName|contains: \SOFTWARE\MICROSOFT\.NETFramework\Security\TrustManager\PromptingLevel\
+        ObjectName|endswith:
             - \Internet
             - \LocalIntranet
             - \MyComputer
             - \TrustedSites
             - \UntrustedSites
-        Details: Enabled
+        NewValue: Enabled
     condition: registry_set and selection
 falsepositives:
     - Legitimate internal requirements.

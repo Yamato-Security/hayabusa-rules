@@ -25,13 +25,14 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        -   TargetObject: HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\AppCertDlls
+        -   ObjectName: \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\Control\Session
+                Manager\AppCertDlls
         -   NewName: HKLM\SYSTEM\CurentControlSet\Control\Session Manager\AppCertDlls
     condition: registry_event and selection
 fields:
+    - ProcessName
+    - ObjectName
     - EventID
-    - Image
-    - TargetObject
     - NewName
 falsepositives:
     - Unknown

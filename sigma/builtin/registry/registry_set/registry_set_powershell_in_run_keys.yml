@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Software\Microsoft\Windows\CurrentVersion\Run
-        Details|contains:
+        ObjectName|contains: \Software\Microsoft\Windows\CurrentVersion\Run
+        NewValue|contains:
             - powershell
             - 'pwsh '
             - FromBase64String

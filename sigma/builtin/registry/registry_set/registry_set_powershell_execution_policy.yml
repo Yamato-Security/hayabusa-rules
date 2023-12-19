@@ -25,15 +25,15 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \ShellIds\Microsoft.PowerShell\ExecutionPolicy
             - \Policies\Microsoft\Windows\PowerShell\ExecutionPolicy
-        Details|contains:
+        NewValue|contains:
             - Bypass
             - RemoteSigned
             - Unrestricted
     filter_main_svchost:
-        Image|contains:
+        ProcessName|contains:
             - :\Windows\System32\
             - :\Windows\SysWOW64\
     condition: registry_set and (selection and not 1 of filter_main_*)

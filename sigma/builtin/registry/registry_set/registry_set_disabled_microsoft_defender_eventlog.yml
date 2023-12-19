@@ -19,9 +19,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Windows
+        ObjectName|contains: \Microsoft\Windows\CurrentVersion\WINEVT\Channels\Microsoft-Windows-Windows
             Defender/Operational\Enabled
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Other Antivirus software installations could cause Windows to disable that eventlog

@@ -20,8 +20,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: Software\Microsoft\Windows NT\CurrentVersion\Tracing\SCM\Regular\TracingDisabled
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: Software\Microsoft\Windows NT\CurrentVersion\Tracing\SCM\Regular\TracingDisabled
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Unknown

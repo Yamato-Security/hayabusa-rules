@@ -29,16 +29,16 @@ detection:
         EventID: 4657
         Channel: Security
     selection_key:
-        EventType: SetValue
-        TargetObject|contains: \Shell\Open\Command
+        OperationType: '%%1905'
+        ObjectName|contains: \Shell\Open\Command
     selection_value_img:
-        Details|contains:
+        NewValue|contains:
             - powershell
             - pwsh
     selection_value_namespace:
-        Details|contains: System.Security.Cryptography.
+        NewValue|contains: System.Security.Cryptography.
     selection_value_classes:
-        Details|contains:
+        NewValue|contains:
             - .AesCryptoServiceProvider
             - .DESCryptoServiceProvider
             - .DSACryptoServiceProvider

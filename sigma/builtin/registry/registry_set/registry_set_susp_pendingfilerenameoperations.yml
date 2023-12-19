@@ -23,14 +23,14 @@ detection:
         EventID: 4657
         Channel: Security
     selection_main:
-        EventType: SetValue
-        TargetObject|contains: \CurrentControlSet\Control\Session Manager\PendingFileRenameOperations
+        OperationType: '%%1905'
+        ObjectName|contains: \CurrentControlSet\Control\Session Manager\PendingFileRenameOperations
     selection_susp_paths:
-        Image|contains:
+        ProcessName|contains:
             - \AppData\Local\Temp\
             - \Users\Public\
     selection_susp_images:
-        Image|endswith:
+        ProcessName|endswith:
             - \reg.exe
             - \regedit.exe
     condition: registry_set and (selection_main and 1 of selection_susp_*)

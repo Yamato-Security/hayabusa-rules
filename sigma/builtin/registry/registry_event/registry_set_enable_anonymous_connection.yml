@@ -18,8 +18,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Microsoft\WBEM\CIMOM\AllowAnonymousCallback
-        Details: DWORD (0x00000001)
+        ObjectName|contains: \Microsoft\WBEM\CIMOM\AllowAnonymousCallback
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Administrative activity

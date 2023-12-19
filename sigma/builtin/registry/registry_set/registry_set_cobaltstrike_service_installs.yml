@@ -31,13 +31,13 @@ detection:
         EventID: 4657
         Channel: Security
     main:
-        TargetObject|contains: HKLM\System\CurrentControlSet\Services
+        ObjectName|contains: \REGISTRY\MACHINE\System\CurrentControlSet\Services
     selection_1:
-        Details|contains|all:
+        NewValue|contains|all:
             - ADMIN$
             - .exe
     selection_2:
-        Details|contains|all:
+        NewValue|contains|all:
             - '%COMSPEC%'
             - start
             - powershell

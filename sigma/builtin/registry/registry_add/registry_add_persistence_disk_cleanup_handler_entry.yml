@@ -27,10 +27,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: CreateKey
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\
+        OperationType: '%%1904'
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VolumeCaches\
     filter:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \Active Setup Temp Folders
             - \BranchCache
             - \Content Indexer Cleaner

@@ -19,26 +19,26 @@ detection:
         EventID: 4657
         Channel: Security
     selection_1:
-        TargetObject|startswith: HKLM\System\CurrentControlSet\Services\
-        TargetObject|endswith: \Start
-        Image|contains:
+        ObjectName|startswith: \REGISTRY\MACHINE\System\CurrentControlSet\Services\
+        ObjectName|endswith: \Start
+        ProcessName|contains:
             - \AppData\Local\
             - \AppData\Roaming\
-        Details:
+        NewValue:
             - DWORD (0x00000000)
             - DWORD (0x00000001)
             - DWORD (0x00000002)
     selection_2:
-        TargetObject|startswith: HKLM\System\CurrentControlSet\Services\
-        TargetObject|endswith: \ImagePath
-        Details|contains:
+        ObjectName|startswith: \REGISTRY\MACHINE\System\CurrentControlSet\Services\
+        ObjectName|endswith: \ImagePath
+        NewValue|contains:
             - \AppData\Local\
             - \AppData\Roaming\
     filter:
-        -   Image|contains:
+        -   ProcessName|contains:
                 - \AppData\Roaming\Zoom
                 - \AppData\Local\Zoom
-        -   Details|contains:
+        -   NewValue|contains:
                 - \AppData\Roaming\Zoom
                 - \AppData\Local\Zoom
     condition: registry_set and (1 of selection_* and not filter)

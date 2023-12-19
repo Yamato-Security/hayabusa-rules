@@ -19,9 +19,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \CLSID\{52A2AAAE-085D-4187-97EA-8C30DB990436}\InprocServer32\(Default)
+        ObjectName|contains: \CLSID\{52A2AAAE-085D-4187-97EA-8C30DB990436}\InprocServer32\(Default)
     filter:
-        Details: C:\Windows\System32\hhctrl.ocx
+        NewValue: C:\Windows\System32\hhctrl.ocx
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Unlikely

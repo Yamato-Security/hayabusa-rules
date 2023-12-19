@@ -23,10 +23,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection_registry:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Keyboard Layout\Preload\
             - \Keyboard Layout\Substitutes\
-        Details|contains:
+        NewValue|contains:
             - 00000429
             - 00050429
             - 0000042a

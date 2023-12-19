@@ -29,7 +29,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\Microsoft\Provisioning\Commands\
+        ObjectName|contains: \SOFTWARE\Microsoft\Provisioning\Commands\
     condition: registry_set and selection
 falsepositives:
     - Unknown

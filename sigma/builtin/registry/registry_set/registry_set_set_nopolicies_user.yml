@@ -19,7 +19,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection_set_1:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoLogOff
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoDesktop
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoRun
@@ -30,7 +30,7 @@ detection:
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoSetTaskbar
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoPropertiesMyDocuments
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoTrayContextMenu
-        Details: DWORD (0x00000001)
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection_set_1
 falsepositives:
     - Legitimate admin script

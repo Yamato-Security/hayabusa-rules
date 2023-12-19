@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: CreateKey
-        TargetObject|endswith: \EulaAccepted
+        OperationType: '%%1904'
+        ObjectName|endswith: \EulaAccepted
     condition: registry_add and selection
 falsepositives:
     - Legitimate use of SysInternals tools

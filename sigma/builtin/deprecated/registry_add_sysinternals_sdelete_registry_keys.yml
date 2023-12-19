@@ -20,8 +20,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: CreateKey
-        TargetObject|contains: \Software\Sysinternals\SDelete
+        OperationType: '%%1904'
+        ObjectName|contains: \Software\Sysinternals\SDelete
     condition: registry_add and selection
 falsepositives:
     - Unknown

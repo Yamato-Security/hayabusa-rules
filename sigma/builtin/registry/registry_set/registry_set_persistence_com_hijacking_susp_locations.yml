@@ -20,11 +20,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \CLSID\
-        TargetObject|endswith:
+        ObjectName|contains: \CLSID\
+        ObjectName|endswith:
             - \InprocServer32\(Default)
             - \LocalServer32\(Default)
-        Details|contains:
+        NewValue|contains:
             - \AppData\Local\Temp\
             - \Desktop\
             - \Downloads\

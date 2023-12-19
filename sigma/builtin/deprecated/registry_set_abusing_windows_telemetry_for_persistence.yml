@@ -29,8 +29,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\
-        Details|endswith:
+        ObjectName|contains: \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\
+        NewValue|endswith:
             - .sh
             - .exe
             - .dll
@@ -46,10 +46,10 @@ detection:
             - .vbs
     condition: registry_set and selection
 fields:
+    - ObjectName
+    - NewValue
     - EventID
     - CommandLine
-    - TargetObject
-    - Details
 falsepositives:
     - Unknown
 level: high

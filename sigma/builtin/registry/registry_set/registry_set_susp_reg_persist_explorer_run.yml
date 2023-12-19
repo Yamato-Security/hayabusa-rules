@@ -19,19 +19,19 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+        ObjectName|endswith: \Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
     selection2:
-        -   Details|startswith:
+        -   NewValue|startswith:
                 - C:\Windows\Temp\
                 - C:\ProgramData\
                 - C:\$Recycle.bin\
                 - C:\Temp\
                 - C:\Users\Public\
                 - C:\Users\Default\
-        -   Details|contains: \AppData\
+        -   NewValue|contains: \AppData\
     condition: registry_set and (selection and selection2)
 fields:
-    - Image
+    - ProcessName
     - ParentImage
 falsepositives:
     - Unknown

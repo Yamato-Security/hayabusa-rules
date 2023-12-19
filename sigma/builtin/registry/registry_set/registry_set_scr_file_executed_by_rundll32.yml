@@ -21,12 +21,12 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        Image|endswith: \rundll32.exe
+        ProcessName|endswith: \rundll32.exe
     registry:
-        TargetObject|contains: \Control Panel\Desktop\SCRNSAVE.EXE
-        Details|endswith: .scr
+        ObjectName|contains: \Control Panel\Desktop\SCRNSAVE.EXE
+        NewValue|endswith: .scr
     filter:
-        Details|contains:
+        NewValue|contains:
             - C:\Windows\System32\
             - C:\Windows\SysWOW64\
     condition: registry_set and (selection and registry and not filter)

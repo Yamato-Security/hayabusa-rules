@@ -18,8 +18,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: SYSTEM\CurrentControlSet\Control\CrashControl
-        Details: DWORD (0x00000000)
+        ObjectName|contains: SYSTEM\CurrentControlSet\Control\CrashControl
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Legitimate disabling of crashdumps

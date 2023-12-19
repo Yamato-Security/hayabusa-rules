@@ -24,13 +24,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: Security\Trusted Locations\Location
-        TargetObject|endswith: \Path
+        ObjectName|contains: Security\Trusted Locations\Location
+        ObjectName|endswith: \Path
     filter_main_office_click_to_run:
-        Image|contains: :\Program Files\Common Files\Microsoft Shared\ClickToRun\
-        Image|endswith: \OfficeClickToRun.exe
+        ProcessName|contains: :\Program Files\Common Files\Microsoft Shared\ClickToRun\
+        ProcessName|endswith: \OfficeClickToRun.exe
     filter_main_office_apps:
-        Image|contains:
+        ProcessName|contains:
             - :\Program Files\Microsoft Office\
             - :\Program Files (x86)\Microsoft Office\
     condition: registry_set and (selection and not 1 of filter_main_*)

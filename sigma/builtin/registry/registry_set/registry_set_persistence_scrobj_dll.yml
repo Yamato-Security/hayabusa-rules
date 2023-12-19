@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: InprocServer32\(Default)
-        Details: C:\WINDOWS\system32\scrobj.dll
+        ObjectName|endswith: InprocServer32\(Default)
+        NewValue: C:\WINDOWS\system32\scrobj.dll
     condition: registry_set and selection
 falsepositives:
     - Legitimate use of the dll.

@@ -25,19 +25,19 @@ detection:
         EventID: 4657
         Channel: Security
     selection_path:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \SOFTWARE\Microsoft\Office\
             - \Security\ProtectedView\
     selection_values_1:
-        Details: DWORD (0x00000001)
-        TargetObject|endswith:
+        NewValue: DWORD (0x00000001)
+        ObjectName|endswith:
             - \DisableAttachementsInPV
             - \DisableInternetFilesInPV
             - \DisableIntranetCheck
             - \DisableUnsafeLocationsInPV
     selection_values_0:
-        Details: DWORD (0x00000000)
-        TargetObject|endswith:
+        NewValue: DWORD (0x00000000)
+        ObjectName|endswith:
             - \enabledatabasefileprotectedview
             - \enableforeigntextfileprotectedview
     condition: registry_set and (selection_path and 1 of selection_values_*)

@@ -22,16 +22,16 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - Software\Microsoft\Windows NT\CurrentVersion\Accessibility\ATs
             - Software\Microsoft\Windows NT\CurrentVersion\Accessibility\Configuration
     filter_atbroker:
-        Image: C:\Windows\system32\atbroker.exe
-        TargetObject|contains: \Microsoft\Windows NT\CurrentVersion\Accessibility\Configuration
-        Details: (Empty)
+        ProcessName: C:\Windows\system32\atbroker.exe
+        ObjectName|contains: \Microsoft\Windows NT\CurrentVersion\Accessibility\Configuration
+        NewValue: (Empty)
     filter_uninstallers:
-        Image|startswith: C:\Windows\Installer\MSI
-        TargetObject|contains: Software\Microsoft\Windows NT\CurrentVersion\Accessibility\ATs
+        ProcessName|startswith: C:\Windows\Installer\MSI
+        ObjectName|contains: Software\Microsoft\Windows NT\CurrentVersion\Accessibility\ATs
     condition: registry_event and (selection and not 1 of filter_*)
 falsepositives:
     - Creation of non-default, legitimate at usage

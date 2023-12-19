@@ -21,8 +21,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA
-        Details: DWORD (0x00000000)
+        ObjectName|contains: SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

@@ -27,11 +27,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB\
             - \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom\
     filter_main_empty:
-        Details: ''
+        NewValue: ''
     condition: registry_set and (selection and not 1 of filter_main_*)
 falsepositives:
     - Legitimate custom SHIM installations will also trigger this rule

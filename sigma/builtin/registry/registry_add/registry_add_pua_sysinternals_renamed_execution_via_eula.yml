@@ -25,8 +25,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: CreateKey
-        TargetObject|contains:
+        OperationType: '%%1904'
+        ObjectName|contains:
             - \Active Directory Explorer
             - \Handle
             - \LiveKd
@@ -39,9 +39,9 @@ detection:
             - \PsPing
             - \PsService
             - \SDelete
-        TargetObject|endswith: \EulaAccepted
+        ObjectName|endswith: \EulaAccepted
     filter:
-        Image|endswith:
+        ProcessName|endswith:
             - \ADExplorer.exe
             - \ADExplorer64.exe
             - \handle.exe

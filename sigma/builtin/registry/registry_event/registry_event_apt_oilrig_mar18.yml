@@ -34,7 +34,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - SOFTWARE\Microsoft\Windows\CurrentVersion\UMe
             - SOFTWARE\Microsoft\Windows\CurrentVersion\UT
     condition: registry_event and selection

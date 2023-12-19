@@ -19,13 +19,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection_main:
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Associations\
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Associations\
     selection_value_default_file_type_rsik:
-        TargetObject|endswith: \DefaultFileTypeRisk
-        Details: DWORD (0x00006152)
+        ObjectName|endswith: \DefaultFileTypeRisk
+        NewValue: DWORD (0x00006152)
     selection_value_low_risk_filetypes:
-        TargetObject|endswith: \LowRiskFileTypes
-        Details|contains:
+        ObjectName|endswith: \LowRiskFileTypes
+        NewValue|contains:
             - .zip;
             - .rar;
             - .exe;

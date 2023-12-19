@@ -18,13 +18,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: CreateKey
-        TargetObject|contains|all:
-            - HKU\
+        OperationType: '%%1904'
+        ObjectName|contains|all:
+            - \REGISTRY\USER\
             - Classes\CLSID\
             - \TreatAs
     filter_svchost:
-        Image: C:\WINDOWS\system32\svchost.exe
+        ProcessName: C:\WINDOWS\system32\svchost.exe
     condition: registry_add and (selection and not 1 of filter_*)
 falsepositives:
     - Maybe some system utilities in rare cases use linking keys for backward compatibility

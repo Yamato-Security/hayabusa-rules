@@ -24,7 +24,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \PsExec
             - \ProcDump
             - \Handle
@@ -33,9 +33,9 @@ detection:
             - \PsLoglist
             - \PsPasswd
             - \Active Directory Explorer
-        TargetObject|endswith: \EulaAccepted
+        ObjectName|endswith: \EulaAccepted
     filter_main_image_names:
-        Image|endswith:
+        ProcessName|endswith:
             - \PsExec.exe
             - \PsExec64.exe
             - \procdump.exe
@@ -53,7 +53,7 @@ detection:
             - \ADExplorer.exe
             - \ADExplorer64.exe
     filter_optional_null:
-        Image: null
+        ProcessName: null
     condition: registry_set and (selection and not 1 of filter_main_* and not 1 of
         filter_optional_*)
 falsepositives:

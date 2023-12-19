@@ -21,8 +21,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\SYSTEM\CurrentControlSet\
-        TargetObject|endswith: \Instances\Sysmon Instance\Altitude
+        ObjectName|startswith: \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\
+        ObjectName|endswith: \Instances\Sysmon Instance\Altitude
     condition: registry_set and selection
 falsepositives:
     - Legitimate driver altitude change to hide sysmon

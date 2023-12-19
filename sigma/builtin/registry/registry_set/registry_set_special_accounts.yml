@@ -24,9 +24,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: SetValue
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList
-        Details: DWORD (0x00000000)
+        OperationType: '%%1905'
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

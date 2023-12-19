@@ -18,8 +18,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: Classes\.
-        Details: exefile
+        ObjectName|contains: Classes\.
+        NewValue: exefile
     condition: registry_set and selection
 falsepositives:
     - Unknown

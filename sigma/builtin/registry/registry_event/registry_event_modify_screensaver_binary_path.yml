@@ -21,9 +21,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Control Panel\Desktop\SCRNSAVE.EXE
+        ObjectName|endswith: \Control Panel\Desktop\SCRNSAVE.EXE
     filter:
-        Image|endswith:
+        ProcessName|endswith:
             - \rundll32.exe
             - \explorer.exe
     condition: registry_event and (selection and not filter)

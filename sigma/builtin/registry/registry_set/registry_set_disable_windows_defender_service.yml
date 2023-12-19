@@ -20,8 +20,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject: HKLM\SYSTEM\CurrentControlSet\Services\WinDefend\Start
-        Details: DWORD (0x00000004)
+        ObjectName: \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend\Start
+        NewValue: DWORD (0x00000004)
     condition: registry_set and selection
 falsepositives:
     - Administrator actions
