@@ -37,6 +37,8 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
     - [Abnormal patterns in EventData](#abnormal-patterns-in-eventdata)
       - [Outputting field data from multiple field names with the same name](#outputting-field-data-from-multiple-field-names-with-the-same-name)
   - [Pipe Modifiers](#pipe-modifiers)
+    - [Supported Sigma Pipe Modifiers](#supported-sigma-pipe-modifiers)
+    - [Extra Pipe Modifiers](#extra-pipe-modifiers)
   - [Unsupported Pipe Modifiers](#unsupported-pipe-modifiers)
   - [Wildcards](#wildcards)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
@@ -463,7 +465,9 @@ If you want to print out just the first `Data` field data, you can specify `%Dat
 
 ## Pipe Modifiers
 
-A pipe can be used with eventkeys as shown below for matching strings. All of the conditions we have described so far use exact matches, but by using pipe modifiers, you can describe more flexible detection rules. In the following example, if a value of `Data` contains the string  `EngineVersion=2`, it will match the condition.
+A pipe can be used with eventkeys as shown below for matching strings.
+All of the conditions we have described so far use exact matches, but by using pipe modifiers, you can describe more flexible detection rules.
+In the following example, if a value of `Data` contains the string  `EngineVersion=2`, it will match the condition.
 
 ```yaml
 detection:
@@ -474,26 +478,18 @@ detection:
     condition: selection
 ```
 
-This is a list of what you can specify after the pipe. At the moment, hayabusa does not support chaining multiple pipes together.
 String matches are case insensitive. However, they become case sensitive whenever `|re` or `|equalsfield` are used.
 
-- `|startswith`: Checks the string from the beginning
-- `|endswith`: Checks the end of the string
+### Supported Sigma Pipe Modifiers
+
+- `|base64offset|contains`: Data will be encoded to base64 in three different ways depending on its position in the encoded string. This modifier will encoded a string to all three variations and check if the string is encoded somewhere in the base64 string.
+- `|cidr`: Matches on a IPv4 or IPv6 CIDR notation (Ex: `192.0.2.0/24`)
 - `|contains`: Checks if a word is contained in the data
 - `|contains|all`: Checks if multiple words are contained in the data
-
-In this example, both `ForEach` and `Xor` strings need to be present in the `CommandLine` field:
-```
-CommandLine|contains|all:
-    - ForEach
-    - Xor
-```
-
+- `|startswith`: Checks the string from the beginning
+- `|endswith`: Checks the end of the string
 - `|re`: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/latest/regex/#syntax> to learn how to write correct regular expressions.)
 > Caution: Regular expression syntax in sigma rules is still not defined so some sigma rules may not match correctly if they differ from the Rust regex syntax.
-- `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
-- `|endswithfield`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` if they are different.
-- `|base64offset|contains`: Data will be encoded to base64 in three different ways depending on its position in the encoded string. This modifier will encoded a string to all three variations and check if the string is encoded somewhere in the base64 string.
 - `'|all':`: This pipe modifier is different from those above because it does not get applied to a certain field but to all fields.
 
 In this example, both strings `Keyword-1` and `Keyword-2` need to exist but can exist anywhere in any field:
@@ -506,9 +502,17 @@ detection:
     condition: keywords
 ```
 
+### Extra Pipe Modifiers
+
+The following modifiers are not in the sigma specification but have been added for very specific use cases.
+
+- `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
+- `|endswithfield`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` if they are different.
+
 ## Unsupported Pipe Modifiers
 
-The following modifiers are currently not supported so we do not include any rules from the Sigma repository that use them:
+The following modifiers are currently not supported so we do not include any rules from the sigma repository that use them:
+
 - `expand`
 - `gt`
 - `gte`
