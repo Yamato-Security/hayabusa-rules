@@ -20,9 +20,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        Image|endswith: \winget.exe
-        TargetObject|startswith: \REGISTRY\A\
-        TargetObject|endswith: \LocalState\admin_settings
+        ProcessName|endswith: \winget.exe
+        ObjectName|startswith: \REGISTRY\A\
+        ObjectName|endswith: \LocalState\admin_settings
     condition: registry_set and selection
 falsepositives:
     - The event doesn't contain information about the type of change. False positives

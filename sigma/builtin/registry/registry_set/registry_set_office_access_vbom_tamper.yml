@@ -25,8 +25,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Security\AccessVBOM
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: \Security\AccessVBOM
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Unlikely

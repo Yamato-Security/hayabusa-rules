@@ -23,7 +23,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: Microsoft\Windows NT\CurrentVersion\SilentProcessExit\lsass.exe
+        ObjectName|contains: Microsoft\Windows NT\CurrentVersion\SilentProcessExit\lsass.exe
     condition: registry_event and selection
 falsepositives:
     - Unlikely

@@ -22,10 +22,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection1:
-        TargetObject|endswith: Software\Classes\exefile\shell\runas\command\isolatedCommand
+        ObjectName|endswith: Software\Classes\exefile\shell\runas\command\isolatedCommand
     selection2:
-        TargetObject|endswith: Software\Classes\Folder\shell\open\command\SymbolicLinkValue
-        Details|re: -1[0-9]{3}\\Software\\Classes\\
+        ObjectName|endswith: Software\Classes\Folder\shell\open\command\SymbolicLinkValue
+        NewValue|re: -1[0-9]{3}\\Software\\Classes\\
     condition: registry_set and (1 of selection*)
 falsepositives:
     - Unknown

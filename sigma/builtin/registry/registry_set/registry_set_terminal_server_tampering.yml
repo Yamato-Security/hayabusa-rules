@@ -38,26 +38,26 @@ detection:
         EventID: 4657
         Channel: Security
     selection_shadow:
-        TargetObject|contains:
+        ObjectName|contains:
             - SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\
             - \Control\Terminal Server\
-        TargetObject|endswith: \Shadow
-        Details:
+        ObjectName|endswith: \Shadow
+        NewValue:
             - DWORD (0x00000001)
             - DWORD (0x00000002)
             - DWORD (0x00000003)
             - DWORD (0x00000004)
     selection_terminal_services_key:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Control\Terminal Server\
             - SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\
     selection_terminal_services_values:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \fAllowUnsolicited
             - \fAllowUnsolicitedFullControl
-        Details: DWORD (0x00000001)
+        NewValue: DWORD (0x00000001)
     selection_tamper_only:
-        TargetObject|contains:
+        ObjectName|contains:
             - \services\TermService\Parameters\ServiceDll
             - \Control\Terminal Server\WinStations\RDP-Tcp\InitialProgram
             - \Control\Terminal Server\InitialProgram

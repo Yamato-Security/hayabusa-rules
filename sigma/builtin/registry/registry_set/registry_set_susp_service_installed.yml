@@ -24,18 +24,18 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject:
-            - HKLM\System\CurrentControlSet\Services\NalDrv\ImagePath
-            - HKLM\System\CurrentControlSet\Services\PROCEXP152\ImagePath
+        ObjectName:
+            - \REGISTRY\MACHINE\System\CurrentControlSet\Services\NalDrv\ImagePath
+            - \REGISTRY\MACHINE\System\CurrentControlSet\Services\PROCEXP152\ImagePath
     filter:
-        Image|endswith:
+        ProcessName|endswith:
             - \procexp64.exe
             - \procexp.exe
             - \procmon64.exe
             - \procmon.exe
             - \handle.exe
             - \handle64.exe
-        Details|contains: \WINDOWS\system32\Drivers\PROCEXP152.SYS
+        NewValue|contains: \WINDOWS\system32\Drivers\PROCEXP152.SYS
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Other legimate tools using this service names and drivers. Note - clever attackers

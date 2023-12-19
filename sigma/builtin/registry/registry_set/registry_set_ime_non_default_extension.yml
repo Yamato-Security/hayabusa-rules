@@ -31,11 +31,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \Control\Keyboard Layouts\
             - Ime File
     filter_main_known_extension:
-        Details|endswith: .ime
+        NewValue|endswith: .ime
     condition: registry_set and (selection and not 1 of filter_main_*)
 falsepositives:
     - IMEs are essential for languages that have more characters than can be represented

@@ -19,7 +19,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\mpnotify
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\mpnotify
     condition: registry_set and selection
 falsepositives:
     - Might trigger if a legitimate new SIP provider is registered. But this is not

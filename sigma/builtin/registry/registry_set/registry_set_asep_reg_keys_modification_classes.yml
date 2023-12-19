@@ -24,9 +24,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection_classes_base:
-        TargetObject|contains: \Software\Classes
+        ObjectName|contains: \Software\Classes
     selection_classes_target:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Folder\ShellEx\ExtShellFolderViews
             - \Folder\ShellEx\DragDropHandlers
             - \Folder\Shellex\ColumnHandlers
@@ -44,14 +44,14 @@ detection:
             - \ShellEx\PropertySheetHandlers
             - \ShellEx\ContextMenuHandlers
     filter_empty:
-        Details: (Empty)
+        NewValue: (Empty)
     filter_msoffice:
-        Details: '{807583E5-5146-11D5-A672-00B0D022E945}'
+        NewValue: '{807583E5-5146-11D5-A672-00B0D022E945}'
     filter_drivers:
-        Image: C:\Windows\System32\drvinst.exe
+        ProcessName: C:\Windows\System32\drvinst.exe
     filter_svchost:
-        Image: C:\Windows\System32\svchost.exe
-        TargetObject|contains: \lnkfile\shellex\ContextMenuHandlers\
+        ProcessName: C:\Windows\System32\svchost.exe
+        ObjectName|contains: \lnkfile\shellex\ContextMenuHandlers\
     condition: registry_set and (all of selection_* and not 1 of filter_*)
 fields:
     - SecurityID

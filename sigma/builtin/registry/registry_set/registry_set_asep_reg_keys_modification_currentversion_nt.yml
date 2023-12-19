@@ -24,9 +24,9 @@ detection:
         EventID: 4657
         Channel: Security
     nt_current_version_base:
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion
     nt_current_version:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Winlogon\VmApplet
             - \Winlogon\Userinit
             - \Winlogon\Taskman
@@ -42,44 +42,44 @@ detection:
             - \Windows\Run
             - \Windows\Load
     filter_empty:
-        Details: (Empty)
+        NewValue: (Empty)
     filter_legitimate_subkey:
-        TargetObject|contains: \Image File Execution Options\
-        TargetObject|endswith:
+        ObjectName|contains: \Image File Execution Options\
+        ObjectName|endswith:
             - \DisableExceptionChainValidation
             - \MitigationOptions
     filter_edge:
-        Image|startswith: C:\Program Files (x86)\Microsoft\Temp\
-        Image|endswith: \MicrosoftEdgeUpdate.exe
+        ProcessName|startswith: C:\Program Files (x86)\Microsoft\Temp\
+        ProcessName|endswith: \MicrosoftEdgeUpdate.exe
     filter_msoffice:
-        -   TargetObject|contains:
-                - \ClickToRunStore\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\
+        -   ObjectName|contains:
+                - \ClickToRunStore\\REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\
                 - \ClickToRun\REGISTRY\MACHINE\Software\Microsoft\Windows NT\CurrentVersion\
-        -   Image:
+        -   ProcessName:
                 - C:\Program Files\Microsoft Office\root\integration\integrator.exe
                 - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
     filter_officeclicktorun:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
-        Image|endswith: \OfficeClickToRun.exe
+        ProcessName|endswith: \OfficeClickToRun.exe
     filter_security_extension_dc:
-        Image: C:\Windows\system32\svchost.exe
-        TargetObject|contains:
+        ProcessName: C:\Windows\system32\svchost.exe
+        ObjectName|contains:
             - \Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\PreviousPolicyAreas
             - \Winlogon\GPExtensions\{827D319E-6EAC-11D2-A4EA-00C04F79F83A}\MaxNoGPOListChangesInterval
-        Details:
+        NewValue:
             - DWORD (0x00000009)
             - DWORD (0x000003c0)
     filter_ngen:
-        Image|startswith: C:\Windows\Microsoft.NET\Framework
-        Image|endswith: \ngen.exe
+        ProcessName|startswith: C:\Windows\Microsoft.NET\Framework
+        ProcessName|endswith: \ngen.exe
     filter_onedrive:
-        Image|endswith: \AppData\Local\Microsoft\OneDrive\StandaloneUpdater\OneDriveSetup.exe
-        TargetObject|endswith: \Microsoft\Windows\CurrentVersion\RunOnce\Delete Cached
+        ProcessName|endswith: \AppData\Local\Microsoft\OneDrive\StandaloneUpdater\OneDriveSetup.exe
+        ObjectName|endswith: \Microsoft\Windows\CurrentVersion\RunOnce\Delete Cached
             Update Binary
-        Details|startswith: C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\
-        Details|endswith: \AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe"
+        NewValue|startswith: C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\
+        NewValue|endswith: \AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe"
     condition: registry_set and (nt_current_version_base and nt_current_version and
         not 1 of filter_*)
 fields:

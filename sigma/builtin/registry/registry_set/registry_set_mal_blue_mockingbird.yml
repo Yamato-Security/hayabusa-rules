@@ -22,7 +22,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \CurrentControlSet\Services\wercplsupport\Parameters\ServiceDll
+        ObjectName|endswith: \CurrentControlSet\Services\wercplsupport\Parameters\ServiceDll
     condition: registry_set and selection
 falsepositives:
     - Unknown

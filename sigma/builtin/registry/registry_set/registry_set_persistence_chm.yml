@@ -19,7 +19,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Software\Microsoft\HtmlHelp Author\Location
             - \Software\WOW6432Node\Microsoft\HtmlHelp Author\Location
     condition: registry_set and selection

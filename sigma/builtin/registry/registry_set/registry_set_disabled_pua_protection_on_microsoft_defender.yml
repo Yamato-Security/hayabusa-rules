@@ -18,8 +18,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Policies\Microsoft\Windows Defender\PUAProtection
-        Details: DWORD (0x00000000)
+        ObjectName|contains: \Policies\Microsoft\Windows Defender\PUAProtection
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

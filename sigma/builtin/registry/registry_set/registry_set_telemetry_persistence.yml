@@ -35,9 +35,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\
-        TargetObject|endswith: \Command
-        Details|contains:
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\TelemetryController\
+        ObjectName|endswith: \Command
+        NewValue|contains:
             - .bat
             - .bin
             - .cmd
@@ -52,7 +52,7 @@ detection:
             - .sh
             - .vb
     filter_main_generic:
-        Details|contains:
+        NewValue|contains:
             - \system32\CompatTelRunner.exe
             - \system32\DeviceCensus.exe
     condition: registry_set and (selection and not 1 of filter_main_*)

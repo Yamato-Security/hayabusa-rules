@@ -21,11 +21,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB\
             - \DatabasePath
     filter_main_known_locations:
-        Details|contains: :\Windows\AppPatch\Custom
+        NewValue|contains: :\Windows\AppPatch\Custom
     condition: registry_set and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

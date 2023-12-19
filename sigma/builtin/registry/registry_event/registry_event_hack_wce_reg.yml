@@ -19,7 +19,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: Services\WCESERVICE\Start
+        ObjectName|contains: Services\WCESERVICE\Start
     condition: registry_event and selection
 falsepositives:
     - Unknown

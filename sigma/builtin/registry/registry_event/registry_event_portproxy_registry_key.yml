@@ -23,7 +23,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection_registry:
-        TargetObject: HKLM\SYSTEM\CurrentControlSet\Services\PortProxy\v4tov4\tcp
+        ObjectName: \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\Services\PortProxy\v4tov4\tcp
     condition: registry_event and selection_registry
 falsepositives:
     - WSL2 network bridge PowerShell script used for WSL/Kubernetes/Docker (e.g. https://github.com/microsoft/WSL/issues/4150#issuecomment-504209723)

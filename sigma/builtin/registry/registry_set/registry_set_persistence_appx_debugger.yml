@@ -19,11 +19,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection_debug:
-        TargetObject|contains: Classes\ActivatableClasses\Package\Microsoft.
-        TargetObject|endswith: \DebugPath
+        ObjectName|contains: Classes\ActivatableClasses\Package\Microsoft.
+        ObjectName|endswith: \DebugPath
     selection_default:
-        TargetObject|contains: \Software\Microsoft\Windows\CurrentVersion\PackagedAppXDebug\Microsoft.
-        TargetObject|endswith: \(Default)
+        ObjectName|contains: \Software\Microsoft\Windows\CurrentVersion\PackagedAppXDebug\Microsoft.
+        ObjectName|endswith: \(Default)
     condition: registry_set and (1 of selection_*)
 falsepositives:
     - Unknown

@@ -20,17 +20,17 @@ detection:
         EventID: 4657
         Channel: Security
     selection_main:
-        TargetObject|contains: \System\CurrentControlSet\Control\WMI\Autologger\
+        ObjectName|contains: \System\CurrentControlSet\Control\WMI\Autologger\
     selection_values:
-        TargetObject|contains:
+        ObjectName|contains:
             - \EventLog-
             - \Defender
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \Enable
             - \Start
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     filter_wevtutil:
-        Image: C:\Windows\system32\wevtutil.exe
+        ProcessName: C:\Windows\system32\wevtutil.exe
     condition: registry_set and (all of selection_* and not 1 of filter_*)
 falsepositives:
     - Unknown

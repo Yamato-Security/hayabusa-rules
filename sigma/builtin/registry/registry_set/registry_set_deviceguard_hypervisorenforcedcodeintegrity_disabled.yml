@@ -21,9 +21,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: SetValue
-        TargetObject|endswith: \Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity\Enabled
-        Details: DWORD (0x00000000)
+        OperationType: '%%1905'
+        ObjectName|endswith: \Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity\Enabled
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

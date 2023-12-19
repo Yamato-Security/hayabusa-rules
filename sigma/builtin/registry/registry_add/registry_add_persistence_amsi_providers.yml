@@ -19,12 +19,12 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: CreateKey
-        TargetObject|contains:
+        OperationType: '%%1904'
+        ObjectName|contains:
             - \SOFTWARE\Microsoft\AMSI\Providers\
             - \SOFTWARE\WOW6432Node\Microsoft\AMSI\Providers\
     filter:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Windows\System32\
             - C:\Program Files\
             - C:\Program Files (x86)\

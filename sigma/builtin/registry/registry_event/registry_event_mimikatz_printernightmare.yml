@@ -25,19 +25,19 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Control\Print\Environments\Windows x64\Drivers\Version-3\QMS 810\
             - \Control\Print\Environments\Windows x64\Drivers\Version-3\mimikatz
     selection_alt:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - legitprinter
             - \Control\Print\Environments\Windows
     selection_print:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Control\Print\Environments
             - \CurrentVersion\Print\Printers
     selection_kiwi:
-        TargetObject|contains:
+        ObjectName|contains:
             - Gentil Kiwi
             - mimikatz printer
             - Kiwi Legit Printer

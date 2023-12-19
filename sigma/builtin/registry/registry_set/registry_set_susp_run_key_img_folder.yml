@@ -19,11 +19,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection_target:
-        TargetObject|contains:
+        ObjectName|contains:
             - \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
             - \SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\
     selection_details:
-        -   Details|contains:
+        -   NewValue|contains:
                 - C:\Windows\Temp\
                 - C:\$Recycle.bin\
                 - C:\Temp\
@@ -33,13 +33,13 @@ detection:
                 - \AppData\Local\Temp\
                 - '%temp%\'
                 - '%tmp%\'
-        -   Details|startswith:
+        -   NewValue|startswith:
                 - '%Public%\'
                 - wscript
                 - cscript
     condition: registry_set and (all of selection_*)
 fields:
-    - Image
+    - ProcessName
 falsepositives:
     - Software using weird folders for updates
 level: high

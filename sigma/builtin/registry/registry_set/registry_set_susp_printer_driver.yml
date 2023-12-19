@@ -20,18 +20,18 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \Control\Print\Environments\Windows x64\Drivers
             - \Manufacturer
-        Details: (Empty)
+        NewValue: (Empty)
     filter_cutepdf:
-        TargetObject|contains: \CutePDF Writer v4.0\
+        ObjectName|contains: \CutePDF Writer v4.0\
     filter_vnc:
-        TargetObject|contains:
+        ObjectName|contains:
             - \VNC Printer (PS)\
             - \VNC Printer (UD)\
     filter_pdf24:
-        TargetObject|contains: \Version-3\PDF24\
+        ObjectName|contains: \Version-3\PDF24\
     condition: registry_set and (selection and not 1 of filter_*)
 falsepositives:
     - Alerts on legitimate printer drivers that do not set any more details in the

@@ -20,17 +20,17 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Microsoft\Windows\PowerShell\
             - \Microsoft\PowerShellCore\
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \ModuleLogging\EnableModuleLogging
             - \ScriptBlockLogging\EnableScriptBlockLogging
             - \ScriptBlockLogging\EnableScriptBlockInvocationLogging
             - \Transcription\EnableTranscripting
             - \Transcription\EnableInvocationHeader
             - \EnableScripts
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

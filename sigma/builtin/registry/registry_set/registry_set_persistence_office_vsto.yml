@@ -20,28 +20,28 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Software\Microsoft\Office\Outlook\Addins\
             - \Software\Microsoft\Office\Word\Addins\
             - \Software\Microsoft\Office\Excel\Addins\
             - \Software\Microsoft\Office\Powerpoint\Addins\
             - \Software\Microsoft\VSTO\Security\Inclusion\
     filter_image:
-        Image|endswith:
+        ProcessName|endswith:
             - \msiexec.exe
             - \regsvr32.exe
     filter_office:
-        Image|endswith:
+        ProcessName|endswith:
             - \excel.exe
             - \integrator.exe
             - \OfficeClickToRun.exe
             - \winword.exe
             - \visio.exe
     filter_teams:
-        Image|endswith: \Teams.exe
+        ProcessName|endswith: \Teams.exe
     filter_avg:
-        Image: C:\Program Files\AVG\Antivirus\RegSvr.exe
-        TargetObject|contains: \Microsoft\Office\Outlook\Addins\Antivirus.AsOutExt\
+        ProcessName: C:\Program Files\AVG\Antivirus\RegSvr.exe
+        ObjectName|contains: \Microsoft\Office\Outlook\Addins\Antivirus.AsOutExt\
     condition: registry_set and (selection and not 1 of filter_*)
 falsepositives:
     - Legitimate Addin Installation

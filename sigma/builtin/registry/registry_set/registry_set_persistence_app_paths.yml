@@ -30,11 +30,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths
-        TargetObject|endswith:
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths
+        ObjectName|endswith:
             - (Default)
             - Path
-        Details|contains:
+        NewValue|contains:
             - \Users\Public
             - \AppData\Local\Temp\
             - \Windows\Temp\

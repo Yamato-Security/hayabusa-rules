@@ -20,8 +20,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Microsoft\Windows NT\Rpc\ExtErrorInformation
-        Details:
+        ObjectName|endswith: \Microsoft\Windows NT\Rpc\ExtErrorInformation
+        NewValue:
             - DWORD (0x00000000)
             - DWORD (0x00000002)
     condition: registry_set and selection

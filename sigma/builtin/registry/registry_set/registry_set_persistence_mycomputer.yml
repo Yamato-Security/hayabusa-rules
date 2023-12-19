@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer
-        TargetObject|endswith: (Default)
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\MyComputer
+        ObjectName|endswith: (Default)
     condition: registry_set and selection
 falsepositives:
     - Unlikely but if you experience FPs add specific processes and locations you

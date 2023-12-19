@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Policies\Microsoft\Windows\ScriptedDiagnostics\TurnOffCheck
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: \Policies\Microsoft\Windows\ScriptedDiagnostics\TurnOffCheck
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Administrator actions

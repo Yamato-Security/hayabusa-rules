@@ -19,11 +19,12 @@ detection:
         EventID: 4657
         Channel: Security
     selection_registry:
-        TargetObject:
-            - HKLM\System\CurrentControlSet\Control\Lsa\Security Packages
-            - HKLM\System\CurrentControlSet\Control\Lsa\OSConfig\Security Packages
+        ObjectName:
+            - \REGISTRY\MACHINE\System\CurrentControlSet\Control\Lsa\Security Packages
+            - \REGISTRY\MACHINE\System\CurrentControlSet\Control\Lsa\OSConfig\Security
+                Packages
     exclusion_images:
-        Image:
+        ProcessName:
             - C:\Windows\system32\msiexec.exe
             - C:\Windows\syswow64\MsiExec.exe
     condition: registry_event and (selection_registry and not exclusion_images)

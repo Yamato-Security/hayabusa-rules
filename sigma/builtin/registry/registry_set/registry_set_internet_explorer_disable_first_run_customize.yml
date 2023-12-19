@@ -23,12 +23,12 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Microsoft\Internet Explorer\Main\DisableFirstRunCustomize
-        Details:
+        ObjectName|endswith: \Microsoft\Internet Explorer\Main\DisableFirstRunCustomize
+        NewValue:
             - DWORD (0x00000001)
             - DWORD (0x00000002)
     filter_main_generic:
-        Image:
+        ProcessName:
             - C:\Windows\explorer.exe
             - C:\Windows\System32\ie4uinit.exe
     condition: registry_set and (selection and not 1 of filter_main_*)

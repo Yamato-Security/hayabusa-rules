@@ -24,11 +24,11 @@ detection:
         EventID: 4657
         Channel: Security
     office:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Software\Wow6432Node\Microsoft\Office
             - \Software\Microsoft\Office
     office_details:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Word\Addins
             - \PowerPoint\Addins
             - \Outlook\Addins
@@ -37,14 +37,14 @@ detection:
             - \Access\Addins
             - test\Special\Perf
     filter_empty:
-        Details: (Empty)
+        NewValue: (Empty)
     filter_known_addins:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Program Files\Microsoft Office\
             - C:\Program Files (x86)\Microsoft Office\
             - C:\Windows\System32\msiexec.exe
             - C:\Windows\System32\regsvr32.exe
-        TargetObject|contains:
+        ObjectName|contains:
             - \Excel\Addins\AdHocReportingExcelClientLib.AdHocReportingExcelClientAddIn.1\
             - \Excel\Addins\ExcelPlugInShell.PowerMapConnect\
             - \Excel\Addins\NativeShim\
@@ -63,13 +63,13 @@ detection:
             - \Outlook\Addins\UCAddin.UCAddin.1
             - \Outlook\Addins\UmOutlookAddin.FormRegionAddin\
     filter_officeclicktorun:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
-        Image|endswith: \OfficeClickToRun.exe
+        ProcessName|endswith: \OfficeClickToRun.exe
     filter_avg:
-        Image: C:\Program Files\AVG\Antivirus\RegSvr.exe
-        TargetObject|contains: \Microsoft\Office\Outlook\Addins\Antivirus.AsOutExt\
+        ProcessName: C:\Program Files\AVG\Antivirus\RegSvr.exe
+        ObjectName|contains: \Microsoft\Office\Outlook\Addins\Antivirus.AsOutExt\
     condition: registry_set and (office and office_details and not 1 of filter_*)
 fields:
     - SecurityID

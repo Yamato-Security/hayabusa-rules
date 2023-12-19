@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: Windows\CurrentVersion\ImmersiveShell\UseActionCenterExperience
-        Details: DWORD (0x00000000)
+        ObjectName|endswith: Windows\CurrentVersion\ImmersiveShell\UseActionCenterExperience
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

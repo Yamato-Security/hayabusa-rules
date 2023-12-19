@@ -18,7 +18,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: HKLM\SOFTWARE\Microsoft\HTMLHelp\data
+        ObjectName|contains: \REGISTRY\MACHINE\SOFTWARE\Microsoft\HTMLHelp\data
     condition: registry_event and selection
 falsepositives:
     - Unknown

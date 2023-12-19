@@ -21,9 +21,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Microsoft\.NETFramework\DbgManagedDebugger
+        ObjectName|endswith: \Microsoft\.NETFramework\DbgManagedDebugger
     filter:
-        Details: '"C:\Windows\system32\vsjitdebugger.exe" PID %d APPDOM %d EXTEXT
+        NewValue: '"C:\Windows\system32\vsjitdebugger.exe" PID %d APPDOM %d EXTEXT
             "%s" EVTHDL %d'
     condition: registry_set and (selection and not filter)
 falsepositives:

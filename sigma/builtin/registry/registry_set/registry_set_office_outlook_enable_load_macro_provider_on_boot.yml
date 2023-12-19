@@ -23,8 +23,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Outlook\LoadMacroProviderOnBoot
-        Details|contains: '0x00000001'
+        ObjectName|endswith: \Outlook\LoadMacroProviderOnBoot
+        NewValue|contains: '0x00000001'
     condition: registry_set and selection
 falsepositives:
     - Unknown

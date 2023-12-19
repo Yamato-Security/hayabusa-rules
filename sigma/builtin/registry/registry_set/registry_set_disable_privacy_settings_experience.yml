@@ -18,8 +18,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \SOFTWARE\Policies\Microsoft\Windows\OOBE\DisablePrivacyExperience
-        Details: DWORD (0x00000000)
+        ObjectName|endswith: \SOFTWARE\Policies\Microsoft\Windows\OOBE\DisablePrivacyExperience
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Legitimate admin script

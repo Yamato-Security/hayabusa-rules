@@ -20,16 +20,16 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith:
-            - HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\
-            - HKLM\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\
-        TargetObject|endswith: \(Default)
-        Details: Service
+        ObjectName|startswith:
+            - \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\Control\SafeBoot\Minimal\
+            - \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\Control\SafeBoot\Network\
+        ObjectName|endswith: \(Default)
+        NewValue: Service
     filter_sophos:
-        Image: C:\WINDOWS\system32\msiexec.exe
-        TargetObject:
-            - HKLM\System\CurrentControlSet\Control\SafeBoot\Minimal\SAVService\(Default)
-            - HKLM\System\CurrentControlSet\Control\SafeBoot\Network\SAVService\(Default)
+        ProcessName: C:\WINDOWS\system32\msiexec.exe
+        ObjectName:
+            - \REGISTRY\MACHINE\System\CurrentControlSet\Control\SafeBoot\Minimal\SAVService\(Default)
+            - \REGISTRY\MACHINE\System\CurrentControlSet\Control\SafeBoot\Network\SAVService\(Default)
     condition: registry_set and (selection and not 1 of filter_*)
 falsepositives:
     - Unknown

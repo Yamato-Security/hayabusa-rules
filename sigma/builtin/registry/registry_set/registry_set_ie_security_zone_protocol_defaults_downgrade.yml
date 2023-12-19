@@ -27,11 +27,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\ProtocolDefaults
-        TargetObject|endswith:
+        ObjectName|contains: \Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\ProtocolDefaults
+        ObjectName|endswith:
             - \http
             - \https
-        Details|contains: DWORD (0x00000000)
+        NewValue|contains: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

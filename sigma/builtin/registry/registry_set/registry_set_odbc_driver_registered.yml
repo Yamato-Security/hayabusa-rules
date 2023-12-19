@@ -17,19 +17,19 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\ODBC\ODBCINST.INI\
-        TargetObject|endswith: \Driver
+        ObjectName|contains: \SOFTWARE\ODBC\ODBCINST.INI\
+        ObjectName|endswith: \Driver
     filter_main_sqlserver:
-        TargetObject|contains: \SQL Server\
-        Details: '%WINDIR%\System32\SQLSRV32.dll'
+        ObjectName|contains: \SQL Server\
+        NewValue: '%WINDIR%\System32\SQLSRV32.dll'
     filter_optional_office_access:
-        TargetObject|contains: '\Microsoft Access '
-        Details|startswith: C:\Progra
-        Details|endswith: \ACEODBC.DLL
+        ObjectName|contains: '\Microsoft Access '
+        NewValue|startswith: C:\Progra
+        NewValue|endswith: \ACEODBC.DLL
     filter_optional_office_excel:
-        TargetObject|contains: \Microsoft Excel Driver
-        Details|startswith: C:\Progra
-        Details|endswith: \ACEODBC.DLL
+        ObjectName|contains: \Microsoft Excel Driver
+        NewValue|startswith: C:\Progra
+        NewValue|endswith: \ACEODBC.DLL
     condition: registry_set and (selection and not 1 of filter_main_* and not 1 of
         filter_optional_*)
 falsepositives:

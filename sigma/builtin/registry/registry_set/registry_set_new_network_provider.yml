@@ -23,16 +23,16 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \System\CurrentControlSet\Services\
             - \NetworkProvider
     filter:
-        TargetObject|contains:
+        ObjectName|contains:
             - \System\CurrentControlSet\Services\WebClient\NetworkProvider
             - \System\CurrentControlSet\Services\LanmanWorkstation\NetworkProvider
             - \System\CurrentControlSet\Services\RDPNP\NetworkProvider
     filter_valid_procs:
-        Image: C:\Windows\System32\poqexec.exe
+        ProcessName: C:\Windows\System32\poqexec.exe
     condition: registry_set and (selection and not 1 of filter*)
 falsepositives:
     - Other legitimate network providers used and not filtred in this rule

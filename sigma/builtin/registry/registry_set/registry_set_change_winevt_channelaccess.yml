@@ -21,16 +21,16 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels\
-        TargetObject|endswith: \ChannelAccess
-        Details|contains:
+        ObjectName|startswith: \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels\
+        ObjectName|endswith: \ChannelAccess
+        NewValue|contains:
             - (A;;0x1;;;SY)
             - (A;;0x5;;;BA)
             - (A;;0x1;;;LA)
     filter_trustedinstaller:
-        Image: C:\Windows\servicing\TrustedInstaller.exe
+        ProcessName: C:\Windows\servicing\TrustedInstaller.exe
     filter_ti_worker:
-        Image|endswith: \TiWorker.exe
+        ProcessName|endswith: \TiWorker.exe
     condition: registry_set and (selection and not 1 of filter*)
 falsepositives:
     - Unknown

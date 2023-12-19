@@ -23,9 +23,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \CLSID\{fdb00e52-a214-4aa1-8fba-4357bb0072ec}\InProcServer32\(Default)
+        ObjectName|endswith: \CLSID\{fdb00e52-a214-4aa1-8fba-4357bb0072ec}\InProcServer32\(Default)
     filter:
-        Details: '%windir%\system32\amsi.dll'
+        NewValue: '%windir%\system32\amsi.dll'
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Unknown

@@ -18,11 +18,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Sophos Endpoint Defense\TamperProtection\Config\SAVEnabled
             - \Sophos Endpoint Defense\TamperProtection\Config\SEDEnabled
             - \Sophos\SAVService\TamperProtection\Enabled
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Some FP may occur when the feature is disabled by the AV itself, you should

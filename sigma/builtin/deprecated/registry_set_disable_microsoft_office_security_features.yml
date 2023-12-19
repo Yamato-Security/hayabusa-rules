@@ -21,13 +21,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\Microsoft\Office\
-        TargetObject|endswith:
+        ObjectName|contains: \SOFTWARE\Microsoft\Office\
+        ObjectName|endswith:
             - VBAWarnings
             - DisableInternetFilesInPV
             - DisableUnsafeLocationsInPV
             - DisableAttachementsInPV
-        Details: DWORD (0x00000001)
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Unknown

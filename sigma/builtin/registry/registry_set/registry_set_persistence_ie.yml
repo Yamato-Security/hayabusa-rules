@@ -22,24 +22,23 @@ detection:
         EventID: 4657
         Channel: Security
     selection_domains:
-        TargetObject|contains: \Software\Microsoft\Windows\CurrentVersion\Internet
-            Settings
+        ObjectName|contains: \Software\Microsoft\Windows\CurrentVersion\Internet Settings
     filter_dword:
-        Details|startswith: DWORD
+        NewValue|startswith: DWORD
     filter_office:
-        Details:
+        NewValue:
             - 'Cookie:'
             - 'Visited:'
             - (Empty)
     filter_path:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Cache
             - \ZoneMap
             - \WpadDecision
     filter_binary:
-        Details: Binary Data
+        NewValue: Binary Data
     filter_accepted_documents:
-        TargetObject|contains: \Accepted Documents\
+        ObjectName|contains: \Accepted Documents\
     condition: registry_set and (selection_domains and not 1 of filter_*)
 falsepositives:
     - Unknown

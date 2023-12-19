@@ -19,15 +19,15 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SYSTEM\CurrentControlSet\services\null\Instance
+        ObjectName|contains: \SYSTEM\CurrentControlSet\services\null\Instance
     condition: registry_event and selection
 fields:
+    - ProcessName
+    - SubjectUserName
+    - ObjectName
     - EventID
     - CommandLine
     - ParentCommandLine
-    - Image
-    - User
-    - TargetObject
 falsepositives:
     - Unknown
 level: critical

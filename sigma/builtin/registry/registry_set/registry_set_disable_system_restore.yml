@@ -19,13 +19,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Policies\Microsoft\Windows NT\SystemRestore
             - \Microsoft\Windows NT\CurrentVersion\SystemRestore
-        TargetObject|endswith:
+        ObjectName|endswith:
             - DisableConfig
             - DisableSR
-        Details: DWORD (0x00000001)
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Unknown

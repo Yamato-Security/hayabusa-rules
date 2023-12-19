@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\DisallowRun
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\DisallowRun
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Unknown
