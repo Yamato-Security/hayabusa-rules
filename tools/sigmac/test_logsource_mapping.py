@@ -94,6 +94,16 @@ class TestLogSourceMapper(TestCase):
         self.assertTrue(ls.is_detectable({"selection": {"NewProcessName|contains": "c.exe" }}))
         self.assertTrue(ls.is_detectable({"selection": {'ParentProcessName|endswith': '\\winword.exe', 'NewProcessName|contains': '/l'}, 'condition': 'selection'}))
 
+    def test_logsource_validate_security_4657(self):
+        ls = LogSource(category="registry_set", event_id=4657, service="", channel="")
+        self.assertFalse(ls.is_detectable({"selection": {"Image": "a.exe"}}))
+        self.assertFalse(ls.is_detectable({"selection": {"Details": "foo"}}))
+        self.assertTrue(ls.is_detectable({"selection": {"ProcessName": "a.exe" }}))
+        self.assertTrue(ls.is_detectable({"selection": {"SubjectUserName": "foo" }}))
+        self.assertTrue(ls.is_detectable({"selection": {"NewValue|contains": "c.exe" }}))
+        self.assertTrue(ls.is_detectable({"selection": {'OperationType|endswith': '%%1904'}, 'condition': 'selection'}))
+
+
     def test_logsource_validate_sysmon_1(self):
         ls = LogSource(category="process_creation", event_id=1, service="", channel="")
         self.assertFalse(ls.is_detectable({"selection": {"NewProcessName": "a.exe"}}))
@@ -102,3 +112,12 @@ class TestLogSourceMapper(TestCase):
         self.assertTrue(ls.is_detectable({"selection": {"ParentImage": "b.exe" }}))
         self.assertTrue(ls.is_detectable({"selection": {"Image|contains": "c.exe" }}))
         self.assertTrue(ls.is_detectable({'selection': {'Image|endswith': '\\winword.exe', 'CommandLine|contains': '/l'}, 'condition': 'selection'}))
+
+    def test_logsource_validate_security_12(self):
+        ls = LogSource(category="registry_set", event_id=12, service="", channel="")
+        self.assertFalse(ls.is_detectable({"selection": {"ProcessName": "a.exe"}}))
+        self.assertFalse(ls.is_detectable({"selection": {"NewValue": "foo"}}))
+        self.assertTrue(ls.is_detectable({"selection": {"Image": "a.exe" }}))
+        self.assertTrue(ls.is_detectable({"selection": {"Details": "foo" }}))
+        self.assertTrue(ls.is_detectable({"selection": {"EventType": "CreateKey" }}))
+        self.assertTrue(ls.is_detectable({"selection": {'TargetObject|endswith': 'software'}, 'condition': 'selection'}))
