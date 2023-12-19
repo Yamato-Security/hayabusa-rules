@@ -160,7 +160,7 @@ class LogSource:
         """
         process_creation/registry_xxルールののSysmon/Securityイベント用変換後フィールドの妥当性チェック
         """
-        if self.category != "process_creation" and self.category != "registry_set" and self.category != "registry_add" and self.category != "registry_event" and self.category == "registry_delete" :
+        if self.category != "process_creation" and self.category != "registry_set" and self.category != "registry_add" and self.category != "registry_event" and self.category != "registry_delete" :
             return True
         for key in obj.keys():
             if key in ["condition", "process_creation", "timeframe", "registry_set", "registry_add", "registry_event", "registry_delete"]:
@@ -264,6 +264,11 @@ class LogsourceConverter:
         logsourceのcategory/serviceをlogsource_mapに基づき変換し、変換後の内容でdetectionブロックを更新する
         """
         obj = create_obj(base_dir=None, file_name=self.sigma_path)
+        keys = get_terminal_keys_recursive(obj["detection"], [])
+        modifiers = {re.sub(r".*\|", "", k) for k in keys if "|" in k}
+        if modifiers and [m for m in modifiers if m not in ["all", "base64", "base64offset", "cidr", "contains", "endswith", "endswithfield", "equalsfield", "re", "startswith"]]:
+            LOGGER.error(f"This rule has incompatible field.{obj['detection']}. skip conversion.")
+            return
         logsources = self.get_logsources(obj)
         if not logsources:
             new_obj = copy.deepcopy(obj)
