@@ -19,11 +19,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\ODBC\ODBCINST.INI\
-        TargetObject|endswith:
+        ObjectName|contains: \SOFTWARE\ODBC\ODBCINST.INI\
+        ObjectName|endswith:
             - \Driver
             - \Setup
-        Details|contains:
+        NewValue|contains:
             - :\PerfLogs\
             - :\ProgramData\
             - :\Temp\

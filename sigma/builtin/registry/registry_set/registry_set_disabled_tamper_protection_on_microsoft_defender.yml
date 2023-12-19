@@ -18,13 +18,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Microsoft\Windows Defender\Features\TamperProtection
-        Details: DWORD (0x00000000)
+        ObjectName|contains: \Microsoft\Windows Defender\Features\TamperProtection
+        NewValue: DWORD (0x00000000)
     filter_msmpeng_client:
-        Image|startswith: C:\ProgramData\Microsoft\Windows Defender\Platform\
-        Image|endswith: \MsMpEng.exe
+        ProcessName|startswith: C:\ProgramData\Microsoft\Windows Defender\Platform\
+        ProcessName|endswith: \MsMpEng.exe
     filter_msmpeng_domain_controller:
-        Image: C:\Program Files\Windows Defender\MsMpEng.exe
+        ProcessName: C:\Program Files\Windows Defender\MsMpEng.exe
     condition: registry_set and (selection and not 1 of filter_*)
 falsepositives:
     - Unknown

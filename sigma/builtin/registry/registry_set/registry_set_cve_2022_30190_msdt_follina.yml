@@ -20,7 +20,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKCR\ms-msdt\
+        ObjectName|startswith: HKCR\ms-msdt\
     condition: registry_set and selection
 falsepositives:
     - Unknown

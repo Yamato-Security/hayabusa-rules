@@ -31,11 +31,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection_registry:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \Control\Keyboard Layouts\
             - Ime File
     selection_folders_1:
-        Details|contains:
+        NewValue|contains:
             - :\Perflogs\
             - :\Users\Public\
             - :\Windows\Temp\
@@ -43,13 +43,13 @@ detection:
             - \AppData\Roaming\
             - \Temporary Internet
     selection_folders_2:
-        -   Details|contains|all:
+        -   NewValue|contains|all:
                 - :\Users\
                 - \Favorites\
-        -   Details|contains|all:
+        -   NewValue|contains|all:
                 - :\Users\
                 - \Favourites\
-        -   Details|contains|all:
+        -   NewValue|contains|all:
                 - :\Users\
                 - \Contacts\
     condition: registry_set and (selection_registry and 1 of selection_folders_*)

@@ -20,10 +20,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Root\InventoryApplicationFile\winsat.exe|
-        TargetObject|endswith: \LowerCaseLongPath
-        Details|startswith: c:\users\
-        Details|endswith: \appdata\local\temp\system32\winsat.exe
+        ObjectName|contains: \Root\InventoryApplicationFile\winsat.exe|
+        ObjectName|endswith: \LowerCaseLongPath
+        NewValue|startswith: c:\users\
+        NewValue|endswith: \appdata\local\temp\system32\winsat.exe
     condition: registry_set and selection
 falsepositives:
     - Unknown

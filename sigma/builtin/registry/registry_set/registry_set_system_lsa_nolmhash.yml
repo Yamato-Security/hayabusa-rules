@@ -28,8 +28,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: System\CurrentControlSet\Control\Lsa\NoLMHash
-        Details: DWORD (0x00000000)
+        ObjectName|endswith: System\CurrentControlSet\Control\Lsa\NoLMHash
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

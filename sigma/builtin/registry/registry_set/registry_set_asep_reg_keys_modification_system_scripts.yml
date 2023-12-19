@@ -24,15 +24,15 @@ detection:
         EventID: 4657
         Channel: Security
     scripts_base:
-        TargetObject|contains: \Software\Policies\Microsoft\Windows\System\Scripts
+        ObjectName|contains: \Software\Policies\Microsoft\Windows\System\Scripts
     scripts:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Startup
             - \Shutdown
             - \Logon
             - \Logoff
     filter:
-        Details: (Empty)
+        NewValue: (Empty)
     condition: registry_set and (scripts_base and scripts and not filter)
 fields:
     - SecurityID

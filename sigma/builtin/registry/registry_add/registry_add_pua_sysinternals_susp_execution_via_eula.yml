@@ -25,8 +25,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: CreateKey
-        TargetObject|contains:
+        OperationType: '%%1904'
+        ObjectName|contains:
             - \Active Directory Explorer
             - \Handle
             - \LiveKd
@@ -37,7 +37,7 @@ detection:
             - \PsPasswd
             - \SDelete
             - \Sysinternals
-        TargetObject|endswith: \EulaAccepted
+        ObjectName|endswith: \EulaAccepted
     condition: registry_add and selection
 falsepositives:
     - Legitimate use of SysInternals tools. Filter the legitimate paths used in your

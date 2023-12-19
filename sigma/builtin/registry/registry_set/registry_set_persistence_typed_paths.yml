@@ -20,9 +20,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths\
+        ObjectName|contains: \Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths\
     filter:
-        Image:
+        ProcessName:
             - C:\Windows\explorer.exe
             - C:\Windows\SysWOW64\explorer.exe
     condition: registry_set and (selection and not filter)

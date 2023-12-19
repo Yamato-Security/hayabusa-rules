@@ -24,12 +24,12 @@ detection:
         EventID: 4657
         Channel: Security
     selection_1:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \COR_ENABLE_PROFILING
             - \COR_PROFILER
             - \CORECLR_ENABLE_PROFILING
     selection_2:
-        TargetObject|contains: \CORECLR_PROFILER_PATH
+        ObjectName|contains: \CORECLR_PROFILER_PATH
     condition: registry_set and (1 of selection_*)
 level: medium
 ruletype: Sigma

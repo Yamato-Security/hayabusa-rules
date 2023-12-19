@@ -25,9 +25,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection_wow_current_version_base:
-        TargetObject|contains: \SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion
+        ObjectName|contains: \SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion
     selection_wow_current_version_keys:
-        TargetObject|contains:
+        ObjectName|contains:
             - \ShellServiceObjectDelayLoad
             - \Run\
             - \RunOnce\
@@ -40,60 +40,60 @@ detection:
             - \Explorer\SharedTaskScheduler
             - \Explorer\Browser Helper Objects
     filter_empty:
-        Details: (Empty)
+        NewValue: (Empty)
     filter_edge:
-        Image|contains|all:
+        ProcessName|contains|all:
             - C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\{
             - \setup.exe
     filter_msoffice1:
-        Image: C:\Program Files\Common Files\Microsoft Shared\ClickToRun\OfficeClickToRun.exe
-        TargetObject|contains: \Office\ClickToRun\REGISTRY\MACHINE\Software\Wow6432Node\
+        ProcessName: C:\Program Files\Common Files\Microsoft Shared\ClickToRun\OfficeClickToRun.exe
+        ObjectName|contains: \Office\ClickToRun\REGISTRY\MACHINE\Software\Wow6432Node\
     filter_msoffice2:
-        Image:
+        ProcessName:
             - C:\Program Files\Microsoft Office\root\integration\integrator.exe
             - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
-        TargetObject|contains: \Explorer\Browser Helper Objects\{31D09BA0-12F5-4CCE-BE8A-2923E76605DA}\
+        ObjectName|contains: \Explorer\Browser Helper Objects\{31D09BA0-12F5-4CCE-BE8A-2923E76605DA}\
     filter_dropbox:
-        -   Details|endswith: -A251-47B7-93E1-CDD82E34AF8B}
-        -   Details: grpconv -o
-        -   Details|contains|all:
+        -   NewValue|endswith: -A251-47B7-93E1-CDD82E34AF8B}
+        -   NewValue: grpconv -o
+        -   NewValue|contains|all:
                 - C:\Program Files
                 - \Dropbox\Client\Dropbox.exe
                 - ' /systemstartup'
     filter_evernote:
-        TargetObject|endswith: \Explorer\Browser Helper Objects\{92EF2EAD-A7CE-4424-B0DB-499CF856608E}\NoExplorer
+        ObjectName|endswith: \Explorer\Browser Helper Objects\{92EF2EAD-A7CE-4424-B0DB-499CF856608E}\NoExplorer
     filter_dotnet:
-        Image|contains: \windowsdesktop-runtime-
-        TargetObject|endswith:
+        ProcessName|contains: \windowsdesktop-runtime-
+        ObjectName|endswith:
             - \WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce\{e2d1ae32-dd1d-4ad7-a298-10e42e7840fc}
             - \WOW6432Node\Microsoft\Windows\CurrentVersion\RunOnce\{7037b699-7382-448c-89a7-4765961d2537}
-        Details|startswith: '"C:\ProgramData\Package Cache\'
-        Details|endswith: .exe" /burn.runonce
+        NewValue|startswith: '"C:\ProgramData\Package Cache\'
+        NewValue|endswith: .exe" /burn.runonce
     filter_office:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
-        Image|endswith: \OfficeClickToRun.exe
+        ProcessName|endswith: \OfficeClickToRun.exe
     filter_ms_win_desktop_runtime:
-        Details|startswith: '"C:\ProgramData\Package Cache\{d21a4f20-968a-4b0c-bf04-a38da5f06e41}\windowsdesktop-runtime-'
+        NewValue|startswith: '"C:\ProgramData\Package Cache\{d21a4f20-968a-4b0c-bf04-a38da5f06e41}\windowsdesktop-runtime-'
     filter_vcredist:
-        Image|endswith: \VC_redist.x64.exe
-        Details|endswith: '}\VC_redist.x64.exe" /burn.runonce'
+        ProcessName|endswith: \VC_redist.x64.exe
+        NewValue|endswith: '}\VC_redist.x64.exe" /burn.runonce'
     filter_upgrades:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\ProgramData\Package Cache
             - C:\Windows\Temp\
-        Image|contains:
+        ProcessName|contains:
             - \winsdksetup.exe
             - \windowsdesktop-runtime-
             - \AspNetCoreSharedFrameworkBundle-
-        Details|endswith: ' /burn.runonce'
+        NewValue|endswith: ' /burn.runonce'
     filter_uninstallers:
-        Image|startswith: C:\Windows\Installer\MSI
-        TargetObject|contains: \Explorer\Browser Helper Objects
+        ProcessName|startswith: C:\Windows\Installer\MSI
+        ObjectName|contains: \Explorer\Browser Helper Objects
     filter_msiexec:
-        Image: C:\WINDOWS\system32\msiexec.exe
-        TargetObject|contains: \SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\
+        ProcessName: C:\WINDOWS\system32\msiexec.exe
+        ObjectName|contains: \SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\
     condition: registry_set and (all of selection_wow_current_version_* and not 1
         of filter_*)
 fields:

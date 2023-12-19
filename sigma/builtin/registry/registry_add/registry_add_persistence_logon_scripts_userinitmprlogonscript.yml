@@ -20,8 +20,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: CreateKey
-        TargetObject|contains: UserInitMprLogonScript
+        OperationType: '%%1904'
+        ObjectName|contains: UserInitMprLogonScript
     condition: registry_add and selection
 falsepositives:
     - Investigate the contents of the "UserInitMprLogonScript" value to determine

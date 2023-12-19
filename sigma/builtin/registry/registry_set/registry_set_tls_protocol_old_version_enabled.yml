@@ -17,11 +17,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.0\
             - \Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.1\
-        TargetObject|endswith: \Enabled
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: \Enabled
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Legitimate enabling of the old tls versions due to incompatibility

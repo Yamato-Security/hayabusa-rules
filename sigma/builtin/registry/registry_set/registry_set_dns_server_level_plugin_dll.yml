@@ -27,7 +27,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \services\DNS\Parameters\ServerLevelPluginDll
+        ObjectName|endswith: \services\DNS\Parameters\ServerLevelPluginDll
     condition: registry_set and selection
 falsepositives:
     - Unknown

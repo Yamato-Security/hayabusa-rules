@@ -23,8 +23,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
-        Details|startswith: '%AppData%\Roaming\Oracle\bin\'
+        ObjectName|startswith: \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+        NewValue|startswith: '%AppData%\Roaming\Oracle\bin\'
     condition: registry_set and selection
 level: high
 ruletype: Sigma

@@ -32,13 +32,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection_etw_enabled:
-        TargetObject|endswith: SOFTWARE\Microsoft\.NETFramework\ETWEnabled
-        Details: DWORD (0x00000000)
+        ObjectName|endswith: SOFTWARE\Microsoft\.NETFramework\ETWEnabled
+        NewValue: DWORD (0x00000000)
     selection_complus:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \COMPlus_ETWEnabled
             - \COMPlus_ETWFlags
-        Details:
+        NewValue:
             - 0
             - DWORD (0x00000000)
     condition: registry_set and (1 of selection_*)

@@ -40,7 +40,7 @@ logsources:
         rewrite:
             product: windows
             service: security
-fieldmappings:
+fieldmappings_process:
     Image: NewProcessName
     ProcessId: NewProcessId
     ParentImage: ParentProcessName
@@ -48,3 +48,9 @@ fieldmappings:
     LogonId: SubjectLogonId
     IntegrityLevel: MandatoryLabel
     User: SubjectUserName
+fieldmappings_registry:
+    Image: ProcessName
+    User: SubjectUserName
+    Details: NewValue
+    EventType: OperationType
+    TargetObject: ObjectName

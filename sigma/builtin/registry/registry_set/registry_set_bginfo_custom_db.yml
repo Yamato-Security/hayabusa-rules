@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: SetValue
-        TargetObject|endswith: \Software\Winternals\BGInfo\Database
+        OperationType: '%%1905'
+        ObjectName|endswith: \Software\Winternals\BGInfo\Database
     condition: registry_set and selection
 falsepositives:
     - Legitimate use of external DB to save the results

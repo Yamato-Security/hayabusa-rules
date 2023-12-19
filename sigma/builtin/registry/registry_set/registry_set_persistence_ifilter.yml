@@ -24,17 +24,17 @@ detection:
         EventID: 4657
         Channel: Security
     selection_ext:
-        TargetObject|startswith:
-            - HKLM\SOFTWARE\Classes\.
+        ObjectName|startswith:
+            - \REGISTRY\MACHINE\SOFTWARE\Classes\.
             - HKEY_LOCAL_MACHINE\SOFTWARE\Classes\.
-        TargetObject|contains: \PersistentHandler
+        ObjectName|contains: \PersistentHandler
     selection_clsid:
-        TargetObject|startswith:
-            - HKLM\SOFTWARE\Classes\CLSID
+        ObjectName|startswith:
+            - \REGISTRY\MACHINE\SOFTWARE\Classes\CLSID
             - HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID
-        TargetObject|contains: \PersistentAddinsRegistered\{89BCB740-6119-101A-BCB7-00DD010655AF}
+        ObjectName|contains: \PersistentAddinsRegistered\{89BCB740-6119-101A-BCB7-00DD010655AF}
     filter_default_targets:
-        TargetObject|contains:
+        ObjectName|contains:
             - \CLSID\{4F46F75F-199F-4C63-8B7D-86D48FE7970C}\
             - \CLSID\{4887767F-7ADC-4983-B576-88FB643D6F79}\
             - \CLSID\{D3B41FA1-01E3-49AF-AA25-1D0D824275AE}\
@@ -64,7 +64,7 @@ detection:
             - \CLSID\{eec97550-47a9-11cf-b952-00aa0051fe20}
             - \CLSID\{FB10BD80-A331-4e9e-9EB7-00279903AD99}\
     filter_generic_paths:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Windows\System32\
             - C:\Program Files (x86)\
             - C:\Program Files\

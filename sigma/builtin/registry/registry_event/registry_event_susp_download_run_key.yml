@@ -19,11 +19,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        Image|contains:
+        ProcessName|contains:
             - \Downloads\
             - \Temporary Internet Files\Content.Outlook\
             - \Local Settings\Temporary Internet Files\
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
     condition: registry_event and selection
 falsepositives:
     - Software installers downloaded and used by users

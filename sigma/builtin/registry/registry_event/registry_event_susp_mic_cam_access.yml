@@ -20,15 +20,15 @@ detection:
         EventID: 4657
         Channel: Security
     selection_1:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \Software\Microsoft\Windows\CurrentVersion\CapabilityAccessManager\ConsentStore\
             - \NonPackaged
     selection_2:
-        TargetObject|contains:
+        ObjectName|contains:
             - microphone
             - webcam
     selection_3:
-        TargetObject|contains:
+        ObjectName|contains:
             - :#Windows#Temp#
             - :#$Recycle.bin#
             - :#Temp#

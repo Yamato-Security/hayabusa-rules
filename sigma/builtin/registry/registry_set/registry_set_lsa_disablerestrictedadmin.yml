@@ -31,7 +31,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: System\CurrentControlSet\Control\Lsa\DisableRestrictedAdmin
+        ObjectName|endswith: System\CurrentControlSet\Control\Lsa\DisableRestrictedAdmin
     condition: registry_set and selection
 falsepositives:
     - Unknown

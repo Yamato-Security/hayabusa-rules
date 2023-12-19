@@ -20,11 +20,11 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject:
-            - HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy
-            - HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLinkedConnections
-            - HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled
-        Details: DWORD (0x00000001)
+        ObjectName:
+            - \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\LocalAccountTokenFilterPolicy
+            - \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLinkedConnections
+            - \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem\LongPathsEnabled
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Unknown

@@ -19,15 +19,15 @@ detection:
         EventID: 4657
         Channel: Security
     selection_word:
-        TargetObject|endswith: \Word\Security\AllowDDE
-        Details:
+        ObjectName|endswith: \Word\Security\AllowDDE
+        NewValue:
             - DWORD (0x00000001)
             - DWORD (0x00000002)
     selection_excel:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \Excel\Security\DisableDDEServerLaunch
             - \Excel\Security\DisableDDEServerLookup
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and (1 of selection_*)
 falsepositives:
     - Unknown

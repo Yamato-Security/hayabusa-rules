@@ -18,8 +18,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: shell\open\command\
-        Details|contains|all:
+        ObjectName|contains: shell\open\command\
+        NewValue|contains|all:
             - powershell
             - -command
     condition: registry_set and selection

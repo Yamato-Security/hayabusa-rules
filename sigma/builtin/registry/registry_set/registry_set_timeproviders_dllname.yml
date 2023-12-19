@@ -26,10 +26,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\System\CurrentControlSet\Services\W32Time\TimeProviders
-        TargetObject|endswith: DllName
+        ObjectName|startswith: \REGISTRY\MACHINE\System\CurrentControlSet\Services\W32Time\TimeProviders
+        ObjectName|endswith: DllName
     filter:
-        Details: C:\Windows\SYSTEM32\w32time.DLL
+        NewValue: C:\Windows\SYSTEM32\w32time.DLL
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Unknown

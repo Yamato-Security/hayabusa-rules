@@ -27,8 +27,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \SOFTWARE\Microsoft\NetSh
-        Details|contains: .dll
+        ObjectName|contains: \SOFTWARE\Microsoft\NetSh
+        NewValue|contains: .dll
     condition: registry_set and selection
 falsepositives:
     - Legitimate helper added by different programs and the OS

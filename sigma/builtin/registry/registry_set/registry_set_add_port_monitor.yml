@@ -24,20 +24,20 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\System\CurrentControlSet\Control\Print\Monitors\
-        Details|endswith: .dll
+        ObjectName|startswith: \REGISTRY\MACHINE\System\CurrentControlSet\Control\Print\Monitors\
+        NewValue|endswith: .dll
     filter_cutepdf:
-        Image: C:\Windows\System32\spoolsv.exe
-        TargetObject|contains: \System\CurrentControlSet\Control\Print\Monitors\CutePDF
+        ProcessName: C:\Windows\System32\spoolsv.exe
+        ObjectName|contains: \System\CurrentControlSet\Control\Print\Monitors\CutePDF
             Writer Monitor v4.0\Driver
-        Details: cpwmon64_v40.dll
-        User|contains:
+        NewValue: cpwmon64_v40.dll
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
     filter_leg1:
-        TargetObject|contains: Control\Print\Monitors\MONVNC\Driver
+        ObjectName|contains: Control\Print\Monitors\MONVNC\Driver
     filter_leg2:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - Control\Print\Environments\
             - \Drivers\
             - \VNC Printer

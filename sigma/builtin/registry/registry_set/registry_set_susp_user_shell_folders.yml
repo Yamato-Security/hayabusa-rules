@@ -20,9 +20,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User
+        ObjectName|contains: SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User
             Shell Folders
-        TargetObject|endswith: Startup
+        ObjectName|endswith: Startup
     condition: registry_set and selection
 falsepositives:
     - Unknown

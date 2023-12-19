@@ -21,8 +21,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \open\command\DelegateExecute
-        Details: (Empty)
+        ObjectName|endswith: \open\command\DelegateExecute
+        NewValue: (Empty)
     condition: registry_set and selection
 falsepositives:
     - Unknown

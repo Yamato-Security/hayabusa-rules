@@ -19,14 +19,14 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: Software\Microsoft\Windows\CurrentVersion\Run\Backup
+        ObjectName|endswith: Software\Microsoft\Windows\CurrentVersion\Run\Backup
             Mgr
     condition: registry_event and selection
 fields:
+    - ProcessName
+    - OperationType
+    - ObjectName
     - ComputerName
-    - Image
-    - EventType
-    - TargetObject
 falsepositives:
     - Unknown
 level: high

@@ -18,10 +18,10 @@ detection:
         EventID: 4657
         Channel: Security
     chrome_ext:
-        TargetObject|contains: Software\Wow6432Node\Google\Chrome\Extensions
-        TargetObject|endswith: update_url
+        ObjectName|contains: Software\Wow6432Node\Google\Chrome\Extensions
+        ObjectName|endswith: update_url
     chrome_vpn:
-        TargetObject|contains:
+        ObjectName|contains:
             - fdcgdnkidjaadafnichfpabhfomcebme
             - fcfhplploccackoneaefokcmbjfbkenj
             - bihmplhobchoageeokmgbdihknkjbknd

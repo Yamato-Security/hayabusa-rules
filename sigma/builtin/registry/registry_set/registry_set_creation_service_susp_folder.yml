@@ -22,27 +22,27 @@ detection:
         EventID: 4657
         Channel: Security
     selection_1:
-        TargetObject|startswith: HKLM\System\CurrentControlSet\Services\
-        TargetObject|endswith: \Start
-        Image|contains:
+        ObjectName|startswith: \REGISTRY\MACHINE\System\CurrentControlSet\Services\
+        ObjectName|endswith: \Start
+        ProcessName|contains:
             - \Users\Public\
             - \Perflogs\
             - \ADMIN$\
             - \Temp\
-        Details:
+        NewValue:
             - DWORD (0x00000000)
             - DWORD (0x00000001)
             - DWORD (0x00000002)
     selection_2:
-        TargetObject|startswith: HKLM\System\CurrentControlSet\Services\
-        TargetObject|endswith: \ImagePath
-        Details|contains:
+        ObjectName|startswith: \REGISTRY\MACHINE\System\CurrentControlSet\Services\
+        ObjectName|endswith: \ImagePath
+        NewValue|contains:
             - \Users\Public\
             - \Perflogs\
             - \ADMIN$\
             - \Temp\
     filter_1:
-        Image|contains|all:
+        ProcessName|contains|all:
             - \Common Files\
             - \Temp\
     condition: registry_set and (1 of selection_* and not 1 of filter_*)

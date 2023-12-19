@@ -21,8 +21,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|startswith: HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports
-        Details|contains:
+        ObjectName|startswith: \REGISTRY\MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Ports
+        NewValue|contains:
             - .dll
             - .exe
             - .bat

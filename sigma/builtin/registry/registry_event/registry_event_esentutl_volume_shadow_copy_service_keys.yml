@@ -20,10 +20,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: System\CurrentControlSet\Services\VSS
-        Image|endswith: esentutl.exe
+        ObjectName|contains: System\CurrentControlSet\Services\VSS
+        ProcessName|endswith: esentutl.exe
     filter:
-        TargetObject|contains: System\CurrentControlSet\Services\VSS\Start
+        ObjectName|contains: System\CurrentControlSet\Services\VSS\Start
     condition: registry_event and (selection and not filter)
 falsepositives:
     - Unknown

@@ -29,10 +29,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\
             - Index
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unlikely

@@ -26,15 +26,15 @@ detection:
         EventID: 4657
         Channel: Security
     selection_global_flag:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \Microsoft\Windows NT\CurrentVersion\
             - \Image File Execution Options\
             - \GlobalFlag
     selection_silent_process:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - \Microsoft\Windows NT\CurrentVersion\
             - \SilentProcessExit\
-        TargetObject|contains:
+        ObjectName|contains:
             - \ReportingMode
             - \MonitorProcess
     condition: registry_set and (1 of selection_*)

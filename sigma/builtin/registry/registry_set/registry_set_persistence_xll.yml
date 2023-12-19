@@ -20,10 +20,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: Software\Microsoft\Office\
-        TargetObject|endswith: \Excel\Options
-        Details|startswith: '/R '
-        Details|endswith: .xll
+        ObjectName|contains: Software\Microsoft\Office\
+        ObjectName|endswith: \Excel\Options
+        NewValue|startswith: '/R '
+        NewValue|endswith: .xll
     condition: registry_set and selection
 falsepositives:
     - Unknown

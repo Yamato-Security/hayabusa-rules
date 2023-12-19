@@ -22,8 +22,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Environment\windir
-        Details|contains: '&REM'
+        ObjectName|endswith: \Environment\windir
+        NewValue|contains: '&REM'
     condition: registry_set and selection
 falsepositives:
     - Unknown

@@ -26,8 +26,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: \Microsoft\Windows NT\CurrentVersion\Winlogon\AllowMultipleTSSessions
-        Details|endswith: DWORD (0x00000001)
+        ObjectName|endswith: \Microsoft\Windows NT\CurrentVersion\Winlogon\AllowMultipleTSSessions
+        NewValue|endswith: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Legitimate use of the multi session functionality

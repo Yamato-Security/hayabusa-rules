@@ -27,25 +27,25 @@ detection:
         EventID: 4657
         Channel: Security
     selection_target:
-        TargetObject|contains: \SOFTWARE\Microsoft\NetSh
+        ObjectName|contains: \SOFTWARE\Microsoft\NetSh
     selection_folders_1:
-        Details|contains:
+        NewValue|contains:
             - :\Perflogs\
             - :\Users\Public\
             - :\Windows\Temp\
             - \AppData\Local\Temp\
             - \Temporary Internet
     selection_folders_2:
-        -   Details|contains|all:
+        -   NewValue|contains|all:
                 - :\Users\
                 - \Favorites\
-        -   Details|contains|all:
+        -   NewValue|contains|all:
                 - :\Users\
                 - \Favourites\
-        -   Details|contains|all:
+        -   NewValue|contains|all:
                 - :\Users\
                 - \Contacts\
-        -   Details|contains|all:
+        -   NewValue|contains|all:
                 - :\Users\
                 - \Pictures\
     condition: registry_set and (selection_target and 1 of selection_folders_*)

@@ -21,7 +21,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \Security\Trusted Documents\TrustRecords
             - \Security\AccessVBOM
             - \Security\VBAWarnings

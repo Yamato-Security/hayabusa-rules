@@ -18,10 +18,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile\EnableFirewall
             - \SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\EnableFirewall
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
     - Unknown

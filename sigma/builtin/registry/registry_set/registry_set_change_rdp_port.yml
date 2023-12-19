@@ -26,9 +26,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject: HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\PortNumber
+        ObjectName: \REGISTRY\MACHINE\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp\PortNumber
     filter:
-        Details: DWORD (0x00000d3d)
+        NewValue: DWORD (0x00000d3d)
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Unknown

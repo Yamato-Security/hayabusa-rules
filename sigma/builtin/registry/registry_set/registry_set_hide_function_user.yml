@@ -19,18 +19,18 @@ detection:
         EventID: 4657
         Channel: Security
     selection_set_1:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideClock
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAHealth
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCANetwork
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAPower
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\HideSCAVolume
-        Details: DWORD (0x00000001)
+        NewValue: DWORD (0x00000001)
     selection_set_0:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ShowInfoTip
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\ShowCompColor
-        Details: DWORD (0x00000000)
+        NewValue: DWORD (0x00000000)
     condition: registry_set and (1 of selection_set_*)
 falsepositives:
     - Legitimate admin script

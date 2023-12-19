@@ -24,9 +24,9 @@ detection:
         EventID: 4657
         Channel: Security
     system_control_base:
-        TargetObject|contains: \SYSTEM\CurrentControlSet\Control
+        ObjectName|contains: \SYSTEM\CurrentControlSet\Control
     system_control_keys:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Terminal Server\WinStations\RDP-Tcp\InitialProgram
             - \Terminal Server\Wds\rdpwd\StartupPrograms
             - \SecurityProviders\SecurityProviders
@@ -38,26 +38,26 @@ detection:
             - \Lsa\Authentication Packages
             - \BootVerificationProgram\ImagePath
     filter_empty:
-        Details: (Empty)
+        NewValue: (Empty)
     filter_cutepdf:
-        Image: C:\Windows\System32\spoolsv.exe
-        TargetObject|contains: \Print\Monitors\CutePDF Writer Monitor
-        Details:
+        ProcessName: C:\Windows\System32\spoolsv.exe
+        ObjectName|contains: \Print\Monitors\CutePDF Writer Monitor
+        NewValue:
             - cpwmon64_v40.dll
             - CutePDF Writer
     filter_onenote:
-        Image: C:\Windows\System32\spoolsv.exe
-        TargetObject|contains: Print\Monitors\Appmon\Ports\Microsoft.Office.OneNote_
-        User|contains:
+        ProcessName: C:\Windows\System32\spoolsv.exe
+        ObjectName|contains: Print\Monitors\Appmon\Ports\Microsoft.Office.OneNote_
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
     filter_poqexec:
-        Image: C:\Windows\System32\poqexec.exe
-        TargetObject|endswith: \NetworkProvider\Order\ProviderOrder
+        ProcessName: C:\Windows\System32\poqexec.exe
+        ObjectName|endswith: \NetworkProvider\Order\ProviderOrder
     filter_realvnc:
-        Image: C:\Windows\System32\spoolsv.exe
-        TargetObject|endswith: \Print\Monitors\MONVNC\Driver
-        Details: VNCpm.dll
+        ProcessName: C:\Windows\System32\spoolsv.exe
+        ObjectName|endswith: \Print\Monitors\MONVNC\Driver
+        NewValue: VNCpm.dll
     condition: registry_set and (all of system_control_* and not 1 of filter_*)
 fields:
     - SecurityID

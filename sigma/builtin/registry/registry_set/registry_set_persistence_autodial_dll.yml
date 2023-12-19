@@ -19,7 +19,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Services\WinSock2\Parameters\AutodialDLL
+        ObjectName|contains: \Services\WinSock2\Parameters\AutodialDLL
     condition: registry_set and selection
 falsepositives:
     - Unlikely

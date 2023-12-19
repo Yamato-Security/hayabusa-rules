@@ -23,13 +23,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Microsoft\Windows\CurrentVersion\AppModelUnlock
             - \Policies\Microsoft\Windows\Appx\
-        TargetObject|endswith:
+        ObjectName|endswith:
             - \AllowAllTrustedApps
             - \AllowDevelopmentWithoutDevLicense
-        Details: DWORD (0x00000001)
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Unknown

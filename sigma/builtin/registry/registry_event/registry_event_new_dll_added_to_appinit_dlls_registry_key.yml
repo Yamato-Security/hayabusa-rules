@@ -20,14 +20,14 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        -   TargetObject|endswith:
+        -   ObjectName|endswith:
                 - \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_Dlls
                 - \SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_Dlls
         -   NewName|endswith:
                 - \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_Dlls
                 - \SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\AppInit_Dlls
     filter:
-        Details: (Empty)
+        NewValue: (Empty)
     condition: registry_event and (selection and not filter)
 falsepositives:
     - Unknown

@@ -19,17 +19,17 @@ detection:
         EventID: 4657
         Channel: Security
     selection_1:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Software\Microsoft\Office\
             - \Outlook\WebView\
-        TargetObject|endswith: \URL
+        ObjectName|endswith: \URL
     selection_2:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Calendar\
             - \Inbox\
     condition: registry_set and (all of selection_*)
 fields:
-    - Details
+    - NewValue
 falsepositives:
     - Unknown
 level: high

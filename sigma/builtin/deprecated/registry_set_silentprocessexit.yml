@@ -20,8 +20,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: Microsoft\Windows NT\CurrentVersion\SilentProcessExit
-        Details|contains: MonitorProcess
+        ObjectName|contains: Microsoft\Windows NT\CurrentVersion\SilentProcessExit
+        NewValue|contains: MonitorProcess
     condition: registry_set and selection
 falsepositives:
     - Unknown

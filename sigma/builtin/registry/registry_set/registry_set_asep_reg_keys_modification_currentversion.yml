@@ -25,9 +25,9 @@ detection:
         EventID: 4657
         Channel: Security
     current_version_base:
-        TargetObject|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion
+        ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion
     current_version_keys:
-        TargetObject|contains:
+        ObjectName|contains:
             - \ShellServiceObjectDelayLoad
             - \Run\
             - \RunOnce\
@@ -49,13 +49,13 @@ detection:
             - \Authentication\Credential Providers
             - \Authentication\Credential Provider Filters
     filter_all:
-        -   Details: (Empty)
-        -   TargetObject|endswith: \NgcFirst\ConsecutiveSwitchCount
-        -   Image|endswith:
+        -   NewValue: (Empty)
+        -   ObjectName|endswith: \NgcFirst\ConsecutiveSwitchCount
+        -   ProcessName|endswith:
                 - \AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe
                 - \AppData\Roaming\Spotify\Spotify.exe
                 - \AppData\Local\WebEx\WebexHost.exe
-        -   Image:
+        -   ProcessName:
                 - C:\WINDOWS\system32\devicecensus.exe
                 - C:\Windows\system32\winsat.exe
                 - C:\Program Files\Microsoft OneDrive\StandaloneUpdater\OneDriveSetup.exe
@@ -65,84 +65,84 @@ detection:
                 - C:\Program Files\Everything\Everything.exe
                 - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
     filter_logonui:
-        Image: C:\Windows\system32\LogonUI.exe
-        TargetObject|contains:
+        ProcessName: C:\Windows\system32\LogonUI.exe
+        ObjectName|contains:
             - \Authentication\Credential Providers\{D6886603-9D2F-4EB2-B667-1971041FA96B}\
             - \Authentication\Credential Providers\{BEC09223-B018-416D-A0AC-523971B639F5}\
             - \Authentication\Credential Providers\{8AF662BF-65A0-4D0A-A540-A338A999D36F}\
             - \Authentication\Credential Providers\{27FBDB57-B613-4AF2-9D7E-4FA7A66C21AD}\
     filter_edge:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\
             - C:\Program Files (x86)\Microsoft\EdgeWebView\
             - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
     filter_dropbox:
-        Image: C:\Windows\system32\regsvr32.exe
-        TargetObject|contains: DropboxExt
-        Details|endswith: A251-47B7-93E1-CDD82E34AF8B}
+        ProcessName: C:\Windows\system32\regsvr32.exe
+        ObjectName|contains: DropboxExt
+        NewValue|endswith: A251-47B7-93E1-CDD82E34AF8B}
     filter_opera:
-        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Opera
+        ObjectName|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Opera
             Browser Assistant
-        Details: C:\Program Files\Opera\assistant\browser_assistant.exe
+        NewValue: C:\Program Files\Opera\assistant\browser_assistant.exe
     filter_itunes:
-        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\iTunesHelper
-        Details: '"C:\Program Files\iTunes\iTunesHelper.exe"'
+        ObjectName|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\iTunesHelper
+        NewValue: '"C:\Program Files\iTunes\iTunesHelper.exe"'
     filter_zoom:
-        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\zoommsirepair
-        Details: '"C:\Program Files\Zoom\bin\installer.exe" /repair'
+        ObjectName|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\zoommsirepair
+        NewValue: '"C:\Program Files\Zoom\bin\installer.exe" /repair'
     filter_greenshot:
-        TargetObject|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Greenshot
-        Details: C:\Program Files\Greenshot\Greenshot.exe
+        ObjectName|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Greenshot
+        NewValue: C:\Program Files\Greenshot\Greenshot.exe
     filter_googledrive1:
-        TargetObject|endswith: \Software\Microsoft\Windows\CurrentVersion\Run\GoogleDriveFS
-        Details|startswith: C:\Program Files\Google\Drive File Stream\
-        Details|contains: \GoogleDriveFS.exe
+        ObjectName|endswith: \Software\Microsoft\Windows\CurrentVersion\Run\GoogleDriveFS
+        NewValue|startswith: C:\Program Files\Google\Drive File Stream\
+        NewValue|contains: \GoogleDriveFS.exe
     filter_googledrive2:
-        TargetObject|contains: GoogleDrive
-        Details:
+        ObjectName|contains: GoogleDrive
+        NewValue:
             - '{CFE8B367-77A7-41D7-9C90-75D16D7DC6B6}'
             - '{A8E52322-8734-481D-A7E2-27B309EF8D56}'
             - '{C973DA94-CBDF-4E77-81D1-E5B794FBD146}'
             - '{51EF1569-67EE-4AD6-9646-E726C3FFC8A2}'
     filter_onedrive:
-        Details|startswith:
+        NewValue|startswith:
             - C:\Windows\system32\cmd.exe /q /c rmdir /s /q "C:\Users\
             - C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\
-        Details|contains: \AppData\Local\Microsoft\OneDrive\
+        NewValue|contains: \AppData\Local\Microsoft\OneDrive\
     filter_python:
-        TargetObject|contains: \Microsoft\Windows\CurrentVersion\RunOnce\{
-        Details|contains|all:
+        ObjectName|contains: \Microsoft\Windows\CurrentVersion\RunOnce\{
+        NewValue|contains|all:
             - \AppData\Local\Package Cache\{
             - '}\python-'
-        Details|endswith: .exe" /burn.runonce
+        NewValue|endswith: .exe" /burn.runonce
     filter_officeclicktorun:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
-        Image|endswith: \OfficeClickToRun.exe
+        ProcessName|endswith: \OfficeClickToRun.exe
     filter_defender:
-        Image: C:\Program Files\Windows Defender\MsMpEng.exe
+        ProcessName: C:\Program Files\Windows Defender\MsMpEng.exe
     filter_teams:
-        Image|endswith: \Microsoft\Teams\current\Teams.exe
-        Details|contains: '\Microsoft\Teams\Update.exe --processStart '
+        ProcessName|endswith: \Microsoft\Teams\current\Teams.exe
+        NewValue|contains: '\Microsoft\Teams\Update.exe --processStart '
     filter_ctfmon:
-        Image: C:\Windows\system32\userinit.exe
-        Details: ctfmon.exe /n
+        ProcessName: C:\Windows\system32\userinit.exe
+        NewValue: ctfmon.exe /n
     filter_AVG:
-        Image|startswith: C:\Program Files\AVG\Antivirus\Setup\
-        Details:
+        ProcessName|startswith: C:\Program Files\AVG\Antivirus\Setup\
+        NewValue:
             - '"C:\Program Files\AVG\Antivirus\AvLaunch.exe" /gui'
             - '"C:\Program Files (x86)\AVG\Antivirus\AvLaunch.exe" /gui'
             - '{472083B0-C522-11CF-8763-00608CC02F24}'
     filter_aurora_dashboard:
-        Image|endswith:
+        ProcessName|endswith:
             - \aurora-agent-64.exe
             - \aurora-agent.exe
-        TargetObject|endswith: \Microsoft\Windows\CurrentVersion\Run\aurora-dashboard
-        Details: C:\Program Files\Aurora-Agent\tools\aurora-dashboard.exe
+        ObjectName|endswith: \Microsoft\Windows\CurrentVersion\Run\aurora-dashboard
+        NewValue: C:\Program Files\Aurora-Agent\tools\aurora-dashboard.exe
     filter_everything:
-        TargetObject|endswith: \Microsoft\Windows\CurrentVersion\Run\Everything
-        Details|endswith: \Everything\Everything.exe" -startup
+        ObjectName|endswith: \Microsoft\Windows\CurrentVersion\Run\Everything
+        NewValue|endswith: \Everything\Everything.exe" -startup
     condition: registry_set and (all of current_version_* and not 1 of filter_*)
 falsepositives:
     - Legitimate software automatically (mostly, during installation) sets up autorun

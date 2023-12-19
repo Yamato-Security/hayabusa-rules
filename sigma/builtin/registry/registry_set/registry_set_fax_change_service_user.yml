@@ -20,9 +20,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject: HKLM\System\CurrentControlSet\Services\Fax\ObjectName
+        ObjectName: \REGISTRY\MACHINE\System\CurrentControlSet\Services\Fax\ObjectName
     filter:
-        Details|contains: NetworkService
+        NewValue|contains: NetworkService
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Unknown

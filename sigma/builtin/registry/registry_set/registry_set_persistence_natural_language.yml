@@ -20,9 +20,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection_root:
-        TargetObject|contains: \SYSTEM\CurrentControlSet\Control\ContentIndex\Language\
+        ObjectName|contains: \SYSTEM\CurrentControlSet\Control\ContentIndex\Language\
     selection_values:
-        TargetObject|contains:
+        ObjectName|contains:
             - \StemmerDLLPathOverride
             - \WBDLLPathOverride
             - \StemmerClass

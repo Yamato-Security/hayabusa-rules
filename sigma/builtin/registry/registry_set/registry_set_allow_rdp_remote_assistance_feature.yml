@@ -19,8 +19,8 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|endswith: System\CurrentControlSet\Control\Terminal Server\fAllowToGetHelp
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: System\CurrentControlSet\Control\Terminal Server\fAllowToGetHelp
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection
 falsepositives:
     - Legitimate use of the feature (alerts should be investigated either way)

@@ -21,9 +21,9 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventType: SetValue
-        TargetObject|contains: \Software\Winternals\BGInfo\UserFields\
-        Details|startswith: '6'
+        OperationType: '%%1905'
+        ObjectName|contains: \Software\Winternals\BGInfo\UserFields\
+        NewValue|startswith: '6'
     condition: registry_set and selection
 falsepositives:
     - Legitimate WMI query

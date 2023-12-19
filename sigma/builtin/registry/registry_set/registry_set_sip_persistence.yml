@@ -22,23 +22,23 @@ detection:
         EventID: 4657
         Channel: Security
     selection_root:
-        TargetObject|contains:
+        ObjectName|contains:
             - \SOFTWARE\Microsoft\Cryptography\Providers\
             - \SOFTWARE\Microsoft\Cryptography\OID\EncodingType
             - \SOFTWARE\WOW6432Node\Microsoft\Cryptography\Providers\
             - \SOFTWARE\WOW6432Node\Microsoft\Cryptography\OID\EncodingType
     selection_dll:
-        TargetObject|contains:
+        ObjectName|contains:
             - \Dll
             - \$DLL
     filter:
-        Details:
+        NewValue:
             - WINTRUST.DLL
             - mso.dll
     filter_poqexec:
-        Image: C:\Windows\System32\poqexec.exe
-        TargetObject|contains: \CryptSIPDll
-        Details: C:\Windows\System32\PsfSip.dll
+        ProcessName: C:\Windows\System32\poqexec.exe
+        ObjectName|contains: \CryptSIPDll
+        NewValue: C:\Windows\System32\PsfSip.dll
     condition: registry_set and (all of selection_* and not 1 of filter*)
 falsepositives:
     - Legitimate SIP being registered by the OS or different software.

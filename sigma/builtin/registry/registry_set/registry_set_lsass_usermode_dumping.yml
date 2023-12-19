@@ -22,10 +22,10 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains:
+        ObjectName|contains:
             - \SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\DumpType
             - \SOFTWARE\Microsoft\Windows\Windows Error Reporting\LocalDumps\lsass.exe\DumpType
-        Details: DWORD (0x00000002)
+        NewValue: DWORD (0x00000002)
     condition: registry_set and selection
 falsepositives:
     - Legitimate application that needs to do a full dump of their process

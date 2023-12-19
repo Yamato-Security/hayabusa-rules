@@ -20,23 +20,23 @@ detection:
         EventID: 4657
         Channel: Security
     selection_main:
-        TargetObject|contains|all:
+        ObjectName|contains|all:
             - Software\Microsoft\Office\
             - \Outlook\Today\
     selection_value_stamp:
-        TargetObject|endswith: Stamp
-        Details: DWORD (0x00000001)
+        ObjectName|endswith: Stamp
+        NewValue: DWORD (0x00000001)
     selection_value_user_defined:
-        TargetObject|endswith: UserDefinedUrl
+        ObjectName|endswith: UserDefinedUrl
     filter_office:
-        Image|startswith:
+        ProcessName|startswith:
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
-        Image|endswith: \OfficeClickToRun.exe
+        ProcessName|endswith: \OfficeClickToRun.exe
     condition: registry_set and (selection_main and 1 of selection_value_* and not
         1 of filter_*)
 fields:
-    - Details
+    - NewValue
 falsepositives:
     - Unknown
 level: high

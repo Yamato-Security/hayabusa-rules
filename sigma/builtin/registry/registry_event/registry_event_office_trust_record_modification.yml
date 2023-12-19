@@ -24,7 +24,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        TargetObject|contains: \Security\Trusted Documents\TrustRecords
+        ObjectName|contains: \Security\Trusted Documents\TrustRecords
     condition: registry_event and selection
 falsepositives:
     - This will alert on legitimate macro usage as well, additional tuning is required
