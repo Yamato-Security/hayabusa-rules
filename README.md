@@ -37,6 +37,7 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
     - [Abnormal patterns in EventData](#abnormal-patterns-in-eventdata)
       - [Outputting field data from multiple field names with the same name](#outputting-field-data-from-multiple-field-names-with-the-same-name)
   - [Pipe Modifiers](#pipe-modifiers)
+  - [Unsupported Pipe Modifiers](#unsupported-pipe-modifiers)
   - [Wildcards](#wildcards)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
     - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
@@ -504,6 +505,17 @@ detection:
             - 'Keyword-2'
     condition: keywords
 ```
+
+## Unsupported Pipe Modifiers
+
+The following modifiers are currently not supported so we do not include any rules from the Sigma repository that use them:
+- `expand`
+- `gt`
+- `gte`
+- `lt`
+- `lte`
+- `utf16 / utf16le / utf16be / wide`
+- `windash`
 
 ## Wildcards
 
