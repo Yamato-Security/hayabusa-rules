@@ -26,10 +26,10 @@ detection:
         CommandLine|contains|all:
             - firewall
             - 'delete '
-    filter_dropbox:
+    filter_optional_dropbox:
         ParentImage|endswith: \Dropbox.exe
         CommandLine|contains: name=Dropbox
-    condition: process_creation and (all of selection_* and not filter_dropbox)
+    condition: process_creation and (all of selection_* and not 1 of filter_optional_*)
 falsepositives:
     - Legitimate administration activity
     - Software installations and removal

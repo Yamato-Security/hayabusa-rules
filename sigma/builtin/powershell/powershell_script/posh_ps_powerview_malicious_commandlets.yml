@@ -1,10 +1,10 @@
-title: Malicious PowerView PowerShell Commandlets
+title: PowerView PowerShell Cmdlets - ScriptBlock
 id: dcd74b95-3f36-4ed9-9598-0490951643aa
 related:
     -   id: b2317cfa-4a47-4ead-b3ff-297438c0bc2d
         type: similar
 status: test
-description: Detects Commandlet names from PowerView of PowerSploit exploitation framework.
+description: Detects Cmdlet names from PowerView of the PowerSploit exploitation framework.
 references:
     - https://powersploit.readthedocs.io/en/stable/Recon/README
     - https://github.com/PowerShellMafia/PowerSploit/tree/master/Recon
@@ -12,7 +12,7 @@ references:
     - https://adsecurity.org/?p=2277
 author: Bhabesh Raj
 date: 2021/05/18
-modified: 2023/04/20
+modified: 2023/11/22
 tags:
     - attack.execution
     - attack.t1059.001
@@ -28,14 +28,6 @@ detection:
             - PowerShellCore/Operational
     selection:
         ScriptBlockText|contains:
-            - Add-DomainGroupMember
-            - Add-DomainObjectAcl
-            - Add-ObjectAcl
-            - Add-RemoteConnection
-            - Convert-ADName
-            - ConvertFrom-UACValue
-            - Convert-NameToSid
-            - ConvertTo-SID
             - Export-PowerViewCSV
             - Find-DomainLocalGroupMember
             - Find-DomainObjectPropertyOutlier
@@ -53,57 +45,26 @@ detection:
             - Find-ManagedSecurityGroups
             - Get-CachedRDPConnection
             - Get-DFSshare
-            - Get-DNSRecord
-            - Get-DNSZone
-            - Get-DomainComputer
-            - Get-DomainController
             - Get-DomainDFSShare
             - Get-DomainDNSRecord
             - Get-DomainDNSZone
             - Get-DomainFileServer
-            - Get-DomainGPO
-            - Get-DomainGroup
-            - Get-DomainGroupMember
-            - Get-DomainManagedSecurityGroup
-            - Get-DomainObject
-            - Get-DomainObjectAcl
-            - Get-DomainOU
-            - Get-DomainPolicy
-            - Get-DomainSID
-            - Get-DomainSite
-            - Get-DomainSPNTicket
-            - Get-DomainSubnet
-            - Get-DomainUser
-            - Get-DomainUserEvent
-            - Get-Forest
-            - Get-IPAddress
+            - Get-DomainGPOComputerLocalGroupMapping
+            - Get-DomainGPOLocalGroup
+            - Get-DomainGPOUserLocalGroupMapping
             - Get-LastLoggedOn
             - Get-LoggedOnLocal
-            - Get-NetComputer
-            - Get-NetDomain
             - Get-NetFileServer
             - Get-NetForest
-            - Get-NetGPO
-            - Get-NetGroup
-            - Get-NetLocalGroup
-            - Get-NetLoggedon
-            - Get-NetOU
+            - Get-NetGPOGroup
             - Get-NetProcess
             - Get-NetRDPSession
-            - Get-NetSession
-            - Get-NetShare
-            - Get-NetSite
-            - Get-NetSubnet
-            - Get-NetUser
-            - Get-ObjectAcl
-            - Get-PathAcl
-            - Get-Proxy
             - Get-RegistryMountedDrive
             - Get-RegLoggedOn
-            - Get-SiteName
-            - Get-UserEvent
-            - Get-WMIProcess
-            - Get-WMIReg
+            - Get-WMIRegCachedRDPConnection
+            - Get-WMIRegLastLoggedOn
+            - Get-WMIRegMountedDrive
+            - Get-WMIRegProxy
             - Invoke-ACLScanner
             - Invoke-CheckLocalAdminAccess
             - Invoke-EnumerateLocalAdmin
@@ -116,17 +77,11 @@ detection:
             - Invoke-ShareFinder
             - Invoke-UserHunter
             - Invoke-UserImpersonation
-            - New-DomainGroup
-            - New-DomainUser
             - Remove-RemoteConnection
             - Request-SPNTicket
             - Resolve-IPAddress
-            - Set-ADObject
-            - Set-DomainObject
-            - Set-DomainUserPassword
-            - Test-AdminAccess
     condition: ps_script and selection
 falsepositives:
-    - Should not be any as administrators do not use this tool
+    - Unknown
 level: high
 ruletype: Sigma

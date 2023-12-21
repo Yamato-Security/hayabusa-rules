@@ -1,5 +1,8 @@
 title: Alternate PowerShell Hosts Pipe
 id: 58cb02d5-78ce-4692-b3e1-dce850aae41a
+related:
+    -   id: ac7102b4-9e1e-4802-9b4f-17c5524c015c
+        type: derived
 status: test
 description: Detects alternate PowerShell hosts potentially bypassing detections looking
     for powershell.exe
@@ -32,8 +35,6 @@ detection:
         PipeName|startswith: \PSHost
     filter_main_generic:
         Image|contains:
-            - :\Program Files\Citrix\
-            - :\Program Files\Microsoft\Exchange Server\
             - :\Program Files\PowerShell\7-preview\pwsh.exe
             - :\Program Files\PowerShell\7\pwsh.exe
             - :\Windows\system32\dsac.exe
@@ -51,9 +52,14 @@ detection:
             - :\Program Files
             - \Microsoft SQL Server\
         Image|endswith: \Tools\Binn\SQLPS.exe
+    filter_optional_citrix:
+        Image|contains: :\Program Files\Citrix\
+    filter_optional_exchange:
+        Image|contains: :\Program Files\Microsoft\Exchange Server\
     filter_main_null:
         Image: null
-    condition: pipe_created and (selection and not 1 of filter_main_*)
+    condition: pipe_created and (selection and not 1 of filter_main_* and not 1 of
+        filter_optional_*)
 falsepositives:
     - Programs using PowerShell directly without invocation of a dedicated interpreter.
 level: medium

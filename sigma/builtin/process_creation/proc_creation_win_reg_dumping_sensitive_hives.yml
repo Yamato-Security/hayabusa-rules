@@ -6,8 +6,8 @@ related:
     -   id: 4d6c9da1-318b-4edf-bcea-b6c93fa98fd0
         type: obsoletes
 status: test
-description: Detects the usage of "reg.exe" in order to dump sensitive registry hives,
-    which includes SAM, SYSTEM and SECURITY
+description: Detects the usage of "reg.exe" in order to dump sensitive registry hives.
+    This includes SAM, SYSTEM and SECURITY hives.
 references:
     - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
     - https://eqllib.readthedocs.io/en/latest/analytics/aed95fc6-5e3f-49dc-8b35-06508613f979.html
@@ -17,7 +17,7 @@ references:
 author: Teymur Kheirkhabarov, Endgame, JHasenbusch, Daniil Yugoslavskiy, oscd.community,
     frack113
 date: 2019/10/22
-modified: 2023/02/06
+modified: 2023/12/13
 tags:
     - attack.credential_access
     - attack.t1003.002
@@ -36,10 +36,10 @@ detection:
         -   OriginalFileName: reg.exe
     selection_cli_flag:
         CommandLine|contains:
-            - save
-            - export
-            - "\u02E2ave"
-            - "e\u02E3port"
+            - ' save '
+            - ' export '
+            - " \u02E2ave "
+            - " e\u02E3port "
     selection_cli_hklm:
         CommandLine|contains:
             - hklm

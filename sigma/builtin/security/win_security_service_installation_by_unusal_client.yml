@@ -8,8 +8,9 @@ description: Detects a service installed by a client which has PID 0 or whose pa
     has PID 0
 references:
     - https://www.elastic.co/guide/en/security/current/windows-service-installed-via-an-unusual-client.html
+    - https://www.x86matthew.com/view_post?id=create_svc_rpc
     - https://twitter.com/SBousseaden/status/1490608838701166596
-author: Tim Rauch
+author: Tim Rauch (Nextron Systems), Elastic
 date: 2022/09/15
 modified: 2023/01/04
 tags:
@@ -18,17 +19,17 @@ tags:
 logsource:
     service: security
     product: windows
-    definition: The 'System Security Extension' audit subcategory need to be enabled
-        to log the EID 4697
+    definition: 'Requirements: The System Security Extension audit subcategory need
+        to be enabled to log the EID 4697'
 detection:
     security:
         Channel: Security
-    selection:
+    selection_eid:
         EventID: 4697
     selection_pid:
         -   ClientProcessId: 0
         -   ParentProcessId: 0
-    condition: security and (all of selection*)
+    condition: security and (all of selection_*)
 falsepositives:
     - Unknown
 level: high

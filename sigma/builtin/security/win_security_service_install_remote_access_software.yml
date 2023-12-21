@@ -10,7 +10,7 @@ references:
     - https://redcanary.com/blog/misbehaving-rats/
 author: Connor Martin, Nasreddine Bencherchali (Nextron Systems)
 date: 2022/12/23
-modified: 2023/06/22
+modified: 2023/11/15
 tags:
     - attack.persistence
     - attack.t1543.003
@@ -25,7 +25,7 @@ detection:
         Channel: Security
     selection:
         EventID: 4697
-        ServiceFileName|contains:
+        ServiceName|contains:
             - AmmyyAdmin
             - Atera
             - BASupportExpressSrvcUpdater

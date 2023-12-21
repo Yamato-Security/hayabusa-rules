@@ -23,7 +23,7 @@ references:
     - https://docs.google.com/presentation/d/1dkrldTTlN3La-OjWtkWJBb4hVk6vfsSMBFBERs6R8zA/edit
 author: '@neu5ron, Nasreddine Bencherchali (Nextron Systems)'
 date: 2017/11/19
-modified: 2021/11/27
+modified: 2023/11/15
 tags:
     - attack.defense_evasion
     - attack.t1562.002
@@ -41,23 +41,23 @@ detection:
             - '%%8450'
     filter_main_guid:
         SubcategoryGuid:
-            - '{0CCE9215-69AE-11D9-BED3-505054503030}'
-            - '{0CCE922B-69AE-11D9-BED3-505054503030}'
-            - '{0CCE9240-69AE-11D9-BED3-505054503030}'
             - '{0CCE9210-69AE-11D9-BED3-505054503030}'
             - '{0CCE9211-69AE-11D9-BED3-505054503030}'
             - '{0CCE9212-69AE-11D9-BED3-505054503030}'
+            - '{0CCE9215-69AE-11D9-BED3-505054503030}'
+            - '{0CCE9217-69AE-11D9-BED3-505054503030}'
             - '{0CCE921B-69AE-11D9-BED3-505054503030}'
+            - '{0CCE922B-69AE-11D9-BED3-505054503030}'
             - '{0CCE922F-69AE-11D9-BED3-505054503030}'
             - '{0CCE9230-69AE-11D9-BED3-505054503030}'
             - '{0CCE9235-69AE-11D9-BED3-505054503030}'
             - '{0CCE9236-69AE-11D9-BED3-505054503030}'
             - '{0CCE9237-69AE-11D9-BED3-505054503030}'
             - '{0CCE923F-69AE-11D9-BED3-505054503030}'
+            - '{0CCE9240-69AE-11D9-BED3-505054503030}'
             - '{0CCE9242-69AE-11D9-BED3-505054503030}'
-            - '{0CCE9217-69AE-11D9-BED3-505054503030}'
-    condition: security and (selection and not filter_main_guid)
+    condition: security and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown
-level: medium
+level: low
 ruletype: Sigma

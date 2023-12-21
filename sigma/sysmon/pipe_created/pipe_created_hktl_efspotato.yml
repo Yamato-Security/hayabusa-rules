@@ -7,7 +7,7 @@ references:
     - https://github.com/zcgonvh/EfsPotato
 author: Florian Roth (Nextron Systems)
 date: 2021/08/23
-modified: 2023/08/07
+modified: 2023/12/21
 tags:
     - attack.defense_evasion
     - attack.privilege_escalation
@@ -34,8 +34,10 @@ detection:
             - \pipe\srvsvc
     filter_optional_ctx:
         PipeName|contains: \CtxShare
+    filter_optional_default:
+        PipeName|startswith: \pipe\
     condition: pipe_created and (selection and not 1 of filter_optional_*)
 falsepositives:
-    - Unknown
+    - \pipe\LOCAL\Monitorian
 level: high
 ruletype: Sigma

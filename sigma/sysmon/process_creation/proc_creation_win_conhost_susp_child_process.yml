@@ -7,7 +7,7 @@ references:
     - http://www.hexacorn.com/blog/2020/05/25/how-to-con-your-host/
 author: omkar72
 date: 2020/10/25
-modified: 2023/06/01
+modified: 2023/12/11
 tags:
     - attack.defense_evasion
     - attack.t1202
@@ -21,36 +21,16 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         ParentImage|endswith: \conhost.exe
+    filter_main_conhost:
+        Image|endswith: :\Windows\System32\conhost.exe
+    filter_main_null:
+        Image: null
+    filter_main_empty:
+        Image: ''
     filter_optional_provider:
         Provider_Name: SystemTraceProvider-Process
-    filter_optional_git:
-        Provider_Name: Microsoft-Windows-Kernel-Process
-        Image|endswith: \git.exe
-        ParentCommandLine|contains:
-            - ' show --textconv '
-            - ' cat-file -s '
-    filter_optional_git_show:
-        ParentCommandLine|contains: C:\WINDOWS\system32\conhost.exe 0x4
-        CommandLine|contains:
-            - ' show --textconv '
-            - ' cat-file -s '
-    filter_optional_image_conhost:
-        Provider_Name: Microsoft-Windows-Kernel-Process
-        ParentCommandLine|contains:
-            - ' cat-file -s '
-            - show --textconv
-        Image: C:\Windows\System32\conhost.exe
-    filter_optional_image_conhost2:
-        ParentCommandLine:
-            - \\\?\?\\C:\\WINDOWS\\system32\\conhost.exe 0x4
-            - \\\?\?\\C:\\WINDOWS\\system32\\conhost.exe 0xffffffff -ForceV1
-        Image: C:\Windows\System32\conhost.exe
-    filter_optional_image_git:
-        ParentCommandLine:
-            - \\\?\?\\C:\\WINDOWS\\system32\\conhost.exe 0xffffffff -ForceV1'
-            - \\\?\?\\C:\\WINDOWS\\system32\\conhost.exe 0x4'
-        Image: C:\Program Files\Git\mingw64\bin\git.exe
-    condition: process_creation and (selection and not 1 of filter_optional_*)
+    condition: process_creation and (selection and not 1 of filter_main_* and not
+        1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: medium
