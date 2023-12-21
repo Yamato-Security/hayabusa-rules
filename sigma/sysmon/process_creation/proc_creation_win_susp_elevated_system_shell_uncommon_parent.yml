@@ -1,0 +1,68 @@
+title: Elevated System Shell Spawned From Uncommon Parent Location
+id: 178e615d-e666-498b-9630-9ed363038101
+related:
+    -   id: 61065c72-5d7d-44ef-bf41-6a36684b545f
+        type: similar
+status: experimental
+description: Detects when a shell program such as the Windows command prompt or PowerShell
+    is launched with system privileges from a uncommon parent location.
+references:
+    - https://github.com/Wh04m1001/SysmonEoP
+author: frack113, Tim Shelton (update fp)
+date: 2022/12/05
+modified: 2023/11/23
+tags:
+    - attack.privilege_escalation
+    - attack.defense_evasion
+    - attack.execution
+    - attack.t1059
+    - sysmon
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection_shell:
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+                - \cmd.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+                - Cmd.Exe
+    selection_user:
+        User|contains:
+            - AUTHORI
+            - AUTORI
+        LogonId: '0x3e7'
+    filter_main_generic:
+        ParentImage|contains:
+            - :\Program Files (x86)\
+            - :\Program Files\
+            - :\ProgramData\
+            - :\Windows\System32\
+            - :\Windows\SysWOW64\
+            - :\Windows\Temp\
+            - :\Windows\WinSxS\
+    filter_optional_manageengine:
+        ParentImage|endswith: :\ManageEngine\ADManager Plus\pgsql\bin\postgres.exe
+        Image|endswith: \cmd.exe
+    filter_optional_asgard:
+        CommandLine|contains: :\WINDOWS\system32\cmd.exe /c "
+        CurrentDirectory|contains: :\WINDOWS\Temp\asgard2-agent\
+    filter_optional_ibm_spectrumprotect:
+        ParentImage|contains: :\IBM\SpectrumProtect\webserver\scripts\
+        CommandLine|contains: :\IBM\SpectrumProtect\webserver\scripts\
+    filter_main_parent_null:
+        ParentImage: null
+    filter_main_parent_empty:
+        ParentImage: ''
+    condition: process_creation and (all of selection_* and not 1 of filter_main_*
+        and not 1 of filter_optional_*)
+falsepositives:
+    - Unknown
+level: medium
+ruletype: Sigma

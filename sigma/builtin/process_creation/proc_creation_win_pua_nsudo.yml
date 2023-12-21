@@ -43,10 +43,7 @@ detection:
             - '-M=S '
             - '-M=H '
             - -ShowWindowMode:Hide
-    condition: process_creation and (all of selection*)
-fields:
-    - CommandLine
-    - ParentCommandLine
+    condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate use by administrators
 level: high

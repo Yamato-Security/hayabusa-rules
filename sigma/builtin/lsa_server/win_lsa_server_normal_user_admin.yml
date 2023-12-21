@@ -16,8 +16,8 @@ tags:
 logsource:
     product: windows
     service: lsa-server
-    definition: 'Requirements: Microsoft-Windows-LSA/Operational ({199FE037-2B82-40A9-82AC-E1D46C792B99})
-        Event Log must be collected in order to receive the events.'
+    definition: 'Requirements: Microsoft-Windows-LSA/Operational (199FE037-2B82-40A9-82AC-E1D46C792B99)
+        Event Log must be enabled and collected in order to use this rule.'
 detection:
     lsa_server:
         Channel: Microsoft-Windows-LSA/Operational
@@ -29,12 +29,12 @@ detection:
             - -500}
             - -518}
             - -519}
-    filter_admin:
+    filter_main_admin:
         TargetUserSid|endswith:
             - '-500'
             - '-518'
             - '-519'
-    condition: lsa_server and (selection and not filter_admin)
+    condition: lsa_server and (selection and not 1 of filter_main_*)
 falsepositives:
     - Standard domain users who are part of the administrator group. These users shouldn't
         have these right. But in the case where it's necessary. They should be filtered

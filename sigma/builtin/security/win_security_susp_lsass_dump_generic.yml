@@ -8,7 +8,7 @@ references:
 author: Roberto Rodriguez, Teymur Kheirkhabarov, Dimitrios Slamaris, Mark Russinovich,
     Aleksey Potapov, oscd.community (update)
 date: 2019/11/01
-modified: 2023/10/11
+modified: 2023/12/19
 tags:
     - attack.credential_access
     - car.2019-04-004
@@ -104,7 +104,13 @@ detection:
         ProcessName|contains: :\Windows\SystemTemp\
         ProcessName|endswith: \GoogleUpdate.exe
         AccessList|contains: '%%4484'
-    condition: security and (1 of selection_* and not 1 of filter_main_*)
+    filter_optional_procmon:
+        ProcessName|endswith:
+            - \procmon64.exe
+            - \procmon.exe
+        AccessList|contains: '%%4484'
+    condition: security and (1 of selection_* and not 1 of filter_main_* and not 1
+        of filter_optional_*)
 falsepositives:
     - Legitimate software accessing LSASS process for legitimate reason; update the
         whitelist with it
