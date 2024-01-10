@@ -13,7 +13,7 @@ references:
 author: frack113, elhoim, Tim Shelton (fps, alias support), Swachchhanda Shrawan Poudel,
     Nasreddine Bencherchali (Nextron Systems)
 date: 2022/01/16
-modified: 2023/06/21
+modified: 2024/01/02
 tags:
     - attack.defense_evasion
     - attack.t1562.001
@@ -43,6 +43,10 @@ detection:
             - -DisableBehaviorMonitoring 1
             - -DisableBlockAtFirstSeen $true
             - -DisableBlockAtFirstSeen 1
+            - -DisableCatchupFullScan $true
+            - -DisableCatchupFullScan 1
+            - -DisableCatchupQuickScan $true
+            - -DisableCatchupQuickScan 1
             - -DisableIntrusionPreventionSystem $true
             - -DisableIntrusionPreventionSystem 1
             - -DisableIOAVProtection $true
@@ -57,6 +61,8 @@ detection:
             - -DisableScanningNetworkFiles 1
             - -DisableScriptScanning $true
             - -DisableScriptScanning 1
+            - -MAPSReporting $false
+            - -MAPSReporting 0
             - -drdsc $true
             - -drdsc 1
             - -drtm $true

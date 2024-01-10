@@ -9,7 +9,7 @@ references:
     - https://www.virustotal.com/gui/search/content%253A%2522Set-MpPreference%2520-Disable%2522/files
 author: Florian Roth (Nextron Systems)
 date: 2022/03/03
-modified: 2022/03/07
+modified: 2024/01/02
 tags:
     - attack.defense_evasion
     - attack.t1562.001
@@ -21,30 +21,40 @@ detection:
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
-    selection1:
+    selection_cli_cmdlet:
         CommandLine|contains:
             - 'Add-MpPreference '
             - 'Set-MpPreference '
-    selection2:
+    selection_cli_option:
         CommandLine|contains:
+            - 'DisableArchiveScanning '
             - 'DisableRealtimeMonitoring '
             - 'DisableIOAVProtection '
             - 'DisableBehaviorMonitoring '
             - 'DisableBlockAtFirstSeen '
-    selection3:
+            - 'DisableCatchupFullScan '
+            - 'DisableCatchupQuickScan '
+    selection_cli_value:
         CommandLine|contains:
             - $true
             - ' 1 '
-    encoded_command:
+    selection_encoded_modifier:
         CommandLine|base64offset|contains:
-            - 'DisableRealtimeMonitoring '
-            - 'DisableIOAVProtection '
-            - 'DisableBehaviorMonitoring '
-            - 'DisableBlockAtFirstSeen '
-            - 'disablerealtimemonitoring '
-            - 'disableioavprotection '
+            - 'disablearchivescanning '
+            - 'DisableArchiveScanning '
             - 'disablebehaviormonitoring '
+            - 'DisableBehaviorMonitoring '
             - 'disableblockatfirstseen '
+            - 'DisableBlockAtFirstSeen '
+            - 'disablecatchupfullscan '
+            - 'DisableCatchupFullScan '
+            - 'disablecatchupquickscan '
+            - 'DisableCatchupQuickScan '
+            - 'disableioavprotection '
+            - 'DisableIOAVProtection '
+            - 'disablerealtimemonitoring '
+            - 'DisableRealtimeMonitoring '
+    selection_encoded_direct:
         CommandLine|contains:
             - RABpAHMAYQBiAGwAZQBSAGUAYQBsAHQAaQBtAGUATQBvAG4AaQB0AG8AcgBpAG4AZwAgA
             - QAaQBzAGEAYgBsAGUAUgBlAGEAbAB0AGkAbQBlAE0AbwBuAGkAdABvAHIAaQBuAGcAIA
@@ -70,9 +80,12 @@ detection:
             - ZABpAHMAYQBiAGwAZQBiAGwAbwBjAGsAYQB0AGYAaQByAHMAdABzAGUAZQBuACAA
             - QAaQBzAGEAYgBsAGUAYgBsAG8AYwBrAGEAdABmAGkAcgBzAHQAcwBlAGUAbgAgA
             - kAGkAcwBhAGIAbABlAGIAbABvAGMAawBhAHQAZgBpAHIAcwB0AHMAZQBlAG4AIA
-    condition: process_creation and (all of selection* or encoded_command)
+            - RABpAHMAYQBiAGwAZQBDAGEAdABjAGgAdQBwAEYAdQBsAGwAUwBjAGEAbgA
+            - RABpAHMAYQBiAGwAZQBDAGEAdABjAGgAdQBwAFEAdQBpAGMAawBTAGMAYQBuAA
+            - RABpAHMAYQBiAGwAZQBBAHIAYwBoAGkAdgBlAFMAYwBhAG4AbgBpAG4AZwA
+    condition: process_creation and (all of selection_cli_* or 1 of selection_encoded_*)
 falsepositives:
-    - Possible Admin Activity
+    - Possible administrative activity
     - Other Cmdlets that may use the same parameters
 level: high
 ruletype: Sigma
