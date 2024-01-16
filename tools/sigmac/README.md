@@ -12,13 +12,10 @@
 Sigma rules have already been pre-converted to hayabusa format and placed in the `./rules/sigma` directory. 
 Please refer to this documentation to convert rules on your own for local testing, using the latest rules, etc...
 
-## Python requirements
-
-You need Python 3.8+ and the following module: `oyaml`
-
-```sh
-pip3 install oyaml
-```
+## Environment
+To run this script, [Poetry](https://python-poetry.org/) is required.
+Please refer to the official documentation for Poetry installation at the following link:
+https://python-poetry.org/docs/#installation
 
 ## About Sigma
 
@@ -75,10 +72,10 @@ detection:
 
 ## Usage
 
-1. `pip install oyaml`
-2. `git clone https://github.com/SigmaHQ/sigma.git`
-3. `git clone https://github.com/Yamato-Security/hayabusa-rules.git`
-4. `cd hayabusa-rules/tools/sigmac`
-5. `python logsource_mapping.py -r ../../../sigma -o ./converted_sigma_rules`
+1. `git clone https://github.com/SigmaHQ/sigma.git`
+2. `git clone https://github.com/Yamato-Security/hayabusa-rules.git`
+3. `cd hayabusa-rules/tools/sigmac`
+4. `poetry install --no-root`
+5. `poetry run python logsource_mapping.py -r ../../../sigma -o ./converted_sigma_rules`
 
 After executing the commands above, the rules converted to Hayabusa format will be output to the `./converted_sigma_rules` directory.
