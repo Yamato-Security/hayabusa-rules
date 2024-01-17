@@ -429,7 +429,7 @@ def merge_category_map(service_map: dict, logsources_lst: list) -> dict[str, lis
             merged_map[ls.category].append(ls)
     for k, v in service_map.items():
         merged_map[k].append(LogSource(category=None, service=k, channel=v, event_id=None))
-    LOGGER.debug(f"create category map done.")
+    LOGGER.debug("create category map done.")
     return merged_map
 
 
@@ -437,7 +437,7 @@ def find_windows_sigma_rule_files(root: str, rule_pattern: str):
     """
     指定したディレクトリから変換対象のSigmaファイルのファイルパスを取得する
     """
-    LOGGER.info(f"Start to collect target yml files path.")
+    LOGGER.info("Start to collect target yml files path.")
     if Path(root).exists() and Path(root).is_file() and rule_pattern.replace("*", "") in root:
         yield root
     for dirpath, dirnames, filenames in os.walk(root):
@@ -496,7 +496,7 @@ if __name__ == '__main__':
     registry_field_map = create_field_map("fieldmappings_registry", create_obj(script_dir, 'windows-audit.yaml'))
     antivirus_field_map = create_field_map("fieldmappings", create_obj(script_dir, 'windows-antivirus.yaml'))
     field_map = {"process_creation": process_creation_field_map} | {"antivirus": antivirus_field_map} | {"registry_set": registry_field_map}| {"registry_add": registry_field_map}| {"registry_event": registry_field_map}| {"registry_delete": registry_field_map}
-    LOGGER.info(f"Loading logsource mapping yaml(sysmon/windows-audit/windows-services) done.")
+    LOGGER.info("Loading logsource mapping yaml(sysmon/windows-audit/windows-services) done.")
 
     # Sigmaディレクトリから対象ファイルをリストアップ
     sigma_files = list(find_windows_sigma_rule_files(args.rule_path, args.rule_filter))
