@@ -1,5 +1,14 @@
 # Changes
 
+## v2.13.0-dev [2024/01/19]
+
+Package management for the sigma conversion backend is now handled by [Poetry](https://python-poetry.org/) and static code analysis is performed by [Ruff](https://github.com/astral-sh/ruff). (#567) (@fukusuket)
+
+## v2.12.0 [2023/12/19]
+
+Added field mapping support for registry rules (`service:`: `registry_add`, `registry_set`, `registry_event`) to detect built-in Windows event logs (`Security EID 4657`).
+Before, only Sysmon (`EID 12, 13, 14`) logs would be able to be detected. (#476) (@fukusuket)
+
 ## v2.6.0 [2023/07/06]
 
 Added support for `category: antivirus`. (#456) (@fukusuket)
