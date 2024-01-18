@@ -8,6 +8,7 @@ Package management for the sigma conversion backend is now handled by [Poetry](h
 
 Added field mapping support for registry rules (`service:`: `registry_add`, `registry_set`, `registry_event`) to detect built-in Windows event logs (`Security EID 4657`).
 Before, only Sysmon (`EID 12, 13, 14`) logs would be able to be detected. (#476) (@fukusuket)
+Also, added checks for ignoring rules that use field modifiers that Hayabusa does yet not support. (Ex: `|expand`) (#553, #554) (@fukusuket)
 
 ## v2.6.0 [2023/07/06]
 
