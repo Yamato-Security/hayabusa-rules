@@ -1,5 +1,15 @@
 # 変更点
 
+## v2.13.0-dev [2024/01/19]
+
+Sigma変換バックエンドのパッケージ管理は [Poetry](https://python-poetry.org/) 、静的コード分析は [Ruff](https://github.com/astral-sh/ruff) で実行するようにした。(#567) (@fukusuket)
+
+## v2.12.0 [2023/12/19]
+
+ビルトインWindowsイベントログ (`Security EID 4657`) を検出するために、レジストリ ルール (`service:`: `registry_add`、`registry_set`、`registry_event`) のフィールド マッピング サポートを追加した。
+以前は、Sysmon (「EID 12、13、14」) ログのみが検出していた。 (#476) (@fukusuket)
+また、Hayabusa がまだサポートしていないフィールド修飾子を使用するルールを無視するためのチェックも追加した。 (例: `|expand`) (#553, #554) (@fukusuket)
+
 ## v2.6.0 [2023/07/06]
 
 `category: antivirus`に対応した。 (#456) (@fukusuket)

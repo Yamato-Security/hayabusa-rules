@@ -12,14 +12,11 @@
 SigmaからHayabusa形式に変換されたルールが`./rules/sigma`ディレクトリに用意されています。 
 ローカル環境で新しいルールをテストしたり、Sigmaの最新のルールを変換したりしたい場合は、以下のドキュメンテーションをご参考下さい。
 
-## Pythonの環境依存
+## 実行環境
 
-Python 3.8以上と次のモジュールが必要です：`oyaml`  
-以下のコマンドでインストール可能です。
-
-```sh
-pip3 install oyaml
-```
+このスクリプトの実行には[Poetry](https://python-poetry.org/)が必要です。  
+以下公式ドキュメントを参考にPoetryをインストールしてください。  
+https://python-poetry.org/docs/#installation
 
 ## Sigmaについて
 
@@ -77,11 +74,11 @@ detection:
 
 ## 使い方
 
-1. `pip install oyaml`
-2. `git clone https://github.com/SigmaHQ/sigma.git`
-3. `git clone https://github.com/Yamato-Security/hayabusa-rules.git`
-4. `cd hayabusa-rules/tools/sigmac`
-5. `python logsource_mapping.py -r ../../../sigma -o ./converted_sigma_rules`
+1. `git clone https://github.com/SigmaHQ/sigma.git`
+2. `git clone https://github.com/Yamato-Security/hayabusa-rules.git`
+3. `cd hayabusa-rules/tools/sigmac`
+4. `poetry install --no-root`
+5. `poetry run python logsource_mapping.py -r ../../../sigma -o ./converted_sigma_rules`
 
 上記実行後、`./converted_sigma_rules`にHayabusa形式に変換されたルールが出力されます。
 
