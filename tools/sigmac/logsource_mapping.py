@@ -296,7 +296,7 @@ class LogsourceConverter:
                 val = self.transform_field_recursive(ls.category, val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
             if " of " not in new_obj['detection']['condition'] and not ls.is_detectable(new_obj['detection']):
-                LOGGER.error(f"This rule has incompatible field.{new_obj['detection']}. skip conversion.")
+                LOGGER.error(f"Error while converting rule [{self.sigma_path}]: This rule has incompatible field.{new_obj['detection']}. skip conversion.")
                 return
             field_map = self.field_map[ls.category] if ls.category in self.field_map else dict()
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
@@ -310,7 +310,7 @@ class LogsourceConverter:
             condition_str = new_obj['detection']['condition']
             if '%' in condition_str or '->' in condition_str:
                 LOGGER.error(
-                    f"Invalid character in condition [{condition_str}] file [{self.sigma_path}]. Skip conversion.")
+                    f"Error while converting rule [{self.sigma_path}]: Invalid character in condition [{condition_str}] file [{self.sigma_path}]. Skip conversion.")
                 continue  # conditionブロックに変な文字が入っているルールがある。この場合スキップ
             if ls.service == "sysmon":
                 self.sigma_converted.append((True, new_obj))
