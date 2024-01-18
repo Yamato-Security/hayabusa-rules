@@ -248,14 +248,14 @@ class LogsourceConverter:
             logsources = self.logsource_map.get(obj['logsource']['service'])
             if logsources:
                 return logsources
-            msg = f"This rule inconvertible service:[{obj['logsource']['service']}]. Skip conversion."
+            msg = f"This rule inconvertible service:[{obj['logsource']['service']}]. Conversion skipped."
             raise Exception(msg)
         elif 'category' in obj['logsource']:
             category = obj['logsource']['category']
             logsources = self.logsource_map.get(category)
             if logsources:
                 return logsources
-            msg = f"This rule has inconvertible service:[{category}]. Skip conversion."
+            msg = f"This rule has inconvertible service: [{category}]. Conversion skipped."
             raise Exception(msg)
         return []
 
@@ -267,7 +267,7 @@ class LogsourceConverter:
         keys = get_terminal_keys_recursive(obj["detection"], [])
         modifiers = {re.sub(r".*\|", "", k) for k in keys if "|" in k}
         if modifiers and [m for m in modifiers if m not in ["all", "base64", "base64offset", "cidr", "contains", "endswith", "endswithfield", "equalsfield", "re", "startswith"]]:
-            LOGGER.error(f"This rule has incompatible field.{obj['detection']}. skip conversion.")
+            LOGGER.error(f"This rule has incompatible field: {obj['detection']}. Conversion skipped.")
             return
         logsources = self.get_logsources(obj)
         if not logsources:
@@ -296,7 +296,7 @@ class LogsourceConverter:
                 val = self.transform_field_recursive(ls.category, val, ls.need_field_conversion())
                 new_obj['detection'][key] = val
             if " of " not in new_obj['detection']['condition'] and not ls.is_detectable(new_obj['detection']):
-                LOGGER.error(f"Error while converting rule [{self.sigma_path}]: This rule has incompatible field.{new_obj['detection']}. skip conversion.")
+                LOGGER.error(f"Error while converting rule [{self.sigma_path}]: This rule has incompatible field: {new_obj['detection']}. Conversion skipped.")
                 return
             field_map = self.field_map[ls.category] if ls.category in self.field_map else dict()
             new_obj['detection']['condition'] = ls.get_condition(new_obj['detection']['condition'],
@@ -310,7 +310,7 @@ class LogsourceConverter:
             condition_str = new_obj['detection']['condition']
             if '%' in condition_str or '->' in condition_str:
                 LOGGER.error(
-                    f"Error while converting rule [{self.sigma_path}]: Invalid character in condition [{condition_str}] file [{self.sigma_path}]. Skip conversion.")
+                    f"Error while converting rule [{self.sigma_path}]: Invalid character in condition [{condition_str}] file [{self.sigma_path}]. Conversion skipped.")
                 continue  # conditionブロックに変な文字が入っているルールがある。この場合スキップ
             if ls.service == "sysmon":
                 self.sigma_converted.append((True, new_obj))
@@ -450,7 +450,7 @@ def find_windows_sigma_rule_files(root: str, rule_pattern: str):
                     data = yaml.safe_load(f)
                 if data.get('logsource', {}).get('category') != "antivirus" \
                         and data.get('logsource', {}).get('product') != 'windows':
-                    LOGGER.debug(f"[{filepath}] has no windows rule. skip conversion.")
+                    LOGGER.debug(f"[{filepath}] has no windows rule. Conversion skipped.")
                 else:
                     yield filepath
             except Exception as e:
