@@ -44,7 +44,7 @@ jobs:
           cd -
           rm -rf hayabusa-rules/sigma/
           mkdir hayabusa-rules/sigma/
-          cp -r converted_rules/* hayabusa-rules/sigma/
+          cp -r hayabusa-rules/tools/sigmac/converted_rules/* hayabusa-rules/sigma/
 
       - name: Create Text
         id: create-text
