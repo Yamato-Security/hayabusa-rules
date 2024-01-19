@@ -505,6 +505,12 @@ if __name__ == '__main__':
                 p = Path(out_path)
                 if not p.parent.exists():
                     os.makedirs(p.parent)
+                # ruamelは以下のインデントを正しく処理できないので、文字列置換で対応する
+                parsed_yaml = parsed_yaml.replace("    type:", "      type:")
+                parsed_yaml = parsed_yaml.replace("      EventType:", "        EventType:")
+                parsed_yaml = parsed_yaml.replace("      OperationType:", "        OperationType:")
+                parsed_yaml = parsed_yaml.replace("      NewProcessName", "        NewProcessName")
+                parsed_yaml = parsed_yaml.replace("      CommandLine", "        CommandLine")
                 p.write_text(parsed_yaml, encoding="utf-8")  # 変換後のSigmaルール(yml形式の文字列)をファイルに出力
                 file_cnt += 1
                 LOGGER.debug(f"Converted to [{out_path}] done.")
