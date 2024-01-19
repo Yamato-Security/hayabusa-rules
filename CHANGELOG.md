@@ -2,7 +2,7 @@
 
 ## v2.13.0-dev [2024/01/19]
 
-Comments on YAML before conversion are left as is(#568) (@fukusuket)
+Comments in Sigma rules are left as is. Before, they would be stripped after conversion. (#568) (@fukusuket)
 Package management for the sigma conversion backend is now handled by [Poetry](https://python-poetry.org/) and static code analysis is performed by [Ruff](https://github.com/astral-sh/ruff). (#567) (@fukusuket)
 
 ## v2.12.0 [2023/12/19]
