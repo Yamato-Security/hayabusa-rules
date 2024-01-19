@@ -41,6 +41,7 @@ jobs:
           cd hayabusa-rules/tools/sigmac/
           poetry install --no-root
           poetry run python logsource_mapping.py -r ../../../sigma-repo -o converted_rules
+          cd -
           rm -rf hayabusa-rules/sigma/
           mkdir hayabusa-rules/sigma/
           cp -r converted_rules/* hayabusa-rules/sigma/
