@@ -316,7 +316,7 @@ class LogsourceConverter:
             with StringIO() as bs:
                 yaml = ruamel.yaml.YAML()
                 yaml.width = 4096
-                yaml.indent(mapping=2, sequence=4, offset=4)
+                yaml.indent(mapping=4, sequence=4, offset=4)
                 yaml.dump(obj, bs)
                 res.append((output_path, bs.getvalue()))
         return res
