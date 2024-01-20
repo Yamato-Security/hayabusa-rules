@@ -32,22 +32,19 @@ jobs:
           python-version: '3.10'
           token: '${{ secrets.GITHUB_TOKEN }}'
 
-      - name: download requirements.txt with curl 
-        uses: wei/curl@master
-        with:
-          args: https://raw.githubusercontent.com/Yamato-Security/hayabusa-rules/main/tools/sigmac/requirements.txt > requirements.txt 
-
-      - name: setup Python for use script
+      - name: setup Poetry
         run: |
-          pip install -r requirements.txt
-          rm requirements.txt
+          curl -sSL https://install.python-poetry.org | python3 -
 
       - name: Update sigma rules
         run: |
-          python3 hayabusa-rules/tools/sigmac/logsource_mapping.py -r sigma-repo -o converted_rules
+          cd hayabusa-rules/tools/sigmac/
+          poetry install --no-root
+          poetry run python logsource_mapping.py -r ../../../sigma-repo -o converted_rules
+          cd -
           rm -rf hayabusa-rules/sigma/
           mkdir hayabusa-rules/sigma/
-          cp -r converted_rules/* hayabusa-rules/sigma/
+          cp -r hayabusa-rules/tools/sigmac/converted_rules/* hayabusa-rules/sigma/
 
       - name: Create Text
         id: create-text
