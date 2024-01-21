@@ -24,10 +24,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - zxFunction
             - RemoteDiskXXXXX
-          NewProcessName|endswith: \rundll32.exe
+        NewProcessName|endswith: \rundll32.exe
     condition: process_creation and selection
 fields:
     - CommandLine

@@ -1,7 +1,8 @@
 title: Parent in Public Folder Suspicious Process
 id: 69bd9b97-2be2-41b6-9816-fb08757a4d1a
 status: test
-description: This rule detects suspicious processes with parent images located in the C:\Users\Public folder
+description: This rule detects suspicious processes with parent images located in
+    the C:\Users\Public folder
 references:
     - https://redcanary.com/blog/blackbyte-ransomware/
 author: Florian Roth (Nextron Systems)
@@ -20,7 +21,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - powershell
             - 'cmd.exe /c '
             - 'cmd.exe /r '

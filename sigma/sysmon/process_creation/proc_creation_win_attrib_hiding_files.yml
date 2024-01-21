@@ -20,19 +20,20 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \attrib.exe
-        - OriginalFileName: ATTRIB.EXE
+        -   Image|endswith: \attrib.exe
+        -   OriginalFileName: ATTRIB.EXE
     selection_cli:
-          CommandLine|contains: ' +h '
+        CommandLine|contains: ' +h '
     filter_msiexec:
-          CommandLine|contains: '\desktop.ini '
+        CommandLine|contains: '\desktop.ini '
     filter_intel:
         ParentImage|endswith: \cmd.exe
-          CommandLine: +R +H +S +A \\\*.cui
+        CommandLine: +R +H +S +A \\\*.cui
         ParentCommandLine: C:\\WINDOWS\\system32\\\*.bat
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
-    - IgfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of cmd.exe and igfxCUIService.exe is the parent of the cmd.exe)
+    - IgfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of
+        cmd.exe and igfxCUIService.exe is the parent of the cmd.exe)
     - Msiexec.exe hiding desktop.ini
 level: medium
 ruletype: Sigma

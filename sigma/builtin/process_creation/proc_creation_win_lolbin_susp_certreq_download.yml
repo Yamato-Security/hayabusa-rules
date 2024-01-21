@@ -1,7 +1,8 @@
 title: Suspicious Certreq Command to Download
 id: 4480827a-9799-4232-b2c4-ccc6c4e9e12b
 status: test
-description: Detects a suspicious certreq execution taken from the LOLBAS examples, which can be abused to download (small) files
+description: Detects a suspicious certreq execution taken from the LOLBAS examples,
+    which can be abused to download (small) files
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/Certreq/
 author: Christian Burkard (Nextron Systems)
@@ -18,10 +19,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \certreq.exe
-        - OriginalFileName: CertReq.exe
+        -   NewProcessName|endswith: \certreq.exe
+        -   OriginalFileName: CertReq.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' -Post '
             - ' -config '
             - ' http'

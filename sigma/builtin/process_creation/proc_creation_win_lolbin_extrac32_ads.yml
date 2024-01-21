@@ -18,10 +18,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - extrac32.exe
             - .cab
-          CommandLine|re: :[^\\]
+        CommandLine|re: :[^\\]
     condition: process_creation and selection
 falsepositives:
     - Unknown

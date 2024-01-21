@@ -1,7 +1,8 @@
 title: Potential Data Exfiltration Via Curl.EXE
 id: 00bca14a-df4e-4649-9054-3f2aa676bc04
 status: test
-description: Detects the execution of the "curl" process with "upload" flags. Which might indicate potential data exfiltration
+description: Detects the execution of the "curl" process with "upload" flags. Which
+    might indicate potential data exfiltration
 references:
     - https://twitter.com/d1r4c/status/1279042657508081664
     - https://medium.com/@petehouston/upload-files-with-curl-93064dcccc76
@@ -23,17 +24,17 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \curl.exe
-        - Product: The curl executable
+        -   NewProcessName|endswith: \curl.exe
+        -   Product: The curl executable
     selection_cli:
-        - CommandLine|contains:
-            - ' --form'   # Also covers the "--form-string"
-            - ' --upload-file '
-            - ' --data '
-            - ' --data-'   # For flags like: "--data-ascii", "--data-binary", "--data-raw", "--data-urlencode"
-        - CommandLine|re: \s-[FTd]\s   # We use regex to ensure a case sensitive argument detection
+        -   CommandLine|contains:
+                - ' --form'
+                - ' --upload-file '
+                - ' --data '
+                - ' --data-'
+        -   CommandLine|re: \s-[FTd]\s
     filter_optional_localhost:
-          CommandLine|contains:
+        CommandLine|contains:
             - ://localhost
             - ://127.0.0.1
     condition: process_creation and (all of selection_* and not 1 of filter_optional_*)

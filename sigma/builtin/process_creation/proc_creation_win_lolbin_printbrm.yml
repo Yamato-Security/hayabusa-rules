@@ -1,7 +1,8 @@
 title: PrintBrm ZIP Creation of Extraction
 id: cafeeba3-01da-4ab4-b6c4-a31b1d9730c7
 status: test
-description: Detects the execution of the LOLBIN PrintBrm.exe, which can be used to create or extract ZIP files. PrintBrm.exe should not be run on a normal workstation.
+description: Detects the execution of the LOLBIN PrintBrm.exe, which can be used to
+    create or extract ZIP files. PrintBrm.exe should not be run on a normal workstation.
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/PrintBrm/
 author: frack113
@@ -19,10 +20,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' -f'
             - .zip
-          NewProcessName|endswith: \PrintBrm.exe
+        NewProcessName|endswith: \PrintBrm.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

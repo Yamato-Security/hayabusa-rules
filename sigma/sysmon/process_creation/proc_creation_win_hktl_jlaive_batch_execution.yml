@@ -24,17 +24,17 @@ detection:
         ParentCommandLine|endswith: .bat
     selection1:
         Image|endswith: \xcopy.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - powershell.exe
             - .bat.exe
     selection2:
         Image|endswith: \xcopy.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - pwsh.exe
             - .bat.exe
     selection3:
         Image|endswith: \attrib.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - +s
             - +h
             - .bat.exe

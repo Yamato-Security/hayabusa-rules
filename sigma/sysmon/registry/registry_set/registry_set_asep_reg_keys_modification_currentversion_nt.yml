@@ -1,15 +1,16 @@
 title: CurrentVersion NT Autorun Keys Modification
 id: cbf93e5d-ca6c-4722-8bea-e9119007c248
 related:
-    - id: 17f878b8-9968-4578-b814-c4217fc5768c
-      type: obsoletes
+    -   id: 17f878b8-9968-4578-b814-c4217fc5768c
+        type: obsoletes
 status: experimental
 description: Detects modification of autostart extensibility point (ASEP) in registry.
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
     - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
-    - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d # a list with registry keys
-author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin, oscd.community, Tim Shelton, frack113 (split)
+    - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
+author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
+    oscd.community, Tim Shelton, frack113 (split)
 date: 2019/10/25
 modified: 2023/08/17
 tags:
@@ -36,14 +37,14 @@ detection:
             - \Winlogon\AlternateShells\AvailableShells
             - \Windows\IconServiceLib
             - \Windows\Appinit_Dlls
-            - \Image File Execution Options   # Covered in better details in 36803969-5421-41ec-b92f-8500f79c23b0
+            - \Image File Execution Options
             - \Font Drivers
             - \Drivers32
             - \Windows\Run
             - \Windows\Load
     filter_empty:
         Details: (Empty)
-    filter_legitimate_subkey:  # Legitimately used subkeys of \Image File Execution Options, which are not used for persistence (see https://pentestlab.blog/2020/01/13/persistence-image-file-execution-options-injection/)
+    filter_legitimate_subkey:
         TargetObject|contains: \Image File Execution Options\
         TargetObject|endswith:
             - \DisableExceptionChainValidation
@@ -52,12 +53,12 @@ detection:
         Image|startswith: C:\Program Files (x86)\Microsoft\Temp\
         Image|endswith: \MicrosoftEdgeUpdate.exe
     filter_msoffice:
-        - TargetObject|contains:
-            - \ClickToRunStore\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\
-            - \ClickToRun\REGISTRY\MACHINE\Software\Microsoft\Windows NT\CurrentVersion\
-        - Image:
-            - C:\Program Files\Microsoft Office\root\integration\integrator.exe
-            - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
+        -   TargetObject|contains:
+                - \ClickToRunStore\HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\
+                - \ClickToRun\REGISTRY\MACHINE\Software\Microsoft\Windows NT\CurrentVersion\
+        -   Image:
+                - C:\Program Files\Microsoft Office\root\integration\integrator.exe
+                - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
     filter_officeclicktorun:
         Image|startswith:
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
@@ -76,17 +77,20 @@ detection:
         Image|endswith: \ngen.exe
     filter_onedrive:
         Image|endswith: \AppData\Local\Microsoft\OneDrive\StandaloneUpdater\OneDriveSetup.exe
-        TargetObject|endswith: \Microsoft\Windows\CurrentVersion\RunOnce\Delete Cached Update Binary
+        TargetObject|endswith: \Microsoft\Windows\CurrentVersion\RunOnce\Delete Cached
+            Update Binary
         Details|startswith: C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\
         Details|endswith: \AppData\Local\Microsoft\OneDrive\Update\OneDriveSetup.exe"
-    condition: registry_set and (nt_current_version_base and nt_current_version and not 1 of filter_*)
+    condition: registry_set and (nt_current_version_base and nt_current_version and
+        not 1 of filter_*)
 fields:
     - SecurityID
     - ObjectName
     - OldValueType
     - NewValueType
 falsepositives:
-    - Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason
+    - Legitimate software automatically (mostly, during installation) sets up autorun
+        keys for legitimate reason
     - Legitimate administrator sets up autorun keys for legitimate reason
 level: medium
 ruletype: Sigma

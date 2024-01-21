@@ -1,7 +1,8 @@
 title: PUA - Crassus Execution
 id: 2c32b543-1058-4808-91c6-5b31b8bed6c5
 status: experimental
-description: Detects Crassus, a Windows privilege escalation discovery tool, based on PE metadata characteristics.
+description: Detects Crassus, a Windows privilege escalation discovery tool, based
+    on PE metadata characteristics.
 references:
     - https://github.com/vu-ls/Crassus
 author: pH-T (Nextron Systems)
@@ -18,9 +19,9 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|endswith: \Crassus.exe
-        - OriginalFileName: Crassus.exe
-        - Description|contains: Crassus
+        -   Image|endswith: \Crassus.exe
+        -   OriginalFileName: Crassus.exe
+        -   Description|contains: Crassus
     condition: process_creation and selection
 falsepositives:
     - Unlikely

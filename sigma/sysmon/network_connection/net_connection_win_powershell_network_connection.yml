@@ -1,7 +1,8 @@
 title: PowerShell Initiated Network Connection
 id: 1f21ec3f-810d-4b0e-8045-322202e22b4b
 status: experimental
-description: Detects a PowerShell process that initiates network connections. Check for suspicious target ports and target systems.
+description: Detects a PowerShell process that initiates network connections. Check
+    for suspicious target ports and target systems.
 references:
     - https://www.youtube.com/watch?v=DLtJTxMWZ2o
 author: Florian Roth (Nextron Systems)
@@ -44,19 +45,18 @@ detection:
             - 172.30.
             - 172.31.
             - 127.0.0.1
-        User|contains: # covers many language settings
+        User|contains:
             - AUTHORI
             - AUTORI
     filter_main_local_ipv6:
         DestinationIp|startswith:
-            - ::1    # IPv6 loopback variant
-            - 0:0:0:0:0:0:0:1    # IPv6 loopback variant
-            - 'fe80:'  # link-local address
-            - fc    # private address range fc00::/7
-            - fd    # private address range fc00::/7
+            - ::1
+            - 0:0:0:0:0:0:0:1
+            - 'fe80:'
+            - fc
+            - fd
     filter_main_msrange:
         DestinationIp|startswith:
-            # Subnet: 20.184.0.0/13
             - 20.184.
             - 20.185.
             - 20.186.
@@ -67,7 +67,6 @@ detection:
             - 20.191.
             - 23.79.
             - 51.10.
-            # Subnet: 51.103.210.0/23
             - 51.103.
             - 51.104.
             - 51.105.
@@ -76,6 +75,7 @@ detection:
 falsepositives:
     - Administrative scripts
     - Microsoft IP range
-    - Additional filters are required. Adjust to your environment (e.g. extend filters with company's ip range')
+    - Additional filters are required. Adjust to your environment (e.g. extend filters
+        with company's ip range')
 level: low
 ruletype: Sigma

@@ -22,7 +22,6 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         TargetFilename|endswith:
-            # Removed the start just in case the logging backend doesn't expand ENV variables when they're used
             - \Microsoft\Event Viewer\RecentViews
             - \Microsoft\EventV~1\RecentViews
     filter:

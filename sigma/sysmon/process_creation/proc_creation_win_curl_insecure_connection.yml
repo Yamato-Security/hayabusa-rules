@@ -17,11 +17,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \curl.exe
-        - OriginalFileName: curl.exe
+        -   Image|endswith: \curl.exe
+        -   OriginalFileName: curl.exe
     selection_cli:
-        - CommandLine|re: \s-k\s
-        - CommandLine|contains: --insecure
+        -   CommandLine|re: \s-k\s
+        -   CommandLine|contains: --insecure
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Access to badly maintained internal or development systems

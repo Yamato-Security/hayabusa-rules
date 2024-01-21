@@ -1,8 +1,8 @@
 title: Vulnerable Driver Load By Name
 id: 39b64854-5497-4b57-a448-40977b8c9679
 related:
-    - id: 7aaaf4b8-e47c-4295-92ee-6ed40a6f60c8
-      type: derived
+    -   id: 7aaaf4b8-e47c-4295-92ee-6ed40a6f60c8
+        type: derived
 status: deprecated
 description: Detects the load of known vulnerable drivers via their names only.
 references:
@@ -366,7 +366,10 @@ detection:
             - \amsdk.sys
     condition: driver_load and selection
 falsepositives:
-    - False positives may occur if one of the vulnerable driver names mentioned above didn't change its name between versions. So always make sure that the driver being loaded is the legitimate one and the non-vulnerable version.
-    - If you experience a lot of FP you could comment the driver name or its exact known legitimate location (when possible)
+    - False positives may occur if one of the vulnerable driver names mentioned above
+        didn't change its name between versions. So always make sure that the driver
+        being loaded is the legitimate one and the non-vulnerable version.
+    - If you experience a lot of FP you could comment the driver name or its exact
+        known legitimate location (when possible)
 level: low
 ruletype: Sigma

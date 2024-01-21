@@ -25,7 +25,7 @@ detection:
         Image|endswith:
             - \powershell.exe
             - \pwsh.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - Get-Content
             - -Stream
     condition: process_creation and selection

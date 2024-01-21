@@ -18,7 +18,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - \Services\VSS\Diag
             - /d Disabled
     condition: process_creation and selection

@@ -21,9 +21,9 @@ detection:
         Channel: Security
     selection_create:
         NewName|contains: \CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\open
-          OperationType: '%%1905'
+        OperationType: '%%1905'
     selection_set:
-          OperationType: '%%1905'
+        OperationType: '%%1905'
         ObjectName|contains: \CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\open\command\(Default)
     condition: registry_event and (1 of selection_*)
 falsepositives:

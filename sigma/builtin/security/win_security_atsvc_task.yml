@@ -1,7 +1,8 @@
 title: Remote Task Creation via ATSVC Named Pipe
 id: f6de6525-4509-495a-8a82-1f8b0ed73a00
 status: test
-description: Detects remote task creation via at.exe or API interacting with ATSVC namedpipe
+description: Detects remote task creation via at.exe or API interacting with ATSVC
+    namedpipe
 references:
     - https://blog.menasec.net/2019/03/threat-hunting-25-scheduled-tasks-for.html
 author: Samir Bousseaden
@@ -16,13 +17,14 @@ tags:
 logsource:
     product: windows
     service: security
-    definition: The advanced audit policy setting "Object Access > Audit Detailed File Share" must be configured for Success/Failure
+    definition: The advanced audit policy setting "Object Access > Audit Detailed
+        File Share" must be configured for Success/Failure
 detection:
     security:
         Channel: Security
     selection:
         EventID: 5145
-        ShareName: \\\\\*\\IPC$   # looking for the string \\*\IPC$
+        ShareName: \\\\\*\\IPC$
         RelativeTargetName: atsvc
         Accesses|contains: WriteData
     condition: security and selection

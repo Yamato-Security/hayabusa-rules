@@ -1,12 +1,12 @@
 title: Windows Defender Configuration Changes
 id: 801bd44f-ceed-4eb6-887c-11544633c0aa
 related:
-    - id: 1321dc4e-a1fe-481d-a016-52c45f0c8b4f
-      type: similar
-    - id: a3ab73f1-bd46-4319-8f06-4b20d0617886
-      type: similar
-    - id: 91903aba-1088-42ee-b680-d6d94fe002b0
-      type: similar
+    -   id: 1321dc4e-a1fe-481d-a016-52c45f0c8b4f
+        type: similar
+    -   id: a3ab73f1-bd46-4319-8f06-4b20d0617886
+        type: similar
+    -   id: 91903aba-1088-42ee-b680-d6d94fe002b0
+        type: similar
 status: stable
 description: Detects suspicious changes to the Windows Defender configuration
 references:
@@ -25,17 +25,13 @@ detection:
     windefend:
         Channel: Microsoft-Windows-Windows Defender/Operational
     selection:
-        EventID: 5007 # The antimalware platform configuration changed.
+        EventID: 5007
         NewValue|contains:
-            # TODO: Add more suspicious values
             - '\Windows Defender\DisableAntiSpyware '
-            # - '\Windows Defender\Features\TamperProtection ' # Might produce FP
             - '\Windows Defender\Scan\DisableRemovableDriveScanning '
             - '\Windows Defender\Scan\DisableScanningMappedNetworkDrivesForFullScan '
             - '\Windows Defender\SpyNet\DisableBlockAtFirstSeen '
             - '\Real-Time Protection\SpyNetReporting '
-            # Exclusions changes are covered in 1321dc4e-a1fe-481d-a016-52c45f0c8b4f
-            # Exploit guard changes are covered in a3ab73f1-bd46-4319-8f06-4b20d0617886
     condition: windefend and selection
 falsepositives:
     - Administrator activity (must be investigated)

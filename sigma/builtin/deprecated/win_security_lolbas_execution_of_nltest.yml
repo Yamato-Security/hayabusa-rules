@@ -1,7 +1,8 @@
 title: Correct Execution of Nltest.exe
 id: eeb66bbb-3dde-4582-815a-584aee9fe6d1
 status: deprecated
-description: The attacker might use LOLBAS nltest.exe for discovery of domain controllers, domain trusts, parent domain and the current user permissions.
+description: The attacker might use LOLBAS nltest.exe for discovery of domain controllers,
+    domain trusts, parent domain and the current user permissions.
 references:
     - https://jpcertcc.github.io/ToolAnalysisResultSheet/details/nltest.htm
     - https://attack.mitre.org/software/S0359/
@@ -10,9 +11,9 @@ date: 2021/10/04
 modified: 2023/02/02
 tags:
     - attack.discovery
-    - attack.t1482 # enumerate trusted domains by using commands such as nltest /domain_trusts
-    - attack.t1018 # enumerate remote domain controllers using options such as /dclist and /dsgetdc
-    - attack.t1016 # enumerate the parent domain of a local machine using /parentdomain
+    - attack.t1482
+    - attack.t1018
+    - attack.t1016
 logsource:
     product: windows
     service: security

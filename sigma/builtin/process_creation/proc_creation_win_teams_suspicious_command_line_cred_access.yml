@@ -1,9 +1,13 @@
 title: Potentially Suspicious Command Targeting Teams Sensitive Files
 id: d2eb17db-1d39-41dc-b57f-301f6512fa75
 status: experimental
-description: |
-    Detects a commandline containing references to the Microsoft Teams database or cookies files from a process other than Teams.
-    The database might contain authentication tokens and other sensitive information about the logged in accounts.
+description: 'Detects a commandline containing references to the Microsoft Teams database
+    or cookies files from a process other than Teams.
+
+    The database might contain authentication tokens and other sensitive information
+    about the logged in accounts.
+
+    '
 references:
     - https://www.bleepingcomputer.com/news/security/microsoft-teams-stores-auth-tokens-as-cleartext-in-windows-linux-macs/
     - https://www.vectra.ai/blogpost/undermining-microsoft-teams-security-by-mining-tokens
@@ -21,11 +25,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - \Microsoft\Teams\Cookies
             - \Microsoft\Teams\Local Storage\leveldb
     filter_main_legit_locations:
-          NewProcessName|endswith: \Microsoft\Teams\current\Teams.exe
+        NewProcessName|endswith: \Microsoft\Teams\current\Teams.exe
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

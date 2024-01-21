@@ -1,7 +1,8 @@
 title: Potential Manage-bde.wsf Abuse To Proxy Execution
 id: c363385c-f75d-4753-a108-c1a8e28bdbda
 status: test
-description: Detects potential abuse of the "manage-bde.wsf" script as a LOLBIN to proxy execution
+description: Detects potential abuse of the "manage-bde.wsf" script as a LOLBIN to
+    proxy execution
 references:
     - https://lolbas-project.github.io/lolbas/Scripts/Manage-bde/
     - https://gist.github.com/bohops/735edb7494fe1bd1010d67823842b712
@@ -22,18 +23,19 @@ detection:
         EventID: 4688
         Channel: Security
     selection_wscript_img:
-        - NewProcessName|endswith: \wscript.exe
-        - OriginalFileName: wscript.exe
+        -   NewProcessName|endswith: \wscript.exe
+        -   OriginalFileName: wscript.exe
     selection_wscript_cli:
-          CommandLine|contains: manage-bde.wsf
+        CommandLine|contains: manage-bde.wsf
     selection_parent:
         ParentCommandLine|contains: manage-bde.wsf
         ParentProcessName|endswith:
             - \cscript.exe
             - \wscript.exe
     selection_filter_cmd:
-          NewProcessName|endswith: \cmd.exe
-    condition: process_creation and (all of selection_wscript_* or (selection_parent and not selection_filter_cmd))
+        NewProcessName|endswith: \cmd.exe
+    condition: process_creation and (all of selection_wscript_* or (selection_parent
+        and not selection_filter_cmd))
 falsepositives:
     - Unlikely
 level: high

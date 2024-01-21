@@ -19,14 +19,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \mstsc.exe
-        - OriginalFileName: mstsc.exe
+        -   NewProcessName|endswith: \mstsc.exe
+        -   OriginalFileName: mstsc.exe
     selection_cli:
-          CommandLine|endswith:
+        CommandLine|endswith:
             - .rdp
             - .rdp"
     filter_optional_wsl:
-          CommandLine|contains: C:\ProgramData\Microsoft\WSL\wslg.rdp
+        CommandLine|contains: C:\ProgramData\Microsoft\WSL\wslg.rdp
         ParentProcessName: C:\Windows\System32\lxss\wslhost.exe
     condition: process_creation and (all of selection_* and not 1 of filter_optional_*)
 falsepositives:

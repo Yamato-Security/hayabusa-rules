@@ -1,8 +1,8 @@
 title: Exports Registry Key To a File
 id: f0e53e89-8d22-46ea-9db5-9d4796ee2f8a
 related:
-    - id: 82880171-b475-4201-b811-e9c826cd5eaa
-      type: similar
+    -   id: 82880171-b475-4201-b811-e9c826cd5eaa
+        type: similar
 status: test
 description: Detects the export of the target Registry key to a file.
 references:
@@ -22,18 +22,18 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \regedit.exe
-        - OriginalFileName: REGEDIT.EXE
+        -   NewProcessName|endswith: \regedit.exe
+        -   OriginalFileName: REGEDIT.EXE
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' /E '
             - ' -E '
-    filter_1:   # filters to avoid intersection with critical keys rule
-          CommandLine|contains:
+    filter_1:
+        CommandLine|contains:
             - hklm
             - hkey_local_machine
     filter_2:
-          CommandLine|endswith:
+        CommandLine|endswith:
             - \system
             - \sam
             - \security

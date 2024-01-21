@@ -1,7 +1,8 @@
 title: Suspicious Non PowerShell WSMAN COM Provider
 id: df9a0e0e-fedb-4d6c-8668-d765dfc92aa7
 status: test
-description: Detects suspicious use of the WSMAN provider without PowerShell.exe as the host application.
+description: Detects suspicious use of the WSMAN provider without PowerShell.exe as
+    the host application.
 references:
     - https://twitter.com/chadtilbury/status/1275851297770610688
     - https://bohops.com/2020/05/12/ws-management-com-another-approach-for-winrm-lateral-movement/
@@ -27,7 +28,6 @@ detection:
             - HostApplication=powershell
             - HostApplication=C:\Windows\System32\WindowsPowerShell\v1.0\powershell
             - HostApplication=C:\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell
-            # In some cases powershell was invoked with inverted slashes
             - HostApplication=C:/Windows/System32/WindowsPowerShell/v1.0/powershell
             - HostApplication=C:/Windows/SysWOW64/WindowsPowerShell/v1.0/powershell
     condition: powershell_classic and (selection and not 1 of filter_main_*)

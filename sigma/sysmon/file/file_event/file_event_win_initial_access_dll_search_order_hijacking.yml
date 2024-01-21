@@ -1,7 +1,9 @@
 title: Potential Initial Access via DLL Search Order Hijacking
 id: dbbd9f66-2ed3-4ca2-98a4-6ea985dd1a1c
 status: test
-description: Detects attempts to create a DLL file to a known desktop application dependencies folder such as Slack, Teams or OneDrive and by an unusual process. This may indicate an attempt to load a malicious module via DLL search order hijacking.
+description: Detects attempts to create a DLL file to a known desktop application
+    dependencies folder such as Slack, Teams or OneDrive and by an unusual process.
+    This may indicate an attempt to load a malicious module via DLL search order hijacking.
 references:
     - https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-5d46dd4ac6866b4337ec126be8cee0e115467b3e8703794ba6f6df6432c806bc
     - https://posts.specterops.io/automating-dll-hijack-discovery-81c4295904b0
@@ -24,7 +26,6 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith:
-            # add more processes when you find them
             - \winword.exe
             - \excel.exe
             - \powerpnt.exe
@@ -44,7 +45,6 @@ detection:
             - \Users\
             - \AppData\
         TargetFilename|contains:
-            # add more suspicious paths when you find them
             - \Microsoft\OneDrive\
             - \Microsoft OneDrive\
             - \Microsoft\Teams\

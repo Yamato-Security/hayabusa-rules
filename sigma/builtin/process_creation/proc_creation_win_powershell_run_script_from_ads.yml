@@ -18,13 +18,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - Get-Content
             - -Stream
         ParentProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
     condition: process_creation and selection

@@ -22,7 +22,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: ' /dest:rdp-tcp#'
+        CommandLine|contains: ' /dest:rdp-tcp#'
     condition: process_creation and selection
 falsepositives:
     - Unknown

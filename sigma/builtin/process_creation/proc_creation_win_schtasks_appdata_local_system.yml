@@ -20,23 +20,22 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - /Create
             - /RU
             - /TR
             - C:\Users\
             - \AppData\Local\
-          CommandLine|contains:
-            - NT AUT   # This covers the usual NT AUTHORITY\SYSTEM
-            - ' SYSTEM ' # SYSTEM is a valid value for schtasks hence it gets it's own value with space
-          NewProcessName|endswith: \schtasks.exe
+        CommandLine|contains:
+            - NT AUT
+            - ' SYSTEM '
+        NewProcessName|endswith: \schtasks.exe
     filter:
-        # FP from test set in SIGMA
-          CommandLine|contains: /TN TVInstallRestore
+        CommandLine|contains: /TN TVInstallRestore
         ParentProcessName|contains|all:
             - \AppData\Local\Temp\
             - TeamViewer_.exe
-          NewProcessName|endswith: \schtasks.exe
+        NewProcessName|endswith: \schtasks.exe
     condition: process_creation and (selection and not filter)
 falsepositives:
     - Unknown

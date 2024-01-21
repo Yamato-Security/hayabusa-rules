@@ -23,37 +23,38 @@ detection:
         Image|endswith: \rundll32.exe
         Initiated: 'true'
     filter:
-        - DestinationIp|startswith:
-            - '10.'
-            - 192.168.
-            - 172.16.
-            - 172.17.
-            - 172.18.
-            - 172.19.
-            - 172.20.
-            - 172.21.
-            - 172.22.
-            - 172.23.
-            - 172.24.
-            - 172.25.
-            - 172.26.
-            - 172.27.
-            - 172.28.
-            - 172.29.
-            - 172.30.
-            - 172.31.
-            - '127.'
-            - '20.'   # Microsoft range, caused some FPs
-            - 51.103.     # Microsoft range, caused some FPs
-            - 51.104.     # Microsoft range, caused some FPs
-            - 51.105.     # Microsoft range, caused some FPs
-        - CommandLine|contains: PcaSvc.dll,PcaPatchSdbTask
-        - SourceHostname|endswith: .internal.cloudapp.net
+        -   DestinationIp|startswith:
+                - '10.'
+                - 192.168.
+                - 172.16.
+                - 172.17.
+                - 172.18.
+                - 172.19.
+                - 172.20.
+                - 172.21.
+                - 172.22.
+                - 172.23.
+                - 172.24.
+                - 172.25.
+                - 172.26.
+                - 172.27.
+                - 172.28.
+                - 172.29.
+                - 172.30.
+                - 172.31.
+                - '127.'
+                - '20.'
+                - 51.103.
+                - 51.104.
+                - 51.105.
+        -   CommandLine|contains: PcaSvc.dll,PcaPatchSdbTask
+        -   SourceHostname|endswith: .internal.cloudapp.net
     filter_update_processes:
         ParentImage: C:\Windows\System32\svchost.exe
         DestinationPort: 443
     condition: network_connection and (selection and not 1 of filter*)
 falsepositives:
-    - Communication to other corporate systems that use IP addresses from public address spaces
+    - Communication to other corporate systems that use IP addresses from public address
+        spaces
 level: medium
 ruletype: Sigma

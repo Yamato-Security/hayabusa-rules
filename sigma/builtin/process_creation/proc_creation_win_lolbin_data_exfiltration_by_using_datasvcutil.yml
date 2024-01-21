@@ -22,13 +22,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - '/in:'
             - '/out:'
             - '/uri:'
     selection_img:
-        - NewProcessName|endswith: \DataSvcUtil.exe
-        - OriginalFileName: DataSvcUtil.exe
+        -   NewProcessName|endswith: \DataSvcUtil.exe
+        -   OriginalFileName: DataSvcUtil.exe
     condition: process_creation and (all of selection*)
 fields:
     - SubjectUserName
@@ -37,7 +37,10 @@ fields:
     - ParentCommandLine
 falsepositives:
     - DataSvcUtil.exe being used may be performed by a system administrator.
-    - Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.
-    - DataSvcUtil.exe being executed from unfamiliar users should be investigated. If known behavior is causing false positives, it can be exempted from the rule.
+    - Verify whether the user identity, user agent, and/or hostname should be making
+        changes in your environment.
+    - DataSvcUtil.exe being executed from unfamiliar users should be investigated.
+        If known behavior is causing false positives, it can be exempted from the
+        rule.
 level: medium
 ruletype: Sigma

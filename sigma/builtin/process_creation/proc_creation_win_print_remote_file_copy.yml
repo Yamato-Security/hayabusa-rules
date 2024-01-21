@@ -19,13 +19,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|startswith: print
-          CommandLine|contains|all:
+        CommandLine|startswith: print
+        CommandLine|contains|all:
             - /D
             - .exe
-          NewProcessName|endswith: \print.exe
+        NewProcessName|endswith: \print.exe
     filter_print:
-          CommandLine|contains: print.exe
+        CommandLine|contains: print.exe
     condition: process_creation and (selection and not filter_print)
 falsepositives:
     - Unknown

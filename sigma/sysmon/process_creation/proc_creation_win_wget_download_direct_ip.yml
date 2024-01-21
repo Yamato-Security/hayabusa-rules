@@ -1,7 +1,8 @@
 title: Suspicious File Download From IP Via Wget.EXE
 id: 17f0c0a8-8bd5-4ee0-8c5f-a342c0199f35
 status: experimental
-description: Detects potentially suspicious file downloads directly from IP addresses using Wget.exe
+description: Detects potentially suspicious file downloads directly from IP addresses
+    using Wget.exe
 references:
     - https://www.gnu.org/software/wget/manual/wget.html
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -17,17 +18,17 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \wget.exe
-        - OriginalFileName: wget.exe
+        -   Image|endswith: \wget.exe
+        -   OriginalFileName: wget.exe
     selection_ip:
-          CommandLine|re: ://[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}
+        CommandLine|re: ://[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}
     selection_http:
-          CommandLine|contains: http
+        CommandLine|contains: http
     selection_flag:
-        - CommandLine|re: \s-O\s
-        - CommandLine|contains: --output-document
+        -   CommandLine|re: \s-O\s
+        -   CommandLine|contains: --output-document
     selection_ext:
-          CommandLine|endswith:
+        CommandLine|endswith:
             - .ps1
             - .ps1'
             - .ps1"

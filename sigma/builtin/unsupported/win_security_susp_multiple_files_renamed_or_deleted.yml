@@ -1,7 +1,8 @@
 title: Suspicious Multiple File Rename Or Delete Occurred
 id: 97919310-06a7-482c-9639-92b67ed63cf8
 status: unsupported
-description: Detects multiple file rename or delete events occurrence within a specified period of time by a same user (these events may signalize about ransomware activity).
+description: Detects multiple file rename or delete events occurrence within a specified
+    period of time by a same user (these events may signalize about ransomware activity).
 references:
     - https://www.manageengine.com/data-security/how-to/how-to-detect-ransomware-attacks.html
 author: Vasiliy Burov, oscd.community
@@ -13,7 +14,9 @@ tags:
 logsource:
     product: windows
     service: security
-    definition: 'Requirements: Audit Policy : Policies/Windows Settings/Security Settings/Local Policies/Audit Policy/Audit object access, Policies/Windows Settings/Security Settings/Advanced Audit Policy Configuration/Object Access'
+    definition: 'Requirements: Audit Policy : Policies/Windows Settings/Security Settings/Local
+        Policies/Audit Policy/Audit object access, Policies/Windows Settings/Security
+        Settings/Advanced Audit Policy Configuration/Object Access'
 detection:
     security:
         Channel: Security

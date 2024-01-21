@@ -21,7 +21,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains: (WCHAR)0x
+        CommandLine|contains: (WCHAR)0x
     condition: process_creation and selection
 falsepositives:
     - Unknown

@@ -20,7 +20,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \splwow64.exe
-          CommandLine|endswith: splwow64.exe
+        CommandLine|endswith: splwow64.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

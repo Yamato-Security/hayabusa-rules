@@ -1,7 +1,9 @@
 title: Permission Misconfiguration Reconnaissance Via Findstr.EXE
 id: 47e4bab7-c626-47dc-967b-255608c9a920
 status: experimental
-description: Detects usage of findstr with the "EVERYONE" or "BUILTIN" keywords. This is seen being used in combination with "icacls" to look for misconfigured files or folders permissions
+description: Detects usage of findstr with the "EVERYONE" or "BUILTIN" keywords. This
+    is seen being used in combination with "icacls" to look for misconfigured files
+    or folders permissions
 references:
     - https://www.absolomb.com/2018-01-26-Windows-Privilege-Escalation-Guide/
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -19,24 +21,20 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_findstr_img:
-        - Image|endswith:
-            - \find.exe
-            - \findstr.exe
-        - OriginalFileName:
-            - FIND.EXE
-            - FINDSTR.EXE
+        -   Image|endswith:
+                - \find.exe
+                - \findstr.exe
+        -   OriginalFileName:
+                - FIND.EXE
+                - FINDSTR.EXE
     selection_findstr_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - '"Everyone"'
-            - "'Everyone'"
+            - '''Everyone'''
             - '"BUILTIN\\"'
-            - "'BUILTIN\\'"
+            - '''BUILTIN\'''
     selection_special:
-          CommandLine|contains|all:
-            # Example CLI would be: icacls "C:\Program Files\*" 2>nul | findstr "(M)" | findstr "Everyone"
-            # You could extend it for other groups and users
-            #   Example: icacls "C:\Program Files\*" 2>nul | findstr "(M)" | findstr "BUILTIN\Users"
-            # Note: This selection only detects the command when executed from a handler such as a "cmd /c" or "powershell -c"
+        CommandLine|contains|all:
             - 'icacls '
             - 'findstr '
             - Everyone

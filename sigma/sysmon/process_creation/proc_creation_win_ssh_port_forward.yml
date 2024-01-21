@@ -23,7 +23,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \ssh.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -R '
             - ' /R '
     condition: process_creation and selection

@@ -17,8 +17,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith: \MSBuild.exe
-        - OriginalFileName: MSBuild.exe
+        -   NewProcessName|endswith: \MSBuild.exe
+        -   OriginalFileName: MSBuild.exe
     filter_parent:
         ParentProcessName|endswith:
             - \devenv.exe

@@ -17,7 +17,7 @@ detection:
     windefend:
         Channel: Microsoft-Windows-Windows Defender/Operational
     selection:
-        EventID: 1013 # The antimalware platform deleted history of malware and other potentially unwanted software.
+        EventID: 1013
     condition: windefend and selection
 falsepositives:
     - Deletion of Defender malware detections history for legitimate reasons

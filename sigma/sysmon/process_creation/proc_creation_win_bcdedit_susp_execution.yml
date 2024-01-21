@@ -22,10 +22,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \bcdedit.exe
-        - OriginalFileName: bcdedit.exe
+        -   Image|endswith: \bcdedit.exe
+        -   OriginalFileName: bcdedit.exe
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - delete
             - deletevalue
             - import

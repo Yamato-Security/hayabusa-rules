@@ -24,7 +24,7 @@ detection:
         Image|endswith:
             - \powershell.exe
             - \pwsh.exe
-          CommandLine|contains: Start-BitsTransfer
+        CommandLine|contains: Start-BitsTransfer
     condition: process_creation and selection
 fields:
     - ComputerName

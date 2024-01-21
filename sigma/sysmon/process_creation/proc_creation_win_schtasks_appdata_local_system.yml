@@ -22,22 +22,21 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \schtasks.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - /Create
             - /RU
             - /TR
             - C:\Users\
             - \AppData\Local\
-          CommandLine|contains:
-            - NT AUT   # This covers the usual NT AUTHORITY\SYSTEM
-            - ' SYSTEM ' # SYSTEM is a valid value for schtasks hence it gets it's own value with space
+        CommandLine|contains:
+            - NT AUT
+            - ' SYSTEM '
     filter:
-        # FP from test set in SIGMA
         ParentImage|contains|all:
             - \AppData\Local\Temp\
             - TeamViewer_.exe
         Image|endswith: \schtasks.exe
-          CommandLine|contains: /TN TVInstallRestore
+        CommandLine|contains: /TN TVInstallRestore
     condition: process_creation and (selection and not filter)
 falsepositives:
     - Unknown

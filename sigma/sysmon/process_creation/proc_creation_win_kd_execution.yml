@@ -18,10 +18,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|endswith: \kd.exe
-        - OriginalFileName: kd.exe
+        -   Image|endswith: \kd.exe
+        -   OriginalFileName: kd.exe
     condition: process_creation and selection
 falsepositives:
-    - Rare occasions of legitimate cases where kernel debugging is necessary in production. Investigation is required
+    - Rare occasions of legitimate cases where kernel debugging is necessary in production.
+        Investigation is required
 level: high
 ruletype: Sigma

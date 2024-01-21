@@ -1,7 +1,8 @@
 title: Share And Session Enumeration Using Net.EXE
 id: 62510e69-616b-4078-b371-847da438cc03
 status: stable
-description: Detects attempts to enumerate file shares, printer shares and sessions using "net.exe" with the "view" flag.
+description: Detects attempts to enumerate file shares, printer shares and sessions
+    using "net.exe" with the "view" flag.
 references:
     - https://eqllib.readthedocs.io/en/latest/analytics/b8a94d2f-dc75-4630-9d73-1edc6bd26fff.html
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1018/T1018.md
@@ -19,16 +20,16 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-            - \net.exe
-            - \net1.exe
-        - OriginalFileName:
-            - net.exe
-            - net1.exe
+        -   NewProcessName|endswith:
+                - \net.exe
+                - \net1.exe
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
     selection_cli:
-          CommandLine|contains: view
+        CommandLine|contains: view
     filter:
-          CommandLine|contains: \\\\
+        CommandLine|contains: \\\\
     condition: process_creation and (all of selection_* and not filter)
 fields:
     - SubjectUserName

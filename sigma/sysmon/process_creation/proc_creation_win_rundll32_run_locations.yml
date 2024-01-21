@@ -20,20 +20,21 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|contains:
-            - :\RECYCLER\
-            - :\SystemVolumeInformation\
-        - Image|startswith:
-            - C:\Windows\Tasks\
-            - C:\Windows\debug\
-            - C:\Windows\fonts\
-            - C:\Windows\help\
-            - C:\Windows\drivers\
-            - C:\Windows\addins\
-            - C:\Windows\cursors\
-            - C:\Windows\system32\tasks\
+        -   Image|contains:
+                - :\RECYCLER\
+                - :\SystemVolumeInformation\
+        -   Image|startswith:
+                - C:\Windows\Tasks\
+                - C:\Windows\debug\
+                - C:\Windows\fonts\
+                - C:\Windows\help\
+                - C:\Windows\drivers\
+                - C:\Windows\addins\
+                - C:\Windows\cursors\
+                - C:\Windows\system32\tasks\
     condition: process_creation and selection
 falsepositives:
-    - False positives depend on scripts and administrative tools used in the monitored environment
+    - False positives depend on scripts and administrative tools used in the monitored
+        environment
 level: medium
 ruletype: Sigma

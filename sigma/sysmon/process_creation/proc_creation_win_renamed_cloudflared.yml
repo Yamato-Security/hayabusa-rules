@@ -22,23 +22,23 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_cleanup:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' tunnel '
             - 'cleanup '
-          CommandLine|contains:
+        CommandLine|contains:
             - '-config '
             - '-connector-id '
     selection_tunnel:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' tunnel '
             - ' run '
-          CommandLine|contains:
+        CommandLine|contains:
             - '-config '
             - '-credentials-contents '
             - '-credentials-file '
             - '-token '
     selection_accountless:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - -url
             - tunnel
     selection_hashes:

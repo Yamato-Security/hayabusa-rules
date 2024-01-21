@@ -16,7 +16,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|contains: \Temporary Internet Files\Content.Outlook\
+        NewProcessName|contains: \Temporary Internet Files\Content.Outlook\
     condition: process_creation and selection
 fields:
     - CommandLine

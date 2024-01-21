@@ -1,8 +1,8 @@
 title: Remote PowerShell Session (PS Classic)
 id: 60167e5c-84b2-4c95-a7ac-86281f27c445
 related:
-    - id: 96b9f619-aa91-478f-bacb-c3e50f8df575
-      type: derived
+    -   id: 96b9f619-aa91-478f-bacb-c3e50f8df575
+        type: derived
 status: test
 description: Detects remote PowerShell sessions
 references:
@@ -29,6 +29,5 @@ detection:
     condition: ps_classic_start and selection
 falsepositives:
     - Legitimate use remote PowerShell sessions
-# Note: Increase the level to "medium" in environments that do not leverage PowerShell remoting
 level: low
 ruletype: Sigma

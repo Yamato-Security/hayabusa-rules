@@ -1,7 +1,8 @@
 title: Failed Logon From Public IP
 id: f88e112a-21aa-44bd-9b01-6ee2a2bbbed1
 status: test
-description: A login from a public IP can indicate a misconfigured firewall or network boundary.
+description: A login from a public IP can indicate a misconfigured firewall or network
+    boundary.
 author: NVISO
 date: 2020/05/06
 modified: 2023/01/11
@@ -23,9 +24,9 @@ detection:
         IpAddress|contains: '-'
     filter_ip_privatev4:
         IpAddress|startswith:
-            - '10.' # 10.0.0.0/8
-            - 192.168.   # 192.168.0.0/16
-            - 172.16.   # 172.16.0.0/12
+            - '10.'
+            - 192.168.
+            - 172.16.
             - 172.17.
             - 172.18.
             - 172.19.
@@ -41,13 +42,13 @@ detection:
             - 172.29.
             - 172.30.
             - 172.31.
-            - '127.' # 127.0.0.0/8
-            - 169.254.   # 169.254.0.0/16
+            - '127.'
+            - 169.254.
     filter_ip_privatev6:
-        - IpAddress: ::1   # loopback
-        - IpAddress|startswith:
-            - 'fe80::'   # link-local
-            - 'fc00::'   # unique local
+        -   IpAddress: ::1
+        -   IpAddress|startswith:
+                - 'fe80::'
+                - 'fc00::'
     condition: security and (selection and not 1 of filter_*)
 falsepositives:
     - Legitimate logon attempts over the internet

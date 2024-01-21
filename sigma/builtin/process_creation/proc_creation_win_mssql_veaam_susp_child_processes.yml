@@ -1,10 +1,11 @@
 title: Suspicious Child Process Of Veeam Dabatase
 id: d55b793d-f847-4eea-b59a-5ab09908ac90
 related:
-    - id: 869b9ca7-9ea2-4a5a-8325-e80e62f75445
-      type: similar
+    -   id: 869b9ca7-9ea2-4a5a-8325-e80e62f75445
+        type: similar
 status: experimental
-description: Detects suspicious child processes of the Veeam service process. This could indicate potential RCE or SQL Injection.
+description: Detects suspicious child processes of the Veeam service process. This
+    could indicate potential RCE or SQL Injection.
 references:
     - https://labs.withsecure.com/publications/fin7-target-veeam-servers
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -24,7 +25,7 @@ detection:
         ParentCommandLine|contains: VEEAMSQL
         ParentProcessName|endswith: \sqlservr.exe
     selection_child_1:
-          CommandLine|contains:
+        CommandLine|contains:
             - '-ex '
             - bypass
             - cscript
@@ -36,14 +37,14 @@ detection:
             - rundll32
             - wscript
             - 'copy '
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \cmd.exe
             - \powershell.exe
             - \pwsh.exe
             - \wsl.exe
             - \wt.exe
     selection_child_2:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \net.exe
             - \net1.exe
             - \netstat.exe

@@ -27,6 +27,7 @@ detection:
             - Remove-WmiObject
     condition: ps_classic_start and selection
 falsepositives:
-    - Legitimate Administrator deletes Shadow Copies using operating systems utilities for legitimate reason
+    - Legitimate Administrator deletes Shadow Copies using operating systems utilities
+        for legitimate reason
 level: high
 ruletype: Sigma

@@ -1,12 +1,16 @@
 title: Potential Persistence Via Microsoft Compatibility Appraiser
 id: f548a603-c9f2-4c89-b511-b089f7e94549
 related:
-    - id: 73a883d0-0348-4be4-a8d8-51031c2564f8
-      type: derived
+    -   id: 73a883d0-0348-4be4-a8d8-51031c2564f8
+        type: derived
 status: test
-description: |
-    Detects manual execution of the "Microsoft Compatibility Appraiser" task via schtasks.
-    In order to trigger persistence stored in the "\AppCompatFlags\TelemetryController" registry key.
+description: 'Detects manual execution of the "Microsoft Compatibility Appraiser"
+    task via schtasks.
+
+    In order to trigger persistence stored in the "\AppCompatFlags\TelemetryController"
+    registry key.
+
+    '
 references:
     - https://www.trustedsec.com/blog/abusing-windows-telemetry-for-persistence/
 author: Sreeman
@@ -24,10 +28,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \schtasks.exe
-        - OriginalFileName: schtasks.exe
+        -   Image|endswith: \schtasks.exe
+        -   OriginalFileName: schtasks.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - 'run '
             - \Application Experience\Microsoft Compatibility Appraiser
     condition: process_creation and (all of selection_*)

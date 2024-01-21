@@ -31,11 +31,11 @@ detection:
             - \powershell.exe
             - \pwsh.exe
         Image|endswith: \schtasks.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - /Create
             - powershell.exe -NonI
             - /TN Updater /TR
-          CommandLine|contains:
+        CommandLine|contains:
             - /SC ONLOGON
             - /SC DAILY /ST
             - /SC ONIDLE

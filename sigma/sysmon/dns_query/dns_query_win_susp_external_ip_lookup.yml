@@ -1,7 +1,8 @@
 title: Suspicious DNS Query for IP Lookup Service APIs
 id: ec82e2a5-81ea-4211-a1f8-37a0286df2c2
 status: test
-description: Detects DNS queries for IP lookup services such as "api.ipify.org" originating from a non browser process.
+description: Detects DNS queries for IP lookup services such as "api.ipify.org" originating
+    from a non browser process.
 references:
     - https://www.binarydefense.com/analysis-of-hancitor-when-boring-begets-beacon
     - https://twitter.com/neonprimetime/status/1436376497980428318
@@ -73,11 +74,11 @@ detection:
     filter_optional_maxthon:
         Image|endswith: \maxthon.exe
     filter_optional_edge_1:
-        - Image|startswith: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\
-        - Image|endswith: \WindowsApps\MicrosoftEdge.exe
-        - Image:
-            - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
-            - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+        -   Image|startswith: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\
+        -   Image|endswith: \WindowsApps\MicrosoftEdge.exe
+        -   Image:
+                - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+                - C:\Program Files\Microsoft\Edge\Application\msedge.exe
     filter_optional_edge_2:
         Image|startswith:
             - C:\Program Files (x86)\Microsoft\EdgeCore\

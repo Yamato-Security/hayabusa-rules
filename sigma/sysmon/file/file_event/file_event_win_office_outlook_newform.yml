@@ -1,7 +1,8 @@
 title: Potential Persistence Via Outlook Form
 id: c3edc6a5-d9d4-48d8-930e-aab518390917
 status: test
-description: Detects the creation of a new Outlook form which can contain malicious code
+description: Detects the creation of a new Outlook form which can contain malicious
+    code
 references:
     - https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=76
     - https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=79
@@ -25,7 +26,7 @@ detection:
         Image|endswith: \outlook.exe
         TargetFilename|contains:
             - \AppData\Local\Microsoft\FORMS\IPM
-            - \Local Settings\Application Data\Microsoft\Forms   # Windows XP
+            - \Local Settings\Application Data\Microsoft\Forms
     condition: file_event and selection
 falsepositives:
     - Legitimate use of outlook forms

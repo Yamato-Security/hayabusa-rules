@@ -1,7 +1,8 @@
 title: WinDivert Driver Load
 id: 679085d5-f427-4484-9f58-1dc30a7c426d
 status: test
-description: Detects the load of the Windiver driver, a powerful user-mode capture/sniffing/modification/blocking/re-injection package for Windows
+description: Detects the load of the Windiver driver, a powerful user-mode capture/sniffing/modification/blocking/re-injection
+    package for Windows
 references:
     - https://reqrypt.org/windivert-doc.html
     - https://rastamouse.me/ntlm-relaying-via-cobalt-strike/
@@ -25,7 +26,6 @@ detection:
         ImageLoaded|contains:
             - \WinDivert.sys
             - \WinDivert64.sys
-            # Other used names
             - \NordDivert.sys
             - \lingtiwfp.sys
             - \eswfp.sys

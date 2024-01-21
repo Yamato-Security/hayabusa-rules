@@ -22,15 +22,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_parent:
-        # ParentCommandLine: '"C:\Windows\System32\OpenSSH\sshd.exe" -R'
         ParentProcessName: C:\Windows\System32\OpenSSH\sshd.exe
     selection_cli_img:
-          NewProcessName|endswith: \ssh.exe
+        NewProcessName|endswith: \ssh.exe
     selection_cli_flags:
-        - CommandLine|contains: ProxyCommand=
-        - CommandLine|contains|all:
-            - PermitLocalCommand
-            - LocalCommand
+        -   CommandLine|contains: ProxyCommand=
+        -   CommandLine|contains|all:
+                - PermitLocalCommand
+                - LocalCommand
     condition: process_creation and (selection_parent or all of selection_cli_*)
 falsepositives:
     - Legitimate usage for administration purposes

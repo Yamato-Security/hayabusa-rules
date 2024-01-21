@@ -1,7 +1,8 @@
 title: Winrar Execution in Non-Standard Folder
 id: 4ede543c-e098-43d9-a28f-dd784a13132f
 status: test
-description: Detects a suspicious winrar execution in a folder which is not the default installation folder
+description: Detects a suspicious winrar execution in a folder which is not the default
+    installation folder
 references:
     - https://twitter.com/cyb3rops/status/1460978167628406785
 author: Florian Roth (Nextron Systems), Tigzy
@@ -18,21 +19,20 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith:
-            - \rar.exe
-            - \winrar.exe
-        - Description: Command line RAR
+        -   NewProcessName|endswith:
+                - \rar.exe
+                - \winrar.exe
+        -   Description: Command line RAR
     filter_main_unrar:
-        # Note: we filter unrar as it has the same description as the other utilities, and we're only interested in compression
-          NewProcessName|endswith: \UnRAR.exe
+        NewProcessName|endswith: \UnRAR.exe
     filter_main_path:
-          NewProcessName|contains:
+        NewProcessName|contains:
             - :\Program Files (x86)\WinRAR\
             - :\Program Files\WinRAR\
     filter_optional_temp:
-        # Note: in some occasion installers were seen dropping "rar" in TEMP
-          NewProcessName|contains: :\Windows\Temp\
-    condition: process_creation and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
+        NewProcessName|contains: :\Windows\Temp\
+    condition: process_creation and (selection and not 1 of filter_main_* and not
+        1 of filter_optional_*)
 falsepositives:
     - Legitimate use of WinRAR in a folder of a software that bundles WinRAR
 level: medium

@@ -1,8 +1,8 @@
 title: Exports Critical Registry Keys To a File
 id: 82880171-b475-4201-b811-e9c826cd5eaa
 related:
-    - id: f0e53e89-8d22-46ea-9db5-9d4796ee2f8a
-      type: similar
+    -   id: f0e53e89-8d22-46ea-9db5-9d4796ee2f8a
+        type: similar
 status: test
 description: Detects the export of a crital Registry key to a file.
 references:
@@ -22,18 +22,18 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \regedit.exe
-        - OriginalFileName: REGEDIT.EXE
+        -   NewProcessName|endswith: \regedit.exe
+        -   OriginalFileName: REGEDIT.EXE
     selection_cli_1:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' /E '
             - ' -E '
     selection_cli_2:
-          CommandLine|contains:
+        CommandLine|contains:
             - hklm
             - hkey_local_machine
     selection_cli_3:
-          CommandLine|endswith:
+        CommandLine|endswith:
             - \system
             - \sam
             - \security

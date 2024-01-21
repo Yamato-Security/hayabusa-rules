@@ -1,7 +1,8 @@
 title: Suspicious Application Installed
 id: 83c161b6-ca67-4f33-8ad0-644a0737cf07
 status: test
-description: Detects suspicious application installed by looking at the added shortcut to the app resolver cache
+description: Detects suspicious application installed by looking at the added shortcut
+    to the app resolver cache
 references:
     - https://nasbench.medium.com/finding-forensic-goodness-in-obscure-windows-event-logs-60e978ea45a3
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -17,7 +18,6 @@ detection:
     selection_name:
         EventID: 28115
         Name|contains:
-            # Please add more
             - Zenmap
             - AnyDesk
             - wireshark
@@ -25,9 +25,8 @@ detection:
     selection_packageid:
         EventID: 28115
         AppID|contains:
-            # Please add more
             - zenmap.exe
-            - prokzult ad   # AnyDesk
+            - prokzult ad
             - wireshark
             - openvpn
     condition: shell_core and (1 of selection_*)

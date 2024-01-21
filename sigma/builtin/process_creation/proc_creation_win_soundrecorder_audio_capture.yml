@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: /FILE
-          NewProcessName|endswith: \SoundRecorder.exe
+        CommandLine|contains: /FILE
+        NewProcessName|endswith: \SoundRecorder.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate audio capture by legitimate user.

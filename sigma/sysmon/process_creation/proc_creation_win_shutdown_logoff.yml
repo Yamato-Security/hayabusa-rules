@@ -20,7 +20,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \shutdown.exe
-          CommandLine|contains: /l
+        CommandLine|contains: /l
     condition: process_creation and selection
 falsepositives:
     - Unknown

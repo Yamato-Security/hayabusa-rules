@@ -14,13 +14,14 @@ tags:
 logsource:
     product: windows
     service: security
-    definition: The advanced audit policy setting "Object Access > Detailed File Share" must be configured for Success/Failure
+    definition: The advanced audit policy setting "Object Access > Detailed File Share"
+        must be configured for Success/Failure
 detection:
     security:
         Channel: Security
     selection:
         EventID: 5145
-        ShareName|startswith: \\\\   # looking for the string \\somethink\IPC$
+        ShareName|startswith: \\\\
         ShareName|endswith: \IPC$
         RelativeTargetName: lsarpc
         SubjectUserName: ANONYMOUS LOGON

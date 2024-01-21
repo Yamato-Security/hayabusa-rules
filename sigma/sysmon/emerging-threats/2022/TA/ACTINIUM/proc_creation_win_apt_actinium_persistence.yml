@@ -1,7 +1,8 @@
 title: Potential ACTINIUM Persistence Activity
 id: e1118a8f-82f5-44b3-bb6b-8a284e5df602
 status: test
-description: Detects specific process parameters as used by ACTINIUM scheduled task persistence creation.
+description: Detects specific process parameters as used by ACTINIUM scheduled task
+    persistence creation.
 references:
     - https://www.microsoft.com/security/blog/2022/02/04/actinium-targets-ukrainian-organizations
 author: Andreas Hunkeler (@Karneades)
@@ -21,7 +22,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - schtasks
             - create
             - wscript

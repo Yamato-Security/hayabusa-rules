@@ -1,8 +1,8 @@
 title: Potentially Suspicious GoogleUpdate Child Process
 id: 84b1ecf9-6eff-4004-bafb-bae5c0e251b2
 related:
-    - id: bdbab15a-3826-48fa-a1b7-723cd8f32fcc
-      type: derived
+    -   id: bdbab15a-3826-48fa-a1b7-723cd8f32fcc
+        type: derived
 status: experimental
 description: Detects potentially suspicious child processes of "GoogleUpdate.exe"
 references:
@@ -22,14 +22,13 @@ detection:
     selection:
         ParentProcessName|endswith: \GoogleUpdate.exe
     filter_main_known_legit:
-        # Some other legit child process might exist. It's better to make a baseline before running this in production
-        - NewProcessName|contains: \Google
-        - NewProcessName|endswith:
-            - \setup.exe
-            - chrome_updater.exe
-            - chrome_installer.exe
+        -   NewProcessName|contains: \Google
+        -   NewProcessName|endswith:
+                - \setup.exe
+                - chrome_updater.exe
+                - chrome_installer.exe
     filter_main_image_null:
-          NewProcessName:
+        NewProcessName: null
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

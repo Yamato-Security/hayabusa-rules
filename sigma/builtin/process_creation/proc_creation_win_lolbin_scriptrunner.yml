@@ -1,7 +1,8 @@
 title: Use of Scriptrunner.exe
 id: 64760eef-87f7-4ed3-93fd-655668ea9420
 status: test
-description: The "ScriptRunner.exe" binary can be abused to proxy execution through it and bypass possible whitelisting
+description: The "ScriptRunner.exe" binary can be abused to proxy execution through
+    it and bypass possible whitelisting
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/Scriptrunner/
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -18,10 +19,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \ScriptRunner.exe
-        - OriginalFileName: ScriptRunner.exe
+        -   NewProcessName|endswith: \ScriptRunner.exe
+        -   OriginalFileName: ScriptRunner.exe
     selection_cli:
-          CommandLine|contains: ' -appvscript '
+        CommandLine|contains: ' -appvscript '
     condition: process_creation and (all of selection*)
 falsepositives:
     - Legitimate use when App-v is deployed

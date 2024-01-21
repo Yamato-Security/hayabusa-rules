@@ -22,10 +22,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \cmdl32.exe
-        - OriginalFileName: CMDL32.EXE
+        -   Image|endswith: \cmdl32.exe
+        -   OriginalFileName: CMDL32.EXE
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '/vpn '
             - '/lan '
     condition: process_creation and (all of selection*)

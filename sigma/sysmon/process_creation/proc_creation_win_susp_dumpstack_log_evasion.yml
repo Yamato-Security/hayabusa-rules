@@ -20,7 +20,7 @@ detection:
     selection:
         Image|endswith: \DumpStack.log
     selection_download:
-          CommandLine|contains: ' -o DumpStack.log'
+        CommandLine|contains: ' -o DumpStack.log'
     condition: process_creation and (1 of selection*)
 falsepositives:
     - Unknown

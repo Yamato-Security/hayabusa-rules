@@ -20,11 +20,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - verb:sync
             - -source:RunCommand
             - -dest:runCommand
-          NewProcessName|endswith: \msdeploy.exe
+        NewProcessName|endswith: \msdeploy.exe
     condition: process_creation and selection
 fields:
     - SubjectUserName

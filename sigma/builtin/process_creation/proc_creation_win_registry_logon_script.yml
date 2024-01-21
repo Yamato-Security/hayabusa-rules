@@ -1,10 +1,11 @@
 title: Potential Persistence Via Logon Scripts - CommandLine
 id: 21d856f9-9281-4ded-9377-51a1a6e2a432
 related:
-    - id: 0a98a10c-685d-4ab0-bddc-b6bdd1d48458
-      type: derived
+    -   id: 0a98a10c-685d-4ab0-bddc-b6bdd1d48458
+        type: derived
 status: experimental
-description: Detects the addition of a new LogonScript to the registry value "UserInitMprLogonScript" for potential persistence
+description: Detects the addition of a new LogonScript to the registry value "UserInitMprLogonScript"
+    for potential persistence
 references:
     - https://cocomelonc.github.io/persistence/2022/12/09/malware-pers-20.html
 author: Tom Ueltschi (@c_APT_ure)
@@ -21,9 +22,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: UserInitMprLogonScript
+        CommandLine|contains: UserInitMprLogonScript
     condition: process_creation and selection
 falsepositives:
-    - Legitimate addition of Logon Scripts via the command line by administrators or third party tools
+    - Legitimate addition of Logon Scripts via the command line by administrators
+        or third party tools
 level: high
 ruletype: Sigma

@@ -1,7 +1,8 @@
 title: HackTool - PPID Spoofing SelectMyParent Tool Execution
 id: 52ff7941-8211-46f9-84f8-9903efb7077d
 status: test
-description: Detects the use of parent process ID spoofing tools like Didier Stevens tool SelectMyParent
+description: Detects the use of parent process ID spoofing tools like Didier Stevens
+    tool SelectMyParent
 references:
     - https://pentestlab.blog/2020/02/24/parent-pid-spoofing/
     - https://www.picussecurity.com/resource/blog/how-to-detect-parent-pid-ppid-spoofing-attacks
@@ -21,35 +22,35 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith: \SelectMyParent.exe
-        - CommandLine|contains:
-            - PPID-spoof
-            - ppid_spoof
-            - spoof-ppid
-            - spoof_ppid
-            - ppidspoof
-            - spoofppid
-            - spoofedppid
-            - ' -spawnto '
-        - OriginalFileName|contains:
-            - PPID-spoof
-            - ppid_spoof
-            - spoof-ppid
-            - spoof_ppid
-            - ppidspoof
-            - spoofppid
-            - spoofedppid
-        - Description: SelectMyParent
-        - Imphash:
-            - 04d974875bd225f00902b4cad9af3fbc
-            - a782af154c9e743ddf3f3eb2b8f3d16e
-            - 89059503d7fbf470e68f7e63313da3ad
-            - ca28337632625c8281ab8a130b3d6bad
-        - Hashes|contains:
-            - IMPHASH=04D974875BD225F00902B4CAD9AF3FBC
-            - IMPHASH=A782AF154C9E743DDF3F3EB2B8F3D16E
-            - IMPHASH=89059503D7FBF470E68F7E63313DA3AD
-            - IMPHASH=CA28337632625C8281AB8A130B3D6BAD
+        -   NewProcessName|endswith: \SelectMyParent.exe
+        -   CommandLine|contains:
+                - PPID-spoof
+                - ppid_spoof
+                - spoof-ppid
+                - spoof_ppid
+                - ppidspoof
+                - spoofppid
+                - spoofedppid
+                - ' -spawnto '
+        -   OriginalFileName|contains:
+                - PPID-spoof
+                - ppid_spoof
+                - spoof-ppid
+                - spoof_ppid
+                - ppidspoof
+                - spoofppid
+                - spoofedppid
+        -   Description: SelectMyParent
+        -   Imphash:
+                - 04d974875bd225f00902b4cad9af3fbc
+                - a782af154c9e743ddf3f3eb2b8f3d16e
+                - 89059503d7fbf470e68f7e63313da3ad
+                - ca28337632625c8281ab8a130b3d6bad
+        -   Hashes|contains:
+                - IMPHASH=04D974875BD225F00902B4CAD9AF3FBC
+                - IMPHASH=A782AF154C9E743DDF3F3EB2B8F3D16E
+                - IMPHASH=89059503D7FBF470E68F7E63313DA3AD
+                - IMPHASH=CA28337632625C8281AB8A130B3D6BAD
     condition: process_creation and selection
 falsepositives:
     - Unlikely

@@ -1,8 +1,8 @@
 title: PowerShell Base64 Encoded Invoke Keyword
 id: 6385697e-9f1b-40bd-8817-f4a91f40508e
 related:
-    - id: fd6e2919-3936-40c9-99db-0aa922c356f7
-      type: obsoletes
+    -   id: fd6e2919-3936-40c9-99db-0aa922c356f7
+        type: obsoletes
 status: test
 description: Detects UTF-8 and UTF-16 Base64 encoded powershell 'Invoke-' calls
 references:
@@ -23,22 +23,19 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-            - \powershell.exe
-            - \pwsh.exe
-        - OriginalFileName:
-            - PowerShell.EXE
-            - pwsh.dll
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
     selection_cli_enc:
-          CommandLine|contains: ' -e'
+        CommandLine|contains: ' -e'
     selection_cli_invoke:
-          CommandLine|contains:
-            # Invoke-
-            # UTF-16LE
+        CommandLine|contains:
             - SQBuAHYAbwBrAGUALQ
             - kAbgB2AG8AawBlAC0A
             - JAG4AdgBvAGsAZQAtA
-            # UTF-8
             - SW52b2tlL
             - ludm9rZS
             - JbnZva2Ut

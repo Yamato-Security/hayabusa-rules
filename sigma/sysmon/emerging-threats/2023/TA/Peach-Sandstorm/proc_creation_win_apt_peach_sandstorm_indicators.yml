@@ -19,7 +19,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains: QP's\*(58vaP!tF4
+        CommandLine|contains: QP's\*(58vaP!tF4
     condition: process_creation and selection
 falsepositives:
     - Unlikely

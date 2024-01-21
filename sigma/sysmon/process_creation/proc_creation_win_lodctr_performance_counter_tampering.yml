@@ -1,7 +1,10 @@
 title: Rebuild Performance Counter Values Via Lodctr.EXE
 id: cc9d3712-6310-4320-b2df-7cb408274d53
 status: experimental
-description: Detects the execution of "lodctr.exe" to rebuild the performance counter registry values. This can be abused by attackers by providing a malicious config file to overwrite performance counter configuration to confuse and evade monitoring and security solutions.
+description: Detects the execution of "lodctr.exe" to rebuild the performance counter
+    registry values. This can be abused by attackers by providing a malicious config
+    file to overwrite performance counter configuration to confuse and evade monitoring
+    and security solutions.
 references:
     - https://learn.microsoft.com/en-us/windows/security/identity-protection/virtual-smart-cards/virtual-smart-card-tpmvscmgr
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -20,7 +23,7 @@ detection:
         Image|endswith: \lodctr.exe
         OriginalFileName: LODCTR.EXE
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' /r'
             - ' -r'
     condition: process_creation and (all of selection_*)

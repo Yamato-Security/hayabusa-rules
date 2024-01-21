@@ -22,7 +22,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -NoP -sta -NonI -W Hidden -Enc '
             - ' -noP -sta -w 1 -enc '
             - ' -NoP -NonI -W Hidden -enc '

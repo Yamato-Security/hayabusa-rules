@@ -31,7 +31,6 @@ detection:
             - \wbemcomn.dll
             - \wbemprox.dll
             - \wbemdisp.dll
-            # - '\wbemsvc.dll'  # too many FPs, tested with Win11 and O365
     condition: image_load and selection
 falsepositives:
     - Possible. Requires further testing.

@@ -1,7 +1,10 @@
 title: File Download From Browser Process Via Inline URL
 id: 94771a71-ba41-4b6e-a757-b531372eaab6
 status: test
-description: Detects execution of a browser process with a URL argument pointing to a file with a potentially interesting extension. This can be abused to download arbitrary files or to hide from the user for example by launching the browser in a minimized state.
+description: Detects execution of a browser process with a URL argument pointing to
+    a file with a potentially interesting extension. This can be abused to download
+    arbitrary files or to hide from the user for example by launching the browser
+    in a minimized state.
 references:
     - https://twitter.com/mrd0x/status/1478116126005641220
     - https://lolbas-project.github.io/lolbas/Binaries/Msedge/
@@ -27,9 +30,9 @@ detection:
             - \opera.exe
             - \vivaldi.exe
     selection_http:
-          CommandLine|contains: http
+        CommandLine|contains: http
     selection_extensions:
-          CommandLine|endswith:
+        CommandLine|endswith:
             - .7z
             - .dat
             - .dll

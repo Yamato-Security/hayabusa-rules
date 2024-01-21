@@ -1,10 +1,11 @@
 title: Uncommon GrantedAccess Flags On LSASS
 id: 678dfc63-fefb-47a5-a04c-26bcf8cc9f65
 related:
-    - id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
-      type: obsoletes
+    -   id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
+        type: obsoletes
 status: test
-description: Detects process access to LSASS memory with uncommon access flags 0x410 and 0x01410
+description: Detects process access to LSASS memory with uncommon access flags 0x410
+    and 0x01410
 references:
     - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
     - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
@@ -30,7 +31,6 @@ detection:
     selection:
         TargetImage|endswith: \lsass.exe
         GrantedAccess|endswith: '10'
-    # Absolute paths to programs that cause false positives
     filter1:
         SourceImage:
             - C:\Program Files\Common Files\McAfee\MMSSHost\MMSSHOST.exe
@@ -45,31 +45,25 @@ detection:
             - C:\WINDOWS\system32\wbem\wmiprvse.exe
             - C:\Windows\SysWOW64\msiexec.exe
             - C:\Windows\sysWOW64\wbem\wmiprvse.exe
-    # Windows Defender
     filter2:
         SourceImage|startswith: C:\ProgramData\Microsoft\Windows Defender\
         SourceImage|endswith: \MsMpEng.exe
-    # Microsoft Gaming Services
     filter3:
         SourceImage|startswith: C:\Program Files\WindowsApps\
         SourceImage|endswith: \GamingServices.exe
-    # Process Explorer
     filter4:
         SourceImage|endswith:
             - \PROCEXP64.EXE
             - \PROCEXP.EXE
-    # VMware Tools
     filter5:
         SourceImage|startswith: C:\ProgramData\VMware\VMware Tools\
         SourceImage|endswith: \vmtoolsd.exe
-    # Antivirus and EDR agents
     filter6:
         SourceImage|startswith:
             - C:\Program Files\
             - C:\Program Files (x86)\
         SourceImage|contains: Antivirus
     filter_nextron:
-        # SourceImage|startswith: 'C:\Windows\Temp\asgard2-agent\'  # Can be a manual THOR installation
         SourceImage|endswith:
             - \thor64.exe
             - \thor.exe
@@ -80,7 +74,6 @@ detection:
             - \AppData\Local\Temp\
             - \vs_bootstrapper_
         GrantedAccess: '0x1410'
-    # Generic Filter for 0x1410 filter (caused by so many programs like DropBox updates etc.)
     filter_generic:
         SourceImage|startswith:
             - C:\Program Files\

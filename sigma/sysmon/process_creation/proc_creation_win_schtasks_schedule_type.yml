@@ -1,10 +1,11 @@
 title: Suspicious Schtasks Schedule Types
 id: 24c8392b-aa3c-46b7-a545-43f71657fe98
 related:
-    - id: 7a02e22e-b885-4404-b38b-1ddc7e65258a
-      type: similar
+    -   id: 7a02e22e-b885-4404-b38b-1ddc7e65258a
+        type: similar
 status: test
-description: Detects scheduled task creations or modification on a suspicious schedule type
+description: Detects scheduled task creations or modification on a suspicious schedule
+    type
 references:
     - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks-change
     - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks-create
@@ -23,18 +24,18 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \schtasks.exe
-        - OriginalFileName: schtasks.exe
+        -   Image|endswith: \schtasks.exe
+        -   OriginalFileName: schtasks.exe
     selection_time:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' ONLOGON '
             - ' ONSTART '
             - ' ONCE '
             - ' ONIDLE '
     filter_privs:
-          CommandLine|contains:
-            - NT AUT   # This covers the usual NT AUTHORITY\SYSTEM
-            - ' SYSTEM' # SYSTEM is a valid value for schtasks hence it gets it's own value with space
+        CommandLine|contains:
+            - NT AUT
+            - ' SYSTEM'
             - HIGHEST
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:

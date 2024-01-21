@@ -1,12 +1,12 @@
 title: Potential Recon Activity Via Nltest.EXE
 id: 5cc90652-4cbd-4241-aa3b-4b462fa5a248
 related:
-    - id: 410ad193-a728-4107-bc79-4419789fcbf8
-      type: similar
-    - id: 903076ff-f442-475a-b667-4f246bcc203b
-      type: similar
-    - id: 77815820-246c-47b8-9741-e0def3f57308
-      type: obsoletes
+    -   id: 410ad193-a728-4107-bc79-4419789fcbf8
+        type: similar
+    -   id: 903076ff-f442-475a-b667-4f246bcc203b
+        type: similar
+    -   id: 77815820-246c-47b8-9741-e0def3f57308
+        type: obsoletes
 status: test
 description: Detects nltest commands that can be used for information discovery
 references:
@@ -34,21 +34,21 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_nltest:
-        - Image|endswith: \nltest.exe
-        - OriginalFileName: nltestrk.exe
+        -   Image|endswith: \nltest.exe
+        -   OriginalFileName: nltestrk.exe
     selection_recon:
-        - CommandLine|contains|all:
-            - server
-            - query
-        - CommandLine|contains:
-            - /user
-            - all_trusts     # Flag for /domain_trusts
-            - 'dclist:'
-            - 'dnsgetdc:'
-            - domain_trusts
-            - 'dsgetdc:'
-            - parentdomain
-            - trusted_domains
+        -   CommandLine|contains|all:
+                - server
+                - query
+        -   CommandLine|contains:
+                - /user
+                - all_trusts
+                - 'dclist:'
+                - 'dnsgetdc:'
+                - domain_trusts
+                - 'dsgetdc:'
+                - parentdomain
+                - trusted_domains
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate administration use but user and host must be investigated

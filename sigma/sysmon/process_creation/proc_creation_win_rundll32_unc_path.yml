@@ -1,7 +1,8 @@
 title: Rundll32 UNC Path Execution
 id: 5cdb711b-5740-4fb2-ba88-f7945027afac
 status: test
-description: Detects rundll32 execution where the DLL is located on a remote location (share)
+description: Detects rundll32 execution where the DLL is located on a remote location
+    (share)
 references:
     - https://www.cybereason.com/blog/rundll32-the-infamous-proxy-for-executing-malicious-code
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -20,11 +21,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \rundll32.exe
-        - OriginalFileName: RUNDLL32.EXE
-        - CommandLine|contains: rundll32
+        -   Image|endswith: \rundll32.exe
+        -   OriginalFileName: RUNDLL32.EXE
+        -   CommandLine|contains: rundll32
     selection_cli:
-          CommandLine|contains: ' \\\\'
+        CommandLine|contains: ' \\\\'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unlikely

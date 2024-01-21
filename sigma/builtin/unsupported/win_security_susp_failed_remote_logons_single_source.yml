@@ -1,7 +1,8 @@
 title: Multiple Users Remotely Failing To Authenticate From Single Source
 id: add2ef8d-dc91-4002-9e7e-f2702369f53a
 status: unsupported
-description: Detects a source system failing to authenticate against a remote host with multiple users.
+description: Detects a source system failing to authenticate against a remote host
+    with multiple users.
 references:
     - https://docs.splunk.com/Documentation/ESSOC/3.22.0/stories/UseCase#Active_directory_password_spraying
 author: Mauricio Velazco
@@ -23,7 +24,8 @@ detection:
     filter:
         IpAddress: '-'
     timeframe: 24h
-    condition: (security and selection1 and not filter) | count(TargetUserName) by IpAddress > 10
+    condition: (security and selection1 and not filter) | count(TargetUserName) by
+        IpAddress > 10
 falsepositives:
     - Terminal servers
     - Jump servers

@@ -1,7 +1,9 @@
 title: Potential Adplus.EXE Abuse
 id: 2f869d59-7f6a-4931-992c-cce556ff2d53
 status: experimental
-description: Detects execution of "AdPlus.exe", a binary that is part of the Windows SDK that can be used as a LOLBIN in order to dump process memory and execute arbitrary commands.
+description: Detects execution of "AdPlus.exe", a binary that is part of the Windows
+    SDK that can be used as a LOLBIN in order to dump process memory and execute arbitrary
+    commands.
 references:
     - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Adplus/
     - https://twitter.com/nas_bench/status/1534916659676422152
@@ -22,19 +24,16 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \adplus.exe
-        - OriginalFileName: Adplus.exe
+        -   Image|endswith: \adplus.exe
+        -   OriginalFileName: Adplus.exe
     selection_cli:
-          CommandLine|contains:
-            # Dump process memory
+        CommandLine|contains:
             - ' -hang '
             - ' -pn '
             - ' -pmn '
             - ' -p '
             - ' -po '
-            # Using a config file
             - ' -c '
-            # Execute commands inline
             - ' -sc '
     condition: process_creation and (all of selection_*)
 falsepositives:

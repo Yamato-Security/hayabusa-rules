@@ -19,20 +19,20 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \KrbRelay.exe
-        - OriginalFileName: KrbRelay.exe   # In case the file has been renamed after compilation
+        -   Image|endswith: \KrbRelay.exe
+        -   OriginalFileName: KrbRelay.exe
     selection_cli_1:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' -spn '
             - ' -clsid '
             - ' -rbcd '
     selection_cli_2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - shadowcred
             - clsid
             - spn
     selection_cli_3:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - 'spn '
             - 'session '
             - 'clsid '

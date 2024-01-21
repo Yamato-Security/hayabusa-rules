@@ -20,7 +20,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - 'tunnel '
             - service
             - internal-run

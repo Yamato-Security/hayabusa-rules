@@ -1,7 +1,8 @@
 title: Suspicious File Download Using Office Application
 id: 0c79148b-118e-472b-bdb7-9b57b444cc19
 status: test
-description: Detects the usage of one of three Microsoft office applications (Word, Excel, PowerPoint) to download arbitrary files
+description: Detects the usage of one of three Microsoft office applications (Word,
+    Excel, PowerPoint) to download arbitrary files
 references:
     - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Powerpnt/
     - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Excel/
@@ -26,7 +27,7 @@ detection:
             - \powerpnt.exe
             - \winword.exe
             - \excel.exe
-          CommandLine|contains: http
+        CommandLine|contains: http
     condition: process_creation and selection
 falsepositives:
     - Unknown

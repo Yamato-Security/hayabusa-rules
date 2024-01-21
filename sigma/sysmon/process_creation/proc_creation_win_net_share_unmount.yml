@@ -1,7 +1,9 @@
 title: Unmount Share Via Net.EXE
 id: cb7c4a03-2871-43c0-9bbb-18bbdb079896
 status: test
-description: Detects when when a mounted share is removed. Adversaries may remove share connections that are no longer useful in order to clean up traces of their operation
+description: Detects when when a mounted share is removed. Adversaries may remove
+    share connections that are no longer useful in order to clean up traces of their
+    operation
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.005/T1070.005.md
 author: oscd.community, @redcanary, Zach Stanford @svch0st
@@ -19,14 +21,14 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith:
-            - \net.exe
-            - \net1.exe
-        - OriginalFileName:
-            - net.exe
-            - net1.exe
+        -   Image|endswith:
+                - \net.exe
+                - \net1.exe
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - share
             - /delete
     condition: process_creation and (all of selection*)

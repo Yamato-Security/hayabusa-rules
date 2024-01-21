@@ -1,7 +1,9 @@
 title: Explorer NOUACCHECK Flag
 id: 534f2ef7-e8a2-4433-816d-c91bccde289b
 status: test
-description: Detects suspicious starts of explorer.exe that use the /NOUACCHECK flag that allows to run all sub processes of that newly started explorer.exe without any UAC checks
+description: Detects suspicious starts of explorer.exe that use the /NOUACCHECK flag
+    that allows to run all sub processes of that newly started explorer.exe without
+    any UAC checks
 references:
     - https://twitter.com/ORCA6665/status/1496478087244095491
 author: Florian Roth (Nextron Systems)
@@ -20,10 +22,10 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \explorer.exe
-          CommandLine|contains: /NOUACCHECK
+        CommandLine|contains: /NOUACCHECK
     filter_dc_logon:
-        - ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
-        - ParentImage: C:\Windows\System32\svchost.exe   # coarse filter needed for ID 4688 Events
+        -   ParentCommandLine: C:\Windows\system32\svchost.exe -k netsvcs -p -s Schedule
+        -   ParentImage: C:\Windows\System32\svchost.exe
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:
     - Domain Controller User Logon

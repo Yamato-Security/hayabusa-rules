@@ -1,7 +1,8 @@
 title: Potential Persistence Via Visual Studio Tools for Office
 id: 9d15044a-7cfe-4d23-8085-6ebc11df7685
 status: experimental
-description: Detects persistence via Visual Studio Tools for Office (VSTO) add-ins in Office applications.
+description: Detects persistence via Visual Studio Tools for Office (VSTO) add-ins
+    in Office applications.
 references:
     - https://twitter.com/_vivami/status/1347925307643355138
     - https://vanmieghem.io/stealth-outlook-persistence/
@@ -28,8 +29,7 @@ detection:
     filter_image:
         ProcessName|endswith:
             - \msiexec.exe
-            - \regsvr32.exe   # e.g. default Evernote installation
-    # triggered by a default Office 2019 installation
+            - \regsvr32.exe
     filter_office:
         ProcessName|endswith:
             - \excel.exe

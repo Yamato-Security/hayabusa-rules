@@ -1,10 +1,11 @@
 title: Renamed ProcDump Execution
 id: 4a0b2c7e-7cb2-495d-8b63-5f268e7bfd67
 related:
-    - id: 03795938-1387-481b-9f4c-3f6241e604fe
-      type: obsoletes
+    -   id: 03795938-1387-481b-9f4c-3f6241e604fe
+        type: obsoletes
 status: test
-description: Detects the execution of a renamed ProcDump executable often used by attackers or malware
+description: Detects the execution of a renamed ProcDump executable often used by
+    attackers or malware
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/procdump
 author: Florian Roth (Nextron Systems)
@@ -24,18 +25,19 @@ detection:
     selection_org:
         OriginalFileName: procdump
     selection_args_ma:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -ma '
             - ' /ma '
     selection_args_other:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -accepteula '
             - ' /accepteula '
     filter:
         Image|endswith:
             - \procdump.exe
             - \procdump64.exe
-    condition: process_creation and ((selection_org or all of selection_args_*) and not filter)
+    condition: process_creation and ((selection_org or all of selection_args_*) and
+        not filter)
 falsepositives:
     - Procdump illegaly bundled with legitimate software
     - Administrators who rename binaries (should be investigated)

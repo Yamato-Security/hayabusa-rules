@@ -24,7 +24,7 @@ detection:
             - \powershell.exe
             - \pwsh.exe
         ParentImage|endswith: \excel.exe
-          CommandLine|contains: DataExchange.dll
+        CommandLine|contains: DataExchange.dll
     condition: process_creation and selection
 falsepositives:
     - Unknown

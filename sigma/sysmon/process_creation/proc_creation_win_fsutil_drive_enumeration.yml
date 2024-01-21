@@ -20,10 +20,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \fsutil.exe
-        - OriginalFileName: fsutil.exe
+        -   Image|endswith: \fsutil.exe
+        -   OriginalFileName: fsutil.exe
     selection_cli:
-          CommandLine|contains: drives
+        CommandLine|contains: drives
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Certain software or administrative tasks may trigger false positives.

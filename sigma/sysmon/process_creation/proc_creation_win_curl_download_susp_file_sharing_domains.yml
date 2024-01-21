@@ -1,7 +1,8 @@
 title: Suspicious File Download From File Sharing Domain Via Curl.EXE
 id: 56454143-524f-49fb-b1c6-3fb8b1ad41fb
 status: experimental
-description: Detects potentially suspicious file download from file sharing domains using curl.exe
+description: Detects potentially suspicious file download from file sharing domains
+    using curl.exe
 references:
     - https://labs.withsecure.com/publications/fin7-target-veeam-servers
     - https://github.com/WithSecureLabs/iocs/blob/344203de742bb7e68bd56618f66d34be95a9f9fc/FIN7VEEAM/iocs.csv
@@ -19,11 +20,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \curl.exe
-        - OriginalFileName: curl.exe
+        -   Image|endswith: \curl.exe
+        -   OriginalFileName: curl.exe
     selection_websites:
-          CommandLine|contains:
-            - .githubusercontent.com         # Includes both gists and github repositories / Michael Haag (idea)
+        CommandLine|contains:
+            - .githubusercontent.com
             - anonfiles.com
             - cdn.discordapp.com
             - cdn.discordapp.com/attachments/
@@ -48,14 +49,14 @@ detection:
             - transfer.sh
             - ufile.io
     selection_http:
-          CommandLine|contains: http
+        CommandLine|contains: http
     selection_flag:
-          CommandLine|contains:
-            - ' -O'  # covers the alias for --remote-name and --output
+        CommandLine|contains:
+            - ' -O'
             - --remote-name
             - --output
     selection_ext:
-          CommandLine|endswith:
+        CommandLine|endswith:
             - .ps1
             - .ps1'
             - .ps1"

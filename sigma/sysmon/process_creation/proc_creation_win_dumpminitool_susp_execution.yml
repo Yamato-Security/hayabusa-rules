@@ -22,28 +22,29 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|endswith:
-            - \DumpMinitool.exe
-            - \DumpMinitool.x86.exe
-            - \DumpMinitool.arm64.exe
-        - OriginalFileName:
-            - DumpMinitool.exe
-            - DumpMinitool.x86.exe
-            - DumpMinitool.arm64.exe
+        -   Image|endswith:
+                - \DumpMinitool.exe
+                - \DumpMinitool.x86.exe
+                - \DumpMinitool.arm64.exe
+        -   OriginalFileName:
+                - DumpMinitool.exe
+                - DumpMinitool.x86.exe
+                - DumpMinitool.arm64.exe
     filter_folder:
         Image|contains:
             - \Microsoft Visual Studio\
-            - \Extensions\    # https://github.com/microsoft/vstest/blob/b2e2126f1aa7e5753cafe9515563c99ade6a59ce/src/package/nuspec/Microsoft.TestPlatform.Portable.nuspec#L159
+            - \Extensions\
     susp_flags:
-          CommandLine|contains: .txt
+        CommandLine|contains: .txt
     cmd_has_flags:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' Full'
             - ' Mini'
             - ' WithHeap'
     filter_cmd_misses_flags:
-          CommandLine|contains: --dumpType
-    condition: process_creation and (selection and ( ( not filter_folder ) or susp_flags or ( cmd_has_flags and not filter_cmd_misses_flags ) ))
+        CommandLine|contains: --dumpType
+    condition: process_creation and (selection and ( ( not filter_folder ) or susp_flags
+        or ( cmd_has_flags and not filter_cmd_misses_flags ) ))
 falsepositives:
     - Unknown
 level: high

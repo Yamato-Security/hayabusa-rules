@@ -23,8 +23,8 @@ detection:
             - S-1-16-12288
             - S-1-16-16384
         ParentProcessName|endswith: \ieinstal.exe
-          NewProcessName|contains: \AppData\Local\Temp\
-          NewProcessName|endswith: consent.exe
+        NewProcessName|contains: \AppData\Local\Temp\
+        NewProcessName|endswith: consent.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

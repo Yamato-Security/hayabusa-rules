@@ -21,16 +21,16 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|endswith: \SharpUp.exe
-        - Description: SharpUp
-        - CommandLine|contains:
-            - HijackablePaths
-            - UnquotedServicePath
-            - ProcessDLLHijack
-            - ModifiableServiceBinaries
-            - ModifiableScheduledTask
-            - DomainGPPPassword
-            - CachedGPPPassword
+        -   Image|endswith: \SharpUp.exe
+        -   Description: SharpUp
+        -   CommandLine|contains:
+                - HijackablePaths
+                - UnquotedServicePath
+                - ProcessDLLHijack
+                - ModifiableServiceBinaries
+                - ModifiableScheduledTask
+                - DomainGPPPassword
+                - CachedGPPPassword
     condition: process_creation and selection
 falsepositives:
     - Unknown

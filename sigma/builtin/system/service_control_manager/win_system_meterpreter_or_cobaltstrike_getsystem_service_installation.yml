@@ -1,7 +1,8 @@
 title: Meterpreter or Cobalt Strike Getsystem Service Installation - System
 id: 843544a7-56e0-4dcc-a44f-5cc266dd97d6
 status: test
-description: Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting a specific service installation
+description: Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting
+    a specific service installation
 references:
     - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
     - https://blog.cobaltstrike.com/2014/04/02/what-happens-when-i-type-getsystem/
@@ -22,9 +23,6 @@ detection:
         Provider_Name: Service Control Manager
         EventID: 7045
     selection_cli_cmd:
-        # meterpreter getsystem technique 1: cmd.exe /c echo 559891bb017 > \\.\pipe\5e120a
-        # cobaltstrike getsystem technique 1: %COMSPEC% /c echo 559891bb017 > \\.\pipe\5e120a
-        # cobaltstrike getsystem technique 1b (expanded %COMSPEC%): %COMSPEC% /c echo 559891bb017 > \\.\pipe\5e120a
         ImagePath|contains|all:
             - /c
             - echo
@@ -33,13 +31,12 @@ detection:
             - cmd
             - '%COMSPEC%'
     selection_cli_rundll:
-        # meterpreter getsystem technique 2: rundll32.exe C:\Users\test\AppData\Local\Temp\tmexsn.dll,a /p:tmexsn
         ImagePath|contains|all:
             - rundll32
             - .dll,a
             - '/p:'
     selection_cli_share:
-        ImagePath|startswith: \\\\127.0.0.1\\ADMIN$\    # https://twitter.com/svch0st/status/1413688851877416960?lang=en
+        ImagePath|startswith: \\\\127.0.0.1\\ADMIN$\
     condition: system and (selection_id and 1 of selection_cli_*)
 falsepositives:
     - Unlikely

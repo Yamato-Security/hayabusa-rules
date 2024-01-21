@@ -1,8 +1,8 @@
 title: PUA - Chisel Tunneling Tool Execution
 id: 8b0e12da-d3c3-49db-bb4f-256703f380e5
 related:
-    - id: cf93e05e-d798-4d9e-b522-b0248dc61eaf
-      type: similar
+    -   id: cf93e05e-d798-4d9e-b522-b0248dc61eaf
+        type: similar
 status: test
 description: Detects usage of the Chisel tunneling tool via the commandline arguments
 references:
@@ -26,11 +26,11 @@ detection:
     selection_img:
         Image|endswith: \chisel.exe
     selection_param1:
-          CommandLine|contains:
+        CommandLine|contains:
             - 'exe client '
             - 'exe server '
     selection_param2:
-          CommandLine|contains:
+        CommandLine|contains:
             - -socks5
             - -reverse
             - ' r:'

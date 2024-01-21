@@ -22,26 +22,26 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|contains:
-            - \$Recycle.bin\
-            - \config\systemprofile\
-            - \Intel\Logs\
-            - \RSA\MachineKeys\
-            - \Users\All Users\
-            - \Users\Default\
-            - \Users\NetworkService\
-            - \Users\Public\
-            - \Windows\addins\
-            - \Windows\debug\
-            - \Windows\Fonts\
-            - \Windows\Help\
-            - \Windows\IME\
-            - \Windows\Media\
-            - \Windows\repair\
-            - \Windows\security\
-            - \Windows\System32\Tasks\
-            - \Windows\Tasks\
-        - Image|startswith: C:\Perflogs\
+        -   Image|contains:
+                - \$Recycle.bin\
+                - \config\systemprofile\
+                - \Intel\Logs\
+                - \RSA\MachineKeys\
+                - \Users\All Users\
+                - \Users\Default\
+                - \Users\NetworkService\
+                - \Users\Public\
+                - \Windows\addins\
+                - \Windows\debug\
+                - \Windows\Fonts\
+                - \Windows\Help\
+                - \Windows\IME\
+                - \Windows\Media\
+                - \Windows\repair\
+                - \Windows\security\
+                - \Windows\System32\Tasks\
+                - \Windows\Tasks\
+        -   Image|startswith: C:\Perflogs\
     filter_ibm:
         Image|startswith: C:\Users\Public\IBM\ClientSolutions\Start_Programs\
     filter_citrix:

@@ -1,10 +1,11 @@
 title: Whoami.EXE Execution From Privileged Process
 id: 79ce34ca-af29-4d0e-b832-fc1b377020db
 related:
-    - id: 80167ada-7a12-41ed-b8e9-aa47195c66a1
-      type: obsoletes
+    -   id: 80167ada-7a12-41ed-b8e9-aa47195c66a1
+        type: obsoletes
 status: experimental
-description: Detects the execution of "whoami.exe" by privileged accounts that are often abused by threat actors
+description: Detects the execution of "whoami.exe" by privileged accounts that are
+    often abused by threat actors
 references:
     - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
     - https://nsudo.m2team.org/en-us/
@@ -24,8 +25,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - OriginalFileName: whoami.exe
-        - Image|endswith: \whoami.exe
+        -   OriginalFileName: whoami.exe
+        -   Image|endswith: \whoami.exe
     selection_user:
         User|contains:
             - AUTHORI

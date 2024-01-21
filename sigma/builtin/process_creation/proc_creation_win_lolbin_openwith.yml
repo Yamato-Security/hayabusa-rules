@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: /c
-          NewProcessName|endswith: \OpenWith.exe
+        CommandLine|contains: /c
+        NewProcessName|endswith: \OpenWith.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

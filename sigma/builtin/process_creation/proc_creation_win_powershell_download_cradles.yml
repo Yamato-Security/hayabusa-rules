@@ -20,7 +20,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - .DownloadString(
             - .DownloadFile(
             - 'Invoke-WebRequest '

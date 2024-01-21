@@ -1,7 +1,8 @@
 title: Start Windows Service Via Net.EXE
 id: 2a072a96-a086-49fa-bcb5-15cc5a619093
 status: test
-description: Detects the usage of the "net.exe" command to start a service using the "start" flag
+description: Detects the usage of the "net.exe" command to start a service using the
+    "start" flag
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1569.002/T1569.002.md
 author: Timur Zinniatullin, Daniil Yugoslavskiy, oscd.community
@@ -18,14 +19,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-            - \net.exe
-            - \net1.exe
-        - OriginalFileName:
-            - net.exe
-            - net1.exe
+        -   NewProcessName|endswith:
+                - \net.exe
+                - \net1.exe
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
     selection_cli:
-          CommandLine|contains: ' start '     # space character after the 'start' keyword indicates that a service name follows, in contrast to `net start` discovery expression
+        CommandLine|contains: ' start '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate administrator or user executes a service for legitimate reasons.

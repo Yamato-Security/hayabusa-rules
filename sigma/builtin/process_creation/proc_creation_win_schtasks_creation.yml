@@ -21,10 +21,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: ' /create '
-          NewProcessName|endswith: \schtasks.exe
+        CommandLine|contains: ' /create '
+        NewProcessName|endswith: \schtasks.exe
     filter:
-        SubjectUserName|contains: # covers many language settings
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
     condition: process_creation and (selection and not filter)

@@ -19,10 +19,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \certutil.exe
-        - OriginalFileName: CertUtil.exe
+        -   Image|endswith: \certutil.exe
+        -   OriginalFileName: CertUtil.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' -syncwithWU '
             - ' \\\\'
     condition: process_creation and (all of selection_*)

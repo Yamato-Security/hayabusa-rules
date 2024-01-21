@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith: \iodine.exe
-        - NewProcessName|contains: \dnscat2
+        -   NewProcessName|endswith: \iodine.exe
+        -   NewProcessName|contains: \dnscat2
     condition: process_creation and selection
 falsepositives:
     - Unlikely

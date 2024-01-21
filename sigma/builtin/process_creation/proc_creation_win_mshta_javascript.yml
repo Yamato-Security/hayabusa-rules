@@ -19,10 +19,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \mshta.exe
-        - OriginalFileName: MSHTA.EXE
+        -   NewProcessName|endswith: \mshta.exe
+        -   OriginalFileName: MSHTA.EXE
     selection_cli:
-          CommandLine|contains: javascript
+        CommandLine|contains: javascript
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

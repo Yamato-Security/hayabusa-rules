@@ -21,12 +21,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '&&'
             - rundll32
             - shell32.dll
             - shellexec_rundll
-          CommandLine|contains:
+        CommandLine|contains:
             - value
             - invoke
             - comspec

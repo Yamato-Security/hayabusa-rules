@@ -1,8 +1,10 @@
 title: Cloudflared Portable Execution
 id: fadb84f0-4e84-4f6d-a1ce-9ef2bffb6ccd
 status: experimental
-description: |
-    Detects the execution of the "cloudflared" binary from a non standard location.
+description: 'Detects the execution of the "cloudflared" binary from a non standard
+    location.
+
+    '
 references:
     - https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/do-more-with-tunnels/trycloudflare/
     - https://github.com/cloudflare/cloudflared
@@ -22,9 +24,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \cloudflared.exe
+        NewProcessName|endswith: \cloudflared.exe
     filter_main_admin_location:
-          NewProcessName|contains:
+        NewProcessName|contains:
             - :\Program Files (x86)\cloudflared\
             - :\Program Files\cloudflared\
     condition: process_creation and (selection and not 1 of filter_main_*)

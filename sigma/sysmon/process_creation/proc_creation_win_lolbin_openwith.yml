@@ -21,7 +21,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \OpenWith.exe
-          CommandLine|contains: /c
+        CommandLine|contains: /c
     condition: process_creation and selection
 falsepositives:
     - Unknown

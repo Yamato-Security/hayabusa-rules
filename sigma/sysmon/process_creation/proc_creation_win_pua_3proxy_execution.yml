@@ -23,8 +23,8 @@ detection:
         Image|endswith: \3proxy.exe
     selection_pe:
         Description: 3proxy - tiny proxy server
-    selection_params: # param combos seen in the wild
-          CommandLine|contains: .exe -i127.0.0.1 -p
+    selection_params:
+        CommandLine|contains: .exe -i127.0.0.1 -p
     condition: process_creation and (1 of selection_*)
 falsepositives:
     - Administrative activity

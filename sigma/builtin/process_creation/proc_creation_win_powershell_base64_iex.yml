@@ -18,31 +18,30 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - CommandLine|base64offset|contains:
-            - IEX ([
-            - iex ([
-            - iex (New
-            - IEX (New
-            - IEX([
-            - iex([
-            - iex(New
-            - IEX(New
-            - IEX(('
-            - iex(('
-        # UTF16 LE
-        - CommandLine|contains:
-            - SQBFAFgAIAAoAFsA
-            - kARQBYACAAKABbA
-            - JAEUAWAAgACgAWw
-            - aQBlAHgAIAAoAFsA
-            - kAZQB4ACAAKABbA
-            - pAGUAeAAgACgAWw
-            - aQBlAHgAIAAoAE4AZQB3A
-            - kAZQB4ACAAKABOAGUAdw
-            - pAGUAeAAgACgATgBlAHcA
-            - SQBFAFgAIAAoAE4AZQB3A
-            - kARQBYACAAKABOAGUAdw
-            - JAEUAWAAgACgATgBlAHcA
+        -   CommandLine|base64offset|contains:
+                - IEX ([
+                - iex ([
+                - iex (New
+                - IEX (New
+                - IEX([
+                - iex([
+                - iex(New
+                - IEX(New
+                - IEX(('
+                - iex(('
+        -   CommandLine|contains:
+                - SQBFAFgAIAAoAFsA
+                - kARQBYACAAKABbA
+                - JAEUAWAAgACgAWw
+                - aQBlAHgAIAAoAFsA
+                - kAZQB4ACAAKABbA
+                - pAGUAeAAgACgAWw
+                - aQBlAHgAIAAoAE4AZQB3A
+                - kAZQB4ACAAKABOAGUAdw
+                - pAGUAeAAgACgATgBlAHcA
+                - SQBFAFgAIAAoAE4AZQB3A
+                - kARQBYACAAKABOAGUAdw
+                - JAEUAWAAgACgATgBlAHcA
     condition: process_creation and selection
 falsepositives:
     - Unknown

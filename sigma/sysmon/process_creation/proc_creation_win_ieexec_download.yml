@@ -19,10 +19,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \IEExec.exe
-        - OriginalFileName: IEExec.exe
+        -   Image|endswith: \IEExec.exe
+        -   OriginalFileName: IEExec.exe
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - http://
             - https://
     condition: process_creation and (all of selection_*)

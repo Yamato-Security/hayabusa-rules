@@ -1,9 +1,14 @@
 title: Process Terminated Via Taskkill
 id: 86085955-ea48-42a2-9dd3-85d4c36b167d
 status: experimental
-description: |
-    Detects execution of "taskkill.exe" in order to stop a service or a process. Look for suspicious parents executing this command in order to hunt for potential malicious activity.
-    Attackers might leverage this in order to conduct data destruction or data encrypted for impact on the data stores of services like Exchange and SQL Server.
+description: 'Detects execution of "taskkill.exe" in order to stop a service or a
+    process. Look for suspicious parents executing this command in order to hunt for
+    potential malicious activity.
+
+    Attackers might leverage this in order to conduct data destruction or data encrypted
+    for impact on the data stores of services like Exchange and SQL Server.
+
+    '
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1489/T1489.md#atomic-test-3---windows---stop-service-by-killing-process
 author: frack113
@@ -22,10 +27,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \taskkill.exe
-        - OriginalFileName: taskkill.exe
+        -   Image|endswith: \taskkill.exe
+        -   OriginalFileName: taskkill.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' /f'
             - ' /im '
     filter_main_installers:
@@ -35,6 +40,7 @@ detection:
         ParentImage|endswith: .tmp
     condition: process_creation and (all of selection_* and not 1 of filter_main_*)
 falsepositives:
-    - Expected FP with some processes using this techniques to terminate one of their processes during installations and updates
+    - Expected FP with some processes using this techniques to terminate one of their
+        processes during installations and updates
 level: low
 ruletype: Sigma

@@ -24,7 +24,7 @@ detection:
             - High
             - System
         ParentImage|endswith: \AppData\Local\Temp\pkgmgr.exe
-          CommandLine: '"C:\Windows\system32\msconfig.exe" -5'
+        CommandLine: '"C:\Windows\system32\msconfig.exe" -5'
     condition: process_creation and selection
 falsepositives:
     - Unknown

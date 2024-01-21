@@ -1,7 +1,8 @@
 title: Suspicious Service Path Modification
 id: 138d3531-8793-4f50-a2cd-f291b2863d78
 status: test
-description: Detects service path modification via the "sc" binary to a suspicious command or path
+description: Detects service path modification via the "sc" binary to a suspicious
+    command or path
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md
     - https://web.archive.org/web/20180331144337/https://www.fireeye.com/blog/threat-research/2018/03/sanny-malware-delivery-method-updated-in-recently-observed-attacks.html
@@ -20,11 +21,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - config
             - binPath
-          CommandLine|contains:
-            # Add more suspicious commands or binaries
+        CommandLine|contains:
             - powershell
             - 'cmd '
             - mshta
@@ -39,14 +39,13 @@ detection:
             - cmd /c
             - cmd /k
             - cmd /r
-            # Add more suspicious paths
             - C:\Users\Public
             - \Downloads\
             - \Desktop\
             - \Microsoft\Windows\Start Menu\Programs\Startup\
             - C:\Windows\TEMP\
             - \AppData\Local\Temp
-          NewProcessName|endswith: \sc.exe
+        NewProcessName|endswith: \sc.exe
     condition: process_creation and selection
 fields:
     - CommandLine

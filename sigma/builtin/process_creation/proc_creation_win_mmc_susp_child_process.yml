@@ -20,17 +20,17 @@ detection:
     selection1:
         ParentProcessName|endswith: \mmc.exe
     selection2:
-        - NewProcessName|endswith:
-            - \cmd.exe
-            - \powershell.exe
-            - \pwsh.exe
-            - \wscript.exe
-            - \cscript.exe
-            - \sh.exe
-            - \bash.exe
-            - \reg.exe
-            - \regsvr32.exe
-        - NewProcessName|contains: \BITSADMIN
+        -   NewProcessName|endswith:
+                - \cmd.exe
+                - \powershell.exe
+                - \pwsh.exe
+                - \wscript.exe
+                - \cscript.exe
+                - \sh.exe
+                - \bash.exe
+                - \reg.exe
+                - \regsvr32.exe
+        -   NewProcessName|contains: \BITSADMIN
     condition: process_creation and (all of selection*)
 fields:
     - NewProcessName

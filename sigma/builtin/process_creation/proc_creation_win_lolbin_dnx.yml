@@ -20,7 +20,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \dnx.exe
+        NewProcessName|endswith: \dnx.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate use of dnx.exe by legitimate user

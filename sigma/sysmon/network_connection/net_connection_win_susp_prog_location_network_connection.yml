@@ -1,7 +1,8 @@
 title: Suspicious Program Location with Network Connections
 id: 7b434893-c57d-4f41-908d-6a17bf1ae98f
 status: test
-description: Detects programs with network connections running in suspicious files system locations
+description: Detects programs with network connections running in suspicious files
+    system locations
 references:
     - https://docs.google.com/spreadsheets/d/17pSTDNpa0sf6pHeRhusvWG6rThciE8CsXTSlDUAZDyo
 author: Florian Roth (Nextron Systems), Tim Shelton
@@ -14,7 +15,8 @@ tags:
 logsource:
     category: network_connection
     product: windows
-    definition: Use the following config to generate the necessary Event ID 3 Network Connection events
+    definition: Use the following config to generate the necessary Event ID 3 Network
+        Connection events
 detection:
     network_connection:
         EventID: 3
@@ -30,7 +32,7 @@ detection:
             - \config\systemprofile\
             - \Windows\addins\
     filter_optional_ibm:
-        Image|contains: :\Users\Public\IBM\ClientSolutions\Start_Programs\   # IBM Client Solutions Default Location
+        Image|contains: :\Users\Public\IBM\ClientSolutions\Start_Programs\
     condition: network_connection and (selection and not 1 of filter_optional_*)
 falsepositives:
     - Unknown

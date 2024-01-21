@@ -17,7 +17,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine: C:\Windows\PSEXESVC.exe
+        CommandLine: C:\Windows\PSEXESVC.exe
     condition: process_creation and selection
 falsepositives:
     - Administrative activity

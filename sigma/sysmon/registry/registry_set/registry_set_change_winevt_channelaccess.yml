@@ -1,7 +1,8 @@
 title: Change Winevt Event Access Permission Via Registry
 id: 7d9263bd-dc47-4a58-bc92-5474abab390c
 status: experimental
-description: Detects tampering with the "ChannelAccess" registry key in order to change access to Windows event channel
+description: Detects tampering with the "ChannelAccess" registry key in order to change
+    access to Windows event channel
 references:
     - https://app.any.run/tasks/77b2e328-8f36-46b2-b2e2-8a80398217ab/
     - https://learn.microsoft.com/en-us/windows/win32/api/winevt/
@@ -23,11 +24,10 @@ detection:
     selection:
         TargetObject|startswith: HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WINEVT\Channels\
         TargetObject|endswith: \ChannelAccess
-        # Add more interesting combinations if you found them
         Details|contains:
-            - (A;;0x1;;;SY)   # Local System having GENERIC ALL
-            - (A;;0x5;;;BA)   # Built-in administrators having GENERIC ALL and  GENERIC WRITE
-            - (A;;0x1;;;LA)   # Local administrator having GENERIC ALL
+            - (A;;0x1;;;SY)
+            - (A;;0x5;;;BA)
+            - (A;;0x1;;;LA)
     filter_trustedinstaller:
         Image: C:\Windows\servicing\TrustedInstaller.exe
     filter_ti_worker:

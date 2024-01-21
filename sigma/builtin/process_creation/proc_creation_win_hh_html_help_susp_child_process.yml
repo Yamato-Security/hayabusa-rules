@@ -34,7 +34,7 @@ detection:
         Channel: Security
     selection:
         ParentProcessName|endswith: \hh.exe
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \CertReq.exe
             - \CertUtil.exe
             - \cmd.exe

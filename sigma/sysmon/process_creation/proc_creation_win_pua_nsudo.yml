@@ -21,24 +21,22 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith:
-            - \NSudo.exe
-            - \NSudoLC.exe
-            - \NSudoLG.exe
-        - OriginalFileName:
-            - NSudo.exe
-            - NSudoLC.exe
-            - NSudoLG.exe
+        -   Image|endswith:
+                - \NSudo.exe
+                - \NSudoLC.exe
+                - \NSudoLG.exe
+        -   OriginalFileName:
+                - NSudo.exe
+                - NSudoLC.exe
+                - NSudoLG.exe
     selection_cli:
-          CommandLine|contains:
-            # Covers Single/Double dash "-"/"--" + ":"
-            - '-U:S ' # System
-            - '-U:T ' # Trusted Installer
-            - '-U:E ' # Elevated
-            - '-P:E ' # Enable All Privileges
-            - '-M:S ' # System Integrity
-            - '-M:H ' # High Integrity
-            # Covers Single/Double dash "-"/"--" + "="
+        CommandLine|contains:
+            - '-U:S '
+            - '-U:T '
+            - '-U:E '
+            - '-P:E '
+            - '-M:S '
+            - '-M:H '
             - '-U=S '
             - '-U=T '
             - '-U=E '

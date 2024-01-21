@@ -1,7 +1,8 @@
 title: HackTool - LocalPotato Execution
 id: 6bd75993-9888-4f91-9404-e1e4e4e34b77
 status: test
-description: Detects the execution of the LocalPotato POC based on basic PE metadata information and default CLI examples
+description: Detects the execution of the LocalPotato POC based on basic PE metadata
+    information and default CLI examples
 references:
     - https://www.localpotato.com/localpotato_html/LocalPotato.html
     - https://github.com/decoder-it/LocalPotato
@@ -19,9 +20,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-          NewProcessName|endswith: \LocalPotato.exe
+        NewProcessName|endswith: \LocalPotato.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - .exe -i C:\
             - -o Windows\
     selection_hash_plain:

@@ -24,14 +24,14 @@ detection:
         Image|endswith:
             - \powershell.exe
             - \pwsh.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -e '
             - ' -en '
             - ' -enc '
             - ' -enco'
             - ' -ec '
     filter_encoding:
-          CommandLine|contains: ' -Encoding '
+        CommandLine|contains: ' -Encoding '
     filter_azure:
         ParentImage|contains:
             - C:\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\

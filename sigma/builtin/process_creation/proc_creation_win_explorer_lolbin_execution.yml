@@ -18,8 +18,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: explorer.exe
-          NewProcessName|endswith: \explorer.exe
+        CommandLine|contains: explorer.exe
+        NewProcessName|endswith: \explorer.exe
         ParentProcessName|endswith: \cmd.exe
     condition: process_creation and selection
 falsepositives:

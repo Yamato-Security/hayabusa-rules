@@ -1,7 +1,9 @@
 title: Sysmon Discovery Via Default Driver Altitude Using Findstr.EXE
 id: 37db85d1-b089-490a-a59a-c7b6f984f480
 status: test
-description: Detects usage of "findstr" with the argument "385201". Which could indicate potential discovery of an installed Sysinternals Sysmon service using the default driver altitude (even if the name is changed).
+description: Detects usage of "findstr" with the argument "385201". Which could indicate
+    potential discovery of an installed Sysinternals Sysmon service using the default
+    driver altitude (even if the name is changed).
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1518.001/T1518.001.md#atomic-test-5---security-software-discovery---sysmon-service
 author: frack113
@@ -18,14 +20,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-            - \find.exe
-            - \findstr.exe
-        - OriginalFileName:
-            - FIND.EXE
-            - FINDSTR.EXE
+        -   NewProcessName|endswith:
+                - \find.exe
+                - \findstr.exe
+        -   OriginalFileName:
+                - FIND.EXE
+                - FINDSTR.EXE
     selection_cli:
-          CommandLine|contains: ' 385201' # Sysmon driver default altitude
+        CommandLine|contains: ' 385201'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

@@ -1,7 +1,8 @@
 title: Potential UAC Bypass Via Sdclt.EXE
 id: 40f9af16-589d-4984-b78d-8c2aec023197
 status: test
-description: A General detection for sdclt being spawned as an elevated process. This could be an indicator of sdclt being used for bypass UAC techniques.
+description: A General detection for sdclt being spawned as an elevated process. This
+    could be an indicator of sdclt being used for bypass UAC techniques.
 references:
     - https://github.com/OTRF/detection-hackathon-apt29/issues/6
     - https://github.com/OTRF/ThreatHunter-Playbook/blob/2d4257f630f4c9770f78d0c1df059f891ffc3fec/docs/evals/apt29/detections/3.B.2_C36B49B5-DF58-4A34-9FE9-56189B9DEFEA.md
@@ -20,7 +21,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: sdclt.exe
+        NewProcessName|endswith: sdclt.exe
         MandatoryLabel: S-1-16-12288
     condition: process_creation and selection
 falsepositives:

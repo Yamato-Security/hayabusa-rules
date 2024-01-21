@@ -21,7 +21,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \SoundRecorder.exe
-          CommandLine|contains: /FILE
+        CommandLine|contains: /FILE
     condition: process_creation and selection
 falsepositives:
     - Legitimate audio capture by legitimate user.

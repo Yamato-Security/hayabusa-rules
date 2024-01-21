@@ -1,7 +1,8 @@
 title: Terminal Service Process Spawn
 id: 1012f107-b8f1-4271-af30-5aed2de89b39
 status: test
-description: Detects a process spawned by the terminal service server process (this could be an indicator for an exploitation of CVE-2019-0708)
+description: Detects a process spawned by the terminal service server process (this
+    could be an indicator for an exploitation of CVE-2019-0708)
 references:
     - https://securingtomorrow.mcafee.com/other-blogs/mcafee-labs/rdp-stands-for-really-do-patch-understanding-the-wormable-rdp-vulnerability-cve-2019-0708/
 author: Florian Roth (Nextron Systems)
@@ -25,13 +26,13 @@ detection:
             - \svchost.exe
             - termsvcs
     filter_img:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \rdpclip.exe
             - :\Windows\System32\csrss.exe
             - :\Windows\System32\wininit.exe
             - :\Windows\System32\winlogon.exe
     filter_null:
-          NewProcessName:
+        NewProcessName: null
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:
     - Unknown

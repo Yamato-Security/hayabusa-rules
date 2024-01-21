@@ -23,9 +23,9 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \schtasks.exe
-          CommandLine|contains: ' /create '
+        CommandLine|contains: ' /create '
     filter:
-        User|contains: # covers many language settings
+        User|contains:
             - AUTHORI
             - AUTORI
     condition: process_creation and (selection and not filter)

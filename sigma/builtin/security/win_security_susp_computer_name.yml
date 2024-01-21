@@ -19,7 +19,6 @@ logsource:
     service: security
     product: windows
 detection:
-    # Not adding an EventID on purpose to try to match on any event in security (including use of account), not just 4741 (computer account created)
     security:
         Channel: Security
     selection1:

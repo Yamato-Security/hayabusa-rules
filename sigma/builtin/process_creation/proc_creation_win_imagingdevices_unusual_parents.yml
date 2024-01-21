@@ -1,7 +1,8 @@
 title: ImagingDevices Unusual Parent/Child Processes
 id: f11f2808-adb4-46c0-802a-8660db50fa99
 status: test
-description: Detects unusual parent or children of the ImagingDevices.exe (Windows Contacts) process as seen being used with Bumblebee activity
+description: Detects unusual parent or children of the ImagingDevices.exe (Windows
+    Contacts) process as seen being used with Bumblebee activity
 references:
     - https://thedfirreport.com/2022/09/26/bumblebee-round-two/
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -19,13 +20,11 @@ detection:
         Channel: Security
     selection_parent:
         ParentProcessName|endswith:
-            # Add more if known
             - \WmiPrvSE.exe
             - \svchost.exe
             - \dllhost.exe
-          NewProcessName|endswith: \ImagingDevices.exe
+        NewProcessName|endswith: \ImagingDevices.exe
     selection_child:
-        # You can add specific suspicious child processes (such as cmd, powershell...) to increase the accuracy
         ParentProcessName|endswith: \ImagingDevices.exe
     condition: process_creation and (1 of selection_*)
 falsepositives:

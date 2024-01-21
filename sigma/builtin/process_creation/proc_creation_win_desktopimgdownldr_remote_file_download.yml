@@ -1,7 +1,9 @@
 title: Remote File Download Via Desktopimgdownldr Utility
 id: 214641c2-c579-4ecb-8427-0cf19df6842e
 status: test
-description: Detects the desktopimgdownldr utility being used to download a remote file. An adversary may use desktopimgdownldr to download arbitrary files as an alternative to certutil.
+description: Detects the desktopimgdownldr utility being used to download a remote
+    file. An adversary may use desktopimgdownldr to download arbitrary files as an
+    alternative to certutil.
 references:
     - https://www.elastic.co/guide/en/security/current/remote-file-download-via-desktopimgdownldr-utility.html
 author: Tim Rauch
@@ -17,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: /lockscreenurl:http
-          NewProcessName|endswith: \desktopimgdownldr.exe
+        CommandLine|contains: /lockscreenurl:http
+        NewProcessName|endswith: \desktopimgdownldr.exe
         ParentProcessName|endswith: \desktopimgdownldr.exe
     condition: process_creation and selection
 falsepositives:

@@ -23,12 +23,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_cli_1:
-          CommandLine|contains:
+        CommandLine|contains:
             - tracert -h 10 yahoo.com
             - .WSqmCons))|iex;
             - Fr`omBa`se6`4Str`ing
     selection_cli_2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - net use https://docs.live.net
             - '@aol.co.uk'
     condition: process_creation and (1 of selection_*)

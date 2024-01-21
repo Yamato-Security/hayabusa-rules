@@ -19,10 +19,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection1:
-          CommandLine|contains: /fullmemdmp
-          NewProcessName|endswith: \rdrleakdiag.exe
+        CommandLine|contains: /fullmemdmp
+        NewProcessName|endswith: \rdrleakdiag.exe
     selection2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - /fullmemdmp
             - ' /o '
             - ' /p '

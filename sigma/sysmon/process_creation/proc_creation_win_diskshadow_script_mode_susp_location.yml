@@ -1,16 +1,17 @@
 title: Diskshadow Script Mode - Execution From Potential Suspicious Location
 id: fa1a7e52-3d02-435b-81b8-00da14dd66c1
 related:
-    - id: 1dde5376-a648-492e-9e54-4241dd9b0c7f # Diskshadow Script Mode - Uncommon Script Extension Execution
-      type: similar
-    - id: 9f546b25-5f12-4c8d-8532-5893dcb1e4b8 # Potentially Suspicious Child Process Of DiskShadow.EXE
-      type: similar
-    - id: 56b1dde8-b274-435f-a73a-fb75eb81262a # Diskshadow Child Process Spawned
-      type: similar
-    - id: 0c2f8629-7129-4a8a-9897-7e0768f13ff2 # Diskshadow Script Mode Execution
-      type: similar
+    -   id: 1dde5376-a648-492e-9e54-4241dd9b0c7f
+        type: similar
+    -   id: 9f546b25-5f12-4c8d-8532-5893dcb1e4b8
+        type: similar
+    -   id: 56b1dde8-b274-435f-a73a-fb75eb81262a
+        type: similar
+    -   id: 0c2f8629-7129-4a8a-9897-7e0768f13ff2
+        type: similar
 status: experimental
-description: Detects execution of "Diskshadow.exe" in script mode using the "/s" flag where the script is located in a potentially suspicious location.
+description: Detects execution of "Diskshadow.exe" in script mode using the "/s" flag
+    where the script is located in a potentially suspicious location.
 references:
     - https://bohops.com/2018/03/26/diskshadow-the-return-of-vss-evasion-persistence-and-active-directory-database-extraction/
     - https://www.ired.team/offensive-security/credential-access-and-credential-dumping/ntds.dit-enumeration
@@ -33,15 +34,14 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - OriginalFileName: diskshadow.exe
-        - Image|endswith: \diskshadow.exe
+        -   OriginalFileName: diskshadow.exe
+        -   Image|endswith: \diskshadow.exe
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - '/s '
             - '-s '
     selection_paths:
-          CommandLine|contains:
-            # Note: Add additional susp paths based on your org needs
+        CommandLine|contains:
             - :\Temp\
             - :\Windows\Temp\
             - \AppData\Local\
@@ -50,6 +50,7 @@ detection:
             - \Users\Public\
     condition: process_creation and (all of selection_*)
 falsepositives:
-    - False positives may occur if you execute the script from one of the paths mentioned in the rule. Apply additional filters that fits your org needs.
+    - False positives may occur if you execute the script from one of the paths mentioned
+        in the rule. Apply additional filters that fits your org needs.
 level: medium
 ruletype: Sigma

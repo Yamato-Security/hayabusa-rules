@@ -1,7 +1,8 @@
 title: Modify User Shell Folders Startup Value
 id: 9c226817-8dc9-46c2-a58d-66655aafd7dc
 status: experimental
-description: Detect modification of the startup key to a path where a payload could be stored to be launched during startup
+description: Detect modification of the startup key to a path where a payload could
+    be stored to be launched during startup
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/9e5b12c4912c07562aec7500447b11fa3e17e254/atomics/T1547.001/T1547.001.md
 author: frack113
@@ -20,9 +21,9 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        TargetObject|contains: SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders
-        TargetObject|endswith: Startup   # cover Common Startup and Startup
-        # can use Details|contains: path if get too many FP
+        TargetObject|contains: SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User
+            Shell Folders
+        TargetObject|endswith: Startup
     condition: registry_set and selection
 falsepositives:
     - Unknown

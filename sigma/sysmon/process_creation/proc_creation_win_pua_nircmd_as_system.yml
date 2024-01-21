@@ -22,7 +22,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains: ' runassystem '
+        CommandLine|contains: ' runassystem '
     condition: process_creation and selection
 fields:
     - CommandLine

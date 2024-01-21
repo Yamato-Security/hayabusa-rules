@@ -20,9 +20,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - \SyncAppvPublishingServer.vbs
-            - ;    # at a minimum, a semi-colon is required
+            - ;
     condition: process_creation and selection
 fields:
     - SubjectUserName

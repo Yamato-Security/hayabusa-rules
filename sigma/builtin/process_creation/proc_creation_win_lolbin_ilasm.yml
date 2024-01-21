@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith: \ilasm.exe
-        - OriginalFileName: ilasm.exe
+        -   NewProcessName|endswith: \ilasm.exe
+        -   OriginalFileName: ilasm.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

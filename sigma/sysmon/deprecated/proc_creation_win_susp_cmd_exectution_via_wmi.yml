@@ -1,7 +1,8 @@
 title: Suspicious Cmd Execution via WMI
 id: e31f89f7-36fb-4697-8ab6-48823708353b
 status: deprecated
-description: Detects suspicious command execution (cmd) via Windows Management Instrumentation (WMI) on a remote host. This could be indicative of adversary lateral movement.
+description: Detects suspicious command execution (cmd) via Windows Management Instrumentation
+    (WMI) on a remote host. This could be indicative of adversary lateral movement.
 references:
     - https://www.elastic.co/guide/en/security/current/suspicious-cmd-execution-via-wmi.html
 author: Tim Rauch
@@ -21,9 +22,9 @@ detection:
     selection:
         Image|endswith: \cmd.exe
         ParentImage|endswith: \WmiPrvSE.exe
-          CommandLine|contains: \\\\127.0.0.1\\
+        CommandLine|contains: \\\\127.0.0.1\\
     selection_opt:
-          CommandLine|contains:
+        CommandLine|contains:
             - 2>&1
             - 1>
     condition: process_creation and (all of selection*)

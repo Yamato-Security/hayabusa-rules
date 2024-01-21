@@ -21,10 +21,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \bcdedit.exe
-        - OriginalFileName: bcdedit.exe
+        -   NewProcessName|endswith: \bcdedit.exe
+        -   OriginalFileName: bcdedit.exe
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - delete
             - deletevalue
             - import

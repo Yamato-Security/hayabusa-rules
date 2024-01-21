@@ -23,7 +23,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains: ' /dest:rdp-tcp#'
+        CommandLine|contains: ' /dest:rdp-tcp#'
     condition: process_creation and selection
 falsepositives:
     - Unknown

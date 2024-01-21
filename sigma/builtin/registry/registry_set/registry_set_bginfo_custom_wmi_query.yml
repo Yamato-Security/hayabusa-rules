@@ -1,10 +1,11 @@
 title: New BgInfo.EXE Custom WMI Query Registry Configuration
 id: cd277474-5c52-4423-a52b-ac2d7969902f
 related:
-    - id: 992dd79f-dde8-4bb0-9085-6350ba97cfb3
-      type: similar
+    -   id: 992dd79f-dde8-4bb0-9085-6350ba97cfb3
+        type: similar
 status: experimental
-description: Detects setting of a new registry value related to BgInfo configuration, which can be abused to execute custom WMI query via "BgInfo.exe"
+description: Detects setting of a new registry value related to BgInfo configuration,
+    which can be abused to execute custom WMI query via "BgInfo.exe"
 references:
     - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -20,7 +21,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-          OperationType: '%%1905'
+        OperationType: '%%1905'
         ObjectName|contains: \Software\Winternals\BGInfo\UserFields\
         NewValue|startswith: '6'
     condition: registry_set and selection

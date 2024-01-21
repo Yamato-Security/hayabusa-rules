@@ -1,10 +1,12 @@
 title: Potentially Suspicious Electron Application CommandLine
 id: 378a05d8-963c-46c9-bcce-13c7657eac99
 related:
-    - id: f26eb764-fd89-464b-85e2-dc4a8e6e77b8
-      type: similar
+    -   id: f26eb764-fd89-464b-85e2-dc4a8e6e77b8
+        type: similar
 status: experimental
-description: Detects potentially suspicious CommandLine of electron apps (teams, discord, slack, etc.). This could be a sign of abuse to proxy execution through a signed binary.
+description: Detects potentially suspicious CommandLine of electron apps (teams, discord,
+    slack, etc.). This could be a sign of abuse to proxy execution through a signed
+    binary.
 references:
     - https://positive.security/blog/ms-officecmd-rce
     - https://lolbas-project.github.io/lolbas/Binaries/Teams/
@@ -25,34 +27,32 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-              # Add more electron based app to the list
-            - \chrome.exe
-            - \code.exe
-            - \discord.exe
-            - \GitHubDesktop.exe
-            - \keybase.exe
-            - \msedge_proxy.exe
-            - \msedge.exe
-            - \msedgewebview2.exe
-            - \msteams.exe
-            - \slack.exe
-            - \Teams.exe
-        - OriginalFileName:
-              # Add more electron based app to the list
-            - chrome.exe
-            - code.exe
-            - discord.exe
-            - GitHubDesktop.exe
-            - keybase.exe
-            - msedge_proxy.exe
-            - msedge.exe
-            - msedgewebview2.exe
-            - msteams.exe
-            - slack.exe
-            - Teams.exe
+        -   NewProcessName|endswith:
+                - \chrome.exe
+                - \code.exe
+                - \discord.exe
+                - \GitHubDesktop.exe
+                - \keybase.exe
+                - \msedge_proxy.exe
+                - \msedge.exe
+                - \msedgewebview2.exe
+                - \msteams.exe
+                - \slack.exe
+                - \Teams.exe
+        -   OriginalFileName:
+                - chrome.exe
+                - code.exe
+                - discord.exe
+                - GitHubDesktop.exe
+                - keybase.exe
+                - msedge_proxy.exe
+                - msedge.exe
+                - msedgewebview2.exe
+                - msteams.exe
+                - slack.exe
+                - Teams.exe
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - --browser-subprocess-path
             - --gpu-launcher
             - --renderer-cmd-prefix
@@ -60,6 +60,5 @@ detection:
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate usage for debugging purposes
-# Increase the level once FP rate is known better (see status)
 level: medium
 ruletype: Sigma
