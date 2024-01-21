@@ -14,10 +14,8 @@ jobs:
   updateSigmaRule:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger rule parse error check
-        uses: actions/workflow-dispatch@v2
-        with:
-          workflow: 'rule-parse-error-check.yaml'
+      - name: Run rule parse error check
+        uses: Yamato-Security/hayabusa-rules/.github/workflows/rule-parse-error-check.yaml@v1
       - name: clone hayabusa rule repo
         uses: actions/checkout@v3
         with:
