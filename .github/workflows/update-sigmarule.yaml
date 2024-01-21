@@ -11,11 +11,11 @@ on:
     - cron: '0 20 * * *' 
 
 jobs:
+  Reuse:
+    uses: ./.github/workflows/rule-parse-error-check.yaml@v1
   updateSigmaRule:
     runs-on: ubuntu-latest
     steps:
-      - name: Run rule parse error check
-        uses: Yamato-Security/hayabusa-rules/.github/workflows/rule-parse-error-check.yaml@v1
       - name: clone hayabusa rule repo
         uses: actions/checkout@v3
         with:
