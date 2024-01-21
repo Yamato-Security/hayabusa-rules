@@ -36,6 +36,7 @@ jobs:
       - name: run csv-timeline
         run: |
             cd hayabusa
+            git fetch --prune --unshallow
             LATEST_VER=`git describe --tags --abbrev=0`
             URL="https://github.com/Yamato-Security/hayabusa/releases/download/${LATEST_VER}/hayabusa-${LATEST_VER#v}-linux.zip"
             mkdir tmp
