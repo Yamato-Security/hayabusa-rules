@@ -47,6 +47,7 @@ jobs:
             ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv  | grep "Rule parsing error" | wc -l | grep 0
 
   updateSigmaRule:
+    needs: rule-parse-error-check
     runs-on: ubuntu-latest
     steps:
       - name: clone hayabusa rule repo
