@@ -20,7 +20,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: (WCHAR)0x
+        CommandLine|contains: (WCHAR)0x
     condition: process_creation and selection
 falsepositives:
     - Unknown

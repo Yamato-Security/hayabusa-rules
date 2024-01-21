@@ -19,12 +19,12 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith: \xordump.exe
-        - CommandLine|contains:
-            - ' -process lsass.exe '
-            - ' -m comsvcs '
-            - ' -m dbghelp '
-            - ' -m dbgcore '
+        -   NewProcessName|endswith: \xordump.exe
+        -   CommandLine|contains:
+                - ' -process lsass.exe '
+                - ' -m comsvcs '
+                - ' -m dbghelp '
+                - ' -m dbgcore '
     condition: process_creation and selection
 falsepositives:
     - Another tool that uses the command line switches of XORdump

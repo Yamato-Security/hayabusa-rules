@@ -25,17 +25,16 @@ detection:
         CallTrace|contains: '|UNKNOWN('
         CallTrace|endswith: )
     filter_main_generic:
-        # To avoid FP with installed applications. This filter assumes that if an application is located here. The attacker has already achieved admin rights
-        - SourceImage|contains:
-            - :\Program Files\
-            - :\Program Files (x86)\
-            - :\Windows\System32\
-            - :\Windows\SysWOW64\
-        - TargetImage|contains:
-            - :\Program Files\
-            - :\Program Files (x86)\
-            - :\Windows\System32\
-            - :\Windows\SysWOW64\
+        -   SourceImage|contains:
+                - :\Program Files\
+                - :\Program Files (x86)\
+                - :\Windows\System32\
+                - :\Windows\SysWOW64\
+        -   TargetImage|contains:
+                - :\Program Files\
+                - :\Program Files (x86)\
+                - :\Windows\System32\
+                - :\Windows\SysWOW64\
     filter_optional_thor:
         SourceImage|endswith:
             - \thor.exe
@@ -70,7 +69,8 @@ detection:
     filter_optional_teams_update_to_teams:
         SourceImage|endswith: \AppData\Local\Microsoft\Teams\Update.exe
         TargetImage|endswith: \AppData\Local\Microsoft\Teams\stage\Teams.exe
-    condition: process_access and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
+    condition: process_access and (selection and not 1 of filter_main_* and not 1
+        of filter_optional_*)
 falsepositives:
     - Unknown
 level: medium

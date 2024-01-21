@@ -21,14 +21,14 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \msiexec.exe
-        - OriginalFileName: \msiexec.exe
+        -   Image|endswith: \msiexec.exe
+        -   OriginalFileName: \msiexec.exe
     selection_flag:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' /z '
             - ' -z '
     selection_dll:
-          CommandLine|contains: .dll
+        CommandLine|contains: .dll
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

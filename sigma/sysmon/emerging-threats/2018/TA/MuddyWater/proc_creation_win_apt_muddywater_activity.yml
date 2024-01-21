@@ -20,19 +20,19 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_mshta:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - vbscript:Close(Execute("CreateObject(
             - powershell
             - -w 1 -exec Bypass
             - \ProgramData\
     selection_survey:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - Win32_OperatingSystem
             - Win32_NetworkAdapterConfiguration
             - root\SecurityCenter2
             - '[System.Net.DNS]'
     selection_pwsh_backdoor:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '[Convert]::ToBase64String'
             - '[System.Text.Encoding]::UTF8.GetString]'
             - GetResponse().GetResponseStream()

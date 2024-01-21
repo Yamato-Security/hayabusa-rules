@@ -1,10 +1,12 @@
 title: Sticky Key Like Backdoor Execution
 id: 2fdefcb3-dbda-401e-ae23-f0db027628bc
 related:
-    - id: baca5663-583c-45f9-b5dc-ea96a22ce542
-      type: derived
+    -   id: baca5663-583c-45f9-b5dc-ea96a22ce542
+        type: derived
 status: test
-description: Detects the usage and installation of a backdoor that uses an option to register a malicious debugger for built-in tools that are accessible in the login screen
+description: Detects the usage and installation of a backdoor that uses an option
+    to register a malicious debugger for built-in tools that are accessible in the
+    login screen
 references:
     - https://learn.microsoft.com/en-us/archive/blogs/jonathantrull/detecting-sticky-key-backdoors
 author: Florian Roth (Nextron Systems), @twjackomo, Jonhnathan Ribeiro, oscd.community
@@ -36,7 +38,7 @@ detection:
             - \rundll32.exe
             - \wscript.exe
             - \wt.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - sethc.exe
             - utilman.exe
             - osk.exe

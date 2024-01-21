@@ -1,7 +1,9 @@
 title: Remote PowerShell Session Host Process (WinRM)
 id: 734f8d9b-42b8-41b2-bcf5-abaf49d5a3c8
 status: test
-description: Detects remote PowerShell sections by monitoring for wsmprovhost (WinRM host process) as a parent or child process (sign of an active PowerShell remote session).
+description: Detects remote PowerShell sections by monitoring for wsmprovhost (WinRM
+    host process) as a parent or child process (sign of an active PowerShell remote
+    session).
 references:
     - https://threathunterplaybook.com/hunts/windows/190511-RemotePwshExecution/notebook.html
 author: Roberto Rodriguez @Cyb3rWard0g
@@ -20,8 +22,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|endswith: \wsmprovhost.exe
-        - ParentImage|endswith: \wsmprovhost.exe
+        -   Image|endswith: \wsmprovhost.exe
+        -   ParentImage|endswith: \wsmprovhost.exe
     condition: process_creation and selection
 fields:
     - ComputerName

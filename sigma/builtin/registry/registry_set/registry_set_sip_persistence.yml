@@ -1,7 +1,8 @@
 title: Persistence Via New SIP Provider
 id: 5a2b21ee-6aaa-4234-ac9d-59a59edf90a1
 status: experimental
-description: Detects when an attacker register a new SIP provider for persistence and defense evasion
+description: Detects when an attacker register a new SIP provider for persistence
+    and defense evasion
 references:
     - https://persistence-info.github.io/Data/codesigning.html
     - https://github.com/gtworek/PSBits/tree/master/SIP
@@ -32,7 +33,6 @@ detection:
             - \$DLL
     filter:
         NewValue:
-            # Add more legitimate SIP providers according to your env
             - WINTRUST.DLL
             - mso.dll
     filter_poqexec:

@@ -1,10 +1,10 @@
 title: WMIC Remote Command Execution
 id: 7773b877-5abb-4a3e-b9c9-fd0369b59b00
 related:
-    - id: e42af9df-d90b-4306-b7fb-05c863847ebd
-      type: obsoletes
-    - id: 09af397b-c5eb-4811-b2bb-08b3de464ebf
-      type: obsoletes
+    -   id: e42af9df-d90b-4306-b7fb-05c863847ebd
+        type: obsoletes
+    -   id: 09af397b-c5eb-4811-b2bb-08b3de464ebf
+        type: obsoletes
 status: test
 description: Detects the execution of WMIC to query information on a remote system
 references:
@@ -23,12 +23,12 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \WMIC.exe
-        - OriginalFileName: wmic.exe
+        -   NewProcessName|endswith: \WMIC.exe
+        -   OriginalFileName: wmic.exe
     selection_cli:
-          CommandLine|contains: '/node:'
+        CommandLine|contains: '/node:'
     filter_localhost:
-          CommandLine|contains:
+        CommandLine|contains:
             - '/node:127.0.0.1 '
             - '/node:localhost '
     condition: process_creation and (all of selection_* and not 1 of filter_*)

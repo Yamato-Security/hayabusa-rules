@@ -21,34 +21,37 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_pwsh_binary:
-        - Image|endswith:
-            - \powershell.exe
-            - \pwsh.exe
-        - OriginalFileName:
-            - PowerShell.EXE
-            - pwsh.dll
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
     selection_pwsh_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - -DisableBehaviorMonitoring $true
             - -DisableRuntimeMonitoring $true
     selection_sc_binary:
-        - Image|endswith: \sc.exe
-        - OriginalFileName: sc.exe
+        -   Image|endswith: \sc.exe
+        -   OriginalFileName: sc.exe
     selection_sc_tamper_cmd_stop:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - stop
             - WinDefend
     selection_sc_tamper_cmd_delete:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - delete
             - WinDefend
     selection_sc_tamper_cmd_disabled:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - config
             - WinDefend
             - start=disabled
-    condition: process_creation and (all of selection_pwsh_* or (selection_sc_binary and 1 of selection_sc_tamper_*))
+    condition: process_creation and (all of selection_pwsh_* or (selection_sc_binary
+        and 1 of selection_sc_tamper_*))
 falsepositives:
-    - Minimal, for some older versions of dev tools, such as pycharm, developers were known to sometimes disable Windows Defender to improve performance, but this generally is not considered a good security practice.
+    - Minimal, for some older versions of dev tools, such as pycharm, developers were
+        known to sometimes disable Windows Defender to improve performance, but this
+        generally is not considered a good security practice.
 level: high
 ruletype: Sigma

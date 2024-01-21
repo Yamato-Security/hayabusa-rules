@@ -21,9 +21,9 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: AtBroker.exe
-          CommandLine|contains: start
+        CommandLine|contains: start
     filter:
-          CommandLine|contains:
+        CommandLine|contains:
             - animations
             - audiodescription
             - caretbrowsing

@@ -1,7 +1,8 @@
 title: Node Process Executions
 id: df1f26d3-bea7-4700-9ea2-ad3e990cf90e
 status: test
-description: Detects the execution of other scripts using the Node executable packaged with Adobe Creative Cloud
+description: Detects the execution of other scripts using the Node executable packaged
+    with Adobe Creative Cloud
 references:
     - https://twitter.com/mttaggart/status/1511804863293784064
 author: Max Altgelt (Nextron Systems)
@@ -18,9 +19,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \Adobe Creative Cloud Experience\libs\node.exe
+        NewProcessName|endswith: \Adobe Creative Cloud Experience\libs\node.exe
     filter:
-          CommandLine|contains: Adobe Creative Cloud Experience\js   # Folder where Creative Cloud's JS resources are located
+        CommandLine|contains: Adobe Creative Cloud Experience\js
     condition: process_creation and (selection and not filter)
 fields:
     - NewProcessName

@@ -22,10 +22,10 @@ detection:
     selection:
         ImageLoaded|endswith: \ShellDispatch.dll
     filter_main_legit_path:
-        - ImageLoaded|contains|all:
-            - :\Users\
-            - \AppData\Local\Temp\
-        - ImageLoaded|contains: :\Windows\Temp\
+        -   ImageLoaded|contains|all:
+                - :\Users\
+                - \AppData\Local\Temp\
+        -   ImageLoaded|contains: :\Windows\Temp\
     condition: image_load and (selection and not 1 of filter_main_*)
 falsepositives:
     - Some installers may trigger some false positives

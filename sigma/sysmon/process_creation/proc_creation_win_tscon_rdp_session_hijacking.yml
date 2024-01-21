@@ -17,8 +17,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \tscon.exe
-        - OriginalFileName: tscon.exe
+        -   Image|endswith: \tscon.exe
+        -   OriginalFileName: tscon.exe
     selection_integrity:
         IntegrityLevel: SYSTEM
     condition: process_creation and (all of selection_*)

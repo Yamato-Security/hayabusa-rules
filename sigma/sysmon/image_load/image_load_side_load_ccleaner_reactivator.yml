@@ -29,6 +29,7 @@ detection:
         Image|endswith: \CCleanerReactivator.exe
     condition: image_load and (selection and not 1 of filter_main_*)
 falsepositives:
-    - False positives could occur from other custom installation paths. Apply additional filters accordingly.
+    - False positives could occur from other custom installation paths. Apply additional
+        filters accordingly.
 level: medium
 ruletype: Sigma

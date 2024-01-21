@@ -22,7 +22,7 @@ detection:
         Image|endswith:
             - \powershell.exe
             - \pwsh.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - ' | iex;'
             - ' | iex '
             - ' | iex}'
@@ -31,11 +31,11 @@ detection:
             - ' | IEX (new'
             - ');IEX '
     selection_combined_2:
-          CommandLine|contains:
+        CommandLine|contains:
             - ::FromBase64String
             - '.GetString([System.Convert]::'
     selection_standalone:
-          CommandLine|contains:
+        CommandLine|contains:
             - )|iex;$
             - );iex($
             - );iex $

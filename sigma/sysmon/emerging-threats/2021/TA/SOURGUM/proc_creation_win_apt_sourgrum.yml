@@ -33,9 +33,9 @@ detection:
         Image|contains:
             - windows\system32\filepath2
             - windows\system32\ime
-          CommandLine|contains: reg add
+        CommandLine|contains: reg add
     registry_key:
-          CommandLine|contains:
+        CommandLine|contains:
             - HKEY_LOCAL_MACHINE\software\classes\clsid\{7c857801-7381-11cf-884d-00aa004b2e24}\inprocserver32
             - HKEY_LOCAL_MACHINE\software\classes\clsid\{cf4cc405-e2c5-4ddd-b3ce-5e7582d8c9fa}\inprocserver32
     condition: process_creation and (selection or all of registry_*)

@@ -1,7 +1,8 @@
 title: Sysmon Blocked Executable
 id: 23b71bc5-953e-4971-be4c-c896cda73fc2
 status: experimental
-description: Triggers on any Sysmon "FileBlockExecutable" event, which indicates a violation of the configured block policy
+description: Triggers on any Sysmon "FileBlockExecutable" event, which indicates a
+    violation of the configured block policy
 references:
     - https://medium.com/@olafhartong/sysmon-14-0-fileblockexecutable-13d7ba3dff3e
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -17,7 +18,7 @@ detection:
     sysmon:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventID: 27  # this is fine, we want to match any FileBlockExecutable event
+        EventID: 27
     condition: sysmon and selection
 falsepositives:
     - Unlikely

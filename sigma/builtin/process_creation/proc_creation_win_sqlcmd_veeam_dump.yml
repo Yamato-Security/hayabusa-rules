@@ -19,9 +19,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection_tools:
-          NewProcessName|endswith: \sqlcmd.exe
+        NewProcessName|endswith: \sqlcmd.exe
     selection_query:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - SELECT
             - TOP
             - '[VeeamBackup].[dbo].[Credentials]'

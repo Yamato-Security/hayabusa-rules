@@ -15,10 +15,10 @@ detection:
     security:
         Channel: Security
     selection1:
-        EventID: 4720 # create user
+        EventID: 4720
         SamAccountName|contains: $
     selection2:
-        EventID: 4781 # rename user
+        EventID: 4781
         NewTargetUserName|contains: $
     condition: security and (1 of selection*)
 fields:

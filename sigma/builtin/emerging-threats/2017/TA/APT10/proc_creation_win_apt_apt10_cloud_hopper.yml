@@ -1,7 +1,8 @@
 title: Potential APT10 Cloud Hopper Activity
 id: 966e4016-627f-44f7-8341-f394905c361f
 status: test
-description: Detects potential process and execution activity related to APT10 Cloud Hopper operation
+description: Detects potential process and execution activity related to APT10 Cloud
+    Hopper operation
 references:
     - https://web.archive.org/web/20180725233601/https://www.pwc.co.uk/cyber-security/pdf/cloud-hopper-annex-b-final.pdf
 author: Florian Roth (Nextron Systems)
@@ -20,10 +21,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_cscript:
-          CommandLine|contains: '.vbs /shell '
-          NewProcessName|endswith: \cscript.exe
+        CommandLine|contains: '.vbs /shell '
+        NewProcessName|endswith: \cscript.exe
     selection_csvde:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - csvde -f C:\windows\web\
             - .log
     condition: process_creation and (1 of selection_*)

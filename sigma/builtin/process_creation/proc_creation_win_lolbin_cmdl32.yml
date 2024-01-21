@@ -21,10 +21,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \cmdl32.exe
-        - OriginalFileName: CMDL32.EXE
+        -   NewProcessName|endswith: \cmdl32.exe
+        -   OriginalFileName: CMDL32.EXE
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '/vpn '
             - '/lan '
     condition: process_creation and (all of selection*)

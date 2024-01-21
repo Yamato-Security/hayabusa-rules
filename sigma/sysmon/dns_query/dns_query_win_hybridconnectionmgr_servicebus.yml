@@ -1,7 +1,8 @@
 title: DNS HybridConnectionManager Service Bus
 id: 7bd3902d-8b8b-4dd4-838a-c6862d40150d
 status: test
-description: Detects Azure Hybrid Connection Manager services querying the Azure service bus service
+description: Detects Azure Hybrid Connection Manager services querying the Azure service
+    bus service
 references:
     - https://twitter.com/Cyb3rWard0g/status/1381642789369286662
 author: Roberto Rodriguez (Cyb3rWard0g), OTR (Open Threat Research)
@@ -23,6 +24,7 @@ detection:
         Image|contains: HybridConnectionManager
     condition: dns_query and selection
 falsepositives:
-    - Legitimate use of Azure Hybrid Connection Manager and the Azure Service Bus service
+    - Legitimate use of Azure Hybrid Connection Manager and the Azure Service Bus
+        service
 level: high
 ruletype: Sigma

@@ -1,7 +1,8 @@
 title: Java Running with Remote Debugging
 id: 8f88e3f6-2a49-48f5-a5c4-2f7eedf78710
 status: test
-description: Detects a JAVA process running with remote debugging allowing more than just localhost to connect
+description: Detects a JAVA process running with remote debugging allowing more than
+    just localhost to connect
 references:
     - https://dzone.com/articles/remote-debugging-java-applications-with-jdwp
 author: Florian Roth (Nextron Systems)
@@ -18,13 +19,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection_jdwp_transport:
-          CommandLine|contains: transport=dt_socket,address=
+        CommandLine|contains: transport=dt_socket,address=
     selection_old_jvm_version:
-          CommandLine|contains:
+        CommandLine|contains:
             - jre1.
             - jdk1.
     exclusion:
-          CommandLine|contains:
+        CommandLine|contains:
             - address=127.0.0.1
             - address=localhost
     condition: process_creation and (all of selection_* and not exclusion)

@@ -1,10 +1,11 @@
 title: HackTool - SharpImpersonation Execution
 id: f89b08d0-77ad-4728-817b-9b16c5a69c7a
 related:
-    - id: cf0c254b-22f1-4b2b-8221-e137b3c0af94
-      type: similar
+    -   id: cf0c254b-22f1-4b2b-8221-e137b3c0af94
+        type: similar
 status: test
-description: Detects execution of the SharpImpersonation tool. Which can be used to manipulate tokens on a Windows computers remotely (PsExec/WmiExec) or interactively
+description: Detects execution of the SharpImpersonation tool. Which can be used to
+    manipulate tokens on a Windows computers remotely (PsExec/WmiExec) or interactively
 references:
     - https://s3cur3th1ssh1t.github.io/SharpImpersonation-Introduction/
     - https://github.com/S3cur3Th1sSh1t/SharpImpersonation
@@ -24,18 +25,18 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \SharpImpersonation.exe
-        - OriginalFileName: SharpImpersonation.exe
+        -   NewProcessName|endswith: \SharpImpersonation.exe
+        -   OriginalFileName: SharpImpersonation.exe
     selection_cli:
-        - CommandLine|contains|all:
-            - ' user:'
-            - ' binary:'
-        - CommandLine|contains|all:
-            - ' user:'
-            - ' shellcode:'
-        - CommandLine|contains:
-            - ' technique:CreateProcessAsUserW'
-            - ' technique:ImpersonateLoggedOnuser'
+        -   CommandLine|contains|all:
+                - ' user:'
+                - ' binary:'
+        -   CommandLine|contains|all:
+                - ' user:'
+                - ' shellcode:'
+        -   CommandLine|contains:
+                - ' technique:CreateProcessAsUserW'
+                - ' technique:ImpersonateLoggedOnuser'
     condition: process_creation and (1 of selection_*)
 falsepositives:
     - Unknown

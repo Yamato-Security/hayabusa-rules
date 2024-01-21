@@ -19,12 +19,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_metadata:
-        - Image|endswith:
-            - \gpg.exe
-            - \gpg2.exe
-        - Description: GnuPG’s OpenPGP tool
+        -   Image|endswith:
+                - \gpg.exe
+                - \gpg2.exe
+        -   Description: "GnuPG\u2019s OpenPGP tool"
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' -c '
             - passphrase
     condition: process_creation and (all of selection_*)

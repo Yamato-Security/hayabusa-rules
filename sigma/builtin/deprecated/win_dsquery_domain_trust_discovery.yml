@@ -18,12 +18,12 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - CommandLine|contains|all:
-            - -filter
-            - trustedDomain
-          NewProcessName|endswith: \dsquery.exe
-        - CommandLine|contains: domain_trusts
-          NewProcessName|endswith: \nltest.exe
+        -   CommandLine|contains|all:
+                - -filter
+                - trustedDomain
+            NewProcessName|endswith: \dsquery.exe
+        -   CommandLine|contains: domain_trusts
+            NewProcessName|endswith: \nltest.exe
     condition: process_creation and selection
 falsepositives:
     - Administration of systems.

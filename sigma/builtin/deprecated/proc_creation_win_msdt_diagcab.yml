@@ -1,7 +1,8 @@
 title: Execute MSDT.EXE Using Diagcab File
 id: 6545ce61-a1bd-4119-b9be-fcbee42c0cf3
 status: deprecated
-description: Detects diagcab leveraging the "ms-msdt" handler or the "msdt.exe" binary to execute arbitrary commands as seen in CVE-2022-30190
+description: Detects diagcab leveraging the "ms-msdt" handler or the "msdt.exe" binary
+    to execute arbitrary commands as seen in CVE-2022-30190
 references:
     - https://github.com/GossiTheDog/ThreatHunting/blob/e85884abbf05d5b41efc809ea6532b10b45bd05c/AdvancedHuntingQueries/DogWalk-DiagCab
     - https://github.com/elastic/protections-artifacts/commit/746086721fd385d9f5c6647cada1788db4aea95f#diff-9015912909545e72ed42cbac4d1e96295e8964579c406d23fd9c47a8091576a0
@@ -20,10 +21,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \msdt.exe
-        - OriginalFileName: msdt.exe
+        -   NewProcessName|endswith: \msdt.exe
+        -   OriginalFileName: msdt.exe
     selection_cmd:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' /cab'
             - ' -cab'
     condition: process_creation and (all of selection_*)

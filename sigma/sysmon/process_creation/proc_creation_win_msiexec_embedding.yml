@@ -1,7 +1,8 @@
 title: Suspicious MsiExec Embedding Parent
 id: 4a2a2c3e-209f-4d01-b513-4155a540b469
 status: test
-description: Adversaries may abuse msiexec.exe to proxy the execution of malicious payloads
+description: Adversaries may abuse msiexec.exe to proxy the execution of malicious
+    payloads
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218.007/T1218.007.md
 author: frack113
@@ -28,12 +29,12 @@ detection:
             - '-Embedding '
     filter_splunk_ufw:
         Image|endswith: :\Windows\System32\cmd.exe
-          CommandLine|contains: C:\Program Files\SplunkUniversalForwarder\bin\
+        CommandLine|contains: C:\Program Files\SplunkUniversalForwarder\bin\
     filter_vs:
-        - CommandLine|contains: \DismFoDInstall.cmd
-        - ParentCommandLine|contains|all:
-            - '\MsiExec.exe -Embedding '
-            - Global\MSI0000
+        -   CommandLine|contains: \DismFoDInstall.cmd
+        -   ParentCommandLine|contains|all:
+                - '\MsiExec.exe -Embedding '
+                - Global\MSI0000
     condition: process_creation and (selection and not 1 of filter*)
 falsepositives:
     - Unknown

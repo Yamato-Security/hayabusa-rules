@@ -1,7 +1,9 @@
 title: Esentutl Gather Credentials
 id: 7df1713a-1a5b-4a4b-a071-dc83b144a101
 status: test
-description: Conti recommendation to its affiliates to use esentutl to access NTDS dumped file. Trickbot also uses this utilities to get MSEdge info via its module pwgrab.
+description: Conti recommendation to its affiliates to use esentutl to access NTDS
+    dumped file. Trickbot also uses this utilities to get MSEdge info via its module
+    pwgrab.
 references:
     - https://twitter.com/vxunderground/status/1423336151860002816
     - https://attack.mitre.org/software/S0404/
@@ -22,7 +24,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - esentutl
             - ' /p'
     condition: process_creation and selection

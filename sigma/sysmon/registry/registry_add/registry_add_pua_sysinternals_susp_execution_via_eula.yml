@@ -1,12 +1,14 @@
 title: PUA - Sysinternals Tools Execution - Registry
 id: c7da8edc-49ae-45a2-9e61-9fd860e4e73d
 related:
-    - id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
-      type: derived
-    - id: 9841b233-8df8-4ad7-9133-b0b4402a9014
-      type: obsoletes
+    -   id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
+        type: derived
+    -   id: 9841b233-8df8-4ad7-9133-b0b4402a9014
+        type: obsoletes
 status: test
-description: Detects the execution of some potentially unwanted tools such as PsExec, Procdump, etc. (part of the Sysinternals suite) via the creation of the "accepteula" registry key.
+description: Detects the execution of some potentially unwanted tools such as PsExec,
+    Procdump, etc. (part of the Sysinternals suite) via the creation of the "accepteula"
+    registry key.
 references:
     - https://twitter.com/Moti_B/status/1008587936735035392
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -24,7 +26,7 @@ detection:
         EventID: 12
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          EventType: CreateKey
+        EventType: CreateKey
         TargetObject|contains:
             - \Active Directory Explorer
             - \Handle
@@ -35,10 +37,11 @@ detection:
             - \PsLoglist
             - \PsPasswd
             - \SDelete
-            - \Sysinternals   # Global level https://twitter.com/leonzandman/status/1561736801953382400
+            - \Sysinternals
         TargetObject|endswith: \EulaAccepted
     condition: registry_add and selection
 falsepositives:
-    - Legitimate use of SysInternals tools. Filter the legitimate paths used in your environment
+    - Legitimate use of SysInternals tools. Filter the legitimate paths used in your
+        environment
 level: medium
 ruletype: Sigma

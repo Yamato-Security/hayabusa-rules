@@ -1,7 +1,8 @@
 title: UtilityFunctions.ps1 Proxy Dll
 id: 0403d67d-6227-4ea8-8145-4e72db7da120
 status: test
-description: Detects the use of a Microsoft signed script executing a managed DLL with PowerShell.
+description: Detects the use of a Microsoft signed script executing a managed DLL
+    with PowerShell.
 references:
     - https://lolbas-project.github.io/lolbas/Scripts/UtilityFunctions/
 author: frack113
@@ -17,7 +18,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - UtilityFunctions.ps1
             - 'RegSnapin '
     condition: process_creation and selection

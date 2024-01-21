@@ -19,7 +19,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - ^^
             - ^|^
             - ',;,'
@@ -35,9 +35,6 @@ detection:
             - ' s^et '
             - ' s^e^t '
             - ' se^t '
-            # - '%%'
-            # - '&&'
-            # - '""'
     condition: process_creation and selection
 falsepositives:
     - Unknown

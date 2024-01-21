@@ -19,13 +19,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection_pe:
-        - NewProcessName|endswith: \setspn.exe
-        - OriginalFileName: setspn.exe
-        - Description|contains|all:
-            - Query or reset the computer
-            - SPN attribute
+        -   NewProcessName|endswith: \setspn.exe
+        -   OriginalFileName: setspn.exe
+        -   Description|contains|all:
+                - Query or reset the computer
+                - SPN attribute
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -q '
             - ' /q '
     condition: process_creation and (all of selection_*)

@@ -1,7 +1,8 @@
 title: Suspicious Kernel Dump Using Dtrace
 id: 7124aebe-4cd7-4ccb-8df0-6d6b93c96795
 status: test
-description: Detects suspicious way to dump the kernel on Windows systems using dtrace.exe, which is available on Windows systems since Windows 10 19H1
+description: Detects suspicious way to dump the kernel on Windows systems using dtrace.exe,
+    which is available on Windows systems since Windows 10 19H1
 references:
     - https://twitter.com/0gtweet/status/1474899714290208777?s=12
     - https://docs.microsoft.com/en-us/windows-hardware/drivers/devtest/dtrace
@@ -18,10 +19,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_plain:
-          CommandLine|contains: lkd(0)
-          NewProcessName|endswith: \dtrace.exe
+        CommandLine|contains: lkd(0)
+        NewProcessName|endswith: \dtrace.exe
     selection_obfuscated:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - syscall:::return
             - lkd(
     condition: process_creation and (1 of selection*)

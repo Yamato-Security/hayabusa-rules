@@ -17,22 +17,23 @@ detection:
         EventID: 4688
         Channel: Security
     selection1a:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - rundll32
             - apphelp.dll
     selection1b:
-          CommandLine|contains:
+        CommandLine|contains:
             - ShimFlushCache
             - '#250'
     selection2a:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - rundll32
             - kernel32.dll
     selection2b:
-          CommandLine|contains:
+        CommandLine|contains:
             - BaseFlushAppcompatCache
             - '#46'
-    condition: process_creation and (( selection1a and selection1b ) or ( selection2a and selection2b ))
+    condition: process_creation and (( selection1a and selection1b ) or ( selection2a
+        and selection2b ))
 fields:
     - NewProcessName
     - CommandLine

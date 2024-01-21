@@ -1,11 +1,13 @@
 title: HackTool - WinPwn Execution
 id: d557dc06-62e8-4468-a8e8-7984124908ce
 related:
-    - id: 851fd622-b675-4d26-b803-14bc7baa517a
-      type: similar
+    -   id: 851fd622-b675-4d26-b803-14bc7baa517a
+        type: similar
 status: experimental
-description: |
-    Detects commandline keywords indicative of potential usge of the tool WinPwn. A tool for Windows and Active Directory reconnaissance and exploitation.
+description: 'Detects commandline keywords indicative of potential usge of the tool
+    WinPwn. A tool for Windows and Active Directory reconnaissance and exploitation.
+
+    '
 author: Swachchhanda Shrawan Poudel
 date: 2023/12/04
 references:
@@ -36,7 +38,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - Offline_Winpwn
             - 'WinPwn '
             - WinPwn.exe

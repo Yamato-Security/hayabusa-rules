@@ -1,7 +1,8 @@
 title: Renamed CURL.EXE Execution
 id: 7530cd3d-7671-43e3-b209-976966f6ea48
 status: experimental
-description: Detects the execution of a renamed "CURL.exe" binary based on the PE metadata fields
+description: Detects the execution of a renamed "CURL.exe" binary based on the PE
+    metadata fields
 references:
     - https://twitter.com/Kostastsale/status/1700965142828290260
 author: X__Junior (Nextron Systems)
@@ -20,10 +21,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - OriginalFileName: curl.exe
-        - Description: The curl executable
+        -   OriginalFileName: curl.exe
+        -   Description: The curl executable
     filter_main_img:
-          NewProcessName|contains: \curl
+        NewProcessName|contains: \curl
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

@@ -20,19 +20,20 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \appcmd.exe
-        - OriginalFileName: appcmd.exe
+        -   Image|endswith: \appcmd.exe
+        -   OriginalFileName: appcmd.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - install
             - module
-          CommandLine|contains:
+        CommandLine|contains:
             - '/name:'
             - '-name:'
     filter_iis_setup:
         ParentImage: C:\Windows\System32\inetsrv\iissetup.exe
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
-    - Unknown as it may vary from organisation to organisation how admins use to install IIS modules
+    - Unknown as it may vary from organisation to organisation how admins use to install
+        IIS modules
 level: medium
 ruletype: Sigma

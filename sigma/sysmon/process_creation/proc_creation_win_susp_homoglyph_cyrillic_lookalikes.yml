@@ -1,10 +1,16 @@
 title: Potential Homoglyph Attack Using Lookalike Characters
 id: 32e280f1-8ad4-46ef-9e80-910657611fbc
 status: experimental
-description: |
-    Detects the presence of unicode characters which are homoglyphs, or identical in appearance, to ASCII letter characters.
-    This is used as an obfuscation and masquerading techniques. Only "perfect" homoglyphs are included; these are characters that
-    are indistinguishable from ASCII characters and thus may make excellent candidates for homoglyph attack characters.
+description: 'Detects the presence of unicode characters which are homoglyphs, or
+    identical in appearance, to ASCII letter characters.
+
+    This is used as an obfuscation and masquerading techniques. Only "perfect" homoglyphs
+    are included; these are characters that
+
+    are indistinguishable from ASCII characters and thus may make excellent candidates
+    for homoglyph attack characters.
+
+    '
 references:
     - https://redcanary.com/threat-detection-report/threats/socgholish/#threat-socgholish
     - http://www.irongeek.com/homoglyph-attack-generator.php
@@ -14,7 +20,6 @@ tags:
     - attack.defense_evasion
     - attack.t1036
     - attack.t1036.003
-   # - attack.t1036.008
     - sysmon
 logsource:
     category: process_creation
@@ -24,59 +29,60 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_upper:
-          CommandLine|contains:
-            - А        # А/A
-            - В        # В/B
-            - Е        # Е/E
-            - К        # К/K
-            - М        # М/M
-            - Н        # Н/H
-            - О        # О/O
-            - Р        # Р/P
-            - С        # С/C
-            - Т        # Т/T
-            - Х        # Х/X
-            - Ѕ        # Ѕ/S
-            - І        # І/I
-            - Ј        # Ј/J
-            - Ү        # Ү/Y
-            - Ӏ        # Ӏ/I
-            - Ԍ        # Ԍ/G
-            - Ԛ        # Ԛ/Q
-            - Ԝ        # Ԝ/W
-            - Α        # Α/A
-            - Β        # Β/B
-            - Ε        # Ε/E
-            - Ζ        # Ζ/Z
-            - Η        # Η/H
-            - Ι        # Ι/I
-            - Κ        # Κ/K
-            - Μ        # Μ/M
-            - Ν        # Ν/N
-            - Ο        # Ο/O
-            - Ρ        # Ρ/P
-            - Τ        # Τ/T
-            - Υ        # Υ/Y
-            - Χ        # Χ/X
+        CommandLine|contains:
+            - "\u0410"
+            - "\u0412"
+            - "\u0415"
+            - "\u041A"
+            - "\u041C"
+            - "\u041D"
+            - "\u041E"
+            - "\u0420"
+            - "\u0421"
+            - "\u0422"
+            - "\u0425"
+            - "\u0405"
+            - "\u0406"
+            - "\u0408"
+            - "\u04AE"
+            - "\u04C0"
+            - "\u050C"
+            - "\u051A"
+            - "\u051C"
+            - "\u0391"
+            - "\u0392"
+            - "\u0395"
+            - "\u0396"
+            - "\u0397"
+            - "\u0399"
+            - "\u039A"
+            - "\u039C"
+            - "\u039D"
+            - "\u039F"
+            - "\u03A1"
+            - "\u03A4"
+            - "\u03A5"
+            - "\u03A7"
     selection_lower:
-          CommandLine|contains:
-            - а        # а/a
-            - е        # е/e
-            - о        # о/o
-            - р        # р/p
-            - с        # с/c
-            - х        # х/x
-            - ѕ        # ѕ/s
-            - і        # і/i
-            - ӏ        # ӏ/l
-            - ј        # ј/j
-            - һ        # һ/h
-            - ԁ        # ԁ/d
-            - ԛ        # ԛ/q
-            - ԝ        # ԝ/w
-            - ο        # ο/o
+        CommandLine|contains:
+            - "\u0430"
+            - "\u0435"
+            - "\u043E"
+            - "\u0440"
+            - "\u0441"
+            - "\u0445"
+            - "\u0455"
+            - "\u0456"
+            - "\u04CF"
+            - "\u0458"
+            - "\u04BB"
+            - "\u0501"
+            - "\u051B"
+            - "\u051D"
+            - "\u03BF"
     condition: process_creation and (1 of selection_*)
 falsepositives:
-    - Commandlines with legitimate Cyrillic text; will likely require tuning (or not be usable) in countries where these alphabets are in use.
+    - Commandlines with legitimate Cyrillic text; will likely require tuning (or not
+        be usable) in countries where these alphabets are in use.
 level: medium
 ruletype: Sigma

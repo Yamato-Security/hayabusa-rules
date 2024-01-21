@@ -1,7 +1,8 @@
 title: Potential PsExec Remote Execution
 id: ea011323-7045-460b-b2d7-0f7442ea6b38
 status: test
-description: Detects potential psexec command that initiate execution on a remote systems via common commandline flags used by the utility
+description: Detects potential psexec command that initiate execution on a remote
+    systems via common commandline flags used by the utility
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/psexec
     - https://www.poweradmin.com/paexec/
@@ -20,8 +21,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        # Accepting EULA in commandline - often used in automated attacks
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - accepteula
             - ' -u '
             - ' -p '

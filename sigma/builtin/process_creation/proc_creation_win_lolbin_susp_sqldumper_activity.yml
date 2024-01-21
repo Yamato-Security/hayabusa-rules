@@ -20,10 +20,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - '0x0110'
             - 0x01100:40
-          NewProcessName|endswith: \sqldumper.exe
+        NewProcessName|endswith: \sqldumper.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate MSSQL Server actions

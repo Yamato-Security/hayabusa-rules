@@ -21,10 +21,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_curl:
-        - Image|endswith: \curl.exe
-        - Product: The curl executable
+        -   Image|endswith: \curl.exe
+        -   Product: The curl executable
     selection_opt:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -A '
             - ' --user-agent '
     condition: process_creation and (all of selection_*)

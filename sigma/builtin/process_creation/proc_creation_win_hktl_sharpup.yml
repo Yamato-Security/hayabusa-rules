@@ -20,16 +20,16 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith: \SharpUp.exe
-        - Description: SharpUp
-        - CommandLine|contains:
-            - HijackablePaths
-            - UnquotedServicePath
-            - ProcessDLLHijack
-            - ModifiableServiceBinaries
-            - ModifiableScheduledTask
-            - DomainGPPPassword
-            - CachedGPPPassword
+        -   NewProcessName|endswith: \SharpUp.exe
+        -   Description: SharpUp
+        -   CommandLine|contains:
+                - HijackablePaths
+                - UnquotedServicePath
+                - ProcessDLLHijack
+                - ModifiableServiceBinaries
+                - ModifiableScheduledTask
+                - DomainGPPPassword
+                - CachedGPPPassword
     condition: process_creation and selection
 falsepositives:
     - Unknown

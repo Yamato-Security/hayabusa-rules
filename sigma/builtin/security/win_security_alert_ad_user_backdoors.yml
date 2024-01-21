@@ -1,7 +1,8 @@
 title: Active Directory User Backdoors
 id: 300bac00-e041-4ee2-9c36-e262656a6ecc
 status: test
-description: Detects scenarios where one can control another users or computers account without having to use their credentials.
+description: Detects scenarios where one can control another users or computers account
+    without having to use their credentials.
 references:
     - https://msdn.microsoft.com/en-us/library/cc220234.aspx
     - https://adsecurity.org/?p=3466
@@ -15,15 +16,21 @@ tags:
 logsource:
     product: windows
     service: security
-    definition: 'Requirements: Audit Policy : Account Management > Audit User Account Management, Group Policy : Computer Configuration\Windows Settings\Security Settings\Advanced Audit Policy Configuration\Audit Policies\Account Management\Audit User Account Management, DS Access > Audit Directory Service Changes, Group Policy : Computer Configuration\Windows Settings\Security Settings\Advanced Audit Policy Configuration\Audit Policies\DS Access\Audit Directory Service Changes'
+    definition: 'Requirements: Audit Policy : Account Management > Audit User Account
+        Management, Group Policy : Computer Configuration\Windows Settings\Security
+        Settings\Advanced Audit Policy Configuration\Audit Policies\Account Management\Audit
+        User Account Management, DS Access > Audit Directory Service Changes, Group
+        Policy : Computer Configuration\Windows Settings\Security Settings\Advanced
+        Audit Policy Configuration\Audit Policies\DS Access\Audit Directory Service
+        Changes'
 detection:
     security:
         Channel: Security
     selection1:
         EventID: 4738
     filter_null:
-        - AllowedToDelegateTo: '-'
-        - AllowedToDelegateTo:
+        -   AllowedToDelegateTo: '-'
+        -   AllowedToDelegateTo: null
     selection_5136_1:
         EventID: 5136
         AttributeLDAPDisplayName: msDS-AllowedToDelegateTo

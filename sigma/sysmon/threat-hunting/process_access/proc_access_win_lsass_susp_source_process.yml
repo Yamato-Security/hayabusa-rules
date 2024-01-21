@@ -1,7 +1,8 @@
 title: LSASS Access From Program In Potentially Suspicious Folder
 id: fa34b441-961a-42fa-a100-ecc28c886725
 status: experimental
-description: Detects process access to LSASS memory with suspicious access flags and from a potentially suspicious folder
+description: Detects process access to LSASS memory with suspicious access flags and
+    from a potentially suspicious folder
 references:
     - https://docs.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
     - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
@@ -50,7 +51,7 @@ detection:
             - BA
             - DA
             - FA
-            - '0x14C2'  # https://github.com/b4rtik/ATPMiniDump/blob/76304f93b390af3bb66e4f451ca16562a479bdc9/ATPMiniDump/ATPMiniDump.c
+            - '0x14C2'
             - FF
         SourceImage|contains:
             - \Temp\
@@ -129,13 +130,14 @@ detection:
         TargetImage|endswith: \winlogon.exe
         GrantedAccess: '0x1fffff'
     filter_optional_adobe_arm_helper:
-        SourceImage|contains:  # Example path: 'C:\Program Files (x86)\Common Files\Adobe\ARM\1.0\Temp\2092867405\AdobeARMHelper.exe'
+        SourceImage|contains:
             - :\Program Files\Common Files\Adobe\ARM\
             - :\Program Files (x86)\Common Files\Adobe\ARM\
         SourceImage|endswith: \AdobeARMHelper.exe
         GrantedAccess: '0x1410'
     condition: process_access and (selection and not 1 of filter_optional_*)
 falsepositives:
-    - Updaters and installers are typical false positives. Apply custom filters depending on your environment
+    - Updaters and installers are typical false positives. Apply custom filters depending
+        on your environment
 level: medium
 ruletype: Sigma

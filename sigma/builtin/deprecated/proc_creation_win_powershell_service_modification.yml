@@ -1,9 +1,13 @@
 title: Stop Or Remove Antivirus Service
 id: 6783aa9e-0dc3-49d4-a94a-8b39c5fd700b
 status: deprecated
-description: |
-    Detects usage of 'Stop-Service' or 'Remove-Service' powershell cmdlet to disable AV services.
-    Adversaries may disable security tools to avoid possible detection of their tools and activities by stopping antivirus service
+description: 'Detects usage of ''Stop-Service'' or ''Remove-Service'' powershell cmdlet
+    to disable AV services.
+
+    Adversaries may disable security tools to avoid possible detection of their tools
+    and activities by stopping antivirus service
+
+    '
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
     - https://research.nccgroup.com/2022/08/19/back-in-black-unlocking-a-lockbit-3-0-ransomware-attack/
@@ -21,12 +25,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection_action:
-          CommandLine|contains:
+        CommandLine|contains:
             - 'Stop-Service '
             - 'Remove-Service '
     selection_product:
-          CommandLine|contains:
-            # Feel free to add more service name
+        CommandLine|contains:
             - ' McAfeeDLPAgentService'
             - ' Trend Micro Deep Security Manager'
             - ' TMBMServer'

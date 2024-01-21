@@ -1,8 +1,8 @@
 title: File Download From IP Based URL Via CertOC.EXE
 id: b86f6dea-0b2f-41f5-bdcc-a057bd19cd6a
 related:
-    - id: 70ad0861-d1fe-491c-a45f-fa48148a300d
-      type: similar
+    -   id: 70ad0861-d1fe-491c-a45f-fa48148a300d
+        type: similar
 status: experimental
 description: Detects when a user downloads a file from an IP based URL using CertOC.exe
 references:
@@ -22,12 +22,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \certoc.exe
-        - OriginalFileName: CertOC.exe
+        -   Image|endswith: \certoc.exe
+        -   OriginalFileName: CertOC.exe
     selection_ip:
-          CommandLine|re: ://[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}
+        CommandLine|re: ://[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}
     selection_cli:
-          CommandLine|contains: -GetCACAPS
+        CommandLine|contains: -GetCACAPS
     condition: process_creation and (all of selection*)
 falsepositives:
     - Unknown

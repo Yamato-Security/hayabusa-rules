@@ -24,11 +24,11 @@ detection:
         EventID: 4688
         Channel: Security
     netCommand1:
-          CommandLine: net view /DOMAIN
+        CommandLine: net view /DOMAIN
     netCommand2:
-          CommandLine: net session
+        CommandLine: net session
     netCommand3:
-          CommandLine: net share
+        CommandLine: net share
     timeframe: 1m
     condition: process_creation and (netCommand1 | near netCommand2 and netCommand3)
 falsepositives:

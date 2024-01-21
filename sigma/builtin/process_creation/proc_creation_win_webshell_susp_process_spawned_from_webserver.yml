@@ -1,11 +1,14 @@
 title: Suspicious Process By Web Server Process
 id: 8202070f-edeb-4d31-a010-a26c72ac5600
 status: test
-description: |
-    Detects potentially suspicious processes being spawned by a web server process which could be the result of a successfully placed web shell or exploitation
+description: 'Detects potentially suspicious processes being spawned by a web server
+    process which could be the result of a successfully placed web shell or exploitation
+
+    '
 references:
     - https://media.defense.gov/2020/Jun/09/2002313081/-1/-1/0/CSI-DETECT-AND-PREVENT-WEB-SHELL-MALWARE-20200422.PDF
-author: Thomas Patzke, Florian Roth (Nextron Systems), Zach Stanford @svch0st, Tim Shelton, Nasreddine Bencherchali (Nextron Systems)
+author: Thomas Patzke, Florian Roth (Nextron Systems), Zach Stanford @svch0st, Tim
+    Shelton, Nasreddine Bencherchali (Nextron Systems)
 date: 2019/01/16
 modified: 2023/11/11
 tags:
@@ -27,7 +30,7 @@ detection:
             - \php-cgi.exe
             - \php.exe
             - \tomcat.exe
-            - \UMWorkerProcess.exe    # https://www.fireeye.com/blog/threat-research/2021/03/detection-response-to-exploitation-of-microsoft-exchange-zero-day-vulnerabilities.html
+            - \UMWorkerProcess.exe
             - \w3wp.exe
             - \ws_TomcatService.exe
     selection_webserver_characteristics_tomcat1:
@@ -46,7 +49,7 @@ detection:
             - \java.exe
             - \javaw.exe
     selection_anomaly_children:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \arp.exe
             - \at.exe
             - \bash.exe
@@ -77,14 +80,16 @@ detection:
             - \wscript.exe
             - \wusa.exe
     filter_main_fp_1:
-          CommandLine|endswith: Windows\system32\cmd.exe /c C:\ManageEngine\ADManager "Plus\ES\bin\elasticsearch.bat -Enode.name=RMP-NODE1 -pelasticsearch-pid.txt
+        CommandLine|endswith: Windows\system32\cmd.exe /c C:\ManageEngine\ADManager
+            "Plus\ES\bin\elasticsearch.bat -Enode.name=RMP-NODE1 -pelasticsearch-pid.txt
         ParentProcessName|endswith: \java.exe
     filter_main_fp_2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - sc query
             - ADManager Plus
         ParentProcessName|endswith: \java.exe
-    condition: process_creation and (1 of selection_webserver_* and selection_anomaly_children and not 1 of filter_main_*)
+    condition: process_creation and (1 of selection_webserver_* and selection_anomaly_children
+        and not 1 of filter_main_*)
 falsepositives:
     - Particular web applications may spawn a shell process legitimately
 level: high

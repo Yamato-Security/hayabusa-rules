@@ -1,7 +1,8 @@
 title: HAFNIUM Exchange Exploitation Activity
 id: bbb2dedd-a0e3-46ab-ba6c-6c82ae7a9aa7
 status: test
-description: Detects activity observed by different researchers to be HAFNIUM group activity (or related) on Exchange servers
+description: Detects activity observed by different researchers to be HAFNIUM group
+    activity (or related) on Exchange servers
 references:
     - https://blog.truesec.com/2021/03/07/exchange-zero-day-proxylogon-and-hafnium/
     - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
@@ -25,52 +26,52 @@ detection:
         EventID: 4688
         Channel: Security
     selection_attrib:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - attrib
             - ' +h '
             - ' +s '
             - ' +r '
             - .aspx
     selection_vsperfmon:
-        - NewProcessName|contains: \ProgramData\VSPerfMon\
-        - CommandLine|contains|all:
-            - schtasks
-            - VSPerfMon
+        -   NewProcessName|contains: \ProgramData\VSPerfMon\
+        -   CommandLine|contains|all:
+                - schtasks
+                - VSPerfMon
     selection_opera_1:
-          NewProcessName|endswith: Opera_browser.exe
+        NewProcessName|endswith: Opera_browser.exe
         ParentProcessName|endswith:
             - \services.exe
             - \svchost.exe
     selection_opera_2:
-          NewProcessName|endswith: Users\Public\opera\Opera_browser.exe
+        NewProcessName|endswith: Users\Public\opera\Opera_browser.exe
     selection_vssadmin:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - vssadmin list shadows
             - Temp\__output
     selection_makecab_1:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - inetpub\wwwroot\
             - .dmp.zip
-          NewProcessName|endswith: \makecab.exe
+        NewProcessName|endswith: \makecab.exe
     selection_makecab_2:
-          CommandLine|contains:
+        CommandLine|contains:
             - Microsoft\Exchange Server\
             - compressionmemory
             - .gif
-          NewProcessName|endswith: \makecab.exe
+        NewProcessName|endswith: \makecab.exe
     selection_7zip:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' -t7z '
             - C:\Programdata\pst
             - \it.zip
     selection_rundll32:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - \comsvcs.dll
             - Minidump
             - 'full '
             - \inetpub\wwwroot
     selection_other:
-          CommandLine|contains:
+        CommandLine|contains:
             - Windows\Temp\xx.bat
             - Windows\WwanSvcdcs
             - Windows\Temp\cw.exe

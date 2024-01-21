@@ -1,13 +1,18 @@
 title: Suspicious Modification Of Scheduled Tasks
 id: 1c0e41cd-21bb-4433-9acc-4a2cd6367b9b
 related:
-    - id: 614cf376-6651-47c4-9dcc-6b9527f749f4 # Security-Audting Eventlog
-      type: similar
+    -   id: 614cf376-6651-47c4-9dcc-6b9527f749f4
+        type: similar
 status: test
-description: |
-    Detects when an attacker tries to modify an already existing scheduled tasks to run from a suspicious location
-    Attackers can create a simple looking task in order to avoid detection on creation as it's often the most focused on
+description: 'Detects when an attacker tries to modify an already existing scheduled
+    tasks to run from a suspicious location
+
+    Attackers can create a simple looking task in order to avoid detection on creation
+    as it''s often the most focused on
+
     Instead they modify the task after creation to include their malicious payload
+
+    '
 references:
     - Internal Research
     - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks
@@ -27,11 +32,11 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_schtasks:
         Image|endswith: \schtasks.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' /Change '
             - ' /TN '
     selection_susp_locations:
-          CommandLine|contains:
+        CommandLine|contains:
             - \AppData\Local\Temp
             - \AppData\Roaming\
             - \Users\Public\
@@ -46,7 +51,7 @@ detection:
             - '%comspec%'
             - '%localappdata%'
     selection_susp_images:
-          CommandLine|contains:
+        CommandLine|contains:
             - regsvr32
             - rundll32
             - 'cmd /c '

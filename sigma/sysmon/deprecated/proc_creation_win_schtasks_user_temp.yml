@@ -21,11 +21,11 @@ detection:
     schtasks:
         Image|endswith: \schtasks.exe
     option:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '/Create '
             - \AppData\Local\Temp
     filter_klite_codec:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '/Create /TN "klcp_update" /XML '
             - \klcp_update_task.xml
     condition: process_creation and (schtasks and option and not 1 of filter_*)

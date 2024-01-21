@@ -1,7 +1,8 @@
 title: Suspicious Bitstransfer via PowerShell
 id: cd5c8085-4070-4e22-908d-a5b3342deb74
 status: deprecated
-description: Detects transferring files from system on a server bitstransfer Powershell cmdlets
+description: Detects transferring files from system on a server bitstransfer Powershell
+    cmdlets
 references:
     - https://docs.microsoft.com/en-us/powershell/module/bitstransfer/add-bitsfile?view=windowsserver2019-ps
 author: Austin Songer @austinsonger
@@ -24,7 +25,7 @@ detection:
             - \powershell.exe
             - \powershell_ise.exe
             - \pwsh.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - Get-BitsTransfer
             - Add-BitsFile
     condition: process_creation and selection

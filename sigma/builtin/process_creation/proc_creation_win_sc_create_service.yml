@@ -1,8 +1,8 @@
 title: New Service Creation Using Sc.EXE
 id: 85ff530b-261d-48c6-a441-facaa2e81e48
 related:
-    - id: c02e96b7-c63a-4c47-bd83-4a9f74afcfb2 # Using PowerShell
-      type: similar
+    -   id: c02e96b7-c63a-4c47-bd83-4a9f74afcfb2
+        type: similar
 status: test
 description: Detects the creation of a new service using the "sc.exe" utility.
 references:
@@ -21,10 +21,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - create
             - binPath
-          NewProcessName|endswith: \sc.exe
+        NewProcessName|endswith: \sc.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate administrator or user creates a service for legitimate reasons.

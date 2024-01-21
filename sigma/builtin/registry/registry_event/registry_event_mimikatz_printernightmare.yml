@@ -1,7 +1,8 @@
 title: PrinterNightmare Mimikatz Driver Name
 id: ba6b9e43-1d45-4d3c-a504-1043a64c8469
 status: test
-description: Detects static QMS 810 and mimikatz driver name used by Mimikatz as exploited in CVE-2021-1675 and CVE-2021-34527
+description: Detects static QMS 810 and mimikatz driver name used by Mimikatz as exploited
+    in CVE-2021-1675 and CVE-2021-34527
 references:
     - https://github.com/gentilkiwi/mimikatz/commit/c21276072b3f2a47a21e215a46962a17d54b3760
     - https://www.lexjansen.com/sesug/1993/SESUG93035.pdf
@@ -40,8 +41,10 @@ detection:
             - Gentil Kiwi
             - mimikatz printer
             - Kiwi Legit Printer
-    condition: registry_event and (selection or selection_alt or (selection_print and selection_kiwi))
+    condition: registry_event and (selection or selection_alt or (selection_print
+        and selection_kiwi))
 falsepositives:
-    - Legitimate installation of printer driver QMS 810, Texas Instruments microLaser printer (unlikely)
+    - Legitimate installation of printer driver QMS 810, Texas Instruments microLaser
+        printer (unlikely)
 level: critical
 ruletype: Sigma

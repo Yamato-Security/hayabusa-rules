@@ -20,12 +20,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|endswith: \xordump.exe
-        - CommandLine|contains:
-            - ' -process lsass.exe '
-            - ' -m comsvcs '
-            - ' -m dbghelp '
-            - ' -m dbgcore '
+        -   Image|endswith: \xordump.exe
+        -   CommandLine|contains:
+                - ' -process lsass.exe '
+                - ' -m comsvcs '
+                - ' -m dbghelp '
+                - ' -m dbgcore '
     condition: process_creation and selection
 falsepositives:
     - Another tool that uses the command line switches of XORdump

@@ -20,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|re: \s-\s*<
-          NewProcessName|endswith:
+        CommandLine|re: \s-\s*<
+        NewProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
     condition: process_creation and selection

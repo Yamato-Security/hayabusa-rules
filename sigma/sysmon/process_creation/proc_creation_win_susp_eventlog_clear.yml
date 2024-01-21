@@ -1,7 +1,9 @@
 title: Suspicious Eventlog Clear or Configuration Change
 id: cc36992a-4671-4f21-a91d-6c2b72a2edf5
 status: stable
-description: Detects clearing or configuration of eventlogs using wevtutil, powershell and wmic. Might be used by ransomwares during the attack (seen by NotPetya and others).
+description: Detects clearing or configuration of eventlogs using wevtutil, powershell
+    and wmic. Might be used by ransomwares during the attack (seen by NotPetya and
+    others).
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070.001/T1070.001.md
     - https://eqllib.readthedocs.io/en/latest/analytics/5b223758-07d6-4100-9e11-238cfdd0fe97.html
@@ -26,17 +28,17 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_wevtutil:
         Image|endswith: \wevtutil.exe
-          CommandLine|contains:
-            - 'clear-log '          # clears specified log
-            - ' cl '                # short version of 'clear-log'
-            - 'set-log '            # modifies config of specified log. could be uset to set it to a tiny size
-            - ' sl '                # short version of 'set-log'
-            - 'lfn:'                # change log file location and name
+        CommandLine|contains:
+            - 'clear-log '
+            - ' cl '
+            - 'set-log '
+            - ' sl '
+            - 'lfn:'
     selection_other_ps:
         Image|endswith:
             - \powershell.exe
             - \pwsh.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - 'Clear-EventLog '
             - 'Remove-EventLog '
             - 'Limit-EventLog '
@@ -46,15 +48,12 @@ detection:
             - \powershell.exe
             - \pwsh.exe
             - \wmic.exe
-          CommandLine|contains: ClearEventLog
+        CommandLine|contains: ClearEventLog
     filter_msiexec:
-        # Example seen during office update/installation:
-        #   ParentImage: C:\Windows\SysWOW64\msiexec.exe
-        #   CommandLine: "C:\WINDOWS\system32\wevtutil.exe" sl Microsoft-RMS-MSIPC/Debug /q:true /e:true /l:4 /rt:false
         ParentImage:
             - C:\Windows\SysWOW64\msiexec.exe
             - C:\Windows\System32\msiexec.exe
-          CommandLine|contains: ' sl '
+        CommandLine|contains: ' sl '
     condition: process_creation and (1 of selection_* and not 1 of filter_*)
 falsepositives:
     - Admin activity

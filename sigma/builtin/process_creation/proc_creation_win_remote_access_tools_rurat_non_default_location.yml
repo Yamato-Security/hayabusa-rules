@@ -1,7 +1,8 @@
 title: Remote Access Tool - RURAT Execution From Unusual Location
 id: e01fa958-6893-41d4-ae03-182477c5e77d
 status: test
-description: Detects execution of Remote Utilities RAT (RURAT) from an unusual location (outside of 'C:\Program Files')
+description: Detects execution of Remote Utilities RAT (RURAT) from an unusual location
+    (outside of 'C:\Program Files')
 references:
     - https://redcanary.com/blog/misbehaving-rats/
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -17,12 +18,12 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith:
-            - \rutserv.exe
-            - \rfusclient.exe
-        - Product: Remote Utilities
+        -   NewProcessName|endswith:
+                - \rutserv.exe
+                - \rfusclient.exe
+        -   Product: Remote Utilities
     filter:
-          NewProcessName|startswith:
+        NewProcessName|startswith:
             - C:\Program Files\Remote Utilities
             - C:\Program Files (x86)\Remote Utilities
     condition: process_creation and (selection and not filter)

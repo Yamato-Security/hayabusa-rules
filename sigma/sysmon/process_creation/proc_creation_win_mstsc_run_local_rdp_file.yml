@@ -20,15 +20,15 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \mstsc.exe
-        - OriginalFileName: mstsc.exe
+        -   Image|endswith: \mstsc.exe
+        -   OriginalFileName: mstsc.exe
     selection_cli:
-          CommandLine|endswith:
+        CommandLine|endswith:
             - .rdp
             - .rdp"
     filter_optional_wsl:
         ParentImage: C:\Windows\System32\lxss\wslhost.exe
-          CommandLine|contains: C:\ProgramData\Microsoft\WSL\wslg.rdp
+        CommandLine|contains: C:\ProgramData\Microsoft\WSL\wslg.rdp
     condition: process_creation and (all of selection_* and not 1 of filter_optional_*)
 falsepositives:
     - Likely with legitimate usage of ".rdp" files

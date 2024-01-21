@@ -19,9 +19,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-          NewProcessName|endswith: \QuarksPwDump.exe
+        NewProcessName|endswith: \QuarksPwDump.exe
     selection_cli:
-          CommandLine:
+        CommandLine:
             - ' -dhl'
             - ' --dump-hash-local'
             - ' -dhdc'

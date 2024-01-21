@@ -20,32 +20,32 @@ detection:
         EventID: 4688
         Channel: Security
     selection1:
-          NewProcessName|endswith: \update.exe
+        NewProcessName|endswith: \update.exe
     selection2:
-          CommandLine|contains:
+        CommandLine|contains:
             - --processStart
             - --processStartAndWait
             - --createShortcut
     filter_discord:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - C:\Users\
             - \AppData\Local\Discord\Update.exe
             - ' --processStart'
             - Discord.exe
     filter_github_desktop:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - C:\Users\
             - \AppData\Local\GitHubDesktop\Update.exe
             - GitHubDesktop.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - --createShortcut
             - --processStartAndWait
     filter_teams:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - C:\Users\
             - \AppData\Local\Microsoft\Teams\Update.exe
             - Teams.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - --processStart
             - --createShortcut
     condition: process_creation and (all of selection* and not 1 of filter_*)

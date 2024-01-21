@@ -21,7 +21,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \changepk.exe
+        NewProcessName|endswith: \changepk.exe
         ParentProcessName|endswith: \slui.exe
         MandatoryLabel:
             - S-1-16-12288

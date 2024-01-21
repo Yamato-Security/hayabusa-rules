@@ -25,7 +25,7 @@ detection:
             - C:\Windows\System32\KERNELBASE.dll+
             - libffi-7.dll
             - _ctypes.pyd+
-            - python3*.dll+     # Pypy requires python>=3.6
+            - python3*.dll+
         GrantedAccess: '0x1FFFFF'
     condition: process_access and selection
 falsepositives:

@@ -1,11 +1,15 @@
 title: Set Suspicious Files as System Files Using Attrib.EXE
 id: efec536f-72e8-4656-8960-5e85d091345b
 related:
-    - id: bb19e94c-59ae-4c15-8c12-c563d23fe52b
-      type: derived
+    -   id: bb19e94c-59ae-4c15-8c12-c563d23fe52b
+        type: derived
 status: experimental
-description: |
-    Detects the usage of attrib with the "+s" option to set scripts or executables located in suspicious locations as system files to hide them from users and make them unable to be deleted with simple rights. The rule limits the search to specific extensions and directories to avoid FPs
+description: 'Detects the usage of attrib with the "+s" option to set scripts or executables
+    located in suspicious locations as system files to hide them from users and make
+    them unable to be deleted with simple rights. The rule limits the search to specific
+    extensions and directories to avoid FPs
+
+    '
 references:
     - https://app.any.run/tasks/c28cabc8-a19f-40f3-a78b-cae506a5c0d4
     - https://app.any.run/tasks/cfc8870b-ccd7-4210-88cf-a8087476a6d0
@@ -25,20 +29,20 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \attrib.exe
-        - OriginalFileName: ATTRIB.EXE
+        -   Image|endswith: \attrib.exe
+        -   OriginalFileName: ATTRIB.EXE
     selection_cli:
-          CommandLine|contains: ' +s'
+        CommandLine|contains: ' +s'
     selection_paths:
-          CommandLine|contains:
-            - ' %' # Custom Environment variable
+        CommandLine|contains:
+            - ' %'
             - \Users\Public\
             - \AppData\Local\
             - \ProgramData\
             - \Downloads\
             - \Windows\Temp\
     selection_ext:
-          CommandLine|contains:
+        CommandLine|contains:
             - .bat
             - .dll
             - .exe
@@ -47,7 +51,7 @@ detection:
             - .vbe
             - .vbs
     filter:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - \Windows\TEMP\
             - .exe
     condition: process_creation and (all of selection* and not filter)

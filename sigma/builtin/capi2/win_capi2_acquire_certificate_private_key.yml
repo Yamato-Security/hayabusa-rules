@@ -17,9 +17,10 @@ detection:
     capi2:
         Channel: Microsoft-Windows-CAPI2/Operational
     selection:
-        EventID: 70 # Acquire Certificate Private Key
+        EventID: 70
     condition: capi2 and selection
 falsepositives:
-    - Legitimate application requesting certificate exports will trigger this. Apply additional filters as needed
+    - Legitimate application requesting certificate exports will trigger this. Apply
+        additional filters as needed
 level: medium
 ruletype: Sigma

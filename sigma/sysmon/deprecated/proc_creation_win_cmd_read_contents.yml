@@ -19,17 +19,17 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_cmd:
-        - OriginalFileName: Cmd.Exe
-        - Image|endswith: \cmd.exe
+        -   OriginalFileName: Cmd.Exe
+        -   Image|endswith: \cmd.exe
     selection_read:
-        - ParentCommandLine|contains|all:
-            - cmd
-            - '/r '
-            - <
-        - CommandLine|contains|all:
-            - cmd
-            - '/r '
-            - <
+        -   ParentCommandLine|contains|all:
+                - cmd
+                - '/r '
+                - <
+        -   CommandLine|contains|all:
+                - cmd
+                - '/r '
+                - <
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate use

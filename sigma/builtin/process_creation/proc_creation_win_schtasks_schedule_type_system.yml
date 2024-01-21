@@ -1,10 +1,11 @@
 title: Suspicious Schtasks Schedule Type With High Privileges
 id: 7a02e22e-b885-4404-b38b-1ddc7e65258a
 related:
-    - id: 24c8392b-aa3c-46b7-a545-43f71657fe98
-      type: similar
+    -   id: 24c8392b-aa3c-46b7-a545-43f71657fe98
+        type: similar
 status: test
-description: Detects scheduled task creations or modification to be run with high privileges on a suspicious schedule type
+description: Detects scheduled task creations or modification to be run with high
+    privileges on a suspicious schedule type
 references:
     - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks-change
     - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/schtasks-create
@@ -21,21 +22,22 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \schtasks.exe
-        - OriginalFileName: schtasks.exe
+        -   NewProcessName|endswith: \schtasks.exe
+        -   OriginalFileName: schtasks.exe
     selection_time:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' ONLOGON '
             - ' ONSTART '
             - ' ONCE '
             - ' ONIDLE '
     selection_privs:
-          CommandLine|contains:
-            - NT AUT   # This covers the usual NT AUTHORITY\SYSTEM
-            - ' SYSTEM' # SYSTEM is a valid value for schtasks hence it gets it's own value with space
+        CommandLine|contains:
+            - NT AUT
+            - ' SYSTEM'
             - HIGHEST
     condition: process_creation and (all of selection_*)
 falsepositives:
-    - Some installers were seen using this method of creation unfortunately. Filter them in your environment
+    - Some installers were seen using this method of creation unfortunately. Filter
+        them in your environment
 level: medium
 ruletype: Sigma

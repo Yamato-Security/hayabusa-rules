@@ -21,10 +21,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \dotnet.exe
-        - OriginalFileName: .NET Host
+        -   Image|endswith: \dotnet.exe
+        -   OriginalFileName: .NET Host
     selection_cli:
-          CommandLine|endswith:
+        CommandLine|endswith:
             - .dll
             - .csproj
     condition: process_creation and (all of selection_*)

@@ -1,7 +1,8 @@
 title: Suspicious Diantz Alternate Data Stream Execution
 id: 6b369ced-4b1d-48f1-b427-fdc0de0790bd
 status: test
-description: Compress target file into a cab file stored in the Alternate Data Stream (ADS) of the target file.
+description: Compress target file into a cab file stored in the Alternate Data Stream
+    (ADS) of the target file.
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/Diantz/
 author: frack113
@@ -18,10 +19,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - diantz.exe
             - .cab
-          CommandLine|re: :[^\\]
+        CommandLine|re: :[^\\]
     condition: process_creation and selection
 falsepositives:
     - Very Possible

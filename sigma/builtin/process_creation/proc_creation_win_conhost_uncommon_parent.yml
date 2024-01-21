@@ -1,7 +1,9 @@
 title: Conhost Spawned By Uncommon Parent Process
 id: cbb9e3d1-2386-4e59-912e-62f1484f7a89
 status: experimental
-description: Detects when the Console Window Host (conhost.exe) process is spawned by an uncommon parent process, which could be indicative of potential code injection activity.
+description: Detects when the Console Window Host (conhost.exe) process is spawned
+    by an uncommon parent process, which could be indicative of potential code injection
+    activity.
 references:
     - https://www.elastic.co/guide/en/security/current/conhost-spawned-by-suspicious-parent-process.html
 author: Tim Rauch
@@ -18,12 +20,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \conhost.exe
+        NewProcessName|endswith: \conhost.exe
         ParentProcessName|endswith:
             - \explorer.exe
-            # - '\csrss.exe'  # Legitimate parent as seen in EchoTrail https://www.echotrail.io/insights/search/csrss.exe
-            # - '\ctfmon.exe'  # Seen several times in a testing environment
-            # - '\dllhost.exe'  # FP on clean system from grandparent 'svchost.exe -k DcomLaunch -p'
             - \lsass.exe
             - \regsvr32.exe
             - \rundll32.exe
@@ -32,7 +31,6 @@ detection:
             - \spoolsv.exe
             - \svchost.exe
             - \userinit.exe
-            # - '\wermgr.exe'  # Legitimate parent as seen in EchoTrail https://www.echotrail.io/insights/search/wermgr.exe
             - \wininit.exe
             - \winlogon.exe
     filter_main_svchost:
@@ -51,7 +49,8 @@ detection:
         ParentCommandLine|contains:
             - C:\Program Files (x86)\Dropbox\Client\
             - C:\Program Files\Dropbox\Client\
-    condition: process_creation and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
+    condition: process_creation and (selection and not 1 of filter_main_* and not
+        1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: medium

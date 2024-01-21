@@ -1,7 +1,8 @@
 title: Windows Internet Hosted WebDav Share Mount Via Net.EXE
 id: 7e6237fe-3ddb-438f-9381-9bf9de5af8d0
 status: experimental
-description: Detects when an internet hosted webdav share is mounted using the "net.exe" utility
+description: Detects when an internet hosted webdav share is mounted using the "net.exe"
+    utility
 references:
     - https://drive.google.com/file/d/1lKya3_mLnR3UQuCoiYruO3qgu052_iS_/view
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -18,14 +19,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-            - \net.exe
-            - \net1.exe
-        - OriginalFileName:
-            - net.exe
-            - net1.exe
+        -   NewProcessName|endswith:
+                - \net.exe
+                - \net1.exe
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' use '
             - ' http'
     condition: process_creation and (all of selection_*)

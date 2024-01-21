@@ -1,7 +1,8 @@
 title: Rundll32 Execution Without Parameters
 id: 5bb68627-3198-40ca-b458-49f973db8752
 status: test
-description: Detects rundll32 execution without parameters as observed when running Metasploit windows/smb/psexec exploit module
+description: Detects rundll32 execution without parameters as observed when running
+    Metasploit windows/smb/psexec exploit module
 references:
     - https://bczyz1.github.io/2021/01/30/psexec.html
 author: Bartlomiej Czyz, Relativity
@@ -21,7 +22,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine:
+        CommandLine:
             - rundll32.exe
             - rundll32
     condition: process_creation and selection

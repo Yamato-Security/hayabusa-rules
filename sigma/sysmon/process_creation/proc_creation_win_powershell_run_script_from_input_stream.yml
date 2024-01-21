@@ -24,7 +24,7 @@ detection:
         Image|endswith:
             - \powershell.exe
             - \pwsh.exe
-          CommandLine|re: \s-\s*<
+        CommandLine|re: \s-\s*<
     condition: process_creation and selection
 falsepositives:
     - Unknown

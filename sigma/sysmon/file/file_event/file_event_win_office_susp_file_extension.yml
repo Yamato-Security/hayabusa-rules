@@ -1,11 +1,13 @@
 title: File With Uncommon Extension Created By An Office Application
 id: c7a74c80-ba5a-486e-9974-ab9e682bc5e4
 status: experimental
-description: Detects the creation of files with an executable or script extension by an Office application.
+description: Detects the creation of files with an executable or script extension
+    by an Office application.
 references:
     - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
     - https://github.com/vadim-hunter/Detection-Ideas-Rules/blob/02bcbfc2bfb8b4da601bb30de0344ae453aa1afe/Threat%20Intelligence/The%20DFIR%20Report/20210329_Sodinokibi_(aka_REvil)_Ransomware.yaml
-author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule), Nasreddine Bencherchali (Nextron Systems)
+author: Vadim Khrykov (ThreatIntel), Cyb3rEng (Rule), Nasreddine Bencherchali (Nextron
+    Systems)
 date: 2021/08/23
 modified: 2023/06/22
 tags:
@@ -16,7 +18,6 @@ logsource:
     product: windows
     category: file_event
 detection:
-    # Note: Please add more file extensions to the logic of your choice.
     file_event:
         EventID: 11
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -46,7 +47,7 @@ detection:
             - .vbs
             - .wsf
             - .wsh
-    filter_optional_webservicecache: # matches e.g. directory with name *.microsoft.com
+    filter_optional_webservicecache:
         TargetFilename|contains|all:
             - C:\Users\
             - \AppData\Local\Microsoft\Office\
@@ -61,7 +62,8 @@ detection:
     filter_main_localassembly:
         TargetFilename|contains: \AppData\Local\assembly\tmp\
         TargetFilename|endswith: .dll
-    condition: file_event and (all of selection* and not 1 of filter_main_* and not 1 of filter_optional_*)
+    condition: file_event and (all of selection* and not 1 of filter_main_* and not
+        1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: high

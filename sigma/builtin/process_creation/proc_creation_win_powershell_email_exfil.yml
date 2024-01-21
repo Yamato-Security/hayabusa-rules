@@ -17,14 +17,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - Add-PSSnapin
             - Get-Recipient
             - -ExpandProperty
             - EmailAddresses
             - SmtpAddress
             - -hidetableheaders
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
     condition: process_creation and selection

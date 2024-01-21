@@ -19,7 +19,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|contains: C:\Windows \System32\
+        NewProcessName|contains: C:\Windows \System32\
     condition: process_creation and selection
 falsepositives:
     - Unknown

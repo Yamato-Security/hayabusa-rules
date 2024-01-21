@@ -21,17 +21,17 @@ detection:
     selection1:
         ParentImage|endswith: \mmc.exe
     selection2:
-        - Image|endswith:
-            - \cmd.exe
-            - \powershell.exe
-            - \pwsh.exe
-            - \wscript.exe
-            - \cscript.exe
-            - \sh.exe
-            - \bash.exe
-            - \reg.exe
-            - \regsvr32.exe
-        - Image|contains: \BITSADMIN
+        -   Image|endswith:
+                - \cmd.exe
+                - \powershell.exe
+                - \pwsh.exe
+                - \wscript.exe
+                - \cscript.exe
+                - \sh.exe
+                - \bash.exe
+                - \reg.exe
+                - \regsvr32.exe
+        -   Image|contains: \BITSADMIN
     condition: process_creation and (all of selection*)
 fields:
     - CommandLine

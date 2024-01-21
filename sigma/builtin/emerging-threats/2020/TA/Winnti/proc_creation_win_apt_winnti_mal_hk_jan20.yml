@@ -1,7 +1,8 @@
 title: Winnti Malware HK University Campaign
 id: 3121461b-5aa0-4a41-b910-66d25524edbb
 status: test
-description: Detects specific process characteristics of Winnti malware noticed in Dec/Jan 2020 in a campaign against Honk Kong universities
+description: Detects specific process characteristics of Winnti malware noticed in
+    Dec/Jan 2020 in a campaign against Honk Kong universities
 references:
     - https://www.welivesecurity.com/2020/01/31/winnti-group-targeting-universities-hong-kong/
 author: Florian Roth (Nextron Systems), Markus Neis
@@ -23,18 +24,18 @@ detection:
         ParentProcessName|contains:
             - C:\Windows\Temp
             - \hpqhvind.exe
-          NewProcessName|startswith: C:\ProgramData\DRM
+        NewProcessName|startswith: C:\ProgramData\DRM
     selection2:
         ParentProcessName|startswith: C:\ProgramData\DRM
-          NewProcessName|endswith: \wmplayer.exe
+        NewProcessName|endswith: \wmplayer.exe
     selection3:
         ParentProcessName|endswith: \Test.exe
-          NewProcessName|endswith: \wmplayer.exe
+        NewProcessName|endswith: \wmplayer.exe
     selection4:
-          NewProcessName: C:\ProgramData\DRM\CLR\CLR.exe
+        NewProcessName: C:\ProgramData\DRM\CLR\CLR.exe
     selection5:
         ParentProcessName|startswith: C:\ProgramData\DRM\Windows
-          NewProcessName|endswith: \SearchFilterHost.exe
+        NewProcessName|endswith: \SearchFilterHost.exe
     condition: process_creation and (1 of selection*)
 falsepositives:
     - Unlikely

@@ -25,6 +25,7 @@ detection:
         NewValue: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
-    - Some FP may occur when the feature is disabled by the AV itself, you should always investigate if the action was legitimate
+    - Some FP may occur when the feature is disabled by the AV itself, you should
+        always investigate if the action was legitimate
 level: high
 ruletype: Sigma

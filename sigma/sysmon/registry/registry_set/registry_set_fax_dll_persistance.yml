@@ -24,7 +24,7 @@ detection:
             - \Software\Microsoft\Fax\Device Providers\
             - \ImageName
     filter:
-        Details: '%systemroot%\system32\fxst30.dll' # Windows 10
+        Details: '%systemroot%\system32\fxst30.dll'
     condition: registry_set and (selection and not filter)
 falsepositives:
     - Unknown

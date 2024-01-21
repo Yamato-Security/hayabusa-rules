@@ -20,14 +20,13 @@ detection:
     selection_parent:
         ParentImage|endswith: \ScreenConnect.ClientService.exe
     selection_img:
-        - Image|endswith: \cmd.exe
-        - OriginalFileName: Cmd.Exe
+        -   Image|endswith: \cmd.exe
+        -   OriginalFileName: Cmd.Exe
     selection_cli:
-        # Example:
-        #   CommandLine: "cmd.exe" /c "C:\Windows\TEMP\ScreenConnect\23.6.8.8644\3c41d689-bbf5-4216-b2f4-ba8fd6192c25run.cmd"
-          CommandLine|contains: \TEMP\ScreenConnect\
+        CommandLine|contains: \TEMP\ScreenConnect\
     condition: process_creation and (all of selection_*)
 falsepositives:
-    - Legitimate use of ScreenConnect. Disable this rule if ScreenConnect is heavily used.
+    - Legitimate use of ScreenConnect. Disable this rule if ScreenConnect is heavily
+        used.
 level: medium
 ruletype: Sigma

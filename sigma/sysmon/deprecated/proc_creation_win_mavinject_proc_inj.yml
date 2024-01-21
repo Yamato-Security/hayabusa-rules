@@ -21,7 +21,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains: ' /INJECTRUNNING '
+        CommandLine|contains: ' /INJECTRUNNING '
     condition: process_creation and selection
 falsepositives:
     - Unknown

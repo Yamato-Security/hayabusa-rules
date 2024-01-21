@@ -1,10 +1,11 @@
 title: Suspicious Processes Spawned by Java.EXE
 id: 0d34ed8b-1c12-4ff2-828c-16fc860b766d
 related:
-    - id: dff1e1cc-d3fd-47c8-bfc2-aeb878a754c0
-      type: similar
+    -   id: dff1e1cc-d3fd-47c8-bfc2-aeb878a754c0
+        type: similar
 status: experimental
-description: Detects suspicious processes spawned from a Java host process which could indicate a sign of exploitation (e.g. log4j)
+description: Detects suspicious processes spawned from a Java host process which could
+    indicate a sign of exploitation (e.g. log4j)
 author: Andreas Hunkeler (@Karneades), Florian Roth
 date: 2021/12/17
 modified: 2023/11/09
@@ -21,7 +22,7 @@ detection:
         Channel: Security
     selection:
         ParentProcessName|endswith: \java.exe
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \AppVLP.exe
             - \bash.exe
             - \bitsadmin.exe
@@ -44,7 +45,7 @@ detection:
             - \sh.exe
             - \systeminfo.exe
             - \whoami.exe
-            - \wmic.exe          # https://app.any.run/tasks/c903e9c8-0350-440c-8688-3881b556b8e0/
+            - \wmic.exe
             - \wscript.exe
     condition: process_creation and selection
 falsepositives:

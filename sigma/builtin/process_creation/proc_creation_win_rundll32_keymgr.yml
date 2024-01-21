@@ -1,7 +1,8 @@
 title: Suspicious Key Manager Access
 id: a4694263-59a8-4608-a3a0-6f8d3a51664c
 status: test
-description: Detects the invocation of the Stored User Names and Passwords dialogue (Key Manager)
+description: Detects the invocation of the Stored User Names and Passwords dialogue
+    (Key Manager)
 references:
     - https://twitter.com/NinjaParanoid/status/1516442028963659777
 author: Florian Roth (Nextron Systems)
@@ -18,10 +19,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \rundll32.exe
-        - OriginalFileName: RUNDLL32.EXE
+        -   NewProcessName|endswith: \rundll32.exe
+        -   OriginalFileName: RUNDLL32.EXE
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - keymgr
             - KRShowKeyMgr
     condition: process_creation and (all of selection_*)

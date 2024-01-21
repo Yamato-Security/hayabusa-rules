@@ -21,10 +21,10 @@ detection:
     selection:
         ParentImage|endswith: \userinit.exe
     filter1:
-          CommandLine|contains: \netlogon\
+        CommandLine|contains: \netlogon\
     filter2:
-        - Image|endswith: \explorer.exe
-        - OriginalFileName: explorer.exe
+        -   Image|endswith: \explorer.exe
+        -   OriginalFileName: explorer.exe
     condition: process_creation and (selection and not 1 of filter*)
 fields:
     - CommandLine

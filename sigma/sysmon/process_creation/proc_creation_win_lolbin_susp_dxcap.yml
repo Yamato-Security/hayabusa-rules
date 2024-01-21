@@ -20,10 +20,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \DXCap.exe
-        - OriginalFileName: DXCap.exe
+        -   Image|endswith: \DXCap.exe
+        -   OriginalFileName: DXCap.exe
     selection_cli:
-          CommandLine|contains: ' -c ' # The ".exe" is not required to run the binary
+        CommandLine|contains: ' -c '
     condition: process_creation and (all of selection*)
 falsepositives:
     - Legitimate execution of dxcap.exe by legitimate user

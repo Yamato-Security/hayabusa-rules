@@ -19,10 +19,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \dotnet-trace.exe
-        - OriginalFileName: dotnet-trace.dll
+        -   Image|endswith: \dotnet-trace.exe
+        -   OriginalFileName: dotnet-trace.dll
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '-- '
             - collect
     condition: process_creation and (all of selection_*)

@@ -18,10 +18,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - '/r '
             - '/s '
-          NewProcessName|endswith: \shutdown.exe
+        NewProcessName|endswith: \shutdown.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

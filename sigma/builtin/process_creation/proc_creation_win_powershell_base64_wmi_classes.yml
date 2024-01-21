@@ -1,10 +1,11 @@
 title: PowerShell Base64 Encoded WMI Classes
 id: 1816994b-42e1-4fb1-afd2-134d88184f71
 related:
-    - id: 47688f1b-9f51-4656-b013-3cc49a166a36
-      type: obsoletes
+    -   id: 47688f1b-9f51-4656-b013-3cc49a166a36
+        type: obsoletes
 status: test
-description: Detects calls to base64 encoded WMI class such as "Win32_Shadowcopy", "Win32_ScheduledJob", etc.
+description: Detects calls to base64 encoded WMI class such as "Win32_Shadowcopy",
+    "Win32_ScheduledJob", etc.
 references:
     - https://github.com/Neo23x0/Raccine/blob/20a569fa21625086433dcce8bb2765d0ea08dcb6/yara/mal_revil.yar
 author: Christian Burkard (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
@@ -22,15 +23,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-            - \powershell.exe
-            - \pwsh.exe
-        - OriginalFileName:
-            - PowerShell.EXE
-            - pwsh.dll
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
     selection_cli_shadowcopy:
-        # Win32_Shadowcopy
-          CommandLine|contains:
+        CommandLine|contains:
             - VwBpAG4AMwAyAF8AUwBoAGEAZABvAHcAYwBvAHAAeQ
             - cAaQBuADMAMgBfAFMAaABhAGQAbwB3AGMAbwBwAHkA
             - XAGkAbgAzADIAXwBTAGgAYQBkAG8AdwBjAG8AcAB5A
@@ -38,8 +38,7 @@ detection:
             - dpbjMyX1NoYWRvd2NvcH
             - XaW4zMl9TaGFkb3djb3B5
     selection_cli_scheduledJob:
-        # Win32_ScheduledJob
-          CommandLine|contains:
+        CommandLine|contains:
             - VwBpAG4AMwAyAF8AUwBjAGgAZQBkAHUAbABlAGQASgBvAGIA
             - cAaQBuADMAMgBfAFMAYwBoAGUAZAB1AGwAZQBkAEoAbwBiA
             - XAGkAbgAzADIAXwBTAGMAaABlAGQAdQBsAGUAZABKAG8AYg
@@ -47,8 +46,7 @@ detection:
             - dpbjMyX1NjaGVkdWxlZEpvY
             - XaW4zMl9TY2hlZHVsZWRKb2
     selection_cli_process:
-        # Win32_Process
-          CommandLine|contains:
+        CommandLine|contains:
             - VwBpAG4AMwAyAF8AUAByAG8AYwBlAHMAcw
             - cAaQBuADMAMgBfAFAAcgBvAGMAZQBzAHMA
             - XAGkAbgAzADIAXwBQAHIAbwBjAGUAcwBzA
@@ -56,8 +54,7 @@ detection:
             - dpbjMyX1Byb2Nlc3
             - XaW4zMl9Qcm9jZXNz
     selection_cli_useraccount:
-        # Win32_UserAccount
-          CommandLine|contains:
+        CommandLine|contains:
             - VwBpAG4AMwAyAF8AVQBzAGUAcgBBAGMAYwBvAHUAbgB0A
             - cAaQBuADMAMgBfAFUAcwBlAHIAQQBjAGMAbwB1AG4AdA
             - XAGkAbgAzADIAXwBVAHMAZQByAEEAYwBjAG8AdQBuAHQA
@@ -65,8 +62,7 @@ detection:
             - dpbjMyX1VzZXJBY2NvdW50
             - XaW4zMl9Vc2VyQWNjb3Vud
     selection_cli_loggedonuser:
-        # Win32_LoggedOnUser
-          CommandLine|contains:
+        CommandLine|contains:
             - VwBpAG4AMwAyAF8ATABvAGcAZwBlAGQATwBuAFUAcwBlAHIA
             - cAaQBuADMAMgBfAEwAbwBnAGcAZQBkAE8AbgBVAHMAZQByA
             - XAGkAbgAzADIAXwBMAG8AZwBnAGUAZABPAG4AVQBzAGUAcg

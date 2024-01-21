@@ -1,7 +1,8 @@
 title: UNC2452 PowerShell Pattern
 id: b7155193-8a81-4d8f-805d-88de864ca50c
 status: test
-description: Detects a specific PowerShell command line pattern used by the UNC2452 actors as mentioned in Microsoft and Symantec reports
+description: Detects a specific PowerShell command line pattern used by the UNC2452
+    actors as mentioned in Microsoft and Symantec reports
 references:
     - https://symantec-enterprise-blogs.security.com/blogs/threat-intelligence/solarwinds-raindrop-malware
     - https://www.microsoft.com/security/blog/2020/12/18/analyzing-solorigate-the-compromised-dll-file-that-started-a-sophisticated-cyberattack-and-how-microsoft-defender-helps-protect/
@@ -14,7 +15,6 @@ tags:
     - attack.t1059.001
     - attack.t1047
     - detection.emerging_threats
-    # - sunburst
     - sysmon
 logsource:
     category: process_creation
@@ -24,11 +24,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_cli_1:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - Invoke-WMIMethod win32_process -name create -argumentlist
             - rundll32 c:\windows
     selection_cli_2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - 'wmic /node:'
             - process call create "rundll32 c:\windows
     condition: process_creation and (1 of selection_*)

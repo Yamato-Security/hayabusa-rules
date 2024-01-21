@@ -18,7 +18,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine: C:\Windows\PSEXESVC.exe
+        CommandLine: C:\Windows\PSEXESVC.exe
     condition: process_creation and selection
 falsepositives:
     - Administrative activity

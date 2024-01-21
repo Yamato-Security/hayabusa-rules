@@ -1,8 +1,8 @@
 title: Suspicious File Drop by Exchange
 id: 6b269392-9eba-40b5-acb6-55c882b20ba6
 related:
-    - id: bd1212e5-78da-431e-95fa-c58e3237a8e6
-      type: similar
+    -   id: bd1212e5-78da-431e-95fa-c58e3237a8e6
+        type: similar
 status: test
 description: Detects suspicious file type dropped by an Exchange component in IIS
 references:
@@ -26,7 +26,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \w3wp.exe
-          CommandLine|contains: MSExchange
+        CommandLine|contains: MSExchange
     selection_types:
         TargetFilename|endswith:
             - .aspx

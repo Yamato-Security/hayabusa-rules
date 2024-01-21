@@ -16,8 +16,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \tscon.exe
-        - OriginalFileName: tscon.exe
+        -   NewProcessName|endswith: \tscon.exe
+        -   OriginalFileName: tscon.exe
     selection_integrity:
         MandatoryLabel: S-1-16-16384
     condition: process_creation and (all of selection_*)

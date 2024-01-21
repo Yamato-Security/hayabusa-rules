@@ -19,14 +19,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - create
             - config
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - binPath
             - type
             - kernel
-          NewProcessName|endswith: \sc.exe
+        NewProcessName|endswith: \sc.exe
     condition: process_creation and selection
 falsepositives:
     - Rare legitimate installation of kernel drivers via sc.exe

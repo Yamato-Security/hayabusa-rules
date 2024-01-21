@@ -1,7 +1,8 @@
 title: Suspicious Werfault.exe Network Connection Outbound
 id: e12c75f2-d09e-43f6-90e4-6a23842907af
 status: experimental
-description: Adversaries can migrate cobalt strike/metasploit/C2 beacons on compromised systems to legitimate werfault.exe process to avoid detection.
+description: Adversaries can migrate cobalt strike/metasploit/C2 beacons on compromised
+    systems to legitimate werfault.exe process to avoid detection.
 references:
     - https://thedfirreport.com/2021/03/08/bazar-drops-the-anchor/
 author: Sreeman
@@ -42,8 +43,10 @@ detection:
         DestinationHostname|contains:
             - '*.windowsupdate.com'
             - '*.microsoft.com'
-    condition: network_connection and (selection and not ( filter1 and filter2 and filter3 ))
+    condition: network_connection and (selection and not ( filter1 and filter2 and
+        filter3 ))
 falsepositives:
-    - Communication to other corporate systems that use IP addresses from public address spaces and Microsoft IP spaces
+    - Communication to other corporate systems that use IP addresses from public address
+        spaces and Microsoft IP spaces
 level: medium
 ruletype: Sigma

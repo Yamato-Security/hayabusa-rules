@@ -18,10 +18,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|contains: \purplesharp
-        - OriginalFileName: PurpleSharp.exe
+        -   NewProcessName|contains: \purplesharp
+        -   OriginalFileName: PurpleSharp.exe
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - xyz123456.exe
             - PurpleSharp
     condition: process_creation and (1 of selection_*)

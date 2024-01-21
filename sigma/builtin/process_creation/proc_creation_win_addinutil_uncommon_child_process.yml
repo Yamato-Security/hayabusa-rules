@@ -1,8 +1,11 @@
 title: Uncommon Child Process Of AddinUtil.EXE
 id: b5746143-59d6-4603-8d06-acbd60e166ee
 status: experimental
-description: |
-    Detects uncommon child processes of the Add-In deployment cache updating utility (AddInutil.exe) which could be a sign of potential abuse of the binary to proxy execution via a custom Addins.Store payload.
+description: 'Detects uncommon child processes of the Add-In deployment cache updating
+    utility (AddInutil.exe) which could be a sign of potential abuse of the binary
+    to proxy execution via a custom Addins.Store payload.
+
+    '
 references:
     - https://www.blue-prints.blog/content/blog/posts/lolbin/addinutil-lolbas.html
 author: Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)
@@ -20,7 +23,7 @@ detection:
     selection:
         ParentProcessName|endswith: \addinutil.exe
     filter_main_werfault:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - :\Windows\System32\conhost.exe
             - :\Windows\System32\werfault.exe
             - :\Windows\SysWOW64\werfault.exe

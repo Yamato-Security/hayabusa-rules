@@ -21,7 +21,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - verb:sync
             - -source:RunCommand
             - -dest:runCommand

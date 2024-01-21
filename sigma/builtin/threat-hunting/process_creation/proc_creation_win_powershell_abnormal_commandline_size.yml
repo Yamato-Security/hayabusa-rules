@@ -1,7 +1,8 @@
 title: Unusually Long PowerShell CommandLine
 id: d0d28567-4b9a-45e2-8bbc-fb1b66a1f7f6
 status: test
-description: Detects unusually long PowerShell command lines with a length of 1000 characters or more
+description: Detects unusually long PowerShell command lines with a length of 1000
+    characters or more
 references:
     - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse
 author: oscd.community, Natalia Shornikova
@@ -19,16 +20,16 @@ detection:
         EventID: 4688
         Channel: Security
     selection_powershell:
-        - NewProcessName|endswith:
-            - \powershell.exe
-            - \pwsh.exe
-        - OriginalFileName:
-            - PowerShell.EXE
-            - pwsh.dll
-        - Description: Windows Powershell
-        - Product: PowerShell Core 6
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+        -   Description: Windows Powershell
+        -   Product: PowerShell Core 6
     selection_length:
-          CommandLine|re: .{1000,}
+        CommandLine|re: .{1000,}
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

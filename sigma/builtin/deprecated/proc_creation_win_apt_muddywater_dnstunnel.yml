@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: DataExchange.dll
-          NewProcessName|endswith:
+        CommandLine|contains: DataExchange.dll
+        NewProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
         ParentProcessName|endswith: \excel.exe

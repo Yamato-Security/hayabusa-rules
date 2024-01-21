@@ -1,7 +1,8 @@
 title: LSASS Memory Dump File Creation
 id: 5e3d3601-0662-4af0-b1d2-36a05e90c40a
 status: deprecated
-description: LSASS memory dump creation using operating systems utilities. Procdump will use process name in output file if no name is specified
+description: LSASS memory dump creation using operating systems utilities. Procdump
+    will use process name in output file if no name is specified
 references:
     - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 author: Teymur Kheirkhabarov, oscd.community
@@ -26,7 +27,8 @@ fields:
     - ComputerName
     - TargetFilename
 falsepositives:
-    - Dumping lsass memory for forensic investigation purposes by legitimate incident responder or forensic invetigator
+    - Dumping lsass memory for forensic investigation purposes by legitimate incident
+        responder or forensic invetigator
     - Dumps of another process that contains lsass in its process name (substring)
 level: high
 ruletype: Sigma

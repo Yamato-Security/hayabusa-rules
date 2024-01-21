@@ -18,8 +18,8 @@ detection:
         Channel: Microsoft-Windows-CodeIntegrity/Operational
     selection:
         EventID:
-            - 3032 # Code Integrity determined a revoked image %2 is loaded into the system. Check with the publisher to see if a new signed version of the image is available.
-            - 3035 # Code Integrity determined a revoked image %2 is loaded into the system. The image is allowed to load because kernel mode debugger is attached.
+            - 3032
+            - 3035
     condition: codeintegrity_operational and selection
 falsepositives:
     - Unlikely

@@ -21,12 +21,12 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \print.exe
-          CommandLine|startswith: print
-          CommandLine|contains|all:
+        CommandLine|startswith: print
+        CommandLine|contains|all:
             - /D
             - .exe
     filter_print:
-          CommandLine|contains: print.exe
+        CommandLine|contains: print.exe
     condition: process_creation and (selection and not filter_print)
 falsepositives:
     - Unknown

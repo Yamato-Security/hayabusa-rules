@@ -22,11 +22,10 @@ detection:
             - 14
         Channel: Microsoft-Windows-Sysmon/Operational
     selection1:
-          EventType: DeleteValue
+        EventType: DeleteValue
         TargetObject|endswith: \AppXypsaf9f1qserqevf0sws76dx4k9a5206\Shell\open\command\DelegateExecute
     selection2:
         TargetObject|endswith: \AppXypsaf9f1qserqevf0sws76dx4k9a5206\Shell\open\command\(Default)
-    # Add the payload in the (Default)
     condition: registry_event and (1 of selection*)
 falsepositives:
     - Unknown

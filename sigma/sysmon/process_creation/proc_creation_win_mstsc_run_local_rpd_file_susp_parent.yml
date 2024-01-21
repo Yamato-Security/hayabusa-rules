@@ -1,7 +1,8 @@
 title: Mstsc.EXE Execution From Uncommon Parent
 id: ff3b6b39-e765-42f9-bb2c-ea6761e0e0f6
 status: experimental
-description: Detects potential RDP connection via Mstsc using a local ".rdp" file located in suspicious locations.
+description: Detects potential RDP connection via Mstsc using a local ".rdp" file
+    located in suspicious locations.
 references:
     - https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/
     - https://blog.thickmints.dev/mintsights/detecting-rogue-rdp/
@@ -20,7 +21,6 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_parent:
         ParentImage|endswith:
-            # Covers potential downloads/clicks from browsers
             - \brave.exe
             - \CCleanerBrowser.exe
             - \chrome.exe
@@ -32,11 +32,10 @@ detection:
             - \opera.exe
             - \vivaldi.exe
             - \whale.exe
-            # Covers potential downloads/clicks from email clients
             - \outlook.exe
     selection_img:
-        - Image|endswith: \mstsc.exe
-        - OriginalFileName: mstsc.exe
+        -   Image|endswith: \mstsc.exe
+        -   OriginalFileName: mstsc.exe
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unlikely

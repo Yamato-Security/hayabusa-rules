@@ -1,12 +1,13 @@
 title: Suspicious Curl.EXE Download
 id: e218595b-bbe7-4ee5-8a96-f32a24ad3468
 related:
-    - id: bbeaed61-1990-4773-bf57-b81dbad7db2d # Basic curl execution
-      type: derived
-    - id: 9a517fca-4ba3-4629-9278-a68694697b81 # Curl download
-      type: similar
+    -   id: bbeaed61-1990-4773-bf57-b81dbad7db2d
+        type: derived
+    -   id: 9a517fca-4ba3-4629-9278-a68694697b81
+        type: similar
 status: test
-description: Detects a suspicious curl process start on Windows and outputs the requested document to a local file
+description: Detects a suspicious curl process start on Windows and outputs the requested
+    document to a local file
 references:
     - https://twitter.com/max_mal_/status/1542461200797163522
     - https://web.archive.org/web/20200128160046/https://twitter.com/reegun21/status/1222093798009790464
@@ -28,10 +29,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_curl:
-        - Image|endswith: \curl.exe
-        - Product: The curl executable
+        -   Image|endswith: \curl.exe
+        -   Product: The curl executable
     selection_susp_locations:
-          CommandLine|contains:
+        CommandLine|contains:
             - '%AppData%'
             - '%Public%'
             - '%Temp%'
@@ -44,7 +45,7 @@ detection:
             - C:\ProgramData\
             - C:\Windows\Temp\
     selection_susp_extensions:
-          CommandLine|endswith:
+        CommandLine|endswith:
             - .dll
             - .gif
             - .jpeg
@@ -56,15 +57,14 @@ detection:
             - .vbe
             - .vbs
     filter_optional_git_windows:
-        # Example FP
-        #   CommandLine: "C:\Program Files\Git\mingw64\bin\curl.exe" --silent --show-error --output C:/Users/test/AppData/Local/Temp/gfw-httpget-jVOEoxbS.txt --write-out %{http_code} https://gitforwindows.org/latest-tag.txt
         ParentImage: C:\Program Files\Git\usr\bin\sh.exe
         Image: C:\Program Files\Git\mingw64\bin\curl.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '--silent --show-error --output '
             - gfw-httpget-
             - AppData
-    condition: process_creation and (selection_curl and 1 of selection_susp_* and not 1 of filter_optional_*)
+    condition: process_creation and (selection_curl and 1 of selection_susp_* and
+        not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: high

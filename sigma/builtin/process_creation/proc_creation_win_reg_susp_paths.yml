@@ -1,7 +1,8 @@
 title: Reg Add Suspicious Paths
 id: b7e2a8d4-74bb-4b78-adc9-3f92af2d4829
 status: test
-description: Detects when an adversary uses the reg.exe utility to add or modify new keys or subkeys
+description: Detects when an adversary uses the reg.exe utility to add or modify new
+    keys or subkeys
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1112/T1112.md
     - https://github.com/redcanaryco/atomic-red-team/blob/40b77d63808dd4f4eafb83949805636735a1fd15/atomics/T1562.001/T1562.001.md
@@ -21,11 +22,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_reg:
-        - NewProcessName|endswith: \reg.exe
-        - OriginalFileName: reg.exe
+        -   NewProcessName|endswith: \reg.exe
+        -   OriginalFileName: reg.exe
     selection_path:
-          CommandLine|contains:
-            # Add more suspicious registry locations below
+        CommandLine|contains:
             - \AppDataLow\Software\Microsoft\
             - \Policies\Microsoft\Windows\OOBE
             - \Policies\Microsoft\Windows NT\CurrentVersion\Winlogon

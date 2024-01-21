@@ -1,11 +1,15 @@
 title: Suspicious Electron Application Child Processes
 id: f26eb764-fd89-464b-85e2-dc4a8e6e77b8
 related:
-    - id: 378a05d8-963c-46c9-bcce-13c7657eac99
-      type: similar
+    -   id: 378a05d8-963c-46c9-bcce-13c7657eac99
+        type: similar
 status: experimental
-description: |
-    Detects suspicious child processes of electron apps (teams, discord, slack, etc.). This could be a potential sign of ".asar" file tampering (See reference section for more information) or binary execution proxy through specific CLI arguments (see related rule)
+description: 'Detects suspicious child processes of electron apps (teams, discord,
+    slack, etc.). This could be a potential sign of ".asar" file tampering (See reference
+    section for more information) or binary execution proxy through specific CLI arguments
+    (see related rule)
+
+    '
 references:
     - https://taggart-tech.com/quasar-electron/
     - https://github.com/mttaggart/quasar
@@ -28,9 +32,7 @@ detection:
         Channel: Security
     selection_parent:
         ParentProcessName|endswith:
-            # Add more electron based app to the list
-            - \chrome.exe   # Might require additional tuning
-            # - '\code.exe' # Requires additional baseline
+            - \chrome.exe
             - \discord.exe
             - \GitHubDesktop.exe
             - \keybase.exe
@@ -40,8 +42,7 @@ detection:
             - \slack.exe
             - \Teams.exe
     selection_child_image:
-          NewProcessName|endswith:
-            # Add more suspicious/unexpected paths
+        NewProcessName|endswith:
             - \cmd.exe
             - \cscript.exe
             - \mshta.exe
@@ -50,49 +51,48 @@ detection:
             - \regsvr32.exe
             - \wscript.exe
     selection_child_paths:
-          NewProcessName|contains:
-            # Add more suspicious/unexpected paths
+        NewProcessName|contains:
             - \AppData\Local\Temp\
             - \Users\Public\
             - \Windows\Temp\
             - :\Temp\
     filter_main_chrome:
         ParentProcessName|endswith: \chrome.exe
-          NewProcessName|endswith: \chrome.exe
+        NewProcessName|endswith: \chrome.exe
     filter_main_discord:
         ParentProcessName|endswith: \discord.exe
-          NewProcessName|endswith: \discord.exe
+        NewProcessName|endswith: \discord.exe
     filter_main_githubdesktop:
         ParentProcessName|endswith: \GitHubDesktop.exe
-          NewProcessName|endswith: \GitHubDesktop.exe
+        NewProcessName|endswith: \GitHubDesktop.exe
     filter_main_keybase:
         ParentProcessName|endswith: \keybase.exe
-          NewProcessName|endswith: \keybase.exe
+        NewProcessName|endswith: \keybase.exe
     filter_main_msedge:
         ParentProcessName|endswith: \msedge.exe
-          NewProcessName|endswith: \msedge.exe
+        NewProcessName|endswith: \msedge.exe
     filter_main_msedgewebview:
         ParentProcessName|endswith: \msedgewebview2.exe
-          NewProcessName|endswith: \msedgewebview2.exe
+        NewProcessName|endswith: \msedgewebview2.exe
     filter_main_msteams:
         ParentProcessName|endswith: \msteams.exe
-          NewProcessName|endswith: \msteams.exe
+        NewProcessName|endswith: \msteams.exe
     filter_main_slack:
         ParentProcessName|endswith: \slack.exe
-          NewProcessName|endswith: \slack.exe
+        NewProcessName|endswith: \slack.exe
     filter_main_teams:
         ParentProcessName|endswith: \teams.exe
-          NewProcessName|endswith: \teams.exe
+        NewProcessName|endswith: \teams.exe
     filter_main_werfault:
-          NewProcessName:
+        NewProcessName:
             - C:\Windows\SysWOW64\WerFault.exe
             - C:\Windows\System32\WerFault.exe
     filter_optional_discord:
-          CommandLine|contains: \NVSMI\nvidia-smi.exe
+        CommandLine|contains: \NVSMI\nvidia-smi.exe
         ParentProcessName|endswith: \Discord.exe
-    condition: process_creation and (selection_parent and 1 of selection_child_* and not 1 of filter_main_* and not 1 of filter_optional_*)
+    condition: process_creation and (selection_parent and 1 of selection_child_* and
+        not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Legitimate child processes can occur in cases of debugging
-# Increase the level once FP rate is known better (see status)
 level: medium
 ruletype: Sigma

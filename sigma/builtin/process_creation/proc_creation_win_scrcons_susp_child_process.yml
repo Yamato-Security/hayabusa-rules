@@ -20,7 +20,7 @@ detection:
         Channel: Security
     selection:
         ParentProcessName|endswith: \scrcons.exe
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \svchost.exe
             - \dllhost.exe
             - \powershell.exe

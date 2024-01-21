@@ -1,8 +1,10 @@
 title: Forfiles.EXE Child Process Masquerading
 id: f53714ec-5077-420e-ad20-907ff9bb2958
 status: experimental
-description: |
-    Detects the execution of "forfiles" from a non-default location, in order to potentially spawn a custom "cmd.exe" from the current working directory.
+description: 'Detects the execution of "forfiles" from a non-default location, in
+    order to potentially spawn a custom "cmd.exe" from the current working directory.
+
+    '
 references:
     - https://www.hexacorn.com/blog/2023/12/31/1-little-known-secret-of-forfiles-exe/
 author: Nasreddine Bencherchali (Nextron Systems), Anish Bogati
@@ -18,24 +20,20 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        # Notes:
-        #   - The parent must not have CLI options
-        #   - The Child Image must be named "cmd" as its hardcoded in the "forfiles" binary
-        #   - The Child CLI will always contains "/c echo" as its hardcoded in the original "forfiles" binary
         ParentCommandLine|endswith:
             - .exe
             - .exe"
-          CommandLine|startswith: /c echo "
-          NewProcessName|endswith: \cmd.exe
+        CommandLine|startswith: /c echo "
+        NewProcessName|endswith: \cmd.exe
     filter_main_parent_not_sys:
         ParentProcessName|contains:
             - :\Windows\System32\
             - :\Windows\SysWOW64\
         ParentProcessName|endswith: \forfiles.exe
-          NewProcessName|contains:
+        NewProcessName|contains:
             - :\Windows\System32\
             - :\Windows\SysWOW64\
-          NewProcessName|endswith: \cmd.exe
+        NewProcessName|endswith: \cmd.exe
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

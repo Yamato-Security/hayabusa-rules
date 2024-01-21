@@ -25,18 +25,18 @@ detection:
         EventID: 4688
         Channel: Security
     selection_path:
-          CommandLine|contains:
+        CommandLine|contains:
             - '%LOCALAPPDATA%'
             - \AppData\Local\
-          NewProcessName|endswith: \rundll32.exe
+        NewProcessName|endswith: \rundll32.exe
     selection_extensions:
-        - CommandLine|contains: .dat",
-        - CommandLine|endswith:
-            - '.dll #1'
-            - '.dll" #1'
-            - .dll",#1
+        -   CommandLine|contains: .dat",
+        -   CommandLine|endswith:
+                - '.dll #1'
+                - '.dll" #1'
+                - .dll",#1
     filter_main_exclude_temp:
-          CommandLine|contains: \AppData\Local\Temp\
+        CommandLine|contains: \AppData\Local\Temp\
     condition: process_creation and (all of selection_* and not 1 of filter_main_*)
 falsepositives:
     - Unknown

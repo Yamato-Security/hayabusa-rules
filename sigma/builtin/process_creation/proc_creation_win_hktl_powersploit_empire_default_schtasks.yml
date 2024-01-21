@@ -26,11 +26,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - /Create
             - powershell.exe -NonI
             - /TN Updater /TR
-          CommandLine|contains:
+        CommandLine|contains:
             - /SC ONLOGON
             - /SC DAILY /ST
             - /SC ONIDLE
@@ -38,7 +38,7 @@ detection:
         ParentProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
-          NewProcessName|endswith: \schtasks.exe
+        NewProcessName|endswith: \schtasks.exe
     condition: process_creation and selection
 falsepositives:
     - Unlikely

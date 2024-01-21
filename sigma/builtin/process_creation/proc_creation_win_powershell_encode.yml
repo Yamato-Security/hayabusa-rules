@@ -20,17 +20,17 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -e '
             - ' -en '
             - ' -enc '
             - ' -enco'
             - ' -ec '
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
     filter_encoding:
-          CommandLine|contains: ' -Encoding '
+        CommandLine|contains: ' -Encoding '
     filter_azure:
         ParentProcessName|contains:
             - C:\Packages\Plugins\Microsoft.GuestConfiguration.ConfigurationforWindows\

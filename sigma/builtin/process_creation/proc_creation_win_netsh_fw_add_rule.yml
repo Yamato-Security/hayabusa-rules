@@ -19,16 +19,18 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \netsh.exe
-        - OriginalFileName: netsh.exe
+        -   NewProcessName|endswith: \netsh.exe
+        -   OriginalFileName: netsh.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' firewall '
             - ' add '
     filter_optional_dropbox:
-          CommandLine|contains:
-            - advfirewall firewall add rule name=Dropbox dir=in action=allow "program=?:\Program Files (x86)\Dropbox\Client\Dropbox.exe" enable=yes profile=Any
-            - advfirewall firewall add rule name=Dropbox dir=in action=allow "program=?:\Program Files\Dropbox\Client\Dropbox.exe" enable=yes profile=Any
+        CommandLine|contains:
+            - advfirewall firewall add rule name=Dropbox dir=in action=allow "program=?:\Program
+                Files (x86)\Dropbox\Client\Dropbox.exe" enable=yes profile=Any
+            - advfirewall firewall add rule name=Dropbox dir=in action=allow "program=?:\Program
+                Files\Dropbox\Client\Dropbox.exe" enable=yes profile=Any
     condition: process_creation and (all of selection_* and not 1 of filter_optional_*)
 falsepositives:
     - Legitimate administration activity
