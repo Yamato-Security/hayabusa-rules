@@ -44,7 +44,7 @@ jobs:
             curl -OL $URL
             unzip *.zip
             chmod +x hayabusa-${LATEST_VER#v}-lin-x64-gnu
-            ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../hayabusa-sample-evtx -r ../hayabusa-rules -w -o out.csv  | grep "Rule parsing error" | wc -l | grep 0
+            ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv  | grep "Rule parsing error" | wc -l | grep 0
 
   updateSigmaRule:
     runs-on: ubuntu-latest
