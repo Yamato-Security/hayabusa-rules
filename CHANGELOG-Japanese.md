@@ -2,7 +2,6 @@
 
 ## v2.13.0-dev [2024/01/19]
 
-Sigmaルールのコメントを残すようにした。以前は変換後に削除されていた。(#568) (@fukusuket)
 Sigma変換バックエンドのパッケージ管理は [Poetry](https://python-poetry.org/) 、静的コード分析は [Ruff](https://github.com/astral-sh/ruff) で実行するようにした。(#567) (@fukusuket)
 
 ## v2.12.0 [2023/12/19]
