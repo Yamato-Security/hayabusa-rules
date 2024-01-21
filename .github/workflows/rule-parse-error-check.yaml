@@ -2,6 +2,7 @@ name: Rule parse error check
 
 on:
   pull_request:
+  workflow_call:
 
 jobs:
   rule-parse-error-check:
