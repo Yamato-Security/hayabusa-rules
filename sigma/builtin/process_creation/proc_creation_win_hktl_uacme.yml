@@ -1,7 +1,8 @@
 title: HackTool - UACMe Akagi Execution
 id: d38d2fa4-98e6-4a24-aff1-410b0c9ad177
 status: test
-description: Detects the execution of UACMe, a tool used for UAC bypasses, via default PE metadata
+description: Detects the execution of UACMe, a tool used for UAC bypasses, via default
+    PE metadata
 references:
     - https://github.com/hfiref0x/UACME
 author: Christian Burkard (Nextron Systems), Florian Roth (Nextron Systems)
@@ -19,21 +20,21 @@ detection:
         EventID: 4688
         Channel: Security
     selection_pe:
-        - Product: UACMe
-        - Company:
-            - REvol Corp
-            - APT 92
-            - UG North
-            - Hazardous Environments
-            - CD Project Rekt
-        - Description:
-            - UACMe main module
-            - Pentesting utility
-        - OriginalFileName:
-            - Akagi.exe
-            - Akagi64.exe
+        -   Product: UACMe
+        -   Company:
+                - REvol Corp
+                - APT 92
+                - UG North
+                - Hazardous Environments
+                - CD Project Rekt
+        -   Description:
+                - UACMe main module
+                - Pentesting utility
+        -   OriginalFileName:
+                - Akagi.exe
+                - Akagi64.exe
     selection_img:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \Akagi64.exe
             - \Akagi.exe
     selection_hashes_sysmon:

@@ -18,10 +18,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \control.exe
+        NewProcessName|endswith: \control.exe
         ParentProcessName|endswith: \WorkFolders.exe
     filter:
-          NewProcessName: C:\Windows\System32\control.exe
+        NewProcessName: C:\Windows\System32\control.exe
     condition: process_creation and (selection and not filter)
 falsepositives:
     - Legitimate usage of the uncommon Windows Work Folders feature.

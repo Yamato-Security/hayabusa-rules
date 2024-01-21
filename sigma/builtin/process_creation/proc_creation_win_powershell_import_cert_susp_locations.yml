@@ -1,7 +1,8 @@
 title: Root Certificate Installed From Susp Locations
 id: 5f6a601c-2ecb-498b-9c33-660362323afa
 status: test
-description: Adversaries may install a root certificate on a compromised system to avoid warnings when connecting to adversary controlled web servers.
+description: Adversaries may install a root certificate on a compromised system to
+    avoid warnings when connecting to adversary controlled web servers.
 references:
     - https://www.microsoft.com/security/blog/2022/09/07/profiling-dev-0270-phosphorus-ransomware-operations/
     - https://docs.microsoft.com/en-us/powershell/module/pki/import-certificate?view=windowsserver2022-ps
@@ -19,11 +20,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - Import-Certificate
             - ' -FilePath '
             - Cert:\LocalMachine\Root
-          CommandLine|contains:
+        CommandLine|contains:
             - \AppData\Local\Temp\
             - :\Windows\TEMP\
             - \Desktop\

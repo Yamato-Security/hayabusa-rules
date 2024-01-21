@@ -1,10 +1,10 @@
 title: WmiPrvSE Spawned A Process
 id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
 related:
-    - id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
-      type: similar
-    - id: 692f0bec-83ba-4d04-af7e-e884a96059b6
-      type: similar
+    -   id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
+        type: similar
+    -   id: 692f0bec-83ba-4d04-af7e-e884a96059b6
+        type: similar
 status: stable
 description: Detects WmiPrvSE spawning a process
 references:
@@ -26,18 +26,18 @@ detection:
         ParentProcessName|endswith: \WmiPrvSe.exe
     filter_logonid:
         SubjectLogonId:
-            - '0x3e7'  # LUID 999 for SYSTEM
-            - 'null'   # too many false positives
+            - '0x3e7'
+            - 'null'
     filter_system_user:
-        SubjectUserName|contains: # covers many language settings
+        SubjectUserName|contains:
             - AUTHORI
             - AUTORI
     filter_wmiprvse:
-          NewProcessName|endswith: \WmiPrvSE.exe
+        NewProcessName|endswith: \WmiPrvSE.exe
     filter_werfault:
-          NewProcessName|endswith: \WerFault.exe
-    filter_null:  # some backends need the null value in a separate expression
-        SubjectLogonId:
+        NewProcessName|endswith: \WerFault.exe
+    filter_null:
+        SubjectLogonId: null
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:
     - False positives are expected (e.g. in environments where WinRM is used legitimately)

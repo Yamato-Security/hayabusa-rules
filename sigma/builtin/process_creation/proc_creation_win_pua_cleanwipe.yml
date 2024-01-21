@@ -18,18 +18,18 @@ detection:
         EventID: 4688
         Channel: Security
     selection1:
-          NewProcessName|endswith: \SepRemovalToolNative_x64.exe
+        NewProcessName|endswith: \SepRemovalToolNative_x64.exe
     selection2:
-          CommandLine|contains: --uninstall
-          NewProcessName|endswith: \CATClean.exe
+        CommandLine|contains: --uninstall
+        NewProcessName|endswith: \CATClean.exe
     selection3:
-          CommandLine|contains: -r
-          NewProcessName|endswith: \NetInstaller.exe
+        CommandLine|contains: -r
+        NewProcessName|endswith: \NetInstaller.exe
     selection4:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - /uninstall
             - /enterprise
-          NewProcessName|endswith: \WFPUnins.exe
+        NewProcessName|endswith: \WFPUnins.exe
     condition: process_creation and (1 of selection*)
 falsepositives:
     - Legitimate administrative use (Should be investigated either way)

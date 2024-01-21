@@ -21,31 +21,31 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|contains:
-            - \$Recycle.bin\
-            - \config\systemprofile\
-            - \Intel\Logs\
-            - \RSA\MachineKeys\
-            - \Users\All Users\
-            - \Users\Default\
-            - \Users\NetworkService\
-            - \Users\Public\
-            - \Windows\addins\
-            - \Windows\debug\
-            - \Windows\Fonts\
-            - \Windows\Help\
-            - \Windows\IME\
-            - \Windows\Media\
-            - \Windows\repair\
-            - \Windows\security\
-            - \Windows\System32\Tasks\
-            - \Windows\Tasks\
-        - NewProcessName|startswith: C:\Perflogs\
+        -   NewProcessName|contains:
+                - \$Recycle.bin\
+                - \config\systemprofile\
+                - \Intel\Logs\
+                - \RSA\MachineKeys\
+                - \Users\All Users\
+                - \Users\Default\
+                - \Users\NetworkService\
+                - \Users\Public\
+                - \Windows\addins\
+                - \Windows\debug\
+                - \Windows\Fonts\
+                - \Windows\Help\
+                - \Windows\IME\
+                - \Windows\Media\
+                - \Windows\repair\
+                - \Windows\security\
+                - \Windows\System32\Tasks\
+                - \Windows\Tasks\
+        -   NewProcessName|startswith: C:\Perflogs\
     filter_ibm:
-          NewProcessName|startswith: C:\Users\Public\IBM\ClientSolutions\Start_Programs\
+        NewProcessName|startswith: C:\Users\Public\IBM\ClientSolutions\Start_Programs\
     filter_citrix:
-          NewProcessName|startswith: C:\Windows\SysWOW64\config\systemprofile\Citrix\UpdaterBinaries\
-          NewProcessName|endswith: \CitrixReceiverUpdater.exe
+        NewProcessName|startswith: C:\Windows\SysWOW64\config\systemprofile\Citrix\UpdaterBinaries\
+        NewProcessName|endswith: \CitrixReceiverUpdater.exe
     condition: process_creation and (selection and not 1 of filter_*)
 fields:
     - CommandLine

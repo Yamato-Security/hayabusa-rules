@@ -19,7 +19,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \procdump.exe
             - \procdump64.exe
     condition: process_creation and selection

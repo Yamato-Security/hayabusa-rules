@@ -1,8 +1,8 @@
 title: New User Created Via Net.EXE
 id: cd219ff3-fa99-45d4-8380-a7d15116c6dc
 related:
-    - id: b9f0e6f5-09b4-4358-bae4-08408705bd5c
-      type: similar
+    -   id: b9f0e6f5-09b4-4358-bae4-08408705bd5c
+        type: similar
 status: test
 description: Identifies the creation of local users via the net.exe command.
 references:
@@ -22,14 +22,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-            - \net.exe
-            - \net1.exe
-        - OriginalFileName:
-            - net.exe
-            - net1.exe
+        -   NewProcessName|endswith:
+                - \net.exe
+                - \net1.exe
+        -   OriginalFileName:
+                - net.exe
+                - net1.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - user
             - add
     condition: process_creation and (all of selection_*)

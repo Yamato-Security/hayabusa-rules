@@ -1,11 +1,13 @@
 title: HackTool - WinPwn Execution - ScriptBlock
 id: 851fd622-b675-4d26-b803-14bc7baa517a
 related:
-    - id: d557dc06-62e8-4468-a8e8-7984124908ce
-      type: similar
+    -   id: d557dc06-62e8-4468-a8e8-7984124908ce
+        type: similar
 status: experimental
-description: |
-    Detects scriptblock text keywords indicative of potential usge of the tool WinPwn. A tool for Windows and Active Directory reconnaissance and exploitation.
+description: 'Detects scriptblock text keywords indicative of potential usge of the
+    tool WinPwn. A tool for Windows and Active Directory reconnaissance and exploitation.
+
+    '
 author: Swachchhanda Shrawan Poudel
 date: 2023/12/04
 references:
@@ -46,6 +48,7 @@ detection:
             - WinPwn.ps1
     condition: ps_script and selection
 falsepositives:
-    - As the script block is a blob of text. False positive may occur with scripts that contain the keyword as a reference or simply use it for detection.
+    - As the script block is a blob of text. False positive may occur with scripts
+        that contain the keyword as a reference or simply use it for detection.
 level: high
 ruletype: Sigma

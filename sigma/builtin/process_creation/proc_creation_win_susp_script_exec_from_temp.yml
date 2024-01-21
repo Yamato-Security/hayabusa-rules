@@ -18,7 +18,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - \Windows\Temp
             - \Temporary Internet
             - \AppData\Local\Temp
@@ -26,19 +26,19 @@ detection:
             - '%TEMP%'
             - '%TMP%'
             - '%LocalAppData%\Temp'
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
             - \mshta.exe
             - \wscript.exe
             - \cscript.exe
     filter:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' >'
             - Out-File
             - ConvertTo-Json
-            - -WindowStyle hidden -Verb runAs    # VSCode behaviour if file cannot be written as current user
-            - \Windows\system32\config\systemprofile\AppData\Local\Temp\Amazon\EC2-Windows\   # EC2 AWS
+            - -WindowStyle hidden -Verb runAs
+            - \Windows\system32\config\systemprofile\AppData\Local\Temp\Amazon\EC2-Windows\
     condition: process_creation and (selection and not filter)
 falsepositives:
     - Administrative scripts

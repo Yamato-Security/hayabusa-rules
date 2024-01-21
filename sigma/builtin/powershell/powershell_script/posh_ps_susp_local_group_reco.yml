@@ -1,10 +1,15 @@
 title: Suspicious Get Local Groups Information - PowerShell
 id: fa6a5a45-3ee2-4529-aa14-ee5edc9e29cb
 status: test
-description: |
-    Adversaries may attempt to find local system groups and permission settings.
-    The knowledge of local system permission groups can help adversaries determine which groups exist and which users belong to a particular group.
-    Adversaries may use this information to determine which users have elevated permissions, such as the users found within the local administrators group.
+description: 'Adversaries may attempt to find local system groups and permission settings.
+
+    The knowledge of local system permission groups can help adversaries determine
+    which groups exist and which users belong to a particular group.
+
+    Adversaries may use this information to determine which users have elevated permissions,
+    such as the users found within the local administrators group.
+
+    '
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1069.001/T1069.001.md
 author: frack113

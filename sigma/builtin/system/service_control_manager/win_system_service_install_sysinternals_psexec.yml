@@ -22,8 +22,8 @@ detection:
         Provider_Name: Service Control Manager
         EventID: 7045
     selection_service:
-        - ServiceName: PSEXESVC
-        - ImagePath|endswith: \PSEXESVC.exe
+        -   ServiceName: PSEXESVC
+        -   ImagePath|endswith: \PSEXESVC.exe
     condition: system and (all of selection_*)
 falsepositives:
     - Unknown

@@ -1,7 +1,9 @@
 title: Suspicious Windows Defender Folder Exclusion Added Via Reg.EXE
 id: 48917adc-a28e-4f5d-b729-11e75da8941f
 status: test
-description: Detects the usage of "reg.exe" to add Defender folder exclusions. Qbot has been seen using this technique to add exclusions for folders within AppData and ProgramData.
+description: Detects the usage of "reg.exe" to add Defender folder exclusions. Qbot
+    has been seen using this technique to add exclusions for folders within AppData
+    and ProgramData.
 references:
     - https://thedfirreport.com/2022/02/07/qbot-likes-to-move-it-move-it/
     - https://redcanary.com/threat-detection-report/threats/qbot/
@@ -19,17 +21,17 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths
             - SOFTWARE\Microsoft\Microsoft Antimalware\Exclusions\Paths
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - 'ADD '
             - '/t '
             - 'REG_DWORD '
             - '/v '
             - '/d '
             - '0'
-          NewProcessName|endswith: \reg.exe
+        NewProcessName|endswith: \reg.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate use

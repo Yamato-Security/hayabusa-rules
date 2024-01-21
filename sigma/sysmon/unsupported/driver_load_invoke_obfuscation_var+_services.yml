@@ -1,15 +1,15 @@
 title: Invoke-Obfuscation VAR+ Launcher
 id: 3e27b010-2cf2-4577-8ef0-3ea44aaea0dc
 related:
-    - id: 8ca7004b-e620-4ecb-870e-86129b5b8e75
-      type: derived
+    -   id: 8ca7004b-e620-4ecb-870e-86129b5b8e75
+        type: derived
 description: Detects Obfuscated use of Environment Variables to execute PowerShell
 status: unsupported
 author: Jonathan Cheong, oscd.community
 date: 2020/10/15
 modified: 2021/09/17
 references:
-    - https://github.com/SigmaHQ/sigma/issues/1009  #(Task 24)
+    - https://github.com/SigmaHQ/sigma/issues/1009
 tags:
     - attack.defense_evasion
     - attack.t1027
@@ -29,5 +29,4 @@ detection:
 falsepositives:
     - Unknown
 level: high
-
 ruletype: Sigma

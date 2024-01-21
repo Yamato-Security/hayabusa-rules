@@ -20,16 +20,16 @@ detection:
         EventID: 4688
         Channel: Security
     selection_1:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - -Sta
             - -Nop
             - -Window
             - Hidden
-          CommandLine|contains:
+        CommandLine|contains:
             - -Command
             - -EncodedCommand
     selection_2:
-          CommandLine|contains:
+        CommandLine|contains:
             - 'sv o (New-Object IO.MemorySteam);sv d '
             - mshta file.hta
             - GruntHTTP

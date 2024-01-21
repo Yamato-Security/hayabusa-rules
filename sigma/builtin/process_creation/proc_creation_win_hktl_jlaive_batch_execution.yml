@@ -22,21 +22,21 @@ detection:
         ParentCommandLine|endswith: .bat
         ParentProcessName|endswith: \cmd.exe
     selection1:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - powershell.exe
             - .bat.exe
-          NewProcessName|endswith: \xcopy.exe
+        NewProcessName|endswith: \xcopy.exe
     selection2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - pwsh.exe
             - .bat.exe
-          NewProcessName|endswith: \xcopy.exe
+        NewProcessName|endswith: \xcopy.exe
     selection3:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - +s
             - +h
             - .bat.exe
-          NewProcessName|endswith: \attrib.exe
+        NewProcessName|endswith: \attrib.exe
     condition: process_creation and (parent_selection and (1 of selection*))
 falsepositives:
     - Unknown

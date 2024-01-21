@@ -1,7 +1,8 @@
 title: PUA - DIT Snapshot Viewer
 id: d3b70aad-097e-409c-9df2-450f80dc476b
 status: test
-description: Detects the use of Ditsnap tool, an inspection tool for Active Directory database, ntds.dit.
+description: Detects the use of Ditsnap tool, an inspection tool for Active Directory
+    database, ntds.dit.
 references:
     - https://thedfirreport.com/2020/06/21/snatch-ransomware/
     - https://web.archive.org/web/20201124182207/https://github.com/yosqueoy/ditsnap
@@ -20,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|endswith: \ditsnap.exe
-        - CommandLine|contains: ditsnap.exe
+        -   Image|endswith: \ditsnap.exe
+        -   CommandLine|contains: ditsnap.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate admin usage

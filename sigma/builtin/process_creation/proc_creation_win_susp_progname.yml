@@ -1,7 +1,8 @@
 title: Suspicious Program Names
 id: efdd8dd5-cee8-4e59-9390-7d4d5e4dd6f6
 status: test
-description: Detects suspicious patterns in program names or folders that are often found in malicious samples or hacktools
+description: Detects suspicious patterns in program names or folders that are often
+    found in malicious samples or hacktools
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1560.001/T1560.001.md
 author: Florian Roth (Nextron Systems)
@@ -18,21 +19,21 @@ detection:
         EventID: 4688
         Channel: Security
     selection_image:
-        - NewProcessName|contains:
-            - \CVE-202     # Update this when we reach the year 2100
-            - \CVE202     # Update this when we reach the year 2100
-        - NewProcessName|endswith:
-            - \poc.exe
-            - \artifact.exe
-            - \artifact64.exe
-            - \artifact_protected.exe
-            - \artifact32.exe
-            - \artifact32big.exe
-            - obfuscated.exe
-            - obfusc.exe
-            - \meterpreter
+        -   NewProcessName|contains:
+                - \CVE-202
+                - \CVE202
+        -   NewProcessName|endswith:
+                - \poc.exe
+                - \artifact.exe
+                - \artifact64.exe
+                - \artifact_protected.exe
+                - \artifact32.exe
+                - \artifact32big.exe
+                - obfuscated.exe
+                - obfusc.exe
+                - \meterpreter
     selection_commandline:
-          CommandLine|contains:
+        CommandLine|contains:
             - inject.ps1
             - Invoke-CVE
             - pupy.ps1

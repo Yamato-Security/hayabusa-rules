@@ -23,6 +23,7 @@ detection:
         Image|endswith: rasdial.exe
     condition: process_creation and selection
 falsepositives:
-    - False positives depend on scripts and administrative tools used in the monitored environment
+    - False positives depend on scripts and administrative tools used in the monitored
+        environment
 level: medium
 ruletype: Sigma

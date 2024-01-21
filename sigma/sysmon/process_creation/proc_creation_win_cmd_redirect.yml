@@ -1,10 +1,11 @@
 title: CMD Shell Output Redirect
 id: 4f4eaa9f-5ad4-410c-a4be-bc6132b0175a
 related:
-    - id: 8e0bb260-d4b2-4fff-bb8d-3f82118e6892
-      type: similar
+    -   id: 8e0bb260-d4b2-4fff-bb8d-3f82118e6892
+        type: similar
 status: test
-description: Detects the use of the redirection character ">" to redicrect information in commandline
+description: Detects the use of the redirection character ">" to redicrect information
+    in commandline
 references:
     - https://ss64.com/nt/syntax-redirection.html
 author: frack113
@@ -22,17 +23,18 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_cmd:
-        - OriginalFileName: Cmd.Exe
-        - Image|endswith: \cmd.exe
+        -   OriginalFileName: Cmd.Exe
+        -   Image|endswith: \cmd.exe
     selection_cli:
-          CommandLine|contains: '>'
+        CommandLine|contains: '>'
     filter_idm_extension:
-          CommandLine|contains:
+        CommandLine|contains:
             - C:\Program Files (x86)\Internet Download Manager\IDMMsgHost.exe
             - chrome-extension://
             - \\.\pipe\chrome.nativeMessaging
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
-    - Internet Download Manager extensions use named pipes and redirection via CLI. Filter it out if you use it in your environment
+    - Internet Download Manager extensions use named pipes and redirection via CLI.
+        Filter it out if you use it in your environment
 level: low
 ruletype: Sigma

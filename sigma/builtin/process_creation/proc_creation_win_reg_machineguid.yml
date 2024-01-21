@@ -17,11 +17,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - SOFTWARE\Microsoft\Cryptography
             - '/v '
             - MachineGuid
-          NewProcessName|endswith: \reg.exe
+        NewProcessName|endswith: \reg.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

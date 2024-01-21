@@ -1,8 +1,8 @@
 title: Windows Firewall Disabled via PowerShell
 id: 12f6b752-042d-483e-bf9c-915a6d06ad75
 related:
-    - id: 488b44e7-3781-4a71-888d-c95abfacf44d
-      type: similar
+    -   id: 488b44e7-3781-4a71-888d-c95abfacf44d
+        type: similar
 status: test
 description: Detects attempts to disable the Windows Firewall using PowerShell
 references:
@@ -21,20 +21,20 @@ detection:
         EventID: 4688
         Channel: Security
     selection_name:
-        - NewProcessName|endswith:
-            - \powershell.exe
-            - \pwsh.exe
-            - \powershell_ise.exe
-        - OriginalFileName:
-            - PowerShell.EXE
-            - pwsh.dll
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+                - \powershell_ise.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
     selection_args:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - 'Set-NetFirewallProfile '
             - ' -Enabled '
             - ' False'
     selection_opt:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -All '
             - Public
             - Domain

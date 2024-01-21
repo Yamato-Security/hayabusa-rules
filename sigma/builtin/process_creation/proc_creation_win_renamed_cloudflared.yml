@@ -21,23 +21,23 @@ detection:
         EventID: 4688
         Channel: Security
     selection_cleanup:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' tunnel '
             - 'cleanup '
-          CommandLine|contains:
+        CommandLine|contains:
             - '-config '
             - '-connector-id '
     selection_tunnel:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' tunnel '
             - ' run '
-          CommandLine|contains:
+        CommandLine|contains:
             - '-config '
             - '-credentials-contents '
             - '-credentials-file '
             - '-token '
     selection_accountless:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - -url
             - tunnel
     selection_hashes:
@@ -81,7 +81,7 @@ detection:
             - SHA256=2fbbfc8299537ff80cadf9d0e27c223fe0ccb9052bf9d8763ad717bbfa521c77
             - SHA256=19074674c6fbdaa573b3081745e5e26144fdf7a086d14e0e220d1814f1f13078
     filter_main_known_names:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \cloudflared.exe
             - \cloudflared-windows-386.exe
             - \cloudflared-windows-amd64.exe

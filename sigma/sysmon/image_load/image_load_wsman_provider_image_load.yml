@@ -1,7 +1,8 @@
 title: Suspicious WSMAN Provider Image Loads
 id: ad1f4bb9-8dfb-4765-adb6-2a7cfb6c0f94
 status: test
-description: Detects signs of potential use of the WSMAN provider from uncommon processes locally and remote execution.
+description: Detects signs of potential use of the WSMAN provider from uncommon processes
+    locally and remote execution.
 references:
     - https://twitter.com/chadtilbury/status/1275851297770610688
     - https://bohops.com/2020/05/12/ws-management-com-another-approach-for-winrm-lateral-movement/
@@ -24,14 +25,14 @@ detection:
         EventID: 7
         Channel: Microsoft-Windows-Sysmon/Operational
     request_client:
-        - ImageLoaded|endswith:
-            - \WsmSvc.dll
-            - \WsmAuto.dll
-            - \Microsoft.WSMan.Management.ni.dll
-        - OriginalFileName:
-            - WsmSvc.dll
-            - WSMANAUTOMATION.DLL
-            - Microsoft.WSMan.Management.dll
+        -   ImageLoaded|endswith:
+                - \WsmSvc.dll
+                - \WsmAuto.dll
+                - \Microsoft.WSMan.Management.ni.dll
+        -   OriginalFileName:
+                - WsmSvc.dll
+                - WSMANAUTOMATION.DLL
+                - Microsoft.WSMan.Management.dll
     respond_server:
         Image|endswith: \svchost.exe
         OriginalFileName: WsmWmiPl.dll
@@ -40,13 +41,13 @@ detection:
             - \powershell.exe
             - C:\Windows\System32\sdiagnhost.exe
             - C:\Windows\System32\services.exe
-    filter_svchost: # not available in Sysmon data, but Aurora logs
-          CommandLine|contains:
+    filter_svchost:
+        CommandLine|contains:
             - svchost.exe -k netsvcs -p -s BITS
             - svchost.exe -k GraphicsPerfSvcGroup -s GraphicsPerfSvc
             - svchost.exe -k NetworkService -p -s Wecsvc
             - svchost.exe -k netsvcs
-    filter_mscorsvw: # Image: C:\Windows\Microsoft.NET\Framework64\v4.0.30319\mscorsvw.exe
+    filter_mscorsvw:
         Image|startswith:
             - C:\Windows\Microsoft.NET\Framework64\v
             - C:\Windows\Microsoft.NET\Framework\v
@@ -66,8 +67,9 @@ detection:
     svchost:
         Image|endswith: \svchost.exe
     commandline_null:
-          CommandLine:
-    condition: image_load and (( request_client or respond_server ) and not 1 of filter* and not ( svchost and commandline_null ))
+        CommandLine: null
+    condition: image_load and (( request_client or respond_server ) and not 1 of filter*
+        and not ( svchost and commandline_null ))
 falsepositives:
     - Unknown
 level: medium

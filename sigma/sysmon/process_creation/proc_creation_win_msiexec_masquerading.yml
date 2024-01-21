@@ -19,8 +19,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|endswith: \msiexec.exe
-        - OriginalFileName: \msiexec.exe
+        -   Image|endswith: \msiexec.exe
+        -   OriginalFileName: \msiexec.exe
     filter:
         Image|startswith:
             - C:\Windows\System32\

@@ -22,7 +22,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \ping.exe
-          CommandLine|contains: 0x
+        CommandLine|contains: 0x
     condition: process_creation and selection
 fields:
     - ParentCommandLine

@@ -21,9 +21,9 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - \SyncAppvPublishingServer.vbs
-            - ;    # at a minimum, a semi-colon is required
+            - ;
     condition: process_creation and selection
 fields:
     - ComputerName

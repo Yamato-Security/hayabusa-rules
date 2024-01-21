@@ -18,7 +18,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \tor.exe
             - \Tor Browser\Browser\firefox.exe
     condition: process_creation and selection

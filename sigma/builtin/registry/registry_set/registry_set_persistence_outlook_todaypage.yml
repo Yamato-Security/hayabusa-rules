@@ -1,7 +1,9 @@
 title: Potential Persistence Via Outlook Today Pages
 id: 487bb375-12ef-41f6-baae-c6a1572b4dd1
 status: experimental
-description: Detects potential persistence activity via outlook today pages. An attacker can set a custom page to execute arbitrary code and link to it via the registry key "UserDefinedUrl".
+description: Detects potential persistence activity via outlook today pages. An attacker
+    can set a custom page to execute arbitrary code and link to it via the registry
+    key "UserDefinedUrl".
 references:
     - https://speakerdeck.com/heirhabarov/hunting-for-persistence-via-microsoft-exchange-server-or-outlook?slide=74
 author: Tobias Michalski (Nextron Systems)
@@ -31,7 +33,8 @@ detection:
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
         ProcessName|endswith: \OfficeClickToRun.exe
-    condition: registry_set and (selection_main and 1 of selection_value_* and not 1 of filter_*)
+    condition: registry_set and (selection_main and 1 of selection_value_* and not
+        1 of filter_*)
 fields:
     - NewValue
 falsepositives:

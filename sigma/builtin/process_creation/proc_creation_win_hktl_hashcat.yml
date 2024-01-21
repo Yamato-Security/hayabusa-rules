@@ -1,7 +1,8 @@
 title: HackTool - Hashcat Password Cracker Execution
 id: 39b31e81-5f5f-4898-9c0e-2160cfc0f9bf
 status: test
-description: Execute Hashcat.exe with provided SAM file from registry of Windows and Password list to crack against
+description: Execute Hashcat.exe with provided SAM file from registry of Windows and
+    Password list to crack against
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1110.002/T1110.002.md#atomic-test-1---password-cracking-with-hashcat
     - https://hashcat.net/wiki/doku.php?id=hashcat
@@ -19,9 +20,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-          NewProcessName|endswith: \hashcat.exe
+        NewProcessName|endswith: \hashcat.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '-a '
             - '-m 1000 '
             - '-r '

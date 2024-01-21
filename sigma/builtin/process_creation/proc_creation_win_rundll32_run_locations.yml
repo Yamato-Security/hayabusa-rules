@@ -19,20 +19,21 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|contains:
-            - :\RECYCLER\
-            - :\SystemVolumeInformation\
-        - NewProcessName|startswith:
-            - C:\Windows\Tasks\
-            - C:\Windows\debug\
-            - C:\Windows\fonts\
-            - C:\Windows\help\
-            - C:\Windows\drivers\
-            - C:\Windows\addins\
-            - C:\Windows\cursors\
-            - C:\Windows\system32\tasks\
+        -   NewProcessName|contains:
+                - :\RECYCLER\
+                - :\SystemVolumeInformation\
+        -   NewProcessName|startswith:
+                - C:\Windows\Tasks\
+                - C:\Windows\debug\
+                - C:\Windows\fonts\
+                - C:\Windows\help\
+                - C:\Windows\drivers\
+                - C:\Windows\addins\
+                - C:\Windows\cursors\
+                - C:\Windows\system32\tasks\
     condition: process_creation and selection
 falsepositives:
-    - False positives depend on scripts and administrative tools used in the monitored environment
+    - False positives depend on scripts and administrative tools used in the monitored
+        environment
 level: medium
 ruletype: Sigma

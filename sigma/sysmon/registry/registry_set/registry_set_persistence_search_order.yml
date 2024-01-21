@@ -4,7 +4,7 @@ status: experimental
 description: Detects potential COM object hijacking leveraging the COM Search Order
 references:
     - https://www.cyberbit.com/blog/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
-author: Maxime Thiebaut (@0xThiebaut), oscd.community, Cédric Hien
+author: "Maxime Thiebaut (@0xThiebaut), oscd.community, C\xE9dric Hien"
 date: 2020/04/14
 modified: 2023/09/28
 tags:
@@ -18,16 +18,15 @@ detection:
     registry_set:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
-    selection: # Detect new COM servers in the user hive
+    selection:
         TargetObject|contains: \CLSID\
         TargetObject|endswith: \InprocServer32\(Default)
     filter_main_generic:
-        Details|contains: # Exclude privileged directories and observed FPs
+        Details|contains:
             - '%%systemroot%%\system32\'
             - '%%systemroot%%\SysWow64\'
     filter_main_onedrive:
         Details|contains:
-            # Related To OneDrive
             - \AppData\Local\Microsoft\OneDrive\
             - \FileCoAuthLib64.dll
             - \FileSyncShell64.dll
@@ -43,7 +42,7 @@ detection:
             - \AppData\Roaming\Dropbox\
             - \DropboxExt64.*.dll
     filter_main_trend_micro:
-        Details|endswith: TmopIEPlg.dll   # TrendMicro osce
+        Details|endswith: TmopIEPlg.dll
     filter_main_update:
         Image|endswith:
             - :\WINDOWS\system32\wuauclt.exe

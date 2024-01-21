@@ -19,10 +19,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|contains: \purplesharp
-        - OriginalFileName: PurpleSharp.exe
+        -   Image|contains: \purplesharp
+        -   OriginalFileName: PurpleSharp.exe
     selection_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - xyz123456.exe
             - PurpleSharp
     condition: process_creation and (1 of selection_*)

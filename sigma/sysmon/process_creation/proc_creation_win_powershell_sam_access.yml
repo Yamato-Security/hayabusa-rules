@@ -19,11 +19,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_1:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - \HarddiskVolumeShadowCopy
             - System32\config\sam
     selection_2:
-          CommandLine|contains:
+        CommandLine|contains:
             - Copy-Item
             - cp $_.
             - cpi $_.

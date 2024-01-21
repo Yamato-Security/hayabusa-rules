@@ -1,7 +1,8 @@
 title: Path To Screensaver Binary Modified
 id: 67a6c006-3fbe-46a7-9074-2ba3b82c3000
 status: test
-description: Detects value modification of registry key containing path to binary used as screensaver.
+description: Detects value modification of registry key containing path to binary
+    used as screensaver.
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.002/T1546.002.md
     - https://www.welivesecurity.com/wp-content/uploads/2017/08/eset-gazer.pdf
@@ -24,7 +25,7 @@ detection:
             - 14
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        TargetObject|endswith: \Control Panel\Desktop\SCRNSAVE.EXE   # HKEY_CURRENT_USER\Control Panel\Desktop\SCRNSAVE.EXE
+        TargetObject|endswith: \Control Panel\Desktop\SCRNSAVE.EXE
     filter:
         Image|endswith:
             - \rundll32.exe

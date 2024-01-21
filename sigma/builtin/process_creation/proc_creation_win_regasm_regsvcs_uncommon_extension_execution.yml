@@ -1,10 +1,11 @@
 title: Potentially Suspicious Execution Of Regasm/Regsvcs With Uncommon Extension
 id: e9f8f8cc-07cc-4e81-b724-f387db9175e4
 related:
-    - id: cc368ed0-2411-45dc-a222-510ace303cb2
-      type: derived
+    -   id: cc368ed0-2411-45dc-a222-510ace303cb2
+        type: derived
 status: test
-description: Detects potentially suspicious execution of the Regasm/Regsvcs utilities with an uncommon extension.
+description: Detects potentially suspicious execution of the Regasm/Regsvcs utilities
+    with an uncommon extension.
 references:
     - https://www.fortiguard.com/threat-signal-report/4718?s=09
     - https://lolbas-project.github.io/lolbas/Binaries/Regasm/
@@ -22,15 +23,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-            - \Regsvcs.exe
-            - \Regasm.exe
-        - OriginalFileName:
-            - RegSvcs.exe
-            - RegAsm.exe
+        -   NewProcessName|endswith:
+                - \Regsvcs.exe
+                - \Regasm.exe
+        -   OriginalFileName:
+                - RegSvcs.exe
+                - RegAsm.exe
     selection_extension:
-          CommandLine|contains:
-            # Note: Add more potentially uncommon extensions
+        CommandLine|contains:
             - .dat
             - .gif
             - .jpeg

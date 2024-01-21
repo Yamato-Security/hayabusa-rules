@@ -20,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: Start-BitsTransfer
-          NewProcessName|endswith:
+        CommandLine|contains: Start-BitsTransfer
+        NewProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
     condition: process_creation and selection

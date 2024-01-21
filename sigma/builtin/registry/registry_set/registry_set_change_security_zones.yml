@@ -1,8 +1,8 @@
 title: IE Change Domain Zone
 id: 45e112d0-7759-4c2a-aa36-9f8fb79d3393
 related:
-    - id: d88d0ab2-e696-4d40-a2ed-9790064e66b3
-      type: derived
+    -   id: d88d0ab2-e696-4d40-a2ed-9790064e66b3
+        type: derived
 status: experimental
 description: Hides the file extension through modification of the registry
 references:
@@ -25,8 +25,8 @@ detection:
         ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\ZoneMap\Domains\
     filter:
         NewValue:
-            - DWORD (0x00000000) # My Computer
-            - DWORD (0x00000001) # Local Intranet Zone
+            - DWORD (0x00000000)
+            - DWORD (0x00000001)
             - (Empty)
     condition: registry_set and (selection_domains and not filter)
 falsepositives:

@@ -1,8 +1,11 @@
 title: Import LDAP Data Interchange Format File Via Ldifde.EXE
 id: 6f535e01-ca1f-40be-ab8d-45b19c0c8b7f
 status: experimental
-description: |
-    Detects the execution of "Ldifde.exe" with the import flag "-i". The can be abused to include HTTP-based arguments which will allow the arbitrary download of files from a remote server.
+description: 'Detects the execution of "Ldifde.exe" with the import flag "-i". The
+    can be abused to include HTTP-based arguments which will allow the arbitrary download
+    of files from a remote server.
+
+    '
 references:
     - https://twitter.com/0gtweet/status/1564968845726580736
     - https://strontic.github.io/xcyclopedia/library/ldifde.exe-979DE101F5059CEC1D2C56967CA2BAC0.html
@@ -23,10 +26,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \ldifde.exe
-        - OriginalFileName: ldifde.exe
+        -   NewProcessName|endswith: \ldifde.exe
+        -   OriginalFileName: ldifde.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - -i
             - -f
     condition: process_creation and (all of selection_*)

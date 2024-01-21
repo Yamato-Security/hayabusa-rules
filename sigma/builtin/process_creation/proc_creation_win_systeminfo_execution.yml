@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith: \systeminfo.exe
-        - OriginalFileName: sysinfo.exe
+        -   NewProcessName|endswith: \systeminfo.exe
+        -   OriginalFileName: sysinfo.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

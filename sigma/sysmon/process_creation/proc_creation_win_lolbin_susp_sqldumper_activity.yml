@@ -22,7 +22,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \sqldumper.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - '0x0110'
             - 0x01100:40
     condition: process_creation and selection

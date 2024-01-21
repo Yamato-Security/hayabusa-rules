@@ -17,18 +17,18 @@ detection:
         EventID: 4688
         Channel: Security
     selection_exec:
-          CommandLine|contains:
+        CommandLine|contains:
             - 'iex '
             - 'Invoke-Expression '
             - 'Invoke-Command '
             - 'icm '
     selection_read:
-          CommandLine|contains:
+        CommandLine|contains:
             - 'cat '
             - 'get-content '
             - 'type '
     selection_raw:
-          CommandLine|contains: ' -raw'
+        CommandLine|contains: ' -raw'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

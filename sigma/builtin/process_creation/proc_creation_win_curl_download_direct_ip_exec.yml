@@ -1,8 +1,8 @@
 title: File Download From IP URL Via Curl.EXE
 id: 9cc85849-3b02-4cb5-b371-3a1ff54f2218
 related:
-    - id: 5cb299fc-5fb1-4d07-b989-0644c68b6043
-      type: similar
+    -   id: 5cb299fc-5fb1-4d07-b989-0644c68b6043
+        type: similar
 status: experimental
 description: Detects file downloads directly from IP address URL using curl.exe
 references:
@@ -21,20 +21,19 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \curl.exe
-        - OriginalFileName: curl.exe
+        -   NewProcessName|endswith: \curl.exe
+        -   OriginalFileName: curl.exe
     selection_ip:
-          CommandLine|re: ://[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}
+        CommandLine|re: ://[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}
     selection_http:
-          CommandLine|contains: http
+        CommandLine|contains: http
     selection_flag:
-          CommandLine|contains:
-            - ' -O'  # covers the alias for --remote-name and --output
+        CommandLine|contains:
+            - ' -O'
             - --remote-name
             - --output
     filter_main_ext:
-        # Note: This filter exists to avoid duplication with 5cb299fc-5fb1-4d07-b989-0644c68b6043
-          CommandLine|endswith:
+        CommandLine|endswith:
             - .bat
             - .bat"
             - .dat

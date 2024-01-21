@@ -1,7 +1,8 @@
 title: HackTool - Certify Execution
 id: 762f2482-ff21-4970-8939-0aa317a886bb
 status: experimental
-description: Detects Certify a tool for Active Directory certificate abuse based on PE metadata characteristics and common command line arguments.
+description: Detects Certify a tool for Active Directory certificate abuse based on
+    PE metadata characteristics and common command line arguments.
 references:
     - https://github.com/GhostPack/Certify
 author: pH-T (Nextron Systems)
@@ -20,18 +21,18 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \Certify.exe
-        - OriginalFileName: Certify.exe
-        - Description|contains: Certify
+        -   Image|endswith: \Certify.exe
+        -   OriginalFileName: Certify.exe
+        -   Description|contains: Certify
     selection_cli_commands:
-          CommandLine|contains:
+        CommandLine|contains:
             - '.exe cas '
             - '.exe find '
             - '.exe pkiobjects '
             - '.exe request '
             - '.exe download '
     selection_cli_options:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' /vulnerable'
             - ' /template:'
             - ' /altname:'

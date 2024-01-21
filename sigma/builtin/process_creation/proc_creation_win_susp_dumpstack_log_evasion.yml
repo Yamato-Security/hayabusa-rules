@@ -17,9 +17,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \DumpStack.log
+        NewProcessName|endswith: \DumpStack.log
     selection_download:
-          CommandLine|contains: ' -o DumpStack.log'
+        CommandLine|contains: ' -o DumpStack.log'
     condition: process_creation and (1 of selection*)
 falsepositives:
     - Unknown

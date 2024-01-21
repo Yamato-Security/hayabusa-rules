@@ -21,7 +21,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \svchost.exe
             - \taskhost.exe
             - \lsm.exe
@@ -32,20 +32,20 @@ detection:
             - \wininit.exe
             - \winlogon.exe
     filter_sys:
-        - ParentProcessName|endswith:
-            - \SavService.exe
-            - \ngen.exe
-        - ParentProcessName|contains:
-            - \System32\
-            - \SysWOW64\
+        -   ParentProcessName|endswith:
+                - \SavService.exe
+                - \ngen.exe
+        -   ParentProcessName|contains:
+                - \System32\
+                - \SysWOW64\
     filter_msmpeng:
         ParentProcessName|contains:
             - \Windows Defender\
             - \Microsoft Security Client\
         ParentProcessName|endswith: \MsMpEng.exe
     filter_null:
-        - ParentProcessName:
-        - ParentProcessName: '-'
+        -   ParentProcessName: null
+        -   ParentProcessName: '-'
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:
     - Some security products seem to spawn these

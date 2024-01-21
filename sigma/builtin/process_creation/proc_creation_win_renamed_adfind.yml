@@ -1,7 +1,9 @@
 title: Renamed AdFind Execution
 id: df55196f-f105-44d3-a675-e9dfb6cc2f2b
 status: test
-description: Detects the use of a renamed Adfind.exe. AdFind continues to be seen across majority of breaches. It is used to domain trust discovery to plan out subsequent steps in the attack chain.
+description: Detects the use of a renamed Adfind.exe. AdFind continues to be seen
+    across majority of breaches. It is used to domain trust discovery to plan out
+    subsequent steps in the attack chain.
 references:
     - https://www.joeware.net/freetools/tools/adfind/
     - https://thedfirreport.com/2020/05/08/adfind-recon/
@@ -26,7 +28,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection_1:
-          CommandLine|contains:
+        CommandLine|contains:
             - domainlist
             - trustdmp
             - dcmodes
@@ -47,16 +49,16 @@ detection:
             - computers_active
             - computers_pwdnotreqd
     selection_2:
-        - Imphash:
-            - bca5675746d13a1f246e2da3c2217492
-            - 53e117a96057eaf19c41380d0e87f1c2
-        - Hashes|contains:
-            - IMPHASH=BCA5675746D13A1F246E2DA3C2217492
-            - IMPHASH=53E117A96057EAF19C41380D0E87F1C2
+        -   Imphash:
+                - bca5675746d13a1f246e2da3c2217492
+                - 53e117a96057eaf19c41380d0e87f1c2
+        -   Hashes|contains:
+                - IMPHASH=BCA5675746D13A1F246E2DA3C2217492
+                - IMPHASH=53E117A96057EAF19C41380D0E87F1C2
     selection_3:
         OriginalFileName: AdFind.exe
     filter:
-          NewProcessName|endswith: \AdFind.exe
+        NewProcessName|endswith: \AdFind.exe
     condition: process_creation and (1 of selection* and not filter)
 falsepositives:
     - Unknown

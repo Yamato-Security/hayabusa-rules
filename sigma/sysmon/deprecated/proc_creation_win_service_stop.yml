@@ -17,29 +17,30 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_sc_net_img:
-        - OriginalFileName:
-            - sc.exe
-            - net.exe
-            - net1.exe
-        - Image|endswith:
-            - \sc.exe
-            - \net.exe
-            - \net1.exe
+        -   OriginalFileName:
+                - sc.exe
+                - net.exe
+                - net1.exe
+        -   Image|endswith:
+                - \sc.exe
+                - \net.exe
+                - \net1.exe
     selection_sc_net_cli:
-          CommandLine|contains: ' stop '
+        CommandLine|contains: ' stop '
     selection_pwsh:
         Image|endswith:
             - \powershell.exe
             - \pwsh.exe
-          CommandLine|contains: 'Stop-Service '
+        CommandLine|contains: 'Stop-Service '
     filter:
-          CommandLine:
-            - sc  stop KSCWebConsoleMessageQueue    # kaspersky Security Center Web Console double space between sc and stop
-            - sc  stop LGHUBUpdaterService    # Logitech LGHUB Updater Service
-        User|contains: # covers many language settings
+        CommandLine:
+            - sc  stop KSCWebConsoleMessageQueue
+            - sc  stop LGHUBUpdaterService
+        User|contains:
             - AUTHORI
             - AUTORI
-    condition: process_creation and ((all of selection_sc_net* and not filter) or selection_pwsh)
+    condition: process_creation and ((all of selection_sc_net* and not filter) or
+        selection_pwsh)
 fields:
     - ComputerName
     - User

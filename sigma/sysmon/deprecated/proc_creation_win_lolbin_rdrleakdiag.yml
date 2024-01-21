@@ -21,9 +21,9 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection1:
         Image|endswith: \rdrleakdiag.exe
-          CommandLine|contains: /fullmemdmp
+        CommandLine|contains: /fullmemdmp
     selection2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - /fullmemdmp
             - ' /o '
             - ' /p '

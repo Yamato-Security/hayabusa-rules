@@ -1,10 +1,12 @@
 title: Potential Xor Encoded PowerShell Command
 id: 5b572dcf-254b-425c-a8c5-d9af6bea35a6
 related:
-    - id: cdf05894-89e7-4ead-b2b0-0a5f97a90f2f
-      type: similar
+    -   id: cdf05894-89e7-4ead-b2b0-0a5f97a90f2f
+        type: similar
 status: deprecated
-description: Detects usage of "xor" or "bxor" in combination of a "foreach" loop. This pattern is often found in encoded powershell code and commands as a way to avoid detection
+description: Detects usage of "xor" or "bxor" in combination of a "foreach" loop.
+    This pattern is often found in encoded powershell code and commands as a way to
+    avoid detection
 references:
     - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=65
 author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
@@ -23,14 +25,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith:
-            - \powershell.exe
-            - \pwsh.exe
-        - OriginalFileName:
-            - PowerShell.exe
-            - pwsh.dll
+        -   NewProcessName|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+        -   OriginalFileName:
+                - PowerShell.exe
+                - pwsh.dll
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ForEach
             - Xor
     condition: process_creation and (all of selection_*)

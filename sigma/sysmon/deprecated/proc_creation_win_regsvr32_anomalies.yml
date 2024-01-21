@@ -23,7 +23,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection1:
         Image|endswith: \regsvr32.exe
-          CommandLine|contains: \Temp\
+        CommandLine|contains: \Temp\
     selection2:
         Image|endswith: \regsvr32.exe
         ParentImage|endswith:
@@ -35,16 +35,16 @@ detection:
         ParentImage|endswith: \cmd.exe
     selection4a:
         Image|endswith: \regsvr32.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '/i:'
             - http
-          CommandLine|endswith: scrobj.dll
+        CommandLine|endswith: scrobj.dll
     selection4b:
         Image|endswith: \regsvr32.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '/i:'
             - ftp
-          CommandLine|endswith: scrobj.dll
+        CommandLine|endswith: scrobj.dll
     selection5:
         Image|endswith:
             - \cscript.exe
@@ -52,18 +52,18 @@ detection:
         ParentImage|endswith: \regsvr32.exe
     selection6:
         Image|endswith: \EXCEL.EXE
-          CommandLine|contains: '..\..\..\Windows\System32\regsvr32.exe '
+        CommandLine|contains: '..\..\..\Windows\System32\regsvr32.exe '
     selection7:
         ParentImage|endswith: \mshta.exe
         Image|endswith: \regsvr32.exe
     selection8:
         Image|endswith: \regsvr32.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - \AppData\Local
             - C:\Users\Public
-    selection9: # suspicious extensions https://twitter.com/Max_Mal_/status/1542461200797163522/photo/3
+    selection9:
         Image|endswith: \regsvr32.exe
-          CommandLine|endswith:
+        CommandLine|endswith:
             - .jpg
             - .jpeg
             - .png
@@ -73,14 +73,14 @@ detection:
             - .temp
             - .txt
     filter1:
-          CommandLine|contains:
+        CommandLine|contains:
             - \AppData\Local\Microsoft\Teams
             - \AppData\Local\WebEx\WebEx64\Meetings\atucfobj.dll
     filter2:
         ParentImage: C:\Program Files\Box\Box\FS\streem.exe
-          CommandLine|contains: \Program Files\Box\Box\Temp\
+        CommandLine|contains: \Program Files\Box\Box\Temp\
     filter_legitimate:
-          CommandLine|endswith: /s C:\Windows\System32\RpcProxy\RpcProxy.dll
+        CommandLine|endswith: /s C:\Windows\System32\RpcProxy\RpcProxy.dll
     condition: process_creation and (1 of selection* and not 1 of filter*)
 fields:
     - CommandLine

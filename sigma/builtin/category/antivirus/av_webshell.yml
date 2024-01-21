@@ -1,7 +1,10 @@
 title: Antivirus Web Shell Detection
 id: fdf135a2-9241-4f96-a114-bb404948f736
 status: test
-description: Detects a highly relevant Antivirus alert that reports a web shell. It's highly recommended to tune this rule to the specific strings used by your anti virus solution by downloading a big webshell repo from e.g. github and checking the matches.
+description: Detects a highly relevant Antivirus alert that reports a web shell. It's
+    highly recommended to tune this rule to the specific strings used by your anti
+    virus solution by downloading a big webshell repo from e.g. github and checking
+    the matches.
 references:
     - https://www.nextron-systems.com/?s=antivirus
     - https://github.com/tennc/webshell
@@ -25,7 +28,7 @@ logsource:
     service: windefend
 detection:
     antivirus:
-        EventID:      # https://learn.microsoft.com/en-us/microsoft-365/security/defender-endpoint/troubleshoot-microsoft-defender-antivirus IDs with existing 'Threat Name' or 'Path'
+        EventID:
             - 1006
             - 1007
             - 1008
@@ -42,60 +45,60 @@ detection:
             - 1116
         Channel: Microsoft-Windows-Windows Defender/Operational
     selection:
-        - ThreatName|startswith:
-            - PHP.
-            - JSP.
-            - ASP.
-            - Perl.
-            - VBS/Uxor     # looking for 'VBS/' would also find downloaders and droppers meant for desktops
-            - IIS/BackDoor
-            - JAVA/Backdoor
-            - Troj/ASP
-            - Troj/PHP
-            - Troj/JSP
-        - ThreatName|contains:
-            - Webshell
-            - Chopper
-            - SinoChoper
-            - ASPXSpy
-            - Aspdoor
-            - filebrowser
-            - PHP_
-            - JSP_
-            - ASP_     # looking for 'VBS_' would also find downloaders and droppers meant for desktops
-            - 'PHP:'
-            - 'JSP:'
-            - 'ASP:'
-            - 'Perl:'
-            - PHP/
-            - JSP/
-            - ASP/
-            - Perl/
-            - PHPShell
-            - Trojan.PHP
-            - Trojan.ASP
-            - Trojan.JSP
-            - Trojan.VBS
-            - PHP/Agent
-            - ASP/Agent
-            - JSP/Agent
-            - VBS/Agent
-            - Backdoor/PHP
-            - Backdoor/JSP
-            - Backdoor/ASP
-            - Backdoor/VBS
-            - Backdoor/Java
-            - PHP.Agent
-            - ASP.Agent
-            - JSP.Agent
-            - VBS.Agent
-            - Backdoor.PHP
-            - Backdoor.JSP
-            - Backdoor.ASP
-            - Backdoor.VBS
-            - Backdoor.Java
-            - PShlSpy
-            - C99shell
+        -   ThreatName|startswith:
+                - PHP.
+                - JSP.
+                - ASP.
+                - Perl.
+                - VBS/Uxor
+                - IIS/BackDoor
+                - JAVA/Backdoor
+                - Troj/ASP
+                - Troj/PHP
+                - Troj/JSP
+        -   ThreatName|contains:
+                - Webshell
+                - Chopper
+                - SinoChoper
+                - ASPXSpy
+                - Aspdoor
+                - filebrowser
+                - PHP_
+                - JSP_
+                - ASP_
+                - 'PHP:'
+                - 'JSP:'
+                - 'ASP:'
+                - 'Perl:'
+                - PHP/
+                - JSP/
+                - ASP/
+                - Perl/
+                - PHPShell
+                - Trojan.PHP
+                - Trojan.ASP
+                - Trojan.JSP
+                - Trojan.VBS
+                - PHP/Agent
+                - ASP/Agent
+                - JSP/Agent
+                - VBS/Agent
+                - Backdoor/PHP
+                - Backdoor/JSP
+                - Backdoor/ASP
+                - Backdoor/VBS
+                - Backdoor/Java
+                - PHP.Agent
+                - ASP.Agent
+                - JSP.Agent
+                - VBS.Agent
+                - Backdoor.PHP
+                - Backdoor.JSP
+                - Backdoor.ASP
+                - Backdoor.VBS
+                - Backdoor.Java
+                - PShlSpy
+                - C99shell
     condition: antivirus and selection
 falsepositives:
     - Unlikely

@@ -20,7 +20,7 @@ detection:
     selection:
         ParentProcessName|endswith: \ws_tomcatservice.exe
     filter_main_repadmin:
-          NewProcessName|endswith: \repadmin.exe
+        NewProcessName|endswith: \repadmin.exe
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

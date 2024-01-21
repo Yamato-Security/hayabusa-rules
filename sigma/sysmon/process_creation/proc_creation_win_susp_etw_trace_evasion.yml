@@ -1,7 +1,8 @@
 title: Disable of ETW Trace
 id: a238b5d0-ce2d-4414-a676-7a531b3d13d6
 status: test
-description: Detects a command that clears or disables any ETW trace log which could indicate a logging evasion.
+description: Detects a command that clears or disables any ETW trace log which could
+    indicate a logging evasion.
 references:
     - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil
     - https://abuse.io/lockergoga.txt
@@ -23,32 +24,32 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_clear_1:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - cl
             - /Trace
     selection_clear_2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - clear-log
             - /Trace
     selection_disable_1:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - sl
             - /e:false
     selection_disable_2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - set-log
             - /e:false
-    selection_disable_3:   # ETW provider removal from a trace session
-          CommandLine|contains|all:
+    selection_disable_3:
+        CommandLine|contains|all:
             - logman
             - update
             - trace
             - --p
             - -ets
-    selection_pwsh_remove:   # Autologger provider removal
-          CommandLine|contains: Remove-EtwTraceProvider
-    selection_pwsh_set:   # Provider “Enable” property modification
-          CommandLine|contains|all:
+    selection_pwsh_remove:
+        CommandLine|contains: Remove-EtwTraceProvider
+    selection_pwsh_set:
+        CommandLine|contains|all:
             - Set-EtwTraceProvider
             - '0x11'
     condition: process_creation and (1 of selection*)

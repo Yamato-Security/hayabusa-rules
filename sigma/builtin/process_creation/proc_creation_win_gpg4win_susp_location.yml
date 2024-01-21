@@ -1,7 +1,8 @@
 title: File Encryption/Decryption Via Gpg4win From Suspicious Locations
 id: e1e0b7d7-e10b-4ee4-ac49-a4bda05d320d
 status: experimental
-description: Detects usage of Gpg4win to encrypt/decrypt files located in potentially suspicious locations.
+description: Detects usage of Gpg4win to encrypt/decrypt files located in potentially
+    suspicious locations.
 references:
     - https://blogs.vmware.com/security/2022/11/batloader-the-evasive-downloader-malware.html
     - https://news.sophos.com/en-us/2022/01/19/zloader-installs-remote-access-backdoors-and-delivers-cobalt-strike/
@@ -18,15 +19,15 @@ detection:
         EventID: 4688
         Channel: Security
     selection_metadata:
-        - NewProcessName|endswith:
-            - \gpg.exe
-            - \gpg2.exe
-        - Product: GNU Privacy Guard (GnuPG)
-        - Description: GnuPG’s OpenPGP tool
+        -   NewProcessName|endswith:
+                - \gpg.exe
+                - \gpg2.exe
+        -   Product: GNU Privacy Guard (GnuPG)
+        -   Description: "GnuPG\u2019s OpenPGP tool"
     selection_cli:
-          CommandLine|contains: -passphrase
+        CommandLine|contains: -passphrase
     selection_paths:
-          CommandLine|contains:
+        CommandLine|contains:
             - :\PerfLogs\
             - :\Temp\
             - :\Users\Public\

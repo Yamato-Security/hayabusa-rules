@@ -1,7 +1,8 @@
 title: Query Usage To Exfil Data
 id: 53ef0cef-fa24-4f25-a34a-6c72dfa2e6e2
 status: test
-description: Detects usage of "query.exe" a system binary to exfil information such as "sessions" and "processes" for later use
+description: Detects usage of "query.exe" a system binary to exfil information such
+    as "sessions" and "processes" for later use
 references:
     - https://twitter.com/MichalKoczwara/status/1553634816016498688
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -17,10 +18,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - session >
             - process >
-          NewProcessName|endswith: :\Windows\System32\query.exe
+        NewProcessName|endswith: :\Windows\System32\query.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

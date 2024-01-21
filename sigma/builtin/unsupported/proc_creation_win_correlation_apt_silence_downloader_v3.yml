@@ -22,15 +22,16 @@ detection:
         EventID: 4688
         Channel: Security
     selection_recon:
-          CommandLine|contains: '>>'
-          CommandLine|endswith: temps.dat
-          NewProcessName|endswith:
+        CommandLine|contains: '>>'
+        CommandLine|endswith: temps.dat
+        NewProcessName|endswith:
             - \tasklist.exe
             - \qwinsta.exe
             - \ipconfig.exe
             - \hostname.exe
     selection_persistence:
-          CommandLine|contains: /C REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Run" /v "WinNetworkSecurity" /t REG_SZ /d
+        CommandLine|contains: /C REG ADD "HKCU\Software\Microsoft\Windows\CurrentVersion\Run"
+            /v "WinNetworkSecurity" /t REG_SZ /d
     condition: process_creation and (selection_recon | near selection_persistence)
 fields:
     - SubjectUserName

@@ -1,7 +1,8 @@
 title: Potential Persistence Via PowerShell User Profile Using Add-Content
 id: 05b3e303-faf0-4f4a-9b30-46cc13e69152
 status: test
-description: Detects calls to "Add-Content" cmdlet in order to modify the content of the user profile and potentially adding suspicious commands for persistence
+description: Detects calls to "Add-Content" cmdlet in order to modify the content
+    of the user profile and potentially adding suspicious commands for persistence
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.013/T1546.013.md
 author: frack113, Nasreddine Bencherchali (Nextron Systems)
@@ -25,17 +26,17 @@ detection:
         ScriptBlockText|contains: Add-Content $profile
     selection_options:
         ScriptBlockText|contains:
-            # Note: You can add more suspicious values
             - '-Value "IEX '
             - -Value "Invoke-Expression
             - -Value "Invoke-WebRequest
             - -Value "Start-Process
-            - "-Value 'IEX "
+            - '-Value ''IEX '
             - -Value 'Invoke-Expression
             - -Value 'Invoke-WebRequest
             - -Value 'Start-Process
     condition: ps_script and (all of selection_*)
 falsepositives:
-    - Legitimate administration and tuning scripts that aim to add functionality to a user PowerShell session
+    - Legitimate administration and tuning scripts that aim to add functionality to
+        a user PowerShell session
 level: medium
 ruletype: Sigma

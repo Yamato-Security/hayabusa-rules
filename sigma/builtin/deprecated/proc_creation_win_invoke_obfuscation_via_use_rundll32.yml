@@ -20,12 +20,12 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '&&'
             - rundll32
             - shell32.dll
             - shellexec_rundll
-          CommandLine|contains:
+        CommandLine|contains:
             - value
             - invoke
             - comspec

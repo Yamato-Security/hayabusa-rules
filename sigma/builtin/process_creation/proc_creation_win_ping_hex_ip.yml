@@ -20,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains: 0x
-          NewProcessName|endswith: \ping.exe
+        CommandLine|contains: 0x
+        NewProcessName|endswith: \ping.exe
     condition: process_creation and selection
 fields:
     - ParentCommandLine

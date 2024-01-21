@@ -1,7 +1,8 @@
 title: Suspicious Advpack Call Via Rundll32.EXE
 id: a1473adb-5338-4a20-b4c3-126763e2d3d3
 status: experimental
-description: Detects execution of "rundll32" calling "advpack.dll" with potential obfuscated ordinal calls in order to leverage the "RegisterOCX" function
+description: Detects execution of "rundll32" calling "advpack.dll" with potential
+    obfuscated ordinal calls in order to leverage the "RegisterOCX" function
 references:
     - https://twitter.com/Hexacorn/status/1224848930795552769
     - http://www.hexacorn.com/blog/2020/02/05/stay-positive-lolbins-not/
@@ -17,16 +18,16 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \rundll32.exe
-        - OriginalFileName: RUNDLL32.EXE
-        - CommandLine|contains: rundll32
+        -   NewProcessName|endswith: \rundll32.exe
+        -   OriginalFileName: RUNDLL32.EXE
+        -   CommandLine|contains: rundll32
     selection_cli_dll:
-          CommandLine|contains: advpack
+        CommandLine|contains: advpack
     selection_cli_ordinal:
-        - CommandLine|contains|all:
-            - '#+'
-            - '12'
-        - CommandLine|contains: '#-'
+        -   CommandLine|contains|all:
+                - '#+'
+                - '12'
+        -   CommandLine|contains: '#-'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unlikely

@@ -21,18 +21,18 @@ detection:
         EventID: 4688
         Channel: Security
     selection_cli:
-        - CommandLine|contains:
-            - Temp\wtask.exe /create
-            - '%windir:~-3,1%%PUBLIC:~-9,1%'
-            - '/tn "Security Script '
-            - '%windir:~-1,1%'
-        - CommandLine|contains|all:
-            - /E:vbscript
-            - C:\Users\
-            - .txt
-            - /F
+        -   CommandLine|contains:
+                - Temp\wtask.exe /create
+                - '%windir:~-3,1%%PUBLIC:~-9,1%'
+                - '/tn "Security Script '
+                - '%windir:~-1,1%'
+        -   CommandLine|contains|all:
+                - /E:vbscript
+                - C:\Users\
+                - .txt
+                - /F
     selection_img:
-          NewProcessName|endswith: Temp\winwsh.exe
+        NewProcessName|endswith: Temp\winwsh.exe
     condition: process_creation and (1 of selection_*)
 falsepositives:
     - Unlikely

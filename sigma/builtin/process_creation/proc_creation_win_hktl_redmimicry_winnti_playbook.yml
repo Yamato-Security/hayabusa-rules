@@ -1,7 +1,8 @@
 title: HackTool - RedMimicry Winnti Playbook Execution
 id: 95022b85-ff2a-49fa-939a-d7b8f56eeb9b
 status: test
-description: Detects actions caused by the RedMimicry Winnti playbook a automated breach emulations utility
+description: Detects actions caused by the RedMimicry Winnti playbook a automated
+    breach emulations utility
 references:
     - https://redmimicry.com/posts/redmimicry-winnti/
 author: Alexander Rausch
@@ -21,11 +22,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - gthread-3.6.dll
             - \Windows\Temp\tmp.bat
             - sigcmm-2.4.dll
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \rundll32.exe
             - \cmd.exe
     condition: process_creation and selection

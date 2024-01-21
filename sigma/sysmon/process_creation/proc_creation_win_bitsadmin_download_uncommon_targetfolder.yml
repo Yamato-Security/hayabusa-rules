@@ -25,15 +25,15 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \bitsadmin.exe
-        - OriginalFileName: bitsadmin.exe
+        -   Image|endswith: \bitsadmin.exe
+        -   OriginalFileName: bitsadmin.exe
     selection_flags:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' /transfer '
             - ' /create '
             - ' /addfile '
     selection_folder:
-          CommandLine|contains:
+        CommandLine|contains:
             - '%AppData%'
             - '%temp%'
             - '%tmp%'

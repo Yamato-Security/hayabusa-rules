@@ -1,7 +1,8 @@
 title: Suspicious Diantz Download and Compress Into a CAB File
 id: 185d7418-f250-42d0-b72e-0c8b70661e93
 status: test
-description: Download and compress a remote file and store it in a cab file on local machine.
+description: Download and compress a remote file and store it in a cab file on local
+    machine.
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/Diantz/
 author: frack113
@@ -19,7 +20,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - diantz.exe
             - ' \\\\'
             - .cab

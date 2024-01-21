@@ -19,14 +19,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-          NewProcessName|endswith: \SysmonEOP.exe
+        NewProcessName|endswith: \SysmonEOP.exe
     selection_hash:
-        - Hashes:
-            - IMPHASH=22F4089EB8ABA31E1BB162C6D9BF72E5
-            - IMPHASH=5123FA4C4384D431CD0D893EEB49BBEC
-        - Imphash:
-            - 22f4089eb8aba31e1bb162c6d9bf72e5
-            - 5123fa4c4384d431cd0d893eeb49bbec
+        -   Hashes:
+                - IMPHASH=22F4089EB8ABA31E1BB162C6D9BF72E5
+                - IMPHASH=5123FA4C4384D431CD0D893EEB49BBEC
+        -   Imphash:
+                - 22f4089eb8aba31e1bb162c6d9bf72e5
+                - 5123fa4c4384d431cd0d893eeb49bbec
     condition: process_creation and (1 of selection_*)
 falsepositives:
     - Unlikely

@@ -28,20 +28,20 @@ detection:
             - \wininit.exe
             - \spoolsv.exe
             - \searchindexer.exe
-        User|contains: # covers many language settings
+        User|contains:
             - AUTHORI
             - AUTORI
     selection_img:
-        - Image|endswith:
-            - \powershell.exe
-            - \pwsh.exe
-            - \cmd.exe
-        - OriginalFileName:
-            - PowerShell.EXE
-            - pwsh.dll
-            - Cmd.Exe
+        -   Image|endswith:
+                - \powershell.exe
+                - \pwsh.exe
+                - \cmd.exe
+        -   OriginalFileName:
+                - PowerShell.EXE
+                - pwsh.dll
+                - Cmd.Exe
     filter:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' route '
             - ' ADD '
     condition: process_creation and (all of selection_* and not filter)

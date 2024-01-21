@@ -19,8 +19,8 @@ detection:
         Channel: Microsoft-Windows-CodeIntegrity/Operational
     selection:
         EventID:
-            - 3082 # Code Integrity determined kernel module %2 that did not meet the WHQL requirements is loaded into the system. However, due to code integrity auditing policy, the image was allowed to load
-            - 3083 # Code Integrity determined kernel module %2 that did not meet the WHQL requirements is loaded into the system. Check with the publisher to see if a WHQL compliant kernel module is available
+            - 3082
+            - 3083
     filter_optional_vmware:
         FileNameBuffer:
             - system32\drivers\vsock.sys

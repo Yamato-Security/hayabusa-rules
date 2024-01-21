@@ -1,7 +1,9 @@
 title: Format.com FileSystem LOLBIN
 id: 9fb6b26e-7f9e-4517-a48b-8cac4a1b6c60
 status: test
-description: Detects the execution of format.com with a suspicious filesystem selection that could indicate a defense evasion activity in which format.com is used to load malicious DLL files or other programs
+description: Detects the execution of format.com with a suspicious filesystem selection
+    that could indicate a defense evasion activity in which format.com is used to
+    load malicious DLL files or other programs
 references:
     - https://twitter.com/0gtweet/status/1477925112561209344
     - https://twitter.com/wdormann/status/1478011052130459653?s=20
@@ -19,9 +21,9 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \format.com
-          CommandLine|contains: '/fs:'
+        CommandLine|contains: '/fs:'
     filter:
-          CommandLine|contains:
+        CommandLine|contains:
             - /fs:FAT
             - /fs:exFAT
             - /fs:NTFS

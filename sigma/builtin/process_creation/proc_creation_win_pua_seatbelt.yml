@@ -1,7 +1,8 @@
 title: PUA - Seatbelt Execution
 id: 38646daa-e78f-4ace-9de0-55547b2d30da
 status: test
-description: Detects the execution of the PUA/Recon tool Seatbelt via PE information of command line parameters
+description: Detects the execution of the PUA/Recon tool Seatbelt via PE information
+    of command line parameters
 references:
     - https://github.com/GhostPack/Seatbelt
     - https://www.bluetangle.dev/2022/08/fastening-seatbelt-on-threat-hunting.html
@@ -21,29 +22,24 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \Seatbelt.exe
-        - OriginalFileName: Seatbelt.exe
-        - Description: Seatbelt
-        - CommandLine|contains:
-              # This just a list of the commands that will produce the least amount of FP in "theory"
-              # Comment out/in as needed in your environment
-              # To get the full list of commands see reference section
-            - ' DpapiMasterKeys'
-            - ' InterestingProcesses'
-            - ' InterestingFiles'
-            - ' CertificateThumbprints'
-            - ' ChromiumBookmarks'
-            - ' ChromiumHistory'
-            - ' ChromiumPresence'
-            - ' CloudCredentials'
-            - ' CredEnum'
-            - ' CredGuard'
-            - ' FirefoxHistory'
-            - ' ProcessCreationEvents'
-              # - ' RDPSessions'
-              # - ' PowerShellHistory'
+        -   NewProcessName|endswith: \Seatbelt.exe
+        -   OriginalFileName: Seatbelt.exe
+        -   Description: Seatbelt
+        -   CommandLine|contains:
+                - ' DpapiMasterKeys'
+                - ' InterestingProcesses'
+                - ' InterestingFiles'
+                - ' CertificateThumbprints'
+                - ' ChromiumBookmarks'
+                - ' ChromiumHistory'
+                - ' ChromiumPresence'
+                - ' CloudCredentials'
+                - ' CredEnum'
+                - ' CredGuard'
+                - ' FirefoxHistory'
+                - ' ProcessCreationEvents'
     selection_group_list:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -group=misc'
             - ' -group=remote'
             - ' -group=chromium'
@@ -52,7 +48,7 @@ detection:
             - ' -group=user'
             - ' -group=all'
     selection_group_output:
-          CommandLine|contains: ' -outputfile='
+        CommandLine|contains: ' -outputfile='
     condition: process_creation and (selection_img or all of selection_group_*)
 falsepositives:
     - Unlikely

@@ -18,7 +18,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \regedit.exe
+        NewProcessName|endswith: \regedit.exe
         ParentProcessName|endswith:
             - \TrustedInstaller.exe
             - \ProcessHacker.exe

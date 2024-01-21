@@ -1,7 +1,8 @@
 title: RClone Execution
 id: a0d63692-a531-4912-ad39-4393325b2a9c
 status: deprecated
-description: Detects execution of RClone utility for exfiltration as used by various ransomwares strains like REvil, Conti, FiveHands, etc
+description: Detects execution of RClone utility for exfiltration as used by various
+    ransomwares strains like REvil, Conti, FiveHands, etc
 tags:
     - attack.exfiltration
     - attack.t1567.002
@@ -31,14 +32,14 @@ detection:
     selection:
         Description: Rsync for cloud storage
     selection2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '--config '
             - '--no-check-certificate '
             - ' copy '
     selection3:
         Image|endswith:
             - \rclone.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - mega
             - pcloud
             - ftp

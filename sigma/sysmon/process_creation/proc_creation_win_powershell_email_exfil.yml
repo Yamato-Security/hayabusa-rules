@@ -21,7 +21,7 @@ detection:
         Image|endswith:
             - \powershell.exe
             - \pwsh.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - Add-PSSnapin
             - Get-Recipient
             - -ExpandProperty

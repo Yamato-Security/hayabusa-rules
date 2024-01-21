@@ -20,13 +20,13 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_download:
-          CommandLine|contains:
+        CommandLine|contains:
             - .DownloadString(
             - .DownloadFile(
             - 'Invoke-WebRequest '
             - 'iwr '
     selection_iex:
-          CommandLine|contains:
+        CommandLine|contains:
             - ;iex $
             - '| IEX'
             - '|IEX '
@@ -39,6 +39,7 @@ detection:
             - Invoke-Expression
     condition: process_creation and (all of selection_*)
 falsepositives:
-    - Some PowerShell installers were seen using similar combinations. Apply filters accordingly
+    - Some PowerShell installers were seen using similar combinations. Apply filters
+        accordingly
 level: high
 ruletype: Sigma

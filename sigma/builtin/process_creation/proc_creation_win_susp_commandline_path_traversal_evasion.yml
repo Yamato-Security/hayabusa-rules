@@ -1,7 +1,8 @@
 title: Potential Command Line Path Traversal Evasion Attempt
 id: 1327381e-6ab0-4f38-b583-4c1b8346a56b
 status: experimental
-description: Detects potential evasion or obfuscation attempts using bogus path traversal via the commandline
+description: Detects potential evasion or obfuscation attempts using bogus path traversal
+    via the commandline
 references:
     - https://twitter.com/hexacorn/status/1448037865435320323
     - https://twitter.com/Gal_B1t/status/1062971006078345217
@@ -19,17 +20,17 @@ detection:
         EventID: 4688
         Channel: Security
     selection_1:
-          CommandLine|contains:
+        CommandLine|contains:
             - \..\Windows\
             - \..\System32\
             - \..\..\
-          NewProcessName|contains: \Windows\
+        NewProcessName|contains: \Windows\
     selection_2:
-          CommandLine|contains: .exe\..\
+        CommandLine|contains: .exe\..\
     filter_optional_google_drive:
-          CommandLine|contains: \Google\Drive\googledrivesync.exe\..\
+        CommandLine|contains: \Google\Drive\googledrivesync.exe\..\
     filter_optional_citrix:
-          CommandLine|contains: \Citrix\Virtual Smart Card\Citrix.Authentication.VirtualSmartcard.Launcher.exe\..\
+        CommandLine|contains: \Citrix\Virtual Smart Card\Citrix.Authentication.VirtualSmartcard.Launcher.exe\..\
     condition: process_creation and (1 of selection_* and not 1 of filter_optional_*)
 falsepositives:
     - Google Drive

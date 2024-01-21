@@ -1,11 +1,14 @@
 title: LOL-Binary Copied From System Directory
 id: f5d19838-41b5-476c-98d8-ba8af4929ee2
 related:
-    - id: fff9d2b7-e11c-4a69-93d3-40ef66189767
-      type: derived
+    -   id: fff9d2b7-e11c-4a69-93d3-40ef66189767
+        type: derived
 status: experimental
-description: |
-    Detects a suspicious copy operation that tries to copy a known LOLBIN from system (System32, SysWOW64, WinSxS) directories to another on disk in order to bypass detections based on locations.
+description: 'Detects a suspicious copy operation that tries to copy a known LOLBIN
+    from system (System32, SysWOW64, WinSxS) directories to another on disk in order
+    to bypass detections based on locations.
+
+    '
 references:
     - https://www.hybrid-analysis.com/sample/8da5b75b6380a41eee3a399c43dfe0d99eeefaa1fd21027a07b1ecaa4cd96fdd?environmentId=120
     - https://web.archive.org/web/20180331144337/https://www.fireeye.com/blog/threat-research/2018/03/sanny-malware-delivery-method-updated-in-recently-observed-attacks.html
@@ -25,31 +28,30 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_tools_cmd:
         Image|endswith: \cmd.exe
-          CommandLine|contains: 'copy '
+        CommandLine|contains: 'copy '
     selection_tools_pwsh:
         Image|endswith:
             - \powershell.exe
             - \pwsh.exe
-          CommandLine|contains:
+        CommandLine|contains:
             - copy-item
             - ' copy '
             - 'cpi '
             - ' cp '
     selection_tools_other:
-        - Image|endswith:
-            - \robocopy.exe
-            - \xcopy.exe
-        - OriginalFileName:
-            - robocopy.exe
-            - XCOPY.EXE
+        -   Image|endswith:
+                - \robocopy.exe
+                - \xcopy.exe
+        -   OriginalFileName:
+                - robocopy.exe
+                - XCOPY.EXE
     selection_target_path:
-          CommandLine|contains:
+        CommandLine|contains:
             - \System32
             - \SysWOW64
             - \WinSxS
     selection_target_lolbin:
-          CommandLine|contains:
-            # Note: add more binaries to increase coverage
+        CommandLine|contains:
             - \bitsadmin.exe
             - \calc.exe
             - \certutil.exe

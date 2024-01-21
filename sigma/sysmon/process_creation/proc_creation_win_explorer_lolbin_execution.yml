@@ -21,7 +21,7 @@ detection:
     selection:
         Image|endswith: \explorer.exe
         ParentImage|endswith: \cmd.exe
-          CommandLine|contains: explorer.exe
+        CommandLine|contains: explorer.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate explorer.exe run from cmd.exe

@@ -20,10 +20,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - OriginalFileName: HH.exe
-        - NewProcessName|endswith: \hh.exe
+        -   OriginalFileName: HH.exe
+        -   NewProcessName|endswith: \hh.exe
     selection_cli:
-          CommandLine|contains: .chm
+        CommandLine|contains: .chm
     condition: process_creation and (all of selection_*)
 falsepositives:
     - False positives are expected with legitimate ".CHM"

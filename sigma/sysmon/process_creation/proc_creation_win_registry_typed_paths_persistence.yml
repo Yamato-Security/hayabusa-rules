@@ -1,7 +1,8 @@
 title: Persistence Via TypedPaths - CommandLine
 id: ec88289a-7e1a-4cc3-8d18-bd1f60e4b9ba
 status: test
-description: Detects modification addition to the 'TypedPaths' key in the user or admin registry via the commandline. Which might indicate persistence attempt
+description: Detects modification addition to the 'TypedPaths' key in the user or
+    admin registry via the commandline. Which might indicate persistence attempt
 references:
     - https://twitter.com/dez_/status/1560101453150257154
     - https://forensafe.com/blogs/typedpaths.html
@@ -18,7 +19,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains: \Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
+        CommandLine|contains: \Software\Microsoft\Windows\CurrentVersion\Explorer\TypedPaths
     condition: process_creation and selection
 falsepositives:
     - Unknown

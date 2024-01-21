@@ -1,7 +1,8 @@
 title: Winnti Pipemon Characteristics
 id: 73d70463-75c9-4258-92c6-17500fe972f2
 status: stable
-description: Detects specific process characteristics of Winnti Pipemon malware reported by ESET
+description: Detects specific process characteristics of Winnti Pipemon malware reported
+    by ESET
 references:
     - https://www.welivesecurity.com/2020/05/21/no-game-over-winnti-group/
 author: Florian Roth (Nextron Systems), oscd.community
@@ -20,10 +21,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_1:
-          CommandLine|contains: setup0.exe -p
+        CommandLine|contains: setup0.exe -p
     selection_2:
-          CommandLine|contains: setup.exe
-          CommandLine|endswith:
+        CommandLine|contains: setup.exe
+        CommandLine|endswith:
             - -x:0
             - -x:1
             - -x:2

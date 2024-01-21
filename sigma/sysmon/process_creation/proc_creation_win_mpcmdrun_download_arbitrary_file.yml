@@ -22,12 +22,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - OriginalFileName: MpCmdRun.exe
-        - Image|endswith: \MpCmdRun.exe
-        - CommandLine|contains: MpCmdRun.exe
-        - Description: Microsoft Malware Protection Command Line Utility
+        -   OriginalFileName: MpCmdRun.exe
+        -   Image|endswith: \MpCmdRun.exe
+        -   CommandLine|contains: MpCmdRun.exe
+        -   Description: Microsoft Malware Protection Command Line Utility
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - DownloadFile
             - url
     condition: process_creation and (all of selection_*)

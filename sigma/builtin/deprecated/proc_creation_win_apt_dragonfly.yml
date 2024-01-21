@@ -22,7 +22,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \crackmapexec.exe
+        NewProcessName|endswith: \crackmapexec.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

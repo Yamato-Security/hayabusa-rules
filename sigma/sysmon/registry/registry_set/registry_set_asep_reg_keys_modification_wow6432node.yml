@@ -1,16 +1,17 @@
 title: Wow6432Node CurrentVersion Autorun Keys Modification
 id: b29aed60-ebd1-442b-9cb5-16a1d0324adb
 related:
-    - id: 17f878b8-9968-4578-b814-c4217fc5768c
-      type: obsoletes
+    -   id: 17f878b8-9968-4578-b814-c4217fc5768c
+        type: obsoletes
 status: experimental
 description: Detects modification of autostart extensibility point (ASEP) in registry.
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
     - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
-    - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d # a list with registry keys
+    - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
     - https://oddvar.moe/2018/03/21/persistence-using-runonceex-hidden-from-autoruns-exe/
-author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin, oscd.community, Tim Shelton, frack113 (split)
+author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
+    oscd.community, Tim Shelton, frack113 (split)
 date: 2019/10/25
 modified: 2023/08/17
 tags:
@@ -54,12 +55,12 @@ detection:
             - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
         TargetObject|contains: \Explorer\Browser Helper Objects\{31D09BA0-12F5-4CCE-BE8A-2923E76605DA}\
     filter_dropbox:
-        - Details|endswith: -A251-47B7-93E1-CDD82E34AF8B}
-        - Details: grpconv -o
-        - Details|contains|all:
-            - C:\Program Files
-            - \Dropbox\Client\Dropbox.exe
-            - ' /systemstartup'
+        -   Details|endswith: -A251-47B7-93E1-CDD82E34AF8B}
+        -   Details: grpconv -o
+        -   Details|contains|all:
+                - C:\Program Files
+                - \Dropbox\Client\Dropbox.exe
+                - ' /systemstartup'
     filter_evernote:
         TargetObject|endswith: \Explorer\Browser Helper Objects\{92EF2EAD-A7CE-4424-B0DB-499CF856608E}\NoExplorer
     filter_dotnet:
@@ -85,24 +86,25 @@ detection:
             - C:\Windows\Temp\
         Image|contains:
             - \winsdksetup.exe
-            - \windowsdesktop-runtime-    # C:\WINDOWS\Temp\{751E2E78-46DC-4376-9205-99219CDC34AE}\.be\windowsdesktop-runtime-6.0.12-win-x86.exe
-            - \AspNetCoreSharedFrameworkBundle-    # "C:\ProgramData\Package Cache\{b52191c1-a9c0-4b34-9a4e-930c2dd8a540}\AspNetCoreSharedFrameworkBundle-x86.exe" /burn.runonce
+            - \windowsdesktop-runtime-
+            - \AspNetCoreSharedFrameworkBundle-
         Details|endswith: ' /burn.runonce'
     filter_uninstallers:
-        # This image path is linked with different uninstallers when running as admin unfortunately
         Image|startswith: C:\Windows\Installer\MSI
         TargetObject|contains: \Explorer\Browser Helper Objects
     filter_msiexec:
         Image: C:\WINDOWS\system32\msiexec.exe
         TargetObject|contains: \SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run\
-    condition: registry_set and (all of selection_wow_current_version_* and not 1 of filter_*)
+    condition: registry_set and (all of selection_wow_current_version_* and not 1
+        of filter_*)
 fields:
     - SecurityID
     - ObjectName
     - OldValueType
     - NewValueType
 falsepositives:
-    - Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason
+    - Legitimate software automatically (mostly, during installation) sets up autorun
+        keys for legitimate reason
     - Legitimate administrator sets up autorun keys for legitimate reason
 level: medium
 ruletype: Sigma

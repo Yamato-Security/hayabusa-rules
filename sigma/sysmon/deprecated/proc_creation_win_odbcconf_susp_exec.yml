@@ -22,10 +22,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_1_img:
-        - Image|endswith: \odbcconf.exe
-        - OriginalFileName: odbcconf.exe
+        -   Image|endswith: \odbcconf.exe
+        -   OriginalFileName: odbcconf.exe
     selection_1_cli:
-          CommandLine|contains:
+        CommandLine|contains:
             - -a
             - -f
             - /a
@@ -34,8 +34,8 @@ detection:
     selection_2_parent:
         ParentImage|endswith: \odbcconf.exe
     selection_2_img:
-        - Image|endswith: \rundll32.exe
-        - OriginalFileName: RUNDLL32.EXE
+        -   Image|endswith: \rundll32.exe
+        -   OriginalFileName: RUNDLL32.EXE
     condition: process_creation and (all of selection_1_* or all of selection_2_*)
 falsepositives:
     - Legitimate use of odbcconf.exe by legitimate user

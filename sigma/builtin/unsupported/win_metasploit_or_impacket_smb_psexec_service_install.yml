@@ -1,6 +1,7 @@
 title: Metasploit Or Impacket Service Installation Via SMB PsExec
 id: 1a17ce75-ff0d-4f02-9709-2b7bb5618cf0
-description: Detects usage of Metasploit SMB PsExec (exploit/windows/smb/psexec) and Impacket psexec.py by triggering on specific service installation
+description: Detects usage of Metasploit SMB PsExec (exploit/windows/smb/psexec) and
+    Impacket psexec.py by triggering on specific service installation
 author: Bartlomiej Czyz, Relativity
 date: 2021/01/21
 modified: 2022/03/21
@@ -24,7 +25,7 @@ detection:
     selection_1:
         ImagePath|re: ^%systemroot%\\[a-zA-Z]{8}\.exe$
         ServiceName|re: (^[a-zA-Z]{4}$)|(^[a-zA-Z]{8}$)|(^[a-zA-Z]{16}$)
-        StartType: '3'  # on-demand start, see https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4697
+        StartType: '3'
         ServiceType: '0x10'
     filter:
         ServiceName: PSEXESVC
@@ -36,7 +37,8 @@ fields:
     - ServiceName
     - ServiceFileName
 falsepositives:
-    - Possible, different agents with a 8 character binary and a 4, 8 or 16 character service name
+    - Possible, different agents with a 8 character binary and a 4, 8 or 16 character
+        service name
 level: high
 status: unsupported
 ruletype: Sigma

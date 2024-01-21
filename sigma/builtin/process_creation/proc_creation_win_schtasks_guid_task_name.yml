@@ -18,19 +18,17 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-          CommandLine|contains: '/Create '
-          NewProcessName|endswith: \schtasks.exe
+        CommandLine|contains: '/Create '
+        NewProcessName|endswith: \schtasks.exe
     selection_tn:
-          CommandLine|contains:
-            # Can start with single or double quote
+        CommandLine|contains:
             - /TN "{
             - /TN '{
             - /TN {
     selection_end:
-          CommandLine|contains:
-            # Ending of the name to avoid possible FP in the rest of the commandline
+        CommandLine|contains:
             - '}"'
-            - "}'"
+            - '}'''
             - '} '
     condition: process_creation and (all of selection_*)
 falsepositives:

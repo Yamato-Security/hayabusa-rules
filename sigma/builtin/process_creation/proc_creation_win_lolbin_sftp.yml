@@ -1,7 +1,8 @@
 title: Use Of The SFTP.EXE Binary As A LOLBIN
 id: a85ffc3a-e8fd-4040-93bf-78aff284d801
 status: test
-description: Detects the usage of the "sftp.exe" binary as a LOLBIN by abusing the "-D" flag
+description: Detects the usage of the "sftp.exe" binary as a LOLBIN by abusing the
+    "-D" flag
 references:
     - https://github.com/LOLBAS-Project/LOLBAS/pull/264
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -18,13 +19,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
-            # Since "-D" is a valid flag for other usage we assume the user is going to enter a path
-            # Either a full one like "C:\Windows\System32\calc.exe" or a relative one "..\..\..\Windows\System32\calc.exe"
-            # In my testing you can't execute direct binaries by their name via this method (if you found a way please update the rule)
+        CommandLine|contains:
             - ' -D ..'
             - ' -D C:\'
-          NewProcessName|endswith: \sftp.exe
+        NewProcessName|endswith: \sftp.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

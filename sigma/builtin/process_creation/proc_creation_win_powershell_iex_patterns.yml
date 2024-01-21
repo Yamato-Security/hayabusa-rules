@@ -18,7 +18,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection_combined_1:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' | iex;'
             - ' | iex '
             - ' | iex}'
@@ -26,15 +26,15 @@ detection:
             - ' | IEX -Error'
             - ' | IEX (new'
             - ');IEX '
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \powershell.exe
             - \pwsh.exe
     selection_combined_2:
-          CommandLine|contains:
+        CommandLine|contains:
             - ::FromBase64String
             - '.GetString([System.Convert]::'
     selection_standalone:
-          CommandLine|contains:
+        CommandLine|contains:
             - )|iex;$
             - );iex($
             - );iex $

@@ -21,7 +21,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \register-cimprovider.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - -path
             - dll
     condition: process_creation and selection

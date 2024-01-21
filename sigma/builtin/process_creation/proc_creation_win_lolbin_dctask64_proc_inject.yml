@@ -20,9 +20,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \dctask64.exe
+        NewProcessName|endswith: \dctask64.exe
     filter:
-          CommandLine|contains: DesktopCentral_Agent\agent
+        CommandLine|contains: DesktopCentral_Agent\agent
     condition: process_creation and (selection and not filter)
 fields:
     - ParentProcessName

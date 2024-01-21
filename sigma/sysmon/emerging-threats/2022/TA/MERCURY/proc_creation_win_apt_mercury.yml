@@ -21,9 +21,9 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_base:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - -exec bypass -w 1 -enc
-            - UwB0AGEAcgB0AC0ASgBvAGIAIAAtAFMAYwByAGkAcAB0AEIAbABvAGMAawAgAHsAKABzAGEAcABzACAAKAAiAHAA    # Start-Job -ScriptBlock
+            - UwB0AGEAcgB0AC0ASgBvAGIAIAAtAFMAYwByAGkAcAB0AEIAbABvAGMAawAgAHsAKABzAGEAcABzACAAKAAiAHAA
     condition: process_creation and (all of selection*)
 falsepositives:
     - Unknown

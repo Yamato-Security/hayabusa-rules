@@ -23,7 +23,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Description: Command-line SSH, Telnet, and Rlogin client
-          CommandLine|contains: ' -R '
+        CommandLine|contains: ' -R '
     condition: process_creation and selection
 falsepositives:
     - Administrative activity using a remote port forwarding to a local port

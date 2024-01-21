@@ -20,7 +20,7 @@ detection:
         Image|endswith: \tpmvscmgr.exe
         OriginalFileName: TpmVscMgr.exe
     selection_cli:
-          CommandLine|contains: create
+        CommandLine|contains: create
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate usage by an administrator

@@ -26,7 +26,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine:
+        CommandLine:
             - net use \\\\%DomainController%\C$ "P@ssw0rd" *
             - dir c:\\*.doc* /s
             - dir %TEMP%\\*.exe

@@ -1,7 +1,8 @@
 title: Renamed Visual Studio Code Tunnel Execution
 id: 2cf29f11-e356-4f61-98c0-1bdb9393d6da
 status: experimental
-description: Detects renamed Visual Studio Code tunnel execution. Attackers can abuse this functionality to establish a C2 channel
+description: Detects renamed Visual Studio Code tunnel execution. Attackers can abuse
+    this functionality to establish a C2 channel
 references:
     - https://ipfyx.fr/post/visual-studio-code-tunnel/
     - https://badoption.eu/blog/2023/01/31/code_c2.html
@@ -19,35 +20,36 @@ detection:
         EventID: 4688
         Channel: Security
     selection_image_only_tunnel:
-        OriginalFileName:
-          CommandLine|endswith: .exe tunnel
+        OriginalFileName: null
+        CommandLine|endswith: .exe tunnel
     selection_image_tunnel_args:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - .exe tunnel
             - '--name '
             - --accept-server-license-terms
     selection_image_tunnel_service:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - 'tunnel '
             - service
             - internal-run
             - tunnel-service.log
     selection_parent_tunnel:
         ParentCommandLine|endswith: ' tunnel'
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '/d /c '
             - \servers\Stable-
             - code-server.cmd
-          NewProcessName|endswith: \cmd.exe
+        NewProcessName|endswith: \cmd.exe
     filter_main_parent_code:
         ParentProcessName|endswith:
             - \code-tunnel.exe
             - \code.exe
     filter_main_image_code:
-          NewProcessName|endswith:
+        NewProcessName|endswith:
             - \code-tunnel.exe
             - \code.exe
-    condition: process_creation and ((1 of selection_image_* and not 1 of filter_main_image_*) or (1 of selection_parent_* and not 1 of filter_main_parent_*))
+    condition: process_creation and ((1 of selection_image_* and not 1 of filter_main_image_*)
+        or (1 of selection_parent_* and not 1 of filter_main_parent_*))
 falsepositives:
     - Unknown
 level: high

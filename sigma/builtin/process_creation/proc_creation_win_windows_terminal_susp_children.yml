@@ -1,7 +1,8 @@
 title: Suspicious WindowsTerminal Child Processes
 id: 8de89e52-f6e1-4b5b-afd1-41ecfa300d48
 status: test
-description: Detects suspicious children spawned via the Windows Terminal application which could be a sign of persistence via WindowsTerminal (see references section)
+description: Detects suspicious children spawned via the Windows Terminal application
+    which could be a sign of persistence via WindowsTerminal (see references section)
 references:
     - https://persistence-info.github.io/Data/windowsterminalprofile.html
     - https://twitter.com/nas_bench/status/1550836225652686848
@@ -23,43 +24,40 @@ detection:
             - \WindowsTerminal.exe
             - \wt.exe
     selection_susp:
-        - NewProcessName|endswith:
-              # Add more LOLBINS
-            - \rundll32.exe
-            - \regsvr32.exe
-            - \certutil.exe
-            - \cscript.exe
-            - \wscript.exe
-            - \csc.exe
-        - NewProcessName|contains:
-              # Add more suspicious paths
-            - C:\Users\Public\
-            - \Downloads\
-            - \Desktop\
-            - \AppData\Local\Temp\
-            - \Windows\TEMP\
-        - CommandLine|contains:
-              # Add more suspicious commandline
-            - ' iex '
-            - ' icm'
-            - Invoke-
-            - 'Import-Module '
-            - 'ipmo '
-            - DownloadString(
-            - ' /c '
-            - ' /k '
-            - ' /r '
+        -   NewProcessName|endswith:
+                - \rundll32.exe
+                - \regsvr32.exe
+                - \certutil.exe
+                - \cscript.exe
+                - \wscript.exe
+                - \csc.exe
+        -   NewProcessName|contains:
+                - C:\Users\Public\
+                - \Downloads\
+                - \Desktop\
+                - \AppData\Local\Temp\
+                - \Windows\TEMP\
+        -   CommandLine|contains:
+                - ' iex '
+                - ' icm'
+                - Invoke-
+                - 'Import-Module '
+                - 'ipmo '
+                - DownloadString(
+                - ' /c '
+                - ' /k '
+                - ' /r '
     filter_builtin_visual_studio_shell:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - Import-Module
             - Microsoft.VisualStudio.DevShell.dll
             - Enter-VsDevShell
     filter_open_settings:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - \AppData\Local\Packages\Microsoft.WindowsTerminal_
             - \LocalState\settings.json
     filter_vsdevcmd:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - C:\Program Files\Microsoft Visual Studio\
             - \Common7\Tools\VsDevCmd.bat
     condition: process_creation and (all of selection_* and not 1 of filter_*)

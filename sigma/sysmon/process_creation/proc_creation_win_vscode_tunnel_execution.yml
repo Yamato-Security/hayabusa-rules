@@ -1,7 +1,8 @@
 title: Visual Studio Code Tunnel Execution
 id: 90d6bd71-dffb-4989-8d86-a827fedd6624
 status: experimental
-description: Detects Visual Studio Code tunnel execution. Attackers can abuse this functionality to establish a C2 channel
+description: Detects Visual Studio Code tunnel execution. Attackers can abuse this
+    functionality to establish a C2 channel
 references:
     - https://ipfyx.fr/post/visual-studio-code-tunnel/
     - https://badoption.eu/blog/2023/01/31/code_c2.html
@@ -20,17 +21,17 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_only_tunnel:
-        OriginalFileName:
-          CommandLine|endswith: .exe tunnel
+        OriginalFileName: null
+        CommandLine|endswith: .exe tunnel
     selection_tunnel_args:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - .exe tunnel
             - '--name '
             - --accept-server-license-terms
     selection_parent_tunnel:
         ParentCommandLine|endswith: ' tunnel'
         Image|endswith: \cmd.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - '/d /c '
             - \servers\Stable-
             - code-server.cmd

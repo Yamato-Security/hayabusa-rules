@@ -1,7 +1,8 @@
 title: KDC RC4-HMAC Downgrade CVE-2022-37966
 id: e6f81941-b1cd-4766-87db-9fc156f658ee
 status: test
-description: Detects the exploitation of a security bypass and elevation of privilege vulnerability with Authentication Negotiation by using weak RC4-HMAC negotiation
+description: Detects the exploitation of a security bypass and elevation of privilege
+    vulnerability with Authentication Negotiation by using weak RC4-HMAC negotiation
 references:
     - https://support.microsoft.com/en-us/topic/kb5021131-how-to-manage-the-kerberos-protocol-changes-related-to-cve-2022-37966-fd837ac3-cdec-4e76-a6ec-86e67501407d
 author: Florian Roth (Nextron Systems)
@@ -17,7 +18,7 @@ detection:
     selection:
         EventID: 42
         Provider_Name: Kerberos-Key-Distribution-Center
-        Level: 2  # Error
+        Level: 2
     condition: system and selection
 falsepositives:
     - Unknown

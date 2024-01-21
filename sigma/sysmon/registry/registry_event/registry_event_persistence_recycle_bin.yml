@@ -24,10 +24,10 @@ detection:
             - 14
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_create:
-          EventType: RenameKey
+        EventType: RenameKey
         NewName|contains: \CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\open
     selection_set:
-          EventType: SetValue
+        EventType: SetValue
         TargetObject|contains: \CLSID\{645FF040-5081-101B-9F08-00AA002F954E}\shell\open\command\(Default)
     condition: registry_event and (1 of selection_*)
 falsepositives:

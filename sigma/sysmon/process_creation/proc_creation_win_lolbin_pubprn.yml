@@ -1,7 +1,8 @@
 title: Pubprn.vbs Proxy Execution
 id: 1fb76ab8-fa60-4b01-bddd-71e89bf555da
 status: test
-description: Detects the use of the 'Pubprn.vbs' Microsoft signed script to execute commands.
+description: Detects the use of the 'Pubprn.vbs' Microsoft signed script to execute
+    commands.
 references:
     - https://lolbas-project.github.io/lolbas/Scripts/Pubprn/
 author: frack113
@@ -18,7 +19,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - \pubprn.vbs
             - 'script:'
     condition: process_creation and selection

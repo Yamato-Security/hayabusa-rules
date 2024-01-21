@@ -1,7 +1,8 @@
 title: Regsvr32 DLL Execution With Uncommon Extension
 id: 50919691-7302-437f-8e10-1fe088afa145
 status: test
-description: Detects a "regsvr32" execution where the DLL doesn't contain a common file extension.
+description: Detects a "regsvr32" execution where the DLL doesn't contain a common
+    file extension.
 references:
     - https://app.any.run/tasks/34221348-072d-4b70-93f3-aa71f6ebecad/
 author: Florian Roth (Nextron Systems)
@@ -19,25 +20,26 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith: \regsvr32.exe
-        - OriginalFileName: REGSVR32.EXE
+        -   NewProcessName|endswith: \regsvr32.exe
+        -   OriginalFileName: REGSVR32.EXE
     filter_main_legit_ext:
-          CommandLine|contains:
-            # Note: For better accuracy you might not want to use contains
+        CommandLine|contains:
             - .ax
             - .cpl
-            - .dll   # Covers ".dll.mui"
+            - .dll
             - .ocx
     filter_optional_pascal:
-          CommandLine|contains: .ppl
+        CommandLine|contains: .ppl
     filter_optional_avg:
-          CommandLine|contains: .bav
+        CommandLine|contains: .bav
     filter_main_null_4688:
-          CommandLine:
+        CommandLine: null
     filter_main_empty_4688:
-          CommandLine: ''
-    condition: process_creation and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
+        CommandLine: ''
+    condition: process_creation and (selection and not 1 of filter_main_* and not
+        1 of filter_optional_*)
 falsepositives:
-    - Other legitimate extensions currently not in the list either from third party or specific Windows components.
+    - Other legitimate extensions currently not in the list either from third party
+        or specific Windows components.
 level: medium
 ruletype: Sigma

@@ -1,10 +1,11 @@
 title: Potentially Suspicious Call To Win32_NTEventlogFile Class
 id: caf201a9-c2ce-4a26-9c3a-2b9525413711
 related:
-    - id: e2812b49-bae0-4b21-b366-7c142eafcde2
-      type: similar
+    -   id: e2812b49-bae0-4b21-b366-7c142eafcde2
+        type: similar
 status: experimental
-description: Detects usage of the WMI class "Win32_NTEventlogFile" in a potentially suspicious way (delete, backup, change permissions, etc.) from a PowerShell script
+description: Detects usage of the WMI class "Win32_NTEventlogFile" in a potentially
+    suspicious way (delete, backup, change permissions, etc.) from a PowerShell script
 references:
     - https://learn.microsoft.com/en-us/previous-versions/windows/desktop/legacy/aa394225(v=vs.85)
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -20,9 +21,9 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_class:
-          CommandLine|contains: Win32_NTEventlogFile
+        CommandLine|contains: Win32_NTEventlogFile
     selection_function:
-          CommandLine|contains:
+        CommandLine|contains:
             - .BackupEventlog(
             - .ChangeSecurityPermissions(
             - .ChangeSecurityPermissionsEx(

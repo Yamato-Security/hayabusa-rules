@@ -1,8 +1,10 @@
 title: HackTool - NoFilter Execution
 id: 7b14c76a-c602-4ae6-9717-eff868153fc0
 status: experimental
-description: |
-    Detects execution of NoFilter, a tool for abusing the Windows Filtering Platform for privilege escalation via hardcoded policy name indicators
+description: 'Detects execution of NoFilter, a tool for abusing the Windows Filtering
+    Platform for privilege escalation via hardcoded policy name indicators
+
+    '
 references:
     - https://github.com/deepinstinct/NoFilter/blob/121d215ab130c5e8e3ad45a7e7fcd56f4de97b4d/NoFilter/Consts.cpp
     - https://github.com/deepinstinct/NoFilter
@@ -17,7 +19,8 @@ tags:
 logsource:
     product: windows
     service: security
-    definition: 'Requirements: Audit Filtering Platform Policy Change needs to be enabled'
+    definition: 'Requirements: Audit Filtering Platform Policy Change needs to be
+        enabled'
 detection:
     security:
         Channel: Security

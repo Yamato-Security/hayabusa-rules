@@ -19,11 +19,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName: C:\WINDOWS\system32\wbem\scrcons.exe
+        NewProcessName: C:\WINDOWS\system32\wbem\scrcons.exe
         ParentProcessName: C:\Windows\System32\svchost.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate event consumers
-    - Dell computers on some versions register an event consumer that is known to cause false positives when brightness is changed by the corresponding keyboard button
+    - Dell computers on some versions register an event consumer that is known to
+        cause false positives when brightness is changed by the corresponding keyboard
+        button
 level: medium
 ruletype: Sigma

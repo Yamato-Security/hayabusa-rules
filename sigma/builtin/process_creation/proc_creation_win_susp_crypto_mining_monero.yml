@@ -18,7 +18,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' --cpu-priority='
             - --donate-level=0
             - ' -o pool.'
@@ -26,11 +26,9 @@ detection:
             - ' --algo=rx/0 '
             - stratum+tcp://
             - stratum+udp://
-            # base64 encoded: --donate-level=
             - LS1kb25hdGUtbGV2ZWw9
             - 0tZG9uYXRlLWxldmVsP
             - tLWRvbmF0ZS1sZXZlbD
-            # base64 encoded: stratum+tcp:// and stratum+udp://
             - c3RyYXR1bSt0Y3A6Ly
             - N0cmF0dW0rdGNwOi8v
             - zdHJhdHVtK3RjcDovL
@@ -38,7 +36,7 @@ detection:
             - N0cmF0dW0rdWRwOi8v
             - zdHJhdHVtK3VkcDovL
     filter:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' pool.c '
             - ' pool.o '
             - gcc -

@@ -30,7 +30,8 @@ detection:
         ObjectName|contains: \Microsoft Excel Driver
         NewValue|startswith: C:\Progra
         NewValue|endswith: \ACEODBC.DLL
-    condition: registry_set and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
+    condition: registry_set and (selection and not 1 of filter_main_* and not 1 of
+        filter_optional_*)
 falsepositives:
     - Likely
 level: low

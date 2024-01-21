@@ -1,7 +1,8 @@
 title: Sysinternals PsService Execution
 id: 3371f518-5fe3-4cf6-a14b-2a0ae3fd8a4f
 status: test
-description: Detects usage of Sysinternals PsService which can be abused for service reconnaissance and tampering
+description: Detects usage of Sysinternals PsService which can be abused for service
+    reconnaissance and tampering
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/psservice
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -20,10 +21,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - OriginalFileName: psservice.exe
-        - Image|endswith:
-            - \PsService.exe
-            - \PsService64.exe
+        -   OriginalFileName: psservice.exe
+        -   Image|endswith:
+                - \PsService.exe
+                - \PsService64.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate use of PsService by an administrator

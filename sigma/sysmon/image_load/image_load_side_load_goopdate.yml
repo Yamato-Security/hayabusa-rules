@@ -24,7 +24,6 @@ detection:
         ImageLoaded|endswith: \goopdate.dll
     filter_main_generic:
         ImageLoaded|startswith:
-            # Many third party chromium based apps use this DLLs. It's better to create a baseline and add specific filters
             - C:\Program Files (x86)\
             - C:\Program Files\
     filter_optional_dropbox_installer_temp:
@@ -36,7 +35,8 @@ detection:
             - .tmp\\goopdate.dll
     condition: image_load and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
-    - False positives are expected from Google Chrome installations running from user locations (AppData) and other custom locations. Apply additional filters accordingly.
+    - False positives are expected from Google Chrome installations running from user
+        locations (AppData) and other custom locations. Apply additional filters accordingly.
     - Other third party chromium browsers located in AppData
 level: medium
 ruletype: Sigma

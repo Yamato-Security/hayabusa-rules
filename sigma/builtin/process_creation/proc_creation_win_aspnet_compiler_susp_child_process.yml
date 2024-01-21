@@ -1,12 +1,12 @@
 title: Suspicious Child Process of AspNetCompiler
-id: 9ccba514-7cb6-4c5c-b377-700758f2f120 # SuspChild
+id: 9ccba514-7cb6-4c5c-b377-700758f2f120
 related:
-    - id: 4c7f49ee-2638-43bb-b85b-ce676c30b260 # TMP File
-      type: similar
-    - id: 9f50fe98-fe5c-4a2d-86c7-fad7f63ed622 # Susp Paths
-      type: similar
-    - id: a01b8329-5953-4f73-ae2d-aa01e1f35f00 # Exec
-      type: similar
+    -   id: 4c7f49ee-2638-43bb-b85b-ce676c30b260
+        type: similar
+    -   id: 9f50fe98-fe5c-4a2d-86c7-fad7f63ed622
+        type: similar
+    -   id: a01b8329-5953-4f73-ae2d-aa01e1f35f00
+        type: similar
 status: experimental
 description: Detects potentially suspicious child processes of "aspnet_compiler.exe".
 references:
@@ -27,18 +27,17 @@ detection:
     selection_parent:
         ParentProcessName|endswith: \aspnet_compiler.exe
     selection_child:
-        # Note: add other potential suspicious child processes and paths
-        - NewProcessName|endswith:
-            - \calc.exe
-            - \notepad.exe
-        - NewProcessName|contains:
-            - \Users\Public\
-            - \AppData\Local\Temp\
-            - \AppData\Local\Roaming\
-            - :\Temp\
-            - :\Windows\Temp\
-            - :\Windows\System32\Tasks\
-            - :\Windows\Tasks\
+        -   NewProcessName|endswith:
+                - \calc.exe
+                - \notepad.exe
+        -   NewProcessName|contains:
+                - \Users\Public\
+                - \AppData\Local\Temp\
+                - \AppData\Local\Roaming\
+                - :\Temp\
+                - :\Windows\Temp\
+                - :\Windows\System32\Tasks\
+                - :\Windows\Tasks\
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

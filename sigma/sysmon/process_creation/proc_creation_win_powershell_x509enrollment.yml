@@ -1,8 +1,8 @@
 title: Suspicious X509Enrollment - Process Creation
 id: 114de787-4eb2-48cc-abdb-c0b449f93ea4
 related:
-    - id: 504d63cb-0dba-4d02-8531-e72981aace2c
-      type: similar
+    -   id: 504d63cb-0dba-4d02-8531-e72981aace2c
+        type: similar
 status: test
 description: Detect use of X509Enrollment
 references:
@@ -23,7 +23,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains:
+        CommandLine|contains:
             - X509Enrollment.CBinaryConverter
             - 884e2002-217d-11da-b2a4-000e7bbb2b09
     condition: process_creation and selection

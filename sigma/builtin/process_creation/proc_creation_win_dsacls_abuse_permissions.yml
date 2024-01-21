@@ -19,12 +19,12 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \dsacls.exe
-        - OriginalFileName: DSACLS.EXE
+        -   NewProcessName|endswith: \dsacls.exe
+        -   OriginalFileName: DSACLS.EXE
     selection_flag:
-          CommandLine|contains: ' /G '
+        CommandLine|contains: ' /G '
     selection_permissions:
-          CommandLine|contains: # Add more permissions as you see fit in your environment
+        CommandLine|contains:
             - GR
             - GE
             - GW

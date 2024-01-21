@@ -21,7 +21,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          NewProcessName|endswith: \wsreset.exe
+        NewProcessName|endswith: \wsreset.exe
         MandatoryLabel:
             - S-1-16-12288
             - S-1-16-16384

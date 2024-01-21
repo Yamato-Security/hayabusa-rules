@@ -19,13 +19,13 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - OriginalFileName: wmic.exe
-        - Image|endswith: \WMIC.exe
+        -   OriginalFileName: wmic.exe
+        -   Image|endswith: \WMIC.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' service '
             - ' call '
-          CommandLine|contains:
+        CommandLine|contains:
             - stopservice
             - startservice
     condition: process_creation and (all of selection_*)

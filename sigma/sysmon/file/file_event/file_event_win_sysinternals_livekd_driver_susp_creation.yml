@@ -1,10 +1,11 @@
 title: LiveKD Driver Creation By Uncommon Process
 id: 059c5af9-5131-4d8d-92b2-de4ad6146712
 related:
-    - id: 16fe46bb-4f64-46aa-817d-ff7bec4a2352
-      type: similar
+    -   id: 16fe46bb-4f64-46aa-817d-ff7bec4a2352
+        type: similar
 status: experimental
-description: Detects the creation of the LiveKD driver by a process image other than "livekd.exe".
+description: Detects the creation of the LiveKD driver by a process image other than
+    "livekd.exe".
 references:
     - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -28,6 +29,7 @@ detection:
             - \livek64.exe
     condition: file_event and (selection and not 1 of filter_main_*)
 falsepositives:
-    - Administrators might rename LiveKD before its usage which could trigger this. Add additional names you use to the filter
+    - Administrators might rename LiveKD before its usage which could trigger this.
+        Add additional names you use to the filter
 level: high
 ruletype: Sigma

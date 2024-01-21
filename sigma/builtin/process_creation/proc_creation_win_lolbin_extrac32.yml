@@ -18,13 +18,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection_lolbas:
-        - CommandLine|contains: extrac32.exe
-        - NewProcessName|endswith: \extrac32.exe
-        - OriginalFileName: extrac32.exe
+        -   CommandLine|contains: extrac32.exe
+        -   NewProcessName|endswith: \extrac32.exe
+        -   OriginalFileName: extrac32.exe
     selection_archive:
-          CommandLine|contains: .cab
+        CommandLine|contains: .cab
     selection_options:
-          CommandLine|contains:
+        CommandLine|contains:
             - /C
             - /Y
             - ' \\\\'

@@ -13,13 +13,14 @@ tags:
 logsource:
     product: windows
     service: security
-    definition: The advanced audit policy setting "Object Access > Audit Detailed File Share" must be configured for Success/Failure
+    definition: The advanced audit policy setting "Object Access > Audit Detailed
+        File Share" must be configured for Success/Failure
 detection:
     security:
         Channel: Security
     selection1:
         EventID: 5145
-        ShareName: \\\\\*\\IPC$   # looking for the string \\*\IPC$
+        ShareName: \\\\\*\\IPC$
         RelativeTargetName|contains:
             - RemCom_stdin
             - RemCom_stdout

@@ -21,11 +21,11 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_sc:
         Image|endswith: \sc.exe
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - create
             - binPath
     selection_posh:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - New-Service
             - -BinaryPathName
     condition: process_creation and (1 of selection*)

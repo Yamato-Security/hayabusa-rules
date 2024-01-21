@@ -1,7 +1,9 @@
 title: Detect Virtualbox Driver Installation OR Starting Of VMs
 id: bab049ca-7471-4828-9024-38279a4c04da
 status: test
-description: Adversaries can carry out malicious operations using a virtual instance to avoid detection. This rule is built to detect the registration of the Virtualbox driver or start of a Virtualbox VM.
+description: Adversaries can carry out malicious operations using a virtual instance
+    to avoid detection. This rule is built to detect the registration of the Virtualbox
+    driver or start of a Virtualbox VM.
 references:
     - https://news.sophos.com/en-us/2020/05/21/ragnar-locker-ransomware-deploys-virtual-machine-to-dodge-security/
     - https://threatpost.com/maze-ransomware-ragnar-locker-virtual-machine/159350/
@@ -21,12 +23,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_1:
-          CommandLine|contains:
+        CommandLine|contains:
             - VBoxRT.dll,RTR3Init
             - VBoxC.dll
             - VBoxDrv.sys
     selection_2:
-          CommandLine|contains:
+        CommandLine|contains:
             - startvm
             - controlvm
     condition: process_creation and (1 of selection_*)
@@ -36,6 +38,7 @@ fields:
     - CommandLine
     - ParentCommandLine
 falsepositives:
-    - This may have false positives on hosts where Virtualbox is legitimately being used for operations
+    - This may have false positives on hosts where Virtualbox is legitimately being
+        used for operations
 level: low
 ruletype: Sigma

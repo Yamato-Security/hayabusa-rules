@@ -1,7 +1,8 @@
 title: Potential Arbitrary Command Execution Using Msdt.EXE
 id: 258fc8ce-8352-443a-9120-8a11e4857fa5
 status: test
-description: Detects processes leveraging the "ms-msdt" handler or the "msdt.exe" binary to execute arbitrary commands as seen in the follina (CVE-2022-30190) vulnerability
+description: Detects processes leveraging the "ms-msdt" handler or the "msdt.exe"
+    binary to execute arbitrary commands as seen in the follina (CVE-2022-30190) vulnerability
 references:
     - https://twitter.com/nao_sec/status/1530196847679401984
     - https://app.any.run/tasks/713f05d2-fe78-4b9d-a744-f7c133e3fafb/
@@ -21,17 +22,18 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \msdt.exe
-        - OriginalFileName: msdt.exe
+        -   Image|endswith: \msdt.exe
+        -   OriginalFileName: msdt.exe
     selection_cmd_inline:
-          CommandLine|contains: IT_BrowseForFile=
+        CommandLine|contains: IT_BrowseForFile=
     selection_cmd_answerfile_flag:
-          CommandLine|contains: ' PCWDiagnostic'
+        CommandLine|contains: ' PCWDiagnostic'
     selection_cmd_answerfile_param:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' /af '
             - ' -af '
-    condition: process_creation and (selection_img and (selection_cmd_inline or all of selection_cmd_answerfile_*))
+    condition: process_creation and (selection_img and (selection_cmd_inline or all
+        of selection_cmd_answerfile_*))
 falsepositives:
     - Unknown
 level: high

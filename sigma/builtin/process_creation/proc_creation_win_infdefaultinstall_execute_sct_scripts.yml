@@ -1,7 +1,8 @@
 title: InfDefaultInstall.exe .inf Execution
 id: ce7cf472-6fcc-490a-9481-3786840b5d9b
 status: test
-description: Executes SCT script using scrobj.dll from a command in entered into a specially prepared INF file.
+description: Executes SCT script using scrobj.dll from a command in entered into a
+    specially prepared INF file.
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1218/T1218.md#atomic-test-4---infdefaultinstallexe-inf-execution
     - https://lolbas-project.github.io/lolbas/Binaries/Infdefaultinstall/
@@ -19,7 +20,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - 'InfDefaultInstall.exe '
             - '.inf'
     condition: process_creation and selection

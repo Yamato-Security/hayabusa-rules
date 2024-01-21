@@ -19,10 +19,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - extrac32.exe
             - .cab
-          CommandLine|re: :[^\\]
+        CommandLine|re: :[^\\]
     condition: process_creation and selection
 falsepositives:
     - Unknown

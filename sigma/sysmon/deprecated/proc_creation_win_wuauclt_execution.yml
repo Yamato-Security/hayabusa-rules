@@ -21,15 +21,15 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \wuauclt.exe
-        - OriginalFileName: wuauclt.exe
+        -   Image|endswith: \wuauclt.exe
+        -   OriginalFileName: wuauclt.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - /UpdateDeploymentProvider
             - /RunHandlerComServer
             - .dll
     filter:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' /ClassId '
             - ' wuaueng.dll '
     condition: process_creation and (all of selection* and not filter)

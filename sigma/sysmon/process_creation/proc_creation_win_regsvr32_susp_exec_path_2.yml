@@ -1,7 +1,8 @@
 title: Regsvr32 Execution From Highly Suspicious Location
 id: 327ff235-94eb-4f06-b9de-aaee571324be
 status: experimental
-description: Detects execution of regsvr32 where the DLL is located in a highly suspicious locations
+description: Detects execution of regsvr32 where the DLL is located in a highly suspicious
+    locations
 references:
     - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -18,10 +19,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \regsvr32.exe
-        - OriginalFileName: REGSVR32.EXE
+        -   Image|endswith: \regsvr32.exe
+        -   OriginalFileName: REGSVR32.EXE
     selection_path_1:
-          CommandLine|contains:
+        CommandLine|contains:
             - :\PerfLogs\
             - :\Temp\
             - \Windows\Registration\CRMLog
@@ -40,28 +41,26 @@ detection:
             - \Windows\Tasks\
             - \Windows\Tracing\
     selection_path_2:
-          CommandLine|contains:
-            # This is to avoid collisions with CLI starting with "C:\"
+        CommandLine|contains:
             - ' "C:\'
             - ' C:\'
-            - " 'C:\\"
+            - ' ''C:\'
             - D:\
     selection_exclude_known_dirs:
-          CommandLine|contains:
-            # Note: add additional locations that are related to third party applications
+        CommandLine|contains:
             - C:\Program Files (x86)\
             - C:\Program Files\
             - C:\ProgramData\
             - C:\Users\
-            # Note: The space added here are to avoid collisions with the "regsvr32" binary full path
             - ' C:\Windows\'
             - ' "C:\Windows\'
-            - " 'C:\\Windows\\"
+            - ' ''C:\Windows\'
     filter_main_empty:
-          CommandLine: ''
+        CommandLine: ''
     filter_main_null:
-          CommandLine:
-    condition: process_creation and (selection_img and (selection_path_1 or (selection_path_2 and not selection_exclude_known_dirs)) and not 1 of filter_main_*)
+        CommandLine: null
+    condition: process_creation and (selection_img and (selection_path_1 or (selection_path_2
+        and not selection_exclude_known_dirs)) and not 1 of filter_main_*)
 falsepositives:
     - Unlikely
 level: high

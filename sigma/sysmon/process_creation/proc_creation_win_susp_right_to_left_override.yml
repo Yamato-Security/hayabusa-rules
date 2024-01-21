@@ -1,9 +1,12 @@
 title: Potential Defense Evasion Via Right-to-Left Override
 id: ad691d92-15f2-4181-9aa4-723c74f9ddc3
 status: test
-description: |
-    Detects the presence of the "u202+E" character, which causes a terminal, browser, or operating system to render text in a right-to-left sequence.
+description: 'Detects the presence of the "u202+E" character, which causes a terminal,
+    browser, or operating system to render text in a right-to-left sequence.
+
     This is used as an obfuscation and masquerading techniques.
+
+    '
 references:
     - https://redcanary.com/blog/right-to-left-override/
     - https://www.malwarebytes.com/blog/news/2014/01/the-rtlo-method
@@ -22,9 +25,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-          CommandLine|contains: ‮
+        CommandLine|contains: "\u202E"
     condition: process_creation and selection
 falsepositives:
-    - Commandlines that contains scriptures such as arabic or hebrew might make use of this character
+    - Commandlines that contains scriptures such as arabic or hebrew might make use
+        of this character
 level: high
 ruletype: Sigma

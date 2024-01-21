@@ -1,7 +1,8 @@
 title: Suspicious Scheduled Task Creation
 id: 3a734d25-df5c-4b99-8034-af1ddb5883a4
 status: test
-description: Detects suspicious scheduled task creation events. Based on attributes such as paths, commands line flags, etc.
+description: Detects suspicious scheduled task creation events. Based on attributes
+    such as paths, commands line flags, etc.
 references:
     - https://learn.microsoft.com/en-us/windows/security/threat-protection/auditing/event-4698
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -15,7 +16,9 @@ tags:
 logsource:
     product: windows
     service: security
-    definition: The Advanced Audit Policy setting Object Access > Audit Other Object Access Events has to be configured to allow this detection. We also recommend extracting the Command field from the embedded XML in the event data.
+    definition: The Advanced Audit Policy setting Object Access > Audit Other Object
+        Access Events has to be configured to allow this detection. We also recommend
+        extracting the Command field from the embedded XML in the event data.
 detection:
     security:
         Channel: Security

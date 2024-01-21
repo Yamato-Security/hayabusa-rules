@@ -1,7 +1,8 @@
 title: Potential APT Mustang Panda Activity Against Australian Gov
 id: 7806bb49-f653-48d3-a915-5115c1a85234
 status: experimental
-description: Detects specific command line execution used by Mustang Panda in a targeted attack against the Australian government as reported by Lab52
+description: Detects specific command line execution used by Mustang Panda in a targeted
+    attack against the Australian government as reported by Lab52
 references:
     - https://lab52.io/blog/new-mustang-pandas-campaing-against-australia/
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -19,11 +20,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_1:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - copy SolidPDFCreator.dll
             - C:\Users\Public\Libraries\PhotoTvRHD\SolidPDFCreator.dll
     selection_2:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - 'reg '
             - \Windows\CurrentVersion\Run
             - SolidPDF

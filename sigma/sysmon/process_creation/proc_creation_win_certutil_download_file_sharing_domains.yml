@@ -1,12 +1,13 @@
 title: Suspicious File Downloaded From File-Sharing Website Via Certutil.EXE
 id: 42a5f1e7-9603-4f6d-97ae-3f37d130d794
 related:
-    - id: 19b08b1c-861d-4e75-a1ef-ea0c1baf202b # Direct IP download
-      type: similar
-    - id: 13e6fe51-d478-4c7e-b0f2-6da9b400a829 # Generic download
-      type: similar
+    -   id: 19b08b1c-861d-4e75-a1ef-ea0c1baf202b
+        type: similar
+    -   id: 13e6fe51-d478-4c7e-b0f2-6da9b400a829
+        type: similar
 status: experimental
-description: Detects the execution of certutil with certain flags that allow the utility to download files from file-sharing websites.
+description: Detects the execution of certutil with certain flags that allow the utility
+    to download files from file-sharing websites.
 references:
     - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/certutil
     - https://forensicitguy.github.io/agenttesla-vba-certutil-download/
@@ -28,15 +29,15 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \certutil.exe
-        - OriginalFileName: CertUtil.exe
+        -   Image|endswith: \certutil.exe
+        -   OriginalFileName: CertUtil.exe
     selection_flags:
-          CommandLine|contains:
+        CommandLine|contains:
             - 'urlcache '
             - 'verifyctl '
     selection_http:
-          CommandLine|contains:
-            - .githubusercontent.com         # Includes both gists and github repositories / Michael Haag (idea)
+        CommandLine|contains:
+            - .githubusercontent.com
             - anonfiles.com
             - cdn.discordapp.com
             - cdn.discordapp.com/attachments/

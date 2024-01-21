@@ -18,10 +18,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: \certutil.exe
-        - OriginalFileName: CertUtil.exe
+        -   NewProcessName|endswith: \certutil.exe
+        -   OriginalFileName: CertUtil.exe
     selection_cli:
-          CommandLine|contains|all:
+        CommandLine|contains|all:
             - ' -syncwithWU '
             - ' \\\\'
     condition: process_creation and (all of selection_*)

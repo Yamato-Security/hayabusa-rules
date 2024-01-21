@@ -1,10 +1,11 @@
 title: Regsvr32 DLL Execution With Suspicious File Extension
 id: 089fc3d2-71e8-4763-a8a5-c97fbb0a403e
 related:
-    - id: 8e2b24c9-4add-46a0-b4bb-0057b4e6187d
-      type: obsoletes
+    -   id: 8e2b24c9-4add-46a0-b4bb-0057b4e6187d
+        type: obsoletes
 status: experimental
-description: Detects the execution of REGSVR32.exe with DLL files masquerading as other files
+description: Detects the execution of REGSVR32.exe with DLL files masquerading as
+    other files
 references:
     - https://thedfirreport.com/2021/11/29/continuing-the-bazar-ransomware-story/
     - https://blog.talosintelligence.com/2021/10/threat-hunting-in-large-datasets-by.html
@@ -24,12 +25,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - Image|endswith: \regsvr32.exe
-        - OriginalFileName: REGSVR32.EXE
+        -   Image|endswith: \regsvr32.exe
+        -   OriginalFileName: REGSVR32.EXE
     selection_cli:
-          CommandLine|endswith:
-            # Add more image extensions
-            # https://twitter.com/Max_Mal_/status/1542461200797163522/photo/3
+        CommandLine|endswith:
             - .bin
             - .bmp
             - .cr2

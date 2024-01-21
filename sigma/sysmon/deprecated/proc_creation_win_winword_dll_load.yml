@@ -16,7 +16,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \winword.exe
-          CommandLine|contains: /l
+        CommandLine|contains: /l
     condition: process_creation and selection
 fields:
     - CommandLine

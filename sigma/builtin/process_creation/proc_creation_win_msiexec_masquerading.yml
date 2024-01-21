@@ -18,10 +18,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        - NewProcessName|endswith: \msiexec.exe
-        - OriginalFileName: \msiexec.exe
+        -   NewProcessName|endswith: \msiexec.exe
+        -   OriginalFileName: \msiexec.exe
     filter:
-          NewProcessName|startswith:
+        NewProcessName|startswith:
             - C:\Windows\System32\
             - C:\Windows\SysWOW64\
             - C:\Windows\WinSxS\

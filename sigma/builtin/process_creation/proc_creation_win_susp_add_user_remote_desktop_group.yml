@@ -1,10 +1,11 @@
 title: Suspicious Add User to Remote Desktop Users Group
 id: ffa28e60-bdb1-46e0-9f82-05f7a61cc06e
 related:
-    - id: ad720b90-25ad-43ff-9b5e-5c841facc8e5 # Admin groups
-      type: similar
+    -   id: ad720b90-25ad-43ff-9b5e-5c841facc8e5
+        type: similar
 status: test
-description: Detects suspicious command line in which a user gets added to the local Remote Desktop Users group
+description: Detects suspicious command line in which a user gets added to the local
+    Remote Desktop Users group
 references:
     - https://www.microsoft.com/security/blog/2021/11/16/evolving-trends-in-iranian-threat-actor-activity-mstic-presentation-at-cyberwarcon-2021/
 author: Florian Roth (Nextron Systems)
@@ -24,17 +25,17 @@ detection:
         EventID: 4688
         Channel: Security
     selection_main:
-        - CommandLine|contains|all:
-            - 'localgroup '
-            - ' /add'
-        - CommandLine|contains|all:
-            - 'Add-LocalGroupMember '
-            - ' -Group '
+        -   CommandLine|contains|all:
+                - 'localgroup '
+                - ' /add'
+        -   CommandLine|contains|all:
+                - 'Add-LocalGroupMember '
+                - ' -Group '
     selection_group:
-          CommandLine|contains:
+        CommandLine|contains:
             - Remote Desktop Users
-            - Utilisateurs du Bureau à distance   # French for "Remote Desktop Users"
-            - Usuarios de escritorio remoto   # Spanish for "Remote Desktop Users"
+            - "Utilisateurs du Bureau \xE0 distance"
+            - Usuarios de escritorio remoto
     condition: process_creation and (all of selection_*)
 fields:
     - CommandLine

@@ -20,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        - Image|endswith: \psexec.exe
-        - OriginalFileName: psexec.c
+        -   Image|endswith: \psexec.exe
+        -   OriginalFileName: psexec.c
     condition: process_creation and selection
 falsepositives:
     - Administrative scripts.

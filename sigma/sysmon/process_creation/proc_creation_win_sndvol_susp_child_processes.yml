@@ -1,7 +1,8 @@
 title: Uncommon Child Processes Of SndVol.exe
 id: ba42babc-0666-4393-a4f7-ceaf5a69191e
 status: experimental
-description: Detects potentially uncommon child processes of SndVol.exe (the Windows volume mixer)
+description: Detects potentially uncommon child processes of SndVol.exe (the Windows
+    volume mixer)
 references:
     - https://twitter.com/Max_Mal_/status/1661322732456353792
 author: X__Junior (Nextron Systems)
@@ -20,7 +21,7 @@ detection:
         ParentImage|endswith: \SndVol.exe
     filter_main_rundll32:
         Image|endswith: \rundll32.exe
-          CommandLine|contains: ' shell32.dll,Control_RunDLL '
+        CommandLine|contains: ' shell32.dll,Control_RunDLL '
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

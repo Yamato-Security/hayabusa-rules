@@ -26,7 +26,12 @@ tags:
 logsource:
     product: windows
     category: pipe_created
-    definition: Note that you have to configure logging for Named Pipe Events in Sysmon config (Event ID 17 and Event ID 18). The basic configuration is in popular sysmon configuration (https://github.com/SwiftOnSecurity/sysmon-config), but it is worth verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config, https://github.com/olafhartong/sysmon-modular. How to test detection? You can check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575
+    definition: Note that you have to configure logging for Named Pipe Events in Sysmon
+        config (Event ID 17 and Event ID 18). The basic configuration is in popular
+        sysmon configuration (https://github.com/SwiftOnSecurity/sysmon-config), but
+        it is worth verifying. You can also use other repo, e.g. https://github.com/Neo23x0/sysmon-config,
+        https://github.com/olafhartong/sysmon-modular. How to test detection? You
+        can check powershell script from this site https://svch0st.medium.com/guide-to-named-pipes-and-hunting-for-cobalt-strike-pipes-dc46b2c5f575
 detection:
     pipe_created:
         EventID:
@@ -35,34 +40,33 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         PipeName:
-            - \46a676ab7f179e511e30dd2dc41bd388    # Project Sauron
-            - \583da945-62af-10e8-4902-a8f205c72b2e    # SolarWinds SUNBURST malware
-            - \6e7645c4-32c5-4fe3-aabf-e94c2f4370e7    # LiquidSnake
-            - \9f81f59bc58452127884ce513865ed20    # Project Sauron
-            - \adschemerpc    # Turla HyperStack
-            - \ahexec    # Sofacy group malware
-            - \AnonymousPipe    # Hidden Cobra Hoplight
-            - \bc31a7    # Pacifier
-            - \bc367    # Pacifier
-            - \bizkaz    # Snatch Ransomware
-            - \csexecsvc   # CSEXEC default
-            - \dce_3d   # Qbot
-            - \e710f28d59aa529d6792ca6ff0ca1b34    # Project Sauron
-            - \gruntsvc   # Covenant default
-            - \isapi_dg    # Uroburos Malware
-            - \isapi_dg2    # Uroburos Malware
-            - \isapi_http    # Uroburos Malware
-            - \jaccdpqnvbrrxlaf   # PoshC2 default
-            - \lsassw    # Wild Neutron APT malware
-            - \NamePipe_MoreWindows    # Cloud Hopper - RedLeaves
-            - \pcheap_reuse    # Pipe used by Equation Group malware
-            - \Posh*   # PoshC2 default
-            - \rpchlp_3    # Project Sauron
-            - \sdlrpc    # Cobra Trojan
-            - \svcctl   # Crackmapexec smbexec default
-            - \testPipe    # Emissary Panda Hyperbro
-            - \winsession    # Wild Neutron APT malware
-            # - '\status_*' # CS default  https://github.com/SigmaHQ/sigma/issues/253
+            - \46a676ab7f179e511e30dd2dc41bd388
+            - \583da945-62af-10e8-4902-a8f205c72b2e
+            - \6e7645c4-32c5-4fe3-aabf-e94c2f4370e7
+            - \9f81f59bc58452127884ce513865ed20
+            - \adschemerpc
+            - \ahexec
+            - \AnonymousPipe
+            - \bc31a7
+            - \bc367
+            - \bizkaz
+            - \csexecsvc
+            - \dce_3d
+            - \e710f28d59aa529d6792ca6ff0ca1b34
+            - \gruntsvc
+            - \isapi_dg
+            - \isapi_dg2
+            - \isapi_http
+            - \jaccdpqnvbrrxlaf
+            - \lsassw
+            - \NamePipe_MoreWindows
+            - \pcheap_reuse
+            - \Posh*
+            - \rpchlp_3
+            - \sdlrpc
+            - \svcctl
+            - \testPipe
+            - \winsession
     condition: pipe_created and selection
 falsepositives:
     - Unknown

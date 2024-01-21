@@ -18,8 +18,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-          CommandLine|endswith: splwow64.exe
-          NewProcessName|endswith: \splwow64.exe
+        CommandLine|endswith: splwow64.exe
+        NewProcessName|endswith: \splwow64.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

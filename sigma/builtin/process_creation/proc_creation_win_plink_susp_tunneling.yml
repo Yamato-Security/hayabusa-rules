@@ -1,8 +1,8 @@
 title: Potential RDP Tunneling Via SSH Plink
 id: f38ce0b9-5e97-4b47-a211-7dc8d8b871da
 related:
-    - id: f7d7ebd5-a016-46e2-9c54-f9932f2d386d # ssh.exe
-      type: similar
+    -   id: f7d7ebd5-a016-46e2-9c54-f9932f2d386d
+        type: similar
 status: test
 description: Execution of plink to perform data exfiltration and tunneling
 references:
@@ -21,13 +21,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection_a:
-          CommandLine|contains: :127.0.0.1:3389
-          NewProcessName|endswith: \plink.exe
+        CommandLine|contains: :127.0.0.1:3389
+        NewProcessName|endswith: \plink.exe
     selection_b1:
-          CommandLine|contains: :3389
-          NewProcessName|endswith: \plink.exe
+        CommandLine|contains: :3389
+        NewProcessName|endswith: \plink.exe
     selection_b2:
-          CommandLine|contains:
+        CommandLine|contains:
             - ' -P 443'
             - ' -P 22'
     condition: process_creation and (selection_a or all of selection_b*)

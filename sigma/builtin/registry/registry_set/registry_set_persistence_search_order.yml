@@ -4,7 +4,7 @@ status: experimental
 description: Detects potential COM object hijacking leveraging the COM Search Order
 references:
     - https://www.cyberbit.com/blog/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
-author: Maxime Thiebaut (@0xThiebaut), oscd.community, Cédric Hien
+author: "Maxime Thiebaut (@0xThiebaut), oscd.community, C\xE9dric Hien"
 date: 2020/04/14
 modified: 2023/09/28
 tags:
@@ -17,16 +17,15 @@ detection:
     registry_set:
         EventID: 4657
         Channel: Security
-    selection: # Detect new COM servers in the user hive
+    selection:
         ObjectName|contains: \CLSID\
         ObjectName|endswith: \InprocServer32\(Default)
     filter_main_generic:
-        NewValue|contains: # Exclude privileged directories and observed FPs
+        NewValue|contains:
             - '%%systemroot%%\system32\'
             - '%%systemroot%%\SysWow64\'
     filter_main_onedrive:
         NewValue|contains:
-            # Related To OneDrive
             - \AppData\Local\Microsoft\OneDrive\
             - \FileCoAuthLib64.dll
             - \FileSyncShell64.dll

@@ -1,7 +1,9 @@
 title: Suspicious AppX Package Installation Attempt
 id: 898d5fc9-fbc3-43de-93ad-38e97237c344
 status: test
-description: Detects an appx package installation with the error code "0x80073cff" which indicates that the package didn't meet the signing requirements and could be suspicious
+description: Detects an appx package installation with the error code "0x80073cff"
+    which indicates that the package didn't meet the signing requirements and could
+    be suspicious
 references:
     - Internal Research
     - https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/
@@ -19,7 +21,7 @@ detection:
         Channel: Microsoft-Windows-AppXDeploymentServer/Operational
     selection:
         EventID: 401
-        ErrorCode: '0x80073cff' # Check ref section to learn more about this error code
+        ErrorCode: '0x80073cff'
     condition: appxdeployment_server and selection
 falsepositives:
     - Legitimate AppX packages not signed by MS used part of an enterprise
