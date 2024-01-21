@@ -14,7 +14,7 @@ from io import StringIO
 from pathlib import Path
 from typing import Union, Optional
 
-import ruamel.yaml
+import oyaml as yaml
 
 FORMAT = '[%(levelname)-2s:%(filename)s:%(lineno)d] %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -181,6 +181,17 @@ class LogSource:
         return True
 
 
+class IndentDumper(yaml.Dumper):
+    """
+    pyyamlの↓バグで、valueがlistの場合インデントされないため、yaml.dump時にインデントさせるためのカスタムクラス
+    https://github.com/yaml/pyyaml/issues/234
+    https://stackoverflow.com/questions/25108581/python-yaml-dump-bad-indentation/39681672#39681672
+    """
+
+    def increase_indent(self, flow=False, indentless=False):
+        return super(IndentDumper, self).increase_indent(flow, False)
+
+
 @dataclass(frozen=True)
 class LogsourceConverter:
     sigma_path: str
@@ -314,10 +325,7 @@ class LogsourceConverter:
         for is_sysmon, obj in self.sigma_converted:
             output_path = build_out_path(base_dir, out_dir, self.sigma_path, is_sysmon)
             with StringIO() as bs:
-                yaml = ruamel.yaml.YAML()
-                yaml.width = 4096
-                yaml.indent(mapping=4, sequence=4, offset=4)
-                yaml.dump(obj, bs)
+                yaml.dump(obj, bs, Dumper=IndentDumper, default_flow_style=False, indent=4)
                 res.append((output_path, bs.getvalue()))
         return res
 
@@ -357,8 +365,7 @@ def create_obj(base_dir: Optional[str], file_name: str) -> dict:
         sys.exit(1)
     try:
         with open(file_path, encoding="utf-8") as f:
-            yaml = ruamel.yaml.YAML()
-            d = yaml.load(f)
+            d = yaml.safe_load(f)
             LOGGER.debug(f"loading yaml [{file_path}] done successfully.")
             return d
     except Exception as e:
@@ -440,8 +447,7 @@ def find_windows_sigma_rule_files(root: str, rule_pattern: str):
                 continue  # フォルダパスにrule/deprecated/unsupportedがつかないものは、Sigmaルールと関係ないため、除外
             try:
                 with open(filepath, encoding="utf-8") as f:
-                    yaml = ruamel.yaml.YAML()
-                    data = yaml.load(f)
+                    data = yaml.safe_load(f)
                 if data.get('logsource', {}).get('category') != "antivirus" \
                         and data.get('logsource', {}).get('product') != 'windows':
                     LOGGER.debug(f"[{filepath}] has no windows rule. Conversion skipped.")
@@ -505,12 +511,6 @@ if __name__ == '__main__':
                 p = Path(out_path)
                 if not p.parent.exists():
                     os.makedirs(p.parent)
-                # ruamelは以下のインデントを正しく処理できないので、文字列置換で対応する
-                parsed_yaml = parsed_yaml.replace("    type:", "      type:")
-                parsed_yaml = parsed_yaml.replace("      EventType:", "        EventType:")
-                parsed_yaml = parsed_yaml.replace("      OperationType:", "        OperationType:")
-                parsed_yaml = parsed_yaml.replace("      NewProcessName", "        NewProcessName")
-                parsed_yaml = parsed_yaml.replace("      CommandLine", "        CommandLine")
                 p.write_text(parsed_yaml, encoding="utf-8")  # 変換後のSigmaルール(yml形式の文字列)をファイルに出力
                 file_cnt += 1
                 LOGGER.debug(f"Converted to [{out_path}] done.")
