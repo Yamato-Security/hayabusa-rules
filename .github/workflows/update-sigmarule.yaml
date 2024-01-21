@@ -40,7 +40,7 @@ jobs:
           path: hayabusa-sample-evtx
 
       - name: run csv-timeline
-      - if: inputs.rule-parse-error-check
+        if: inputs.rule-parse-error-check
         run: |
             cd hayabusa
             git fetch --prune --unshallow
