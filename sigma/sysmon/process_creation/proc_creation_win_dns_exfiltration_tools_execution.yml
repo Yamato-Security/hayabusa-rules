@@ -20,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Image|endswith: \iodine.exe
-        -   Image|contains: \dnscat2
+        - Image|endswith: \iodine.exe
+        - Image|contains: \dnscat2
     condition: process_creation and selection
 falsepositives:
     - Unlikely

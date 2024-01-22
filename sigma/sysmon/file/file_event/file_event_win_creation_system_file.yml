@@ -1,8 +1,7 @@
 title: Files With System Process Name In Unsuspected Locations
 id: d5866ddf-ce8f-4aea-b28e-d96485a20d3d
 status: test
-description: Detects the creation of an executable with a system process name in folders
-    other than the system ones (System32, SysWOW64...etc).
+description: Detects the creation of an executable with a system process name in folders other than the system ones (System32, SysWOW64...etc).
 author: Sander Wiebing, Tim Shelton, Nasreddine Bencherchali (Nextron Systems)
 date: 2020/05/26
 modified: 2023/11/10
@@ -117,7 +116,9 @@ detection:
     filter_main_explorer:
         TargetFilename|endswith: :\Windows\explorer.exe
     filter_main_msiexec:
+        # This filter handles system processes who are updated/installed using misexec.
         Image|endswith: :\WINDOWS\system32\msiexec.exe
+        # Add more processes if you find them or simply filter msiexec on its own. If the list grows big
         TargetFilename|endswith:
             - :\Program Files\PowerShell\7\pwsh.exe
             - :\Program Files\PowerShell\7-preview\pwsh.exe
@@ -132,7 +133,6 @@ detection:
     condition: file_event and (selection and not 1 of filter_main_*)
 falsepositives:
     - System processes copied outside their default folders for testing purposes
-    - Third party software naming their software with the same names as the processes
-        mentioned here
+    - Third party software naming their software with the same names as the processes mentioned here
 level: high
 ruletype: Sigma

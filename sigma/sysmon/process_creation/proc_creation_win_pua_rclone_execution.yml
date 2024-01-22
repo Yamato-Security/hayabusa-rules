@@ -1,13 +1,12 @@
 title: PUA - Rclone Execution
 id: e37db05d-d1f9-49c8-b464-cee1a4b11638
 related:
-    -   id: a0d63692-a531-4912-ad39-4393325b2a9c
-        type: obsoletes
-    -   id: cb7286ba-f207-44ab-b9e6-760d82b84253
-        type: obsoletes
+    - id: a0d63692-a531-4912-ad39-4393325b2a9c
+      type: obsoletes
+    - id: cb7286ba-f207-44ab-b9e6-760d82b84253
+      type: obsoletes
 status: test
-description: Detects execution of RClone utility for exfiltration as used by various
-    ransomwares strains like REvil, Conti, FiveHands, etc
+description: Detects execution of RClone utility for exfiltration as used by various ransomwares strains like REvil, Conti, FiveHands, etc
 references:
     - https://research.nccgroup.com/2021/05/27/detecting-rclone-an-effective-tool-for-exfiltration/
     - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware
@@ -34,8 +33,8 @@ detection:
             - '--no-check-certificate '
             - ' copy '
     selection_rclone_img:
-        -   Image|endswith: \rclone.exe
-        -   Description: Rsync for cloud storage
+        - Image|endswith: \rclone.exe
+        - Description: Rsync for cloud storage
     selection_rclone_cli:
         CommandLine|contains:
             - pass

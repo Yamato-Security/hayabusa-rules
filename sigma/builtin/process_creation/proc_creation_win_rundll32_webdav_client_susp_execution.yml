@@ -1,12 +1,8 @@
 title: Suspicious WebDav Client Execution Via Rundll32.EXE
 id: 982e9f2d-1a85-4d5b-aea4-31f5e97c6555
 status: experimental
-description: 'Detects "svchost.exe" spawning "rundll32.exe" with command arguments
-    like C:\windows\system32\davclnt.dll,DavSetCookie. This could be an indicator
-    of exfiltration or use of WebDav to launch code (hosted on WebDav Server) or potentially
-    a sign of exploitation of CVE-2023-23397
-
-    '
+description: |
+    Detects "svchost.exe" spawning "rundll32.exe" with command arguments like C:\windows\system32\davclnt.dll,DavSetCookie. This could be an indicator of exfiltration or use of WebDav to launch code (hosted on WebDav Server) or potentially a sign of exploitation of CVE-2023-23397
 references:
     - https://twitter.com/aceresponder/status/1636116096506818562
     - https://www.mdsec.co.uk/2023/03/exploiting-cve-2023-23397-microsoft-outlook-elevation-of-privilege-vulnerability/
@@ -35,9 +31,9 @@ detection:
         NewProcessName|endswith: \rundll32.exe
     filter_local_ips:
         CommandLine|contains:
-            - ://10.
-            - ://192.168.
-            - ://172.16.
+            - ://10.   # 10.0.0.0/8
+            - ://192.168.   # 192.168.0.0/16
+            - ://172.16.   # 172.16.0.0/12
             - ://172.17.
             - ://172.18.
             - ://172.19.
@@ -53,8 +49,8 @@ detection:
             - ://172.29.
             - ://172.30.
             - ://172.31.
-            - ://127.
-            - ://169.254.
+            - ://127.   # 127.0.0.0/8
+            - ://169.254.   # 169.254.0.0/16
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:
     - Unknown

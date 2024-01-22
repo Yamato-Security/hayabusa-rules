@@ -1,17 +1,14 @@
 title: Potential DLL Sideloading Of Non-Existent DLLs From System Folders
 id: 6b98b92b-4f00-4f62-b4fe-4d1920215771
 related:
-    -   id: df6ecb8b-7822-4f4b-b412-08f524b4576c
-        type: similar
-    -   id: 602a1f13-c640-4d73-b053-be9a2fa58b77
-        type: obsoletes
+    - id: df6ecb8b-7822-4f4b-b412-08f524b4576c # FileEvent rule
+      type: similar
+    - id: 602a1f13-c640-4d73-b053-be9a2fa58b77
+      type: obsoletes
 status: test
-description: 'Detects DLL sideloading of system DLLs that are not present on the system
-    by default (at least not in system directories).
-
+description: |
+    Detects DLL sideloading of system DLLs that are not present on the system by default (at least not in system directories).
     Usually this technique is used to achieve UAC bypass or privilege escalation.
-
-    '
 references:
     - https://decoded.avast.io/martinchlumecky/png-steganography/
     - https://posts.specterops.io/lateral-movement-scm-and-dll-hijacking-primer-d2f61e8ab992
@@ -38,6 +35,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         ImageLoaded|endswith:
+            # Add other DLLs
             - :\Windows\System32\TSMSISrv.dll
             - :\Windows\System32\TSVIPSrv.dll
             - :\Windows\System32\wbem\wbemcomn.dll
@@ -47,6 +45,7 @@ detection:
     filter_main_ms_signed:
         Signed: 'true'
         SignatureStatus: Valid
+        # There could be other signatures (please add when found)
         Signature: Microsoft Windows
     condition: image_load and (selection and not 1 of filter_main_*)
 falsepositives:

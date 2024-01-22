@@ -1,12 +1,9 @@
 title: VHD Image Download Via Browser
 id: 8468111a-ef07-4654-903b-b863a80bbc95
 status: test
-description: 'Detects creation of ".vhd"/".vhdx" files by browser processes.
-
-    Malware can use mountable Virtual Hard Disk ".vhd" files to encapsulate payloads
-    and evade security controls.
-
-    '
+description: |
+    Detects creation of ".vhd"/".vhdx" files by browser processes.
+    Malware can use mountable Virtual Hard Disk ".vhd" files to encapsulate payloads and evade security controls.
 references:
     - https://redcanary.com/blog/intelligence-insights-october-2021/
     - https://www.kaspersky.com/blog/lazarus-vhd-ransomware/36559/
@@ -40,6 +37,7 @@ detection:
             - \seamonkey.exe
             - \vivaldi.exe
             - \whale.exe
+        # We don't use "endswith" to also match with ADS logs and ".vhdx". Example: "TargetFilename: C:\Users\xxx\Downloads\windows.vhd:Zone.Identifier"
         TargetFilename|contains: .vhd
     condition: file_event and selection
 falsepositives:

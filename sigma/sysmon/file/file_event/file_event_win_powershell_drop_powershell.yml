@@ -1,9 +1,7 @@
 title: PowerShell Script Dropped Via PowerShell.EXE
 id: 576426ad-0131-4001-ae01-be175da0c108
 status: experimental
-description: Detects PowerShell creating a PowerShell file (.ps1). While often times
-    this behavior is benign, sometimes it can be a sign of a dropper script trying
-    to achieve persistence.
+description: Detects PowerShell creating a PowerShell file (.ps1). While often times this behavior is benign, sometimes it can be a sign of a dropper script trying to achieve persistence.
 references:
     - https://www.zscaler.com/blogs/security-research/onenote-growing-threat-malware-distribution
 author: frack113
@@ -32,7 +30,6 @@ detection:
         TargetFilename|startswith: C:\Windows\Temp\
     condition: file_event and (selection and not 1 of filter_main_*)
 falsepositives:
-    - False positives will differ depending on the environment and scripts used. Apply
-        additional filters accordingly.
+    - False positives will differ depending on the environment and scripts used. Apply additional filters accordingly.
 level: low
 ruletype: Sigma

@@ -1,8 +1,7 @@
 title: Pass the Hash Activity 2
 id: 8eef149c-bd26-49f2-9e5a-9b00e3af499b
 status: stable
-description: Detects the attack technique pass the hash which is used to move laterally
-    inside the network
+description: Detects the attack technique pass the hash which is used to move laterally inside the network
 references:
     - https://github.com/iadgov/Event-Forwarding-Guidance/tree/master/Events
     - https://blog.binarydefense.com/reliably-detecting-pass-the-hash-through-event-log-analysis
@@ -16,8 +15,7 @@ tags:
 logsource:
     product: windows
     service: security
-    definition: The successful use of PtH for lateral movement between workstations
-        would trigger event ID 4624
+    definition: The successful use of PtH for lateral movement between workstations would trigger event ID 4624
 detection:
     security:
         Channel: Security

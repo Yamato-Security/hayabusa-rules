@@ -1,8 +1,7 @@
 title: HackTool - SafetyKatz Execution
 id: b1876533-4ed5-4a83-90f3-b8645840a413
 status: test
-description: Detects the execution of the hacktool SafetyKatz via PE information and
-    default Image name
+description: Detects the execution of the hacktool SafetyKatz via PE information and default Image name
 references:
     - https://github.com/GhostPack/SafetyKatz
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -19,9 +18,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        -   NewProcessName|endswith: \SafetyKatz.exe
-        -   OriginalFileName: SafetyKatz.exe
-        -   Description: SafetyKatz
+        - NewProcessName|endswith: \SafetyKatz.exe
+        - OriginalFileName: SafetyKatz.exe
+        - Description: SafetyKatz
     condition: process_creation and selection
 falsepositives:
     - Unlikely

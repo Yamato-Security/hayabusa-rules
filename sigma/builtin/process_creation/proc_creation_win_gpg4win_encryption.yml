@@ -18,10 +18,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_metadata:
-        -   NewProcessName|endswith:
-                - \gpg.exe
-                - \gpg2.exe
-        -   Description: "GnuPG\u2019s OpenPGP tool"
+        - NewProcessName|endswith:
+              - \gpg.exe
+              - \gpg2.exe
+        - Description: GnuPG’s OpenPGP tool
     selection_cli:
         CommandLine|contains|all:
             - ' -c '

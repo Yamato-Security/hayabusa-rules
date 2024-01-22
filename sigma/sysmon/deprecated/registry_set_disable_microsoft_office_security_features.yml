@@ -17,6 +17,11 @@ logsource:
     product: windows
     category: registry_set
     definition: key must be add to the sysmon configuration to works
+    # Sysmon
+    # <TargetObject name="T1562,office" condition="end with">\VBAWarnings</TargetObject>
+    # <TargetObject name="T1562,office" condition="end with">\DisableInternetFilesInPV</TargetObject>
+    # <TargetObject name="T1562,office" condition="end with">\DisableUnsafeLocationsInPV</TargetObject>
+    # <TargetObject name="T1562,office" condition="end with">\DisableAttachementsInPV</TargetObject>
 detection:
     registry_set:
         EventID: 13

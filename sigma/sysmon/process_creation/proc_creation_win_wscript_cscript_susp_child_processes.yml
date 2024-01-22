@@ -1,14 +1,9 @@
 title: Cscript/Wscript Potentially Suspicious Child Process
 id: b6676963-0353-4f88-90f5-36c20d443c6a
 status: experimental
-description: 'Detects potentially suspicious child processes of Wscript/Cscript. These
-    include processes such as rundll32 with uncommon exports or PowerShell spawning
-    rundll32 or regsvr32.
-
-    Malware such as Pikabot and Qakbot were seen using similar techniques as well
-    as many others.
-
-    '
+description: |
+    Detects potentially suspicious child processes of Wscript/Cscript. These include processes such as rundll32 with uncommon exports or PowerShell spawning rundll32 or regsvr32.
+    Malware such as Pikabot and Qakbot were seen using similar techniques as well as many others.
 references:
     - Internal Research
     - https://github.com/pr0xylife/Pikabot/blob/main/Pikabot_30.10.2023.txt
@@ -35,6 +30,7 @@ detection:
             - \cmd.exe
             - \powershell.exe
             - \pwsh.exe
+    # Note: Add other combinations that are suspicious
     selection_cli_script_option_mshta:
         CommandLine|contains|all:
             - mshta
@@ -52,11 +48,8 @@ detection:
             - UpdatePerUserSystemParameters
             - PrintUIEntry
             - ClearMyTracksByProcess
-    condition: process_creation and (selection_parent and ( selection_cli_standalone
-        or (selection_cli_script_main and 1 of selection_cli_script_option_*) ) and
-        not 1 of filter_main_*)
+    condition: process_creation and (selection_parent and ( selection_cli_standalone or (selection_cli_script_main and 1 of selection_cli_script_option_*) ) and not 1 of filter_main_*)
 falsepositives:
-    - Some false positives might occur with admin or third party software scripts.
-        Investigate and apply additional filters accordingly.
+    - Some false positives might occur with admin or third party software scripts. Investigate and apply additional filters accordingly.
 level: medium
 ruletype: Sigma

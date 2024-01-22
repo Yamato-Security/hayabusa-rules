@@ -44,13 +44,13 @@ detection:
             - .dll
             - .exe
     filter_main_admin_temp:
+        # Example: C:\Windows\Temp\0DA9758B-4649-4969-9409-5CBDF193FB53\TransmogProvider.dll
         TargetFilename|startswith: C:\Windows\Temp\
         TargetFilename|endswith:
             - .dll
             - .exe
     condition: file_event and (selection and not 1 of filter_main_*)
 falsepositives:
-    - False positives will differ depending on the environment and scripts used. Apply
-        additional filters accordingly.
+    - False positives will differ depending on the environment and scripts used. Apply additional filters accordingly.
 level: medium
 ruletype: Sigma

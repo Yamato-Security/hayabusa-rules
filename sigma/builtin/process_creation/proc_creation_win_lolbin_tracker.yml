@@ -18,8 +18,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \tracker.exe
-        -   Description: Tracker
+        - NewProcessName|endswith: \tracker.exe
+        - Description: Tracker
     selection_cli:
         CommandLine|contains:
             - ' /d '
@@ -27,6 +27,10 @@ detection:
     filter_msbuild1:
         CommandLine|contains: ' /ERRORREPORT:PROMPT '
     filter_msbuild2:
+        # Example:
+        #   GrandparentImage: C:\Program Files\Microsoft Visual Studio\2022\Community\Msbuild\Current\Bin\MSBuild.exe
+        #   ParentCommandLine: "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" /nologo /nodemode:1 /nodeReuse:true /low:false
+        #   CommandLine: "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Tracker.exe" @"C:\Users\user\AppData\Local\Temp\tmp05c7789bc5534838bf96d7a0fed1ffff.tmp" /c "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.29.30133\bin\HostX86\x64\Lib.exe"
         ParentProcessName|endswith:
             - \Msbuild\Current\Bin\MSBuild.exe
             - \Msbuild\Current\Bin\amd64\MSBuild.exe

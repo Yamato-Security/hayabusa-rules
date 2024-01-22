@@ -1,11 +1,10 @@
 title: Meterpreter or Cobalt Strike Getsystem Service Installation
 id: d585ab5a-6a69-49a8-96e8-4a726a54de46
 related:
-    -   id: 843544a7-56e0-4dcc-a44f-5cc266dd97d6
-        type: derived
+    - id: 843544a7-56e0-4dcc-a44f-5cc266dd97d6
+      type: derived
 status: unsupported
-description: Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting
-    a specific service installation
+description: Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting a specific service installation
 references:
     - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
     - https://blog.cobaltstrike.com/2014/04/02/what-happens-when-i-type-getsystem/
@@ -25,25 +24,29 @@ detection:
         EventID: 6
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   ImagePath|contains|all:
-                - cmd
-                - /c
-                - echo
-                - \pipe\
-        -   ImagePath|contains|all:
-                - '%COMSPEC%'
-                - /c
-                - echo
-                - \pipe\
-        -   ImagePath|contains|all:
-                - cmd.exe
-                - /c
-                - echo
-                - \pipe\
-        -   ImagePath|contains|all:
-                - rundll32
-                - .dll,a
-                - '/p:'
+        # meterpreter getsystem technique 1: cmd.exe /c echo 559891bb017 > \\.\pipe\5e120a
+        - ImagePath|contains|all:
+              - cmd
+              - /c
+              - echo
+              - \pipe\
+        # cobaltstrike getsystem technique 1: %COMSPEC% /c echo 559891bb017 > \\.\pipe\5e120a
+        - ImagePath|contains|all:
+              - '%COMSPEC%'
+              - /c
+              - echo
+              - \pipe\
+        # cobaltstrike getsystem technique 1b (expanded %COMSPEC%): %COMSPEC% /c echo 559891bb017 > \\.\pipe\5e120a
+        - ImagePath|contains|all:
+              - cmd.exe
+              - /c
+              - echo
+              - \pipe\
+        # meterpreter getsystem technique 2: rundll32.exe C:\Users\test\AppData\Local\Temp\tmexsn.dll,a /p:tmexsn
+        - ImagePath|contains|all:
+              - rundll32
+              - .dll,a
+              - '/p:'
     condition: driver_load and selection
 fields:
     - ComputerName

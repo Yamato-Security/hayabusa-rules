@@ -20,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \verclsid.exe
-        -   OriginalFileName: verclsid.exe
+        - NewProcessName|endswith: \verclsid.exe
+        - OriginalFileName: verclsid.exe
     selection_cli:
         CommandLine|contains|all:
             - /S

@@ -1,8 +1,7 @@
 title: Always Install Elevated Windows Installer
 id: cd951fdc-4b2f-47f5-ba99-a33bf61e3770
 status: experimental
-description: Detects Windows Installer service (msiexec.exe) trying to install MSI
-    packages with SYSTEM privilege
+description: Detects Windows Installer service (msiexec.exe) trying to install MSI packages with SYSTEM privilege
 references:
     - https://image.slidesharecdn.com/kheirkhabarovoffzonefinal-181117201458/95/hunting-for-privilege-escalation-in-windows-environment-48-638.jpg
 author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community
@@ -19,7 +18,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection_user:
-        SubjectUserName|contains:
+        SubjectUserName|contains: # covers many language settings
             - AUTHORI
             - AUTORI
     selection_image_1:
@@ -33,8 +32,8 @@ detection:
     filter_installer:
         ParentProcessName: C:\Windows\System32\services.exe
     filter_repair:
-        -   CommandLine|endswith: \system32\msiexec.exe /V
-        -   ParentCommandLine|endswith: \system32\msiexec.exe /V
+        - CommandLine|endswith: \system32\msiexec.exe /V   # ignore "repair option"
+        - ParentCommandLine|endswith: \system32\msiexec.exe /V   # ignore "repair option"
     filter_sophos:
         ParentProcessName|startswith: C:\ProgramData\Sophos\
     filter_avira:
@@ -47,8 +46,7 @@ detection:
         ParentProcessName|startswith:
             - C:\Program Files\Google\Update\
             - C:\Program Files (x86)\Google\Update\
-    condition: process_creation and (1 of selection_image_* and selection_user and
-        not 1 of filter_*)
+    condition: process_creation and (1 of selection_image_* and selection_user and not 1 of filter_*)
 falsepositives:
     - System administrator usage
     - Anti virus products

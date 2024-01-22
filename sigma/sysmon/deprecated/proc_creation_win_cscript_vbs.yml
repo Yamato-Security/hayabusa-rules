@@ -19,12 +19,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_exe:
-        -   OriginalFileName:
-                - cscript.exe
-                - wscript.exe
-        -   Image|endswith:
-                - \cscript.exe
-                - \wscript.exe
+        - OriginalFileName:
+              - cscript.exe
+              - wscript.exe
+        - Image|endswith:
+              - \cscript.exe
+              - \wscript.exe
     selection_script:
         CommandLine|contains: .vbs
     condition: process_creation and (all of selection_*)

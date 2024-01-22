@@ -24,8 +24,8 @@ detection:
             - 'wget '
             - 'curl '
         CommandLine|contains|all:
-            - ' -ur'
-            - ' -me'
+            - ' -ur' # Shortest possible version of the -uri flag
+            - ' -me' # Shortest possible version of the -method flag
             - ' -b'
             - ' POST '
         NewProcessName|endswith:
@@ -33,11 +33,11 @@ detection:
             - \pwsh.exe
             - \cmd.exe
     selection_curl:
-        CommandLine|contains: --ur
+        CommandLine|contains: --ur   # Shortest possible version of the --uri flag
         NewProcessName|endswith: \curl.exe
     selection_curl_data:
         CommandLine|contains:
-            - ' -d '
+            - ' -d ' # Shortest possible version of the --data flag
             - ' --data '
     selection_wget:
         CommandLine|contains:
@@ -45,27 +45,26 @@ detection:
             - --post-file
         NewProcessName|endswith: \wget.exe
     payloads:
-        -   CommandLine|contains:
-                - Get-Content
-                - GetBytes
-                - hostname
-                - ifconfig
-                - ipconfig
-                - net view
-                - netstat
-                - nltest
-                - qprocess
-                - sc query
-                - systeminfo
-                - tasklist
-                - ToBase64String
-                - whoami
-        -   CommandLine|contains|all:
-                - 'type '
-                - ' > '
-                - ' C:\'
-    condition: process_creation and ((selection_iwr or all of selection_curl* or selection_wget)
-        and payloads)
+        - CommandLine|contains:
+              - Get-Content
+              - GetBytes
+              - hostname
+              - ifconfig
+              - ipconfig
+              - net view
+              - netstat
+              - nltest
+              - qprocess
+              - sc query
+              - systeminfo
+              - tasklist
+              - ToBase64String
+              - whoami
+        - CommandLine|contains|all:
+              - 'type '
+              - ' > '
+              - ' C:\'
+    condition: process_creation and ((selection_iwr or all of selection_curl* or selection_wget) and payloads)
 falsepositives:
     - Unlikely
 level: high

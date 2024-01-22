@@ -1,8 +1,7 @@
 title: HAFNIUM Exchange Exploitation Activity
 id: bbb2dedd-a0e3-46ab-ba6c-6c82ae7a9aa7
 status: test
-description: Detects activity observed by different researchers to be HAFNIUM group
-    activity (or related) on Exchange servers
+description: Detects activity observed by different researchers to be HAFNIUM group activity (or related) on Exchange servers
 references:
     - https://blog.truesec.com/2021/03/07/exchange-zero-day-proxylogon-and-hafnium/
     - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
@@ -33,10 +32,10 @@ detection:
             - ' +r '
             - .aspx
     selection_vsperfmon:
-        -   NewProcessName|contains: \ProgramData\VSPerfMon\
-        -   CommandLine|contains|all:
-                - schtasks
-                - VSPerfMon
+        - NewProcessName|contains: \ProgramData\VSPerfMon\
+        - CommandLine|contains|all:
+              - schtasks
+              - VSPerfMon
     selection_opera_1:
         NewProcessName|endswith: Opera_browser.exe
         ParentProcessName|endswith:

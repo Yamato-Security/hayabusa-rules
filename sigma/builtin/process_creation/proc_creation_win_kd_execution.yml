@@ -17,11 +17,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        -   NewProcessName|endswith: \kd.exe
-        -   OriginalFileName: kd.exe
+        - NewProcessName|endswith: \kd.exe
+        - OriginalFileName: kd.exe
     condition: process_creation and selection
 falsepositives:
-    - Rare occasions of legitimate cases where kernel debugging is necessary in production.
-        Investigation is required
+    - Rare occasions of legitimate cases where kernel debugging is necessary in production. Investigation is required
 level: high
 ruletype: Sigma

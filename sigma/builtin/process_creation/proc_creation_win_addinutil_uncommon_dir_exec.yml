@@ -1,8 +1,7 @@
 title: AddinUtil.EXE Execution From Uncommon Directory
 id: 6120ac2a-a34b-42c0-a9bd-1fb9f459f348
 status: experimental
-description: Detects execution of the Add-In deployment cache updating utility (AddInutil.exe)
-    from a non-standard directory.
+description: Detects execution of the Add-In deployment cache updating utility (AddInutil.exe) from a non-standard directory.
 references:
     - https://www.blue-prints.blog/content/blog/posts/lolbin/addinutil-lolbas.html
 author: Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)
@@ -18,8 +17,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        -   NewProcessName|endswith: \addinutil.exe
-        -   OriginalFileName: AddInUtil.exe
+        - NewProcessName|endswith: \addinutil.exe
+        - OriginalFileName: AddInUtil.exe
     filter_main_legit_location:
         NewProcessName|contains:
             - :\Windows\Microsoft.NET\Framework\

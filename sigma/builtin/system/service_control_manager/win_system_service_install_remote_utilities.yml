@@ -12,16 +12,24 @@ logsource:
     product: windows
     service: system
 detection:
+    # Example:
+    #   <EventData>
+    #       <Data Name="ServiceName">Remote Utilities - Host</Data>
+    #       <Data Name="ImagePath">"C:\Program Files (x86)\Remote Utilities - Host\rutserv.exe" -service</Data>
+    #       <Data Name="ServiceType">user mode service</Data>
+    #       <Data Name="StartType">auto start</Data>
+    #       <Data Name="AccountName">LocalSystem</Data>
+    #   </EventData>
     system:
         Channel: System
     selection_root:
         Provider_Name: Service Control Manager
         EventID: 7045
     selection_service:
-        -   ImagePath|contains|all:
-                - \rutserv.exe
-                - -service
-        -   ServiceName: Remote Utilities - Host
+        - ImagePath|contains|all:
+              - \rutserv.exe
+              - -service
+        - ServiceName: Remote Utilities - Host
     condition: system and (all of selection_*)
 falsepositives:
     - Legitimate use of the tool

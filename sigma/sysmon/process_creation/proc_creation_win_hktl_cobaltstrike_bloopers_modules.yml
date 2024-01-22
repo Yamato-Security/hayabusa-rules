@@ -1,8 +1,8 @@
 title: Operator Bloopers Cobalt Strike Modules
 id: 4f154fb6-27d1-4813-a759-78b93e0b9c48
 related:
-    -   id: 647c7b9e-d784-4fda-b9a0-45c565a7b729
-        type: similar
+    - id: 647c7b9e-d784-4fda-b9a0-45c565a7b729
+      type: similar
 status: test
 description: Detects Cobalt Strike module/commands accidentally entered in CMD shell
 references:
@@ -24,8 +24,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   OriginalFileName: Cmd.Exe
-        -   Image|endswith: \cmd.exe
+        - OriginalFileName: Cmd.Exe
+        - Image|endswith: \cmd.exe
     selection_cli:
         CommandLine|contains:
             - Invoke-UserHunter

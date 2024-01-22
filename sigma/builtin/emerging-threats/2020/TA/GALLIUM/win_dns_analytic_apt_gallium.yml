@@ -1,11 +1,10 @@
 title: GALLIUM Artefacts - Builtin
 id: 3db10f25-2527-4b79-8d4b-471eb900ee29
 related:
-    -   id: 440a56bf-7873-4439-940a-1c8a671073c2
-        type: derived
+    - id: 440a56bf-7873-4439-940a-1c8a671073c2
+      type: derived
 status: test
-description: Detects artefacts associated with activity group GALLIUM - Microsoft
-    Threat Intelligence Center indicators released in December 2019.
+description: Detects artefacts associated with activity group GALLIUM - Microsoft Threat Intelligence Center indicators released in December 2019.
 references:
     - https://www.microsoft.com/security/blog/2019/12/12/gallium-targeting-global-telecom/
     - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-R2-and-2012/dn800669(v=ws.11)
@@ -20,8 +19,7 @@ tags:
 logsource:
     product: windows
     service: dns-server-analytic
-    definition: 'Requirements: Microsoft-Windows-DNS-Server/Analytical ({EB79061A-A566-4698-9119-3ED2807060E7})
-        Event Log must be collected in order to receive the events.'
+    definition: 'Requirements: Microsoft-Windows-DNS-Server/Analytical ({EB79061A-A566-4698-9119-3ED2807060E7}) Event Log must be collected in order to receive the events.'
 detection:
     dns_server_analytic:
         Channel: Microsoft-Windows-DNS-Server/Analytical

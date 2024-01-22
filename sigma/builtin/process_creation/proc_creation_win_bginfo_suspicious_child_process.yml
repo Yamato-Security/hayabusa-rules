@@ -1,11 +1,10 @@
 title: Suspicious Child Process Of BgInfo.EXE
 id: 811f459f-9231-45d4-959a-0266c6311987
 related:
-    -   id: aaf46cdc-934e-4284-b329-34aa701e3771
-        type: similar
+    - id: aaf46cdc-934e-4284-b329-34aa701e3771
+      type: similar
 status: experimental
-description: Detects suspicious child processes of "BgInfo.exe" which could be a sign
-    of potential abuse of the binary to proxy execution via external VBScript
+description: Detects suspicious child processes of "BgInfo.exe" which could be a sign of potential abuse of the binary to proxy execution via external VBScript
 references:
     - https://lolbas-project.github.io/lolbas/OtherMSBinaries/Bginfo/
     - https://oddvar.moe/2017/05/18/bypassing-application-whitelisting-with-bginfo/
@@ -29,22 +28,22 @@ detection:
             - \bginfo.exe
             - \bginfo64.exe
     selection_child:
-        -   NewProcessName|endswith:
-                - \calc.exe
-                - \cmd.exe
-                - \cscript.exe
-                - \mshta.exe
-                - \notepad.exe
-                - \powershell.exe
-                - \pwsh.exe
-                - \wscript.exe
-        -   NewProcessName|contains:
-                - \AppData\Local\
-                - \AppData\Roaming\
-                - :\Users\Public\
-                - :\Temp\
-                - :\Windows\Temp\
-                - :\PerfLogs\
+        - NewProcessName|endswith:
+              - \calc.exe
+              - \cmd.exe
+              - \cscript.exe
+              - \mshta.exe
+              - \notepad.exe
+              - \powershell.exe
+              - \pwsh.exe
+              - \wscript.exe
+        - NewProcessName|contains:
+              - \AppData\Local\
+              - \AppData\Roaming\
+              - :\Users\Public\
+              - :\Temp\
+              - :\Windows\Temp\
+              - :\PerfLogs\
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

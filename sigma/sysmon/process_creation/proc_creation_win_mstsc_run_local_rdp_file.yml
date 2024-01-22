@@ -20,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \mstsc.exe
-        -   OriginalFileName: mstsc.exe
+        - Image|endswith: \mstsc.exe
+        - OriginalFileName: mstsc.exe
     selection_cli:
         CommandLine|endswith:
             - .rdp

@@ -20,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \dotnet.exe
-        -   OriginalFileName: .NET Host
+        - NewProcessName|endswith: \dotnet.exe
+        - OriginalFileName: .NET Host
     selection_cli:
         CommandLine|endswith:
             - .dll

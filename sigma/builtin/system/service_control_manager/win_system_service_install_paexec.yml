@@ -19,8 +19,8 @@ detection:
         Provider_Name: Service Control Manager
         EventID: 7045
     selection_image:
-        -   ServiceName|startswith: PAExec-
-        -   ImagePath|startswith: C:\WINDOWS\PAExec-
+        - ServiceName|startswith: PAExec-
+        - ImagePath|startswith: C:\WINDOWS\PAExec-
     condition: system and (all of selection_*)
 falsepositives:
     - Unknown

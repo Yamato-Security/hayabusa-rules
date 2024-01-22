@@ -1,8 +1,7 @@
 title: All Rules Have Been Deleted From The Windows Firewall Configuration
 id: 79609c82-a488-426e-abcf-9f341a39365d
 status: experimental
-description: Detects when a all the rules have been deleted from the Windows Defender
-    Firewall configuration
+description: Detects when a all the rules have been deleted from the Windows Defender Firewall configuration
 references:
     - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 author: frack113, Nasreddine Bencherchali (Nextron Systems)
@@ -19,8 +18,8 @@ detection:
         Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
     selection:
         EventID:
-            - 2033
-            - 2059
+            - 2033 # All rules have been deleted from the Windows Defender Firewall configuration on this computer
+            - 2059 # All rules have been deleted from the Windows Defender Firewall configuration on this computer. (Windows 11)
     filter_main_generic:
         ModifyingApplication|startswith:
             - C:\Program Files\
@@ -30,7 +29,6 @@ detection:
     filter_optional_msmpeng:
         ModifyingApplication|startswith: C:\ProgramData\Microsoft\Windows Defender\Platform\
         ModifyingApplication|endswith: \MsMpEng.exe
-    condition: firewall_as and (selection and not 1 of filter_main_* and not 1 of
-        filter_optional_*)
+    condition: firewall_as and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 level: high
 ruletype: Sigma

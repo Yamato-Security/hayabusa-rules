@@ -1,8 +1,8 @@
 title: Scheduled Tasks Names Used By SVR For GraphicalProton Backdoor - Task Scheduler
 id: 2bfc1373-0220-4fbd-8b10-33ddafd2a142
 related:
-    -   id: 8fa65166-f463-4fd2-ad4f-1436133c52e1
-        type: similar
+    - id: 8fa65166-f463-4fd2-ad4f-1436133c52e1 # Security-Audting Eventlog
+      type: similar
 status: experimental
 description: Hunts for known SVR-specific scheduled task names
 author: CISA
@@ -14,17 +14,15 @@ tags:
 logsource:
     product: windows
     service: taskscheduler
-    definition: 'Requirements: The "Microsoft-Windows-TaskScheduler/Operational" is
-        disabled by default and needs to be enabled in order for this detection to
-        trigger'
+    definition: 'Requirements: The "Microsoft-Windows-TaskScheduler/Operational" is disabled by default and needs to be enabled in order for this detection to trigger'
 detection:
     taskscheduler:
         Channel: Microsoft-Windows-TaskScheduler/Operational
     selection:
         EventID:
-            - 129
-            - 140
-            - 141
+            - 129 # Task Created
+            - 140 # Task Updated
+            - 141 # Task Deleted
         TaskName:
             - \defender
             - \Microsoft\DefenderService

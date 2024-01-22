@@ -21,7 +21,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        User|contains:
+        User|contains: # covers many language settings
             - AUTHORI
             - AUTORI
         Image|endswith: \tscon.exe

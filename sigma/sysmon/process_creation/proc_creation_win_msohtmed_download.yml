@@ -20,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \MSOHTMED.exe
-        -   OriginalFileName: MsoHtmEd.exe
+        - Image|endswith: \MSOHTMED.exe
+        - OriginalFileName: MsoHtmEd.exe
     selection_cli:
         CommandLine|contains:
             - ftp://

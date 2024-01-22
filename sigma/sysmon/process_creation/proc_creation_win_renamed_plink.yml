@@ -20,11 +20,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   OriginalFileName: Plink
-        -   CommandLine|contains|all:
-                - ' -l forward'
-                - ' -P '
-                - ' -R '
+        - OriginalFileName: Plink
+        - CommandLine|contains|all:
+              - ' -l forward'
+              - ' -P '
+              - ' -R '
     filter:
         Image|endswith: \plink.exe
     condition: process_creation and (selection and not filter)

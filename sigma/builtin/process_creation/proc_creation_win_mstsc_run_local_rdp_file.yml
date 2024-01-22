@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \mstsc.exe
-        -   OriginalFileName: mstsc.exe
+        - NewProcessName|endswith: \mstsc.exe
+        - OriginalFileName: mstsc.exe
     selection_cli:
         CommandLine|endswith:
             - .rdp

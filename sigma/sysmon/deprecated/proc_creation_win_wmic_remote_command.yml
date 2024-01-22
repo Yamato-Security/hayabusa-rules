@@ -20,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \WMIC.exe
-        -   OriginalFileName: wmic.exe
+        - Image|endswith: \WMIC.exe
+        - OriginalFileName: wmic.exe
     selection_cli:
         CommandLine|contains|all:
             - '/node:'

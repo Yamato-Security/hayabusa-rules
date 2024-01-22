@@ -1,8 +1,8 @@
 title: Clear PowerShell History - PowerShell Module
 id: f99276ad-d122-4989-a09a-d00904a5f9d2
 related:
-    -   id: dfba4ce1-e0ea-495f-986e-97140f31af2d
-        type: derived
+    - id: dfba4ce1-e0ea-495f-986e-97140f31af2d
+      type: derived
 status: test
 description: Detects keywords that could indicate clearing PowerShell history
 references:
@@ -33,7 +33,7 @@ detection:
     selection_payload_2:
         Payload|contains|all:
             - Set-PSReadlineOption
-            - "\u2013HistorySaveStyle"
+            - –HistorySaveStyle    # not sure if the homoglyph –/- is intended, just checking for both
             - SaveNothing
     selection_payload_3:
         Payload|contains|all:

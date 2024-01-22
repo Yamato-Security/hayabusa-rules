@@ -40,12 +40,10 @@ detection:
             - \wmic.exe
             - \wscript.exe
     filter_optional_amazon:
-        ParentCommandLine|contains: \Program Files\Amazon\WorkspacesConfig\Scripts\
-        CommandLine|contains: \Program Files\Amazon\WorkspacesConfig\Scripts\
+        ParentCommandLine|contains: \Program Files\Amazon\WorkspacesConfig\Scripts\    # AWS Workspaces
+        CommandLine|contains: \Program Files\Amazon\WorkspacesConfig\Scripts\    # AWS Workspaces
     condition: process_creation and (selection and not 1 of filter_optional_*)
 falsepositives:
-    - Some false positive is to be expected from PowerShell scripts that might make
-        use of additional binaries such as "mshta", "bitsadmin", etc. Apply additional
-        filters for those scripts when needed.
+    - Some false positive is to be expected from PowerShell scripts that might make use of additional binaries such as "mshta", "bitsadmin", etc. Apply additional filters for those scripts when needed.
 level: high
 ruletype: Sigma

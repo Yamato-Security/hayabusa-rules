@@ -1,9 +1,7 @@
 title: Potentially Suspicious Office Document Executed From Trusted Location
 id: f99abdf0-6283-4e71-bd2b-b5c048a94743
 status: experimental
-description: Detects the execution of an Office application that points to a document
-    that is located in a trusted location. Attackers often used this to avoid macro
-    security and execute their malicious code.
+description: Detects the execution of an Office application that points to a document that is located in a trusted location. Attackers often used this to avoid macro security and execute their malicious code.
 references:
     - Internal Research
     - https://twitter.com/Max_Mal_/status/1633863678909874176
@@ -23,25 +21,28 @@ detection:
         EventID: 4688
         Channel: Security
     selection_parent:
+        # Note: we add a parent shell to reduce FP. Add additional 3rd party shells that you might use
         ParentProcessName|endswith:
             - \explorer.exe
             - \dopus.exe
     selection_img:
-        -   NewProcessName|endswith:
-                - \EXCEL.EXE
-                - \POWERPNT.EXE
-                - \WINWORD.exe
-        -   OriginalFileName:
-                - Excel.exe
-                - POWERPNT.EXE
-                - WinWord.exe
+        - NewProcessName|endswith:
+              - \EXCEL.EXE
+              - \POWERPNT.EXE
+              - \WINWORD.exe
+        - OriginalFileName:
+              - Excel.exe
+              - POWERPNT.EXE
+              - WinWord.exe
     selection_trusted_location:
         CommandLine|contains:
+            # Note: these are the default locations. Admins/Users could add additional ones that you need to cover
             - \AppData\Roaming\Microsoft\Templates
             - \AppData\Roaming\Microsoft\Word\Startup\
             - \Microsoft Office\root\Templates\
             - \Microsoft Office\Templates\
     filter_main_dotx:
+        # Note: We add this filter to avoid curious people clicking on template files
         CommandLine|endswith:
             - .dotx
             - .xltx

@@ -1,9 +1,7 @@
 title: Scheduled Task Executed From A Suspicious Location
 id: 424273ea-7cf8-43a6-b712-375f925e481f
 status: test
-description: Detects the execution of Scheduled Tasks where the Program being run
-    is located in a suspicious location or it's an unusale program to be run from
-    a Scheduled Task
+description: Detects the execution of Scheduled Tasks where the Program being run is located in a suspicious location or it's an unusale program to be run from a Scheduled Task
 references:
     - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -15,14 +13,12 @@ tags:
 logsource:
     product: windows
     service: taskscheduler
-    definition: 'Requirements: The "Microsoft-Windows-TaskScheduler/Operational" is
-        disabled by default and needs to be enabled in order for this detection to
-        trigger'
+    definition: 'Requirements: The "Microsoft-Windows-TaskScheduler/Operational" is disabled by default and needs to be enabled in order for this detection to trigger'
 detection:
     taskscheduler:
         Channel: Microsoft-Windows-TaskScheduler/Operational
     selection:
-        EventID: 129
+        EventID: 129 # Created Task Process
         Path|contains:
             - C:\Windows\Temp\
             - \AppData\Local\Temp\
@@ -30,6 +26,10 @@ detection:
             - \Downloads\
             - \Users\Public\
             - C:\Temp\
+    # If you experience FP. Uncomment the filter below and add the specific TaskName with the Program to it
+    # filter:
+    #     TaskName: '\Exact\Task\Name'
+    #     Path: 'Exact\Path'
     condition: taskscheduler and selection
 falsepositives:
     - Unknown

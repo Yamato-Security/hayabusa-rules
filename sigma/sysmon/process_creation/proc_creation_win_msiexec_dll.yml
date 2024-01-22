@@ -21,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \msiexec.exe
-        -   OriginalFileName: \msiexec.exe
+        - Image|endswith: \msiexec.exe
+        - OriginalFileName: \msiexec.exe
     selection_flag:
         CommandLine|contains:
             - ' /z '

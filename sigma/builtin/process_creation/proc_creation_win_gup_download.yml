@@ -1,8 +1,7 @@
 title: File Download Using Notepad++ GUP Utility
 id: 44143844-0631-49ab-97a0-96387d6b2d7c
 status: test
-description: Detects execution of the Notepad++ updater (gup) from a process other
-    than Notepad++ to download files.
+description: Detects execution of the Notepad++ updater (gup) from a process other than Notepad++ to download files.
 references:
     - https://twitter.com/nas_bench/status/1535322182863179776
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -19,8 +18,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \GUP.exe
-        -   OriginalFileName: gup.exe
+        - NewProcessName|endswith: \GUP.exe
+        - OriginalFileName: gup.exe
     selection_cli:
         CommandLine|contains|all:
             - ' -unzipTo '
@@ -29,7 +28,6 @@ detection:
         ParentProcessName|endswith: \notepad++.exe
     condition: process_creation and (all of selection* and not filter)
 falsepositives:
-    - Other parent processes other than notepad++ using GUP that are not currently
-        identified
+    - Other parent processes other than notepad++ using GUP that are not currently identified
 level: high
 ruletype: Sigma

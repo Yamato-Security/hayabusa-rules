@@ -1,16 +1,11 @@
 title: Suspicious AddinUtil.EXE CommandLine Execution
 id: 631b22a4-70f4-4e2f-9ea8-42f84d9df6d8
 status: experimental
-description: 'Detects execution of the Add-In deployment cache updating utility (AddInutil.exe)
-    with suspicious Addinroot or Pipelineroot paths. An adversary may execute AddinUtil.exe
-    with uncommon Addinroot/Pipelineroot paths that point to the adversaries Addins.Store
-    payload.
-
-    '
+description: |
+    Detects execution of the Add-In deployment cache updating utility (AddInutil.exe) with suspicious Addinroot or Pipelineroot paths. An adversary may execute AddinUtil.exe with uncommon Addinroot/Pipelineroot paths that point to the adversaries Addins.Store payload.
 references:
     - https://www.blue-prints.blog/content/blog/posts/lolbin/addinutil-lolbas.html
-author: Nasreddine Bencherchali (Nextron Systems), Michael McKinley (@McKinleyMike),
-    Tony Latteri (@TheLatteri)
+author: Nasreddine Bencherchali (Nextron Systems), Michael McKinley (@McKinleyMike), Tony Latteri (@TheLatteri)
 date: 2023/09/18
 tags:
     - attack.defense_evasion
@@ -24,8 +19,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \addinutil.exe
-        -   OriginalFileName: AddInUtil.exe
+        - Image|endswith: \addinutil.exe
+        - OriginalFileName: AddInUtil.exe
     selection_susp_1_flags:
         CommandLine|contains:
             - '-AddInRoot:'
@@ -49,8 +44,7 @@ detection:
             - \Downloads\
             - \Users\Public\
             - \Windows\Temp\
-    condition: process_creation and (selection_img and (all of selection_susp_1_*
-        or selection_susp_2))
+    condition: process_creation and (selection_img and (all of selection_susp_1_* or selection_susp_2))
 falsepositives:
     - Unknown
 level: high

@@ -5,11 +5,10 @@ status: deprecated
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
     - https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns
-    - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d
+    - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d # a list with registry keys
 date: 2019/10/25
 modified: 2022/05/14
-author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin,
-    oscd.community, Tim Shelton
+author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin, oscd.community, Tim Shelton
 logsource:
     category: registry_event
     product: windows
@@ -194,25 +193,17 @@ detection:
             - \Lsa\Authentication Packages
             - \BootVerificationProgram\ImagePath
     filter:
-        -   Details: (Empty)
-        -   TargetObject|endswith: \NgcFirst\ConsecutiveSwitchCount
-        -   Image: C:\WINDOWS\System32\svchost.exe
-    condition: registry_event and (( main_selection or session_manager_base and session_manager
-        or current_version_base and current_version or nt_current_version_base and
-        nt_current_version or wow_current_version_base and wow_current_version or
-        wow_nt_current_version_base and wow_nt_current_version or (wow_office or office)
-        and wow_office_details or (wow_ie or ie) and wow_ie_details or wow_classes_base
-        and wow_classes or classes_base and classes or scripts_base and scripts or
-        winsock_parameters_base and winsock_parameters or system_control_base and
-        system_control ) and not filter)
+        - Details: (Empty)
+        - TargetObject|endswith: \NgcFirst\ConsecutiveSwitchCount
+        - Image: C:\WINDOWS\System32\svchost.exe
+    condition: registry_event and (( main_selection or session_manager_base and session_manager or current_version_base and current_version or nt_current_version_base and nt_current_version or wow_current_version_base and wow_current_version or wow_nt_current_version_base and wow_nt_current_version or (wow_office or office) and wow_office_details or (wow_ie or ie) and wow_ie_details or wow_classes_base and wow_classes or classes_base and classes or scripts_base and scripts or winsock_parameters_base and winsock_parameters or system_control_base and system_control ) and not filter)
 fields:
     - SecurityID
     - ObjectName
     - OldValueType
     - NewValueType
 falsepositives:
-    - Legitimate software automatically (mostly, during installation) sets up autorun
-        keys for legitimate reason
+    - Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason
     - Legitimate administrator sets up autorun keys for legitimate reason
 tags:
     - attack.persistence

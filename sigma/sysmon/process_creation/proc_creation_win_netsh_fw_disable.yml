@@ -22,20 +22,22 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \netsh.exe
-        -   OriginalFileName: netsh.exe
+        - Image|endswith: \netsh.exe
+        - OriginalFileName: netsh.exe
     selection_cli_1:
+        # Example: netsh firewall set opmode disable
         CommandLine|contains|all:
             - firewall
             - set
             - opmode
             - disable
     selection_cli_2:
+        # Example: netsh advfirewall set currentprofile state off
         CommandLine|contains|all:
             - advfirewall
             - set
             - state
-            - 'off'
+            - off
     condition: process_creation and (selection_img and 1 of selection_cli_*)
 falsepositives:
     - Legitimate administration activity

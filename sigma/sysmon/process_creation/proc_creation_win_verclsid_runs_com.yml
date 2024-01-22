@@ -21,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \verclsid.exe
-        -   OriginalFileName: verclsid.exe
+        - Image|endswith: \verclsid.exe
+        - OriginalFileName: verclsid.exe
     selection_cli:
         CommandLine|contains|all:
             - /S

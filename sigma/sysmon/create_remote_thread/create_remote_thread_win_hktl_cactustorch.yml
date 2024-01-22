@@ -3,7 +3,7 @@ id: 2e4e488a-6164-4811-9ea1-f960c7359c40
 status: test
 description: Detects remote thread creation from CACTUSTORCH as described in references.
 references:
-    - https://twitter.com/SBousseaden/status/1090588499517079552
+    - https://twitter.com/SBousseaden/status/1090588499517079552 # Deleted
     - https://github.com/mdsecactivebreach/CACTUSTORCH
 author: '@SBousseaden (detection), Thomas Patzke (rule)'
 date: 2019/02/01
@@ -31,7 +31,7 @@ detection:
             - \winword.exe
             - \excel.exe
         TargetImage|contains: \SysWOW64\
-        StartModule: null
+        StartModule:
     condition: create_remote_thread and selection
 falsepositives:
     - Unknown

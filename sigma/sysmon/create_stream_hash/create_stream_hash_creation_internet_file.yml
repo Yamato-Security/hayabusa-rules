@@ -1,8 +1,7 @@
 title: Creation Of a Suspicious ADS File Outside a Browser Download
 id: 573df571-a223-43bc-846e-3f98da481eca
 status: experimental
-description: Detects the creation of a suspicious ADS (Alternate Data Stream) file
-    by software other than browsers
+description: Detects the creation of a suspicious ADS (Alternate Data Stream) file by software other than browsers
 references:
     - https://www.bleepingcomputer.com/news/security/exploited-windows-zero-day-lets-javascript-files-bypass-security-warnings/
 author: frack113
@@ -55,11 +54,11 @@ detection:
     filter_optional_maxthon:
         Image|endswith: \maxthon.exe
     filter_optional_edge_1:
-        -   Image|startswith: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\
-        -   Image|endswith: \WindowsApps\MicrosoftEdge.exe
-        -   Image:
-                - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
-                - C:\Program Files\Microsoft\Edge\Application\msedge.exe
+        - Image|startswith: C:\Program Files (x86)\Microsoft\EdgeWebView\Application\
+        - Image|endswith: \WindowsApps\MicrosoftEdge.exe
+        - Image:
+              - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+              - C:\Program Files\Microsoft\Edge\Application\msedge.exe
     filter_optional_edge_2:
         Image|startswith:
             - C:\Program Files (x86)\Microsoft\EdgeCore\
@@ -88,7 +87,6 @@ detection:
     condition: create_stream_hash and (selection and not 1 of filter_optional_*)
 falsepositives:
     - Other legitimate browsers not currently included in the filter (please add them)
-    - Legitimate downloads via scripting or command-line tools (Investigate to determine
-        if it's legitimate)
+    - Legitimate downloads via scripting or command-line tools (Investigate to determine if it's legitimate)
 level: medium
 ruletype: Sigma

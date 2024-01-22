@@ -1,8 +1,7 @@
 title: A Rule Has Been Deleted From The Windows Firewall Exception List
 id: c187c075-bb3e-4c62-b4fa-beae0ffc211f
 status: experimental
-description: Detects when a single rules or all of the rules have been deleted from
-    the Windows Defender Firewall
+description: Detects when a single rules or all of the rules have been deleted from the Windows Defender Firewall
 references:
     - https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/dd364427(v=ws.10)
 author: frack113
@@ -19,8 +18,8 @@ detection:
         Channel: Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
     selection:
         EventID:
-            - 2006
-            - 2052
+            - 2006 # A rule has been deleted in the Windows Defender Firewall exception list
+            - 2052 # A rule has been deleted in the Windows Defender Firewall exception list. (Windows 11)
     filter_main_generic:
         ModifyingApplication|startswith:
             - C:\Program Files\
@@ -31,10 +30,9 @@ detection:
         ModifyingApplication|startswith: C:\ProgramData\Microsoft\Windows Defender\Platform\
         ModifyingApplication|endswith: \MsMpEng.exe
     filter_main_null:
-        ModifyingApplication: null
+        ModifyingApplication:
     filter_main_empty:
         ModifyingApplication: ''
-    condition: firewall_as and (selection and not 1 of filter_main_* and not 1 of
-        filter_optional_*)
+    condition: firewall_as and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 level: medium
 ruletype: Sigma

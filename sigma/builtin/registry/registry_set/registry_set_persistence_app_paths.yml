@@ -1,18 +1,11 @@
 title: Potential Persistence Via App Paths Default Property
 id: 707e097c-e20f-4f67-8807-1f72ff4500d6
 status: experimental
-description: 'Detects changes to the "Default" property for keys located in the \Software\Microsoft\Windows\CurrentVersion\App
-    Paths\ registry. Which might be used as a method of persistence
-
+description: |
+    Detects changes to the "Default" property for keys located in the \Software\Microsoft\Windows\CurrentVersion\App Paths\ registry. Which might be used as a method of persistence
     The entries found under App Paths are used primarily for the following purposes.
-
-    First, to map an application''s executable file name to that file''s fully qualified
-    path.
-
-    Second, to prepend information to the PATH environment variable on a per-application,
-    per-process basis.
-
-    '
+    First, to map an application's executable file name to that file's fully qualified path.
+    Second, to prepend information to the PATH environment variable on a per-application, per-process basis.
 references:
     - https://www.hexacorn.com/blog/2013/01/19/beyond-good-ol-run-key-part-3/
     - https://docs.microsoft.com/en-us/windows/win32/shell/app-registration?redirectedfrom=MSDN
@@ -35,6 +28,7 @@ detection:
             - (Default)
             - Path
         NewValue|contains:
+            # Add more suspicious paths or binaries as you see fit.
             - \Users\Public
             - \AppData\Local\Temp\
             - \Windows\Temp\
@@ -55,7 +49,6 @@ detection:
             - .ps1
     condition: registry_set and selection
 falsepositives:
-    - Legitimate applications registering their binary from on of the suspicious locations
-        mentioned above (tune it)
+    - Legitimate applications registering their binary from on of the suspicious locations mentioned above (tune it)
 level: high
 ruletype: Sigma

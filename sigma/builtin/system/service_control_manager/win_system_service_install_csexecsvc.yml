@@ -19,10 +19,11 @@ detection:
         Provider_Name: Service Control Manager
         EventID: 7045
     selection_service:
-        -   ServiceName: csexecsvc
-        -   ImagePath|endswith: \csexecsvc.exe
+        - ServiceName: csexecsvc
+        - ImagePath|endswith: \csexecsvc.exe
     condition: system and (all of selection_*)
 falsepositives:
     - Unknown
 level: medium
+
 ruletype: Sigma

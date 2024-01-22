@@ -18,14 +18,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith:
-                - \cmd.exe
-                - \powershell.exe
-                - \pwsh.exe
-        -   OriginalFileName:
-                - Cmd.Exe
-                - PowerShell.EXE
-                - pwsh.dll
+        - NewProcessName|endswith:
+              - \cmd.exe
+              - \powershell.exe
+              - \pwsh.exe
+        - OriginalFileName:
+              - Cmd.Exe
+              - PowerShell.EXE
+              - pwsh.dll
     selection_parent:
         ParentProcessName|contains|all:
             - \Windows\Installer\

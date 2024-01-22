@@ -18,17 +18,17 @@ detection:
         EventID: 4688
         Channel: Security
     selection_cmd:
-        -   OriginalFileName: Cmd.Exe
-        -   NewProcessName|endswith: \cmd.exe
+        - OriginalFileName: Cmd.Exe
+        - NewProcessName|endswith: \cmd.exe
     selection_read:
-        -   ParentCommandLine|contains|all:
-                - cmd
-                - '/r '
-                - <
-        -   CommandLine|contains|all:
-                - cmd
-                - '/r '
-                - <
+        - ParentCommandLine|contains|all:
+              - cmd
+              - '/r '
+              - <
+        - CommandLine|contains|all:
+              - cmd
+              - '/r '
+              - <
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate use

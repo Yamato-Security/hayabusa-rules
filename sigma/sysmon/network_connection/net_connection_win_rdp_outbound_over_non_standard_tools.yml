@@ -1,8 +1,7 @@
 title: Outbound RDP Connections Over Non-Standard Tools
 id: ed74fe75-7594-4b4b-ae38-e38e3fd2eb23
 status: test
-description: Detects Non-Standard Tools Connecting to TCP port 3389 indicating possible
-    lateral movement
+description: Detects Non-Standard Tools Connecting to TCP port 3389 indicating possible lateral movement
 references:
     - https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2019-0708
 author: Markus Neis
@@ -28,6 +27,7 @@ detection:
             - C:\Windows\System32\mstsc.exe
             - C:\Windows\SysWOW64\mstsc.exe
     filter_optional_dns:
+        # https://github.com/SigmaHQ/sigma/pull/2249
         Image: C:\Windows\System32\dns.exe
         SourcePort: 53
         Protocol: udp
@@ -66,13 +66,12 @@ detection:
     filter_optional_firefox:
         Image: C:\Program Files\Mozilla Firefox\firefox.exe
     filter_optional_null:
-        Image: null
+        Image:
     filter_optional_empty:
         Image: ''
     filter_optional_unknown:
         Image: <unknown process>
-    condition: network_connection and (selection and not 1 of filter_main_* and not
-        1 of filter_optional_*)
+    condition: network_connection and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Third party RDP tools
 level: high

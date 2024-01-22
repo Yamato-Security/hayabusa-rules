@@ -1,8 +1,7 @@
 title: Suspicious Child Process Of Manage Engine ServiceDesk
 id: cea2b7ea-792b-405f-95a1-b903ea06458f
 status: experimental
-description: Detects suspicious child processes of the "Manage Engine ServiceDesk
-    Plus" Java web service
+description: Detects suspicious child processes of the "Manage Engine ServiceDesk Plus" Java web service
 references:
     - https://www.horizon3.ai/manageengine-cve-2022-47966-technical-deep-dive/
     - https://github.com/horizon3ai/CVE-2022-47966/blob/3a51c6b72ebbd87392babd955a8fbeaee2090b35/CVE-2022-47966.py
@@ -38,7 +37,7 @@ detection:
             - \mshta.exe
             - \net.exe
             - \net1.exe
-            - \notepad.exe
+            - \notepad.exe    # Often used in POCs
             - \powershell.exe
             - \pwsh.exe
             - \query.exe
@@ -47,9 +46,13 @@ detection:
             - \scrcons.exe
             - \sh.exe
             - \systeminfo.exe
-            - \whoami.exe
+            - \whoami.exe    # Often used in POCs
             - \wmic.exe
             - \wscript.exe
+            # - '\hh.exe'
+            # - '\regsvr32.exe'
+            # - '\rundll32.exe'
+            # - '\scriptrunner.exe'
     filter_main_net:
         Image|endswith:
             - \net.exe

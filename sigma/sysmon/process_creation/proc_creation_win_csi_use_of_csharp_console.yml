@@ -27,7 +27,6 @@ detection:
         OriginalFileName: csi.exe
     condition: process_creation and selection
 falsepositives:
-    - Possible depending on environment. Pair with other factors such as net connections,
-        command-line args, etc.
+    - Possible depending on environment. Pair with other factors such as net connections, command-line args, etc.
 level: high
 ruletype: Sigma

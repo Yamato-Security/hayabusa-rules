@@ -1,8 +1,7 @@
 title: Suspicious Use of PsLogList
 id: aae1243f-d8af-40d8-ab20-33fc6d0c55bc
 status: test
-description: Detects usage of the PsLogList utility to dump event log in order to
-    extract admin accounts and perform account discovery or delete events logs
+description: Detects usage of the PsLogList utility to dump event log in order to extract admin accounts and perform account discovery or delete events logs
 references:
     - https://research.nccgroup.com/2021/01/12/abusing-cloud-services-to-fly-under-the-radar/
     - https://www.cybereason.com/blog/deadringer-exposing-chinese-threat-actors-targeting-major-telcos
@@ -24,10 +23,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   OriginalFileName: psloglist.exe
-        -   NewProcessName|endswith:
-                - \psloglist.exe
-                - \psloglist64.exe
+        - OriginalFileName: psloglist.exe
+        - NewProcessName|endswith:
+              - \psloglist.exe
+              - \psloglist64.exe
     selection_cli_eventlog:
         CommandLine|contains:
             - ' security'
@@ -41,9 +40,9 @@ detection:
             - ' /x'
             - ' -s'
             - ' /s'
-            - ' -c'
+            - ' -c' # Clear event log after displaying
             - ' /c'
-            - ' -g'
+            - ' -g' # Export an event log as an evt file.
             - ' /g'
     condition: process_creation and (all of selection_*)
 falsepositives:

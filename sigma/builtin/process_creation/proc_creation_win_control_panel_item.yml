@@ -21,8 +21,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_reg_img:
-        -   NewProcessName|endswith: \reg.exe
-        -   OriginalFileName: reg.exe
+        - NewProcessName|endswith: \reg.exe
+        - OriginalFileName: reg.exe
     selection_reg_cli:
         CommandLine|contains|all:
             - add
@@ -39,8 +39,7 @@ detection:
             - 'regsvr32 '
             - ' /s '
             - igfxCPL.cpl
-    condition: process_creation and (all of selection_reg_* or (selection_cpl and
-        not 1 of filter_cpl_*))
+    condition: process_creation and (all of selection_reg_* or (selection_cpl and not 1 of filter_cpl_*))
 falsepositives:
     - Unknown
 level: high

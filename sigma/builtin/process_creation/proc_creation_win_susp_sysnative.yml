@@ -1,8 +1,7 @@
 title: Process Creation Using Sysnative Folder
 id: 3c1b5fb0-c72f-45ba-abd1-4d4c353144ab
 status: test
-description: Detects process creation events that use the Sysnative folder (common
-    for CobaltStrike spawns)
+description: Detects process creation events that use the Sysnative folder (common for CobaltStrike spawns)
 references:
     - https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/
 author: Max Altgelt (Nextron Systems)
@@ -20,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     sysnative:
-        -   CommandLine|contains: :\Windows\Sysnative\
-        -   NewProcessName|contains: :\Windows\Sysnative\
+        - CommandLine|contains: :\Windows\Sysnative\
+        - NewProcessName|contains: :\Windows\Sysnative\
     condition: process_creation and sysnative
 falsepositives:
     - Unknown

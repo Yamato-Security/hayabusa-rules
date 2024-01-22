@@ -19,6 +19,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith:
+            # Covers browsers
             - \brave.exe
             - \CCleaner Browser\Application\CCleanerBrowser.exe
             - \chromium.exe
@@ -30,10 +31,12 @@ detection:
             - \Opera.exe
             - \Vivaldi.exe
             - \Whale.exe
+            # Covers email clients
             - \Outlook.exe
-            - \RuntimeBroker.exe
+            - \RuntimeBroker.exe   # If the windows mail client is used
             - \Thunderbird.exe
-            - \Discord.exe
+            # Covers chat applications
+            - \Discord.exe   # Should open the browser for download, but just in case.
             - \Keybase.exe
             - \msteams.exe
             - \Slack.exe

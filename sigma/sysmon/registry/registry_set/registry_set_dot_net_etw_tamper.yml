@@ -1,8 +1,8 @@
 title: ETW Logging Disabled In .NET Processes - Sysmon Registry
 id: bf4fc428-dcc3-4bbd-99fe-2422aeee2544
 related:
-    -   id: a4c90ea1-2634-4ca0-adbb-35eae169b6fc
-        type: similar
+    - id: a4c90ea1-2634-4ca0-adbb-35eae169b6fc
+      type: similar
 status: test
 description: Potential adversaries stopping ETW providers recording loaded .NET assemblies.
 references:
@@ -40,7 +40,7 @@ detection:
             - \COMPlus_ETWEnabled
             - \COMPlus_ETWFlags
         Details:
-            - 0
+            - 0 # For REG_SZ type
             - DWORD (0x00000000)
     condition: registry_set and (1 of selection_*)
 falsepositives:

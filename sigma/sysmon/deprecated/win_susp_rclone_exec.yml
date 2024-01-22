@@ -39,6 +39,5 @@ detection:
             - ' ls '
     description_selection:
         Description: Rsync for cloud storage
-    condition: process_creation and (command_selection and ( description_selection
-        or exec_selection ))
+    condition: process_creation and (command_selection and ( description_selection or exec_selection ))
 ruletype: Sigma

@@ -19,8 +19,8 @@ detection:
         Provider_Name: Service Control Manager
         EventID: 7045
     selection_service:
-        -   ServiceName: RemComSvc
-        -   ImagePath|endswith: \RemComSvc.exe
+        - ServiceName: RemComSvc
+        - ImagePath|endswith: \RemComSvc.exe
     condition: system and (all of selection_*)
 falsepositives:
     - Unknown

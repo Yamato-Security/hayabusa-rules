@@ -1,8 +1,7 @@
 title: HackTool - Impersonate Execution
 id: cf0c254b-22f1-4b2b-8221-e137b3c0af94
 status: test
-description: Detects execution of the Impersonate tool. Which can be used to manipulate
-    tokens on a Windows computers remotely (PsExec/WmiExec) or interactively
+description: Detects execution of the Impersonate tool. Which can be used to manipulate tokens on a Windows computers remotely (PsExec/WmiExec) or interactively
 references:
     - https://sensepost.com/blog/2022/abusing-windows-tokens-to-compromise-active-directory-without-touching-lsass/
     - https://github.com/sensepost/impersonate
@@ -35,9 +34,9 @@ detection:
             - SHA256=E81CC96E2118DC4FBFE5BAD1604E0AC7681960143E2101E1A024D52264BB0A8A
             - IMPHASH=0A358FFC1697B7A07D0E817AC740DF62
     selection_hash_ext:
-        -   md5: 9520714AB576B0ED01D1513691377D01
-        -   sha256: E81CC96E2118DC4FBFE5BAD1604E0AC7681960143E2101E1A024D52264BB0A8A
-        -   Imphash: 0A358FFC1697B7A07D0E817AC740DF62
+        - md5: 9520714AB576B0ED01D1513691377D01
+        - sha256: E81CC96E2118DC4FBFE5BAD1604E0AC7681960143E2101E1A024D52264BB0A8A
+        - Imphash: 0A358FFC1697B7A07D0E817AC740DF62
     condition: process_creation and (all of selection_commandline_* or 1 of selection_hash_*)
 falsepositives:
     - Unknown

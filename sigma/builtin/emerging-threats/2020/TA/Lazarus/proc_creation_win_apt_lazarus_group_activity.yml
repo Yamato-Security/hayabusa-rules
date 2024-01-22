@@ -1,11 +1,10 @@
 title: Lazarus Group Activity
 id: 24c4d154-05a4-4b99-b57d-9b977472443a
 related:
-    -   id: 7b49c990-4a9a-4e65-ba95-47c9cc448f6e
-        type: obsoletes
+    - id: 7b49c990-4a9a-4e65-ba95-47c9cc448f6e
+      type: obsoletes
 status: test
-description: Detects different process execution behaviors as described in various
-    threat reports on Lazarus group activity
+description: Detects different process execution behaviors as described in various threat reports on Lazarus group activity
 references:
     - https://securelist.com/lazarus-covets-covid-19-related-intelligence/99906/
     - https://www.hvs-consulting.de/lazarus-report/
@@ -35,6 +34,7 @@ detection:
             - 'netstat -aon | find '
             - ESTA
             - ' > %temp%\~'
+    # Network share discovery
     selection_network_discovery:
         CommandLine|contains|all:
             - .255 10 C:\ProgramData\IBM\

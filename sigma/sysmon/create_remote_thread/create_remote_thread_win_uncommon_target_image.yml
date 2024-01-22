@@ -1,8 +1,8 @@
 title: Remote Thread Creation In Uncommon Target Image
 id: a1a144b7-5c9b-4853-a559-2172be8d4a03
 related:
-    -   id: f016c716-754a-467f-a39e-63c06f773987
-        type: obsoletes
+    - id: f016c716-754a-467f-a39e-63c06f773987
+      type: obsoletes
 status: experimental
 description: Detects uncommon target processes for remote thread creation
 references:
@@ -56,8 +56,7 @@ detection:
     filter_optional_winzip:
         SourceImage|endswith: :\Program Files\WinZip\FAHWindow64.exe
         TargetImage|endswith: :\Windows\explorer.exe
-    condition: create_remote_thread and (selection and not 1 of filter_main_* and
-        not 1 of filter_optional_*)
+    condition: create_remote_thread and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: high

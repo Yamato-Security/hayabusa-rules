@@ -19,9 +19,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        -   Company: SecurityXploded
-        -   NewProcessName|endswith: PasswordDump.exe
-        -   OriginalFileName|endswith: PasswordDump.exe
+        - Company: SecurityXploded
+        - NewProcessName|endswith: PasswordDump.exe
+        - OriginalFileName|endswith: PasswordDump.exe
     condition: process_creation and selection
 falsepositives:
     - Unlikely

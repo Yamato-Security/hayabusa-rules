@@ -1,8 +1,7 @@
 title: CodeIntegrity - Disallowed File For Protected Processes Has Been Blocked
 id: 5daf11c3-022b-4969-adb9-365e6c078c7c
 status: experimental
-description: Detects block events for files that are disallowed by code integrity
-    for protected processes
+description: Detects block events for files that are disallowed by code integrity for protected processes
 references:
     - https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/event-id-explanations
     - https://learn.microsoft.com/en-us/windows/security/threat-protection/windows-defender-application-control/event-tag-explanations
@@ -18,7 +17,7 @@ detection:
     codeintegrity_operational:
         Channel: Microsoft-Windows-CodeIntegrity/Operational
     selection:
-        EventID: 3104
+        EventID: 3104 # Windows blocked file %2 which has been disallowed for protected processes.
     condition: codeintegrity_operational and selection
 falsepositives:
     - Unlikely

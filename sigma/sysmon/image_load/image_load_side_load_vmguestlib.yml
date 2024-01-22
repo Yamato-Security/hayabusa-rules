@@ -29,7 +29,6 @@ detection:
         Signed: 'true'
     condition: image_load and (selection and not filter)
 falsepositives:
-    - FP could occur if the legitimate version of vmGuestLib already exists on the
-        system
+    - FP could occur if the legitimate version of vmGuestLib already exists on the system
 level: medium
 ruletype: Sigma

@@ -1,9 +1,7 @@
 title: Visual Studio Code Tunnel Shell Execution
 id: f4a623c2-4ef5-4c33-b811-0642f702c9f1
 status: experimental
-description: Detects the execution of a shell (powershell, bash, wsl...) via Visual
-    Studio Code tunnel. Attackers can abuse this functionality to establish a C2 channel
-    and execute arbitrary commands on the system.
+description: Detects the execution of a shell (powershell, bash, wsl...) via Visual Studio Code tunnel. Attackers can abuse this functionality to establish a C2 channel and execute arbitrary commands on the system.
 references:
     - https://ipfyx.fr/post/visual-studio-code-tunnel/
     - https://badoption.eu/blog/2023/01/31/code_c2.html
@@ -21,7 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_parent:
-        ParentCommandLine|contains: .vscode-server
+        ParentCommandLine|contains: .vscode-server   # Technically one can host its own local server instead of using the VsCode one. And that would probably change the name (requires further research)
+    # Note: Child processes (ie: shells) can be whatever technically (with some efforts)
         ParentProcessName|contains: \servers\Stable-
         ParentProcessName|endswith: \server\node.exe
     selection_child_1:

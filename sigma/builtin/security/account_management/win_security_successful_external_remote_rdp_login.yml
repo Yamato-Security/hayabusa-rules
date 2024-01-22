@@ -1,11 +1,10 @@
 title: External Remote RDP Logon from Public IP
 id: 259a9cdf-c4dd-4fa2-b243-2269e5ab18a2
 related:
-    -   id: 78d5cab4-557e-454f-9fb9-a222bd0d5edc
-        type: derived
+    - id: 78d5cab4-557e-454f-9fb9-a222bd0d5edc
+      type: derived
 status: experimental
-description: Detects successful logon from public IP address via RDP. This can indicate
-    a publicly-exposed RDP port.
+description: Detects successful logon from public IP address via RDP. This can indicate a publicly-exposed RDP port.
 references:
     - https://www.inversecos.com/2020/04/successful-4624-anonymous-logons-to.html
     - https://twitter.com/Purp1eW0lf/status/1616144561965002752
@@ -34,16 +33,15 @@ detection:
             - 172.16.0.0/12
             - 192.168.0.0/16
     filter_ipv6:
-        -   IpAddress: ::1
-        -   IpAddress|startswith:
-                - 'fe80:'
-                - fc
-                - fd
+        - IpAddress: ::1   # IPv6 loopback
+        - IpAddress|startswith:
+              - 'fe80:'  # link-local address
+              - fc    # private address range fc00::/7
+              - fd    # private address range fc00::/7
     filter_empty:
         IpAddress: '-'
     condition: security and (selection and not 1 of filter_*)
 falsepositives:
-    - Legitimate or intentional inbound connections from public IP addresses on the
-        RDP port.
+    - Legitimate or intentional inbound connections from public IP addresses on the RDP port.
 level: medium
 ruletype: Sigma

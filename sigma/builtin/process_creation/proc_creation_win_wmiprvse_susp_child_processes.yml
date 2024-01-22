@@ -1,12 +1,12 @@
 title: Suspicious WmiPrvSE Child Process
 id: 8a582fe2-0882-4b89-a82a-da6b2dc32937
 related:
-    -   id: 692f0bec-83ba-4d04-af7e-e884a96059b6
-        type: similar
-    -   id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
-        type: similar
-    -   id: 18cf6cf0-39b0-4c22-9593-e244bdc9a2d4
-        type: obsoletes
+    - id: 692f0bec-83ba-4d04-af7e-e884a96059b6
+      type: similar
+    - id: d21374ff-f574-44a7-9998-4a8c8bf33d7d
+      type: similar
+    - id: 18cf6cf0-39b0-4c22-9593-e244bdc9a2d4
+      type: obsoletes
 status: test
 description: Detects suspicious and uncommon child processes of WmiPrvSE
 references:
@@ -33,6 +33,7 @@ detection:
     selection_parent:
         ParentProcessName|endswith: \wbem\WmiPrvSE.exe
     selection_children_1:
+        # TODO: Add more LOLBINs or suspicious processes that make sens in your environment
         NewProcessName|endswith:
             - \certutil.exe
             - \cscript.exe
@@ -43,6 +44,7 @@ detection:
             - \verclsid.exe
             - \wscript.exe
     selection_children_2:
+        # This is in a separate selection due to the nature of FP generated with CMD
         CommandLine|contains:
             - cscript
             - mshta
@@ -59,8 +61,7 @@ detection:
     filter_main_msiexec:
         CommandLine|contains: '/i '
         NewProcessName|endswith: \msiexec.exe
-    condition: process_creation and (selection_parent and 1 of selection_children_*
-        and not 1 of filter_main_*)
+    condition: process_creation and (selection_parent and 1 of selection_children_* and not 1 of filter_main_*)
 falsepositives:
     - Unknown
 level: high

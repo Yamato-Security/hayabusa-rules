@@ -38,8 +38,8 @@ detection:
             - ' >'
             - Out-File
             - ConvertTo-Json
-            - -WindowStyle hidden -Verb runAs
-            - \Windows\system32\config\systemprofile\AppData\Local\Temp\Amazon\EC2-Windows\
+            - -WindowStyle hidden -Verb runAs    # VSCode behaviour if file cannot be written as current user
+            - \Windows\system32\config\systemprofile\AppData\Local\Temp\Amazon\EC2-Windows\   # EC2 AWS
     condition: process_creation and (selection and not filter)
 falsepositives:
     - Administrative scripts

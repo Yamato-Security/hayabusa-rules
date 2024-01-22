@@ -18,24 +18,24 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   OriginalFileName:
-                - Excel.exe
-                - MSACCESS.EXE
-                - MSPUB.EXE
-                - OneNote.exe
-                - OneNoteM.exe
-                - OUTLOOK.EXE
-                - POWERPNT.EXE
-                - WinWord.exe
-        -   Description:
-                - Microsoft Access
-                - Microsoft Excel
-                - Microsoft OneNote
-                - Microsoft Outlook
-                - Microsoft PowerPoint
-                - Microsoft Publisher
-                - Microsoft Word
-                - Sent to OneNote Tool
+        - OriginalFileName:
+              - Excel.exe
+              - MSACCESS.EXE
+              - MSPUB.EXE
+              - OneNote.exe
+              - OneNoteM.exe
+              - OUTLOOK.EXE
+              - POWERPNT.EXE
+              - WinWord.exe
+        - Description:
+              - Microsoft Access
+              - Microsoft Excel
+              - Microsoft OneNote
+              - Microsoft Outlook
+              - Microsoft PowerPoint
+              - Microsoft Publisher
+              - Microsoft Word
+              - Sent to OneNote Tool
     filter_main_legit_names:
         Image|endswith:
             - \EXCEL.exe

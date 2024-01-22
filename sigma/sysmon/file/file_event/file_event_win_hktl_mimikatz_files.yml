@@ -1,11 +1,10 @@
 title: Mimikatz Kirbi File Creation
 id: 9e099d99-44c2-42b6-a6d8-54c3545cab29
 related:
-    -   id: 034affe8-6170-11ec-844f-0f78aa0c4d66
-        type: obsoletes
+    - id: 034affe8-6170-11ec-844f-0f78aa0c4d66
+      type: obsoletes
 status: test
-description: Detects the creation of files created by mimikatz such as ".kirbi", "mimilsa.log",
-    etc.
+description: Detects the creation of files created by mimikatz such as ".kirbi", "mimilsa.log", etc.
 references:
     - https://cobalt.io/blog/kerberoast-attack-techniques
     - https://pentestlab.blog/2019/10/21/persistence-security-support-provider/
@@ -25,8 +24,8 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         TargetFilename|endswith:
-            - .kirbi
-            - mimilsa.log
+            - .kirbi   # Kerberos tickets
+            - mimilsa.log   # MemSSP default file
     condition: file_event and selection
 falsepositives:
     - Unlikely

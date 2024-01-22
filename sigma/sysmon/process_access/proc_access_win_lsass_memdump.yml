@@ -1,13 +1,9 @@
 title: Potential Credential Dumping Activity Via LSASS
 id: 5ef9853e-4d0e-4a70-846f-a9ca37d876da
 status: experimental
-description: 'Detects process access requests to the LSASS process with specific call
-    trace calls and access masks.
-
-    This behaviour is expressed by many credential dumping tools such as Mimikatz,
-    NanoDump, Invoke-Mimikatz, Procdump and even the Taskmgr dumping feature.
-
-    '
+description: |
+    Detects process access requests to the LSASS process with specific call trace calls and access masks.
+    This behaviour is expressed by many credential dumping tools such as Mimikatz, NanoDump, Invoke-Mimikatz, Procdump and even the Taskmgr dumping feature.
 references:
     - https://blog.menasec.net/2019/02/threat-hunting-21-procdump-or-taskmgr.html
     - https://web.archive.org/web/20230208123920/https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
@@ -35,7 +31,12 @@ detection:
             - '0x1038'
             - '0x1438'
             - '0x143a'
-            - '0x1fffff'
+            - '0x1fffff' # Too many false positives
+            # - '0x01000'  # Too many false positives
+            # - '0x1010'   # Too many false positives
+            # - '0x1400'  # Too many false positives
+            # - '0x1410' # Too many false positives
+            # - '0x40'   # Too many false positives
         CallTrace|contains:
             - dbgcore.dll
             - dbghelp.dll
@@ -43,7 +44,7 @@ detection:
             - kernelbase.dll
             - ntdll.dll
     filter_main_system_user:
-        SourceUser|contains:
+        SourceUser|contains: # Covers many language settings
             - AUTHORI
             - AUTORI
     filter_optional_thor:
@@ -54,8 +55,7 @@ detection:
         GrantedAccess: '0x103800'
     filter_optional_sysmon:
         SourceImage|endswith: :\Windows\Sysmon64.exe
-    condition: process_access and (selection and not 1 of filter_main_* and not 1
-        of filter_optional_*)
+    condition: process_access and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: medium

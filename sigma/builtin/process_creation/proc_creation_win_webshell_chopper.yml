@@ -1,8 +1,7 @@
 title: Chopper Webshell Process Pattern
 id: fa3c117a-bc0d-416e-a31b-0c0e80653efb
 status: test
-description: Detects patterns found in process executions cause by China Chopper like
-    tiny (ASPX) webshells
+description: Detects patterns found in process executions cause by China Chopper like tiny (ASPX) webshells
 references:
     - https://www.microsoft.com/security/blog/2022/09/30/analyzing-attacks-using-the-exchange-vulnerabilities-cve-2022-41040-and-cve-2022-41082/
 author: Florian Roth (Nextron Systems), MSTI (query)
@@ -21,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_origin:
-        -   NewProcessName|endswith: \w3wp.exe
-        -   ParentProcessName|endswith: \w3wp.exe
+        - NewProcessName|endswith: \w3wp.exe
+        - ParentProcessName|endswith: \w3wp.exe
     selection_cmdline:
         CommandLine|contains:
             - '&ipconfig&echo'

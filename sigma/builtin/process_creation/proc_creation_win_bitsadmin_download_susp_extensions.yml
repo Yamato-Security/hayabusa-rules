@@ -23,8 +23,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \bitsadmin.exe
-        -   OriginalFileName: bitsadmin.exe
+        - NewProcessName|endswith: \bitsadmin.exe
+        - OriginalFileName: bitsadmin.exe
     selection_flags:
         CommandLine|contains:
             - ' /transfer '

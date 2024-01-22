@@ -1,8 +1,7 @@
 title: Sysmon Blocked File Shredding
 id: c3e5c1b1-45e9-4632-b242-27939c170239
 status: experimental
-description: Triggers on any Sysmon "FileBlockShredding" event, which indicates a
-    violation of the configured shredding policy.
+description: Triggers on any Sysmon "FileBlockShredding" event, which indicates a violation of the configured shredding policy.
 references:
     - https://learn.microsoft.com/en-us/sysinternals/downloads/sysmon
 author: frack113
@@ -17,7 +16,7 @@ detection:
     sysmon:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventID: 28
+        EventID: 28  # this is fine, we want to match any FileBlockShredding event
     condition: sysmon and selection
 falsepositives:
     - Unlikely

@@ -12,6 +12,7 @@ tags:
 logsource:
     product: windows
     service: application
+    # warning: The 'data' field used in the detection section is the container for the event data as a whole. You may have to adapt the rule for your backend accordingly
 detection:
     application:
         Channel: Application
@@ -21,19 +22,20 @@ detection:
             - 1040
             - 1042
         Data|contains:
+            # Add more suspicious paths
             - :\Windows\TEMP\
             - \\\\
             - \Desktop\
             - \PerfLogs\
             - \Users\Public\
+            # - '\AppData\Local\Temp\'  # too many FPs
+            # - '\Downloads\'  # too many FPs, typical legitimate staging directory
     filter_winget:
         Data|contains: \AppData\Local\Temp\WinGet\
     filter_updhealthtools:
         Data|contains: C:\Windows\TEMP\UpdHealthTools.msi
     condition: application and (selection and not 1 of filter_*)
 falsepositives:
-    - False positives may occur if you allow installation from folders such as the
-        desktop, the public folder or remote shares. A baseline is required before
-        production use.
+    - False positives may occur if you allow installation from folders such as the desktop, the public folder or remote shares. A baseline is required before production use.
 level: medium
 ruletype: Sigma

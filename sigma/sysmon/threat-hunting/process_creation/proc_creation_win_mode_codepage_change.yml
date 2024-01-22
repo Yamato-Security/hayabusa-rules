@@ -1,14 +1,12 @@
 title: CodePage Modification Via MODE.COM
 id: d48c5ffa-3b02-4c0f-9a9e-3c275650dd0e
 related:
-    -   id: 12fbff88-16b5-4b42-9754-cd001a789fb3
-        type: derived
+    - id: 12fbff88-16b5-4b42-9754-cd001a789fb3
+      type: derived
 status: experimental
-description: 'Detects a CodePage modification using the "mode.com" utility.
-
+description: |
+    Detects a CodePage modification using the "mode.com" utility.
     This behavior has been used by threat actors behind Dharma ransomware.
-
-    '
 references:
     - https://learn.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
     - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/mode
@@ -29,8 +27,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \mode.com
-        -   OriginalFileName: MODE.COM
+        - Image|endswith: \mode.com
+        - OriginalFileName: MODE.COM
     selection_cli:
         CommandLine|contains|all:
             - ' con '

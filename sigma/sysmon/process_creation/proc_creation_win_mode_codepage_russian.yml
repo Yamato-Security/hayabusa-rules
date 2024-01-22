@@ -1,15 +1,12 @@
 title: CodePage Modification Via MODE.COM To Russian Language
 id: 12fbff88-16b5-4b42-9754-cd001a789fb3
 related:
-    -   id: d48c5ffa-3b02-4c0f-9a9e-3c275650dd0e
-        type: derived
+    - id: d48c5ffa-3b02-4c0f-9a9e-3c275650dd0e
+      type: derived
 status: experimental
-description: 'Detects a CodePage modification using the "mode.com" utility to Russian
-    language.
-
+description: |
+    Detects a CodePage modification using the "mode.com" utility to Russian language.
     This behavior has been used by threat actors behind Dharma ransomware.
-
-    '
 references:
     - https://learn.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
     - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/mode
@@ -25,20 +22,22 @@ logsource:
     category: process_creation
     product: windows
 detection:
+    # VT Query: behavior:"mode con cp select=1251"
+    # VT Query: behavior:"mode con cp select=866"
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \mode.com
-        -   OriginalFileName: MODE.COM
+        - Image|endswith: \mode.com
+        - OriginalFileName: MODE.COM
     selection_cli:
         CommandLine|contains|all:
             - ' con '
             - ' cp '
             - ' select='
         CommandLine|endswith:
-            - =1251
-            - =866
+            - =1251   # ANSI Cyrillic; Cyrillic (Windows) - Observed ITW by Dharma ransomware
+            - =866   # OEM Russian; Cyrillic (DOS) - Observed ITW by other malware
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Russian speaking people changing the CodePage

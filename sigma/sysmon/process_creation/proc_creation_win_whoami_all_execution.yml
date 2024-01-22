@@ -21,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_main_img:
-        -   Image|endswith: \whoami.exe
-        -   OriginalFileName: whoami.exe
+        - Image|endswith: \whoami.exe
+        - OriginalFileName: whoami.exe
     selection_main_cli:
         CommandLine|contains:
             - ' -all'

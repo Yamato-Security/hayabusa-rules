@@ -24,6 +24,7 @@ detection:
         TargetImage|endswith: vcredist_x64.exe
         SourceImage|endswith: vcredist_x64.exe
     filter_main_generic:
+        # Examples include "systeminfo", "backgroundTaskHost", "AUDIODG"
         SourceImage|contains:
             - :\Program Files (x86)\
             - :\Program Files\
@@ -37,23 +38,24 @@ detection:
             - :\Windows\SysWOW64\
             - :\Windows\WinSxS\
     filter_main_kerneltrace_edge:
+        # Cases in which the CallTrace is just e.g. 'UNKNOWN(19290435374)' from Microsoft-Windows-Kernel-Audit-API-Calls provider
         Provider_Name: Microsoft-Windows-Kernel-Audit-API-Calls
     filter_optional_vmware:
         TargetImage|endswith: :\Windows\system32\systeminfo.exe
-        SourceImage|endswith: setup64.exe
+        SourceImage|endswith: setup64.exe   # vmware
     filter_optional_cylance:
         SourceImage|endswith: :\Windows\Explorer.EXE
         TargetImage|endswith: :\Program Files\Cylance\Desktop\CylanceUI.exe
     filter_optional_amazon:
         SourceImage|endswith: AmazonSSMAgentSetup.exe
         TargetImage|endswith: AmazonSSMAgentSetup.exe
-    filter_optional_vscode:
+    filter_optional_vscode: # VsCode
         SourceImage|endswith: \AppData\Local\Programs\Microsoft VS Code\Code.exe
         TargetImage|endswith: \AppData\Local\Programs\Microsoft VS Code\Code.exe
-    filter_optional_teams:
+    filter_optional_teams: # MS Teams
         TargetImage|endswith: \AppData\Local\Microsoft\Teams\current\Teams.exe
         SourceImage|endswith: \AppData\Local\Microsoft\Teams\current\Teams.exe
-    filter_optional_discord:
+    filter_optional_discord: # Discord
         TargetImage|contains: \AppData\Local\Discord\
         TargetImage|endswith: \Discord.exe
     filter_optional_yammer:
@@ -69,8 +71,7 @@ detection:
         SourceImage|endswith: \AcroCEF.exe
         TargetImage|contains: :\Program Files\Adobe\Acrobat DC\Acrobat\
         TargetImage|endswith: \AcroCEF.exe
-    condition: process_access and (selection and not 1 of filter_main_* and not 1
-        of filter_optional_*)
+    condition: process_access and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: medium

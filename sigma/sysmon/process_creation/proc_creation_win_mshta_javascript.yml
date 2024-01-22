@@ -20,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \mshta.exe
-        -   OriginalFileName: MSHTA.EXE
+        - Image|endswith: \mshta.exe
+        - OriginalFileName: MSHTA.EXE
     selection_cli:
         CommandLine|contains: javascript
     condition: process_creation and (all of selection_*)

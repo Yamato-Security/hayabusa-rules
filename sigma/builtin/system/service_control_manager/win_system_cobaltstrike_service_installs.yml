@@ -1,8 +1,7 @@
 title: CobaltStrike Service Installations - System
 id: 5a105d34-05fc-401e-8553-272b45c1522d
 status: test
-description: Detects known malicious service installs that appear in cases in which
-    a Cobalt Strike beacon elevates privileges or lateral movement
+description: Detects known malicious service installs that appear in cases in which a Cobalt Strike beacon elevates privileges or lateral movement
 references:
     - https://www.sans.org/webcasts/119395
     - https://www.crowdstrike.com/blog/getting-the-bacon-from-cobalt-strike-beacon/
@@ -38,9 +37,8 @@ detection:
     selection3:
         ImagePath|contains: powershell -nop -w hidden -encodedcommand
     selection4:
-        ImagePath|base64offset|contains: 'IEX (New-Object Net.Webclient).DownloadString(''http://127.0.0.1:'
-    condition: system and (selection_id and (selection1 or selection2 or selection3
-        or selection4))
+        ImagePath|base64offset|contains: "IEX (New-Object Net.Webclient).DownloadString('http://127.0.0.1:"
+    condition: system and (selection_id and (selection1 or selection2 or selection3 or selection4))
 falsepositives:
     - Unknown
 level: critical

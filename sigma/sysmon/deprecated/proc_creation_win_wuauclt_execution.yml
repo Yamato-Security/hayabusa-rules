@@ -21,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \wuauclt.exe
-        -   OriginalFileName: wuauclt.exe
+        - Image|endswith: \wuauclt.exe
+        - OriginalFileName: wuauclt.exe
     selection_cli:
         CommandLine|contains|all:
             - /UpdateDeploymentProvider

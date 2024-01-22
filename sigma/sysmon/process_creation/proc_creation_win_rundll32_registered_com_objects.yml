@@ -21,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \rundll32.exe
-        -   OriginalFileName: RUNDLL32.EXE
+        - Image|endswith: \rundll32.exe
+        - OriginalFileName: RUNDLL32.EXE
     selection_cli:
         CommandLine|contains:
             - '-sta '
