@@ -22,8 +22,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \cmd.exe
-        -   OriginalFileName: Cmd.Exe
+        - NewProcessName|endswith: \cmd.exe
+        - OriginalFileName: Cmd.Exe
     selection_cli:
         CommandLine|contains|all:
             - /q

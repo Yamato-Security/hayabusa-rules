@@ -1,8 +1,7 @@
 title: PowerShell Get-Process LSASS
 id: b2815d0d-7481-4bf0-9b6c-a4c48a94b349
 status: test
-description: Detects a "Get-Process" cmdlet and it's aliases on lsass process, which
-    is in almost all cases a sign of malicious activity
+description: Detects a "Get-Process" cmdlet and it's aliases on lsass process, which is in almost all cases a sign of malicious activity
 references:
     - https://twitter.com/PythonResponder/status/1385064506049630211
 author: Florian Roth (Nextron Systems)
@@ -21,6 +20,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         CommandLine|contains:
+            # You can add more permutation as you see fit
             - Get-Process lsas
             - ps lsas
             - gps lsas

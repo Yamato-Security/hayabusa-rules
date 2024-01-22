@@ -16,9 +16,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \rundll32.exe
-        -   OriginalFileName: RUNDLL32.EXE
-        -   CommandLine|contains: rundll32
+        - NewProcessName|endswith: \rundll32.exe
+        - OriginalFileName: RUNDLL32.EXE
+        - CommandLine|contains: rundll32
     selection_cli:
         CommandLine|contains:
             - '#+'

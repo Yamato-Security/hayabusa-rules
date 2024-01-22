@@ -1,15 +1,15 @@
 title: Invoke-Obfuscation RUNDLL LAUNCHER
 id: 03b024c6-aad1-4da5-9f60-e9e8c00fa64c
 related:
-    -   id: 11b52f18-aaec-4d60-9143-5dd8cc4706b9
-        type: derived
+    - id: 11b52f18-aaec-4d60-9143-5dd8cc4706b9
+      type: derived
 description: Detects Obfuscated Powershell via RUNDLL LAUNCHER
 status: unsupported
 author: Timur Zinniatullin, oscd.community
 date: 2020/10/18
 modified: 2022/03/08
 references:
-    - https://github.com/SigmaHQ/sigma/issues/1009
+    - https://github.com/SigmaHQ/sigma/issues/1009 #(Task 23)
 logsource:
     product: windows
     category: driver_load

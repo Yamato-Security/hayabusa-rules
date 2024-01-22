@@ -1,8 +1,7 @@
 title: HackTool - Certipy Execution
 id: 6938366d-8954-4ddc-baff-c830b3ba8fcd
 status: experimental
-description: Detects Certipy a tool for Active Directory Certificate Services enumeration
-    and abuse based on PE metadata characteristics and common command line arguments.
+description: Detects Certipy a tool for Active Directory Certificate Services enumeration and abuse based on PE metadata characteristics and common command line arguments.
 references:
     - https://github.com/ly4k/Certipy
 author: pH-T (Nextron Systems)
@@ -19,9 +18,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \Certipy.exe
-        -   OriginalFileName: Certipy.exe
-        -   Description|contains: Certipy
+        - NewProcessName|endswith: \Certipy.exe
+        - OriginalFileName: Certipy.exe
+        - Description|contains: Certipy
     selection_cli_commands:
         CommandLine|contains:
             - ' auth '

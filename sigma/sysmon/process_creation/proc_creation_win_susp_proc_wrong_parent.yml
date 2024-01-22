@@ -33,20 +33,20 @@ detection:
             - \wininit.exe
             - \winlogon.exe
     filter_sys:
-        -   ParentImage|endswith:
-                - \SavService.exe
-                - \ngen.exe
-        -   ParentImage|contains:
-                - \System32\
-                - \SysWOW64\
+        - ParentImage|endswith:
+              - \SavService.exe
+              - \ngen.exe
+        - ParentImage|contains:
+              - \System32\
+              - \SysWOW64\
     filter_msmpeng:
         ParentImage|contains:
             - \Windows Defender\
             - \Microsoft Security Client\
         ParentImage|endswith: \MsMpEng.exe
     filter_null:
-        -   ParentImage: null
-        -   ParentImage: '-'
+        - ParentImage:
+        - ParentImage: '-'
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:
     - Some security products seem to spawn these

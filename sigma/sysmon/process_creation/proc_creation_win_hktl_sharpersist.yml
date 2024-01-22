@@ -1,8 +1,7 @@
 title: HackTool - SharPersist Execution
 id: 26488ad0-f9fd-4536-876f-52fea846a2e4
 status: test
-description: Detects the execution of the hacktool SharPersist - used to deploy various
-    different kinds of persistence mechanisms
+description: Detects the execution of the hacktool SharPersist - used to deploy various different kinds of persistence mechanisms
 references:
     - https://www.mandiant.com/resources/blog/sharpersist-windows-persistence-toolkit
     - https://github.com/mandiant/SharPersist
@@ -21,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \SharPersist.exe
-        -   Product: SharPersist
+        - Image|endswith: \SharPersist.exe
+        - Product: SharPersist
     selection_cli_1:
         CommandLine|contains:
             - ' -t schtask -c '

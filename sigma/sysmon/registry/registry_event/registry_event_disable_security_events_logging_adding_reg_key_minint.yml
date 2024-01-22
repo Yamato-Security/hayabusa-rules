@@ -1,8 +1,7 @@
 title: Disable Security Events Logging Adding Reg Key MiniNt
 id: 919f2ef0-be2d-4a7a-b635-eb2b41fde044
 status: test
-description: Detects the addition of a key 'MiniNt' to the registry. Upon a reboot,
-    Windows Event Log service will stopped write events.
+description: Detects the addition of a key 'MiniNt' to the registry. Upon a reboot, Windows Event Log service will stopped write events.
 references:
     - https://twitter.com/0gtweet/status/1182516740955226112
 author: Ilyas Ochkov, oscd.community
@@ -24,9 +23,11 @@ detection:
             - 14
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   TargetObject: HKLM\SYSTEM\CurrentControlSet\Control\MiniNt
-            EventType: CreateKey
-        -   NewName: HKLM\SYSTEM\CurrentControlSet\Control\MiniNt
+    # Sysmon gives us HKLM\SYSTEM\CurrentControlSet\.. if ControlSetXX is the selected one
+        - TargetObject: HKLM\SYSTEM\CurrentControlSet\Control\MiniNt
+          EventType: CreateKey      # we don't want deletekey
+    # key rename
+        - NewName: HKLM\SYSTEM\CurrentControlSet\Control\MiniNt
     condition: registry_event and selection
 fields:
     - EventID

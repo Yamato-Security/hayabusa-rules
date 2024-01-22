@@ -1,8 +1,7 @@
 title: Suspicious Execution of Sc to Delete AV Services
 id: 7fd4bb39-12d0-45ab-bb36-cebabc73dc7b
 status: deprecated
-description: Detects when attackers use "sc.exe" to delete AV services from the system
-    in order to avoid detection
+description: Detects when attackers use "sc.exe" to delete AV services from the system in order to avoid detection
 references:
     - https://www.virustotal.com/gui/file/38283b775552da8981452941ea74191aa0d203edd3f61fb2dee7b0aea3514955
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -20,18 +19,21 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \sc.exe
-        -   OriginalFileName: sc.exe
+        - NewProcessName|endswith: \sc.exe
+        - OriginalFileName: sc.exe
     selection_cli:
         CommandLine|contains: ' delete '
     selection_av_process:
         CommandLine|contains:
+            # Delete Service 'AVG'
             - AvgAdminServer
             - AVG Antivirus
             - MBEndpointAgent
+            # Delete Service 'Malwarebytes'
             - MBAMService
             - MBCloudEA
             - avgAdminClient
+            # Delete Service 'Sophos'
             - SAVService
             - SAVAdminService
             - Sophos AutoUpdate Service
@@ -54,11 +56,15 @@ detection:
             - Sophos Endpoint Defense Service
             - SophosFIM
             - swi_filter
+            # Delete Service 'FireBird'
             - FirebirdGuardianDefaultInstance
             - FirebirdServerDefaultInstance
+            # Delete Service 'Webroot'
             - WRSVC
+            # Delete Service 'ESET'
             - ekrn
             - ekrnEpsw
+            # Delete Service 'Kaspersky'
             - klim6
             - AVP18.0.0
             - KLIF
@@ -71,6 +77,7 @@ detection:
             - klhk
             - KSDE1.0.0
             - kltap
+            # Delete Service 'Quick Heal'
             - ScSecSvc
             - Core Mail Protection
             - Core Scanning Server
@@ -79,11 +86,13 @@ detection:
             - RepairService
             - Core Browsing Protection
             - Quick Update Service
+            # Delete Service 'McAfee'
             - McAfeeFramework
             - macmnsvc
             - masvc
             - mfemms
             - mfevtp
+            # Delete Service 'Trend Micro'
             - TmFilter
             - TMLWCSService
             - tmusa
@@ -98,6 +107,7 @@ detection:
             - ofcservice
             - TmPfw
             - PccNTUpd
+            # Delete Service 'Panda'
             - PandaAetherAgent
             - PSUAService
             - NanoServiceMain
@@ -108,7 +118,6 @@ detection:
             - EPUpdateService
     condition: process_creation and (all of selection*)
 falsepositives:
-    - Legitimate software deleting using the same method of deletion (Add it to a
-        filter if you find cases as such)
+    - Legitimate software deleting using the same method of deletion (Add it to a filter if you find cases as such)
 level: high
 ruletype: Sigma

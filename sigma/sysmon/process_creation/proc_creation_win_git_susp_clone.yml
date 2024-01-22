@@ -1,8 +1,7 @@
 title: Suspicious Git Clone
 id: aef9d1f1-7396-4e92-a927-4567c7a495c1
 status: test
-description: Detects execution of "git" in order to clone a remote repository that
-    contain suspicious keywords which might be suspicious
+description: Detects execution of "git" in order to clone a remote repository that contain suspicious keywords which might be suspicious
 references:
     - https://gist.githubusercontent.com/MichaelKoczwara/12faba9c061c12b5814b711166de8c2f/raw/e2068486692897b620c25fde1ea258c8218fe3d3/history.txt
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -20,16 +19,17 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith:
-                - \git.exe
-                - \git-remote-https.exe
-        -   OriginalFileName: git.exe
+        - Image|endswith:
+              - \git.exe
+              - \git-remote-https.exe
+        - OriginalFileName: git.exe
     selection_cli:
         CommandLine|contains:
             - ' clone '
             - 'git-remote-https '
     selection_keyword:
         CommandLine|contains:
+            # Add more suspicious keywords
             - exploit
             - Vulns
             - vulnerability
@@ -38,6 +38,7 @@ detection:
             - CVE-
             - poc-
             - ProofOfConcept
+            # Add more vuln names
             - proxyshell
             - log4shell
             - eternalblue

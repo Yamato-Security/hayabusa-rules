@@ -1,8 +1,8 @@
 title: Windows Service Terminated With Error
 id: acfa2210-0d71-4eeb-b477-afab494d596c
 related:
-    -   id: d6b5520d-3934-48b4-928c-2aa3f92d6963
-        type: similar
+    - id: d6b5520d-3934-48b4-928c-2aa3f92d6963
+      type: similar
 status: experimental
 description: Detects Windows services that got terminated for whatever reason
 references:
@@ -19,10 +19,9 @@ detection:
         Channel: System
     selection:
         Provider_Name: Service Control Manager
-        EventID: 7023
+        EventID: 7023 # The X Service service terminated with the following error
     condition: system and selection
 falsepositives:
-    - False positives could occur since service termination could happen due to multiple
-        reasons
+    - False positives could occur since service termination could happen due to multiple reasons
 level: low
 ruletype: Sigma

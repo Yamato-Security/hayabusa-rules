@@ -19,12 +19,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Image|endswith: \dsquery.exe
-            CommandLine|contains|all:
-                - -filter
-                - trustedDomain
-        -   Image|endswith: \nltest.exe
-            CommandLine|contains: domain_trusts
+        - Image|endswith: \dsquery.exe
+          CommandLine|contains|all:
+              - -filter
+              - trustedDomain
+        - Image|endswith: \nltest.exe
+          CommandLine|contains: domain_trusts
     condition: process_creation and selection
 falsepositives:
     - Administration of systems.

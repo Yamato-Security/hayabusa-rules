@@ -1,8 +1,7 @@
 title: Exchange PowerShell Snap-Ins Usage
 id: 25676e10-2121-446e-80a4-71ff8506af47
 status: experimental
-description: Detects adding and using Exchange PowerShell snap-ins to export mailbox
-    data. As seen used by HAFNIUM and APT27
+description: Detects adding and using Exchange PowerShell snap-ins to export mailbox data. As seen used by HAFNIUM and APT27
 references:
     - https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/
     - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
@@ -24,12 +23,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith:
-                - \powershell.exe
-                - \pwsh.exe
-        -   OriginalFileName:
-                - PowerShell.EXE
-                - pwsh.dll
+        - Image|endswith:
+              - \powershell.exe
+              - \pwsh.exe
+        - OriginalFileName:
+              - PowerShell.EXE
+              - pwsh.dll
     selection_cli:
         CommandLine|contains: Add-PSSnapin
     selection_module:
@@ -37,9 +36,9 @@ detection:
             - Microsoft.Exchange.Powershell.Snapin
             - Microsoft.Exchange.Management.PowerShell.SnapIn
     filter_msiexec:
+        # ParentCommandLine: C:\Windows\System32\MsiExec.exe -Embedding C9138ECE2536CB4821EB5F55D300D88E E Global\MSI0000
         ParentImage: C:\Windows\System32\msiexec.exe
-        CommandLine|contains: $exserver=Get-ExchangeServer ([Environment]::MachineName)
-            -ErrorVariable exerr 2> $null
+        CommandLine|contains: $exserver=Get-ExchangeServer ([Environment]::MachineName) -ErrorVariable exerr 2> $null
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
     - Unknown

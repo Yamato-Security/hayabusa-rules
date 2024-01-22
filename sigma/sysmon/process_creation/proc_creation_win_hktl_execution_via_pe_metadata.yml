@@ -1,8 +1,7 @@
 title: Hacktool Execution - PE Metadata
 id: 37c1333a-a0db-48be-b64b-7393b2386e3b
 status: test
-description: Detects the execution of different Windows based hacktools via PE metadata
-    (company, product, etc.) even if the files have been renamed
+description: Detects the execution of different Windows based hacktools via PE metadata (company, product, etc.) even if the files have been renamed
 references:
     - https://github.com/cube0x0
     - https://www.virustotal.com/gui/search/metadata%253ACube0x0/files
@@ -22,7 +21,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        Company: Cube0x0
+        Company: Cube0x0   # Detects the use of tools created by a well-known hacktool producer named "Cube0x0", which includes his handle in all binaries as company information in the PE headers (SharpPrintNightmare, KrbRelay, SharpMapExec, etc.)
     condition: process_creation and selection
 falsepositives:
     - Unlikely

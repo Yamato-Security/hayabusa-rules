@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \appcmd.exe
-        -   OriginalFileName: appcmd.exe
+        - NewProcessName|endswith: \appcmd.exe
+        - OriginalFileName: appcmd.exe
     selection_cli:
         CommandLine|contains|all:
             - install
@@ -32,7 +32,6 @@ detection:
         ParentProcessName: C:\Windows\System32\inetsrv\iissetup.exe
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
-    - Unknown as it may vary from organisation to organisation how admins use to install
-        IIS modules
+    - Unknown as it may vary from organisation to organisation how admins use to install IIS modules
 level: medium
 ruletype: Sigma

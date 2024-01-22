@@ -25,24 +25,22 @@ detection:
         Image|endswith:
             - \cacls.exe
             - \icacls.exe
-            - \net.exe
-            - \net1.exe
+            - \net.exe   # "grant" Option available when used with "net share"
+            - \net1.exe   # "grant" Option available when used with "net share"
         CommandLine|contains:
             - /grant
             - /setowner
-            - /inheritance:r
+            - /inheritance:r   # Remove all inherited ACEs
     selection_2:
         Image|endswith: \attrib.exe
         CommandLine|contains: -r
     selection_3:
-        Image|endswith: \takeown.exe
+        Image|endswith: \takeown.exe   # If this generates FP in your environment. Comment it out or add more suspicious flags and locations
     filter_optional_dynatrace_1:
-        CommandLine|endswith: ICACLS C:\ProgramData\dynatrace\gateway\config\connectivity.history
-            /reset
+        CommandLine|endswith: ICACLS C:\ProgramData\dynatrace\gateway\config\connectivity.history /reset
     filter_optional_dynatrace_2:
         CommandLine|contains|all:
-            - 'ICACLS C:\ProgramData\dynatrace\gateway\config\config.properties /grant
-                :r '
+            - 'ICACLS C:\ProgramData\dynatrace\gateway\config\config.properties /grant :r '
             - S-1-5-19:F
     filter_optional_vscode:
         CommandLine|contains:

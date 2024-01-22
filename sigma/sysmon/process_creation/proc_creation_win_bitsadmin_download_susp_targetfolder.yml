@@ -1,8 +1,7 @@
 title: File Download Via Bitsadmin To A Suspicious Target Folder
 id: 2ddef153-167b-4e89-86b6-757a9e65dcac
 status: experimental
-description: Detects usage of bitsadmin downloading a file to a suspicious target
-    folder
+description: Detects usage of bitsadmin downloading a file to a suspicious target folder
 references:
     - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
     - https://isc.sans.edu/diary/22264
@@ -26,8 +25,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \bitsadmin.exe
-        -   OriginalFileName: bitsadmin.exe
+        - Image|endswith: \bitsadmin.exe
+        - OriginalFileName: bitsadmin.exe
     selection_flags:
         CommandLine|contains:
             - ' /transfer '

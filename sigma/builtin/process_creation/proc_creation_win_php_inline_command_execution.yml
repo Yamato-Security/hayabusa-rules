@@ -1,8 +1,7 @@
 title: Php Inline Command Execution
 id: d81871ef-5738-47ab-9797-7a9c90cd4bfb
 status: test
-description: Detects execution of php using the "-r" flag. This is could be used as
-    a way to launch a reverse shell or execute live php code.
+description: Detects execution of php using the "-r" flag. This is could be used as a way to launch a reverse shell or execute live php code.
 references:
     - https://www.php.net/manual/en/features.commandline.php
     - https://www.revshells.com/
@@ -20,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \php.exe
-        -   OriginalFileName: php.exe
+        - NewProcessName|endswith: \php.exe
+        - OriginalFileName: php.exe
     selection_cli:
         CommandLine|contains: ' -r'
     condition: process_creation and (all of selection_*)

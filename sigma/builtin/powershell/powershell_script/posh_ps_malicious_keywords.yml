@@ -24,6 +24,7 @@ detection:
         ScriptBlockText|contains:
             - AdjustTokenPrivileges
             - IMAGE_NT_OPTIONAL_HDR64_MAGIC
+            # - 'LSA_UNICODE_STRING'
             - Metasploit
             - Microsoft.Win32.UnsafeNativeMethods
             - Mimikatz
@@ -43,7 +44,6 @@ detection:
             - TOKEN_QUERY
     condition: ps_script and selection
 falsepositives:
-    - Depending on the scripts, this rule might require some initial tuning to fit
-        the environment
+    - Depending on the scripts, this rule might require some initial tuning to fit the environment
 level: medium
 ruletype: Sigma

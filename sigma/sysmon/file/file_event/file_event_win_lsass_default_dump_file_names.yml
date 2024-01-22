@@ -1,14 +1,12 @@
 title: LSASS Process Memory Dump Files
 id: a5a2d357-1ab8-4675-a967-ef9990a59391
 related:
-    -   id: db2110f3-479d-42a6-94fb-d35bc1e46492
-        type: obsoletes
-    -   id: 5e3d3601-0662-4af0-b1d2-36a05e90c40a
-        type: obsoletes
+    - id: db2110f3-479d-42a6-94fb-d35bc1e46492
+      type: obsoletes
+    - id: 5e3d3601-0662-4af0-b1d2-36a05e90c40a
+      type: obsoletes
 status: experimental
-description: Detects creation of files with names used by different memory dumping
-    tools to create a memory dump of the LSASS process memory, which contains user
-    credentials.
+description: Detects creation of files with names used by different memory dumping tools to create a memory dump of the LSASS process memory, which contains user credentials.
 references:
     - https://www.google.com/search?q=procdump+lsass
     - https://medium.com/@markmotig/some-ways-to-dump-lsass-exe-c4a75fdc49bf
@@ -37,11 +35,11 @@ detection:
             - \lsass.rar
             - \Andrew.dmp
             - \Coredump.dmp
-            - \NotLSASS.zip
-            - \PPLBlade.dmp
+            - \NotLSASS.zip    # https://github.com/CCob/MirrorDump
+            - \PPLBlade.dmp    # https://github.com/tastypepperoni/PPLBlade
     selection_2:
         TargetFilename|contains:
-            - \lsass_2
+            - \lsass_2    # default format of procdump v9.0 is lsass_YYMMDD_HHmmss.dmp
             - \lsassdump
             - \lsassdmp
     selection_3:

@@ -1,8 +1,7 @@
 title: Potential Process Hollowing Activity
 id: c4b890e5-8d8c-4496-8c66-c805753817cd
 status: experimental
-description: Detects when a memory process image does not match the disk image, indicative
-    of process hollowing.
+description: Detects when a memory process image does not match the disk image, indicative of process hollowing.
 references:
     - https://twitter.com/SecurePeacock/status/1486054048390332423?s=20
     - https://www.bleepingcomputer.com/news/microsoft/microsoft-sysmon-now-detects-malware-process-tampering-attempts/
@@ -34,8 +33,7 @@ detection:
         Image|endswith: \opera.exe
     filter_optional_edge:
         Image|endswith: \WindowsApps\MicrosoftEdge.exe
-    condition: process_tampering and (selection and not 1 of filter_main_* and not
-        1 of filter_optional_*)
+    condition: process_tampering and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: medium

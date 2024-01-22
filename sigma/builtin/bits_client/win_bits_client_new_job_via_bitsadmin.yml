@@ -22,7 +22,6 @@ detection:
         processPath|endswith: \bitsadmin.exe
     condition: bits_client and selection
 falsepositives:
-    - Many legitimate applications or scripts could leverage "bitsadmin". This event
-        is best correlated with EID 16403 via the JobID field
+    - Many legitimate applications or scripts could leverage "bitsadmin". This event is best correlated with EID 16403 via the JobID field
 level: low
 ruletype: Sigma

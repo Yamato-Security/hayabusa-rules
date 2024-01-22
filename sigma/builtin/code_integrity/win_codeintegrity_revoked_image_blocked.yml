@@ -17,7 +17,7 @@ detection:
     codeintegrity_operational:
         Channel: Microsoft-Windows-CodeIntegrity/Operational
     selection:
-        EventID: 3036
+        EventID: 3036 # Windows is unable to verify the integrity of the file %2 because the signing certificate has been revoked.  Check with the publisher to see if a new signed version of the kernel module is available.
     condition: codeintegrity_operational and selection
 falsepositives:
     - Unlikely

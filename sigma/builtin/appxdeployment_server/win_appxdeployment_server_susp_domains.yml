@@ -1,8 +1,7 @@
 title: Suspicious Remote AppX Package Locations
 id: 8b48ad89-10d8-4382-a546-50588c410f0d
 status: experimental
-description: Detects an appx package added the pipeline of the "to be processed" packages
-    which is downloaded from a suspicious domain
+description: Detects an appx package added the pipeline of the "to be processed" packages which is downloaded from a suspicious domain
 references:
     - Internal Research
     - https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/
@@ -22,7 +21,7 @@ detection:
     selection:
         EventID: 854
         Path|contains:
-            - .githubusercontent.com
+            - .githubusercontent.com         # Includes both gists and github repositories / Michael Haag (idea)
             - anonfiles.com
             - cdn.discordapp.com
             - cdn.discordapp.com/attachments/

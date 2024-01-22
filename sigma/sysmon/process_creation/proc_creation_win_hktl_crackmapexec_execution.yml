@@ -1,8 +1,7 @@
 title: HackTool - CrackMapExec Execution
 id: 42a993dd-bb3e-48c8-b372-4d6684c4106c
 status: test
-description: This rule detect common flag combinations used by CrackMapExec in order
-    to detect its use even if the binary has been replaced.
+description: This rule detect common flag combinations used by CrackMapExec in order to detect its use even if the binary has been replaced.
 references:
     - https://mpgn.gitbook.io/crackmapexec/smb-protocol/authentication/checking-credentials-local
     - https://www.mandiant.com/resources/telegram-malware-iranian-espionage
@@ -45,7 +44,7 @@ detection:
             - ' --local-auth'
             - ' -u '
             - ' -p '
-            - ' -H ''NTHASH'''
+            - " -H 'NTHASH'"
     selection_module_mssql:
         CommandLine|contains|all:
             - ' mssql '

@@ -23,13 +23,15 @@ detection:
         CommandLine|contains: '/Create '
     selection_tn:
         CommandLine|contains:
+            # Can start with single or double quote
             - /TN "{
             - /TN '{
             - /TN {
     selection_end:
         CommandLine|contains:
+            # Ending of the name to avoid possible FP in the rest of the commandline
             - '}"'
-            - '}'''
+            - "}'"
             - '} '
     condition: process_creation and (all of selection_*)
 falsepositives:

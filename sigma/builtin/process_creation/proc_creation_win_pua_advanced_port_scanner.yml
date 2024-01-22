@@ -19,9 +19,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|contains: \advanced_port_scanner
-        -   OriginalFileName|contains: advanced_port_scanner
-        -   Description|contains: Advanced Port Scanner
+        - NewProcessName|contains: \advanced_port_scanner
+        - OriginalFileName|contains: advanced_port_scanner   # Covers also advanced_port_scanner_console.exe
+        - Description|contains: Advanced Port Scanner
     selection_cli:
         CommandLine|contains|all:
             - /portable

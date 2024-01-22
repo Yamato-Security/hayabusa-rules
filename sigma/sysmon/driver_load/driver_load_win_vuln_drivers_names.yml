@@ -1,8 +1,7 @@
 title: Vulnerable Driver Load By Name
 id: 72cd00d6-490c-4650-86ff-1d11f491daa1
 status: experimental
-description: Detects the load of known vulnerable drivers via the file name of the
-    drivers.
+description: Detects the load of known vulnerable drivers via the file name of the drivers.
 references:
     - https://loldrivers.io/
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -297,10 +296,7 @@ detection:
             - \iqvw64e.sys
     condition: driver_load and selection
 falsepositives:
-    - False positives may occur if one of the vulnerable driver names mentioned above
-        didn't change its name between versions. So always make sure that the driver
-        being loaded is the legitimate one and the non vulnerable version.
-    - If you experience a lot of FP you could comment the driver name or its exact
-        known legitimate location (when possible)
+    - False positives may occur if one of the vulnerable driver names mentioned above didn't change its name between versions. So always make sure that the driver being loaded is the legitimate one and the non vulnerable version.
+    - If you experience a lot of FP you could comment the driver name or its exact known legitimate location (when possible)
 level: low
 ruletype: Sigma

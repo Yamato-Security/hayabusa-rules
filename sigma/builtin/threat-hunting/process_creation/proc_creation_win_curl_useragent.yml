@@ -20,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_curl:
-        -   NewProcessName|endswith: \curl.exe
-        -   Product: The curl executable
+        - NewProcessName|endswith: \curl.exe
+        - Product: The curl executable
     selection_opt:
         CommandLine|contains:
             - ' -A '

@@ -21,14 +21,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \rundll32.exe
-        -   OriginalFileName: RUNDLL32.EXE
+        - NewProcessName|endswith: \rundll32.exe
+        - OriginalFileName: RUNDLL32.EXE
     selection_cli:
         CommandLine|contains:
             - ',#'
             - ', #'
-            - '.dll #'
-            - '.ocx #'
+            - '.dll #'  # Sysmon removes , in its log
+            - '.ocx #'  # HermeticWizard
     filter_edge:
         CommandLine|contains|all:
             - EDGEHTML.dll
@@ -45,8 +45,7 @@ detection:
             - \Tracker.exe
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
-    - False positives depend on scripts and administrative tools used in the monitored
-        environment
+    - False positives depend on scripts and administrative tools used in the monitored environment
     - Windows control panel elements have been identified as source (mmc)
 level: high
 ruletype: Sigma

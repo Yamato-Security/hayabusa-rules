@@ -1,9 +1,7 @@
 title: First Time Seen Remote Named Pipe
 id: 52d8b0c6-53d6-439a-9e41-52ad442ad9ad
 status: test
-description: This detection excludes known namped pipes accessible remotely and notify
-    on newly observed ones, may help to detect lateral movement and remote exec using
-    named pipes
+description: This detection excludes known namped pipes accessible remotely and notify on newly observed ones, may help to detect lateral movement and remote exec using named pipes
 references:
     - https://twitter.com/menasec1/status/1104489274387451904
 author: Samir Bousseaden
@@ -15,14 +13,13 @@ tags:
 logsource:
     product: windows
     service: security
-    definition: The advanced audit policy setting "Object Access > Audit Detailed
-        File Share" must be configured for Success/Failure
+    definition: The advanced audit policy setting "Object Access > Audit Detailed File Share" must be configured for Success/Failure
 detection:
     security:
         Channel: Security
     selection1:
         EventID: 5145
-        ShareName: \\\\\*\\IPC$
+        ShareName: \\\\\*\\IPC$   # looking for the string \\*\IPC$
     false_positives:
         RelativeTargetName:
             - atsvc
@@ -47,7 +44,6 @@ detection:
             - eventlog
     condition: security and (selection1 and not false_positives)
 falsepositives:
-    - Update the excluded named pipe to filter out any newly observed legit named
-        pipe
+    - Update the excluded named pipe to filter out any newly observed legit named pipe
 level: high
 ruletype: Sigma

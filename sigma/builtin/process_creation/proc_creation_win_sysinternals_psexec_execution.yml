@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        -   NewProcessName|endswith: \psexec.exe
-        -   OriginalFileName: psexec.c
+        - NewProcessName|endswith: \psexec.exe
+        - OriginalFileName: psexec.c
     condition: process_creation and selection
 falsepositives:
     - Administrative scripts.

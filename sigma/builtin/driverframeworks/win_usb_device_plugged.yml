@@ -14,16 +14,15 @@ tags:
 logsource:
     product: windows
     service: driver-framework
-    definition: Requires enabling and collection of the Microsoft-Windows-DriverFrameworks-UserMode/Operational
-        eventlog
+    definition: Requires enabling and collection of the Microsoft-Windows-DriverFrameworks-UserMode/Operational eventlog
 detection:
     driver_framework:
         Channel: Microsoft-Windows-DriverFrameworks-UserMode/Operational
     selection:
         EventID:
-            - 2003
-            - 2100
-            - 2102
+            - 2003  # Loading drivers
+            - 2100  # Pnp or power management
+            - 2102  # Pnp or power management
     condition: driver_framework and selection
 falsepositives:
     - Legitimate administrative activity

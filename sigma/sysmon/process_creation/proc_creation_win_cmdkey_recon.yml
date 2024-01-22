@@ -6,8 +6,7 @@ references:
     - https://www.peew.pw/blog/2017/11/26/exploring-cmdkey-an-edge-case-for-privilege-escalation
     - https://technet.microsoft.com/en-us/library/cc754243(v=ws.11).aspx
     - https://github.com/redcanaryco/atomic-red-team/blob/b27a3cb25025161d49ac861cb216db68c46a3537/atomics/T1003.005/T1003.005.md#atomic-test-1---cached-credential-dump-via-cmdkey
-author: jmallette, Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron
-    Systems)
+author: jmallette, Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2019/01/16
 modified: 2023/02/03
 tags:
@@ -22,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \cmdkey.exe
-        -   OriginalFileName: cmdkey.exe
+        - Image|endswith: \cmdkey.exe
+        - OriginalFileName: cmdkey.exe
     selection_cli:
         CommandLine|contains:
             - ' /l'

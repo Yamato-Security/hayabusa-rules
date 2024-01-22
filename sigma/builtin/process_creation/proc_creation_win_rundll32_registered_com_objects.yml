@@ -20,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \rundll32.exe
-        -   OriginalFileName: RUNDLL32.EXE
+        - NewProcessName|endswith: \rundll32.exe
+        - OriginalFileName: RUNDLL32.EXE
     selection_cli:
         CommandLine|contains:
             - '-sta '

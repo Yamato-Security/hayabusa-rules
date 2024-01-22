@@ -1,8 +1,7 @@
 title: Use of OpenConsole
 id: 814c95cc-8192-4378-a70a-f1aafd877af1
 status: test
-description: Detects usage of OpenConsole binary as a LOLBIN to launch other binaries
-    to bypass application Whitelisting
+description: Detects usage of OpenConsole binary as a LOLBIN to launch other binaries to bypass application Whitelisting
 references:
     - https://twitter.com/nas_bench/status/1537563834478645252
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -19,10 +18,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   OriginalFileName: OpenConsole.exe
-        -   Image|endswith: \OpenConsole.exe
+        - OriginalFileName: OpenConsole.exe
+        - Image|endswith: \OpenConsole.exe
     filter:
-        Image|startswith: C:\Program Files\WindowsApps\Microsoft.WindowsTerminal
+        Image|startswith: C:\Program Files\WindowsApps\Microsoft.WindowsTerminal   # We exclude the default path for WindowsTerminal
     condition: process_creation and (selection and not filter)
 falsepositives:
     - Legitimate use by an administrator

@@ -1,11 +1,10 @@
 title: MSSQL Server Failed Logon From External Network
 id: ebfe73c2-5bc9-4ed9-aaa8-8b54b2b4777d
 related:
-    -   id: 218d2855-2bba-4f61-9c85-81d0ea63ac71
-        type: similar
+    - id: 218d2855-2bba-4f61-9c85-81d0ea63ac71
+      type: similar
 status: experimental
-description: Detects failed logon attempts from clients with external network IP to
-    an MSSQL server. This can be a sign of a bruteforce attack.
+description: Detects failed logon attempts from clients with external network IP to an MSSQL server. This can be a sign of a bruteforce attack.
 author: j4son
 date: 2023/10/11
 references:
@@ -26,8 +25,8 @@ detection:
         EventID: 18456
     filter_main_local_ips:
         Data|contains:
-            - 'CLIENT: 10.'
-            - 'CLIENT: 172.16.'
+            - 'CLIENT: 10.' # filter_range_IP: 10.0.0.0/8
+            - 'CLIENT: 172.16.' # filter_range_IP: 172.16.0.0/12
             - 'CLIENT: 172.17.'
             - 'CLIENT: 172.18.'
             - 'CLIENT: 172.19.'
@@ -43,9 +42,9 @@ detection:
             - 'CLIENT: 172.29.'
             - 'CLIENT: 172.30.'
             - 'CLIENT: 172.31.'
-            - 'CLIENT: 192.168.'
-            - 'CLIENT: 127.'
-            - 'CLIENT: 169.254.'
+            - 'CLIENT: 192.168.' # filter_range_IP: 192.168.0.0/16
+            - 'CLIENT: 127.' # filter_loop_back: 127.0.0.0/8
+            - 'CLIENT: 169.254.' # fileter_link-local_addressing: 169.254.0.0/16
     condition: application and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

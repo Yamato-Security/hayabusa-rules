@@ -30,7 +30,6 @@ detection:
         Signature: Nextron Systems GmbH
     condition: image_load and (selection and not filter_main)
 falsepositives:
-    - Other legitimate binaries named "thor.exe" that aren't published by Nextron
-        Systems
+    - Other legitimate binaries named "thor.exe" that aren't published by Nextron Systems
 level: high
 ruletype: Sigma

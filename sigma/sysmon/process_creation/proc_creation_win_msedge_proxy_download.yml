@@ -19,8 +19,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \msedge_proxy.exe
-        -   OriginalFileName: msedge_proxy.exe
+        - Image|endswith: \msedge_proxy.exe
+        - OriginalFileName: msedge_proxy.exe
     selection_cli:
         CommandLine|contains:
             - http://

@@ -22,8 +22,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_reg_img:
-        -   Image|endswith: \reg.exe
-        -   OriginalFileName: reg.exe
+        - Image|endswith: \reg.exe
+        - OriginalFileName: reg.exe
     selection_reg_cli:
         CommandLine|contains|all:
             - add
@@ -40,8 +40,7 @@ detection:
             - 'regsvr32 '
             - ' /s '
             - igfxCPL.cpl
-    condition: process_creation and (all of selection_reg_* or (selection_cpl and
-        not 1 of filter_cpl_*))
+    condition: process_creation and (all of selection_reg_* or (selection_cpl and not 1 of filter_cpl_*))
 falsepositives:
     - Unknown
 level: high

@@ -17,12 +17,13 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \regsvr32.exe
-        -   OriginalFileName: \REGSVR32.EXE
+        - NewProcessName|endswith: \regsvr32.exe
+        - OriginalFileName: \REGSVR32.EXE
     selection_cli:
         CommandLine|contains: ' \\\\'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown
+# Decrease to medium if this is something common in your org
 level: high
 ruletype: Sigma

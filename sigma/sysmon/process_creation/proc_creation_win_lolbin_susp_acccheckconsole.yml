@@ -1,8 +1,7 @@
 title: Suspicious LOLBIN AccCheckConsole
 id: 0f6da907-5854-4be6-859a-e9958747b0aa
 status: test
-description: Detects suspicious LOLBIN AccCheckConsole execution with parameters as
-    used to load an arbitrary DLL
+description: Detects suspicious LOLBIN AccCheckConsole execution with parameters as used to load an arbitrary DLL
 references:
     - https://gist.github.com/bohops/2444129419c8acf837aedda5f0e7f340
     - https://twitter.com/bohops/status/1477717351017680899?s=12
@@ -20,8 +19,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \AccCheckConsole.exe
-        -   OriginalFileName: AccCheckConsole.exe
+        - Image|endswith: \AccCheckConsole.exe
+        - OriginalFileName: AccCheckConsole.exe
     selection_cli:
         CommandLine|contains|all:
             - ' -window '

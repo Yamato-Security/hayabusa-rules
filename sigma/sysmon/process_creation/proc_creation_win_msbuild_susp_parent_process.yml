@@ -18,8 +18,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Image|endswith: \MSBuild.exe
-        -   OriginalFileName: MSBuild.exe
+        - Image|endswith: \MSBuild.exe
+        - OriginalFileName: MSBuild.exe
     filter_parent:
         ParentImage|endswith:
             - \devenv.exe

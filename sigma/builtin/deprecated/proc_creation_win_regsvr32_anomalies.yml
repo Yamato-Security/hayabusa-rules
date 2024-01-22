@@ -60,7 +60,7 @@ detection:
             - \AppData\Local
             - C:\Users\Public
         NewProcessName|endswith: \regsvr32.exe
-    selection9:
+    selection9: # suspicious extensions https://twitter.com/Max_Mal_/status/1542461200797163522/photo/3
         CommandLine|endswith:
             - .jpg
             - .jpeg

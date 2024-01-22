@@ -1,16 +1,13 @@
 title: Potential Persistence Via Netsh Helper DLL
 id: 56321594-9087-49d9-bf10-524fe8479452
 related:
-    -   id: c90362e0-2df3-4e61-94fe-b37615814cb1
-        type: similar
-    -   id: e7b18879-676e-4a0e-ae18-27039185a8e7
-        type: similar
+    - id: c90362e0-2df3-4e61-94fe-b37615814cb1
+      type: similar
+    - id: e7b18879-676e-4a0e-ae18-27039185a8e7
+      type: similar
 status: test
-description: 'Detects the execution of netsh with "add helper" flag in order to add
-    a custom helper DLL. This technique can be abused to add a malicious helper DLL
-    that can be used as a persistence proxy that gets called when netsh.exe is executed.
-
-    '
+description: |
+    Detects the execution of netsh with "add helper" flag in order to add a custom helper DLL. This technique can be abused to add a malicious helper DLL that can be used as a persistence proxy that gets called when netsh.exe is executed.
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.007/T1546.007.md
     - https://github.com/outflanknl/NetshHelperBeacon
@@ -32,8 +29,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   OriginalFileName: netsh.exe
-        -   Image|endswith: \netsh.exe
+        - OriginalFileName: netsh.exe
+        - Image|endswith: \netsh.exe
     selection_cli:
         CommandLine|contains|all:
             - add

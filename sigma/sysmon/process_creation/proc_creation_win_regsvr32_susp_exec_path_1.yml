@@ -1,11 +1,10 @@
 title: Regsvr32 Execution From Potential Suspicious Location
 id: 9525dc73-0327-438c-8c04-13c0e037e9da
 related:
-    -   id: 8e2b24c9-4add-46a0-b4bb-0057b4e6187d
-        type: obsoletes
+    - id: 8e2b24c9-4add-46a0-b4bb-0057b4e6187d
+      type: obsoletes
 status: experimental
-description: Detects execution of regsvr32 where the DLL is located in a potentially
-    suspicious location.
+description: Detects execution of regsvr32 where the DLL is located in a potentially suspicious location.
 references:
     - https://web.archive.org/web/20171001085340/https://subt0x10.blogspot.com/2017/04/bypass-application-whitelisting-script.html
     - https://app.any.run/tasks/34221348-072d-4b70-93f3-aa71f6ebecad/
@@ -23,8 +22,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \regsvr32.exe
-        -   OriginalFileName: REGSVR32.EXE
+        - Image|endswith: \regsvr32.exe
+        - OriginalFileName: REGSVR32.EXE
     selection_cli:
         CommandLine|contains:
             - :\ProgramData\
@@ -35,7 +34,6 @@ detection:
             - \AppData\Roaming\
     condition: process_creation and (all of selection_*)
 falsepositives:
-    - Some installers might execute "regsvr32" with DLLs located in %TEMP% or in %PROGRAMDATA%.
-        Apply additional filters if necessary.
+    - Some installers might execute "regsvr32" with DLLs located in %TEMP% or in %PROGRAMDATA%. Apply additional filters if necessary.
 level: medium
 ruletype: Sigma

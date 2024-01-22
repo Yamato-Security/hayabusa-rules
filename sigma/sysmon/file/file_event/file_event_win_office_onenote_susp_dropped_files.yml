@@ -1,9 +1,7 @@
 title: Suspicious File Created Via OneNote Application
 id: fcc6d700-68d9-4241-9a1a-06874d621b06
 status: test
-description: Detects suspicious files created via the OneNote application. This could
-    indicate a potential malicious ".one"/".onepkg" file was executed as seen being
-    used in malware activity in the wild
+description: Detects suspicious files created via the OneNote application. This could indicate a potential malicious ".one"/".onepkg" file was executed as seen being used in malware activity in the wild
 references:
     - https://www.bleepingcomputer.com/news/security/hackers-now-use-microsoft-onenote-attachments-to-spread-malware/
     - https://blog.osarmor.com/319/onenote-attachment-delivers-asyncrat-malware/
@@ -31,6 +29,7 @@ detection:
             - \onenoteim.exe
         TargetFilename|contains: \AppData\Local\Temp\OneNote\
         TargetFilename|endswith:
+            # TODO: Add more suspicious extensions
             - .bat
             - .chm
             - .cmd
@@ -47,9 +46,7 @@ detection:
             - .wsf
     condition: file_event and selection
 falsepositives:
-    - False positives should be very low with the extensions list cited. Especially
-        if you don't heavily utilize OneNote.
-    - Occasional FPs might occur if OneNote is used internally to share different
-        embedded documents
+    - False positives should be very low with the extensions list cited. Especially if you don't heavily utilize OneNote.
+    - Occasional FPs might occur if OneNote is used internally to share different embedded documents
 level: high
 ruletype: Sigma

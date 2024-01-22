@@ -38,7 +38,7 @@ detection:
             - \Users\
         NewProcessName|endswith: \cmd.exe
     filter_cmd:
-        CommandLine|contains: ' rmdir '
+        CommandLine|contains: ' rmdir ' # don't match on 'dir'   "C:\Windows\System32\cmd.exe" /q /c rmdir /s /q "C:\Users\XX\AppData\Local\Microsoft\OneDrive\19.232.1124.0005"
     selection_net:
         CommandLine|contains: user
         NewProcessName|endswith:
@@ -46,17 +46,16 @@ detection:
             - \net1.exe
     filter_net:
         CommandLine|contains:
-            - /domain
-            - /add
-            - /delete
-            - /active
-            - /expires
-            - /passwordreq
-            - /scriptpath
-            - /times
-            - /workstations
-    condition: process_creation and ((selection_cmd and not filter_cmd) or (selection_net
-        and not filter_net) or 1 of selection_other_*)
+            - /domain         # local account discovery only
+            - /add            # discovery only
+            - /delete         # discovery only
+            - /active         # discovery only
+            - /expires        # discovery only
+            - /passwordreq    # discovery only
+            - /scriptpath     # discovery only
+            - /times          # discovery only
+            - /workstations   # discovery only
+    condition: process_creation and ((selection_cmd and not filter_cmd) or (selection_net and not filter_net) or 1 of selection_other_*)
 falsepositives:
     - Legitimate administrator or user enumerates local users for legitimate reason
 level: low

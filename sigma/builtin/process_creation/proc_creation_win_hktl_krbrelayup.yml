@@ -1,8 +1,7 @@
 title: HackTool - KrbRelayUp Execution
 id: 12827a56-61a4-476a-a9cb-f3068f191073
 status: test
-description: Detects KrbRelayUp used to perform a universal no-fix local privilege
-    escalation in Windows domain environments where LDAP signing is not enforced
+description: Detects KrbRelayUp used to perform a universal no-fix local privilege escalation in Windows domain environments where LDAP signing is not enforced
 references:
     - https://github.com/Dec0ne/KrbRelayUp
 author: Florian Roth (Nextron Systems)
@@ -21,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \KrbRelayUp.exe
-        -   OriginalFileName: KrbRelayUp.exe
+        - NewProcessName|endswith: \KrbRelayUp.exe
+        - OriginalFileName: KrbRelayUp.exe   # In case the file has been renamed after compilation
     selection_cli_1:
         CommandLine|contains|all:
             - ' relay '

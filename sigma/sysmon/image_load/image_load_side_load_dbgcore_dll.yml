@@ -3,7 +3,7 @@ id: 9ca2bf31-0570-44d8-a543-534c47c33ed7
 status: experimental
 description: Detects DLL sideloading of "dbgcore.dll"
 references:
-    - https://hijacklibs.net/
+    - https://hijacklibs.net/ # For list of DLLs that could be sideloaded (search for dlls mentioned here in there)
 author: Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)
 date: 2022/10/25
 modified: 2023/05/05
@@ -36,7 +36,6 @@ detection:
         ImageLoaded|endswith: \Steam\bin\cef\cef.win7x64\dbgcore.dll
     condition: image_load and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
-    - Legitimate applications loading their own versions of the DLL mentioned in this
-        rule
+    - Legitimate applications loading their own versions of the DLL mentioned in this rule
 level: medium
 ruletype: Sigma

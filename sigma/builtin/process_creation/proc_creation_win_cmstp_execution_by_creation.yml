@@ -1,8 +1,7 @@
 title: CMSTP Execution Process Creation
 id: 7d4cdc5a-0076-40ca-aac8-f7e714570e47
 status: stable
-description: Detects various indicators of Microsoft Connection Manager Profile Installer
-    execution
+description: Detects various indicators of Microsoft Connection Manager Profile Installer execution
 references:
     - https://web.archive.org/web/20190720093911/http://www.endurant.io/cmstp/detecting-cmstp-enabled-code-execution-and-uac-bypass-with-sysmon/
 author: Nik Seetharaman
@@ -18,6 +17,7 @@ logsource:
     category: process_creation
     product: windows
 detection:
+    # CMSTP Spawning Child Process
     process_creation:
         EventID: 4688
         Channel: Security

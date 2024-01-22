@@ -73,14 +73,11 @@ detection:
     suspicious_powershell_filter:
         CommandLine|contains: .spl
     suspicious_rundll32_img:
-        -   NewProcessName|endswith: \rundll32.exe
-        -   OriginalFileName: RUNDLL32.EXE
+        - NewProcessName|endswith: \rundll32.exe
+        - OriginalFileName: RUNDLL32.EXE
     suspicious_rundll32_cli:
         CommandLine|endswith: rundll32.exe
-    condition: process_creation and (spoolsv and ( suspicious_unrestricted or (suspicious_net
-        and not suspicious_net_filter) or (suspicious_cmd and not suspicious_cmd_filter)
-        or (suspicious_netsh and not suspicious_netsh_filter) or (suspicious_powershell
-        and not suspicious_powershell_filter) or all of suspicious_rundll32_* ))
+    condition: process_creation and (spoolsv and ( suspicious_unrestricted or (suspicious_net and not suspicious_net_filter) or (suspicious_cmd and not suspicious_cmd_filter) or (suspicious_netsh and not suspicious_netsh_filter) or (suspicious_powershell and not suspicious_powershell_filter) or all of suspicious_rundll32_* ))
 fields:
     - NewProcessName
     - CommandLine

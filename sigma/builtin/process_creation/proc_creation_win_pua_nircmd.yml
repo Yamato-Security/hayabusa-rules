@@ -1,8 +1,7 @@
 title: PUA - NirCmd Execution
 id: 4e2ed651-1906-4a59-a78a-18220fca1b22
 status: test
-description: Detects the use of NirCmd tool for command execution, which could be
-    the result of legitimate administrative activity
+description: Detects the use of NirCmd tool for command execution, which could be the result of legitimate administrative activity
 references:
     - https://www.nirsoft.net/utils/nircmd.html
     - https://www.winhelponline.com/blog/run-program-as-system-localsystem-account-windows/
@@ -22,8 +21,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_org:
-        -   NewProcessName|endswith: \NirCmd.exe
-        -   OriginalFileName: NirCmd.exe
+        - NewProcessName|endswith: \NirCmd.exe
+        - OriginalFileName: NirCmd.exe
     selection_cmd:
         CommandLine|contains:
             - ' execmd '

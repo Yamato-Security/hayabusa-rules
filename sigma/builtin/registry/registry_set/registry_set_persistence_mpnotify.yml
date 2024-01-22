@@ -1,8 +1,7 @@
 title: Potential Persistence Via Mpnotify
 id: 92772523-d9c1-4c93-9547-b0ca500baba3
 status: experimental
-description: Detects when an attacker register a new SIP provider for persistence
-    and defense evasion
+description: Detects when an attacker register a new SIP provider for persistence and defense evasion
 references:
     - https://persistence-info.github.io/Data/mpnotify.html
     - https://www.youtube.com/watch?v=ggY3srD9dYs&ab_channel=GrzegorzTworek
@@ -22,7 +21,6 @@ detection:
         ObjectName|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\mpnotify
     condition: registry_set and selection
 falsepositives:
-    - Might trigger if a legitimate new SIP provider is registered. But this is not
-        a common occurrence in an environment and should be investigated either way
+    - Might trigger if a legitimate new SIP provider is registered. But this is not a common occurrence in an environment and should be investigated either way
 level: high
 ruletype: Sigma

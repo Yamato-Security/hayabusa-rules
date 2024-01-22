@@ -1,8 +1,7 @@
 title: Potential Download/Upload Activity Using Type Command
 id: aa0b3a82-eacc-4ec3-9150-b5a9a3e3f82f
 status: test
-description: Detects usage of the "type" command to download/upload data from WebDAV
-    server
+description: Detects usage of the "type" command to download/upload data from WebDAV server
 references:
     - https://mr0range.com/a-new-lolbin-using-the-windows-type-command-to-upload-download-files-81d7b6179e22
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -15,6 +14,7 @@ logsource:
     product: windows
     category: process_creation
 detection:
+    # Note that since built in CMD commands do not trigger a process creation. This would be detected only if used in a "/c" command
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -25,7 +25,7 @@ detection:
     selection_download:
         CommandLine|contains|all:
             - type \\\\
-            - ' > '
+            - ' > ' # Space are added to increase atom length and speed up matching. If your backend can handle this remove the space
     condition: process_creation and (1 of selection_*)
 falsepositives:
     - Unknown

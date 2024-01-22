@@ -20,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Image|endswith: \ilasm.exe
-        -   OriginalFileName: ilasm.exe
+        - Image|endswith: \ilasm.exe
+        - OriginalFileName: ilasm.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

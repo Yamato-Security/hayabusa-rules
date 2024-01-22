@@ -1,8 +1,7 @@
 title: UAC Bypass Using Windows Media Player - Process
 id: 0058b9e5-bcd7-40d4-9205-95ca5a16d7b2
 status: test
-description: Detects the pattern of UAC Bypass using Windows Media Player osksupport.dll
-    (UACMe 32)
+description: Detects the pattern of UAC Bypass using Windows Media Player osksupport.dll (UACMe 32)
 references:
     - https://github.com/hfiref0x/UACME
 author: Christian Burkard (Nextron Systems)
@@ -25,8 +24,7 @@ detection:
             - S-1-16-12288
             - S-1-16-16384
     selection2:
-        ParentCommandLine: '"C:\Windows\system32\mmc.exe" "C:\Windows\system32\eventvwr.msc"
-            /s'
+        ParentCommandLine: '"C:\Windows\system32\mmc.exe" "C:\Windows\system32\eventvwr.msc" /s'
         NewProcessName: C:\Windows\System32\cmd.exe
         MandatoryLabel:
             - S-1-16-12288

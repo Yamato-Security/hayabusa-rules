@@ -1,8 +1,7 @@
 title: Execution via stordiag.exe
 id: 961e0abb-1b1e-4c84-a453-aafe56ad0d34
 status: test
-description: Detects the use of stordiag.exe to execute schtasks.exe systeminfo.exe
-    and fltmc.exe
+description: Detects the use of stordiag.exe to execute schtasks.exe systeminfo.exe and fltmc.exe
 references:
     - https://strontic.github.io/xcyclopedia/library/stordiag.exe-1F08FC87C373673944F6A7E8B18CD845.html
     - https://twitter.com/eral4m/status/1451112385041911809
@@ -27,7 +26,7 @@ detection:
             - \systeminfo.exe
             - \fltmc.exe
     filter:
-        ParentImage|startswith:
+        ParentImage|startswith: # as first is "Copy c:\windows\system32\stordiag.exe to a folder"
             - c:\windows\system32\
             - c:\windows\syswow64\
     condition: process_creation and (selection and not filter)

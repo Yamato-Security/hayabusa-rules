@@ -36,8 +36,7 @@ detection:
     filter_main_msdefender:
         SourceImage|contains: :\ProgramData\Microsoft\Windows Defender\Platform\
         SourceImage|endswith: \MsMpEng.exe
-    condition: process_access and (( selection_sysmon and not 1 of filter_main_* )
-        or selection_calltrace)
+    condition: process_access and (( selection_sysmon and not 1 of filter_main_* ) or selection_calltrace)
 falsepositives:
     - Unknown
 level: high

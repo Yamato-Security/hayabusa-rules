@@ -23,14 +23,14 @@ detection:
         EventID: 11
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   TargetFilename|contains:
-                - \hive_sam_
-                - \SAM-2021-
-                - \SAM-2022-
-                - \SAM-2023-
-                - \SAM-haxx
-                - \Sam.save
-        -   TargetFilename: C:\windows\temp\sam
+        - TargetFilename|contains:
+              - \hive_sam_    # Go version
+              - \SAM-2021-    # C++ version
+              - \SAM-2022-    # C++ version
+              - \SAM-2023-    # C++ version
+              - \SAM-haxx     # Early C++ versions
+              - \Sam.save     # PowerShell version
+        - TargetFilename: C:\windows\temp\sam    # C# version of HiveNightmare
     condition: file_event and selection
 falsepositives:
     - Files that accidentally contain these strings

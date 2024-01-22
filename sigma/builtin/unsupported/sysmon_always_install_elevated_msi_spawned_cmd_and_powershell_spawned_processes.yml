@@ -1,7 +1,6 @@
 title: MSI Spawned Cmd and Powershell Spawned Processes
 id: 38cf8340-461b-4857-bf99-23a41f772b18
-description: This rule looks for Windows Installer service (msiexec.exe) spawning
-    command line and/or powershell that spawns other processes
+description: This rule looks for Windows Installer service (msiexec.exe) spawning command line and/or powershell that spawns other processes
 status: unsupported
 author: Teymur Kheirkhabarov (idea), Mangatas Tondang (rule), oscd.community
 date: 2020/10/13
@@ -14,8 +13,7 @@ tags:
 logsource:
     product: windows
     category: process_creation
-    definition: Works only if  Enrich Sysmon events with additional information about
-        process in ParentOfParentImage check enrichment section
+    definition: Works only if  Enrich Sysmon events with additional information about process in ParentOfParentImage check enrichment section
 detection:
     process_creation:
         EventID: 4688
@@ -38,6 +36,6 @@ falsepositives:
     - Unknown
 level: high
 enrichment:
-    - EN_0001_cache_sysmon_event_id_1_info
-    - EN_0002_enrich_sysmon_event_id_1_with_parent_info
+    - EN_0001_cache_sysmon_event_id_1_info                # http://bit.ly/314zc6x
+    - EN_0002_enrich_sysmon_event_id_1_with_parent_info   # http://bit.ly/2KmSC0l
 ruletype: Sigma

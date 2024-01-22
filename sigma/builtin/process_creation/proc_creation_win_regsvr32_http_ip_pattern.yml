@@ -1,8 +1,7 @@
 title: Potentially Suspicious Regsvr32 HTTP IP Pattern
 id: 2dd2c217-bf68-437a-b57c-fe9fd01d5de8
 status: experimental
-description: Detects regsvr32 execution to download and install DLLs located remotely
-    where the address is an IP address.
+description: Detects regsvr32 execution to download and install DLLs located remotely where the address is an IP address.
 references:
     - https://twitter.com/mrd0x/status/1461041276514623491
     - https://twitter.com/tccontre18/status/1480950986650832903
@@ -21,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \regsvr32.exe
-        -   OriginalFileName: REGSVR32.EXE
+        - NewProcessName|endswith: \regsvr32.exe
+        - OriginalFileName: REGSVR32.EXE
     selection_ip:
         CommandLine|contains:
             - ' /i:http://1'

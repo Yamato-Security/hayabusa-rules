@@ -1,12 +1,10 @@
 title: Potentially Suspicious DLL Registered Via Odbcconf.EXE
 id: ba4cfc11-d0fa-4d94-bf20-7c332c412e76
 related:
-    -   id: 9f0a8bf3-a65b-440a-8c1e-5cb1547c8e70
-        type: derived
+    - id: 9f0a8bf3-a65b-440a-8c1e-5cb1547c8e70
+      type: derived
 status: experimental
-description: Detects execution of "odbcconf" with the "REGSVR" action where the DLL
-    in question doesn't contain a ".dll" extension. Which is often used as a method
-    to evade defenses.
+description: Detects execution of "odbcconf" with the "REGSVR" action where the DLL in question doesn't contain a ".dll" extension. Which is often used as a method to evade defenses.
 references:
     - https://learn.microsoft.com/en-us/sql/odbc/odbcconf-exe?view=sql-server-ver16
     - https://lolbas-project.github.io/lolbas/Binaries/Odbcconf/
@@ -25,9 +23,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \odbcconf.exe
-        -   OriginalFileName: odbcconf.exe
+        - Image|endswith: \odbcconf.exe
+        - OriginalFileName: odbcconf.exe
     selection_cli:
+        # Note: The "/A" flag is not required to call a specific action
         CommandLine|contains: 'REGSVR '
     filter_main_dll_ext:
         CommandLine|contains: .dll

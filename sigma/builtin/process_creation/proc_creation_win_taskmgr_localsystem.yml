@@ -16,7 +16,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        SubjectUserName|contains:
+        SubjectUserName|contains: # covers many language settings
             - AUTHORI
             - AUTORI
         NewProcessName|endswith: \taskmgr.exe

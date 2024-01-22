@@ -1,8 +1,7 @@
 title: Suspicious Non-Browser Network Communication With Google API
 id: 7e9cf7b6-e827-11ed-a05b-0242ac120003
 status: experimental
-description: Detects a non-browser process interacting with the Google API which could
-    indicate the use of a covert C2 such as Google Sheet C2 (GC2-sheet)
+description: Detects a non-browser process interacting with the Google API which could indicate the use of a covert C2 such as Google Sheet C2 (GC2-sheet)
 references:
     - https://github.com/looCiprian/GC2-sheet
     - https://youtu.be/n2dFlSaBBKo
@@ -24,7 +23,7 @@ detection:
         EventID: 3
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        DestinationHostname|contains:
+        DestinationHostname|contains:  # Other googleapis should be added as the GC2 tool evolves
             - oauth2.googleapis.com
             - sheets.googleapis.com
             - drive.googleapis.com
@@ -49,11 +48,11 @@ detection:
     filter_optional_maxthon:
         Image|endswith: \maxthon.exe
     filter_optional_edge_1:
-        -   Image|contains: :\Program Files (x86)\Microsoft\EdgeWebView\Application\
-        -   Image|endswith:
-                - :\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
-                - :\Program Files\Microsoft\Edge\Application\msedge.exe
-                - \WindowsApps\MicrosoftEdge.exe
+        - Image|contains: :\Program Files (x86)\Microsoft\EdgeWebView\Application\
+        - Image|endswith:
+              - :\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+              - :\Program Files\Microsoft\Edge\Application\msedge.exe
+              - \WindowsApps\MicrosoftEdge.exe
     filter_optional_edge_2:
         Image|contains:
             - :\Program Files (x86)\Microsoft\EdgeCore\
@@ -79,8 +78,6 @@ detection:
         Image|endswith: \teams.exe
     condition: network_connection and (selection and not 1 of filter_optional_*)
 falsepositives:
-    - Legitimate applications communicating with the "googleapis.com" endpoints that
-        are not already in the exclusion list. This is environmental dependent and
-        requires further testing and tuning.
+    - Legitimate applications communicating with the "googleapis.com" endpoints that are not already in the exclusion list. This is environmental dependent and requires further testing and tuning.
 level: medium
 ruletype: Sigma

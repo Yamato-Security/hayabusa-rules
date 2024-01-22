@@ -31,8 +31,6 @@ detection:
             - C:\Program Files\
     condition: image_load and (selection and not 1 of filter_main_*)
 falsepositives:
-    - Legitimate third party application located in "AppData" may leverage this DLL
-        to offer 7z compression functionality and may generate false positives. Apply
-        additional filters as needed.
+    - Legitimate third party application located in "AppData" may leverage this DLL to offer 7z compression functionality and may generate false positives. Apply additional filters as needed.
 level: low
 ruletype: Sigma

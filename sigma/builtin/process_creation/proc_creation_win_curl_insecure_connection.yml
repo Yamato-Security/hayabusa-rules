@@ -16,11 +16,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \curl.exe
-        -   OriginalFileName: curl.exe
+        - NewProcessName|endswith: \curl.exe
+        - OriginalFileName: curl.exe
     selection_cli:
-        -   CommandLine|re: \s-k\s
-        -   CommandLine|contains: --insecure
+        - CommandLine|re: \s-k\s
+        - CommandLine|contains: --insecure
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Access to badly maintained internal or development systems

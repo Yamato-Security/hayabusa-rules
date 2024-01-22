@@ -1,8 +1,8 @@
 title: Application Removed Via Wmic.EXE
 id: b53317a0-8acf-4fd1-8de8-a5401e776b96
 related:
-    -   id: 847d5ff3-8a31-4737-a970-aeae8fe21765
-        type: derived
+    - id: 847d5ff3-8a31-4737-a970-aeae8fe21765 # Uninstall Security Products
+      type: derived
 status: test
 description: Uninstall an application with wmic
 references:
@@ -21,8 +21,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \WMIC.exe
-        -   OriginalFileName: wmic.exe
+        - NewProcessName|endswith: \WMIC.exe
+        - OriginalFileName: wmic.exe
     selection_cli:
         CommandLine|contains:
             - call

@@ -27,10 +27,11 @@ detection:
             - C:\Users\
             - \AppData\Local\
         CommandLine|contains:
-            - NT AUT
-            - ' SYSTEM '
+            - NT AUT   # This covers the usual NT AUTHORITY\SYSTEM
+            - ' SYSTEM ' # SYSTEM is a valid value for schtasks hence it gets it's own value with space
         NewProcessName|endswith: \schtasks.exe
     filter:
+        # FP from test set in SIGMA
         CommandLine|contains: /TN TVInstallRestore
         ParentProcessName|contains|all:
             - \AppData\Local\Temp\

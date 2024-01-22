@@ -19,24 +19,24 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_child_img:
-        -   Image|endswith: \wlrmdr.exe
-        -   OriginalFileName: WLRMNDR.EXE
+        - Image|endswith: \wlrmdr.exe
+        - OriginalFileName: WLRMNDR.EXE
     selection_child_cli:
         CommandLine|contains|all:
+            # Note that the dash "-" can be replaced with a slash "/" (TODO: Use the "windash" modifier when it's introduced)
             - '-s '
             - '-f '
             - '-t '
             - '-m '
             - '-a '
             - '-u '
-    selection_parent:
+    selection_parent: # This selection is looking for processes spawned from wlrmdr using the "-u" flag
         ParentImage|endswith: \wlrmdr.exe
     filter:
         ParentImage: C:\Windows\System32\winlogon.exe
     filter_null:
         ParentImage: '-'
-    condition: process_creation and (selection_parent or (all of selection_child_*
-        and not 1 of filter*))
+    condition: process_creation and (selection_parent or (all of selection_child_* and not 1 of filter*))
 falsepositives:
     - Unknown
 level: medium

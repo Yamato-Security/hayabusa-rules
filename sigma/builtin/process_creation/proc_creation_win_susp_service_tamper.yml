@@ -1,16 +1,14 @@
 title: Suspicious Windows Service Tampering
 id: ce72ef99-22f1-43d4-8695-419dcb5d9330
 related:
-    -   id: eb87818d-db5d-49cc-a987-d5da331fbd90
-        type: derived
-    -   id: 6783aa9e-0dc3-49d4-a94a-8b39c5fd700b
-        type: obsoletes
-    -   id: 7fd4bb39-12d0-45ab-bb36-cebabc73dc7b
-        type: obsoletes
+    - id: eb87818d-db5d-49cc-a987-d5da331fbd90
+      type: derived
+    - id: 6783aa9e-0dc3-49d4-a94a-8b39c5fd700b
+      type: obsoletes
+    - id: 7fd4bb39-12d0-45ab-bb36-cebabc73dc7b
+      type: obsoletes
 status: experimental
-description: Detects the usage of binaries such as 'net', 'sc' or 'powershell' in
-    order to stop, pause or delete critical or important Windows services such as
-    AV, Backup, etc. As seen being used in some ransomware scripts
+description: Detects the usage of binaries such as 'net', 'sc' or 'powershell' in order to stop, pause or delete critical or important Windows services such as AV, Backup, etc. As seen being used in some ransomware scripts
 references:
     - https://www.trendmicro.com/content/dam/trendmicro/global/en/research/22/h/ransomware-actor-abuses-genshin-impact-anti-cheat-driver-to-kill-antivirus/Genshin%20Impact%20Figure%2010.jpg
     - https://www.trellix.com/en-sg/about/newsroom/stories/threat-labs/lockergoga-ransomware-family-used-in-targeted-attacks.html
@@ -31,29 +29,29 @@ detection:
         EventID: 4688
         Channel: Security
     selection_net_img:
-        -   OriginalFileName:
-                - net.exe
-                - net1.exe
-        -   NewProcessName|endswith:
-                - \net.exe
-                - \net1.exe
+        - OriginalFileName:
+              - net.exe
+              - net1.exe
+        - NewProcessName|endswith:
+              - \net.exe
+              - \net1.exe
     selection_net_cli:
         CommandLine|contains: ' stop '
     selection_sc_img:
-        -   OriginalFileName: sc.exe
-        -   NewProcessName|endswith: \sc.exe
+        - OriginalFileName: sc.exe
+        - NewProcessName|endswith: \sc.exe
     selection_sc_cli:
         CommandLine|contains:
             - ' stop '
             - ' delete '
             - ' pause '
     selection_pwsh_img:
-        -   OriginalFileName:
-                - PowerShell.EXE
-                - pwsh.dll
-        -   NewProcessName|endswith:
-                - \powershell.exe
-                - \pwsh.exe
+        - OriginalFileName:
+              - PowerShell.EXE
+              - pwsh.dll
+        - NewProcessName|endswith:
+              - \powershell.exe
+              - \pwsh.exe
     selection_pwsh_cli:
         CommandLine|contains:
             - 'Stop-Service '
@@ -72,7 +70,7 @@ detection:
             - AVG Antivirus
             - avgAdminClient
             - AvgAdminServer
-            - AVP1
+            - AVP1   # Covers multiple AVP versions
             - BackupExec
             - bedbg
             - BITS
@@ -80,10 +78,10 @@ detection:
             - Client Agent 7.60
             - Core Browsing Protection
             - Core Mail Protection
-            - Core Scanning Server
+            - Core Scanning Server   # Covers 'Core Scanning ServerEx'
             - DCAgent
-            - EhttpSr
-            - ekrn
+            - EhttpSr   # Covers 'EhttpSry', 'EhttpSrv'
+            - ekrn   # Covers 'ekrnEpsw'
             - Enterprise Client Service
             - epag
             - EPIntegrationService
@@ -98,7 +96,7 @@ detection:
             - FirebirdGuardianDefaultInstance
             - FirebirdServerDefaultInstance
             - HealthTLService
-            - MSSQLFDLauncher$
+            - MSSQLFDLauncher$   # Covers 'SHAREPOINT', 'TPS', 'SBSMonitoring', etc.
             - hmpalertsvc
             - HMS
             - IISAdmin
@@ -239,11 +237,8 @@ detection:
             - wozyprobackup
             - WRSVC
             - Zoolz 2 Service
-    condition: process_creation and (selection_services and (all of selection_net_*
-        or all of selection_pwsh_* or all of selection_sc_*))
+    condition: process_creation and (selection_services and (all of selection_net_* or all of selection_pwsh_* or all of selection_sc_*))
 falsepositives:
-    - Administrators or tools shutting down the services due to upgrade or removal
-        purposes. If you experience some false positive, please consider adding filters
-        to the parent process launching this command and not removing the entry
+    - Administrators or tools shutting down the services due to upgrade or removal purposes. If you experience some false positive, please consider adding filters to the parent process launching this command and not removing the entry
 level: high
 ruletype: Sigma

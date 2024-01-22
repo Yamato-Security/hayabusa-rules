@@ -1,12 +1,9 @@
 title: Fsutil Suspicious Invocation
 id: add64136-62e5-48ea-807e-88638d02df1e
 status: stable
-description: 'Detects suspicious parameters of fsutil (deleting USN journal, configuring
-    it with small size, etc).
-
+description: |
+    Detects suspicious parameters of fsutil (deleting USN journal, configuring it with small size, etc).
     Might be used by ransomwares during the attack (seen by NotPetya and others).
-
-    '
 references:
     - https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/fsutil-usn
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1070/T1070.md
@@ -30,13 +27,13 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \fsutil.exe
-        -   OriginalFileName: fsutil.exe
+        - Image|endswith: \fsutil.exe
+        - OriginalFileName: fsutil.exe
     selection_cli:
         CommandLine|contains:
-            - deletejournal
-            - createjournal
-            - setZeroData
+            - deletejournal          # usn deletejournal ==> generally ransomware or attacker
+            - createjournal          # usn createjournal ==> can modify config to set it to a tiny size
+            - setZeroData            # file setZeroData  ==> empties a file with zeroes
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Admin activity

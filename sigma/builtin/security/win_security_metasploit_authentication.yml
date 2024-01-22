@@ -24,7 +24,7 @@ detection:
         AuthenticationPackageName: NTLM
         WorkstationName|re: ^[A-Za-z0-9]{16}$
     selection2:
-        ProcessName: null
+        ProcessName:
         EventID: 4776
         Workstation|re: ^[A-Za-z0-9]{16}$
     condition: security and (1 of selection*)

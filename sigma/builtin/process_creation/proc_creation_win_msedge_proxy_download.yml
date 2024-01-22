@@ -18,8 +18,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \msedge_proxy.exe
-        -   OriginalFileName: msedge_proxy.exe
+        - NewProcessName|endswith: \msedge_proxy.exe
+        - OriginalFileName: msedge_proxy.exe
     selection_cli:
         CommandLine|contains:
             - http://

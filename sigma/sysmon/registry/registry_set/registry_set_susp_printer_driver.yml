@@ -1,8 +1,7 @@
 title: Suspicious Printer Driver Empty Manufacturer
 id: e0813366-0407-449a-9869-a2db1119dc41
 status: test
-description: Detects a suspicious printer driver installation with an empty Manufacturer
-    value
+description: Detects a suspicious printer driver installation with an empty Manufacturer value
 references:
     - https://twitter.com/SBousseaden/status/1410545674773467140
 author: Florian Roth (Nextron Systems)
@@ -35,7 +34,6 @@ detection:
         TargetObject|contains: \Version-3\PDF24\
     condition: registry_set and (selection and not 1 of filter_*)
 falsepositives:
-    - Alerts on legitimate printer drivers that do not set any more details in the
-        Manufacturer value
+    - Alerts on legitimate printer drivers that do not set any more details in the Manufacturer value
 level: high
 ruletype: Sigma

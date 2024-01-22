@@ -1,8 +1,7 @@
 title: Potential Product Reconnaissance Via Wmic.EXE
 id: 15434e33-5027-4914-88d5-3d4145ec25a9
 status: test
-description: Detects the execution of WMIC in order to get a list of firewall and
-    antivirus products
+description: Detects the execution of WMIC in order to get a list of firewall and antivirus products
 references:
     - https://thedfirreport.com/2023/03/06/2022-year-in-review/
     - https://www.yeahhub.com/list-installed-programs-version-path-windows/
@@ -20,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \wmic.exe
-        -   OriginalFileName: wmic.exe
+        - NewProcessName|endswith: \wmic.exe
+        - OriginalFileName: wmic.exe
     selection_cli:
         CommandLine|contains: Product
     condition: process_creation and (all of selection_*)

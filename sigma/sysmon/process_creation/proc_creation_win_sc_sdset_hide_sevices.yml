@@ -1,13 +1,12 @@
 title: Service DACL Abuse To Hide Services Via Sc.EXE
 id: a537cfc3-4297-4789-92b5-345bfd845ad0
 related:
-    -   id: 99cf1e02-00fb-4c0d-8375-563f978dfd37
-        type: similar
-    -   id: 98c5aeef-32d5-492f-b174-64a691896d25
-        type: similar
+    - id: 99cf1e02-00fb-4c0d-8375-563f978dfd37 # Deny Service Access
+      type: similar
+    - id: 98c5aeef-32d5-492f-b174-64a691896d25 # Generic SD tampering
+      type: similar
 status: test
-description: Detects usage of the "sc.exe" utility adding a new service with special
-    permission seen used by threat actors which makes the service hidden and unremovable.
+description: Detects usage of the "sc.exe" utility adding a new service with special permission seen used by threat actors which makes the service hidden and unremovable.
 references:
     - https://blog.talosintelligence.com/2021/10/threat-hunting-in-large-datasets-by.html
     - https://www.sans.org/blog/red-team-tactics-hiding-windows-services/
@@ -30,11 +29,17 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \sc.exe
-        -   OriginalFileName: sc.exe
+        - Image|endswith: \sc.exe
+        - OriginalFileName: sc.exe
     selection_cli:
         CommandLine|contains|all:
             - sdset
+            # Summary of permissions
+            #   DC: Delete All Child Objects
+            #   LC: List Contents
+            #   WP: Write All Properties
+            #   DT: Delete Subtree
+            #   SD: Delete
             - DCLCWPDTSD
     condition: process_creation and (all of selection_*)
 falsepositives:

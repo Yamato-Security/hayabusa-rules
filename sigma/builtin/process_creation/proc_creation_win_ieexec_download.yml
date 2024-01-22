@@ -18,8 +18,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \IEExec.exe
-        -   OriginalFileName: IEExec.exe
+        - NewProcessName|endswith: \IEExec.exe
+        - OriginalFileName: IEExec.exe
     selection_cli:
         CommandLine|contains:
             - http://

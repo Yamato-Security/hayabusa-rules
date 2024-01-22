@@ -22,14 +22,14 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \rundll32.exe
-        -   OriginalFileName: RUNDLL32.EXE
+        - Image|endswith: \rundll32.exe
+        - OriginalFileName: RUNDLL32.EXE
     selection_cli:
         CommandLine|contains:
             - ',#'
             - ', #'
-            - '.dll #'
-            - '.ocx #'
+            - '.dll #'  # Sysmon removes , in its log
+            - '.ocx #'  # HermeticWizard
     filter_edge:
         CommandLine|contains|all:
             - EDGEHTML.dll
@@ -46,8 +46,7 @@ detection:
             - \FileTracker64.dll",#1
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
-    - False positives depend on scripts and administrative tools used in the monitored
-        environment
+    - False positives depend on scripts and administrative tools used in the monitored environment
     - Windows control panel elements have been identified as source (mmc)
 level: high
 ruletype: Sigma

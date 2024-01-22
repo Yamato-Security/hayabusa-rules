@@ -1,14 +1,12 @@
 title: Suspicious Group And Account Reconnaissance Activity Using Net.EXE
 id: d95de845-b83c-4a9a-8a6a-4fc802ebf6c0
 status: test
-description: Detects suspicious reconnaissance command line activity on Windows systems
-    using Net.EXE
+description: Detects suspicious reconnaissance command line activity on Windows systems using Net.EXE
 references:
     - https://redcanary.com/blog/how-one-hospital-thwarted-a-ryuk-ransomware-outbreak/
     - https://thedfirreport.com/2020/10/18/ryuk-in-5-hours/
     - https://research.nccgroup.com/2022/08/19/back-in-black-unlocking-a-lockbit-3-0-ransomware-attack/
-author: Florian Roth (Nextron Systems), omkar72, @svch0st, Nasreddine Bencherchali
-    (Nextron Systems)
+author: Florian Roth (Nextron Systems), omkar72, @svch0st, Nasreddine Bencherchali (Nextron Systems)
 date: 2019/01/16
 modified: 2023/03/02
 tags:
@@ -23,35 +21,38 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith:
-                - \net.exe
-                - \net1.exe
-        -   OriginalFileName:
-                - net.exe
-                - net1.exe
+        - NewProcessName|endswith:
+              - \net.exe
+              - \net1.exe
+        - OriginalFileName:
+              - net.exe
+              - net1.exe
+    # Covers group and localgroup flags
     selection_group_root:
         CommandLine|contains:
             - ' group '
             - ' localgroup '
     selection_group_flags:
         CommandLine|contains:
+            # Add more groups for other languages
             - domain admins
-            - ' administrator'
-            - ' administrateur'
+            - ' administrator' # Typo without an 'S' so we catch both
+            - ' administrateur' # Typo without an 'S' so we catch both
             - enterprise admins
             - Exchange Trusted Subsystem
             - Remote Desktop Users
-            - "Utilisateurs du Bureau \xE0 distance"
-            - Usuarios de escritorio remoto
-            - ' /do'
+            - Utilisateurs du Bureau à distance   # French for "Remote Desktop Users"
+            - Usuarios de escritorio remoto   # Spanish for "Remote Desktop Users"
+            - ' /do' # short for domain
     filter_group_add:
+        # This filter is added to avoid the potential case where the point is not recon but addition
         CommandLine|contains: ' /add'
+    # Covers 'accounts' flag
     selection_accounts_root:
         CommandLine|contains: ' accounts '
     selection_accounts_flags:
-        CommandLine|contains: ' /do'
-    condition: process_creation and (selection_img and ((all of selection_group_*
-        and not filter_group_add) or all of selection_accounts_*))
+        CommandLine|contains: ' /do' # short for domain
+    condition: process_creation and (selection_img and ((all of selection_group_* and not filter_group_add) or all of selection_accounts_*))
 fields:
     - CommandLine
     - ParentCommandLine
@@ -60,6 +61,5 @@ falsepositives:
     - Administrative activity
 level: medium
 analysis:
-    recommendation: Check if the user that executed the commands is suspicious (e.g.
-        service accounts, LOCAL_SYSTEM)
+    recommendation: Check if the user that executed the commands is suspicious (e.g. service accounts, LOCAL_SYSTEM)
 ruletype: Sigma

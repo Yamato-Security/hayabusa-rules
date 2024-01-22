@@ -1,9 +1,7 @@
 title: Indirect Inline Command Execution Via Bash.EXE
 id: 5edc2273-c26f-406c-83f3-f4d948e740dd
 status: experimental
-description: Detects execution of Microsoft bash launcher with the "-c" flag. This
-    can be used to potentially bypass defenses and execute Linux or Windows-based
-    binaries directly via bash
+description: Detects execution of Microsoft bash launcher with the "-c" flag. This can be used to potentially bypass defenses and execute Linux or Windows-based binaries directly via bash
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/Bash/
 author: frack113
@@ -21,10 +19,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith:
-                - :\Windows\System32\bash.exe
-                - :\Windows\SysWOW64\bash.exe
-        -   OriginalFileName: Bash.exe
+        - Image|endswith:
+              - :\Windows\System32\bash.exe
+              - :\Windows\SysWOW64\bash.exe
+        - OriginalFileName: Bash.exe
     selection_cli:
         CommandLine|contains: ' -c '
     condition: process_creation and (all of selection_*)

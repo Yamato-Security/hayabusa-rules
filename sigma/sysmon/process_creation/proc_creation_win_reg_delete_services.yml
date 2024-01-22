@@ -1,8 +1,7 @@
 title: Service Registry Key Deleted Via Reg.EXE
 id: 05b2aa93-1210-42c8-8d9a-2fcc13b284f5
 status: test
-description: Detects execution of "reg.exe" commands with the "delete" flag on services
-    registry key. Often used by attacker to remove AV software services
+description: Detects execution of "reg.exe" commands with the "delete" flag on services registry key. Often used by attacker to remove AV software services
 references:
     - https://www.virustotal.com/gui/file/2bcd5702a7565952c44075ac6fb946c7780526640d1264f692c7664c02c68465
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -20,11 +19,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: reg.exe
-        -   OriginalFileName: reg.exe
+        - Image|endswith: reg.exe
+        - OriginalFileName: reg.exe
     selection_delete:
         CommandLine|contains: ' delete '
     selection_key:
+        # Add specific services if you would like the rule to be more specific
         CommandLine|contains: \SYSTEM\CurrentControlSet\services\
     condition: process_creation and (all of selection_*)
 falsepositives:

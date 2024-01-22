@@ -1,15 +1,11 @@
 title: Suspicious Electron Application Child Processes
 id: f26eb764-fd89-464b-85e2-dc4a8e6e77b8
 related:
-    -   id: 378a05d8-963c-46c9-bcce-13c7657eac99
-        type: similar
+    - id: 378a05d8-963c-46c9-bcce-13c7657eac99
+      type: similar
 status: experimental
-description: 'Detects suspicious child processes of electron apps (teams, discord,
-    slack, etc.). This could be a potential sign of ".asar" file tampering (See reference
-    section for more information) or binary execution proxy through specific CLI arguments
-    (see related rule)
-
-    '
+description: |
+    Detects suspicious child processes of electron apps (teams, discord, slack, etc.). This could be a potential sign of ".asar" file tampering (See reference section for more information) or binary execution proxy through specific CLI arguments (see related rule)
 references:
     - https://taggart-tech.com/quasar-electron/
     - https://github.com/mttaggart/quasar
@@ -32,7 +28,9 @@ detection:
         Channel: Security
     selection_parent:
         ParentProcessName|endswith:
-            - \chrome.exe
+            # Add more electron based app to the list
+            - \chrome.exe   # Might require additional tuning
+            # - '\code.exe' # Requires additional baseline
             - \discord.exe
             - \GitHubDesktop.exe
             - \keybase.exe
@@ -43,6 +41,7 @@ detection:
             - \Teams.exe
     selection_child_image:
         NewProcessName|endswith:
+            # Add more suspicious/unexpected paths
             - \cmd.exe
             - \cscript.exe
             - \mshta.exe
@@ -52,6 +51,7 @@ detection:
             - \wscript.exe
     selection_child_paths:
         NewProcessName|contains:
+            # Add more suspicious/unexpected paths
             - \AppData\Local\Temp\
             - \Users\Public\
             - \Windows\Temp\
@@ -90,9 +90,9 @@ detection:
     filter_optional_discord:
         CommandLine|contains: \NVSMI\nvidia-smi.exe
         ParentProcessName|endswith: \Discord.exe
-    condition: process_creation and (selection_parent and 1 of selection_child_* and
-        not 1 of filter_main_* and not 1 of filter_optional_*)
+    condition: process_creation and (selection_parent and 1 of selection_child_* and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Legitimate child processes can occur in cases of debugging
+# Increase the level once FP rate is known better (see status)
 level: medium
 ruletype: Sigma

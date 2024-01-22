@@ -1,8 +1,7 @@
 title: Suspicious Command Patterns In Scheduled Task Creation
 id: f2c64357-b1d2-41b7-849f-34d2682c0fad
 status: experimental
-description: Detects scheduled task creation using "schtasks" that contain potentially
-    suspicious or uncommon commands
+description: Detects scheduled task creation using "schtasks" that contain potentially suspicious or uncommon commands
 references:
     - https://app.any.run/tasks/512c1352-6380-4436-b27d-bb62f0c020d6/
     - https://twitter.com/RedDrip7/status/1506480588827467785
@@ -45,7 +44,7 @@ detection:
             - .DownloadData
             - .DownloadFile
             - .DownloadString
-            - '/c start /min '
+            - '/c start /min ' # https://twitter.com/RedDrip7/status/1506480588827467785
             - FromBase64String
             - mshta http
             - mshta.exe http
@@ -61,10 +60,8 @@ detection:
             - cscript
             - curl
             - wscript
-    condition: process_creation and (selection_schtasks and ( all of selection_pattern_*
-        or selection_uncommon or all of selection_anomaly_* ))
+    condition: process_creation and (selection_schtasks and ( all of selection_pattern_* or selection_uncommon or all of selection_anomaly_* ))
 falsepositives:
-    - Software installers that run from temporary folders and also install scheduled
-        tasks are expected to generate some false positives
+    - Software installers that run from temporary folders and also install scheduled tasks are expected to generate some false positives
 level: high
 ruletype: Sigma

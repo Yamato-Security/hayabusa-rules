@@ -3,7 +3,7 @@ id: 6414b5cd-b19d-447e-bb5e-9f03940b5784
 status: experimental
 description: Detects DLL sideloading of "dbghelp.dll"
 references:
-    - https://hijacklibs.net/
+    - https://hijacklibs.net/ # For list of DLLs that could be sideloaded (search for dlls mentioned here in there)
 author: Nasreddine Bencherchali (Nextron Systems), Wietze Beukema (project and research)
 date: 2022/10/25
 modified: 2023/05/05
@@ -42,7 +42,6 @@ detection:
             - \Epic Games\MagicLegends\x86\dbghelp.dll
     condition: image_load and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
-    - Legitimate applications loading their own versions of the DLL mentioned in this
-        rule
+    - Legitimate applications loading their own versions of the DLL mentioned in this rule
 level: medium
 ruletype: Sigma

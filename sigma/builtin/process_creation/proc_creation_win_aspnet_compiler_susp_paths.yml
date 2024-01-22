@@ -1,15 +1,14 @@
 title: Potentially Suspicious ASP.NET Compilation Via AspNetCompiler
-id: 9f50fe98-fe5c-4a2d-86c7-fad7f63ed622
+id: 9f50fe98-fe5c-4a2d-86c7-fad7f63ed622 # Susp Paths
 related:
-    -   id: 9ccba514-7cb6-4c5c-b377-700758f2f120
-        type: similar
-    -   id: 4c7f49ee-2638-43bb-b85b-ce676c30b260
-        type: similar
-    -   id: a01b8329-5953-4f73-ae2d-aa01e1f35f00
-        type: similar
+    - id: 9ccba514-7cb6-4c5c-b377-700758f2f120 # SuspChild
+      type: similar
+    - id: 4c7f49ee-2638-43bb-b85b-ce676c30b260 # TMP File
+      type: similar
+    - id: a01b8329-5953-4f73-ae2d-aa01e1f35f00 # Exec
+      type: similar
 status: experimental
-description: Detects execution of "aspnet_compiler.exe" with potentially suspicious
-    paths for compilation.
+description: Detects execution of "aspnet_compiler.exe" with potentially suspicious paths for compilation.
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/Aspnet_Compiler/
     - https://ijustwannared.team/2020/08/01/the-curious-case-of-aspnet_compiler-exe/
@@ -27,6 +26,7 @@ detection:
         Channel: Security
     selection:
         CommandLine|contains:
+            # Note: add other potential suspicious paths
             - \Users\Public\
             - \AppData\Local\Temp\
             - \AppData\Local\Roaming\

@@ -18,8 +18,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \dotnet-trace.exe
-        -   OriginalFileName: dotnet-trace.dll
+        - NewProcessName|endswith: \dotnet-trace.exe
+        - OriginalFileName: dotnet-trace.dll
     selection_cli:
         CommandLine|contains|all:
             - '-- '

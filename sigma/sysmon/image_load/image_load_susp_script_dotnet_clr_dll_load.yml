@@ -1,8 +1,7 @@
 title: DotNet CLR DLL Loaded By Scripting Applications
 id: 4508a70e-97ef-4300-b62b-ff27992990ea
 status: test
-description: Detects .NET CLR DLLs being loaded by scripting applications such as
-    wscript or cscript. This could be an indication of potential suspicious execution.
+description: Detects .NET CLR DLLs being loaded by scripting applications such as wscript or cscript. This could be an indication of potential suspicious execution.
 references:
     - https://github.com/tyranid/DotNetToJScript
     - https://thewover.github.io/Introducing-Donut/
@@ -30,6 +29,7 @@ detection:
             - \mshta.exe
             - \msxsl.exe
             - \regsvr32.exe
+            # - '\svchost.exe'
             - \wmic.exe
             - \wscript.exe
         ImageLoaded|endswith:

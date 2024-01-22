@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \WMIC.exe
-        -   OriginalFileName: wmic.exe
+        - NewProcessName|endswith: \WMIC.exe
+        - OriginalFileName: wmic.exe
     selection_cli:
         CommandLine|contains|all:
             - '/node:'

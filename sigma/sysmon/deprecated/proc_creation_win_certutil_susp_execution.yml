@@ -1,8 +1,7 @@
 title: Suspicious Certutil Command Usage
 id: e011a729-98a6-4139-b5c4-bf6f6dd8239a
 status: deprecated
-description: Detects a suspicious Microsoft certutil execution with sub commands like
-    'decode' sub command, which is sometimes used to decode malicious code
+description: Detects a suspicious Microsoft certutil execution with sub commands like 'decode' sub command, which is sometimes used to decode malicious code
 references:
     - https://twitter.com/JohnLaTwC/status/835149808817991680
     - https://blogs.technet.microsoft.com/pki/2006/11/30/basic-crl-checking-with-certutil/
@@ -33,8 +32,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \certutil.exe
-        -   OriginalFileName: CertUtil.exe
+        - Image|endswith: \certutil.exe
+        - OriginalFileName: CertUtil.exe
     selection_cli:
         CommandLine|contains:
             - ' -decode '
@@ -54,7 +53,6 @@ fields:
     - CommandLine
     - ParentCommandLine
 falsepositives:
-    - False positives depend on scripts and administrative tools used in the monitored
-        environment
+    - False positives depend on scripts and administrative tools used in the monitored environment
 level: high
 ruletype: Sigma

@@ -1,9 +1,7 @@
 title: Potentially Suspicious Child Process Of VsCode
 id: 5a3164f2-b373-4152-93cf-090b13c12d27
 status: experimental
-description: Detects uncommon or suspicious child processes spawning from a VsCode
-    "code.exe" process. This could indicate an attempt of persistence via VsCode tasks
-    or terminal profiles.
+description: Detects uncommon or suspicious child processes spawning from a VsCode "code.exe" process. This could indicate an attempt of persistence via VsCode tasks or terminal profiles.
 references:
     - https://twitter.com/nas_bench/status/1618021838407495681
     - https://twitter.com/nas_bench/status/1618021415852335105
@@ -49,13 +47,12 @@ detection:
             - cscript
     selection_children_paths:
         Image|contains:
+            # Add more suspicious locations
             - :\Users\Public\
             - :\Windows\Temp\
             - :\Temp\
     condition: process_creation and (selection_parent and 1 of selection_children_*)
 falsepositives:
-    - In development environment where VsCode is used heavily. False positives may
-        occur when developers use task to compile or execute different types of code.
-        Remove or add processes accordingly
+    - In development environment where VsCode is used heavily. False positives may occur when developers use task to compile or execute different types of code. Remove or add processes accordingly
 level: medium
 ruletype: Sigma
