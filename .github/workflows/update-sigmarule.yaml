@@ -20,6 +20,13 @@ jobs:
   rule-parse-error-check:
     runs-on: ubuntu-latest
     steps:
+      - name: clone sigma
+        uses: actions/checkout@v3
+        with:
+          repository: SigmaHQ/sigma
+          path: sigma-repo
+          token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
+
       - name: clone hayabusa rule repo
         uses: actions/checkout@v3
         with:
@@ -38,6 +45,20 @@ jobs:
         with:
           repository: Yamato-Security/hayabusa-sample-evtx
           path: hayabusa-sample-evtx
+
+      - name: setup Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Update sigma rules
+        run: |
+          cd hayabusa-rules/tools/sigmac/
+          poetry install --no-root
+          poetry run python logsource_mapping.py -r ../../../sigma-repo -o ../../../converted_rules
+          cd -
+          rm -rf hayabusa-rules/sigma/
+          mkdir hayabusa-rules/sigma/
+          cp -r converted_rules/* hayabusa-rules/sigma/
 
       - name: run csv-timeline
         if: inputs.rule-parse-error-check
@@ -58,11 +79,6 @@ jobs:
     needs: rule-parse-error-check
     runs-on: ubuntu-latest
     steps:
-      - name: clone hayabusa rule repo
-        uses: actions/checkout@v3
-        with:
-          path: hayabusa-rules
-
       - name: clone sigma
         uses: actions/checkout@v3
         with:
@@ -70,11 +86,10 @@ jobs:
           path: sigma-repo
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: clone hayabusa rule repo
+        uses: actions/checkout@v3
         with:
-          python-version: '3.10'
-          token: '${{ secrets.GITHUB_TOKEN }}'
+          path: hayabusa-rules
 
       - name: setup Poetry
         run: |
