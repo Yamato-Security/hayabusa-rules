@@ -14,7 +14,7 @@ from io import StringIO
 from pathlib import Path
 from typing import Union, Optional
 
-import oyaml as yaml
+import ruamel.yaml
 
 FORMAT = '[%(levelname)-2s:%(filename)s:%(lineno)d] %(message)s'
 logging.basicConfig(format=FORMAT, level=logging.INFO)
@@ -181,17 +181,6 @@ class LogSource:
         return True
 
 
-class IndentDumper(yaml.Dumper):
-    """
-    pyyamlの↓バグで、valueがlistの場合インデントされないため、yaml.dump時にインデントさせるためのカスタムクラス
-    https://github.com/yaml/pyyaml/issues/234
-    https://stackoverflow.com/questions/25108581/python-yaml-dump-bad-indentation/39681672#39681672
-    """
-
-    def increase_indent(self, flow=False, indentless=False):
-        return super(IndentDumper, self).increase_indent(flow, False)
-
-
 @dataclass(frozen=True)
 class LogsourceConverter:
     sigma_path: str
@@ -325,7 +314,10 @@ class LogsourceConverter:
         for is_sysmon, obj in self.sigma_converted:
             output_path = build_out_path(base_dir, out_dir, self.sigma_path, is_sysmon)
             with StringIO() as bs:
-                yaml.dump(obj, bs, Dumper=IndentDumper, default_flow_style=False, indent=4)
+                yaml = ruamel.yaml.YAML()
+                yaml.width = 4096
+                yaml.indent(mapping=4, sequence=6, offset=4)
+                yaml.dump(obj, bs)
                 res.append((output_path, bs.getvalue()))
         return res
 
@@ -365,7 +357,8 @@ def create_obj(base_dir: Optional[str], file_name: str) -> dict:
         sys.exit(1)
     try:
         with open(file_path, encoding="utf-8") as f:
-            d = yaml.safe_load(f)
+            yaml = ruamel.yaml.YAML()
+            d = yaml.load(f)
             LOGGER.debug(f"loading yaml [{file_path}] done successfully.")
             return d
     except Exception as e:
@@ -447,7 +440,8 @@ def find_windows_sigma_rule_files(root: str, rule_pattern: str):
                 continue  # フォルダパスにrule/deprecated/unsupportedがつかないものは、Sigmaルールと関係ないため、除外
             try:
                 with open(filepath, encoding="utf-8") as f:
-                    data = yaml.safe_load(f)
+                    yaml = ruamel.yaml.YAML()
+                    data = yaml.load(f)
                 if data.get('logsource', {}).get('category') != "antivirus" \
                         and data.get('logsource', {}).get('product') != 'windows':
                     LOGGER.debug(f"[{filepath}] has no windows rule. Conversion skipped.")
