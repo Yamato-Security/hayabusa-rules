@@ -19,11 +19,11 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        -   CommandLine|contains|all:
-                - localgroup
-                - admin
-                - /add
-        -   CommandLine|contains: \Win64.exe
+        - CommandLine|contains|all:
+              - localgroup
+              - admin
+              - /add
+        - CommandLine|contains: \Win64.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

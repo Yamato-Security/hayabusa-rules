@@ -1,8 +1,7 @@
 title: Potential Persistence Via Logon Scripts - Registry
 id: 9ace0707-b560-49b8-b6ca-5148b42f39fb
 status: test
-description: Detects creation of "UserInitMprLogonScript" registry value which can
-    be used as a persistence method by malicious actors
+description: Detects creation of "UserInitMprLogonScript" registry value which can be used as a persistence method by malicious actors
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1037.001/T1037.001.md
 author: Tom Ueltschi (@c_APT_ure)
@@ -25,7 +24,6 @@ detection:
         TargetObject|contains: UserInitMprLogonScript
     condition: registry_add and selection
 falsepositives:
-    - Investigate the contents of the "UserInitMprLogonScript" value to determine
-        of the added script is legitimate
+    - Investigate the contents of the "UserInitMprLogonScript" value to determine of the added script is legitimate
 level: medium
 ruletype: Sigma

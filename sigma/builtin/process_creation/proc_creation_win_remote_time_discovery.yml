@@ -1,9 +1,7 @@
 title: Discovery of a System Time
 id: b243b280-65fe-48df-ba07-6ddea7646427
 status: test
-description: Identifies use of various commands to query a systems time. This technique
-    may be used before executing a scheduled task or to discover the time zone of
-    a target system.
+description: Identifies use of various commands to query a systems time. This technique may be used before executing a scheduled task or to discover the time zone of a target system.
 references:
     - https://eqllib.readthedocs.io/en/latest/analytics/fcdb99c2-ac3c-4bde-b664-4b336329bed2.html
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1124/T1124.md
@@ -30,7 +28,6 @@ detection:
         NewProcessName|endswith: \w32tm.exe
     condition: process_creation and (1 of selection_*)
 falsepositives:
-    - Legitimate use of the system utilities to discover system time for legitimate
-        reason
+    - Legitimate use of the system utilities to discover system time for legitimate reason
 level: low
 ruletype: Sigma

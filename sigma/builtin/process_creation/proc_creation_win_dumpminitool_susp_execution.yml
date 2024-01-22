@@ -21,18 +21,18 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        -   NewProcessName|endswith:
-                - \DumpMinitool.exe
-                - \DumpMinitool.x86.exe
-                - \DumpMinitool.arm64.exe
-        -   OriginalFileName:
-                - DumpMinitool.exe
-                - DumpMinitool.x86.exe
-                - DumpMinitool.arm64.exe
+        - NewProcessName|endswith:
+              - \DumpMinitool.exe
+              - \DumpMinitool.x86.exe
+              - \DumpMinitool.arm64.exe
+        - OriginalFileName:
+              - DumpMinitool.exe
+              - DumpMinitool.x86.exe
+              - DumpMinitool.arm64.exe
     filter_folder:
         NewProcessName|contains:
             - \Microsoft Visual Studio\
-            - \Extensions\
+            - \Extensions\    # https://github.com/microsoft/vstest/blob/b2e2126f1aa7e5753cafe9515563c99ade6a59ce/src/package/nuspec/Microsoft.TestPlatform.Portable.nuspec#L159
     susp_flags:
         CommandLine|contains: .txt
     cmd_has_flags:
@@ -42,8 +42,7 @@ detection:
             - ' WithHeap'
     filter_cmd_misses_flags:
         CommandLine|contains: --dumpType
-    condition: process_creation and (selection and ( ( not filter_folder ) or susp_flags
-        or ( cmd_has_flags and not filter_cmd_misses_flags ) ))
+    condition: process_creation and (selection and ( ( not filter_folder ) or susp_flags or ( cmd_has_flags and not filter_cmd_misses_flags ) ))
 falsepositives:
     - Unknown
 level: high

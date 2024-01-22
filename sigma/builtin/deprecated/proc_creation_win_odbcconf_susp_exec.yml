@@ -21,8 +21,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_1_img:
-        -   NewProcessName|endswith: \odbcconf.exe
-        -   OriginalFileName: odbcconf.exe
+        - NewProcessName|endswith: \odbcconf.exe
+        - OriginalFileName: odbcconf.exe
     selection_1_cli:
         CommandLine|contains:
             - -a
@@ -33,8 +33,8 @@ detection:
     selection_2_parent:
         ParentProcessName|endswith: \odbcconf.exe
     selection_2_img:
-        -   NewProcessName|endswith: \rundll32.exe
-        -   OriginalFileName: RUNDLL32.EXE
+        - NewProcessName|endswith: \rundll32.exe
+        - OriginalFileName: RUNDLL32.EXE
     condition: process_creation and (all of selection_1_* or all of selection_2_*)
 falsepositives:
     - Legitimate use of odbcconf.exe by legitimate user

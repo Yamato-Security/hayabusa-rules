@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \MSOHTMED.exe
-        -   OriginalFileName: MsoHtmEd.exe
+        - NewProcessName|endswith: \MSOHTMED.exe
+        - OriginalFileName: MsoHtmEd.exe
     selection_cli:
         CommandLine|contains:
             - ftp://

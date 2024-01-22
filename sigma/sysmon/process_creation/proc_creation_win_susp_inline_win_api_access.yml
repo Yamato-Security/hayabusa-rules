@@ -1,11 +1,10 @@
 title: Potential WinAPI Calls Via CommandLine
 id: ba3f5c1b-6272-4119-9dbd-0bc8d21c2702
 related:
-    -   id: 03d83090-8cba-44a0-b02f-0b756a050306
-        type: derived
+    - id: 03d83090-8cba-44a0-b02f-0b756a050306
+      type: derived
 status: test
-description: Detects the use of WinAPI Functions via the commandline. As seen used
-    by threat actors via the tool winapiexec
+description: Detects the use of WinAPI Functions via the commandline. As seen used by threat actors via the tool winapiexec
 references:
     - https://twitter.com/m417z/status/1566674631788007425
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -49,6 +48,7 @@ detection:
             - LoadLibrary
             - memcpy
             - MiniDumpWriteDump
+            # - 'msvcrt'
             - ntdll
             - OpenDesktop
             - OpenProcess
@@ -62,6 +62,7 @@ detection:
             - RtlCreateUserThread
             - secur32
             - SetThreadToken
+            # - 'user32'
             - VirtualAlloc
             - VirtualFree
             - VirtualProtect

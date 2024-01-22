@@ -1,8 +1,7 @@
 title: Portable Gpg.EXE Execution
 id: 77df53a5-1d78-4f32-bc5a-0e7465bd8f41
 status: experimental
-description: Detects the execution of "gpg.exe" from uncommon location. Often used
-    by ransomware and loaders to decrypt/encrypt data.
+description: Detects the execution of "gpg.exe" from uncommon location. Often used by ransomware and loaders to decrypt/encrypt data.
 references:
     - https://www.trendmicro.com/vinfo/vn/threat-encyclopedia/malware/ransom.bat.zarlock.a
     - https://securelist.com/locked-out/68960/
@@ -22,11 +21,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Image|endswith:
-                - \gpg.exe
-                - \gpg2.exe
-        -   OriginalFileName: gpg.exe
-        -   Description: "GnuPG\u2019s OpenPGP tool"
+        - Image|endswith:
+              - \gpg.exe
+              - \gpg2.exe
+        - OriginalFileName: gpg.exe
+        - Description: GnuPG’s OpenPGP tool
     filter_main_legit_location:
         Image|contains:
             - :\Program Files (x86)\GNU\GnuPG\bin\

@@ -1,8 +1,7 @@
 title: Suspicious Add Scheduled Task Parent
 id: 9494479d-d994-40bf-a8b1-eea890237021
 status: test
-description: Detects suspicious scheduled task creations from a parent stored in a
-    temporary folder
+description: Detects suspicious scheduled task creations from a parent stored in a temporary folder
 references:
     - https://app.any.run/tasks/649e7b46-9bec-4d05-98a5-dfa9a13eaae5/
 author: Florian Roth (Nextron Systems)
@@ -32,7 +31,6 @@ detection:
             - unattended.ini
     condition: process_creation and (selection and not 1 of filter*)
 falsepositives:
-    - Software installers that run from temporary folders and also install scheduled
-        tasks
+    - Software installers that run from temporary folders and also install scheduled tasks
 level: medium
 ruletype: Sigma

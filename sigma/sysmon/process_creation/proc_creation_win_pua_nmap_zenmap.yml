@@ -1,9 +1,7 @@
 title: PUA - Nmap/Zenmap Execution
 id: f6ecd1cf-19b8-4488-97f6-00f0924991a3
 status: test
-description: Detects usage of namp/zenmap. Adversaries may attempt to get a listing
-    of services running on remote hosts, including those that may be vulnerable to
-    remote software exploitation
+description: Detects usage of namp/zenmap. Adversaries may attempt to get a listing of services running on remote hosts, including those that may be vulnerable to remote software exploitation
 references:
     - https://nmap.org/
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1046/T1046.md#atomic-test-3---port-scan-nmap-for-windows
@@ -22,12 +20,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Image|endswith:
-                - \nmap.exe
-                - \zennmap.exe
-        -   OriginalFileName:
-                - nmap.exe
-                - zennmap.exe
+        - Image|endswith:
+              - \nmap.exe
+              - \zennmap.exe
+        - OriginalFileName:
+              - nmap.exe
+              - zennmap.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate administrator activity

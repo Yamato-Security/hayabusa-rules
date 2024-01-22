@@ -20,9 +20,9 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Company: SecurityXploded
-        -   Image|endswith: PasswordDump.exe
-        -   OriginalFileName|endswith: PasswordDump.exe
+        - Company: SecurityXploded
+        - Image|endswith: PasswordDump.exe
+        - OriginalFileName|endswith: PasswordDump.exe
     condition: process_creation and selection
 falsepositives:
     - Unlikely

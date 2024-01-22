@@ -20,11 +20,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_pe:
-        -   Image|endswith: \setspn.exe
-        -   OriginalFileName: setspn.exe
-        -   Description|contains|all:
-                - Query or reset the computer
-                - SPN attribute
+        - Image|endswith: \setspn.exe
+        - OriginalFileName: setspn.exe
+        - Description|contains|all:
+              - Query or reset the computer
+              - SPN attribute
     selection_cli:
         CommandLine|contains:
             - ' -q '

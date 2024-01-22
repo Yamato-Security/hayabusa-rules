@@ -1,8 +1,7 @@
 title: Suspicious Process Parents
 id: cbec226f-63d9-4eca-9f52-dfb6652f24df
 status: test
-description: Detects suspicious parent processes that should not have any children
-    or should only have a single possible child program
+description: Detects suspicious parent processes that should not have any children or should only have a single possible child program
 references:
     - https://twitter.com/x86matthew/status/1505476263464607744?s=12
     - https://svch0st.medium.com/stats-from-hunting-cobalt-strike-beacons-c17e56255f9b
@@ -29,6 +28,7 @@ detection:
         ParentImage|endswith:
             - \csrss.exe
             - \certutil.exe
+         # - '\schtasks.exe'
             - \eventvwr.exe
             - \calc.exe
             - \notepad.exe
@@ -36,14 +36,13 @@ detection:
         Image|endswith:
             - \WerFault.exe
             - \wermgr.exe
-            - \conhost.exe
-            - \mmc.exe
-            - \win32calc.exe
+            - \conhost.exe   # csrss.exe, certutil.exe
+            - \mmc.exe       # eventvwr.exe
+            - \win32calc.exe   # calc.exe
             - \notepad.exe
     filter_null:
-        Image: null
-    condition: process_creation and (selection or ( selection_special and not 1 of
-        filter_* ))
+        Image:
+    condition: process_creation and (selection or ( selection_special and not 1 of filter_* ))
 falsepositives:
     - Unknown
 level: high

@@ -22,9 +22,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Image|endswith: \whoami.exe
-        -   OriginalFileName: whoami.exe
+        - Image|endswith: \whoami.exe
+        - OriginalFileName: whoami.exe
     filter_main_known_parents:
+        # This list can be any legitimate shell or application that you expect whoami to run from
         ParentImage|endswith:
             - \cmd.exe
             - \powershell_ise.exe
@@ -33,11 +34,10 @@ detection:
     filter_optional_ms_monitoring_agent:
         ParentImage|endswith: :\Program Files\Microsoft Monitoring Agent\Agent\MonitoringHost.exe
     filter_main_parent_null:
-        ParentImage: null
+        ParentImage:
     filter_main_parent_empty:
         ParentImage: ''
-    condition: process_creation and (selection and not 1 of filter_main_* and not
-        1 of filter_optional_*)
+    condition: process_creation and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Admin activity
     - Scripts and administrative tools used in the monitored environment

@@ -1,8 +1,7 @@
 title: Copying Sensitive Files with Credential Data
 id: e7be6119-fc37-43f0-ad4f-1f3f99be2f9f
 status: test
-description: Files with well-known filenames (sensitive files with credential data)
-    copying
+description: Files with well-known filenames (sensitive files with credential data) copying
 references:
     - https://room362.com/post/2013/2013-06-10-volume-shadow-copy-ntdsdit-domain-hashes-remotely-part-1/
     - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
@@ -24,8 +23,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_esent_img:
-        -   NewProcessName|endswith: \esentutl.exe
-        -   OriginalFileName: \esentutl.exe
+        - NewProcessName|endswith: \esentutl.exe
+        - OriginalFileName: \esentutl.exe
     selection_esent_cli:
         CommandLine|contains:
             - vss
@@ -36,7 +35,7 @@ detection:
             - \windows\ntds\ntds.dit
             - \config\sam
             - \config\security
-            - '\config\system '
+            - '\config\system '        # space needed to avoid false positives with \config\systemprofile\
             - \repair\sam
             - \repair\system
             - \repair\security
@@ -45,7 +44,6 @@ detection:
             - \config\RegBack\security
     condition: process_creation and (all of selection_esent_* or selection_susp_paths)
 falsepositives:
-    - Copying sensitive files for legitimate use (eg. backup) or forensic investigation
-        by legitimate incident responder or forensic invetigator
+    - Copying sensitive files for legitimate use (eg. backup) or forensic investigation by legitimate incident responder or forensic invetigator
 level: high
 ruletype: Sigma

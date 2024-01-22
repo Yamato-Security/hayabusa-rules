@@ -1,8 +1,8 @@
 title: Operation Wocao Activity
 id: 1cfac73c-be78-4f9a-9b08-5bde0c3953ab
 related:
-    -   id: 74ad4314-482e-4c3e-b237-3f7ed3b9ca8d
-        type: derived
+    - id: 74ad4314-482e-4c3e-b237-3f7ed3b9ca8d
+      type: derived
 status: test
 description: Detects activity mentioned in Operation Wocao report
 references:
@@ -24,8 +24,7 @@ tags:
 logsource:
     category: process_creation
     product: windows
-    definition: The 'System Security Extension' audit subcategory need to be enabled
-        to log the EID 4697
+    definition: The 'System Security Extension' audit subcategory need to be enabled to log the EID 4697
 detection:
     process_creation:
         EventID: 4688

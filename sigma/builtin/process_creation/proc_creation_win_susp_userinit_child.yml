@@ -22,8 +22,8 @@ detection:
     filter1:
         CommandLine|contains: \netlogon\
     filter2:
-        -   NewProcessName|endswith: \explorer.exe
-        -   OriginalFileName: explorer.exe
+        - NewProcessName|endswith: \explorer.exe
+        - OriginalFileName: explorer.exe
     condition: process_creation and (selection and not 1 of filter*)
 fields:
     - CommandLine

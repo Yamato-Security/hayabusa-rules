@@ -23,8 +23,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \cmd.exe
-        -   OriginalFileName: Cmd.Exe
+        - Image|endswith: \cmd.exe
+        - OriginalFileName: Cmd.Exe
     selection_cli:
         CommandLine|contains|all:
             - /q

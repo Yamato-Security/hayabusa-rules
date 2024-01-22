@@ -23,14 +23,15 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_parent:
+        # ParentCommandLine: '"C:\Windows\System32\OpenSSH\sshd.exe" -R'
         ParentImage: C:\Windows\System32\OpenSSH\sshd.exe
     selection_cli_img:
         Image|endswith: \ssh.exe
     selection_cli_flags:
-        -   CommandLine|contains: ProxyCommand=
-        -   CommandLine|contains|all:
-                - PermitLocalCommand
-                - LocalCommand
+        - CommandLine|contains: ProxyCommand=
+        - CommandLine|contains|all:
+              - PermitLocalCommand
+              - LocalCommand
     condition: process_creation and (selection_parent or all of selection_cli_*)
 falsepositives:
     - Legitimate usage for administration purposes

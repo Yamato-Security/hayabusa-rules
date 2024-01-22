@@ -1,8 +1,7 @@
 title: Suspicious Mstsc.EXE Execution With Local RDP File
 id: 6e22722b-dfb1-4508-a911-49ac840b40f8
 status: experimental
-description: Detects potential RDP connection via Mstsc using a local ".rdp" file
-    located in suspicious locations.
+description: Detects potential RDP connection via Mstsc using a local ".rdp" file located in suspicious locations.
 references:
     - https://www.blackhillsinfosec.com/rogue-rdp-revisiting-initial-access-methods/
     - https://blog.thickmints.dev/mintsights/detecting-rogue-rdp/
@@ -19,13 +18,14 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \mstsc.exe
-        -   OriginalFileName: mstsc.exe
+        - NewProcessName|endswith: \mstsc.exe
+        - OriginalFileName: mstsc.exe
     selection_extension:
         CommandLine|endswith:
             - .rdp
             - .rdp"
     selection_paths:
+        # Note: This list of paths is better transformed into a whitelist where you only exclude legitimate locations you use in your env
         CommandLine|contains:
             - :\Users\Public\
             - :\Windows\System32\spool\drivers\color
@@ -34,7 +34,8 @@ detection:
             - :\Windows\Temp\
             - :\Windows\Tracing\
             - \AppData\Local\Temp\
-            - \Downloads\
+            # - '\Desktop\' # Could be source of FP depending on the environment
+            - \Downloads\   # Could be source of FP depending on the environment
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Likelihood is related to how often the paths are used in the environment

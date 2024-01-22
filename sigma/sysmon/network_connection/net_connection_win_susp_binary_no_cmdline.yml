@@ -1,8 +1,7 @@
 title: Suspicious Network Connection Binary No CommandLine
 id: 20384606-a124-4fec-acbb-8bd373728613
 status: test
-description: Detects suspicious network connections made by a well-known Windows binary
-    run with no command line parameters
+description: Detects suspicious network connections made by a well-known Windows binary run with no command line parameters
 references:
     - https://redcanary.com/blog/raspberry-robin/
 author: Florian Roth (Nextron Systems)
@@ -29,8 +28,8 @@ detection:
             - \dllhost.exe
     filter_no_cmdline:
         CommandLine: ''
-    filter_null:
-        CommandLine: null
+    filter_null: # e.g. Sysmon has no CommandLine field in network events with ID 3
+        CommandLine:
     condition: network_connection and (selection and not 1 of filter*)
 falsepositives:
     - Unknown

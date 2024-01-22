@@ -18,12 +18,12 @@ detection:
         EventID: 4688
         Channel: Security
     selection_exe:
-        -   OriginalFileName:
-                - cscript.exe
-                - wscript.exe
-        -   NewProcessName|endswith:
-                - \cscript.exe
-                - \wscript.exe
+        - OriginalFileName:
+              - cscript.exe
+              - wscript.exe
+        - NewProcessName|endswith:
+              - \cscript.exe
+              - \wscript.exe
     selection_script:
         CommandLine|contains: .vbs
     condition: process_creation and (all of selection_*)

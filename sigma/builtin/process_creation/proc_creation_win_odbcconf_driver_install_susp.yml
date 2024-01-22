@@ -1,12 +1,10 @@
 title: Suspicious Driver/DLL Installation Via Odbcconf.EXE
 id: cb0fe7c5-f3a3-484d-aa25-d350a7912729
 related:
-    -   id: 3f5491e2-8db8-496b-9e95-1029fce852d4
-        type: derived
+    - id: 3f5491e2-8db8-496b-9e95-1029fce852d4
+      type: derived
 status: experimental
-description: Detects execution of "odbcconf" with the "INSTALLDRIVER" action where
-    the driver doesn't contain a ".dll" extension. This is often used as a defense
-    evasion method.
+description: Detects execution of "odbcconf" with the "INSTALLDRIVER" action where the driver doesn't contain a ".dll" extension. This is often used as a defense evasion method.
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/Odbcconf/
     - https://web.archive.org/web/20191023232753/https://twitter.com/Hexacorn/status/1187143326673330176
@@ -24,9 +22,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \odbcconf.exe
-        -   OriginalFileName: odbcconf.exe
+        - NewProcessName|endswith: \odbcconf.exe
+        - OriginalFileName: odbcconf.exe
     selection_cli:
+        # Note: The "/A" flag is not required to call a specific action
         CommandLine|contains: 'INSTALLDRIVER '
     filter_main_dll_ext:
         CommandLine|contains: .dll

@@ -1,13 +1,12 @@
 title: Suspicious Response File Execution Via Odbcconf.EXE
 id: 2d32dd6f-3196-4093-b9eb-1ad8ab088ca5
 related:
-    -   id: 5f03babb-12db-4eec-8c82-7b4cb5580868
-        type: derived
-    -   id: 65d2be45-8600-4042-b4c0-577a1ff8a60e
-        type: obsoletes
+    - id: 5f03babb-12db-4eec-8c82-7b4cb5580868
+      type: derived
+    - id: 65d2be45-8600-4042-b4c0-577a1ff8a60e
+      type: obsoletes
 status: experimental
-description: Detects execution of "odbcconf" with the "-f" flag in order to load a
-    response file with a non-".rsp" extension.
+description: Detects execution of "odbcconf" with the "-f" flag in order to load a response file with a non-".rsp" extension.
 references:
     - https://learn.microsoft.com/en-us/sql/odbc/odbcconf-exe?view=sql-server-ver16
     - https://lolbas-project.github.io/lolbas/Binaries/Odbcconf/
@@ -27,8 +26,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \odbcconf.exe
-        -   OriginalFileName: odbcconf.exe
+        - Image|endswith: \odbcconf.exe
+        - OriginalFileName: odbcconf.exe
     selection_cli:
         CommandLine|contains:
             - ' -f '
@@ -36,6 +35,7 @@ detection:
     filter_main_rsp_ext:
         CommandLine|contains: .rsp
     filter_main_runonce_odbc:
+        # When odbcconf is run with the "/R" flag, it creates a "runonce" key to run at the next reboot
         ParentImage: C:\Windows\System32\runonce.exe
         Image: C:\Windows\System32\odbcconf.exe
         CommandLine|contains: .exe /E /F "C:\WINDOWS\system32\odbcconf.tmp"

@@ -24,8 +24,8 @@ detection:
             - PowerShellCore/Operational
     selection:
         ContextInfo|contains|all:
-            - ' = ServerRemoteHost '
-            - wsmprovhost.exe
+            - ' = ServerRemoteHost ' #  HostName: 'ServerRemoteHost'  french : Nom d’hôte =
+            - wsmprovhost.exe        #  HostApplication|contains: 'wsmprovhost.exe' french  Application hôte =
     filter_pwsh_archive:
         ContextInfo|contains: \Windows\system32\WindowsPowerShell\v1.0\Modules\Microsoft.PowerShell.Archive\Microsoft.PowerShell.Archive.psm1
     condition: ps_module and (selection and not 1 of filter_*)

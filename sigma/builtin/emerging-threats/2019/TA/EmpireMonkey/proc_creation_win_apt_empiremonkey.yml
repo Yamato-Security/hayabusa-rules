@@ -21,7 +21,7 @@ detection:
         Channel: Security
     selection:
         CommandLine|contains|all:
-            - /e:jscript
+            - /e:jscript   # This is a guess since the report doesn't mention the method of execution. This assumes that it is achieved via specifying the execution engine
             - \Local\Temp\Errors.bat
     condition: process_creation and selection
 falsepositives:

@@ -30,7 +30,6 @@ detection:
             - 'vbscript:'
     condition: process_creation and (all of selection*)
 falsepositives:
-    - False positives depend on scripts and administrative tools used in the monitored
-        environment
+    - False positives depend on scripts and administrative tools used in the monitored environment
 level: medium
 ruletype: Sigma

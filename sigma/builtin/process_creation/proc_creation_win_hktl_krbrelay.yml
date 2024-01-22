@@ -18,8 +18,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \KrbRelay.exe
-        -   OriginalFileName: KrbRelay.exe
+        - NewProcessName|endswith: \KrbRelay.exe
+        - OriginalFileName: KrbRelay.exe   # In case the file has been renamed after compilation
     selection_cli_1:
         CommandLine|contains|all:
             - ' -spn '

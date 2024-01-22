@@ -4,8 +4,7 @@ status: test
 description: Detects the PowerShell command lines with special characters
 references:
     - https://speakerdeck.com/heirhabarov/hunting-for-powershell-abuse?slide=64
-author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton
-    (fp)
+author: Teymur Kheirkhabarov (idea), Vasiliy Burov (rule), oscd.community, Tim Shelton (fp)
 date: 2020/10/15
 modified: 2023/04/06
 tags:
@@ -22,24 +21,24 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith:
-                - \powershell.exe
-                - \pwsh.exe
-        -   OriginalFileName:
-                - PowerShell.EXE
-                - pwsh.dll
+        - Image|endswith:
+              - \powershell.exe
+              - \pwsh.exe
+        - OriginalFileName:
+              - PowerShell.EXE
+              - pwsh.dll
     selection_re:
-        -   CommandLine|re: .*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*
-        -   CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*
-        -   CommandLine|re: .*\^.*\^.*\^.*\^.*\^.*
-        -   CommandLine|re: .*`.*`.*`.*`.*`.*
+        # TODO: Optimize for PySIGMA
+        - CommandLine|re: .*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*\+.*
+        - CommandLine|re: .*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*\{.*
+        - CommandLine|re: .*\^.*\^.*\^.*\^.*\^.*
+        - CommandLine|re: .*`.*`.*`.*`.*`.*
     filter_optional_amazonSSM:
         ParentImage: C:\Program Files\Amazon\SSM\ssm-document-worker.exe
     filter_optional_defender_atp:
         CommandLine|contains:
             - new EventSource("Microsoft.Windows.Sense.Client.Management"
-            - public static extern bool InstallELAMCertificateInfo(SafeFileHandle
-                handle);
+            - public static extern bool InstallELAMCertificateInfo(SafeFileHandle handle);
     condition: process_creation and (all of selection_* and not 1 of filter_optional_*)
 falsepositives:
     - Amazon SSM Document Worker

@@ -23,7 +23,6 @@ detection:
         ImageLoaded|endswith: .xll
     condition: image_load and selection
 falsepositives:
-    - The rules is only looking for ".xll" loads. So some false positives are expected
-        with legitimate and allowed XLLs
+    - The rules is only looking for ".xll" loads. So some false positives are expected with legitimate and allowed XLLs
 level: low
 ruletype: Sigma

@@ -1,8 +1,7 @@
 title: Potential Cookies Session Hijacking
 id: 5a6e1e16-07de-48d8-8aae-faa766c05e88
 status: experimental
-description: Detects execution of "curl.exe" with the "-c" flag in order to save cookie
-    data.
+description: Detects execution of "curl.exe" with the "-c" flag in order to save cookie data.
 references:
     - https://curl.se/docs/manpage.html
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -18,11 +17,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \curl.exe
-        -   OriginalFileName: curl.exe
+        - Image|endswith: \curl.exe
+        - OriginalFileName: curl.exe
     selection_cli:
-        -   CommandLine|re: \s-c\s
-        -   CommandLine|contains: --cookie-jar
+        - CommandLine|re: \s-c\s
+        - CommandLine|contains: --cookie-jar
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

@@ -1,13 +1,9 @@
 title: Suspicious ScreenSave Change by Reg.exe
 id: 0fc35fc3-efe6-4898-8a37-0b233339524f
 status: test
-description: 'Adversaries may establish persistence by executing malicious content
-    triggered by user inactivity.
-
-    Screensavers are programs that execute after a configurable time of user inactivity
-    and consist of Portable Executable (PE) files with a .scr file extension
-
-    '
+description: |
+    Adversaries may establish persistence by executing malicious content triggered by user inactivity.
+    Screensavers are programs that execute after a configurable time of user inactivity and consist of Portable Executable (PE) files with a .scr file extension
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1546.002/T1546.002.md
     - https://www.welivesecurity.com/wp-content/uploads/2017/08/eset-gazer.pdf
@@ -29,25 +25,25 @@ detection:
             - HKEY_CURRENT_USER\Control Panel\Desktop
             - HKCU\Control Panel\Desktop
         NewProcessName|endswith: \reg.exe
-    selection_option_1:
+    selection_option_1: # /force Active ScreenSaveActive
         CommandLine|contains|all:
             - /v ScreenSaveActive
             - /t REG_SZ
             - /d 1
             - /f
-    selection_option_2:
+    selection_option_2: # /force  set ScreenSaveTimeout
         CommandLine|contains|all:
             - /v ScreenSaveTimeout
             - /t REG_SZ
             - '/d '
             - /f
-    selection_option_3:
+    selection_option_3: # /force set ScreenSaverIsSecure
         CommandLine|contains|all:
             - /v ScreenSaverIsSecure
             - /t REG_SZ
             - /d 0
             - /f
-    selection_option_4:
+    selection_option_4: # /force set a .scr
         CommandLine|contains|all:
             - /v SCRNSAVE.EXE
             - /t REG_SZ

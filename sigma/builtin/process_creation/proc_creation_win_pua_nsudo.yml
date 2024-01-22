@@ -20,22 +20,24 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith:
-                - \NSudo.exe
-                - \NSudoLC.exe
-                - \NSudoLG.exe
-        -   OriginalFileName:
-                - NSudo.exe
-                - NSudoLC.exe
-                - NSudoLG.exe
+        - NewProcessName|endswith:
+              - \NSudo.exe
+              - \NSudoLC.exe
+              - \NSudoLG.exe
+        - OriginalFileName:
+              - NSudo.exe
+              - NSudoLC.exe
+              - NSudoLG.exe
     selection_cli:
         CommandLine|contains:
-            - '-U:S '
-            - '-U:T '
-            - '-U:E '
-            - '-P:E '
-            - '-M:S '
-            - '-M:H '
+            # Covers Single/Double dash "-"/"--" + ":"
+            - '-U:S ' # System
+            - '-U:T ' # Trusted Installer
+            - '-U:E ' # Elevated
+            - '-P:E ' # Enable All Privileges
+            - '-M:S ' # System Integrity
+            - '-M:H ' # High Integrity
+            # Covers Single/Double dash "-"/"--" + "="
             - '-U=S '
             - '-U=T '
             - '-U=E '

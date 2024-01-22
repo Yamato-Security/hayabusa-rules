@@ -1,8 +1,7 @@
 title: HackTool - SharpLdapWhoami Execution
 id: d9367cbb-c2e0-47ce-bdc0-128cb6da898d
 status: test
-description: Detects SharpLdapWhoami, a whoami alternative that queries the LDAP service
-    on a domain controller
+description: Detects SharpLdapWhoami, a whoami alternative that queries the LDAP service on a domain controller
 references:
     - https://github.com/bugch3ck/SharpLdapWhoami
 author: Florian Roth (Nextron Systems)
@@ -22,9 +21,9 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_name:
         Image|endswith: \SharpLdapWhoami.exe
-    selection_pe:
-        -   OriginalFileName|contains: SharpLdapWhoami
-        -   Product: SharpLdapWhoami
+    selection_pe: # in case the file has been renamed after compilation
+        - OriginalFileName|contains: SharpLdapWhoami
+        - Product: SharpLdapWhoami
     selection_flags1:
         CommandLine|endswith:
             - ' /method:ntlm'

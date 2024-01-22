@@ -17,10 +17,10 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Image|endswith:
-                - \livekd.exe
-                - \livekd64.exe
-        -   OriginalFileName: livekd.exe
+        - Image|endswith:
+              - \livekd.exe
+              - \livekd64.exe
+        - OriginalFileName: livekd.exe
     condition: process_creation and selection
 falsepositives:
     - Administration and debugging activity (must be investigated)

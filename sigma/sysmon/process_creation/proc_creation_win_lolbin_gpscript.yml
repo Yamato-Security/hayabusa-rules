@@ -1,8 +1,7 @@
 title: Gpscript Execution
 id: 1e59c230-6670-45bf-83b0-98903780607e
 status: experimental
-description: Detects the execution of the LOLBIN gpscript, which executes logon or
-    startup scripts configured in Group Policy
+description: Detects the execution of the LOLBIN gpscript, which executes logon or startup scripts configured in Group Policy
 references:
     - https://oddvar.moe/2018/04/27/gpscript-exe-another-lolbin-to-the-list/
     - https://lolbas-project.github.io/lolbas/Binaries/Gpscript/
@@ -21,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \gpscript.exe
-        -   OriginalFileName: GPSCRIPT.EXE
+        - Image|endswith: \gpscript.exe
+        - OriginalFileName: GPSCRIPT.EXE
     selection_cli:
         CommandLine|contains:
             - ' /logon'

@@ -16,7 +16,7 @@ detection:
     dns_server:
         Channel: DNS Server
     selection:
-        EventID: 6004
+        EventID: 6004 # The DNS server received a zone transfer request from %1 for a non-existent or non-authoritative zone %2.
     condition: dns_server and selection
 falsepositives:
     - Unlikely

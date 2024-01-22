@@ -1,9 +1,7 @@
 title: Potential Powershell ReverseShell Connection
 id: edc2f8ae-2412-4dfd-b9d5-0c57727e70be
 status: stable
-description: Detects usage of the "TcpClient" class. Which can be abused to establish
-    remote connections and reverse-shells. As seen used by the Nishang "Invoke-PowerShellTcpOneLine"
-    reverse shell and other.
+description: Detects usage of the "TcpClient" class. Which can be abused to establish remote connections and reverse-shells. As seen used by the Nishang "Invoke-PowerShellTcpOneLine" reverse shell and other.
 references:
     - https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/
     - https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/
@@ -23,12 +21,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   OriginalFileName:
-                - PowerShell.EXE
-                - pwsh.dll
-        -   Image|endswith:
-                - \powershell.exe
-                - \pwsh.exe
+        - OriginalFileName:
+              - PowerShell.EXE
+              - pwsh.dll
+        - Image|endswith:
+              - \powershell.exe
+              - \pwsh.exe
     selection_cli:
         CommandLine|contains|all:
             - ' Net.Sockets.TCPClient'

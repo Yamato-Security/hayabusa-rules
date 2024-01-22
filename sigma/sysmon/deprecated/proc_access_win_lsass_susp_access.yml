@@ -1,16 +1,13 @@
 title: Credential Dumping Tools Accessing LSASS Memory
 id: 32d0d3e2-e58d-4d41-926b-18b520b2b32d
 status: deprecated
-description: Detects processes requesting access to LSASS memory via suspicious access
-    masks. This is typical for credentials dumping tools
+description: Detects processes requesting access to LSASS memory via suspicious access masks. This is typical for credentials dumping tools
 references:
     - https://onedrive.live.com/view.aspx?resid=D026B4699190F1E6!2843&ithint=file%2cpptx&app=PowerPoint&authkey=!AMvCRTKB_V1J5ow
     - https://web.archive.org/web/20230208123920/https://cyberwardog.blogspot.com/2017/03/chronicles-of-threat-hunter-hunting-for_22.html
     - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
     - http://security-research.dyndns.org/pub/slides/FIRST2017/FIRST-2017_Tom-Ueltschi_Sysmon_FINAL_notes.pdf
-author: Florian Roth, Roberto Rodriguez, Dimitrios Slamaris, Mark Russinovich, Thomas
-    Patzke, Teymur Kheirkhabarov, Sherif Eldeeb, James Dickenson, Aleksey Potapov,
-    oscd.community
+author: Florian Roth, Roberto Rodriguez, Dimitrios Slamaris, Mark Russinovich, Thomas Patzke, Teymur Kheirkhabarov, Sherif Eldeeb, James Dickenson, Aleksey Potapov, oscd.community
 date: 2017/02/16
 modified: 2023/11/30
 tags:
@@ -30,11 +27,14 @@ detection:
         TargetImage|endswith: \lsass.exe
         GrantedAccess|startswith:
             - '0x40'
+            # - '0x1000'  # minimum access requirements to query basic info from service
+            # - '0x1400'
             - '0x100000'
-            - '0x1410'
-            - '0x1438'
-            - '0x143a'
-            - '0x1418'
+            - '0x1410'    # car.2019-04-004
+            # - '0x1010'    # car.2019-04-004
+            - '0x1438'    # car.2019-04-004
+            - '0x143a'    # car.2019-04-004
+            - '0x1418'    # car.2019-04-004
             - '0x1f0fff'
             - '0x1f1fff'
             - '0x1f2fff'
@@ -54,7 +54,7 @@ detection:
         SourceImage|startswith:
             - C:\ProgramData\Microsoft\Windows Defender\
             - C:\Program Files\Windows Defender\
-            - C:\Program Files\Microsoft Security Client\MsMpEng.exe
+            - C:\Program Files\Microsoft Security Client\MsMpEng.exe   # Windows7
         SourceImage|endswith: \MsMpEng.exe
     filter_defender_updates:
         SourceImage: C:\Windows\System32\svchost.exe
@@ -118,7 +118,7 @@ detection:
         SourceImage|endswith: \explorer.exe
         GrantedAccess: '0x401'
     filter_mrt:
-        SourceImage: C:\Windows\system32\MRT.exe
+        SourceImage: C:\Windows\system32\MRT.exe   # Windows Malicious Software Removal Tool
         GrantedAccess:
             - '0x1410'
             - '0x1418'
@@ -127,7 +127,7 @@ detection:
         SourceImage|endswith:
             - \handle.exe
             - \handle64.exe
-    filter_edge:
+    filter_edge: # version in path 96.0.1054.43
         SourceImage|startswith: C:\Program Files (x86)\Microsoft\Edge\Application\
         SourceImage|endswith: \Installer\setup.exe
     filter_webex:
@@ -145,9 +145,22 @@ detection:
             - '0x410'
             - '0x1410'
     filter_msbuild:
+        # This FP was generated while building CPython from source and could be related to other similar examples.
+        # But if you don't do that kind of stuff consider removing it from the rule ;)
         SourceImage|startswith: C:\Program Files\Microsoft Visual Studio\
         SourceImage|endswith: \MSBuild\Current\Bin\MSBuild.exe
         GrantedAccess: '0x1F3FFF'
+    # Old - too broad filter
+        # SourceImage|endswith: # easy to bypass. need to implement supportive rule to detect bypass attempts
+        #     - '\wmiprvse.exe'
+        #     - '\taskmgr.exe'
+        #     - '\procexp64.exe'
+        #     - '\procexp.exe'
+        #     - '\lsm.exe'
+        #     - '\MsMpEng.exe'
+        #     - '\csrss.exe'
+        #     - '\wininit.exe'
+        #     - '\vmtoolsd.exe'
     filter_games:
         SourceImage|contains: \SteamLibrary\steamapps\
     condition: process_access and (selection and not 1 of filter_*)

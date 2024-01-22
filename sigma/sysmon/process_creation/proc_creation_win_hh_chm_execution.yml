@@ -21,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   OriginalFileName: HH.exe
-        -   Image|endswith: \hh.exe
+        - OriginalFileName: HH.exe
+        - Image|endswith: \hh.exe
     selection_cli:
         CommandLine|contains: .chm
     condition: process_creation and (all of selection_*)

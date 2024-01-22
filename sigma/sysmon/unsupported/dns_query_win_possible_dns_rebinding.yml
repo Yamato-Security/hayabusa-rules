@@ -1,9 +1,7 @@
 title: Possible DNS Rebinding
 id: eb07e747-2552-44cd-af36-b659ae0958e4
 status: unsupported
-description: Detects several different DNS-answers by one domain with IPs from internal
-    and external networks. Normally, DNS-answer contain TTL >100. (DNS-record will
-    saved in host cache for a while TTL).
+description: Detects several different DNS-answers by one domain with IPs from internal and external networks. Normally, DNS-answer contain TTL >100. (DNS-record will saved in host cache for a while TTL).
 references:
     - https://medium.com/@brannondorsey/attacking-private-networks-from-the-internet-with-dns-rebinding-ea7098a2d325
 author: Ilyas Ochkov, oscd.community
@@ -45,7 +43,6 @@ detection:
             - (::ffff:)?172.31.
             - (::ffff:)?127.
     timeframe: 30s
-    condition: (dns_query and (dns_answer and filter_int_ip) and (dns_answer and not
-        filter_int_ip)) | count(QueryName) by ComputerName > 3
+    condition: (dns_query and (dns_answer and filter_int_ip) and (dns_answer and not filter_int_ip)) | count(QueryName) by ComputerName > 3
 level: medium
 ruletype: Sigma

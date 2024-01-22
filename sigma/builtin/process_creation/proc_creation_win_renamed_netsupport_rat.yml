@@ -1,8 +1,7 @@
 title: Renamed NetSupport RAT Execution
 id: 0afbd410-de03-4078-8491-f132303cb67d
 status: test
-description: Detects the execution of a renamed "client32.exe" (NetSupport RAT) via
-    Imphash, Product and OriginalFileName strings
+description: Detects the execution of a renamed "client32.exe" (NetSupport RAT) via Imphash, Product and OriginalFileName strings
 references:
     - https://redcanary.com/blog/misbehaving-rats/
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -18,10 +17,10 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        -   Product|contains: NetSupport Remote Control
-        -   OriginalFileName|contains: client32.exe
-        -   Imphash: a9d50692e95b79723f3e76fcf70d023e
-        -   Hashes|contains: IMPHASH=A9D50692E95B79723F3E76FCF70D023E
+        - Product|contains: NetSupport Remote Control
+        - OriginalFileName|contains: client32.exe
+        - Imphash: a9d50692e95b79723f3e76fcf70d023e
+        - Hashes|contains: IMPHASH=A9D50692E95B79723F3E76FCF70D023E
     filter:
         NewProcessName|endswith: \client32.exe
     condition: process_creation and (selection and not filter)

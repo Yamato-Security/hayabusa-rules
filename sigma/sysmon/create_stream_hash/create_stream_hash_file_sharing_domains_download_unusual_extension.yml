@@ -1,11 +1,10 @@
 title: Unusual File Download From File Sharing Websites
 id: ae02ed70-11aa-4a22-b397-c0d0e8f6ea99
 related:
-    -   id: 52182dfb-afb7-41db-b4bc-5336cb29b464
-        type: similar
+    - id: 52182dfb-afb7-41db-b4bc-5336cb29b464
+      type: similar
 status: experimental
-description: Detects the download of suspicious file type from a well-known file and
-    paste sharing domain
+description: Detects the download of suspicious file type from a well-known file and paste sharing domain
 references:
     - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventid=90015
     - https://www.cisa.gov/uscert/ncas/alerts/aa22-321a
@@ -26,7 +25,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_domain:
         Contents|contains:
-            - .githubusercontent.com
+            - .githubusercontent.com         # Includes both gists and github repositories / Michael Haag (idea)
             - anonfiles.com
             - cdn.discordapp.com
             - cdn.discordapp.com/attachments/

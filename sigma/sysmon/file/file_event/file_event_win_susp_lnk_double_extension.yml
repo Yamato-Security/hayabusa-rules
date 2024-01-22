@@ -1,14 +1,11 @@
 title: Suspicious LNK Double Extension File Created
 id: 3215aa19-f060-4332-86d5-5602511f3ca8
 related:
-    -   id: b4926b47-a9d7-434c-b3a0-adc3fa0bd13e
-        type: derived
+    - id: b4926b47-a9d7-434c-b3a0-adc3fa0bd13e
+      type: derived
 status: experimental
-description: 'Detects the creation of files with an "LNK" as a second extension. This
-    is sometimes used by malware as a method to abuse the fact that Windows hides
-    the "LNK" extension by default.
-
-    '
+description: |
+    Detects the creation of files with an "LNK" as a second extension. This is sometimes used by malware as a method to abuse the fact that Windows hides the "LNK" extension by default.
 references:
     - https://www.crowdstrike.com/blog/meet-crowdstrikes-adversary-of-the-month-for-june-mustang-panda/
     - https://www.anomali.com/blog/china-based-apt-mustang-panda-targets-minority-groups-public-and-private-sector-organizations
@@ -44,6 +41,7 @@ detection:
         TargetFilename|contains: \AppData\Roaming\Microsoft\Windows\Recent\
     filter_optional_office_recent:
         Image|endswith:
+            # Note: Some additional office application might need to be added
             - \excel.exe
             - \powerpnt.exe
             - \winword.exe
@@ -59,7 +57,6 @@ detection:
         TargetFilename|contains: \AppData\Roaming\Microsoft\Word
     condition: file_event and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
-    - Some tuning is required for other general purpose directories of third party
-        apps
+    - Some tuning is required for other general purpose directories of third party apps
 level: medium
 ruletype: Sigma

@@ -1,8 +1,7 @@
 title: New RUN Key Pointing to Suspicious Folder
 id: 02ee49e2-e294-4d0f-9278-f5b3212fc588
 status: experimental
-description: Detects suspicious new RUN key element pointing to an executable in a
-    suspicious folder
+description: Detects suspicious new RUN key element pointing to an executable in a suspicious folder
 references:
     - https://www.fireeye.com/blog/threat-research/2018/08/fin7-pursuing-an-enigmatic-and-evasive-global-criminal-operation.html
 author: Florian Roth (Nextron Systems), Markus Neis, Sander Wiebing
@@ -23,20 +22,20 @@ detection:
             - \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\
             - \SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\
     selection_details:
-        -   NewValue|contains:
-                - :\$Recycle.bin\
-                - :\Temp\
-                - :\Users\Default\
-                - :\Users\Desktop\
-                - :\Users\Public\
-                - :\Windows\Temp\
-                - \AppData\Local\Temp\
-                - '%temp%\'
-                - '%tmp%\'
-        -   NewValue|startswith:
-                - '%Public%\'
-                - wscript
-                - cscript
+        - NewValue|contains:
+              - :\$Recycle.bin\
+              - :\Temp\
+              - :\Users\Default\
+              - :\Users\Desktop\
+              - :\Users\Public\
+              - :\Windows\Temp\
+              - \AppData\Local\Temp\
+              - '%temp%\'
+              - '%tmp%\'
+        - NewValue|startswith:
+              - '%Public%\'
+              - wscript
+              - cscript
     condition: registry_set and (all of selection_*)
 fields:
     - ProcessName

@@ -19,8 +19,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \KrbRelay.exe
-        -   OriginalFileName: KrbRelay.exe
+        - Image|endswith: \KrbRelay.exe
+        - OriginalFileName: KrbRelay.exe   # In case the file has been renamed after compilation
     selection_cli_1:
         CommandLine|contains|all:
             - ' -spn '

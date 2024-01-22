@@ -1,8 +1,7 @@
 title: Suspicious NTLM Authentication on the Printer Spooler Service
 id: bb76d96b-821c-47cf-944b-7ce377864492
 status: test
-description: Detects a privilege elevation attempt by coercing NTLM authentication
-    on the Printer Spooler service
+description: Detects a privilege elevation attempt by coercing NTLM authentication on the Printer Spooler service
 references:
     - https://twitter.com/med0x2e/status/1520402518685200384
     - https://github.com/elastic/detection-rules/blob/dd224fb3f81d0b4bf8593c5f02a029d647ba2b2d/rules/windows/credential_access_relay_ntlm_auth_via_http_spoolss.toml
@@ -22,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \rundll32.exe
-        -   OriginalFileName: RUNDLL32.EXE
+        - Image|endswith: \rundll32.exe
+        - OriginalFileName: RUNDLL32.EXE
     selection_cli:
         CommandLine|contains|all:
             - C:\windows\system32\davclnt.dll,DavSetCookie

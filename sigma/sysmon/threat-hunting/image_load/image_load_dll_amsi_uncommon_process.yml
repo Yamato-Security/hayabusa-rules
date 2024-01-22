@@ -44,12 +44,11 @@ detection:
             - :\Windows\Microsoft.NET\Framework64\
         Image|endswith: \ngentask.exe
     filter_main_null:
-        Image: null
+        Image:
     filter_main_empty:
         Image: ''
     condition: image_load and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
-    - Legitimate third party apps installed in "ProgramData" and "AppData" might generate
-        some false positives. Apply additional filters accordingly
+    - Legitimate third party apps installed in "ProgramData" and "AppData" might generate some false positives. Apply additional filters accordingly
 level: low
 ruletype: Sigma

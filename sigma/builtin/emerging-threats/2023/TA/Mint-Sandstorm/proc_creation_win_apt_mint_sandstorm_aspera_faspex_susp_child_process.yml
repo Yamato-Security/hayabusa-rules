@@ -26,39 +26,39 @@ detection:
             - \powershell.exe
             - \powershell_ise.exe
     selection_special_child_powershell_cli:
-        -   CommandLine|contains:
-                - ' echo '
-                - -dumpmode
-                - -ssh
-                - .dmp
-                - add-MpPreference
-                - adscredentials
-                - bitsadmin
-                - certutil
-                - csvhost.exe
-                - DownloadFile
-                - DownloadString
-                - dsquery
-                - ekern.exe
-                - FromBase64String
-                - 'iex '
-                - iex(
-                - Invoke-Expression
-                - Invoke-WebRequest
-                - localgroup administrators
-                - net group
-                - net user
-                - o365accountconfiguration
-                - query session
-                - samaccountname=
-                - set-MpPreference
-                - svhost.exe
-                - System.IO.Compression
-                - System.IO.MemoryStream
-                - usoprivate
-                - usoshared
-                - whoami
-        -   CommandLine|re: "[-/\u2013][Ee^]{1,2}[ncodema^]*\\s[A-Za-z0-9+/=]{15,}"
+        - CommandLine|contains:
+              - ' echo '
+              - -dumpmode
+              - -ssh
+              - .dmp
+              - add-MpPreference
+              - adscredentials
+              - bitsadmin
+              - certutil
+              - csvhost.exe
+              - DownloadFile
+              - DownloadString
+              - dsquery
+              - ekern.exe
+              - FromBase64String
+              - 'iex '
+              - iex(
+              - Invoke-Expression
+              - Invoke-WebRequest
+              - localgroup administrators
+              - net group
+              - net user
+              - o365accountconfiguration
+              - query session
+              - samaccountname=
+              - set-MpPreference
+              - svhost.exe
+              - System.IO.Compression
+              - System.IO.MemoryStream
+              - usoprivate
+              - usoshared
+              - whoami
+        - CommandLine|re: '[-/–][Ee^]{1,2}[ncodema^]*\s[A-Za-z0-9+/=]{15,}'
     selection_special_child_lsass_1:
         CommandLine|contains: lsass
     selection_special_child_lsass_2:
@@ -81,19 +81,19 @@ detection:
             - localgroup Administrators
             - /add
     selection_child_net:
-        CommandLine|contains: net
+        CommandLine|contains: net   # Covers net1
         CommandLine|contains|all:
             - user
             - /add
     selection_child_reg:
-        -   CommandLine|contains|all:
-                - reg add
-                - DisableAntiSpyware
-                - \Microsoft\Windows Defender
-        -   CommandLine|contains|all:
-                - reg add
-                - DisableRestrictedAdmin
-                - CurrentControlSet\Control\Lsa
+        - CommandLine|contains|all:
+              - reg add
+              - DisableAntiSpyware
+              - \Microsoft\Windows Defender
+        - CommandLine|contains|all:
+              - reg add
+              - DisableRestrictedAdmin
+              - CurrentControlSet\Control\Lsa
     selection_child_wmic_1:
         CommandLine|contains|all:
             - wmic
@@ -113,8 +113,7 @@ detection:
             - wbadmin
             - delete
             - catalog
-    condition: process_creation and (selection_parent and (all of selection_special_child_powershell_*
-        or all of selection_special_child_lsass_* or 1 of selection_child_*))
+    condition: process_creation and (selection_parent and (all of selection_special_child_powershell_* or all of selection_special_child_lsass_* or 1 of selection_child_*))
 falsepositives:
     - Unlikely
 level: critical

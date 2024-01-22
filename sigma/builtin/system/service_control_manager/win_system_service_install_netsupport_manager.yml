@@ -12,14 +12,22 @@ logsource:
     product: windows
     service: system
 detection:
+    # Example:
+    #   <EventData>
+    #       <Data Name="ServiceName">Client32</Data>
+    #       <Data Name="ImagePath">"C:\Program Files (x86)\NetSupport\NetSupport Manager\client32.exe" /* *</Data>
+    #       <Data Name="ServiceType">user mode service</Data>
+    #       <Data Name="StartType">auto start</Data>
+    #       <Data Name="AccountName">LocalSystem</Data>
+    #   </EventData>
     system:
         Channel: System
     selection_root:
         Provider_Name: Service Control Manager
         EventID: 7045
     selection_service:
-        -   ImagePath|contains: \NetSupport Manager\client32.exe
-        -   ServiceName: Client32
+        - ImagePath|contains: \NetSupport Manager\client32.exe
+        - ServiceName: Client32
     condition: system and (all of selection_*)
 falsepositives:
     - Legitimate use of the tool

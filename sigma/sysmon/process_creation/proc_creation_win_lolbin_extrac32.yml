@@ -19,9 +19,9 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_lolbas:
-        -   CommandLine|contains: extrac32.exe
-        -   Image|endswith: \extrac32.exe
-        -   OriginalFileName: extrac32.exe
+        - CommandLine|contains: extrac32.exe
+        - Image|endswith: \extrac32.exe
+        - OriginalFileName: extrac32.exe
     selection_archive:
         CommandLine|contains: .cab
     selection_options:

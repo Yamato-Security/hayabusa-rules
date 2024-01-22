@@ -8,8 +8,7 @@ references:
     - https://eqllib.readthedocs.io/en/latest/analytics/e61f557c-a9d0-4c25-ab5b-bbc46bb24deb.html
     - https://eqllib.readthedocs.io/en/latest/analytics/9b3dd402-891c-4c4d-a662-28947168ce61.html
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1007/T1007.md#atomic-test-2---system-service-discovery---netexe
-author: Michael Haag, Mark Woan (improvements), James Pemberton / @4A616D6573 / oscd.community
-    (improvements)
+author: Michael Haag, Mark Woan (improvements), James Pemberton / @4A616D6573 / oscd.community (improvements)
 date: 2019/01/16
 modified: 2022/07/11
 tags:
@@ -34,12 +33,12 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith:
-                - \net.exe
-                - \net1.exe
-        -   OriginalFileName:
-                - net.exe
-                - net1.exe
+        - NewProcessName|endswith:
+              - \net.exe
+              - \net1.exe
+        - OriginalFileName:
+              - net.exe
+              - net1.exe
     selection_cli:
         CommandLine|contains:
             - ' group'
@@ -57,7 +56,6 @@ fields:
     - CommandLine
     - ParentCommandLine
 falsepositives:
-    - Will need to be tuned. If using Splunk, I recommend | stats count by Computer,CommandLine
-        following the search for easy hunting by computer/CommandLine.
+    - Will need to be tuned. If using Splunk, I recommend | stats count by Computer,CommandLine following the search for easy hunting by computer/CommandLine.
 level: low
 ruletype: Sigma

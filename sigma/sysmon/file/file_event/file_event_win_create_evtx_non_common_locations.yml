@@ -1,9 +1,7 @@
 title: EVTX Created In Uncommon Location
 id: 65236ec7-ace0-4f0c-82fd-737b04fd4dcb
 status: experimental
-description: Detects the creation of new files with the ".evtx" extension in non-common
-    locations. Which could indicate tampering with default evtx locations in order
-    to evade security controls
+description: Detects the creation of new files with the ".evtx" extension in non-common locations. Which could indicate tampering with default evtx locations in order to evade security controls
 references:
     - https://learn.microsoft.com/en-us/windows/win32/eventlog/eventlog-key
 author: D3F7A5105
@@ -16,8 +14,7 @@ tags:
 logsource:
     category: file_event
     product: windows
-    definition: 'Requirements: The ".evtx" extension should be monitored via a Sysmon
-        configuration. Example: <TargetFilename condition="end with">.evtx<TargetFilename>'
+    definition: 'Requirements: The ".evtx" extension should be monitored via a Sysmon configuration. Example: <TargetFilename condition="end with">.evtx<TargetFilename>'
 detection:
     file_event:
         EventID: 11

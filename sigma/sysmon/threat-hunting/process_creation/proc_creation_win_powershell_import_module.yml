@@ -1,8 +1,7 @@
 title: Import New Module Via PowerShell CommandLine
 id: 4ad74d01-f48c-42d0-b88c-b31efa4d2262
 status: experimental
-description: Detects usage of the "Import-Module" cmdlet in order to add new Cmdlets
-    to the current PowerShell session
+description: Detects usage of the "Import-Module" cmdlet in order to add new Cmdlets to the current PowerShell session
 references:
     - https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/import-module?view=powershell-7.3
     - https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/import-module?view=powershell-5.1
@@ -21,12 +20,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith:
-                - \powershell.exe
-                - \pwsh.exe
-        -   OriginalFileName:
-                - PowerShell.EXE
-                - pwsh.dll
+        - Image|endswith:
+              - \powershell.exe
+              - \pwsh.exe
+        - OriginalFileName:
+              - PowerShell.EXE
+              - pwsh.dll
     selection_cmdlet:
         CommandLine|contains:
             - 'Import-Module '
@@ -40,7 +39,6 @@ detection:
             - Tools\Microsoft.VisualStudio.DevShell.dll
     condition: process_creation and (all of selection_* and not 1 of filter_main_*)
 falsepositives:
-    - Depending on the environement, many legitimate scripts will import modules inline.
-        This rule is targeted for hunting purposes.
+    - Depending on the environement, many legitimate scripts will import modules inline. This rule is targeted for hunting purposes.
 level: low
 ruletype: Sigma

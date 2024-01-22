@@ -1,11 +1,10 @@
 title: Suspicious New Service Creation
 id: 17a1be64-8d88-40bf-b5ff-a4f7a50ebcc8
 related:
-    -   id: 7fe71fc9-de3b-432a-8d57-8c809efc10ab
-        type: derived
+    - id: 7fe71fc9-de3b-432a-8d57-8c809efc10ab
+      type: derived
 status: test
-description: Detects creation of a new service via "sc" command or the powershell
-    "new-service" cmdlet with suspicious binary paths
+description: Detects creation of a new service via "sc" command or the powershell "new-service" cmdlet with suspicious binary paths
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1543.003/T1543.003.md
     - https://web.archive.org/web/20180331144337/https://www.fireeye.com/blog/threat-research/2018/03/sanny-malware-delivery-method-updated-in-recently-observed-attacks.html
@@ -35,6 +34,7 @@ detection:
             - -BinaryPathName
     susp_binpath:
         CommandLine|contains:
+            # Add more suspicious commands or binaries
             - powershell
             - mshta
             - wscript
@@ -46,6 +46,7 @@ detection:
             - cmd.exe /k
             - cmd.exe /r
             - rundll32
+            # Add more suspicious paths
             - C:\Users\Public
             - \Downloads\
             - \Desktop\

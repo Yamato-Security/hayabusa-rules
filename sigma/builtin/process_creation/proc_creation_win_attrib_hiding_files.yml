@@ -19,8 +19,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \attrib.exe
-        -   OriginalFileName: ATTRIB.EXE
+        - NewProcessName|endswith: \attrib.exe
+        - OriginalFileName: ATTRIB.EXE
     selection_cli:
         CommandLine|contains: ' +h '
     filter_msiexec:
@@ -31,8 +31,7 @@ detection:
         ParentProcessName|endswith: \cmd.exe
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 falsepositives:
-    - IgfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of
-        cmd.exe and igfxCUIService.exe is the parent of the cmd.exe)
+    - IgfxCUIService.exe hiding *.cui files via .bat script (attrib.exe a child of cmd.exe and igfxCUIService.exe is the parent of the cmd.exe)
     - Msiexec.exe hiding desktop.ini
 level: medium
 ruletype: Sigma

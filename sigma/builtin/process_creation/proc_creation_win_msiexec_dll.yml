@@ -20,8 +20,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \msiexec.exe
-        -   OriginalFileName: \msiexec.exe
+        - NewProcessName|endswith: \msiexec.exe
+        - OriginalFileName: \msiexec.exe
     selection_flag:
         CommandLine|contains:
             - ' /z '

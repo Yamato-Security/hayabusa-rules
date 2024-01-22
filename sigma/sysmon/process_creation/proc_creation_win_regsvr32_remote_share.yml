@@ -18,12 +18,13 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \regsvr32.exe
-        -   OriginalFileName: \REGSVR32.EXE
+        - Image|endswith: \regsvr32.exe
+        - OriginalFileName: \REGSVR32.EXE
     selection_cli:
         CommandLine|contains: ' \\\\'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown
+# Decrease to medium if this is something common in your org
 level: high
 ruletype: Sigma

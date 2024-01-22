@@ -1,8 +1,8 @@
 title: PsExec Tool Execution
 id: fa91cc36-24c9-41ce-b3c8-3bbc3f2f67ba
 related:
-    -   id: 42c575ea-e41e-41f1-b248-8093c3e82a28
-        type: derived
+    - id: 42c575ea-e41e-41f1-b248-8093c3e82a28
+      type: derived
 status: deprecated
 description: Detects PsExec service execution via default service image name
 references:
@@ -25,7 +25,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \PSEXESVC.exe
-        User|contains:
+        User|contains: # covers many language settings
             - AUTHORI
             - AUTORI
     condition: process_creation and selection

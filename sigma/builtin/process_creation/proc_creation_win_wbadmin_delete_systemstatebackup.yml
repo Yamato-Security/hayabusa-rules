@@ -1,13 +1,10 @@
 title: SystemStateBackup Deleted Using Wbadmin.EXE
 id: 89f75308-5b1b-4390-b2d8-d6b2340efaf8
 status: test
-description: 'Deletes the Windows systemstatebackup using wbadmin.exe.
-
+description: |
+    Deletes the Windows systemstatebackup using wbadmin.exe.
     This technique is used by numerous ransomware families.
-
     This may only be successful on server platforms that have Windows Backup enabled.
-
-    '
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1490/T1490.md#atomic-test-5---windows---delete-volume-shadow-copies-via-wmi-with-powershell
 author: frack113
@@ -24,8 +21,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \wbadmin.exe
-        -   OriginalFileName: WBADMIN.EXE
+        - NewProcessName|endswith: \wbadmin.exe
+        - OriginalFileName: WBADMIN.EXE
     selection_cli:
         CommandLine|contains|all:
             - 'delete '

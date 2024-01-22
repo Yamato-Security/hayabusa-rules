@@ -1,9 +1,7 @@
 title: Potential Defense Evasion Via Raw Disk Access By Uncommon Tools
 id: db809f10-56ce-4420-8c86-d6a7d793c79c
 status: test
-description: Detects raw disk access using uncommon tools or tools that are located
-    in suspicious locations (heavy filtering is required), which could indicate possible
-    defense evasion attempts
+description: Detects raw disk access using uncommon tools or tools that are located in suspicious locations (heavy filtering is required), which could indicate possible defense evasion attempts
 references:
     - https://www.slideshare.net/heirhabarov/hunting-for-credentials-dumping-in-windows-environment
 author: Teymur Kheirkhabarov, oscd.community
@@ -53,7 +51,7 @@ detection:
             - \Executables\SSDUpdate.exe
             - \HostMetadata\NVMEHostmetadata.exe
     filter_main_null:
-        Image: null
+        Image:
     filter_main_systemsettings:
         Image|endswith: :\Windows\ImmersiveControlPanel\SystemSettings.exe
     filter_optional_github_desktop:

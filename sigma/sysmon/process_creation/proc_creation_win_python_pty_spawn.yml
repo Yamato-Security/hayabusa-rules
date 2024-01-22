@@ -1,8 +1,8 @@
 title: Python Spawning Pretty TTY on Windows
 id: 480e7e51-e797-47e3-8d72-ebfce65b6d8d
 related:
-    -   id: 899133d5-4d7c-4a7f-94ee-27355c879d90
-        type: derived
+    - id: 899133d5-4d7c-4a7f-94ee-27355c879d90
+      type: derived
 status: test
 description: Detects python spawning a pretty tty
 references:
@@ -22,7 +22,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
         Image|endswith:
-            - python.exe
+            - python.exe   # no \ bc of e.g. ipython.exe
             - python3.exe
             - python2.exe
     selection_cli_1:

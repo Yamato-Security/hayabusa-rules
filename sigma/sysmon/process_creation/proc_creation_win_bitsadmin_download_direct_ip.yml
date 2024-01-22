@@ -1,11 +1,10 @@
 title: Suspicious Download From Direct IP Via Bitsadmin
 id: 99c840f2-2012-46fd-9141-c761987550ef
 related:
-    -   id: 90f138c1-f578-4ac3-8c49-eecfd847c8b7
-        type: similar
+    - id: 90f138c1-f578-4ac3-8c49-eecfd847c8b7
+      type: similar
 status: test
-description: Detects usage of bitsadmin downloading a file using an URL that contains
-    an IP
+description: Detects usage of bitsadmin downloading a file using an URL that contains an IP
 references:
     - https://blog.netspi.com/15-ways-to-download-a-file/#bitsadmin
     - https://isc.sans.edu/diary/22264
@@ -29,8 +28,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \bitsadmin.exe
-        -   OriginalFileName: bitsadmin.exe
+        - Image|endswith: \bitsadmin.exe
+        - OriginalFileName: bitsadmin.exe
     selection_flags:
         CommandLine|contains:
             - ' /transfer '
@@ -48,7 +47,7 @@ detection:
             - ://8
             - ://9
     filter_seven_zip:
-        CommandLine|contains: ://7-
+        CommandLine|contains: ://7-   # For https://7-zip.org/
     condition: process_creation and (all of selection_* and not 1 of filter_*)
 fields:
     - CommandLine

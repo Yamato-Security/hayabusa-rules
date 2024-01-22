@@ -25,7 +25,7 @@ detection:
         Image|endswith: \schtasks.exe
         CommandLine|contains: ' /create '
     filter:
-        User|contains:
+        User|contains: # covers many language settings
             - AUTHORI
             - AUTORI
     condition: process_creation and (selection and not filter)

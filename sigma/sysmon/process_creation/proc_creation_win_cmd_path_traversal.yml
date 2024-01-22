@@ -1,8 +1,7 @@
 title: Potential CommandLine Path Traversal Via Cmd.EXE
 id: 087790e3-3287-436c-bccf-cbd0184a7db1
 status: test
-description: Detects potential path traversal attempt via cmd.exe. Could indicate
-    possible command/argument confusion/hijacking
+description: Detects potential path traversal attempt via cmd.exe. Could indicate possible command/argument confusion/hijacking
 references:
     - https://hackingiscool.pl/cmdhijack-command-argument-confusion-with-path-traversal-in-cmd-exe/
     - https://twitter.com/Oddvarmoe/status/1270633613449723905
@@ -21,21 +20,21 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   ParentImage|endswith: \cmd.exe
-        -   Image|endswith: \cmd.exe
-        -   OriginalFileName: cmd.exe
+        - ParentImage|endswith: \cmd.exe
+        - Image|endswith: \cmd.exe
+        - OriginalFileName: cmd.exe
     selection_flags:
-        -   ParentCommandLine|contains:
-                - /c
-                - /k
-                - /r
-        -   CommandLine|contains:
-                - /c
-                - /k
-                - /r
+        - ParentCommandLine|contains:
+              - /c
+              - /k
+              - /r
+        - CommandLine|contains:
+              - /c
+              - /k
+              - /r
     selection_path_traversal:
-        -   ParentCommandLine: /../../
-        -   CommandLine|contains: /../../
+        - ParentCommandLine: /../../
+        - CommandLine|contains: /../../
     filter_java:
         CommandLine|contains: \Tasktop\keycloak\bin\/../../jre\bin\java
     condition: process_creation and (all of selection_* and not 1 of filter_*)

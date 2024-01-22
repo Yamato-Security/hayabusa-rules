@@ -1,8 +1,7 @@
 title: Suspicious Windows Trace ETW Session Tamper Via Logman.EXE
 id: cd1f961e-0b96-436b-b7c6-38da4583ec00
 status: test
-description: Detects the execution of "logman" utility in order to disable or delete
-    Windows trace sessions
+description: Detects the execution of "logman" utility in order to disable or delete Windows trace sessions
 references:
     - https://twitter.com/0gtweet/status/1359039665232306183?s=21
     - https://ss64.com/nt/logman.html
@@ -22,8 +21,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \logman.exe
-        -   OriginalFileName: Logman.exe
+        - Image|endswith: \logman.exe
+        - OriginalFileName: Logman.exe
     selection_action:
         CommandLine|contains:
             - 'stop '
@@ -31,7 +30,7 @@ detection:
     selection_service:
         CommandLine|contains:
             - Circular Kernel Context Logger
-            - EventLog-
+            - EventLog-   # Cover multiple traces starting with EventLog-*
             - SYSMON TRACE
             - SysmonDnsEtwSession
     condition: process_creation and (all of selection*)

@@ -20,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        -   Image|endswith: \systeminfo.exe
-        -   OriginalFileName: sysinfo.exe
+        - Image|endswith: \systeminfo.exe
+        - OriginalFileName: sysinfo.exe
     condition: process_creation and selection
 falsepositives:
     - Unknown

@@ -1,8 +1,7 @@
 title: Arbitrary File Download Via PresentationHost.EXE
 id: b124ddf4-778d-418e-907f-6dd3fc0d31cd
 status: test
-description: Detects usage of "PresentationHost" which is a utility that runs ".xbap"
-    (Browser Applications) files to download arbitrary files
+description: Detects usage of "PresentationHost" which is a utility that runs ".xbap" (Browser Applications) files to download arbitrary files
 references:
     - https://github.com/LOLBAS-Project/LOLBAS/pull/239/files
 author: Nasreddine Bencherchali (Nextron Systems)
@@ -21,8 +20,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \presentationhost.exe
-        -   OriginalFileName: PresentationHost.exe
+        - Image|endswith: \presentationhost.exe
+        - OriginalFileName: PresentationHost.exe
     selection_cli:
         CommandLine|contains:
             - http://

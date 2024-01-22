@@ -28,6 +28,7 @@ detection:
             - Microsoft-Windows-PowerShell/Operational
             - PowerShellCore/Operational
     empire:
+        # better to randomise the order
         ScriptBlockText|contains|all:
             - System.Diagnostics.Process
             - Stop-Computer
@@ -36,6 +37,7 @@ detection:
             - $cmdargs
             - Close-Dnscat2Tunnel
     dnscat:
+        # better to randomise the order
         ScriptBlockText|contains|all:
             - set type=$LookupType`nserver
             - $Command | nslookup 2>&1 | Out-String

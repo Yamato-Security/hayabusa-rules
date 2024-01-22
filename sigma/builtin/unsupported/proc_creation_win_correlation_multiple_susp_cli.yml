@@ -62,7 +62,6 @@ detection:
     timeframe: 5m
     condition: (process_creation and selection) | count() by MachineName > 5
 falsepositives:
-    - False positives depend on scripts and administrative tools used in the monitored
-        environment
+    - False positives depend on scripts and administrative tools used in the monitored environment
 level: low
 ruletype: Sigma

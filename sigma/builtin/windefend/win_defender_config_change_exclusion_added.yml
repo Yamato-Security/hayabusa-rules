@@ -17,7 +17,7 @@ detection:
     windefend:
         Channel: Microsoft-Windows-Windows Defender/Operational
     selection:
-        EventID: 5007
+        EventID: 5007 # The antimalware platform configuration changed.
         NewValue|contains: \Microsoft\Windows Defender\Exclusions
     condition: windefend and selection
 falsepositives:

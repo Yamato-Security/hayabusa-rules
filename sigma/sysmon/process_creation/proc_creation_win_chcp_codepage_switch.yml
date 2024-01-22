@@ -1,8 +1,7 @@
 title: Suspicious CodePage Switch Via CHCP
 id: c7942406-33dd-4377-a564-0f62db0593a3
 status: test
-description: Detects a code page switch in command line or batch scripts to a rare
-    language
+description: Detects a code page switch in command line or batch scripts to a rare language
 references:
     - https://docs.microsoft.com/en-us/windows/win32/intl/code-page-identifiers
     - https://twitter.com/cglyer/status/1183756892952248325
@@ -23,13 +22,16 @@ detection:
     selection:
         Image|endswith: \chcp.com
         CommandLine|endswith:
-            - ' 936'
-            - ' 1258'
+            - ' 936'    # Chinese
+            # - ' 1256' # Arabic
+            - ' 1258'   # Vietnamese
+            # - ' 855'  # Russian
+            # - ' 866'  # Russian
+            # - ' 864'  # Arabic
     condition: process_creation and selection
 fields:
     - ParentCommandLine
 falsepositives:
-    - Administrative activity (adjust code pages according to your organization's
-        region)
+    - Administrative activity (adjust code pages according to your organization's region)
 level: medium
 ruletype: Sigma

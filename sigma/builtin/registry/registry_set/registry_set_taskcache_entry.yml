@@ -1,8 +1,7 @@
 title: Scheduled TaskCache Change by Uncommon Program
 id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
 status: experimental
-description: Monitor the creation of a new key under 'TaskCache' when a new scheduled
-    task is registered by a process that is not svchost.exe, which is suspicious
+description: Monitor the creation of a new key under 'TaskCache' when a new scheduled task is registered by a process that is not svchost.exe, which is suspicious
 references:
     - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
     - https://labs.f-secure.com/blog/scheduled-task-tampering/
@@ -37,8 +36,7 @@ detection:
         ProcessName|endswith: \ngen.exe
         ObjectName|contains:
             - \Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tasks\{B66B135D-DA06-4FC4-95F8-7458E1D10129}
-            - \Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\Windows\.NET
-                Framework\.NET Framework NGEN
+            - \Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\Windows\.NET Framework\.NET Framework NGEN
     filter_office_click_to_run:
         ProcessName:
             - C:\Program Files\Microsoft Office\root\Integration\Integrator.exe
@@ -51,8 +49,7 @@ detection:
             - C:\Program Files\Dropbox\Update\DropboxUpdate.exe
     filter_explorer:
         ProcessName: C:\Windows\explorer.exe
-        ObjectName|contains: \Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\Windows\PLA\Server
-            Manager Performance Monitor\
+        ObjectName|contains: \Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\Windows\PLA\Server Manager Performance Monitor\
     filter_system:
         ProcessName: System
     condition: registry_set and (selection and not 1 of filter*)

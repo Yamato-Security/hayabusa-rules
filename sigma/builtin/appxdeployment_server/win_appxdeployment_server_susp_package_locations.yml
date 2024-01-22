@@ -1,8 +1,7 @@
 title: Suspicious AppX Package Locations
 id: 5cdeaf3d-1489-477c-95ab-c318559fc051
 status: test
-description: Detects an appx package added the pipeline of the "to be processed" packages
-    which is located in suspicious locations
+description: Detects an appx package added the pipeline of the "to be processed" packages which is located in suspicious locations
 references:
     - Internal Research
     - https://www.sentinelone.com/labs/inside-malicious-windows-apps-for-malware-deployment/
@@ -21,6 +20,7 @@ detection:
     selection:
         EventID: 854
         Path|contains:
+            # Paths can be written using forward slash if the "file://" protocol is used
             - C:\Users\Public\
             - /users/public/
             - C:\PerfLogs\

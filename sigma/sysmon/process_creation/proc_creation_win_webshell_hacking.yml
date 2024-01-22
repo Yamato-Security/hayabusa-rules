@@ -1,11 +1,8 @@
 title: Webshell Hacking Activity Patterns
 id: 4ebc877f-4612-45cb-b3a5-8e3834db36c9
 status: test
-description: 'Detects certain parent child patterns found in cases in which a web
-    shell is used to perform certain credential dumping or exfiltration activities
-    on a compromised system
-
-    '
+description: |
+    Detects certain parent child patterns found in cases in which a web shell is used to perform certain credential dumping or exfiltration activities on a compromised system
 references:
     - https://youtu.be/7aemGhaE9ds?t=641
 author: Florian Roth (Nextron Systems)
@@ -22,6 +19,7 @@ logsource:
     category: process_creation
     product: windows
 detection:
+   # Webserver
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -47,16 +45,20 @@ detection:
         CommandLine|contains:
             - catalina.jar
             - CATALINA_HOME
+    # Suspicious child processes
     selection_child_1:
+        # Process dumping
         CommandLine|contains|all:
             - rundll32
             - comsvcs
     selection_child_2:
+        # Winrar exfil
         CommandLine|contains|all:
             - ' -hp'
             - ' a '
             - ' -m'
     selection_child_3:
+        # User add
         CommandLine|contains|all:
             - net
             - ' user '
@@ -69,27 +71,32 @@ detection:
             - /add
     selection_child_5:
         Image|endswith:
+            # Credential stealing
             - \ntdsutil.exe
+            # AD recon
             - \ldifde.exe
             - \adfind.exe
+            # Process dumping
             - \procdump.exe
             - \Nanodump.exe
+            # Destruction / ransom groups
             - \vssadmin.exe
             - \fsutil.exe
     selection_child_6:
+        # SUspicious patterns
         CommandLine|contains:
-            - ' -decode '
-            - ' -NoP '
-            - ' -W Hidden '
-            - ' /decode '
-            - ' /ticket:'
-            - ' sekurlsa'
-            - .dmp full
-            - .downloadfile(
-            - .downloadstring(
-            - FromBase64String
-            - process call create
-            - 'reg save '
+            - ' -decode '  # Used with certutil
+            - ' -NoP '  # Often used in malicious PowerShell commands
+            - ' -W Hidden '  # Often used in malicious PowerShell commands
+            - ' /decode '  # Used with certutil
+            - ' /ticket:'  # Rubeus
+            - ' sekurlsa'  # Mimikatz
+            - .dmp full    # Process dumping method apart from procdump
+            - .downloadfile(    # PowerShell download command
+            - .downloadstring(    # PowerShell download command
+            - FromBase64String   # PowerShell encoded payload
+            - process call create   # WMIC process creation
+            - 'reg save '  # save registry SAM - syskey extraction
             - whoami /priv
     condition: process_creation and (1 of selection_webserver_* and 1 of selection_child_*)
 falsepositives:

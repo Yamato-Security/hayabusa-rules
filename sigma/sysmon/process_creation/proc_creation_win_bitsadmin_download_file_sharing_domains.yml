@@ -26,8 +26,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   Image|endswith: \bitsadmin.exe
-        -   OriginalFileName: bitsadmin.exe
+        - Image|endswith: \bitsadmin.exe
+        - OriginalFileName: bitsadmin.exe
     selection_flags:
         CommandLine|contains:
             - ' /transfer '
@@ -35,7 +35,7 @@ detection:
             - ' /addfile '
     selection_domain:
         CommandLine|contains:
-            - .githubusercontent.com
+            - .githubusercontent.com         # Includes both gists and github repositories / Michael Haag (idea)
             - anonfiles.com
             - cdn.discordapp.com
             - cdn.discordapp.com/attachments/

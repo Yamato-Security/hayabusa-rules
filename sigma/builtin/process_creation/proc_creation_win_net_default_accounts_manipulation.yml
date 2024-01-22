@@ -1,8 +1,7 @@
 title: Suspicious Manipulation Of Default Accounts Via Net.EXE
 id: 5b768e71-86f2-4879-b448-81061cbae951
 status: test
-description: Detects suspicious manipulations of default accounts such as 'administrator'
-    and 'guest'. For example 'enable' or 'disable' accounts or change the password...etc
+description: Detects suspicious manipulations of default accounts such as 'administrator' and 'guest'. For example 'enable' or 'disable' accounts or change the password...etc
 references:
     - https://www.trellix.com/en-sg/about/newsroom/stories/threat-labs/lockergoga-ransomware-family-used-in-targeted-attacks.html
     - https://redacted.com/blog/bianlian-ransomware-gang-gives-it-a-go/
@@ -21,54 +20,53 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith:
-                - \net.exe
-                - \net1.exe
-        -   OriginalFileName:
-                - net.exe
-                - net1.exe
+        - NewProcessName|endswith:
+              - \net.exe
+              - \net1.exe
+        - OriginalFileName:
+              - net.exe
+              - net1.exe
     selection_user_option:
         CommandLine|contains: ' user '
     selection_username:
         CommandLine|contains:
-            - " J\xE4rjestelm\xE4nvalvoja "
-            - ' Rendszergazda '
-            - " \u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\
-                \u043E\u0440 "
-            - ' Administrateur '
-            - ' Administrador '
-            - " Administrat\xF6r "
-            - ' Administrator '
+            # Note: We need to write the full account name for cases starting with 'admin' to avoid lookups only with the user flag
+            - ' Järjestelmänvalvoja ' # Finish
+            - ' Rendszergazda ' # Hungarian
+            - ' Администратор ' # Russian
+            - ' Administrateur ' # French
+            - ' Administrador ' # Portuguese (Brazil + Portugal) + Spanish
+            - ' Administratör ' # Swedish
+            - ' Administrator ' # English
             - ' guest '
             - ' DefaultAccount '
-            - " \"J\xE4rjestelm\xE4nvalvoja\" "
-            - ' "Rendszergazda" '
-            - " \"\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\
-                \u043E\u0440\" "
-            - ' "Administrateur" '
-            - ' "Administrador" '
-            - " \"Administrat\xF6r\" "
-            - ' "Administrator" '
+            # The cases below are for when an attacker requests the net command via 'cmd /c....'
+            # First in double quotes
+            - ' "Järjestelmänvalvoja" ' # Finish
+            - ' "Rendszergazda" ' # Hungarian
+            - ' "Администратор" ' # Russian
+            - ' "Administrateur" ' # French
+            - ' "Administrador" ' # Portuguese (Brazil + Portugal) + Spanish
+            - ' "Administratör" ' # Swedish
+            - ' "Administrator" ' # English
             - ' "guest" '
             - ' "DefaultAccount" '
-            - " 'J\xE4rjestelm\xE4nvalvoja' "
-            - ' ''Rendszergazda'' '
-            - " '\u0410\u0434\u043C\u0438\u043D\u0438\u0441\u0442\u0440\u0430\u0442\
-                \u043E\u0440' "
-            - ' ''Administrateur'' '
-            - ' ''Administrador'' '
-            - " 'Administrat\xF6r' "
-            - ' ''Administrator'' '
-            - ' ''guest'' '
-            - ' ''DefaultAccount'' '
+            # Second in single quotes
+            - " 'Järjestelmänvalvoja' " # Finish
+            - " 'Rendszergazda' " # Hungarian
+            - " 'Администратор' " # Russian
+            - " 'Administrateur' " # French
+            - " 'Administrador' " # Portuguese (Brazil + Portugal) + Spanish
+            - " 'Administratör' " # Swedish
+            - " 'Administrator' " # English
+            - " 'guest' "
+            - " 'DefaultAccount' "
     filter:
         CommandLine|contains|all:
             - guest
             - /active no
     condition: process_creation and (all of selection_* and not filter)
 falsepositives:
-    - Some false positives could occur with the admin or guest account. It depends
-        on the scripts being used by the admins in your env. If you experience a lot
-        of FP you could reduce the level to medium
+    - Some false positives could occur with the admin or guest account. It depends on the scripts being used by the admins in your env. If you experience a lot of FP you could reduce the level to medium
 level: high
 ruletype: Sigma

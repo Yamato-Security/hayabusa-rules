@@ -1,8 +1,8 @@
 title: File Download via CertOC.EXE
 id: 70ad0861-d1fe-491c-a45f-fa48148a300d
 related:
-    -   id: b86f6dea-0b2f-41f5-bdcc-a057bd19cd6a
-        type: similar
+    - id: b86f6dea-0b2f-41f5-bdcc-a057bd19cd6a
+      type: similar
 status: test
 description: Detects when a user downloads a file by using CertOC.exe
 references:
@@ -21,8 +21,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        -   NewProcessName|endswith: \certoc.exe
-        -   OriginalFileName: CertOC.exe
+        - NewProcessName|endswith: \certoc.exe
+        - OriginalFileName: CertOC.exe
     selection_cli:
         CommandLine|contains|all:
             - -GetCACAPS

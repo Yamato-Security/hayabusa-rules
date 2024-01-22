@@ -20,6 +20,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
+        # Win32_Shadowcopy | ForEach-Object
         CommandLine|contains:
             - VwBpAG4AMwAyAF8AUwBoAGEAZABvAHcAYwBvAHAAeQAgAHwAIABGAG8AcgBFAGEAYwBoAC0ATwBiAGoAZQBjAHQA
             - cAaQBuADMAMgBfAFMAaABhAGQAbwB3AGMAbwBwAHkAIAB8ACAARgBvAHIARQBhAGMAaAAtAE8AYgBqAGUAYwB0A

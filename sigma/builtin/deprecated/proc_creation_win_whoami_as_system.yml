@@ -1,8 +1,7 @@
 title: Run Whoami as SYSTEM
 id: 80167ada-7a12-41ed-b8e9-aa47195c66a1
 status: deprecated
-description: Detects a whoami.exe executed by LOCAL SYSTEM. This may be a sign of
-    a successful local privilege escalation.
+description: Detects a whoami.exe executed by LOCAL SYSTEM. This may be a sign of a successful local privilege escalation.
 references:
     - https://speakerdeck.com/heirhabarov/hunting-for-privilege-escalation-in-windows-environment
 author: Teymur Kheirkhabarov, Florian Roth
@@ -20,12 +19,12 @@ detection:
         EventID: 4688
         Channel: Security
     selection_user:
-        SubjectUserName|contains:
+        SubjectUserName|contains: # covers many language settings
             - AUTHORI
             - AUTORI
     selection_img:
-        -   OriginalFileName: whoami.exe
-        -   NewProcessName|endswith: \whoami.exe
+        - OriginalFileName: whoami.exe
+        - NewProcessName|endswith: \whoami.exe
     condition: process_creation and (all of selection*)
 falsepositives:
     - Possible name overlap with NT AUHTORITY substring to cover all languages

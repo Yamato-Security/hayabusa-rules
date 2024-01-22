@@ -38,7 +38,6 @@ detection:
             - Invoke-Expression
     condition: process_creation and (all of selection_*)
 falsepositives:
-    - Some PowerShell installers were seen using similar combinations. Apply filters
-        accordingly
+    - Some PowerShell installers were seen using similar combinations. Apply filters accordingly
 level: high
 ruletype: Sigma

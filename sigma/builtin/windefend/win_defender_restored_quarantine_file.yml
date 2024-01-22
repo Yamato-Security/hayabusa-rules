@@ -16,7 +16,7 @@ detection:
     windefend:
         Channel: Microsoft-Windows-Windows Defender/Operational
     selection:
-        EventID: 1009
+        EventID: 1009 # The antimalware platform restored an item from quarantine.
     condition: windefend and selection
 falsepositives:
     - Legitimate administrator activity restoring a file

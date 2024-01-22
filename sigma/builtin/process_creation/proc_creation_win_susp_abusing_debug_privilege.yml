@@ -27,18 +27,18 @@ detection:
             - \wininit.exe
             - \spoolsv.exe
             - \searchindexer.exe
-        SubjectUserName|contains:
+        SubjectUserName|contains: # covers many language settings
             - AUTHORI
             - AUTORI
     selection_img:
-        -   NewProcessName|endswith:
-                - \powershell.exe
-                - \pwsh.exe
-                - \cmd.exe
-        -   OriginalFileName:
-                - PowerShell.EXE
-                - pwsh.dll
-                - Cmd.Exe
+        - NewProcessName|endswith:
+              - \powershell.exe
+              - \pwsh.exe
+              - \cmd.exe
+        - OriginalFileName:
+              - PowerShell.EXE
+              - pwsh.dll
+              - Cmd.Exe
     filter:
         CommandLine|contains|all:
             - ' route '

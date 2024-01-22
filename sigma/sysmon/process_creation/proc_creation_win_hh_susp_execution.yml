@@ -34,8 +34,8 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        -   OriginalFileName: HH.exe
-        -   Image|endswith: \hh.exe
+        - OriginalFileName: HH.exe
+        - Image|endswith: \hh.exe
     selection_paths:
         CommandLine|contains:
             - .application
@@ -44,6 +44,11 @@ detection:
             - \Downloads\
             - \Users\Public\
             - \Windows\Temp\
+            # - '\AppData\Local\Temp\Temp?_'
+            # - '\AppData\Local\Temp\Rar$'
+            # - '\AppData\Local\Temp\7z'
+            # - '\AppData\Local\Temp\wz'
+            # - '\AppData\Local\Temp\peazip-tmp'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

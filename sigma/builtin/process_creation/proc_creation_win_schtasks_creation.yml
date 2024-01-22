@@ -24,7 +24,7 @@ detection:
         CommandLine|contains: ' /create '
         NewProcessName|endswith: \schtasks.exe
     filter:
-        SubjectUserName|contains:
+        SubjectUserName|contains: # covers many language settings
             - AUTHORI
             - AUTORI
     condition: process_creation and (selection and not filter)

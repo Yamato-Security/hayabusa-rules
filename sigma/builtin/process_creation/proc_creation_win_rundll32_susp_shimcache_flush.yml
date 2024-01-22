@@ -32,8 +32,7 @@ detection:
         CommandLine|contains:
             - BaseFlushAppcompatCache
             - '#46'
-    condition: process_creation and (( selection1a and selection1b ) or ( selection2a
-        and selection2b ))
+    condition: process_creation and (( selection1a and selection1b ) or ( selection2a and selection2b ))
 fields:
     - NewProcessName
     - CommandLine

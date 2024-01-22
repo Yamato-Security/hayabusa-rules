@@ -1,8 +1,7 @@
 title: MpiExec Lolbin
 id: 729ce0ea-5d8f-4769-9762-e35de441586d
 status: test
-description: Detects a certain command line flag combination used by mpiexec.exe LOLBIN
-    from HPC pack that can be used to execute any other binary
+description: Detects a certain command line flag combination used by mpiexec.exe LOLBIN from HPC pack that can be used to execute any other binary
 references:
     - https://twitter.com/mrd0x/status/1465058133303246867
     - https://docs.microsoft.com/en-us/powershell/high-performance-computing/mpiexec?view=hpc19-ps
@@ -21,9 +20,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection_binary:
-        -   NewProcessName|endswith: \mpiexec.exe
-        -   Imphash: d8b52ef6aaa3a81501bdfff9dbb96217
-        -   Hashes|contains: IMPHASH=d8b52ef6aaa3a81501bdfff9dbb96217
+        - NewProcessName|endswith: \mpiexec.exe
+        - Imphash: d8b52ef6aaa3a81501bdfff9dbb96217
+        - Hashes|contains: IMPHASH=d8b52ef6aaa3a81501bdfff9dbb96217
     selection_flags:
         CommandLine|contains:
             - ' /n 1 '

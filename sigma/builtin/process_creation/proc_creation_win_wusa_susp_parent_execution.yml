@@ -1,10 +1,8 @@
 title: Wusa.EXE Executed By Parent Process Located In Suspicious Location
 id: ef64fc9c-a45e-43cc-8fd8-7d75d73b4c99
 status: experimental
-description: 'Detects execution of the "wusa.exe" (Windows Update Standalone Installer)
-    utility by a parent process that is located in a suspicious location.
-
-    '
+description: |
+    Detects execution of the "wusa.exe" (Windows Update Standalone Installer) utility by a parent process that is located in a suspicious location.
 references:
     - https://www.fortinet.com/blog/threat-research/konni-campaign-distributed-via-malicious-document
 author: X__Junior (Nextron Systems)
@@ -28,18 +26,18 @@ detection:
             - \Appdata\Local\Temp\
             - \Temporary Internet
     selection_paths_2:
-        -   ParentProcessName|contains|all:
-                - :\Users\
-                - \Favorites\
-        -   ParentProcessName|contains|all:
-                - :\Users\
-                - \Favourites\
-        -   ParentProcessName|contains|all:
-                - :\Users\
-                - \Contacts\
-        -   ParentProcessName|contains|all:
-                - :\Users\
-                - \Pictures\
+        - ParentProcessName|contains|all:
+              - :\Users\
+              - \Favorites\
+        - ParentProcessName|contains|all:
+              - :\Users\
+              - \Favourites\
+        - ParentProcessName|contains|all:
+              - :\Users\
+              - \Contacts\
+        - ParentProcessName|contains|all:
+              - :\Users\
+              - \Pictures\
     condition: process_creation and (selection_img and 1 of selection_paths_*)
 falsepositives:
     - Unknown
