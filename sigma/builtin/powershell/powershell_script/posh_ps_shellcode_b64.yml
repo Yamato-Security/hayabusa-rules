@@ -6,7 +6,7 @@ references:
     - https://twitter.com/cyb3rops/status/1063072865992523776
 author: David Ledbetter (shellcode), Florian Roth (Nextron Systems)
 date: 2018/11/17
-modified: 2022/12/25
+modified: 2024/01/25
 tags:
     - attack.defense_evasion
     - attack.privilege_escalation
@@ -24,12 +24,10 @@ detection:
             - Microsoft-Windows-PowerShell/Operational
             - PowerShellCore/Operational
     selection:
-        ScriptBlockText|contains: AAAAYInlM
-    selection2:
         ScriptBlockText|contains:
             - OiCAAAAYInlM
             - OiJAAAAYInlM
-    condition: ps_script and (selection and selection2)
+    condition: ps_script and selection
 falsepositives:
     - Unknown
 level: high
