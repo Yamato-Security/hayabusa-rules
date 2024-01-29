@@ -6,6 +6,10 @@ references:
     - https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-347a
 author: CISA
 date: 2023/12/18
+tags:
+    - attack.defense_evasion
+    - attack.t1574.002
+    - sysmon
 logsource:
     category: image_load
     product: windows
@@ -34,6 +38,4 @@ detection:
 falsepositives:
     - Unknown
 level: medium
-tags:
-    - sysmon
 ruletype: Sigma
