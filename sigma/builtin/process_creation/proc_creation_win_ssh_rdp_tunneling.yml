@@ -25,6 +25,6 @@ detection:
         NewProcessName|endswith: \ssh.exe
     condition: process_creation and selection
 falsepositives:
-    - Administrative activity
+    - Unknown
 level: high
 ruletype: Sigma
