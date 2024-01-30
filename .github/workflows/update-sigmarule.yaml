@@ -8,11 +8,11 @@ on:
   ## I added workflow_dispatch so that you can execute this workflow from the GitHub UI.
   workflow_dispatch:
    inputs:
-     rule-parse-error-check:
-       description: If true, check rule parse error
-       required: true
+     disable-rule-parse-error-check:
+       description: If true, disable check rule parse error
+       required: false
        type: boolean
-       default: true
+       default: false
   schedule:
     - cron: '0 20 * * *'
 
@@ -61,7 +61,7 @@ jobs:
           cp -r converted_rules/* hayabusa-rules/sigma/
 
       - name: run csv-timeline
-        if: inputs.rule-parse-error-check
+        if: ${{!inputs.disable-rule-parse-error-check }}
         run: |
             cd hayabusa
             git fetch --prune --unshallow
