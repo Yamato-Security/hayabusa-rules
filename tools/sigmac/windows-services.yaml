@@ -243,3 +243,32 @@ logsources:
         service: certificateservicesclient-lifecycle-system
         conditions:
             Channel: 'Microsoft-Windows-CertificateServicesClient-Lifecycle-System/Operational'
+    windows-kernel-shimengine:
+        product: windows
+        service: kernel-shimengine
+        conditions:
+            Channel:
+                - 'Microsoft-Windows-Kernel-ShimEngine/Operational'
+                - 'Microsoft-Windows-Kernel-ShimEngine/Diagnostic'
+    windows-application-experience:
+        product: windows
+        service: application-experience
+        conditions:
+            Channel:
+                - 'Microsoft-Windows-Application-Experience/Program-Telemetry'
+                - 'Microsoft-Windows-Application-Experience/Program-Compatibility-Assistant'
+    windows-ntfs:
+        product: windows
+        service: ntfs
+        conditions:
+            Channel: 'Microsoft-Windows-Ntfs/Operational'
+    windows-hyper-v-worker:
+        product: windows
+        service: hyper-v-worker
+        conditions:
+            Channel: 'Microsoft-Windows-Hyper-V-Worker'
+    windows-kernel-event-tracing:
+        product: windows
+        service: kernel-event-tracing
+        conditions:
+            Channel: 'Microsoft-Windows-Kernel-EventTracing'

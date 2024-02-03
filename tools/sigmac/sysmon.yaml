@@ -181,8 +181,8 @@ logsources:
         rewrite:
             product: windows
             service: sysmon
-    clipboard_capture:
-        category: clipboard_capture
+    clipboard_change:
+        category: clipboard_change
         product: windows
         conditions:
             EventID: 24
@@ -197,11 +197,35 @@ logsources:
         rewrite:
             product: windows
             service: sysmon
-    file_block:
-        category: file_block
+    file_delete_detected:
+        category: file_delete_detected
+        product: windows
+        conditions:
+            EventID: 26
+        rewrite:
+            product: windows
+            service: sysmon
+    file_block_executable:
+        category: file_block_executable
         product: windows
         conditions:
             EventID: 27
+        rewrite:
+            product: windows
+            service: sysmon
+    file_block_shredding:
+        category: file_block_shredding
+        product: windows
+        conditions:
+            EventID: 28
+        rewrite:
+            product: windows
+            service: sysmon
+    file_executable_detected:
+        category: file_executable_detected
+        product: windows
+        conditions:
+            EventID: 29
         rewrite:
             product: windows
             service: sysmon
