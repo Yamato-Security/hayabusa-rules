@@ -1,0 +1,73 @@
+author: Zach Mathis
+date: 2024/02/05
+modified: 2024/02/05
+
+title: Inbound NTLM Auth
+description: |
+    If `Network security: Restrict NTLM: Audit Incoming NTLM Traffic` is set to `Enable auditing for all accounts` then this log will be
+    recorded any time there is inbound NTLM traffic. This is actually not a very useful log because `ClientUserName` will not be the user name
+    of the account that was logged onto, but the computer account of the machine. The `ProcessName` will usually either be blank or lsass.exe.
+    It is better to check for inbound NTLM usage with Security 4624 (Successful Logon) Security 4625 (Failed Logon) events where
+    `AuthenticationPackageName` is `NTLM`. This log contains information about the source IP address and Workstation Name so it is easy to
+    identify the remote source. Therefore, I have not defined any fields to save in `Details`.
+
+id: c56166a8-0c04-48b2-8d5f-96cb4b4bf694
+level: informational
+status: test
+logsource:
+    product: windows
+    service: ntlm
+    description: The NTLM operational logs need to be enabled manually.
+detection:
+    selection:
+        Channel: Microsoft-Windows-NTLM/Operational
+        EventID: 8002
+    condition: selection
+falsepositives:
+tags:
+    - NTLM
+references:
+    - https://www.scip.ch/en/?labs.20210909
+ruletype: Hayabusa
+
+sample-message: |
+    NTLM server blocked audit: Audit Incoming NTLM Traffic that would be blocked
+    Calling process PID: 1004
+    Calling process name: C:\Windows\System32\lsass.exe
+    Calling process LUID: 0x3E7
+    Calling process user identity: DC1$
+    Calling process domain identity: DOMAIN
+    Mechanism OID: (NULL)
+
+    Audit NTLM authentication requests to this server that would be blocked if the security policy
+    Network Security: Restrict NTLM: Incoming NTLM Traffic is set to Deny all accounts or Deny all domain accounts.
+
+    If you want this server to allow NTLM authentication, set the security policy Network Security: Restrict NTLM: Incoming NTLM Traffic to Allow all.
+
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft-Windows-NTLM" Guid="{ac43300d-5fcc-4800-8e99-1bd3f85f0320}" />
+            <EventID>8002</EventID>
+            <Version>0</Version>
+            <Level>4</Level>
+            <Task>2</Task>
+            <Opcode>0</Opcode>
+            <Keywords>0x8000000000000000</Keywords>
+            <TimeCreated SystemTime="2021-08-24T06:52:03.1616272Z" />
+            <EventRecordID>4222</EventRecordID>
+            <Correlation />
+            <Execution ProcessID="1004" ThreadID="18952" />
+            <Channel>Microsoft-Windows-NTLM/Operational</Channel>
+            <Computer>DC1.hoge.domain.co.jp</Computer>
+            <Security UserID="S-1-5-18" />
+        </System>
+        <EventData>
+            <Data Name="CallerPID">1004</Data>
+            <Data Name="ProcessName">C:\Windows\System32\lsass.exe</Data>
+            <Data Name="ClientLUID">0x3e7</Data>
+            <Data Name="ClientUserName">DC1$</Data>
+            <Data Name="ClientDomainName">DOMAIN</Data>
+            <Data Name="MechanismOID">(NULL)</Data>
+        </EventData>
+    </Event>

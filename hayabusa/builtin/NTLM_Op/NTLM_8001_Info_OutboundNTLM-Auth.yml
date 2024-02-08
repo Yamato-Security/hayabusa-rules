@@ -1,0 +1,80 @@
+author: Zach Mathis
+date: 2024/02/05
+modified: 2024/02/05
+
+title: Outbound NTLM Auth
+description: |
+    If `Network security: Restrict NTLM: Outgoing NTLM traffic to remote servers` is set to `Audit all` then this log will be
+    recorded any time there is outbound NTLM traffic. This log is also refered to as an `NTLM client blocked audit` log as if this
+    setting was enforced then the outbound trafficed would be blocked.
+
+id: aaa3c100-ae97-4cde-a22e-0f83b141d827
+level: informational
+status: test
+logsource:
+    product: windows
+    service: ntlm
+    description: The NTLM operational logs need to be enabled manually.
+detection:
+    selection:
+        Channel: Microsoft-Windows-NTLM/Operational
+        EventID: 8001
+    condition: selection
+falsepositives:
+tags:
+    - NTLM
+references:
+    - https://www.scip.ch/en/?labs.20210909
+ruletype: Hayabusa
+
+sample-message: |
+    NTLM client blocked audit: Audit outgoing NTLM authentication traffic that would be blocked.
+    Target server: ldap/10.10.1.100
+    Supplied user: (NULL)
+    Supplied domain: (NULL)
+    PID of client process: 3548
+    Name of client process: C:\Program Files (x86)\OneLogin, Inc\OneLogin Active Directory Connector\ConnectorService.exe
+    LUID of client process: 0x1C0723
+    User identity of client process: user
+    Domain name of user identity of client process: DOMAIN
+    Mechanism OID: (NULL)
+
+    Audit the NTLM authentication requests from this computer that would be blocked by the target server ldap/10.10.1.100 if the security policy
+    Network Security: Restrict NTLM: Outgoing NTLM traffic to remote servers is set to Deny all.
+
+    If you want all servers to accept NTLM authentication requests from this computer, set the security policy Network Security: Restrict NTLM: Outgoing NTLM traffic to remote servers to Allow all.
+
+    If you want only the target server ldap/10.10.1.100 to accept NTLM authentication requests from this computer,
+    set the security policy Network Security: Restrict NTLM: Outgoing NTLM traffic to remote servers to Deny all,
+    and then set the security policy Network Security: Restrict NTLM: Add remote server exceptions and list the target server ldap/10.10.1.100 as an exception to use NTLM authentication.
+
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft-Windows-NTLM" Guid="{ac43200d-5dcc-4800-8a99-1fd3f85f0320}" />
+            <EventID>8001</EventID>
+            <Version>0</Version>
+            <Level>4</Level>
+            <Task>2</Task>
+            <Opcode>0</Opcode>
+            <Keywords>0x8000000000000000</Keywords>
+            <TimeCreated SystemTime="2021-11-15T04:32:54.5940933Z" />
+            <EventRecordID>1054</EventRecordID>
+            <Correlation />
+            <Execution ProcessID="764" ThreadID="1672" />
+            <Channel>Microsoft-Windows-NTLM/Operational</Channel>
+            <Computer>DC01.hoge.kaisha.co.jp</Computer>
+            <Security UserID="S-1-5-18" />
+        </System>
+        <EventData>
+            <Data Name="TargetName">ldap/10.10.1.100</Data>
+            <Data Name="UserName">(NULL)</Data>
+            <Data Name="DomainName">(NULL)</Data>
+            <Data Name="CallerPID">3548</Data>
+            <Data Name="ProcessName">C:\Program Files (x86)\OneLogin, Inc\OneLogin Active Directory Connector\ConnectorService.exe</Data>
+            <Data Name="ClientLUID">0x1c0723</Data>
+            <Data Name="ClientUserName">user</Data>
+            <Data Name="ClientDomainName">DOMAIN</Data>
+            <Data Name="MechanismOID">(NULL)</Data>
+        </EventData>
+    </Event>
