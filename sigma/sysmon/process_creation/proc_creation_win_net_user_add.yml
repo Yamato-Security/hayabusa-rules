@@ -34,10 +34,6 @@ detection:
             - user
             - add
     condition: process_creation and (all of selection_*)
-fields:
-    - ComputerName
-    - User
-    - CommandLine
 falsepositives:
     - Legitimate user creation.
     - Better use event IDs for user creation rather than command line rules.
