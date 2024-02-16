@@ -185,7 +185,7 @@ class LogSource:
 class LogsourceConverter:
     sigma_path: str
     logsource_map: dict[str, list[LogSource]]
-    field_map: dict[str, dict[str, str]]
+    field_map: dict[str, dict]
     sigma_converted: list[tuple[bool, dict]] = field(default_factory=list)
 
     def transform_field(self, category: str, obj: dict, original_field):
@@ -366,7 +366,7 @@ def create_obj(base_dir: Optional[str], file_name: str) -> dict:
         sys.exit(1)
 
 
-def create_field_map(key:str, obj: dict) -> dict[str, str]:
+def create_field_map(key:str, obj: dict) -> dict[str, dict]:
     """
     カテゴリcreate_process用のフィールド名をマッピングするdict作成
     """
