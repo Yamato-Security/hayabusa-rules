@@ -5,7 +5,7 @@ from logsource_mapping import *
 class TestLogSourceMapper(TestCase):
     def test_create_service_map(self):
         res = create_service_map(create_obj(os.path.dirname(os.path.abspath(__file__)), "windows-services.yaml"))
-        self.assertEquals(len(res.keys()), 38)
+        self.assertEqual(len(res.keys()), 43)
 
     def test_create_category_map(self):
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -14,8 +14,8 @@ class TestLogSourceMapper(TestCase):
         s2 = create_category_map(create_obj(script_dir, 'windows-audit.yaml'), service_to_channels)
         s3 = create_category_map(create_obj(script_dir, 'windows-services.yaml'), service_to_channels)
         s4 = merge_category_map(service_to_channels, [s1, s2, s3])
-        self.assertEquals(len(s4), 68)
-        self.assertEquals(len(s4["process_creation"]), 2)
+        self.assertEqual(len(s4), 76)
+        self.assertEqual(len(s4["process_creation"]), 2)
 
     def test_build_out_path(self):
         sigma_path = "/hoge/sigma/builtin/security/sample.yml"
@@ -23,42 +23,42 @@ class TestLogSourceMapper(TestCase):
         out_dir = "/hoge/hayabusa_rule"
         sysmon = True
         r = build_out_path(base_dir, out_dir, sigma_path, sysmon)
-        self.assertEquals(r, "/hoge/hayabusa_rule/sysmon/security/sample.yml")
+        self.assertEqual(r, "/hoge/hayabusa_rule/sysmon/security/sample.yml")
         sysmon = False
         r = build_out_path(base_dir, out_dir, sigma_path, sysmon)
-        self.assertEquals(r, "/hoge/hayabusa_rule/builtin/security/sample.yml")
+        self.assertEqual(r, "/hoge/hayabusa_rule/builtin/security/sample.yml")
 
     def test_get_key(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=1)
-        self.assertEquals(ls.get_identifier_for_detection([]), "process_creation")
+        self.assertEqual(ls.get_identifier_for_detection([]), "process_creation")
 
     def test_get_uniq_key(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=1)
-        self.assertEquals(ls.get_identifier_for_detection(["process_creation"]), "logsource_mapping_process_creation")
+        self.assertEqual(ls.get_identifier_for_detection(["process_creation"]), "logsource_mapping_process_creation")
 
     def test_get_detection(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
-        self.assertEquals(ls.get_detection(), {"Channel": "hoge"})
+        self.assertEqual(ls.get_detection(), {"Channel": "hoge"})
 
     def test_get_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
-        self.assertEquals(ls.get_condition("select1 and select2", [], dict()),
+        self.assertEqual(ls.get_condition("select1 and select2", [], dict()),
                           "process_creation and (select1 and select2)")
 
     def test_get_single_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
-        self.assertEquals(ls.get_condition("select", [], dict()), "process_creation and select")
+        self.assertEqual(ls.get_condition("select", [], dict()), "process_creation and select")
 
     def test_get_aggregation_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
         condition = "select | count(TargetUserName) by Workstation > 10"
-        self.assertEquals(ls.get_condition(condition, [], dict()),
+        self.assertEqual(ls.get_condition(condition, [], dict()),
                           "(process_creation and select) | count(TargetUserName) by Workstation > 10")
 
     def test_get_aggregation_conversion_field_condition(self):
         ls = LogSource(category="process_creation", service="Security", channel="hoge", event_id=4688)
         condition = "select | count(Image) by Workstation > 10"
-        self.assertEquals(ls.get_condition(condition, [], {"Image": "NewProcessName"}),
+        self.assertEqual(ls.get_condition(condition, [], {"Image": "NewProcessName"}),
                           "(process_creation and select) | count(NewProcessName) by Workstation > 10")
 
     def test_get_logsources(self):
@@ -71,7 +71,7 @@ class TestLogSourceMapper(TestCase):
         process_creation_field_map = create_field_map("fieldmappings_process", create_obj(script_dir, 'windows-audit.yaml'))
         lc = LogsourceConverter("", all_category_map, process_creation_field_map, [])
         r = lc.get_logsources({"logsource": {"service": "sysmon"}})
-        self.assertEquals(r[0].service, "sysmon")
+        self.assertEqual(r[0].service, "sysmon")
 
     def test_get_logsources_raise_exception_if_not_supported_category(self):
         script_dir = os.path.dirname(os.path.abspath(__file__))
