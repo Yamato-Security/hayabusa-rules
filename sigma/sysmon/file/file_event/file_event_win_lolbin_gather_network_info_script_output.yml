@@ -29,7 +29,7 @@ detection:
             - \netiostate.txt
             - \sysportslog.txt
             - \VmSwitchLog.evtx
-    condition: file_event and (all of selection*)
+    condition: file_event and selection
 falsepositives:
     - Unknown
 level: medium

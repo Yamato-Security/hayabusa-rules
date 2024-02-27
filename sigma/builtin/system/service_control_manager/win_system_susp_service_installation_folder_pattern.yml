@@ -18,13 +18,13 @@ logsource:
 detection:
     system:
         Channel: System
-    selection:
+    selection_eid:
         Provider_Name: Service Control Manager
         EventID: 7045
-    suspicious1:
+    selection_img_paths:
         - ImagePath|re: ^[Cc]:\\[Pp]rogram[Dd]ata\\.{1,9}\.exe
         - ImagePath|re: ^[Cc]:\\.{1,9}\.exe
-    condition: system and (selection and 1 of suspicious*)
+    condition: system and (all of selection_*)
 falsepositives:
     - Unknown
 level: high
