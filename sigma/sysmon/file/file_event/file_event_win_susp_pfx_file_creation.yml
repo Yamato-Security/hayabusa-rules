@@ -21,12 +21,12 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         TargetFilename|endswith: .pfx
-    filter:
+    filter_main_windows_tmp_key:
         TargetFilename|contains|all:
             - \Templates\Windows\Windows_TemporaryKey.pfx
             - \CMake\
-    condition: file_event and (selection and not 1 of filter*)
+    condition: file_event and (selection and not 1 of filter_main_*)
 falsepositives:
-    - System administrators managing certififcates.
+    - System administrators managing certificates.
 level: medium
 ruletype: Sigma

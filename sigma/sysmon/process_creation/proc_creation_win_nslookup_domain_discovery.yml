@@ -19,11 +19,11 @@ detection:
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
-    selection_nslookup:
+    selection:
         CommandLine|contains|all:
             - nslookup
             - _ldap._tcp.dc._msdcs.
-    condition: process_creation and (1 of selection*)
+    condition: process_creation and selection
 falsepositives:
     - False positives depend on scripts and administrative tools used in the monitored environment
 level: high
