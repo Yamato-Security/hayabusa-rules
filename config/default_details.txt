@@ -60,8 +60,8 @@ Microsoft-Windows-Sysmon, 9, Proc: %Image% ¦ Device: %Device% ¦ PID: %ProcessI
 Microsoft-Windows-Sysmon, 10, SrcProc: %SourceImage% ¦ TgtProc: %TargetImage% ¦ SrcUser: %SourceUser% ¦ TgtUser: %TargetUser% ¦ Access: %GrantedAccess% ¦ SrcPID: %SourceProcessId% ¦ SrcPGUID: %SourceProcessGUID% ¦ TgtPID: %TargetProcessId% ¦ TgtPGUID: %TargetProcessGUID%
 Microsoft-Windows-Sysmon, 11, Path: %TargetFilename% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 12, EventType: %EventType% ¦ TgtObj: %TargetObject% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
-Microsoft-Windows-Sysmon, 13, EventType: %EventType% ¦ TgtObj: %TargetObject% ¦ %Details% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
-Microsoft-Windows-Sysmon, 14, EventType: %EventType% ¦ TgtObj: %TargetObject% ¦ %Details% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
+Microsoft-Windows-Sysmon, 13, EventType: %EventType% ¦ RegKey: %TargetObject% ¦ Details: %Details% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ User: %User%
+Microsoft-Windows-Sysmon, 14, EventType: %EventType% ¦ OldName: %TargetObject% ¦ NewName: %NewName% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ User: %User%
 Microsoft-Windows-Sysmon, 15, Path: %TargetFilename% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ Hash: %Hash%
 Microsoft-Windows-Sysmon, 16, Config: %Configuration%
 Microsoft-Windows-Sysmon, 17, Pipe: %PipeName% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
