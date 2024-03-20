@@ -310,11 +310,15 @@ class LogsourceConverter:
         """
         dictをyaml形式のstringに変換する
         """
+        def represent_none(self, _):
+            return self.represent_scalar('tag:yaml.org,2002:null', u'null')
+
         res = []
         for is_sysmon, obj in self.sigma_converted:
             output_path = build_out_path(base_dir, out_dir, self.sigma_path, is_sysmon)
             with StringIO() as bs:
                 yaml = ruamel.yaml.YAML()
+                yaml.representer.add_representer(type(None), represent_none)
                 yaml.width = 4096
                 yaml.indent(mapping=4, sequence=6, offset=4)
                 yaml.dump(obj, bs)
