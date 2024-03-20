@@ -54,14 +54,13 @@ def get_terminal_keys_recursive(dictionary, keys=[]) -> list[str]:
     dictの末端キーを再帰的にリストアップ
     """
     for key, value in dictionary.items():
+        keys.append(key)
         if isinstance(value, dict):
             get_terminal_keys_recursive(value, keys)
         elif isinstance(value, list):
             for item in value:
                 if isinstance(item, dict):
                     get_terminal_keys_recursive(item, keys)
-        else:
-            keys.append(key)
     return keys
 
 
