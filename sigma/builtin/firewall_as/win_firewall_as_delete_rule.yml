@@ -30,7 +30,7 @@ detection:
         ModifyingApplication|startswith: C:\ProgramData\Microsoft\Windows Defender\Platform\
         ModifyingApplication|endswith: \MsMpEng.exe
     filter_main_null:
-        ModifyingApplication:
+        ModifyingApplication: null
     filter_main_empty:
         ModifyingApplication: ''
     condition: firewall_as and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)

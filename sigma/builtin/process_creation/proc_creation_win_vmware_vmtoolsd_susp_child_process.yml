@@ -52,7 +52,7 @@ detection:
         CommandLine: ''
         NewProcessName|endswith: \cmd.exe
     filter_main_null:
-        CommandLine:
+        CommandLine: null
         NewProcessName|endswith: \cmd.exe
     condition: process_creation and (all of selection* and not 1 of filter_main_*)
 falsepositives:

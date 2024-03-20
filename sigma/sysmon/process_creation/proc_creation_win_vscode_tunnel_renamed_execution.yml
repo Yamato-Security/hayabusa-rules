@@ -20,7 +20,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_image_only_tunnel:
-        OriginalFileName:
+        OriginalFileName: null
         CommandLine|endswith: .exe tunnel
     selection_image_tunnel_args:
         CommandLine|contains|all:

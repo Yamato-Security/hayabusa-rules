@@ -34,7 +34,7 @@ detection:
     filter_optional_ms_monitoring_agent:
         ParentImage|endswith: :\Program Files\Microsoft Monitoring Agent\Agent\MonitoringHost.exe
     filter_main_parent_null:
-        ParentImage:
+        ParentImage: null
     filter_main_parent_empty:
         ParentImage: ''
     condition: process_creation and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)

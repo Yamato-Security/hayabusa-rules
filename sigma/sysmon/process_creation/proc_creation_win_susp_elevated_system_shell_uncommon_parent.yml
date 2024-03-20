@@ -64,7 +64,7 @@ detection:
         ParentImage|contains: :\IBM\SpectrumProtect\webserver\scripts\
         CommandLine|contains: :\IBM\SpectrumProtect\webserver\scripts\
     filter_main_parent_null:
-        ParentImage:
+        ParentImage: null
     filter_main_parent_empty:
         ParentImage: ''
     condition: process_creation and (all of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*)

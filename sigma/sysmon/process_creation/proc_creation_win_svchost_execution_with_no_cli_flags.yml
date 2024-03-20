@@ -26,7 +26,7 @@ detection:
         - ParentImage|endswith:
               - \rpcnet.exe
               - \rpcnetp.exe
-        - CommandLine:       # no CommandLine value available
+        - CommandLine: null  # no CommandLine value available
     condition: process_creation and (selection and not filter)
 fields:
     - CommandLine

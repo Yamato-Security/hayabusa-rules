@@ -22,7 +22,7 @@ detection:
     filter_main_conhost:
         NewProcessName|endswith: :\Windows\System32\conhost.exe
     filter_main_null:
-        NewProcessName:
+        NewProcessName: null
     filter_main_empty:
         NewProcessName: ''
     filter_optional_provider:

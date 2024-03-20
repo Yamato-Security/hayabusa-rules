@@ -38,7 +38,7 @@ detection:
     filter_werfault:
         Image|endswith: \WerFault.exe
     filter_null:  # some backends need the null value in a separate expression
-        LogonId:
+        LogonId: null
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:
     - False positives are expected (e.g. in environments where WinRM is used legitimately)
