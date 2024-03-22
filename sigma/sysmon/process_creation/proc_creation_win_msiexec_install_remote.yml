@@ -28,14 +28,14 @@ detection:
         # Note that there is no space before and after the arguments because it's possible to write a commandline as such
         # Example: msiexec -q/i [MSI Package]
         CommandLine|contains:
-            - /a
-            - -a
-            - /package
-            - -i
-            - -j
             - -package
-            - /j
+            - /package
+            - -a
+            - -i
             - /i
+            - /j
+            - -j
+            - /a
     selection_quiet:
         CommandLine|contains:
             - -q

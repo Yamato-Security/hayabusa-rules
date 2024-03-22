@@ -25,24 +25,24 @@ detection:
     selection:
         # Escalation to LOCAL_SYSTEM
         CommandLine|contains:
-            - ' -i -s cmd'
             - ' -s -i powershell'
-            - ' -s -i cmd'
-            - ' /s /i cmd'
-            - ' -i -s powershell'
-            - ' /s /i pwsh'
-            - ' -i -s pwsh'
-            - ' -s powershell'
-            - ' /i /s cmd'
-            - ' /s pwsh'
-            - ' /s powershell'
             - ' -s cmd'
-            - ' /s /i powershell'
-            - ' -s pwsh'
+            - ' /i /s cmd'
+            - ' -s -i cmd'
             - ' /s cmd'
             - ' -s -i pwsh'
-            - ' /i /s pwsh'
+            - ' -s pwsh'
+            - ' -i -s cmd'
             - ' /i /s powershell'
+            - ' /s /i powershell'
+            - ' /i /s pwsh'
+            - ' /s powershell'
+            - ' /s pwsh'
+            - ' /s /i pwsh'
+            - ' -i -s powershell'
+            - ' -s powershell'
+            - ' /s /i cmd'
+            - ' -i -s pwsh'
     filter_main_exclude_coverage:
         # This filter exclude strings covered by 8834e2f7-6b4b-4f09-8906-d2276470ee23
         CommandLine|contains:

@@ -23,12 +23,12 @@ detection:
         EventID: 7045
     selection_cmd_flags:
         ImagePath|contains:
-            - ' /r '
+            - ' -c '
             - ' /c '
             - ' -k '
-            - ' /k '
             - ' -r '
-            - ' -c '
+            - ' /k '
+            - ' /r '
     selection_binaries:
         ImagePath|contains:
             - cscript
