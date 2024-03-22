@@ -28,10 +28,10 @@ detection:
         - OriginalFileName: CertUtil.exe
     selection_cli:
         CommandLine|contains:
+            - '-decode '
             - '/decodehex '
             - '/decode '
             - '-decodehex '
-            - '-decode '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

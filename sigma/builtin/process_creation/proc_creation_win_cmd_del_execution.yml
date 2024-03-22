@@ -31,11 +31,11 @@ detection:
             - 'erase '
     selection_flags:
         CommandLine|contains:
-            - ' -q'
-            - ' -f'
-            - ' /s'
-            - ' -s'
             - ' /q'
+            - ' -s'
+            - ' -q'
+            - ' /s'
+            - ' -f'
             - ' /f'
     condition: process_creation and (all of selection_*)
 falsepositives:
