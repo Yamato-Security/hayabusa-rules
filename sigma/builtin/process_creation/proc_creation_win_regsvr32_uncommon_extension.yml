@@ -33,7 +33,7 @@ detection:
     filter_optional_avg:
         CommandLine|contains: .bav
     filter_main_null_4688:
-        CommandLine:
+        CommandLine: null
     filter_main_empty_4688:
         CommandLine: ''
     condition: process_creation and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)

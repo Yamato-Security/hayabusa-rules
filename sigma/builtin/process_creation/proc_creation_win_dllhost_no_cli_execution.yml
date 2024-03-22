@@ -25,7 +25,7 @@ detection:
             - dllhost
         NewProcessName|endswith: \dllhost.exe
     filter_main_null:
-        CommandLine:
+        CommandLine: null
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unlikely

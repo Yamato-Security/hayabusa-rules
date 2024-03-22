@@ -29,7 +29,7 @@ detection:
     filter_no_cmdline:
         CommandLine: ''
     filter_null: # e.g. Sysmon has no CommandLine field in network events with ID 3
-        CommandLine:
+        CommandLine: null
     condition: network_connection and (selection and not 1 of filter*)
 falsepositives:
     - Unknown

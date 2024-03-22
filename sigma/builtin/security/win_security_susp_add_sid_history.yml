@@ -27,7 +27,7 @@ detection:
             - '-'
             - '%%1793'
     filter_null:
-        SidHistory:
+        SidHistory: null
     condition: security and (selection1 or (selection2 and not selection3 and not filter_null))
 falsepositives:
     - Migration of an account into a new domain

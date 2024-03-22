@@ -56,7 +56,7 @@ detection:
         CommandLine|startswith: C:\$WinREAgent\Scratch\
         CommandLine|contains: \dismhost.exe {
     filter_image_null:
-        Image:
+        Image: null
     condition: image_load and (selection and not 1 of filter_*)
 falsepositives:
     - Unknown

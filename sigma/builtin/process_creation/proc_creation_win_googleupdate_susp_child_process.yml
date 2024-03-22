@@ -29,7 +29,7 @@ detection:
               - chrome_updater.exe
               - chrome_installer.exe
     filter_main_image_null:
-        NewProcessName:
+        NewProcessName: null
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown
