@@ -207,6 +207,52 @@ class LogsourceConverter:
             else:
                 obj[k] = v
 
+    @staticmethod
+    def transform_windash(obj: dict) -> dict:
+        def conv(s:str) -> str:
+            if "-" in s:
+                return s.replace("-", "/")
+            return s.replace("/", "-")
+        if not isinstance(obj, dict):
+                return obj
+        for key, value in list(obj.items()):
+            if '|all|windash' in key:
+                del obj[key]
+                key = key.replace("|windash", "")
+                obj[key] = value
+            elif '|windash' in key:
+                del obj[key]
+                key = key.replace("|windash", "")
+                if isinstance(value, list):
+                    x = set([item for item in value] + [conv(item) for item in value])
+                    obj[key] = list(x)
+                elif isinstance(value, str):
+                    obj[key] = [value, conv(value)]
+                else:
+                    obj[key] = value
+            else:
+                obj[key] = value
+        return obj
+
+    @staticmethod
+    def transform_transform_windash_recursive(obj: dict) -> dict:
+        """
+        dictを再帰的に探索し、field_mapの内容でfiled名を変換する(category=process_creation以外は変換されない)
+        """
+        if isinstance(obj, dict):
+            for field_name, val in list(obj.items()):
+                if isinstance(val, dict):
+                    LogsourceConverter.transform_windash(val)
+                elif isinstance(val, list):
+                    for item in val:
+                        LogsourceConverter.transform_windash(item)
+                else:
+                    LogsourceConverter.transform_windash(val)
+        elif isinstance(obj, list):
+            for item in obj:
+                LogsourceConverter.transform_windash(item)
+        return obj
+
     def transform_field_recursive(self, category: str, obj: dict, need_field_conversion: bool) -> dict:
         """
         dictを再帰的に探索し、field_mapの内容でfiled名を変換する(category=process_creation以外は変換されない)
@@ -254,13 +300,14 @@ class LogsourceConverter:
         obj = create_obj(base_dir=None, file_name=self.sigma_path)
         keys = get_terminal_keys_recursive(obj["detection"], [])
         modifiers = {re.sub(r".*\|", "", k) for k in keys if "|" in k}
-        if modifiers and [m for m in modifiers if m not in ["all", "base64", "base64offset", "cidr", "contains", "endswith", "endswithfield", "equalsfield", "re", "startswith"]]:
+        if modifiers and [m for m in modifiers if m not in ["all", "base64", "base64offset", "cidr", "contains", "endswith", "endswithfield", "equalsfield", "re", "startswith", "windash"]]:
             LOGGER.error(f"This rule has incompatible field: {obj['detection']}. Conversion skipped.")
             return
         logsources = self.get_logsources(obj)
         if not logsources:
             new_obj = copy.deepcopy(obj)
             new_obj['ruletype'] = 'Sigma'
+            LogsourceConverter.transform_transform_windash_recursive(new_obj["detection"])
             self.sigma_converted.append((False, new_obj))
             return  # ログソースマッピングにないcategory/serviceのため、変換処理はスキップ
         for ls in logsources:
@@ -294,6 +341,7 @@ class LogsourceConverter:
                 converted_fields = [field_map[f] for f in fields if f in field_map]
                 not_converted_fields = [f for f in fields if f not in field_map]
                 new_obj['fields'] = converted_fields + not_converted_fields
+            LogsourceConverter.transform_transform_windash_recursive(new_obj["detection"])
             new_obj['ruletype'] = 'Sigma'
             condition_str = new_obj['detection']['condition']
             if '%' in condition_str or '->' in condition_str:
@@ -499,6 +547,7 @@ if __name__ == '__main__':
     sigma_files = list(find_windows_sigma_rule_files(args.rule_path, args.rule_filter))
     LOGGER.info(f"Collecting target yml files path done. Start to convert [{len(sigma_files)}] files.")
     file_cnt = 0
+    file_err_cnt = 0
     for sigma_file in sigma_files:
         try:
             lc = LogsourceConverter(sigma_file, all_category_map, field_map)
@@ -512,7 +561,8 @@ if __name__ == '__main__':
                 file_cnt += 1
                 LOGGER.debug(f"Converted to [{out_path}] done.")
         except Exception as err:
+            file_err_cnt += 1
             LOGGER.error(f"Error while converting rule [{sigma_file}]: {err}")
     end_time = time.perf_counter()
-    LOGGER.info(f"[{file_cnt}] files created successfully. Created files were saved under [{args.output}].")
+    LOGGER.info(f"[{file_cnt}] files created successfully.[{file_err_cnt}] files failed to convert. Created files were saved under [{args.output}].")
     LOGGER.info(f"Script took [{'{:.2f}'.format(end_time - start_time)}] seconds.")
