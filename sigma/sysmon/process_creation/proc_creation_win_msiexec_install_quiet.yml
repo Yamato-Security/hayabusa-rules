@@ -30,13 +30,13 @@ detection:
         # Example: msiexec -q/i [MSI Package]
         CommandLine|contains:
             - /a
-            - -a
-            - /package
-            - -i
             - -j
-            - -package
-            - /j
+            - -i
             - /i
+            - -a
+            - /j
+            - -package
+            - /package
     selection_quiet:
         CommandLine|contains:
             - -q

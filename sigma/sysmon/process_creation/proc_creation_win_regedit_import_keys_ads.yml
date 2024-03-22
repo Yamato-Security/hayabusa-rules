@@ -32,12 +32,12 @@ detection:
         CommandLine|re: :[^ \\]
     filter:
         CommandLine|contains:
-            - ' -e '
-            - ' /c '
             - ' -a '
+            - ' -e '
             - ' /a '
-            - ' /e '
+            - ' /c '
             - ' -c '
+            - ' /e '
     condition: process_creation and (all of selection_* and not filter)
 fields:
     - ParentImage

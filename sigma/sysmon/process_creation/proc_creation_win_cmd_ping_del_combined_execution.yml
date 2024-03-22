@@ -31,10 +31,10 @@ detection:
         CommandLine|contains: Nul   # Covers "> Nul" and ">Nul "
     selection_del_param:
         CommandLine|contains:
-            - ' /f '
-            - ' -f '
-            - ' -q '
             - ' /q '
+            - ' -q '
+            - ' -f '
+            - ' /f '
     selection_all:
         CommandLine|contains|all:
             - ping   # Covers "ping" and "ping.exe"

@@ -30,8 +30,8 @@ detection:
         CommandLine|contains:
             - '/decodehex '
             - '/decode '
-            - '-decodehex '
             - '-decode '
+            - '-decodehex '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

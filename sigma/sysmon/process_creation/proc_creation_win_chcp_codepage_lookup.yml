@@ -28,10 +28,10 @@ detection:
             - 'chcp  '
         ParentCommandLine|contains:
             - ' /r '
+            - ' -r '
+            - ' /k '
             - ' /c '
             - ' -k '
-            - ' /k '
-            - ' -r '
             - ' -c '
     condition: process_creation and selection
 falsepositives:
