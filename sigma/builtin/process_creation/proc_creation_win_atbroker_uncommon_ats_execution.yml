@@ -1,34 +1,36 @@
-title: Suspicious Atbroker Execution
+title: Uncommon  Assistive Technology Applications Execution Via AtBroker.EXE
 id: f24bcaea-0cd1-11eb-adc1-0242ac120002
 status: test
-description: Atbroker executing non-deafualt Assistive Technology applications
+description: Detects the start of a non built-in assistive technology applications via "Atbroker.EXE".
 references:
     - http://www.hexacorn.com/blog/2016/07/22/beyond-good-ol-run-key-part-42/
     - https://lolbas-project.github.io/lolbas/Binaries/Atbroker/
 author: Mateusz Wydra, oscd.community
 date: 2020/10/12
-modified: 2022/10/09
+modified: 2024/03/06
 tags:
     - attack.defense_evasion
     - attack.t1218
-    - sysmon
 logsource:
     category: process_creation
     product: windows
 detection:
     process_creation:
-        EventID: 1
-        Channel: Microsoft-Windows-Sysmon/Operational
-    selection:
-        Image|endswith: AtBroker.exe
+        EventID: 4688
+        Channel: Security
+    selection_img:
+        - NewProcessName|endswith: \AtBroker.exe
+        - OriginalFileName: AtBroker.exe
+    selection_cli:
         CommandLine|contains: start
-    filter:
+    filter_main_builtin:
         CommandLine|contains:
             - animations
             - audiodescription
             - caretbrowsing
             - caretwidth
             - colorfiltering
+            - cursorindicator
             - cursorscheme
             - filterkeys
             - focusborderheight
@@ -36,6 +38,7 @@ detection:
             - highcontrast
             - keyboardcues
             - keyboardpref
+            - livecaptions
             - magnifierpane
             - messageduration
             - minimumhitradius
@@ -45,14 +48,18 @@ detection:
             - overlappedcontent
             - showsounds
             - soundsentry
+            - speechreco
             - stickykeys
             - togglekeys
+            - voiceaccess
             - windowarranging
             - windowtracking
             - windowtrackingtimeout
             - windowtrackingzorder
-    condition: process_creation and (selection and not filter)
+    filter_optional_java:
+        CommandLine|contains: Oracle_JavaAccessBridge
+    condition: process_creation and (all of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Legitimate, non-default assistive technology applications execution
-level: high
+level: medium
 ruletype: Sigma

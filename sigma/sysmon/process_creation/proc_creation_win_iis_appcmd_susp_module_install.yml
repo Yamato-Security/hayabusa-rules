@@ -7,7 +7,7 @@ references:
     - https://www.microsoft.com/security/blog/2022/07/26/malicious-iis-extensions-quietly-open-persistent-backdoors-into-servers/
 author: Florian Roth (Nextron Systems)
 date: 2019/12/11
-modified: 2023/01/22
+modified: 2024/03/13
 tags:
     - attack.persistence
     - attack.t1505.003
@@ -27,8 +27,8 @@ detection:
             - install
             - module
         CommandLine|contains:
-            - '/name:'
             - '-name:'
+            - '/name:'
     filter_iis_setup:
         ParentImage: C:\Windows\System32\inetsrv\iissetup.exe
     condition: process_creation and (all of selection_* and not 1 of filter_*)

@@ -44,7 +44,7 @@ detection:
             - \Microsoft Security Client\
         ParentProcessName|endswith: \MsMpEng.exe
     filter_null:
-        - ParentProcessName:
+        - ParentProcessName: null
         - ParentProcessName: '-'
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:

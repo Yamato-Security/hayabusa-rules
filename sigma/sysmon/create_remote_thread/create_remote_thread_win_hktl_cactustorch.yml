@@ -31,7 +31,7 @@ detection:
             - \winword.exe
             - \excel.exe
         TargetImage|contains: \SysWOW64\
-        StartModule:
+        StartModule: null
     condition: create_remote_thread and selection
 falsepositives:
     - Unknown

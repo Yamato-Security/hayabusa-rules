@@ -63,7 +63,7 @@ detection:
         CommandLine|contains: :\IBM\SpectrumProtect\webserver\scripts\
         ParentProcessName|contains: :\IBM\SpectrumProtect\webserver\scripts\
     filter_main_parent_null:
-        ParentProcessName:
+        ParentProcessName: null
     filter_main_parent_empty:
         ParentProcessName: ''
     condition: process_creation and (all of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*)

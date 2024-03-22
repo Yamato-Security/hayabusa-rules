@@ -9,6 +9,7 @@ references:
     - https://www.microsoft.com/en-us/security/blog/2022/10/27/raspberry-robin-worm-part-of-larger-ecosystem-facilitating-pre-ransomware-activity/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/10/28
+modified: 2024/03/13
 tags:
     - attack.defense_evasion
     - attack.t1218.007
@@ -27,18 +28,18 @@ detection:
         # Note that there is no space before and after the arguments because it's possible to write a commandline as such
         # Example: msiexec -q/i [MSI Package]
         CommandLine|contains:
-            - /i
-            - -i
-            - /package
-            - -package
             - /a
             - -a
-            - /j
+            - /package
+            - -i
             - -j
+            - -package
+            - /j
+            - /i
     selection_quiet:
         CommandLine|contains:
-            - /q
             - -q
+            - /q
     selection_remote:
         CommandLine|contains:
             - http

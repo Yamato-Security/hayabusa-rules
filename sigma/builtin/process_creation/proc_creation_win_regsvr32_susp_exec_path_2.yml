@@ -59,7 +59,7 @@ detection:
     filter_main_empty:
         CommandLine: ''
     filter_main_null:
-        CommandLine:
+        CommandLine: null
     condition: process_creation and (selection_img and (selection_path_1 or (selection_path_2 and not selection_exclude_known_dirs)) and not 1 of filter_main_*)
 falsepositives:
     - Unlikely

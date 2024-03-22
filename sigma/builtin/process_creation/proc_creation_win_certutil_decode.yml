@@ -11,6 +11,7 @@ references:
     - https://lolbas-project.github.io/lolbas/Binaries/Certutil/
 author: Florian Roth (Nextron Systems), Jonhnathan Ribeiro, oscd.community
 date: 2023/02/15
+modified: 2024/03/05
 tags:
     - attack.defense_evasion
     - attack.t1027
@@ -26,12 +27,10 @@ detection:
         - OriginalFileName: CertUtil.exe
     selection_cli:
         CommandLine|contains:
-            # Decode Base64
-            - '-decode '
-            - '/decode '
-            # Decode Hex
-            - '-decodehex '
             - '/decodehex '
+            - '/decode '
+            - '-decodehex '
+            - '-decode '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown
