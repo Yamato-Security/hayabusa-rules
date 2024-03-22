@@ -32,7 +32,7 @@ detection:
             - :\Windows\System32\wininit.exe
             - :\Windows\System32\winlogon.exe
     filter_null:
-        Image:
+        Image: null
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:
     - Unknown

@@ -22,7 +22,7 @@ detection:
     passwordchanged:
         EventID: 4738
     passwordchanged_filter:
-        PasswordLastSet:
+        PasswordLastSet: null
     timeframe: 15s
     condition: security and (( passwordchanged and not passwordchanged_filter ) | near samrpipe)
 level: medium

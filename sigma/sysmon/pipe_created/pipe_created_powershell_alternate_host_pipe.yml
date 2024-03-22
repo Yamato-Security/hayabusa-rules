@@ -51,7 +51,7 @@ detection:
     filter_optional_exchange:
         Image|contains: :\Program Files\Microsoft\Exchange Server\
     filter_main_null:
-        Image:
+        Image: null
     condition: pipe_created and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Programs using PowerShell directly without invocation of a dedicated interpreter.

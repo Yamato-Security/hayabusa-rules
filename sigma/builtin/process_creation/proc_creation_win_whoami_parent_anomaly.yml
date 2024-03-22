@@ -33,7 +33,7 @@ detection:
     filter_optional_ms_monitoring_agent:
         ParentProcessName|endswith: :\Program Files\Microsoft Monitoring Agent\Agent\MonitoringHost.exe
     filter_main_parent_null:
-        ParentProcessName:
+        ParentProcessName: null
     filter_main_parent_empty:
         ParentProcessName: ''
     condition: process_creation and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)

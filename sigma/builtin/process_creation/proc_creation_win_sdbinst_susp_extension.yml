@@ -38,7 +38,7 @@ detection:
               - ' -t'
         - CommandLine|contains: ' -m -bg'
     filter_main_null:
-        CommandLine:
+        CommandLine: null
     filter_main_empty:
         CommandLine: ''
     condition: process_creation and (selection and not 1 of filter_main_*)

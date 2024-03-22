@@ -6,7 +6,7 @@ references:
     - Internal Research
 author: pH-T (Nextron Systems)
 date: 2022/03/18
-modified: 2024/02/23
+modified: 2024/03/05
 tags:
     - attack.persistence
     - attack.privilege_escalation
@@ -23,12 +23,12 @@ detection:
         EventID: 7045
     selection_cmd_flags:
         ImagePath|contains:
-            - ' /c '
-            - ' -c '
             - ' /r '
-            - ' -r '
-            - ' /k '
+            - ' /c '
             - ' -k '
+            - ' /k '
+            - ' -r '
+            - ' -c '
     selection_binaries:
         ImagePath|contains:
             - cscript

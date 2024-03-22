@@ -1,5 +1,10 @@
 # Changes
 
+## v2.13.0 [2024/03/22]
+
+The `null` keyword was converted to an empty string. This may have been a regression when comments were left as is.
+Now `null` keywords are being convert correctly. `|contains|windash` modifier is now being converted to a usable form.
+
 ## v2.13.0-dev [2024/01/19]
 
 Comments in Sigma rules are left as is. Before, they would be stripped after conversion. (#568) (@fukusuket)

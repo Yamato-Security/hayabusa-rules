@@ -54,7 +54,7 @@ detection:
         CommandLine: ''
     filter_main_null:
         Image|endswith: \cmd.exe
-        CommandLine:
+        CommandLine: null
     condition: process_creation and (all of selection* and not 1 of filter_main_*)
 falsepositives:
     - Legitimate use by VM administrator

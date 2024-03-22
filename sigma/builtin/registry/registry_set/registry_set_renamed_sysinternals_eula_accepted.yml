@@ -52,7 +52,7 @@ detection:
             - \ADExplorer.exe
             - \ADExplorer64.exe
     filter_optional_null:
-        ProcessName:
+        ProcessName: null
     condition: registry_set and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Unlikely
