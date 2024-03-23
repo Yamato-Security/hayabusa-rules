@@ -1,25 +1,32 @@
 # Replaced by Hayabusa rules:
-c0bc3297-2d37-ceaf-64d0-1d38523d0684 # "User Added to Local Administrators".
-37364223-3ca8-875b-6b74-c40bc3a36807 # "Local User Creation".
-7a41b62e-a8a0-5ff0-80dd-5c8598faa0bf # "Hidden Local User Creation".
-f91e6dc8-52ca-1424-671c-164202f565b8 # "PsExec Tool Execution" win_tool_psexec.yml Note: rule not working to begin with.
-6c9c572d-e42f-bc79-0d6b-59512f499780 # "Execution Of Other File Type Than .exe". Hayabusa rule: 8d1487f1-7664-4bda-83b5-cb2f79491b6a
-6165d65e-6c8a-5e9d-ef06-45016b78e800 # "Execution Of Other File Type Than .exe". Hayabusa rule: 8d1487f1-7664-4bda-83b5-cb2f79491b6a
-836b8f98-24ef-1a17-37e3-fcd288281cb0 # "Windows Defender Threat Detected"
-0325375d-d3d8-791e-420a-2e340b8673c8 # "Security Event Log Cleared" c2f690ac-53f8-4745-8cfe-7127dda28c74
-57b143a3-a39c-7ca2-8984-8162bff81fd1 # "Security Eventlog Cleared" c2f690ac-53f8-4745-8cfe-7127dda28c74
-f6152efb-48d7-0e8d-f97f-0ecaa606508c # "Important Eventlog Cleared" replaced by f481a1f3-969e-4187-b3a5-b47c272bfebd
-7f869c56-dd1f-7eb9-d68e-bea573cc190f # "Eventlog Cleared" replaced by ed90ed4f-0d93-4f1a-99a2-4b9003b750a7
-21d12128-f8a6-bc31-1c12-fc48230885b8 # "User Logoff Event"
-b8d7987c-9834-59a2-0a6b-44e216dfa9fe # "Admin User Remote Logon". Already covered with rule "Logon (Type 10 RemoteInteractive)"
-38be9bfe-191e-9938-bb35-e018ae252736 # Sysmon 4,16: Configuration Modification
-f125fa34-4156-d861-f90a-fdb040cc8371 # Sysmon 16: Configuration Change
-aa4cf66c-a8a4-16dc-191f-5bfaa8a2de46 # Sysmon 25: Process Hollowing
-01177566-b413-7cc7-2655-6cc5bb20aced # Sysmon 27: "Sysmon Blocked Executable" replaced with "Blocked Exe File Creation" (bb35ca48-8e4a-445b-bc6d-0a994a0e9310)
-52cd2a52-ea52-0aed-6d68-879d8eac6dec # Sysmon 255: Configuration Error
+6695d6a2-9365-ee87-ccdd-966b0e1cdbd4 # "User Added to Local Administrators".
+5ecd226b-563f-4723-7a1e-d637d81f0a1f # "Local User Creation".
+23013005-3d59-4dbe-dabd-d17a54e6c6cf # "Hidden Local User Creation".
+637d0128-4677-a212-5902-5ce8a999f458 # "PsExec Tool Execution" win_tool_psexec.yml Note: rule not working to begin with.
+c063426c-1b9b-025d-71cc-5097a233285d # "Execution Of Other File Type Than .exe". Hayabusa rule: 8d1487f1-7664-4bda-83b5-cb2f79491b6a
+3ce7b51a-ad12-59bb-6c81-3e9532685c1e # "Execution Of Other File Type Than .exe". Hayabusa rule: 8d1487f1-7664-4bda-83b5-cb2f79491b6a
+c70d7033-8146-fe73-8430-90b23c296f9d # "Windows Defender Threat Detected"
+23f0b75b-66c0-4895-ae63-4243fa898109 # "Security Event Log Cleared" c2f690ac-53f8-4745-8cfe-7127dda28c74
+9b14c9d8-6b61-e49f-f8a8-0836d0ad98c9 # "Security Eventlog Cleared" c2f690ac-53f8-4745-8cfe-7127dda28c74
+100ef69e-3327-481c-8e5c-6d80d9507556 # "Important Eventlog Cleared" replaced by f481a1f3-969e-4187-b3a5-b47c272bfebd
+8617b59c-812e-c88e-0bd4-5267e0e825f0 # "Eventlog Cleared" replaced by ed90ed4f-0d93-4f1a-99a2-4b9003b750a7
+73f64ce7-a76d-0208-ea75-dd26a09d719b # "User Logoff Event"
+de5d0dd7-b73e-7f18-02b0-6b1acb7e9f52 # "Admin User Remote Logon". Already covered with rule "Logon (Type 10 RemoteInteractive)"
+f508ff7b-4021-6693-0852-ce59ee2d0343 # Sysmon 4,16: Configuration Modification
+0f88cce2-f7ed-3b15-a7fe-27f2d440680c # Sysmon 16: Configuration Change
+17d51ceb-915d-bf28-8699-81e3f51b2a4e # Sysmon 25: Process Hollowing
+5dd9120c-635f-ace4-6acf-d10a14229f19 # Sysmon 27: "Sysmon Blocked Executable" replaced with "Blocked Exe File Creation" (bb35ca48-8e4a-445b-bc6d-0a994a0e9310)
+8a5ee8f3-da35-b174-1d66-ff5ad8125abe # Sysmon 255: Configuration Error
+
+# Disabled because they require placeholders to be set so cannot be used as is:
+f8d98d6c-7a07-4d74-b064-dd4a3c244528 # Pass the Hash Activity (%Workstations%)
+dd7876d8-0f09-11eb-adc1-0242ac120002 # Possible Zerologon (CVE-2020-1472) Exploitation (%DC-MACHINE-NAME%)
+68fcba0d-73a5-475e-a915-e8b4c576827e # Remote Registry Management Using Reg Utility (%Admins_Workstations%)
+3ff152b2-1388-4984-9cd9-a323323fdadf # Interactive Logon to Server Systems (%ServerSystems%, %DomainControllers%, %Workstations%)
 
 # Disabled because they cannot but used as is:
-d9f1b05e-3ff4-9310-3fc8-9852b73bc4a5 # "Windows Kernel and 3rd-Party Drivers Exploits Token Stealing" because it requires a ParentIntegrityLevel field that does not exist.
+d85240fc-d5ad-8061-a795-9eaea580fbf0 # "Windows Kernel and 3rd-Party Drivers Exploits Token Stealing" because it requires a ParentIntegrityLevel field that does not exist.
+ab0d6f07-d3a5-dcce-b343-05bfd1a8b000 # "Windows Kernel and 3rd-Party Drivers Exploits Token Stealing" because it requires a ParentIntegrityLevel field that does not exist.
 
 # Test Files
 00000000-0000-0000-0000-000000000000 # TestFile
