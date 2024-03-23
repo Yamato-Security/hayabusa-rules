@@ -119,11 +119,11 @@ def transform_windash_recursive(obj: dict) -> dict:
     return obj
 
 
-def assign_uuid_for_convert_rules(obj: dict) -> dict:
+def assign_uuid_for_convert_rules(obj: dict, logsource_hash:str) -> dict:
     if "id" not in obj:
         return dict(obj)
     original_uuid = obj["id"]
-    hash_bytes = hashlib.md5(original_uuid.encode()).digest()
+    hash_bytes = hashlib.md5((original_uuid + logsource_hash).encode()).digest()
     new_obj = dict()
     new_obj["title"] = obj["title"]
     new_obj["id"] = str(uuid.UUID(bytes=hash_bytes))
@@ -329,7 +329,7 @@ class LogsourceConverter:
             return  # ログソースマッピングにないcategory/serviceのため、変換処理はスキップ
 
         for ls in logsources:
-            new_obj = assign_uuid_for_convert_rules(obj)
+            new_obj = assign_uuid_for_convert_rules(obj, str(hash(ls)))
             if ls.service == "sysmon":
                 if "tags" not in new_obj:
                     new_obj["tags"] = ["sysmon"]

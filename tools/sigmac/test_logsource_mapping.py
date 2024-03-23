@@ -143,5 +143,5 @@ class TestLogSourceMapper(TestCase):
     def test_assign_uuid(self):
         original_uuid = "557e3885-7a7e-40b7-8b69-1e5e658ca1d1"
         inp = {"title": "X", "id": original_uuid, "related": [{"id": "a", "type": "similar"}]}
-        res = assign_uuid_for_convert_rules(inp)
-        self.assertEqual(res, {"title":"X", "id": "caf0e06c-fb6d-1815-d3f2-22b5d7f87538", "related": [{'id': 'a', 'type': 'similar'}, {"id": original_uuid, "type": "derived"}]})
+        res = assign_uuid_for_convert_rules(inp, "abc")
+        self.assertEqual(res, {"title":"X", "id": "04428db4-0588-7e14-0c46-c99384f8fc4c", "related": [{'id': 'a', 'type': 'similar'}, {"id": original_uuid, "type": "derived"}]})
