@@ -329,7 +329,7 @@ class LogsourceConverter:
             return  # ログソースマッピングにないcategory/serviceのため、変換処理はスキップ
 
         for ls in logsources:
-            new_obj = assign_uuid_for_convert_rules(obj, str(hash(ls)))
+            new_obj = assign_uuid_for_convert_rules(obj, str(ls))
             if ls.service == "sysmon":
                 if "tags" not in new_obj:
                     new_obj["tags"] = ["sysmon"]
