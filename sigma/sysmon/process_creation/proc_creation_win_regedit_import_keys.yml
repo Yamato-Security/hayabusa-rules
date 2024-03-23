@@ -32,12 +32,12 @@ detection:
             - .reg
     filter_1:
         CommandLine|contains:
+            - ' /e '
+            - ' -e '
+            - ' /a '
             - ' -c '
             - ' /c '
             - ' -a '
-            - ' /e '
-            - ' /a '
-            - ' -e '
     filter_2:
         CommandLine|re: :[^ \\]       # to avoid intersection with ADS rule
     condition: process_creation and (all of selection_* and not all of filter_*)

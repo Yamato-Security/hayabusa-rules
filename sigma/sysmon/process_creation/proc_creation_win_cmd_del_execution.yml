@@ -32,12 +32,12 @@ detection:
             - 'erase '
     selection_flags:
         CommandLine|contains:
-            - ' /q'
             - ' -s'
-            - ' -q'
-            - ' /s'
-            - ' -f'
             - ' /f'
+            - ' -q'
+            - ' -f'
+            - ' /q'
+            - ' /s'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - False positives levels will differ Depending on the environment. You can use a combination of ParentImage and other keywords from the CommandLine field to filter legitimate activity

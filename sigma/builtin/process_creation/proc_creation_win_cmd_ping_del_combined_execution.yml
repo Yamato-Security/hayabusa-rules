@@ -32,8 +32,8 @@ detection:
         CommandLine|contains:
             - ' /q '
             - ' /f '
-            - ' -f '
             - ' -q '
+            - ' -f '
     selection_all:
         CommandLine|contains|all:
             - ping   # Covers "ping" and "ping.exe"

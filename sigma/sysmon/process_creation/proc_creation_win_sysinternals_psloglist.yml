@@ -36,15 +36,15 @@ detection:
     selection_cli_flags:
         CommandLine|contains:
             - ' -s'
-            - ' /s'
-            - ' /c'
-            - ' -d'
-            - ' /g'
-            - ' /d'
             - ' -c'
-            - ' -x'
             - ' /x'
+            - ' /d'
             - ' -g'
+            - ' /c'
+            - ' /g'
+            - ' -d'
+            - ' -x'
+            - ' /s'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Another tool that uses the command line switches of PsLogList
