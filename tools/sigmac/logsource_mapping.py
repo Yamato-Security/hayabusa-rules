@@ -316,7 +316,7 @@ class LogsourceConverter:
             LOGGER.error(f"This rule has incompatible field: {obj['detection']}. Conversion skipped.")
             return
         con = obj['detection']['condition']
-        if '%' in con or '->' in con or "near" in con:
+        if '%' in con or '->' in con or " near " in con:
             LOGGER.error(f"Error while converting rule [{self.sigma_path}]: Invalid character in condition [{con}] file [{self.sigma_path}]. Conversion skipped.")
             return  # conditionブロックに変な文字が入っているルールがある。この場合スキップ
 
