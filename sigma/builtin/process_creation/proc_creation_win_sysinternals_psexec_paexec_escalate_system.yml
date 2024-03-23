@@ -24,24 +24,24 @@ detection:
         Channel: Security
     selection_sys: # Escalation to LOCAL_SYSTEM
         CommandLine|contains:
-            - ' -s -i powershell'
-            - ' -s cmd'
-            - ' /i /s cmd'
-            - ' -s -i cmd'
-            - ' /s cmd'
-            - ' -s -i pwsh'
             - ' -s pwsh'
-            - ' -i -s cmd'
-            - ' /i /s powershell'
-            - ' /s /i powershell'
             - ' /i /s pwsh'
-            - ' /s powershell'
+            - ' /s /i powershell'
             - ' /s pwsh'
-            - ' /s /i pwsh'
+            - ' -s cmd'
+            - ' /s powershell'
+            - ' -s -i cmd'
             - ' -i -s powershell'
+            - ' -i -s cmd'
             - ' -s powershell'
-            - ' /s /i cmd'
+            - ' /s /i pwsh'
+            - ' /i /s cmd'
             - ' -i -s pwsh'
+            - ' -s -i pwsh'
+            - ' /s /i cmd'
+            - ' /s cmd'
+            - ' /i /s powershell'
+            - ' -s -i powershell'
     selection_other:
         CommandLine|contains:
             - psexec

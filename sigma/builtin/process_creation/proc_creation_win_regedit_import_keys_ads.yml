@@ -31,12 +31,12 @@ detection:
         CommandLine|re: :[^ \\]
     filter:
         CommandLine|contains:
+            - ' /e '
+            - ' -e '
+            - ' /a '
             - ' -c '
             - ' /c '
             - ' -a '
-            - ' /e '
-            - ' /a '
-            - ' -e '
     condition: process_creation and (all of selection_* and not filter)
 fields:
     - ParentProcessName
