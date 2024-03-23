@@ -1,5 +1,6 @@
 import argparse
 import copy
+import hashlib
 import fnmatch
 import logging
 import os
@@ -7,6 +8,7 @@ import re
 import shutil
 import sys
 import time
+import uuid
 from collections import defaultdict
 from dataclasses import dataclass, field
 from functools import reduce
@@ -49,10 +51,12 @@ OPERATION_TYPE_VALUES = {
 }
 
 
-def get_terminal_keys_recursive(dictionary, keys=[]) -> list[str]:
+def get_terminal_keys_recursive(dictionary, keys=None) -> list[str]:
     """
     dictの末端キーを再帰的にリストアップ
     """
+    if keys is None:
+        keys = []
     for key, value in dictionary.items():
         keys.append(key)
         if isinstance(value, dict):
@@ -81,6 +85,60 @@ def convert_special_val(key: str, value: str | list[str]) -> str | list[str]:
         elif isinstance(value, list):
             return [x.replace("HKLM", r"\REGISTRY\MACHINE").replace("HKU", r"\REGISTRY\USER") for x in value]
     return value
+
+def transform_windash(obj: dict):
+    if not isinstance(obj, dict):
+        return obj
+    conv = lambda s: s.replace("-", "/") if "-" in s else s.replace("/", "-")
+    for key, value in list(obj.items()):
+        if '|windash' in key:
+            del obj[key]
+            key = key.replace("|windash", "")
+            if '|all|windash' in key:
+                obj[key] = value
+            elif isinstance(value, list):
+                x = set([item for item in value] + [conv(item) for item in value])
+                obj[key] = list(x)
+            elif isinstance(value, str):
+                obj[key] = [value, conv(value)]
+            else:
+                obj[key] = value
+        else:
+            obj[key] = value
+def transform_windash_recursive(obj: dict) -> dict:
+    if isinstance(obj, dict):
+        for field_name, val in list(obj.items()):
+            if isinstance(val, list):
+                for item in val:
+                    transform_windash(item)
+            else:
+                transform_windash(val)
+    elif isinstance(obj, list):
+        for item in obj:
+            transform_windash(item)
+    return obj
+
+
+def assign_uuid_for_convert_rules(obj: dict) -> dict:
+    if "id" not in obj:
+        return dict(obj)
+    original_uuid = obj["id"]
+    hash_bytes = hashlib.md5(original_uuid.encode()).digest()
+    new_obj = dict()
+    new_obj["title"] = obj["title"]
+    new_obj["id"] = str(uuid.UUID(bytes=hash_bytes))
+    for k, v in obj.items():
+        if k == "id":
+            if "related" not in obj:
+                new_obj["related"] = [{"id": original_uuid, "type": "derived"}]
+            else:
+                related = obj["related"]
+                related.append({"id": original_uuid, "type": "derived"})
+                new_obj["related"] = related
+        elif k != "related":
+            new_obj[k] = v  # idの次の行に挿入するためすべて代入しなおす
+    return new_obj
+
 
 
 @dataclass(frozen=True)
@@ -207,52 +265,6 @@ class LogsourceConverter:
             else:
                 obj[k] = v
 
-    @staticmethod
-    def transform_windash(obj: dict) -> dict:
-        def conv(s:str) -> str:
-            if "-" in s:
-                return s.replace("-", "/")
-            return s.replace("/", "-")
-        if not isinstance(obj, dict):
-                return obj
-        for key, value in list(obj.items()):
-            if '|all|windash' in key:
-                del obj[key]
-                key = key.replace("|windash", "")
-                obj[key] = value
-            elif '|windash' in key:
-                del obj[key]
-                key = key.replace("|windash", "")
-                if isinstance(value, list):
-                    x = set([item for item in value] + [conv(item) for item in value])
-                    obj[key] = list(x)
-                elif isinstance(value, str):
-                    obj[key] = [value, conv(value)]
-                else:
-                    obj[key] = value
-            else:
-                obj[key] = value
-        return obj
-
-    @staticmethod
-    def transform_transform_windash_recursive(obj: dict) -> dict:
-        """
-        dictを再帰的に探索し、field_mapの内容でfiled名を変換する(category=process_creation以外は変換されない)
-        """
-        if isinstance(obj, dict):
-            for field_name, val in list(obj.items()):
-                if isinstance(val, dict):
-                    LogsourceConverter.transform_windash(val)
-                elif isinstance(val, list):
-                    for item in val:
-                        LogsourceConverter.transform_windash(item)
-                else:
-                    LogsourceConverter.transform_windash(val)
-        elif isinstance(obj, list):
-            for item in obj:
-                LogsourceConverter.transform_windash(item)
-        return obj
-
     def transform_field_recursive(self, category: str, obj: dict, need_field_conversion: bool) -> dict:
         """
         dictを再帰的に探索し、field_mapの内容でfiled名を変換する(category=process_creation以外は変換されない)
@@ -303,22 +315,27 @@ class LogsourceConverter:
         if modifiers and [m for m in modifiers if m not in ["all", "base64", "base64offset", "cidr", "contains", "endswith", "endswithfield", "equalsfield", "re", "startswith", "windash"]]:
             LOGGER.error(f"This rule has incompatible field: {obj['detection']}. Conversion skipped.")
             return
+        con = obj['detection']['condition']
+        if '%' in con or '->' in con:
+            LOGGER.error(f"Error while converting rule [{self.sigma_path}]: Invalid character in condition [{con}] file [{self.sigma_path}]. Conversion skipped.")
+            return  # conditionブロックに変な文字が入っているルールがある。この場合スキップ
+
         logsources = self.get_logsources(obj)
         if not logsources:
             new_obj = copy.deepcopy(obj)
             new_obj['ruletype'] = 'Sigma'
-            LogsourceConverter.transform_transform_windash_recursive(new_obj["detection"])
+            transform_windash_recursive(new_obj["detection"])
             self.sigma_converted.append((False, new_obj))
             return  # ログソースマッピングにないcategory/serviceのため、変換処理はスキップ
+
         for ls in logsources:
-            new_obj = copy.deepcopy(obj)
+            new_obj = assign_uuid_for_convert_rules(obj)
             if ls.service == "sysmon":
-                if "tags" in new_obj:
-                    if "sysmon" not in new_obj["tags"]:
-                        new_obj["tags"].append("sysmon")
-                else:
+                if "tags" not in new_obj:
                     new_obj["tags"] = ["sysmon"]
-            if ls.category == "antivirus":
+                elif "sysmon" not in new_obj["tags"]:
+                    new_obj["tags"].append("sysmon")
+            elif ls.category == "antivirus":
                 new_obj['logsource']["product"] = "windows"
                 new_obj['logsource']["service"] = ls.service
             detection = copy.deepcopy(new_obj['detection'])
@@ -341,13 +358,8 @@ class LogsourceConverter:
                 converted_fields = [field_map[f] for f in fields if f in field_map]
                 not_converted_fields = [f for f in fields if f not in field_map]
                 new_obj['fields'] = converted_fields + not_converted_fields
-            LogsourceConverter.transform_transform_windash_recursive(new_obj["detection"])
+            transform_windash_recursive(new_obj["detection"])
             new_obj['ruletype'] = 'Sigma'
-            condition_str = new_obj['detection']['condition']
-            if '%' in condition_str or '->' in condition_str:
-                LOGGER.error(
-                    f"Error while converting rule [{self.sigma_path}]: Invalid character in condition [{condition_str}] file [{self.sigma_path}]. Conversion skipped.")
-                continue  # conditionブロックに変な文字が入っているルールがある。この場合スキップ
             if ls.service == "sysmon":
                 self.sigma_converted.append((True, new_obj))
             else:

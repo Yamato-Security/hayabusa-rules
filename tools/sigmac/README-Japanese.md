@@ -26,6 +26,7 @@ https://python-poetry.org/docs/#installation
 `logsource_mapping.py`は、Sigmaルールの`logsource`をHayabusa形式に変換するツールです。  
 `Hayabusa`では`logsource`は検知処理に使われないため、 以下`yaml`のマッピングを使い、`logsource`の内容を`detection`,`condition`に変換します。
 - sysmon.yaml
+- windows-antivirus.yaml
 - windows-audit.yaml
 - windows-services.yaml
 
