@@ -9,23 +9,22 @@
 
 ## v2.13.0 [2024/03/22]
 
-The `null` keyword was converted to an empty string. This may have been a regression when comments were left as is.
-Now `null` keywords are being convert correctly. `|contains|windash` modifier is now being converted to a usable form.
+- Bug fix: the `null` keyword was converted to an empty string. This may have been a regression when comments were left as is. Now `null` keywords are being convert correctly. (#620) (@fukusuket)
+- `|contains|windash` modifier is now being converted to a usable form. (#622) (@fukusuket)
 
 ## v2.13.0-dev [2024/01/19]
 
-Comments in Sigma rules are left as is. Before, they would be stripped after conversion. (#568) (@fukusuket)
-Package management for the sigma conversion backend is now handled by [Poetry](https://python-poetry.org/) and static code analysis is performed by [Ruff](https://github.com/astral-sh/ruff). (#567) (@fukusuket)
+- Comments in Sigma rules are left as is. Before, they would be stripped after conversion. (#568) (@fukusuket)
+- Package management for the sigma conversion backend is now handled by [Poetry](https://python-poetry.org/) and static code analysis is performed by [Ruff](https://github.com/astral-sh/ruff). (#567) (@fukusuket)
 
 ## v2.12.0 [2023/12/19]
 
-Added field mapping support for registry rules (`service:`: `registry_add`, `registry_set`, `registry_event`) to detect built-in Windows event logs (`Security EID 4657`).
-Before, only Sysmon (`EID 12, 13, 14`) logs would be able to be detected. (#476) (@fukusuket)
-Also, added checks for ignoring rules that use field modifiers that Hayabusa does yet not support. (Ex: `|expand`) (#553, #554) (@fukusuket)
+- Added field mapping support for registry rules (`service:`: `registry_add`, `registry_set`, `registry_event`) to detect built-in Windows event logs (`Security EID 4657`). Before, only Sysmon (`EID 12, 13, 14`) logs would be able to be detected. (#476) (@fukusuket)
+- Added checks for ignoring rules that use field modifiers that Hayabusa does yet not support. (Ex: `|expand`) (#553, #554) (@fukusuket)
 
 ## v2.6.0 [2023/07/06]
 
-Added support for `category: antivirus`. (#456) (@fukusuket)
+- Added support for `category: antivirus`. (#456) (@fukusuket)
 
 ## v2.6.0 [2023/07/02]
 
