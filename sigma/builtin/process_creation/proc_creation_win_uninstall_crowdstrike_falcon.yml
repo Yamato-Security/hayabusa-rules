@@ -1,5 +1,8 @@
 title: Uninstall Crowdstrike Falcon Sensor
-id: f0f7be61-9cf5-43be-9836-99d6ef448a18
+id: 1ee586c3-86e8-4b2c-b33f-80c524292d5e
+related:
+    - id: f0f7be61-9cf5-43be-9836-99d6ef448a18
+      type: derived
 status: test
 description: Adversaries may disable security tools to avoid possible detection of their tools and activities by uninstalling Crowdstrike Falcon
 references:
@@ -10,6 +13,7 @@ modified: 2023/03/09
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

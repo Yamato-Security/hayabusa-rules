@@ -1,5 +1,8 @@
 title: Suspicious RASdial Activity
-id: 6bba49bf-7f8c-47d6-a1bb-6b4dece4640e
+id: 60b34e33-95fe-6beb-2917-eb4309e6dcd8
+related:
+    - id: 6bba49bf-7f8c-47d6-a1bb-6b4dece4640e
+      type: derived
 status: test
 description: Detects suspicious process related to rasdial.exe
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

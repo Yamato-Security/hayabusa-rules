@@ -1,5 +1,8 @@
 title: Potential RDP Session Hijacking Activity
-id: 224f140f-3553-4cd1-af78-13d81bf9f7cc
+id: 679db9c2-6669-dc7b-3b9c-a20f4d600b28
+related:
+    - id: 224f140f-3553-4cd1-af78-13d81bf9f7cc
+      type: derived
 status: test
 description: Detects potential RDP Session Hijacking activity on Windows systems
 references:
@@ -8,6 +11,7 @@ author: '@juju4'
 date: 2022/12/27
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

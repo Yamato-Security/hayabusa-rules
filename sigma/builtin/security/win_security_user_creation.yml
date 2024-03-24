@@ -1,5 +1,8 @@
 title: Local User Creation
-id: 66b6be3d-55d0-4f47-9855-d69df21740ea
+id: 5ecd226b-563f-4723-7a1e-d637d81f0a1f
+related:
+    - id: 66b6be3d-55d0-4f47-9855-d69df21740ea
+      type: derived
 status: test
 description: |
     Detects local user creation on Windows servers, which shouldn't happen in an Active Directory environment. Apply this Sigma Use Case on your Windows server logs and not on your DC logs.

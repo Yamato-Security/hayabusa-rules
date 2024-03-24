@@ -1,5 +1,5 @@
 title: Potentially Suspicious Child Process Of DiskShadow.EXE
-id: 9f546b25-5f12-4c8d-8532-5893dcb1e4b8
+id: 90ce0f10-c98e-b3ae-f20e-15d375577aa0
 related:
     - id: fa1a7e52-3d02-435b-81b8-00da14dd66c1 # Diskshadow Script Mode - Execution From Potential Suspicious Location
       type: similar
@@ -9,6 +9,8 @@ related:
       type: similar
     - id: 0c2f8629-7129-4a8a-9897-7e0768f13ff2 # Diskshadow Script Mode Execution
       type: similar
+    - id: 9f546b25-5f12-4c8d-8532-5893dcb1e4b8
+      type: derived
 status: experimental
 description: Detects potentially suspicious child processes of "Diskshadow.exe". This could be an attempt to bypass parent/child relationship detection or application whitelisting rules.
 references:

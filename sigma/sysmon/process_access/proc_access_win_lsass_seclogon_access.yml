@@ -1,5 +1,8 @@
 title: Suspicious LSASS Access Via MalSecLogon
-id: 472159c5-31b9-4f56-b794-b766faa8b0a7
+id: b961f203-200a-0627-5e59-15bceaf72ab3
+related:
+    - id: 472159c5-31b9-4f56-b794-b766faa8b0a7
+      type: derived
 status: test
 description: Detects suspicious access to LSASS handle via a call trace to "seclogon.dll" with a suspicious access right.
 references:

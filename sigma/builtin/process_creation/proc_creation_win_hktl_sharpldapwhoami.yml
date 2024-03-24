@@ -1,5 +1,8 @@
 title: HackTool - SharpLdapWhoami Execution
-id: d9367cbb-c2e0-47ce-bdc0-128cb6da898d
+id: 5a867cd0-5780-c09f-9e82-86aaaca431f5
+related:
+    - id: d9367cbb-c2e0-47ce-bdc0-128cb6da898d
+      type: derived
 status: test
 description: Detects SharpLdapWhoami, a whoami alternative that queries the LDAP service on a domain controller
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.discovery
     - attack.t1033
     - car.2016-03-001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

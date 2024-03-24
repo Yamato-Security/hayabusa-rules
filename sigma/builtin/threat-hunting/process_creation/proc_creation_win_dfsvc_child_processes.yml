@@ -1,5 +1,8 @@
 title: ClickOnce Deployment Execution - Dfsvc.EXE Child Process
-id: 241d52b5-eee0-49d0-ac8a-8b9c15c7221c
+id: 7482a6b9-2304-1d3c-7835-d804bcf7672f
+related:
+    - id: 241d52b5-eee0-49d0-ac8a-8b9c15c7221c
+      type: derived
 status: experimental
 description: Detects child processes of "dfsvc" which indicates a ClickOnce deployment execution.
 references:
@@ -10,6 +13,7 @@ tags:
     - attack.execution
     - attack.defense_evasion
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,8 +1,5 @@
 title: MsiExec Web Install
-id: f7b5f842-a6af-4da5-9e95-e32478f3cd2f
-related:
-    - id: 8150732a-0c9d-4a99-82b9-9efb9b90c40c
-      type: similar
+id: 570163b5-0034-92d2-919d-b0027cb8ee68
 status: test
 description: Detects suspicious msiexec process starts with web addresses as parameter
 references:
@@ -15,6 +12,7 @@ tags:
     - attack.t1218.007
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

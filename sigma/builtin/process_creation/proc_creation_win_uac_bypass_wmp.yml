@@ -1,5 +1,8 @@
 title: UAC Bypass Using Windows Media Player - Process
-id: 0058b9e5-bcd7-40d4-9205-95ca5a16d7b2
+id: 3ff6fb4d-1767-844e-dbf0-3bfa8dd55d56
+related:
+    - id: 0058b9e5-bcd7-40d4-9205-95ca5a16d7b2
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass using Windows Media Player osksupport.dll (UACMe 32)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

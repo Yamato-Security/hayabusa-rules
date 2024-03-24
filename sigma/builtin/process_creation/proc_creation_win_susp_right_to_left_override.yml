@@ -1,5 +1,8 @@
 title: Potential Defense Evasion Via Right-to-Left Override
-id: ad691d92-15f2-4181-9aa4-723c74f9ddc3
+id: 7d442414-1318-9f2d-6f0c-65ff86c357de
+related:
+    - id: ad691d92-15f2-4181-9aa4-723c74f9ddc3
+      type: derived
 status: test
 description: |
     Detects the presence of the "u202+E" character, which causes a terminal, browser, or operating system to render text in a right-to-left sequence.
@@ -13,6 +16,7 @@ date: 2023/02/15
 tags:
     - attack.defense_evasion
     - attack.t1036.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

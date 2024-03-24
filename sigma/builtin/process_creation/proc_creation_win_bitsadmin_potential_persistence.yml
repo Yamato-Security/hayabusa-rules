@@ -1,5 +1,8 @@
 title: Monitoring For Persistence Via BITS
-id: b9cbbc17-d00d-4e3d-a827-b06d03d2380d
+id: b6abae48-2937-b8aa-70ef-ae27212059c5
+related:
+    - id: b9cbbc17-d00d-4e3d-a827-b06d03d2380d
+      type: derived
 status: test
 description: |
     BITS will allow you to schedule a command to execute after a successful download to notify you that the job is finished.
@@ -16,6 +19,7 @@ modified: 2024/01/25
 tags:
     - attack.defense_evasion
     - attack.t1197
+    - sysmon
 logsource:
     product: windows
     category: process_creation

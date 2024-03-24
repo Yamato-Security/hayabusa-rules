@@ -1,5 +1,8 @@
 title: Modification of Explorer Hidden Keys
-id: 5a5152f1-463f-436b-b2f5-8eceb3964b42
+id: 0399e65b-992d-24c3-dc62-0b2904dda8f1
+related:
+    - id: 5a5152f1-463f-436b-b2f5-8eceb3964b42
+      type: derived
 status: experimental
 description: Detects modifications to the hidden files keys in registry. This technique is abused by several malware families to hide their files from normal users.
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1564.001
+    - sysmon
 logsource:
     category: registry_set
     product: windows

@@ -1,5 +1,8 @@
 title: HackTool - PCHunter Execution
-id: fca949cc-79ca-446e-8064-01aa7e52ece5
+id: a40c99d5-1323-f65d-73d1-ca673940b7b2
+related:
+    - id: fca949cc-79ca-446e-8064-01aa7e52ece5
+      type: derived
 status: test
 description: Detects suspicious use of PCHunter, a tool like Process Hacker to view and manipulate processes, kernel options and other low level stuff
 references:
@@ -17,6 +20,7 @@ tags:
     - attack.t1012
     - attack.t1083
     - attack.t1007
+    - sysmon
 logsource:
     category: process_creation
     product: windows

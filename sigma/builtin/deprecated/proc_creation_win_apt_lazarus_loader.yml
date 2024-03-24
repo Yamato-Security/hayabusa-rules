@@ -1,5 +1,8 @@
 title: Lazarus Loaders
-id: 7b49c990-4a9a-4e65-ba95-47c9cc448f6e
+id: c155c295-ca75-0671-80f9-2910740dabe7
+related:
+    - id: 7b49c990-4a9a-4e65-ba95-47c9cc448f6e
+      type: derived
 status: deprecated
 description: Detects different loaders as described in various threat reports on Lazarus group activity
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.g0032
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

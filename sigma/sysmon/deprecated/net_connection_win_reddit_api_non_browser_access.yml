@@ -1,6 +1,9 @@
 title: Suspicious Non-Browser Network Communication With Reddit API
-id: d7b09985-95a3-44be-8450-b6eadf49833e
-status: deprecated # In favour of 297ae038-edc2-4b2e-bb3e-7c5fc94dd5c7
+id: 174193f0-8544-6350-b59b-3ff47ee9e715
+related:
+    - id: d7b09985-95a3-44be-8450-b6eadf49833e
+      type: derived
+status: deprecated
 description: Detects an a non-browser process interacting with the Reddit API which could indicate use of a covert C2 such as RedditC2
 references:
     - https://github.com/kleiton0x00/RedditC2

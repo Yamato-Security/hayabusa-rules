@@ -1,8 +1,5 @@
 title: Operator Bloopers Cobalt Strike Modules
-id: 4f154fb6-27d1-4813-a759-78b93e0b9c48
-related:
-    - id: 647c7b9e-d784-4fda-b9a0-45c565a7b729
-      type: similar
+id: c7a2ef80-f915-79f0-1ce3-bf61d570a990
 status: test
 description: Detects Cobalt Strike module/commands accidentally entered in CMD shell
 references:
@@ -15,6 +12,7 @@ modified: 2023/01/30
 tags:
     - attack.execution
     - attack.t1059.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

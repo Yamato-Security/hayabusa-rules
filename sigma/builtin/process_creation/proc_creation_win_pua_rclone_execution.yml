@@ -1,10 +1,5 @@
 title: PUA - Rclone Execution
-id: e37db05d-d1f9-49c8-b464-cee1a4b11638
-related:
-    - id: a0d63692-a531-4912-ad39-4393325b2a9c
-      type: obsoletes
-    - id: cb7286ba-f207-44ab-b9e6-760d82b84253
-      type: obsoletes
+id: a2dbf468-e91d-96e1-aaa1-d7a9e2cfb209
 status: test
 description: Detects execution of RClone utility for exfiltration as used by various ransomwares strains like REvil, Conti, FiveHands, etc
 references:
@@ -19,6 +14,7 @@ modified: 2023/03/05
 tags:
     - attack.exfiltration
     - attack.t1567.002
+    - sysmon
 logsource:
     product: windows
     category: process_creation

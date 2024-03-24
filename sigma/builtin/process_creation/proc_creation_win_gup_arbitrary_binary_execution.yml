@@ -1,5 +1,8 @@
 title: Arbitrary Binary Execution Using GUP Utility
-id: d65aee4d-2292-4cea-b832-83accd6cfa43
+id: 3d30b2bb-135f-d972-364f-9e41f8aa609b
+related:
+    - id: d65aee4d-2292-4cea-b832-83accd6cfa43
+      type: derived
 status: test
 description: Detects execution of the Notepad++ updater (gup) to launch other commands or executables
 references:
@@ -9,6 +12,7 @@ date: 2022/06/10
 modified: 2023/03/02
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

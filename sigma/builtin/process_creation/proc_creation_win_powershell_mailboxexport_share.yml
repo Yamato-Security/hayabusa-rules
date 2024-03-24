@@ -1,5 +1,8 @@
 title: Suspicious PowerShell Mailbox Export to Share
-id: 889719ef-dd62-43df-86c3-768fb08dc7c0
+id: 5485eaef-6cb2-5361-f012-c32a0798ac29
+related:
+    - id: 889719ef-dd62-43df-86c3-768fb08dc7c0
+      type: derived
 status: test
 description: Detects usage of the powerShell New-MailboxExportRequest Cmdlet to exports a mailbox to a remote or local share, as used in ProxyShell exploitations
 references:
@@ -12,6 +15,7 @@ date: 2021/08/07
 modified: 2022/10/26
 tags:
     - attack.exfiltration
+    - sysmon
 logsource:
     category: process_creation
     product: windows

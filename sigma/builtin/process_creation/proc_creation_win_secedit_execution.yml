@@ -1,5 +1,8 @@
 title: Potential Suspicious Activity Using SeCEdit
-id: c2c76b77-32be-4d1f-82c9-7e544bdfe0eb
+id: b1b4e91a-f98e-efe3-e440-4baf203a621a
+related:
+    - id: c2c76b77-32be-4d1f-82c9-7e544bdfe0eb
+      type: derived
 status: test
 description: Detects potential suspicious behaviour using secedit.exe. Such as exporting or modifying the security policy
 references:
@@ -28,6 +31,7 @@ tags:
     - attack.t1547.002
     - attack.t1557
     - attack.t1082
+    - sysmon
 logsource:
     category: process_creation
     product: windows

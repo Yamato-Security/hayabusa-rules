@@ -1,5 +1,8 @@
 title: Suspicious DumpMinitool Execution
-id: eb1c4225-1c23-4241-8dd4-051389fde4ce
+id: 09d5f483-1225-411f-dfcc-1fa1550bd9a6
+related:
+    - id: eb1c4225-1c23-4241-8dd4-051389fde4ce
+      type: derived
 status: test
 description: Detects suspicious ways to use the "DumpMinitool.exe" binary
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.defense_evasion
     - attack.t1036
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

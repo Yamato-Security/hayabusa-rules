@@ -1,5 +1,8 @@
 title: Suspicious Program Names
-id: efdd8dd5-cee8-4e59-9390-7d4d5e4dd6f6
+id: 9c2f40db-46e4-85f0-3104-427e61b344a1
+related:
+    - id: efdd8dd5-cee8-4e59-9390-7d4d5e4dd6f6
+      type: derived
 status: test
 description: Detects suspicious patterns in program names or folders that are often found in malicious samples or hacktools
 references:
@@ -10,6 +13,7 @@ modified: 2023/03/22
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

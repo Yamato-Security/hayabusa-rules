@@ -1,5 +1,8 @@
 title: Suspicious Regsvr32 Execution From Remote Share
-id: 88a87a10-384b-4ad7-8871-2f9bf9259ce5
+id: 5b838545-abaf-44b0-643d-b363389ecb5e
+related:
+    - id: 88a87a10-384b-4ad7-8871-2f9bf9259ce5
+      type: derived
 status: test
 description: Detects REGSVR32.exe to execute DLL hosted on remote shares
 references:
@@ -9,6 +12,7 @@ date: 2022/10/31
 tags:
     - attack.defense_evasion
     - attack.t1218.010
+    - sysmon
 logsource:
     category: process_creation
     product: windows

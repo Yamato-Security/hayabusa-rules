@@ -1,5 +1,8 @@
 title: PUA - DefenderCheck Execution
-id: f0ca6c24-3225-47d5-b1f5-352bf07ecfa7
+id: 912866aa-0cd5-dcb6-e1d4-a0b6cbbdc575
+related:
+    - id: f0ca6c24-3225-47d5-b1f5-352bf07ecfa7
+      type: derived
 status: test
 description: Detects the use of DefenderCheck, a tool to evaluate the signatures used in Microsoft Defender. It can be used to figure out the strings / byte chains used in Microsoft Defender to detect a tool and thus used for AV evasion.
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/04
 tags:
     - attack.defense_evasion
     - attack.t1027.005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Invoke-Obfuscation Via Use Clip
-id: e1561947-b4e3-4a74-9bdd-83baed21bdb5
+id: 5557e23a-e632-646a-e8ae-d0a476f8cea4
+related:
+    - id: e1561947-b4e3-4a74-9bdd-83baed21bdb5
+      type: derived
 status: test
 description: Detects Obfuscated Powershell via use Clip.exe in Scripts
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

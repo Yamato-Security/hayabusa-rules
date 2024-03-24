@@ -1,8 +1,5 @@
 title: New User Created Via Net.EXE
-id: cd219ff3-fa99-45d4-8380-a7d15116c6dc
-related:
-    - id: b9f0e6f5-09b4-4358-bae4-08408705bd5c
-      type: similar
+id: 6770bbc3-76b1-d22f-6192-d180542dc2a2
 status: test
 description: Identifies the creation of local users via the net.exe command.
 references:
@@ -14,6 +11,7 @@ modified: 2023/02/21
 tags:
     - attack.persistence
     - attack.t1136.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Suspicious Rundll32 Activity Invoking Sys File
-id: 731231b9-0b5d-4219-94dd-abb6959aa7ea
+id: 9d6f9951-dc6f-66b5-290e-ff79c75550f6
+related:
+    - id: 731231b9-0b5d-4219-94dd-abb6959aa7ea
+      type: derived
 status: test
 description: Detects suspicious process related to rundll32 based on command line that includes a *.sys file as seen being used by UNC2452
 references:
@@ -10,6 +13,7 @@ modified: 2022/10/09
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

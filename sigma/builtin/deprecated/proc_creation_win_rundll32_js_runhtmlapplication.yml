@@ -1,5 +1,8 @@
 title: Rundll32 JS RunHTMLApplication Pattern
-id: 9f06447a-a33a-4cbe-a94f-a3f43184a7a3
+id: 8994ee03-9478-bde3-ab3d-3abafad0bfd1
+related:
+    - id: 9f06447a-a33a-4cbe-a94f-a3f43184a7a3
+      type: derived
 status: deprecated
 description: Detects suspicious command line patterns used when rundll32 is used to run JavaScript code
 references:
@@ -9,6 +12,7 @@ author: Florian Roth (Nextron Systems)
 date: 2024/02/23
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Gzip Archive Decode Via PowerShell
-id: 98767d61-b2e8-4d71-b661-e36783ee24c1
+id: 31616502-c261-6b78-a809-4408f88bc4fb
+related:
+    - id: 98767d61-b2e8-4d71-b661-e36783ee24c1
+      type: derived
 status: test
 description: Detects attempts of decoding encoded Gzip archives via PowerShell.
 references:
@@ -9,6 +12,7 @@ date: 2023/03/13
 tags:
     - attack.command_and_control
     - attack.t1132.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

@@ -1,5 +1,8 @@
 title: Remote XSL Execution Via Msxsl.EXE
-id: 75d0a94e-6252-448d-a7be-d953dff527bb
+id: 8bb8dbbf-4781-7bf2-3340-f3b39cc8501a
+related:
+    - id: 75d0a94e-6252-448d-a7be-d953dff527bb
+      type: derived
 status: experimental
 description: Detects the execution of the "msxsl" binary with an "http" keyword in the command line. This might indicate a potential remote execution of XSL files.
 references:
@@ -10,6 +13,7 @@ date: 2023/11/09
 tags:
     - attack.defense_evasion
     - attack.t1220
+    - sysmon
 logsource:
     category: process_creation
     product: windows

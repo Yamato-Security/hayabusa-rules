@@ -1,5 +1,8 @@
 title: Start of NT Virtual DOS Machine
-id: 16905e21-66ee-42fe-b256-1318ada2d770
+id: 79562785-6cc3-acf1-853a-e4758e918d32
+related:
+    - id: 16905e21-66ee-42fe-b256-1318ada2d770
+      type: derived
 status: test
 description: Ntvdm.exe allows the execution of 16-bit Windows applications on 32-bit Windows operating systems, as well as the execution of both 16-bit and 32-bit DOS applications
 references:
@@ -12,6 +15,7 @@ date: 2022/07/16
 modified: 2022/07/16
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Potential SysInternals ProcDump Evasion
-id: 79b06761-465f-4f88-9ef2-150e24d3d737
+id: 61427f33-35de-ec51-6afd-e44b8ccf9023
+related:
+    - id: 79b06761-465f-4f88-9ef2-150e24d3d737
+      type: derived
 status: test
 description: Detects uses of the SysInternals ProcDump utility in which ProcDump or its output get renamed, or a dump file is moved or copied to a different name
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1036
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

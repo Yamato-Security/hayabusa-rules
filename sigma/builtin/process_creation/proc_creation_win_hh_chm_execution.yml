@@ -1,5 +1,8 @@
 title: HH.EXE Execution
-id: 68c8acb4-1b60-4890-8e82-3ddf7a6dba84
+id: cb0503aa-0857-ee4c-cde4-211dcf7917f8
+related:
+    - id: 68c8acb4-1b60-4890-8e82-3ddf7a6dba84
+      type: derived
 status: test
 description: Detects the execution of "hh.exe" to open ".chm" files.
 references:
@@ -12,6 +15,7 @@ modified: 2023/12/11
 tags:
     - attack.defense_evasion
     - attack.t1218.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

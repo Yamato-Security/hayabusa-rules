@@ -1,5 +1,8 @@
 title: Add DisallowRun Execution to Registry
-id: 275641a5-a492-45e2-a817-7c81e9d9d3e9
+id: c1daf9d0-4faf-5cf7-ee69-08dbaf545e0b
+related:
+    - id: 275641a5-a492-45e2-a817-7c81e9d9d3e9
+      type: derived
 status: experimental
 description: Detect set DisallowRun to 1 to prevent user running specific computer program
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     category: registry_set
     product: windows

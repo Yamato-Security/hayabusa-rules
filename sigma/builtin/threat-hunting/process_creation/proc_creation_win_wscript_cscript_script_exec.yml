@@ -1,10 +1,5 @@
 title: WSF/JSE/JS/VBA/VBE File Execution Via Cscript/Wscript
-id: 1e33157c-53b1-41ad-bbcc-780b80b58288
-related:
-    - id: 23250293-eed5-4c39-b57a-841c8933a57d
-      type: obsoletes
-    - id: cea72823-df4d-4567-950c-0b579eaf0846
-      type: derived
+id: 5742c4d7-6bb8-d4c7-1abf-eedde7c178df
 status: test
 description: Detects script file execution (.js, .jse, .vba, .vbe, .vbs, .wsf) by Wscript/Cscript
 references:
@@ -18,6 +13,7 @@ tags:
     - attack.t1059.005
     - attack.t1059.007
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

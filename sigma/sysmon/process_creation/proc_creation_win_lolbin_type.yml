@@ -1,5 +1,8 @@
 title: Potential Download/Upload Activity Using Type Command
-id: aa0b3a82-eacc-4ec3-9150-b5a9a3e3f82f
+id: d05e404f-e59f-b860-597a-49c86249f77b
+related:
+    - id: aa0b3a82-eacc-4ec3-9150-b5a9a3e3f82f
+      type: derived
 status: test
 description: Detects usage of the "type" command to download/upload data from WebDAV server
 references:
@@ -14,7 +17,6 @@ logsource:
     product: windows
     category: process_creation
 detection:
-    # Note that since built in CMD commands do not trigger a process creation. This would be detected only if used in a "/c" command
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational

@@ -1,5 +1,8 @@
 title: MSHTA Suspicious Execution 01
-id: cc7abbd0-762b-41e3-8a26-57ad50d2eea3
+id: a641f121-9379-33a5-1c52-cda13641658a
+related:
+    - id: cc7abbd0-762b-41e3-8a26-57ad50d2eea3
+      type: derived
 status: test
 description: Detection for mshta.exe suspicious execution patterns sometimes involving file polyglotism
 references:
@@ -18,6 +21,7 @@ tags:
     - attack.execution
     - attack.t1059.007
     - cve.2020.1599
+    - sysmon
 logsource:
     category: process_creation
     product: windows

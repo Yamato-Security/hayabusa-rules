@@ -1,5 +1,8 @@
 title: Windows Shell/Scripting Processes Spawning Suspicious Programs
-id: 3a6586ad-127a-4d3b-a677-1e6eacdf8fde
+id: b9675cf5-52dc-a941-e484-247f3640e055
+related:
+    - id: 3a6586ad-127a-4d3b-a677-1e6eacdf8fde
+      type: derived
 status: test
 description: Detects suspicious child processes of a Windows shell and scripting processes such as wscript, rundll32, powershell, mshta...etc.
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1059.005
     - attack.t1059.001
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Suspicious AddinUtil.EXE CommandLine Execution
-id: 631b22a4-70f4-4e2f-9ea8-42f84d9df6d8
+id: 9990ea1d-fc80-2490-3c4f-8237e8bfbc7f
+related:
+    - id: 631b22a4-70f4-4e2f-9ea8-42f84d9df6d8
+      type: derived
 status: experimental
 description: |
     Detects execution of the Add-In deployment cache updating utility (AddInutil.exe) with suspicious Addinroot or Pipelineroot paths. An adversary may execute AddinUtil.exe with uncommon Addinroot/Pipelineroot paths that point to the adversaries Addins.Store payload.
@@ -10,6 +13,7 @@ date: 2023/09/18
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

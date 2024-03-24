@@ -1,5 +1,8 @@
 title: Non Interactive PowerShell Process Spawned
-id: f4bbd493-b796-416e-bbf2-121235348529
+id: 53c6b925-8f6a-b834-1463-b4dade337d85
+related:
+    - id: f4bbd493-b796-416e-bbf2-121235348529
+      type: derived
 status: test
 description: Detects non-interactive PowerShell activity by looking at the "powershell" process with a non-user GUI process such as "explorer.exe" as a parent.
 references:
@@ -10,6 +13,7 @@ modified: 2023/09/07
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

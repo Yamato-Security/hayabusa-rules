@@ -1,5 +1,8 @@
 title: Audio Capture via PowerShell
-id: 932fb0d8-692b-4b0f-a26e-5643a50fe7d6
+id: 3b83d907-4a3c-e167-7892-6f19c85d3edd
+related:
+    - id: 932fb0d8-692b-4b0f-a26e-5643a50fe7d6
+      type: derived
 status: test
 description: Detects audio capture via PowerShell Cmdlet.
 references:
@@ -12,6 +15,7 @@ modified: 2023/04/06
 tags:
     - attack.collection
     - attack.t1123
+    - sysmon
 logsource:
     category: process_creation
     product: windows

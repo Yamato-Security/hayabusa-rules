@@ -1,5 +1,8 @@
 title: Potential Persistence Attempt Via Run Keys Using Reg.EXE
-id: de587dce-915e-4218-aac4-835ca6af6f70
+id: 9221ea23-8f7a-5f6e-cde6-763911fe289d
+related:
+    - id: de587dce-915e-4218-aac4-835ca6af6f70
+      type: derived
 status: test
 description: Detects suspicious command line reg.exe tool adding key to RUN key in Registry
 references:
@@ -11,6 +14,7 @@ modified: 2023/01/30
 tags:
     - attack.persistence
     - attack.t1547.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

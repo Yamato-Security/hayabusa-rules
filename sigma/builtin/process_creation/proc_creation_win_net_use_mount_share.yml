@@ -1,8 +1,5 @@
 title: Windows Share Mount Via Net.EXE
-id: f117933c-980c-4f78-b384-e3d838111165
-related:
-    - id: 3abd6094-7027-475f-9630-8ab9be7b9725
-      type: similar
+id: 3037cec2-08d0-f4a4-91c3-668db3535704
 status: test
 description: Detects when a share is mounted using the "net.exe" utility
 references:
@@ -13,6 +10,7 @@ modified: 2023/02/21
 tags:
     - attack.lateral_movement
     - attack.t1021.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

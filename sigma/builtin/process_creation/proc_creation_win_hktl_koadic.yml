@@ -1,5 +1,8 @@
 title: HackTool - Koadic Execution
-id: 5cddf373-ef00-4112-ad72-960ac29bac34
+id: 21709122-92d3-408a-ce43-7f0ab256c315
+related:
+    - id: 5cddf373-ef00-4112-ad72-960ac29bac34
+      type: derived
 status: test
 description: Detects command line parameters used by Koadic hack tool
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1059.003
     - attack.t1059.005
     - attack.t1059.007
+    - sysmon
 logsource:
     category: process_creation
     product: windows

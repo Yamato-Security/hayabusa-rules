@@ -1,5 +1,8 @@
 title: HackTool - KrbRelay Execution
-id: e96253b8-6b3b-4f90-9e59-3b24b99cf9b4
+id: e9360920-9296-fc5f-1231-e443387e7381
+related:
+    - id: e96253b8-6b3b-4f90-9e59-3b24b99cf9b4
+      type: derived
 status: test
 description: Detects the use of KrbRelay, a Kerberos relaying tool
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/04
 tags:
     - attack.credential_access
     - attack.t1558.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Rebuild Performance Counter Values Via Lodctr.EXE
-id: cc9d3712-6310-4320-b2df-7cb408274d53
+id: 57428c1a-2716-80c7-6059-bb8408c50569
+related:
+    - id: cc9d3712-6310-4320-b2df-7cb408274d53
+      type: derived
 status: experimental
 description: Detects the execution of "lodctr.exe" to rebuild the performance counter registry values. This can be abused by attackers by providing a malicious config file to overwrite performance counter configuration to confuse and evade monitoring and security solutions.
 references:
@@ -9,6 +12,7 @@ date: 2023/06/15
 modified: 2024/03/05
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

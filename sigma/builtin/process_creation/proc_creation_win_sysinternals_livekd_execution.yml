@@ -1,5 +1,8 @@
 title: Potential Memory Dumping Activity Via LiveKD
-id: a85f7765-698a-4088-afa0-ecfbf8d01fa4
+id: 4015c0bf-a80a-7b4f-cff2-cb50ea14b40f
+related:
+    - id: a85f7765-698a-4088-afa0-ecfbf8d01fa4
+      type: derived
 status: experimental
 description: Detects execution of LiveKD based on PE metadata or image name
 references:
@@ -8,6 +11,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/05/15
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

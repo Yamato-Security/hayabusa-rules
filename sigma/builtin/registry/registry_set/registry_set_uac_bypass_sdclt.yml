@@ -1,5 +1,8 @@
 title: UAC Bypass via Sdclt
-id: 5b872a46-3b90-45c1-8419-f675db8053aa
+id: 4e8bf251-fcde-0996-45f9-62335b5e5d8b
+related:
+    - id: 5b872a46-3b90-45c1-8419-f675db8053aa
+      type: derived
 status: experimental
 description: Detects the pattern of UAC Bypass using registry key manipulation of sdclt.exe (e.g. UACMe 53)
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.privilege_escalation
     - attack.t1548.002
     - car.2019-04-001
+    - sysmon
 logsource:
     category: registry_set
     product: windows

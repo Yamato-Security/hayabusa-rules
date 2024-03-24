@@ -1,8 +1,5 @@
 title: Potential Recon Activity Using DriverQuery.EXE
-id: 9fc3072c-dc8f-4bf7-b231-18950000fadd
-related:
-    - id: a20def93-0709-4eae-9bd2-31206e21e6b2
-      type: similar
+id: 36d25ea3-c267-467d-2607-8791f67b7e4e
 status: experimental
 description: Detect usage of the "driverquery" utility to perform reconnaissance on installed drivers
 references:
@@ -14,6 +11,7 @@ date: 2023/01/19
 modified: 2023/09/29
 tags:
     - attack.discovery
+    - sysmon
 logsource:
     category: process_creation
     product: windows

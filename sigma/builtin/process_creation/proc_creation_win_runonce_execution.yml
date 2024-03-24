@@ -1,5 +1,8 @@
 title: Run Once Task Execution as Configured in Registry
-id: 198effb6-6c98-4d0c-9ea3-451fa143c45c
+id: aa8af443-e70d-a6a2-5903-1c62f232c0ed
+related:
+    - id: 198effb6-6c98-4d0c-9ea3-451fa143c45c
+      type: derived
 status: test
 description: This rule detects the execution of Run Once task as configured in the registry
 references:
@@ -12,6 +15,7 @@ modified: 2022/12/13
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: process_creation

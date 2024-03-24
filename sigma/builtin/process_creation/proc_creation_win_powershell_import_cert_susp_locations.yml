@@ -1,5 +1,8 @@
 title: Root Certificate Installed From Susp Locations
-id: 5f6a601c-2ecb-498b-9c33-660362323afa
+id: a7e6a51e-0f36-3f14-8b9b-12110ce23ff3
+related:
+    - id: 5f6a601c-2ecb-498b-9c33-660362323afa
+      type: derived
 status: test
 description: Adversaries may install a root certificate on a compromised system to avoid warnings when connecting to adversary controlled web servers.
 references:
@@ -11,6 +14,7 @@ modified: 2023/01/16
 tags:
     - attack.defense_evasion
     - attack.t1553.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

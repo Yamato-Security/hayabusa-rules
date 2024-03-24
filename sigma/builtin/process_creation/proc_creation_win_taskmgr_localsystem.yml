@@ -1,5 +1,8 @@
 title: Taskmgr as LOCAL_SYSTEM
-id: 9fff585c-c33e-4a86-b3cd-39312079a65f
+id: d2fc7f9b-7773-8c83-5bf3-d977a655e6e0
+related:
+    - id: 9fff585c-c33e-4a86-b3cd-39312079a65f
+      type: derived
 status: test
 description: Detects the creation of taskmgr.exe process in context of LOCAL_SYSTEM
 references:
@@ -10,6 +13,7 @@ modified: 2022/05/27
 tags:
     - attack.defense_evasion
     - attack.t1036
+    - sysmon
 logsource:
     category: process_creation
     product: windows

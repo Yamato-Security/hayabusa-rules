@@ -1,5 +1,8 @@
 title: Pubprn.vbs Proxy Execution
-id: 1fb76ab8-fa60-4b01-bddd-71e89bf555da
+id: b176b53d-4619-d65f-baf1-b3a4f1ec0b12
+related:
+    - id: 1fb76ab8-fa60-4b01-bddd-71e89bf555da
+      type: derived
 status: test
 description: Detects the use of the 'Pubprn.vbs' Microsoft signed script to execute commands.
 references:
@@ -9,6 +12,7 @@ date: 2022/05/28
 tags:
     - attack.defense_evasion
     - attack.t1216.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Start Windows Service Via Net.EXE
-id: 2a072a96-a086-49fa-bcb5-15cc5a619093
+id: 1bd2b1a4-7ec2-8aac-b8fa-fa17526df88a
+related:
+    - id: 2a072a96-a086-49fa-bcb5-15cc5a619093
+      type: derived
 status: test
 description: Detects the usage of the "net.exe" command to start a service using the "start" flag
 references:
@@ -10,6 +13,7 @@ modified: 2023/03/05
 tags:
     - attack.execution
     - attack.t1569.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

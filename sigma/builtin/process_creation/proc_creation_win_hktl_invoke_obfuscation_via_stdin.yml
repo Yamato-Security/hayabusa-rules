@@ -1,5 +1,8 @@
 title: Invoke-Obfuscation Via Stdin
-id: 9c14c9fa-1a63-4a64-8e57-d19280559490
+id: e8fdfc6d-5256-c3f4-7858-a45724bce385
+related:
+    - id: 9c14c9fa-1a63-4a64-8e57-d19280559490
+      type: derived
 status: test
 description: Detects Obfuscated Powershell via Stdin in Scripts
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

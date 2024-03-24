@@ -1,5 +1,8 @@
 title: Potential Persistence Using DebugPath
-id: df4dc653-1029-47ba-8231-3c44238cc0ae
+id: 7e39f9c6-fca2-d20b-c975-48062f7ac3e0
+related:
+    - id: df4dc653-1029-47ba-8231-3c44238cc0ae
+      type: derived
 status: experimental
 description: Detects potential persistence using Appx DebugPath
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1546.015
+    - sysmon
 logsource:
     category: registry_set
     product: windows

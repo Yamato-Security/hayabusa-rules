@@ -1,5 +1,8 @@
 title: Use of OpenConsole
-id: 814c95cc-8192-4378-a70a-f1aafd877af1
+id: 94528740-76e2-5bfd-e3d5-a6fc1aea5bcd
+related:
+    - id: 814c95cc-8192-4378-a70a-f1aafd877af1
+      type: derived
 status: test
 description: Detects usage of OpenConsole binary as a LOLBIN to launch other binaries to bypass application Whitelisting
 references:
@@ -9,6 +12,7 @@ date: 2022/06/16
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

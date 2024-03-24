@@ -1,5 +1,8 @@
 title: Mint Sandstorm - ManageEngine Suspicious Process Execution
-id: 58d8341a-5849-44cd-8ac8-8b020413a31b
+id: 16662367-d8c5-c609-8ef7-131dda0a9ae9
+related:
+    - id: 58d8341a-5849-44cd-8ac8-8b020413a31b
+      type: derived
 status: test
 description: Detects suspicious execution from ManageEngine as seen used by Mint Sandstorm
 references:
@@ -10,6 +13,7 @@ modified: 2023/04/25
 tags:
     - attack.execution
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

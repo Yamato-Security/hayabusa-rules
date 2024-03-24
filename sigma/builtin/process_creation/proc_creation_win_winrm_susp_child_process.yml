@@ -1,5 +1,8 @@
 title: Suspicious Processes Spawned by WinRM
-id: 5cc2cda8-f261-4d88-a2de-e9e193c86716
+id: 7d84c2d9-4528-bdae-4cc2-945948102cbd
+related:
+    - id: 5cc2cda8-f261-4d88-a2de-e9e193c86716
+      type: derived
 status: test
 description: Detects suspicious processes including shells spawnd from WinRM host process
 author: Andreas Hunkeler (@Karneades), Markus Neis
@@ -12,6 +15,7 @@ tags:
     - attack.initial_access
     - attack.persistence
     - attack.privilege_escalation
+    - sysmon
 logsource:
     category: process_creation
     product: windows

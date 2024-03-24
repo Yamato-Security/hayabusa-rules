@@ -1,5 +1,8 @@
 title: Suspicious Call by Ordinal
-id: e79a9e79-eb72-4e78-a628-0e7e8f59e89c
+id: 20c51c2f-7e3d-8f18-01f5-ef39633f31f9
+related:
+    - id: e79a9e79-eb72-4e78-a628-0e7e8f59e89c
+      type: derived
 status: stable
 description: Detects suspicious calls of DLLs in rundll32.dll exports by ordinal
 references:
@@ -13,6 +16,7 @@ modified: 2023/02/09
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

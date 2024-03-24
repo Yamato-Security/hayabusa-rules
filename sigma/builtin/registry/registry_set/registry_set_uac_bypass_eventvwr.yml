@@ -1,5 +1,8 @@
 title: UAC Bypass via Event Viewer
-id: 7c81fec3-1c1d-43b0-996a-46753041b1b6
+id: dee5910c-4bd3-fb48-fdbf-2d813d23aefb
+related:
+    - id: 7c81fec3-1c1d-43b0-996a-46753041b1b6
+      type: derived
 status: experimental
 description: Detects UAC bypass method using Windows event viewer
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.privilege_escalation
     - attack.t1548.002
     - car.2019-04-001
+    - sysmon
 logsource:
     product: windows
     category: registry_set

@@ -1,5 +1,8 @@
 title: Suspicious New Printer Ports in Registry (CVE-2020-1048)
-id: 7ec912f2-5175-4868-b811-ec13ad0f8567
+id: 630f16a8-0e53-642e-ff10-1e8fdeb631b8
+related:
+    - id: 7ec912f2-5175-4868-b811-ec13ad0f8567
+      type: derived
 status: test
 description: Detects a new and suspicious printer port creation in Registry that could be an attempt to exploit CVE-2020-1048
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.execution
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: registry_set

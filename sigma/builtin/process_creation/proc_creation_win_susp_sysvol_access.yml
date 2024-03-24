@@ -1,5 +1,8 @@
 title: Suspicious SYSVOL Domain Group Policy Access
-id: 05f3c945-dcc8-4393-9f3d-af65077a8f86
+id: 9eaaf7c3-c142-31ba-f615-52ed6de31344
+related:
+    - id: 05f3c945-dcc8-4393-9f3d-af65077a8f86
+      type: derived
 status: test
 description: Detects Access to Domain Group Policies stored in SYSVOL
 references:
@@ -11,6 +14,7 @@ modified: 2022/01/07
 tags:
     - attack.credential_access
     - attack.t1552.006
+    - sysmon
 logsource:
     category: process_creation
     product: windows

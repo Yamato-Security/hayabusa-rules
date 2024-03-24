@@ -1,8 +1,5 @@
 title: Suspicious Parent Double Extension File Execution
-id: 5e6a80c8-2d45-4633-9ef4-fa2671a39c5c
-related:
-    - id: 1cdd9a09-06c9-4769-99ff-626e2b3991b8 # Image/CommandLine
-      type: derived
+id: 775d4bc1-d404-6927-6dc7-c22d00029c37
 status: test
 description: Detect execution of suspicious double extension files in ParentCommandLine
 references:
@@ -14,6 +11,7 @@ modified: 2023/02/28
 tags:
     - attack.defense_evasion
     - attack.t1036.007
+    - sysmon
 logsource:
     category: process_creation
     product: windows

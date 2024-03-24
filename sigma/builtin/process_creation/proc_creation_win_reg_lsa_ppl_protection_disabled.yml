@@ -1,5 +1,8 @@
 title: LSA PPL Protection Disabled Via Reg.EXE
-id: 8c0eca51-0f88-4db2-9183-fdfb10c703f9
+id: a6a22651-ffaa-7713-8313-46ce8a85ad64
+related:
+    - id: 8c0eca51-0f88-4db2-9183-fdfb10c703f9
+      type: derived
 status: test
 description: Detects the usage of the "reg.exe" utility to disable PPL protection on the LSA process
 references:
@@ -10,6 +13,7 @@ modified: 2023/03/26
 tags:
     - attack.defense_evasion
     - attack.t1562.010
+    - sysmon
 logsource:
     category: process_creation
     product: windows

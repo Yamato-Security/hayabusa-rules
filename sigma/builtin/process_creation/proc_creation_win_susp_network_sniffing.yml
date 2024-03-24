@@ -1,5 +1,8 @@
 title: Potential Network Sniffing Activity Using Network Tools
-id: ba1f7802-adc7-48b4-9ecb-81e227fddfd5
+id: 7d08c255-caa9-d1ce-ba23-4030c6718e0b
+related:
+    - id: ba1f7802-adc7-48b4-9ecb-81e227fddfd5
+      type: derived
 status: test
 description: |
     Detects potential network sniffing via use of network tools such as "tshark", "windump".
@@ -14,6 +17,7 @@ tags:
     - attack.credential_access
     - attack.discovery
     - attack.t1040
+    - sysmon
 logsource:
     category: process_creation
     product: windows

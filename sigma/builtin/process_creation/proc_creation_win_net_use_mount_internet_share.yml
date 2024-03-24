@@ -1,5 +1,8 @@
 title: Windows Internet Hosted WebDav Share Mount Via Net.EXE
-id: 7e6237fe-3ddb-438f-9381-9bf9de5af8d0
+id: bc7f261d-3cfe-72c9-521d-d3cd1a0032bf
+related:
+    - id: 7e6237fe-3ddb-438f-9381-9bf9de5af8d0
+      type: derived
 status: experimental
 description: Detects when an internet hosted webdav share is mounted using the "net.exe" utility
 references:
@@ -10,6 +13,7 @@ modified: 2023/07/25
 tags:
     - attack.lateral_movement
     - attack.t1021.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

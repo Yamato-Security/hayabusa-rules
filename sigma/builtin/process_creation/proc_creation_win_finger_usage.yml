@@ -1,5 +1,8 @@
 title: Finger.exe Suspicious Invocation
-id: af491bca-e752-4b44-9c86-df5680533dbc
+id: 1e5c4cf4-c566-7068-d0ce-7a2eeabfc733
+related:
+    - id: af491bca-e752-4b44-9c86-df5680533dbc
+      type: derived
 status: test
 description: Detects suspicious aged finger.exe tool execution often used in malware attacks nowadays
 references:
@@ -12,6 +15,7 @@ modified: 2022/08/16
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

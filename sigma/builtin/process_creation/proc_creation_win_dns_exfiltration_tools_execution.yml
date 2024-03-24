@@ -1,5 +1,8 @@
 title: DNS Exfiltration and Tunneling Tools Execution
-id: 98a96a5a-64a0-4c42-92c5-489da3866cb0
+id: e44a6a45-107b-0cdb-3b8a-61b2e33d55d7
+related:
+    - id: 98a96a5a-64a0-4c42-92c5-489da3866cb0
+      type: derived
 status: test
 description: Well-known DNS Exfiltration tools execution
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.command_and_control
     - attack.t1071.004
     - attack.t1132.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

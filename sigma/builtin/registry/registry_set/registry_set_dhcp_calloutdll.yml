@@ -1,5 +1,8 @@
 title: DHCP Callout DLL Installation
-id: 9d3436ef-9476-4c43-acca-90ce06bdf33a
+id: 8db93e70-1420-c43f-ea06-00a6fc42449f
+related:
+    - id: 9d3436ef-9476-4c43-acca-90ce06bdf33a
+      type: derived
 status: test
 description: Detects the installation of a Callout DLL via CalloutDlls and CalloutEnabled parameter in Registry, which can be used to execute code in context of the DHCP server (restart required)
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.defense_evasion
     - attack.t1574.002
     - attack.t1112
+    - sysmon
 logsource:
     category: registry_set
     product: windows

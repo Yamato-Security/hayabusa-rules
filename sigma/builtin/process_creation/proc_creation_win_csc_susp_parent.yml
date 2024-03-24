@@ -1,5 +1,8 @@
 title: Csc.EXE Execution Form Potentially Suspicious Parent
-id: b730a276-6b63-41b8-bcf8-55930c8fc6ee
+id: 46903700-a139-8e57-f71a-3b0e0c0b1fb5
+related:
+    - id: b730a276-6b63-41b8-bcf8-55930c8fc6ee
+      type: derived
 status: test
 description: Detects a potentially suspicious parent of "csc.exe", which could be a sign of payload delivery.
 references:
@@ -16,6 +19,7 @@ tags:
     - attack.defense_evasion
     - attack.t1218.005
     - attack.t1027.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

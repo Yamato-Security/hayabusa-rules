@@ -1,5 +1,8 @@
 title: Potential Manage-bde.wsf Abuse To Proxy Execution
-id: c363385c-f75d-4753-a108-c1a8e28bdbda
+id: 35e14148-f5cd-9d4d-90bb-e63d555a1a02
+related:
+    - id: c363385c-f75d-4753-a108-c1a8e28bdbda
+      type: derived
 status: test
 description: Detects potential abuse of the "manage-bde.wsf" script as a LOLBIN to proxy execution
 references:
@@ -14,6 +17,7 @@ modified: 2023/02/03
 tags:
     - attack.defense_evasion
     - attack.t1216
+    - sysmon
 logsource:
     category: process_creation
     product: windows

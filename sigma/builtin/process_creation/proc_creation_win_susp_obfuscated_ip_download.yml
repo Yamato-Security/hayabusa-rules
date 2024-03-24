@@ -1,5 +1,8 @@
 title: Obfuscated IP Download Activity
-id: cb5a2333-56cf-4562-8fcb-22ba1bca728d
+id: e0a1f78a-c161-fbe3-4ec6-e151177ec4f1
+related:
+    - id: cb5a2333-56cf-4562-8fcb-22ba1bca728d
+      type: derived
 status: test
 description: Detects use of an encoded/obfuscated version of an IP address (hex, octal...) in an URL combined with a download command
 references:
@@ -11,6 +14,7 @@ date: 2022/08/03
 modified: 2023/11/06
 tags:
     - attack.discovery
+    - sysmon
 logsource:
     category: process_creation
     product: windows

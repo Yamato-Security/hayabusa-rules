@@ -1,5 +1,8 @@
 title: Reg Add Suspicious Paths
-id: b7e2a8d4-74bb-4b78-adc9-3f92af2d4829
+id: c4e3bdbb-aa79-5067-6b21-87a8fa83ae97
+related:
+    - id: b7e2a8d4-74bb-4b78-adc9-3f92af2d4829
+      type: derived
 status: test
 description: Detects when an adversary uses the reg.exe utility to add or modify new keys or subkeys
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.defense_evasion
     - attack.t1112
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

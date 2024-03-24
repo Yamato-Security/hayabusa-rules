@@ -1,5 +1,8 @@
 title: PowerShell SAM Copy
-id: 1af57a4b-460a-4738-9034-db68b880c665
+id: 5400e5cd-e82b-a457-8209-7ea3515c05e4
+related:
+    - id: 1af57a4b-460a-4738-9034-db68b880c665
+      type: derived
 status: test
 description: Detects suspicious PowerShell scripts accessing SAM hives
 references:
@@ -10,6 +13,7 @@ modified: 2023/01/06
 tags:
     - attack.credential_access
     - attack.t1003.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

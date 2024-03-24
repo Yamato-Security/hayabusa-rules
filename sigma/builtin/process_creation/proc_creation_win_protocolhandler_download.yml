@@ -1,5 +1,8 @@
 title: File Download Using ProtocolHandler.exe
-id: 104cdb48-a7a8-4ca7-a453-32942c6e5dcb
+id: 40508368-741e-4fc4-bc48-e76128b330d2
+related:
+    - id: 104cdb48-a7a8-4ca7-a453-32942c6e5dcb
+      type: derived
 status: test
 description: |
     Detects usage of "ProtocolHandler" to download files. Downloaded files will be located in the cache folder (for example - %LOCALAPPDATA%\Microsoft\Windows\INetCache\IE)
@@ -12,6 +15,7 @@ modified: 2023/11/09
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

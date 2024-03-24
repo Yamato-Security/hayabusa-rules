@@ -1,5 +1,8 @@
 title: Whoami.EXE Execution Anomaly
-id: 8de1cbe8-d6f5-496d-8237-5f44a721c7a0
+id: 5a52bc92-7713-3fca-6d54-f03845a88c47
+related:
+    - id: 8de1cbe8-d6f5-496d-8237-5f44a721c7a0
+      type: derived
 status: experimental
 description: Detects the execution of whoami.exe with suspicious parent processes.
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.discovery
     - attack.t1033
     - car.2016-03-001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

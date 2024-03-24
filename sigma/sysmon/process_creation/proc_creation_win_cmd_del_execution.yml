@@ -1,5 +1,8 @@
 title: File Deletion Via Del
-id: 379fa130-190e-4c3f-b7bc-6c8e834485f3
+id: f61ca443-661f-86bb-95df-1a549eee8e88
+related:
+    - id: 379fa130-190e-4c3f-b7bc-6c8e834485f3
+      type: derived
 status: test
 description: |
     Detects execution of the builtin "del"/"erase" commands in order to delete files.
@@ -32,10 +35,10 @@ detection:
             - 'erase '
     selection_flags:
         CommandLine|contains:
+            - ' -f'
+            - ' -q'
             - ' -s'
             - ' /f'
-            - ' -q'
-            - ' -f'
             - ' /q'
             - ' /s'
     condition: process_creation and (all of selection_*)

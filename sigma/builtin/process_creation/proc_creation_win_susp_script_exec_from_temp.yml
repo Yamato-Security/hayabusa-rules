@@ -1,5 +1,8 @@
 title: Suspicious Script Execution From Temp Folder
-id: a6a39bdb-935c-4f0a-ab77-35f4bbf44d33
+id: 18f506e1-2726-f3fa-8429-f7b06ce69825
+related:
+    - id: a6a39bdb-935c-4f0a-ab77-35f4bbf44d33
+      type: derived
 status: test
 description: Detects a suspicious script executions from temporary folder
 references:
@@ -10,6 +13,7 @@ modified: 2022/10/05
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

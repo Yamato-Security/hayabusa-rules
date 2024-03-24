@@ -1,5 +1,8 @@
 title: Powershell Inline Execution From A File
-id: ee218c12-627a-4d27-9e30-d6fb2fe22ed2
+id: 58d3ef60-05d8-9a87-7fde-3bd696dba247
+related:
+    - id: ee218c12-627a-4d27-9e30-d6fb2fe22ed2
+      type: derived
 status: test
 description: Detects inline execution of PowerShell code from a file
 references:
@@ -9,6 +12,7 @@ date: 2022/12/25
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

@@ -1,5 +1,8 @@
 title: Suspicious File Download From File Sharing Domain Via Curl.EXE
-id: 56454143-524f-49fb-b1c6-3fb8b1ad41fb
+id: ebccbc0b-0513-7912-7679-1ff5d676842e
+related:
+    - id: 56454143-524f-49fb-b1c6-3fb8b1ad41fb
+      type: derived
 status: experimental
 description: Detects potentially suspicious file download from file sharing domains using curl.exe
 references:
@@ -10,6 +13,7 @@ date: 2023/05/05
 modified: 2024/02/09
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

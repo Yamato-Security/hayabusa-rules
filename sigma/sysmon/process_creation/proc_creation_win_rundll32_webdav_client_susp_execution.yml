@@ -1,5 +1,8 @@
 title: Suspicious WebDav Client Execution Via Rundll32.EXE
-id: 982e9f2d-1a85-4d5b-aea4-31f5e97c6555
+id: 5110c0df-f22e-16a3-bd41-fc4185ba1e8d
+related:
+    - id: 982e9f2d-1a85-4d5b-aea4-31f5e97c6555
+      type: derived
 status: experimental
 description: |
     Detects "svchost.exe" spawning "rundll32.exe" with command arguments like C:\windows\system32\davclnt.dll,DavSetCookie. This could be an indicator of exfiltration or use of WebDav to launch code (hosted on WebDav Server) or potentially a sign of exploitation of CVE-2023-23397

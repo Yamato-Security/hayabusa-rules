@@ -1,5 +1,8 @@
 title: Suspicious PsExec Execution
-id: c462f537-a1e3-41a6-b5fc-b2c2cef9bf82
+id: 426009da-814c-c1c0-cf41-6631c9ff6a8e
+related:
+    - id: c462f537-a1e3-41a6-b5fc-b2c2cef9bf82
+      type: derived
 status: test
 description: detects execution of psexec or paexec with renamed service name, this rule helps to filter out the noise if psexec is used for legit purposes or if attacker uses a different psexec client other than sysinternal one
 references:

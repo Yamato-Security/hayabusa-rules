@@ -1,8 +1,5 @@
 title: Powershell Token Obfuscation - Process Creation
-id: deb9b646-a508-44ee-b7c9-d8965921c6b6
-related:
-    - id: f3a98ce4-6164-4dd4-867c-4d83de7eca51
-      type: similar
+id: 9e12c2cd-fa32-33a2-e894-455cfcbb3680
 status: test
 description: Detects TOKEN OBFUSCATION technique from Invoke-Obfuscation
 references:
@@ -13,6 +10,7 @@ modified: 2022/12/30
 tags:
     - attack.defense_evasion
     - attack.t1027.009
+    - sysmon
 logsource:
     category: process_creation
     product: windows

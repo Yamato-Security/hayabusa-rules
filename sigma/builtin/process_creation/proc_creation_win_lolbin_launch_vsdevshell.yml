@@ -1,5 +1,8 @@
 title: Launch-VsDevShell.PS1 Proxy Execution
-id: 45d3a03d-f441-458c-8883-df101a3bb146
+id: ba78b609-b5f0-41e2-1081-e3424cdfe02d
+related:
+    - id: 45d3a03d-f441-458c-8883-df101a3bb146
+      type: derived
 status: test
 description: Detects the use of the 'Launch-VsDevShell.ps1' Microsoft signed script to execute commands.
 references:
@@ -9,6 +12,7 @@ date: 2022/08/19
 tags:
     - attack.defense_evasion
     - attack.t1216.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

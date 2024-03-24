@@ -1,5 +1,8 @@
 title: Suspicious Office Token Search Via CLI
-id: 6d3a3952-6530-44a3-8554-cf17c116c615
+id: 81c5facb-4885-e062-fbf5-27475e21bba1
+related:
+    - id: 6d3a3952-6530-44a3-8554-cf17c116c615
+      type: derived
 status: test
 description: Detects possible search for office tokens via CLI by looking for the string "eyJ0eX". This string is used as an anchor to look for the start of the JWT token used by office and similar apps.
 references:

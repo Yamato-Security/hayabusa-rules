@@ -1,5 +1,8 @@
 title: Microsoft Workflow Compiler Execution
-id: 419dbf2b-8a9b-4bea-bf99-7544b050ec8d
+id: 592e613b-8b20-792b-c8be-b55cf0bbe6a4
+related:
+    - id: 419dbf2b-8a9b-4bea-bf99-7544b050ec8d
+      type: derived
 status: test
 description: Detects invocation of Microsoft Workflow Compiler, which may permit the execution of arbitrary unsigned code.
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.execution
     - attack.t1127
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

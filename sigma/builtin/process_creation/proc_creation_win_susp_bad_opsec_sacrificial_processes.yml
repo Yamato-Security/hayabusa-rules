@@ -1,8 +1,5 @@
 title: Bad Opsec Defaults Sacrificial Processes With Improper Arguments
-id: a7c3d773-caef-227e-a7e7-c2f13c622329
-related:
-    - id: f5647edc-a7bf-4737-ab50-ef8c60dc3add
-      type: obsoletes
+id: 79657164-232b-d42a-7eab-1d9b88196e7a
 status: experimental
 description: |
     Detects attackers using tooling with bad opsec defaults.
@@ -22,6 +19,7 @@ modified: 2023/12/02
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

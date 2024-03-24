@@ -1,5 +1,8 @@
 title: Windows Kernel Debugger Execution
-id: 27ee9438-90dc-4bef-904b-d3ef927f5e7e
+id: 5f7d7535-bf69-3a27-8300-415e9b0ed170
+related:
+    - id: 27ee9438-90dc-4bef-904b-d3ef927f5e7e
+      type: derived
 status: experimental
 description: Detects execution of the Windows Kernel Debugger "kd.exe".
 references:
@@ -9,6 +12,7 @@ date: 2023/05/15
 tags:
     - attack.defense_evasion
     - attack.privilege_escalation
+    - sysmon
 logsource:
     category: process_creation
     product: windows

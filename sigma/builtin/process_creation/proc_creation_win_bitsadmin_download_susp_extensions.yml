@@ -1,5 +1,8 @@
 title: File With Suspicious Extension Downloaded Via Bitsadmin
-id: 5b80a791-ad9b-4b75-bcc1-ad4e1e89c200
+id: 24c9aace-94e9-d8a7-f3fc-58eaff2eefea
+related:
+    - id: 5b80a791-ad9b-4b75-bcc1-ad4e1e89c200
+      type: derived
 status: experimental
 description: Detects usage of bitsadmin downloading a file with a suspicious extension
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1197
     - attack.s0190
     - attack.t1036.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

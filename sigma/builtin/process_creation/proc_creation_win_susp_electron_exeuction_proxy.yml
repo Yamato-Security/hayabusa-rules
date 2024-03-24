@@ -1,8 +1,5 @@
 title: Potentially Suspicious Electron Application CommandLine
-id: 378a05d8-963c-46c9-bcce-13c7657eac99
-related:
-    - id: f26eb764-fd89-464b-85e2-dc4a8e6e77b8
-      type: similar
+id: db4d52b7-af14-c61b-c1e1-5b52f036b5e0
 status: experimental
 description: Detects potentially suspicious CommandLine of electron apps (teams, discord, slack, etc.). This could be a sign of abuse to proxy execution through a signed binary.
 references:
@@ -17,6 +14,7 @@ date: 2023/09/05
 modified: 2023/11/09
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

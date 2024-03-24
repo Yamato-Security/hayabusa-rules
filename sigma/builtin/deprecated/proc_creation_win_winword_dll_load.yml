@@ -1,5 +1,8 @@
 title: Winword.exe Loads Suspicious DLL
-id: 2621b3a6-3840-4810-ac14-a02426086171
+id: af42e8c8-7702-f542-d278-68bf89a26251
+related:
+    - id: 2621b3a6-3840-4810-ac14-a02426086171
+      type: derived
 status: deprecated
 description: Detects Winword.exe loading a custom DLL using the /l flag
 author: Victor Sergeev, oscd.community
@@ -26,4 +29,5 @@ level: medium
 tags:
     - attack.defense_evasion
     - attack.t1202
+    - sysmon
 ruletype: Sigma

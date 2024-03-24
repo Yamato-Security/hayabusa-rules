@@ -1,5 +1,8 @@
 title: Curl Download And Execute Combination
-id: 21dd6d38-2b18-4453-9404-a0fe4a0cc288
+id: 637e9594-8499-4a83-1fec-53dd2ff90147
+related:
+    - id: 21dd6d38-2b18-4453-9404-a0fe4a0cc288
+      type: derived
 status: test
 description: Adversaries can use curl to download payloads remotely and execute them. Curl is included by default in Windows 10 build 17063 and later.
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1218
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

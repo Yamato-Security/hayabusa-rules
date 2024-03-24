@@ -1,5 +1,8 @@
 title: Rundll32 Execution Without Parameters
-id: 5bb68627-3198-40ca-b458-49f973db8752
+id: 686228e1-28f8-b922-43d9-3b2fb663b67e
+related:
+    - id: 5bb68627-3198-40ca-b458-49f973db8752
+      type: derived
 status: test
 description: Detects rundll32 execution without parameters as observed when running Metasploit windows/smb/psexec exploit module
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1570
     - attack.execution
     - attack.t1569.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

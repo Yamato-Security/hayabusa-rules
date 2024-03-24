@@ -1,8 +1,10 @@
 title: DLL Sideloading Of ShellChromeAPI.DLL
-id: ee4c5d06-3abc-48cc-8885-77f1c20f4451
+id: 48a951a7-a562-f985-7630-f8f242bf1f3c
 related:
     - id: e173ad47-4388-4012-ae62-bd13f71c18a8
       type: similar
+    - id: ee4c5d06-3abc-48cc-8885-77f1c20f4451
+      type: derived
 status: test
 description: |
     Detects processes loading the non-existent DLL "ShellChromeAPI". One known example is the "DeviceEnroller" binary in combination with the "PhoneDeepLink" flag tries to load this DLL.

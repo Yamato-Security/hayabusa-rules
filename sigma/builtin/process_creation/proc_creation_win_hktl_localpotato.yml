@@ -1,5 +1,8 @@
 title: HackTool - LocalPotato Execution
-id: 6bd75993-9888-4f91-9404-e1e4e4e34b77
+id: be028779-def3-3fc8-e466-1ed868806e63
+related:
+    - id: 6bd75993-9888-4f91-9404-e1e4e4e34b77
+      type: derived
 status: test
 description: Detects the execution of the LocalPotato POC based on basic PE metadata information and default CLI examples
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - cve.2023.21746
+    - sysmon
 logsource:
     category: process_creation
     product: windows

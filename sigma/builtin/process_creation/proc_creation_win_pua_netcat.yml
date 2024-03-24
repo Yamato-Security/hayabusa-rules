@@ -1,5 +1,8 @@
 title: PUA - Netcat Suspicious Execution
-id: e31033fc-33f0-4020-9a16-faf9b31cbf08
+id: f483b0b8-2606-8691-2edb-5c64c3a7347e
+related:
+    - id: e31033fc-33f0-4020-9a16-faf9b31cbf08
+      type: derived
 status: test
 description: Detects execution of Netcat. Adversaries may use a non-application layer protocol for communication between host and C2 server or among infected hosts within a network
 references:
@@ -12,6 +15,7 @@ modified: 2023/02/08
 tags:
     - attack.command_and_control
     - attack.t1095
+    - sysmon
 logsource:
     category: process_creation
     product: windows

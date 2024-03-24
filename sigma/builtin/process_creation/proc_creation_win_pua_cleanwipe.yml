@@ -1,5 +1,8 @@
 title: PUA - CleanWipe Execution
-id: f44800ac-38ec-471f-936e-3fa7d9c53100
+id: 3e89a33f-127c-1329-d332-0d836db05ad7
+related:
+    - id: f44800ac-38ec-471f-936e-3fa7d9c53100
+      type: derived
 status: test
 description: Detects the use of CleanWipe a tool usually used to delete Symantec antivirus.
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/14
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

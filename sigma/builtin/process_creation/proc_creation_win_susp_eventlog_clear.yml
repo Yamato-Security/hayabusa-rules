@@ -1,5 +1,8 @@
 title: Suspicious Eventlog Clear or Configuration Change
-id: cc36992a-4671-4f21-a91d-6c2b72a2edf5
+id: 676111e7-0d6f-b5f4-e267-6399b5052fdc
+related:
+    - id: cc36992a-4671-4f21-a91d-6c2b72a2edf5
+      type: derived
 status: stable
 description: Detects clearing or configuration of eventlogs using wevtutil, powershell and wmic. Might be used by ransomwares during the attack (seen by NotPetya and others).
 references:
@@ -16,6 +19,7 @@ tags:
     - attack.t1070.001
     - attack.t1562.002
     - car.2016-04-002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

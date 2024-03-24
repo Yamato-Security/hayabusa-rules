@@ -1,8 +1,5 @@
 title: Windows Registry Trust Record Modification
-id: 295a59c1-7b79-4b47-a930-df12c15fc9c2
-related:
-    - id: a166f74e-bf44-409d-b9ba-ea4b2dd8b3cd
-      type: similar
+id: b2a0af70-a308-0185-6128-c2e37db1ebf2
 status: test
 description: Alerts on trust record modification within the registry, indicating usage of macros
 references:
@@ -15,6 +12,7 @@ modified: 2023/06/21
 tags:
     - attack.initial_access
     - attack.t1566.001
+    - sysmon
 logsource:
     category: registry_event
     product: windows

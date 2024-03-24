@@ -1,5 +1,8 @@
 title: Potential PowerShell Command Line Obfuscation
-id: d7bcd677-645d-4691-a8d4-7a5602b780d1
+id: 8f07f78d-22f4-9cc9-b3fb-8d8c7b056395
+related:
+    - id: d7bcd677-645d-4691-a8d4-7a5602b780d1
+      type: derived
 status: test
 description: Detects the PowerShell command lines with special characters
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.t1027
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

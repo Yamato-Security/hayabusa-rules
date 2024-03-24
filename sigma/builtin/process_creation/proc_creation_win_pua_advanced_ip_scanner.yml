@@ -1,5 +1,8 @@
 title: PUA - Advanced IP Scanner Execution
-id: bef37fa2-f205-4a7b-b484-0759bfd5f86f
+id: c888539c-8fb0-45df-4874-934d5b1edf1c
+related:
+    - id: bef37fa2-f205-4a7b-b484-0759bfd5f86f
+      type: derived
 status: test
 description: Detects the use of Advanced IP Scanner. Seems to be a popular tool for ransomware groups.
 references:
@@ -16,6 +19,7 @@ tags:
     - attack.discovery
     - attack.t1046
     - attack.t1135
+    - sysmon
 logsource:
     category: process_creation
     product: windows

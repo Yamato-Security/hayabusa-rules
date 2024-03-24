@@ -1,5 +1,8 @@
 title: HackTool - SysmonEOP Execution
-id: 8a7e90c5-fe6e-45dc-889e-057fe4378bd9
+id: 40c1ee69-dcc9-b5a4-614c-60aa83c693d0
+related:
+    - id: 8a7e90c5-fe6e-45dc-889e-057fe4378bd9
+      type: derived
 status: test
 description: Detects the execution of the PoC that can be used to exploit Sysmon CVE-2022-41120
 references:
@@ -11,6 +14,7 @@ tags:
     - cve.2022.41120
     - attack.t1068
     - attack.privilege_escalation
+    - sysmon
 logsource:
     category: process_creation
     product: windows

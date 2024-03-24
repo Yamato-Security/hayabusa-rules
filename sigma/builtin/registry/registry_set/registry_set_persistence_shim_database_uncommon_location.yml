@@ -1,5 +1,8 @@
 title: Potential Persistence Via Shim Database In Uncommon Location
-id: 6b6976a3-b0e6-4723-ac24-ae38a737af41
+id: 658b7369-eb29-2ab2-5a37-830bffa14b06
+related:
+    - id: 6b6976a3-b0e6-4723-ac24-ae38a737af41
+      type: derived
 status: experimental
 description: Detects the installation of a new shim database where the file is located in a non-default location
 references:
@@ -12,6 +15,7 @@ modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1546.011
+    - sysmon
 logsource:
     category: registry_set
     product: windows

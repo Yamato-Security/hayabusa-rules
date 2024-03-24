@@ -1,5 +1,8 @@
 title: ETW Logging Disabled For rpcrt4.dll
-id: 90f342e1-1aaa-4e43-b092-39fda57ed11e
+id: c1e78049-d5f0-8a11-39dd-10110524f89f
+related:
+    - id: 90f342e1-1aaa-4e43-b092-39fda57ed11e
+      type: derived
 status: experimental
 description: Detects changes to the "ExtErrorInformation" key in order to disable ETW logging for rpcrt4.dll
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1112
     - attack.t1562
+    - sysmon
 logsource:
     product: windows
     category: registry_set

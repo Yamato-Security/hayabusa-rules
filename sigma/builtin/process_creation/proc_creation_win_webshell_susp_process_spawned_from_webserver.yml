@@ -1,5 +1,8 @@
 title: Suspicious Process By Web Server Process
-id: 8202070f-edeb-4d31-a010-a26c72ac5600
+id: 5bdc7357-a9e6-95bc-a7cd-c6e0022b3299
+related:
+    - id: 8202070f-edeb-4d31-a010-a26c72ac5600
+      type: derived
 status: test
 description: |
     Detects potentially suspicious processes being spawned by a web server process which could be the result of a successfully placed web shell or exploitation
@@ -12,6 +15,7 @@ tags:
     - attack.persistence
     - attack.t1505.003
     - attack.t1190
+    - sysmon
 logsource:
     category: process_creation
     product: windows

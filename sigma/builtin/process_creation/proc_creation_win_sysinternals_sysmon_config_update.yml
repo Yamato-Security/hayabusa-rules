@@ -1,5 +1,8 @@
 title: Sysmon Configuration Update
-id: 87911521-7098-470b-a459-9a57fc80bdfd
+id: 055ae5db-808f-a1cc-57ac-99f0fadbab7f
+related:
+    - id: 87911521-7098-470b-a459-9a57fc80bdfd
+      type: derived
 status: test
 description: Detects updates to Sysmon's configuration. Attackers might update or replace the Sysmon configuration with a bare bone one to avoid monitoring without shutting down the service completely
 references:
@@ -10,6 +13,7 @@ modified: 2024/03/13
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

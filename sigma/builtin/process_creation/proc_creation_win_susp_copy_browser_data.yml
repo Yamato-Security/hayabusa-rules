@@ -1,8 +1,5 @@
 title: Potential Browser Data Stealing
-id: 47147b5b-9e17-4d76-b8d2-7bac24c5ce1b
-related:
-    - id: fc028194-969d-4122-8abe-0470d5b8f12f
-      type: derived
+id: 469a9d6a-0e9f-492d-9e3a-e0f35762874e
 status: experimental
 description: |
     Adversaries may acquire credentials from web browsers by reading files specific to the target browser.
@@ -16,6 +13,7 @@ modified: 2023/08/29
 tags:
     - attack.credential_access
     - attack.t1555.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

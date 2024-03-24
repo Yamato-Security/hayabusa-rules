@@ -1,5 +1,8 @@
 title: Microsoft Defender Blocked from Loading Unsigned DLL
-id: 0b0ea3cc-99c8-4730-9c53-45deee2a4c86
+id: 838d17f1-63ba-03c4-f8ae-2bdfd74a6a08
+related:
+    - id: 0b0ea3cc-99c8-4730-9c53-45deee2a4c86
+      type: derived
 status: test
 description: Detects Code Integrity (CI) engine blocking Microsoft Defender's processes (MpCmdRun and NisSrv) from loading unsigned DLLs which may be an attempt to sideload arbitrary DLL
 references:

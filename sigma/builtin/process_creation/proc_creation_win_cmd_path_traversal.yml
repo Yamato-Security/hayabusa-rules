@@ -1,5 +1,8 @@
 title: Potential CommandLine Path Traversal Via Cmd.EXE
-id: 087790e3-3287-436c-bccf-cbd0184a7db1
+id: 63efb70a-b106-3e6a-fe1d-b3c49558ebd0
+related:
+    - id: 087790e3-3287-436c-bccf-cbd0184a7db1
+      type: derived
 status: test
 description: Detects potential path traversal attempt via cmd.exe. Could indicate possible command/argument confusion/hijacking
 references:
@@ -11,6 +14,7 @@ modified: 2023/03/06
 tags:
     - attack.execution
     - attack.t1059.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

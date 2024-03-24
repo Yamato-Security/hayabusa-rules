@@ -1,5 +1,8 @@
 title: Suspicious ScreenSave Change by Reg.exe
-id: 0fc35fc3-efe6-4898-8a37-0b233339524f
+id: d7156c2d-f3d8-5088-3d92-b5b7ee49cb65
+related:
+    - id: 0fc35fc3-efe6-4898-8a37-0b233339524f
+      type: derived
 status: test
 description: |
     Adversaries may establish persistence by executing malicious content triggered by user inactivity.
@@ -13,6 +16,7 @@ modified: 2022/06/02
 tags:
     - attack.privilege_escalation
     - attack.t1546.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

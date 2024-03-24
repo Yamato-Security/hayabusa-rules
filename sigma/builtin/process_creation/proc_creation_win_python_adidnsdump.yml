@@ -1,5 +1,8 @@
 title: PUA - Adidnsdump Execution
-id: 26d3f0a2-f514-4a3f-a8a7-e7e48a8d9160
+id: e88b49c4-9d10-2b2d-da20-8934c2de27db
+related:
+    - id: 26d3f0a2-f514-4a3f-a8a7-e7e48a8d9160
+      type: derived
 status: test
 description: |
     This tool enables enumeration and exporting of all DNS records in the zone for recon purposes of internal networks Python 3 and python.exe must be installed,
@@ -12,6 +15,7 @@ modified: 2023/02/21
 tags:
     - attack.discovery
     - attack.t1018
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Shell Context Menu Command Tampering
-id: 868df2d1-0939-4562-83a7-27408c4a1ada
+id: 1ce6a719-c7b0-11e7-2b9f-37facf10d1d4
+related:
+    - id: 868df2d1-0939-4562-83a7-27408c4a1ada
+      type: derived
 status: experimental
 description: Detects changes to shell context menu commands. Use this rule to hunt for potential anomalies and suspicious shell commands.
 references:
@@ -9,6 +12,7 @@ date: 2024/03/06
 tags:
     - attack.persistence
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: registry_set
     product: windows

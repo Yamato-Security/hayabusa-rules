@@ -1,5 +1,8 @@
 title: Ps.exe Renamed SysInternals Tool
-id: 18da1007-3f26-470f-875d-f77faf1cab31
+id: 3f54c5d2-0fd9-2b17-f9e5-c2fa4ca101d7
+related:
+    - id: 18da1007-3f26-470f-875d-f77faf1cab31
+      type: derived
 status: test
 description: Detects renamed SysInternals tool execution with a binary named ps.exe as used by Dragonfly APT group and documented in TA17-293A report
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1036.003
     - car.2013-05-009
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

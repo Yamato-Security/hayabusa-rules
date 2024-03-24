@@ -1,5 +1,8 @@
 title: Private Keys Reconnaissance Via CommandLine Tools
-id: 213d6a77-3d55-4ce8-ba74-fcfef741974e
+id: 6608cba0-3816-77a3-31ab-3b70c790f18c
+related:
+    - id: 213d6a77-3d55-4ce8-ba74-fcfef741974e
+      type: derived
 status: test
 description: Adversaries may search for private key certificate files on compromised systems for insecurely stored credential
 references:
@@ -10,6 +13,7 @@ modified: 2023/03/06
 tags:
     - attack.credential_access
     - attack.t1552.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

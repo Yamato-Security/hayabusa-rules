@@ -1,5 +1,8 @@
 title: Sofacy Trojan Loader Activity
-id: ba778144-5e3d-40cf-8af9-e28fb1df1e20
+id: 8b5c9860-1038-cd29-e1fe-e5ebcf52d6f0
+related:
+    - id: ba778144-5e3d-40cf-8af9-e28fb1df1e20
+      type: derived
 status: test
 description: Detects Trojan loader activity as used by APT28
 references:
@@ -17,6 +20,7 @@ tags:
     - attack.t1218.011
     - car.2013-10-002
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Code Execution via Pcwutl.dll
-id: 9386d78a-7207-4048-9c9f-a93a7c2d1c05
+id: ced3b93a-d1cc-dab7-fe8c-be95fd649ff3
+related:
+    - id: 9386d78a-7207-4048-9c9f-a93a7c2d1c05
+      type: derived
 status: test
 description: Detects launch of executable by calling the LaunchApplication function from pcwutl.dll library.
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/09
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

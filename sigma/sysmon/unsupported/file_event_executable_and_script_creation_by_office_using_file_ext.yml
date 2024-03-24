@@ -1,5 +1,8 @@
 title: File Creation by Office Applications
-id: 8c6fd6fc-28fc-4597-a86a-fc1de20b039d
+id: c24ae889-cbc0-8ffd-409e-f044accdda78
+related:
+    - id: 8c6fd6fc-28fc-4597-a86a-fc1de20b039d
+      type: derived
 description: This rule will monitor executable and script file creation by office applications. Please add more file extensions or magic bytes to the logic of your choice.
 references:
     - https://thedfirreport.com/2021/03/29/sodinokibi-aka-revil-ransomware/
@@ -19,7 +22,6 @@ logsource:
     product: windows
     category: file_event
 detection:
-    #useful_information: Please add more file extensions and magic bytes to the logic of your choice.
     file_event:
         EventID: 11
         Channel: Microsoft-Windows-Sysmon/Operational

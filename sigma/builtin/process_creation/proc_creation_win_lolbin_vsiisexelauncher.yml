@@ -1,5 +1,8 @@
 title: Use of VSIISExeLauncher.exe
-id: 18749301-f1c5-4efc-a4c3-276ff1f5b6f8
+id: 98e8d981-f4c4-0375-e252-80c62c6ff415
+related:
+    - id: 18749301-f1c5-4efc-a4c3-276ff1f5b6f8
+      type: derived
 status: test
 description: The "VSIISExeLauncher.exe" binary part of the Visual Studio/VS Code can be used to execute arbitrary binaries
 references:
@@ -9,6 +12,7 @@ date: 2022/06/09
 tags:
     - attack.defense_evasion
     - attack.t1127
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: HackTool - TruffleSnout Execution
-id: 69ca006d-b9a9-47f5-80ff-ecd4d25d481a
+id: 56a9069d-21e3-4b02-f132-6a4e930a4432
+related:
+    - id: 69ca006d-b9a9-47f5-80ff-ecd4d25d481a
+      type: derived
 status: test
 description: Detects the use of TruffleSnout.exe an iterative AD discovery toolkit for offensive operators, situational awareness and targeted low noise enumeration.
 references:
@@ -12,6 +15,7 @@ modified: 2023/02/13
 tags:
     - attack.discovery
     - attack.t1482
+    - sysmon
 logsource:
     category: process_creation
     product: windows

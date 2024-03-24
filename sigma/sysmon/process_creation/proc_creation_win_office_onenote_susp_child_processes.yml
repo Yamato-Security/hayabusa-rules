@@ -1,7 +1,9 @@
 title: Suspicious Microsoft OneNote Child Process
-id: c27515df-97a9-4162-8a60-dc0eeb51b775
+id: 144300b0-a5d0-c277-2871-98a3f3b2b32d
 related:
     - id: 438025f9-5856-4663-83f7-52f878a70a50 # Generic rule for suspicious office application child processes
+      type: derived
+    - id: c27515df-97a9-4162-8a60-dc0eeb51b775
       type: derived
 status: test
 description: Detects suspicious child processes of the Microsoft OneNote application. This may indicate an attempt to execute malicious embedded objects from a .one file.

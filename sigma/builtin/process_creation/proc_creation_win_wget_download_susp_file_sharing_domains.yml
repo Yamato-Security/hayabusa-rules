@@ -1,5 +1,8 @@
 title: Suspicious File Download From File Sharing Domain Via Wget.EXE
-id: a0d7e4d2-bede-4141-8896-bc6e237e977c
+id: 85360622-4657-c400-b38e-9dc13bdb53f6
+related:
+    - id: a0d7e4d2-bede-4141-8896-bc6e237e977c
+      type: derived
 status: experimental
 description: Detects potentially suspicious file downloads from file sharing domains using wget.exe
 references:
@@ -11,6 +14,7 @@ date: 2023/05/05
 modified: 2024/02/09
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

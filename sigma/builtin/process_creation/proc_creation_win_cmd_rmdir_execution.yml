@@ -1,5 +1,8 @@
 title: Directory Removal Via Rmdir
-id: 41ca393d-538c-408a-ac27-cf1e038be80c
+id: 80e2dcdb-b882-51ac-b1e2-8440243a0492
+related:
+    - id: 41ca393d-538c-408a-ac27-cf1e038be80c
+      type: derived
 status: test
 description: |
     Detects execution of the builtin "rmdir" command in order to delete directories.
@@ -15,6 +18,7 @@ modified: 2023/03/07
 tags:
     - attack.defense_evasion
     - attack.t1070.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Execution DLL of Choice Using WAB.EXE
-id: fc014922-5def-4da9-a0fc-28c973f41bfb
+id: 027f1f5f-4aa7-ac2c-d8c2-084da4eaee3d
+related:
+    - id: fc014922-5def-4da9-a0fc-28c973f41bfb
+      type: derived
 status: test
 description: This rule detects that the path to the DLL written in the registry is different from the default one. Launched WAB.exe tries to load the DLL from Registry.
 references:
@@ -12,6 +15,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: registry_set
     product: windows

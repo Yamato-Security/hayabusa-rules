@@ -1,5 +1,8 @@
 title: Renamed Visual Studio Code Tunnel Execution
-id: 2cf29f11-e356-4f61-98c0-1bdb9393d6da
+id: 4295ffa5-ee9c-252b-51b9-150363e6906b
+related:
+    - id: 2cf29f11-e356-4f61-98c0-1bdb9393d6da
+      type: derived
 status: experimental
 description: Detects renamed Visual Studio Code tunnel execution. Attackers can abuse this functionality to establish a C2 channel
 references:
@@ -11,6 +14,7 @@ date: 2023/09/28
 tags:
     - attack.command_and_control
     - attack.t1071.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: HackTool - Empire PowerShell UAC Bypass
-id: 3268b746-88d8-4cd3-bffc-30077d02c787
+id: 5ccc4b5a-ddf6-63e0-3b00-82be3eb56506
+related:
+    - id: 3268b746-88d8-4cd3-bffc-30077d02c787
+      type: derived
 status: stable
 description: Detects some Empire PowerShell UAC bypass methods
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.privilege_escalation
     - attack.t1548.002
     - car.2019-04-001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

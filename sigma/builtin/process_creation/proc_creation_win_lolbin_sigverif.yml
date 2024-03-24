@@ -1,5 +1,8 @@
 title: Suspicious Sigverif Execution
-id: 7d4aaec2-08ed-4430-8b96-28420e030e04
+id: 7f54442b-227f-edd9-29d8-f6dc27ca512e
+related:
+    - id: 7d4aaec2-08ed-4430-8b96-28420e030e04
+      type: derived
 status: test
 description: Detects the execution of sigverif binary as a parent process which could indicate it being used as a LOLBIN to proxy execution
 references:
@@ -10,6 +13,7 @@ date: 2022/08/19
 tags:
     - attack.defense_evasion
     - attack.t1216
+    - sysmon
 logsource:
     category: process_creation
     product: windows

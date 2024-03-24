@@ -1,10 +1,5 @@
 title: New DNS ServerLevelPluginDll Installed
-id: e61e8a88-59a9-451c-874e-70fcc9740d67
-related:
-    - id: cbe51394-cd93-4473-b555-edf0144952d9
-      type: derived
-    - id: f63b56ee-3f79-4b8a-97fb-5c48007e8573
-      type: derived
+id: 1c9de880-3d26-4614-f41f-a4d975e609ff
 status: experimental
 description: Detects the installation of a DNS plugin DLL via ServerLevelPluginDll parameter in registry, which can be used to execute code in context of the DNS server (restart required)
 references:
@@ -17,6 +12,7 @@ tags:
     - attack.defense_evasion
     - attack.t1574.002
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: registry_set

@@ -1,5 +1,8 @@
 title: File Encryption Using Gpg4win
-id: 550bbb84-ce5d-4e61-84ad-e590f0024dcd
+id: 5159a920-5ab6-272b-4cd3-a3ea17a108ea
+related:
+    - id: 550bbb84-ce5d-4e61-84ad-e590f0024dcd
+      type: derived
 status: experimental
 description: Detects usage of Gpg4win to encrypt files
 references:
@@ -10,6 +13,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/08/09
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

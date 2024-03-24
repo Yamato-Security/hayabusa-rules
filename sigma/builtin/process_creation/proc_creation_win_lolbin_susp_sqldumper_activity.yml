@@ -1,5 +1,8 @@
 title: Dumping Process via Sqldumper.exe
-id: 23ceaf5c-b6f1-4a32-8559-f2ff734be516
+id: 38362740-fe8e-6e9d-79ad-a290fe8d5190
+related:
+    - id: 23ceaf5c-b6f1-4a32-8559-f2ff734be516
+      type: derived
 status: test
 description: Detects process dump via legitimate sqldumper.exe binary
 references:
@@ -12,6 +15,7 @@ modified: 2021/11/27
 tags:
     - attack.credential_access
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

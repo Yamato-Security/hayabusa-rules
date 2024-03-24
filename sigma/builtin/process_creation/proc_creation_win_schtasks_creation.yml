@@ -1,5 +1,8 @@
 title: Scheduled Task Creation Via Schtasks.EXE
-id: 92626ddd-662c-49e3-ac59-f6535f12d189
+id: c7b9e6e8-4212-b14e-b622-503d7c760107
+related:
+    - id: 92626ddd-662c-49e3-ac59-f6535f12d189
+      type: derived
 status: test
 description: Detects the creation of scheduled tasks by user accounts via the "schtasks" utility.
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.s0111
     - car.2013-08-001
     - stp.1u
+    - sysmon
 logsource:
     category: process_creation
     product: windows

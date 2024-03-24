@@ -1,5 +1,8 @@
 title: Veeam Backup Database Suspicious Query
-id: 696bfb54-227e-4602-ac5b-30d9d2053312
+id: 2eed1cc9-eaed-d468-3184-02f80bf78c3d
+related:
+    - id: 696bfb54-227e-4602-ac5b-30d9d2053312
+      type: derived
 status: test
 description: Detects potentially suspicious SQL queries using SQLCmd targeting the Veeam backup databases in order to steal information.
 references:
@@ -9,6 +12,7 @@ date: 2023/05/04
 tags:
     - attack.collection
     - attack.t1005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

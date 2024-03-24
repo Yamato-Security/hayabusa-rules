@@ -1,5 +1,8 @@
 title: Rundll32 InstallScreenSaver Execution
-id: 15bd98ea-55f4-4d37-b09a-e7caa0fa2221
+id: 86e778e7-ed84-5e14-0732-2e352101ac62
+related:
+    - id: 15bd98ea-55f4-4d37-b09a-e7caa0fa2221
+      type: derived
 status: test
 description: An attacker may execute an application as a SCR File using rundll32.exe desk.cpl,InstallScreenSaver
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/09
 tags:
     - attack.t1218.011
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

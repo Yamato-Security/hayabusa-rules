@@ -1,5 +1,8 @@
 title: Uncommon Child Process Of AddinUtil.EXE
-id: b5746143-59d6-4603-8d06-acbd60e166ee
+id: 3f0f871d-3133-3c63-e1e7-ba1bf9dcc38f
+related:
+    - id: b5746143-59d6-4603-8d06-acbd60e166ee
+      type: derived
 status: experimental
 description: |
     Detects uncommon child processes of the Add-In deployment cache updating utility (AddInutil.exe) which could be a sign of potential abuse of the binary to proxy execution via a custom Addins.Store payload.

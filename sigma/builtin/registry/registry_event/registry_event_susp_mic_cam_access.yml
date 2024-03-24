@@ -1,5 +1,8 @@
 title: Suspicious Camera and Microphone Access
-id: 62120148-6b7a-42be-8b91-271c04e281a3
+id: 139f52db-35af-c5f8-bbf8-22a2094dfea6
+related:
+    - id: 62120148-6b7a-42be-8b91-271c04e281a3
+      type: derived
 status: test
 description: Detects Processes accessing the camera and microphone from suspicious folder
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.collection
     - attack.t1125
     - attack.t1123
+    - sysmon
 logsource:
     category: registry_event
     product: windows

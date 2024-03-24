@@ -1,5 +1,8 @@
 title: Remote File Download Via Desktopimgdownldr Utility
-id: 214641c2-c579-4ecb-8427-0cf19df6842e
+id: f4d831e1-972e-94c7-61af-2c756813c8af
+related:
+    - id: 214641c2-c579-4ecb-8427-0cf19df6842e
+      type: derived
 status: test
 description: Detects the desktopimgdownldr utility being used to download a remote file. An adversary may use desktopimgdownldr to download arbitrary files as an alternative to certutil.
 references:
@@ -9,6 +12,7 @@ date: 2022/09/27
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

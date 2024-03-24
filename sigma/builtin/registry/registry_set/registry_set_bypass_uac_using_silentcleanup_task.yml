@@ -1,5 +1,8 @@
 title: Bypass UAC Using SilentCleanup Task
-id: 724ea201-6514-4f38-9739-e5973c34f49a
+id: b9c795cf-be1f-5020-c75e-f51c56483739
+related:
+    - id: 724ea201-6514-4f38-9739-e5973c34f49a
+      type: derived
 status: test
 description: |
     Detects the setting of the environement variable "windir" to a non default value.
@@ -16,6 +19,7 @@ tags:
     - attack.privilege_escalation
     - attack.defense_evasion
     - attack.t1548.002
+    - sysmon
 logsource:
     category: registry_set
     product: windows

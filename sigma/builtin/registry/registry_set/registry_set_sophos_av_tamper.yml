@@ -1,5 +1,8 @@
 title: Tamper With Sophos AV Registry Keys
-id: 9f4662ac-17ca-43aa-8f12-5d7b989d0101
+id: ea43cb8f-21a1-38f6-1d50-bbcb754a91f6
+related:
+    - id: 9f4662ac-17ca-43aa-8f12-5d7b989d0101
+      type: derived
 status: experimental
 description: Detects tamper attempts to sophos av functionality via registry key modification
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: registry_set
     product: windows

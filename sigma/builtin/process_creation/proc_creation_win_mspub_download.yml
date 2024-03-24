@@ -1,5 +1,8 @@
 title: Arbitrary File Download Via MSPUB.EXE
-id: 3b3c7f55-f771-4dd6-8a6e-08d057a17caf
+id: dd4ac92f-1ad9-9f2e-e7b1-574030f25c36
+related:
+    - id: 3b3c7f55-f771-4dd6-8a6e-08d057a17caf
+      type: derived
 status: test
 description: Detects usage of "MSPUB" (Microsoft Publisher) to download arbitrary files
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

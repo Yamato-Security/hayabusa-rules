@@ -1,5 +1,8 @@
 title: Suspicious Execution of Systeminfo
-id: 0ef56343-059e-4cb6-adc1-4c3c967c5e46
+id: 4304f0ae-3682-de08-b8f4-d768ac9cb749
+related:
+    - id: 0ef56343-059e-4cb6-adc1-4c3c967c5e46
+      type: derived
 status: test
 description: Detects usage of the "systeminfo" command to retrieve information
 references:
@@ -11,6 +14,7 @@ modified: 2022/07/14
 tags:
     - attack.discovery
     - attack.t1082
+    - sysmon
 logsource:
     category: process_creation
     product: windows

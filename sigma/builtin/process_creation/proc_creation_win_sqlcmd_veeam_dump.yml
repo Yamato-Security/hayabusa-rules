@@ -1,5 +1,8 @@
 title: VeeamBackup Database Credentials Dump Via Sqlcmd.EXE
-id: b57ba453-b384-4ab9-9f40-1038086b4e53
+id: 9a714c62-1669-9a37-eb23-3aca9c2ca26e
+related:
+    - id: b57ba453-b384-4ab9-9f40-1038086b4e53
+      type: derived
 status: test
 description: Detects dump of credentials in VeeamBackup dbo
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/13
 tags:
     - attack.collection
     - attack.t1005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

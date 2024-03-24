@@ -1,5 +1,8 @@
 title: Atbroker Registry Change
-id: 9577edbb-851f-4243-8c91-1d5b50c1a39b
+id: 5c5490c6-68eb-786c-e6b0-12374dce833f
+related:
+    - id: 9577edbb-851f-4243-8c91-1d5b50c1a39b
+      type: derived
 status: test
 description: Detects creation/modification of Assistive Technology applications and persistence with usage of 'at'
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1218
     - attack.persistence
     - attack.t1547
+    - sysmon
 logsource:
     category: registry_event
     product: windows

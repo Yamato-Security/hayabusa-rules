@@ -1,5 +1,8 @@
 title: Suspicious LOLBIN AccCheckConsole
-id: 0f6da907-5854-4be6-859a-e9958747b0aa
+id: db8f163e-5399-d993-524b-d1c4ad63c442
+related:
+    - id: 0f6da907-5854-4be6-859a-e9958747b0aa
+      type: derived
 status: test
 description: Detects suspicious LOLBIN AccCheckConsole execution with parameters as used to load an arbitrary DLL
 references:
@@ -10,6 +13,7 @@ author: Florian Roth (Nextron Systems)
 date: 2022/01/06
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

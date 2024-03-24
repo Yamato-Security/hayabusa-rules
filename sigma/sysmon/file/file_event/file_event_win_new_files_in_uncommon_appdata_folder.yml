@@ -1,5 +1,8 @@
 title: Suspicious File Creation In Uncommon AppData Folder
-id: d7b50671-d1ad-4871-aa60-5aa5b331fe04
+id: 38fe3d3a-d397-ce42-ba3b-df0756a71d38
+related:
+    - id: d7b50671-d1ad-4871-aa60-5aa5b331fe04
+      type: derived
 status: test
 description: Detects the creation of suspicious files and folders inside the user's AppData folder but not inside any of the common and well known directories (Local, Romaing, LocalLow). This method could be used as a method to bypass detection who exclude the AppData folder in fear of FPs
 references:

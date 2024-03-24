@@ -1,5 +1,8 @@
 title: Renamed Cloudflared.EXE Execution
-id: e0c69ebd-b54f-4aed-8ae3-e3467843f3f0
+id: c4597337-053d-373e-4faa-cc0e1796fde6
+related:
+    - id: e0c69ebd-b54f-4aed-8ae3-e3467843f3f0
+      type: derived
 status: experimental
 description: Detects the execution of a renamed "cloudflared" binary.
 references:
@@ -11,6 +14,7 @@ references:
 tags:
     - attack.command_and_control
     - attack.t1090.001
+    - sysmon
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/12/20
 logsource:

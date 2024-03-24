@@ -1,5 +1,8 @@
 title: NtdllPipe Like Activity Execution
-id: bbc865e4-7fcd-45a6-8ff1-95ced28ec5b2
+id: ae7a6aa8-b9bd-4f34-f72a-5e9d33e9098c
+related:
+    - id: bbc865e4-7fcd-45a6-8ff1-95ced28ec5b2
+      type: derived
 status: test
 description: Detects command that type the content of ntdll.dll to a different file or a pipe in order to evade AV / EDR detection. As seen being used in the POC NtdllPipe
 references:
@@ -9,6 +12,7 @@ date: 2022/03/05
 modified: 2023/03/07
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

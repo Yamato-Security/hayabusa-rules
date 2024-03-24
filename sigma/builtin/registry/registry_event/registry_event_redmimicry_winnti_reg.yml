@@ -1,5 +1,8 @@
 title: RedMimicry Winnti Playbook Registry Manipulation
-id: 5b175490-b652-4b02-b1de-5b5b4083c5f8
+id: a250ceb5-fda2-758b-e33b-594cb197d8ca
+related:
+    - id: 5b175490-b652-4b02-b1de-5b5b4083c5f8
+      type: derived
 status: test
 description: Detects actions caused by the RedMimicry Winnti playbook
 references:
@@ -10,6 +13,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: registry_event

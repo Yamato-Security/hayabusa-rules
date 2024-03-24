@@ -1,8 +1,5 @@
 title: EventLog Query Requests By Builtin Utilities
-id: 9cd55b6c-430a-4fa9-96f4-7cadf5229e9f
-related:
-    - id: beaa66d6-aa1b-4e3c-80f5-e0145369bfaf
-      type: derived
+id: 28780094-1850-b624-cda8-9bec4509c976
 status: experimental
 description: |
     Detect attempts to query the contents of the event log using command line utilities. Attackers use this technique in order to look for sensitive information in the logs such as passwords, usernames, IPs, etc.
@@ -18,6 +15,7 @@ tags:
     - attack.t1552
     - attack.credential_access
     - detection.threat_hunting
+    - sysmon
 logsource:
     product: windows
     category: process_creation

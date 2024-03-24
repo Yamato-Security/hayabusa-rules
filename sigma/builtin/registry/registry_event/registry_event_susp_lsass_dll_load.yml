@@ -1,5 +1,8 @@
 title: DLL Load via LSASS
-id: b3503044-60ce-4bf4-bbcb-e3db98788823
+id: f90321bd-3a7e-2f0a-220f-49096e6b8ef5
+related:
+    - id: b3503044-60ce-4bf4-bbcb-e3db98788823
+      type: derived
 status: test
 description: Detects a method to load DLL via LSASS process using an undocumented Registry key
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.execution
     - attack.persistence
     - attack.t1547.008
+    - sysmon
 logsource:
     category: registry_event
     product: windows

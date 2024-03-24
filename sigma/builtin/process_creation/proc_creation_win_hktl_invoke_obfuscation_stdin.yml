@@ -1,5 +1,8 @@
 title: Invoke-Obfuscation STDIN+ Launcher
-id: 6c96fc76-0eb1-11eb-adc1-0242ac120002
+id: 0b1a8cb5-34ab-b019-66ad-98f7c43bb8ff
+related:
+    - id: 6c96fc76-0eb1-11eb-adc1-0242ac120002
+      type: derived
 status: test
 description: Detects Obfuscated use of stdin to execute PowerShell
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

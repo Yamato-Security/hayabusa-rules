@@ -1,5 +1,8 @@
 title: Interactive AT Job
-id: 60fc936d-2eb0-4543-8a13-911c750a1dfc
+id: 432d294d-a306-5b48-a105-306e9dfd78cf
+related:
+    - id: 60fc936d-2eb0-4543-8a13-911c750a1dfc
+      type: derived
 status: test
 description: Detects an interactive AT job, which may be used as a form of privilege escalation.
 references:
@@ -11,6 +14,7 @@ modified: 2021/11/27
 tags:
     - attack.privilege_escalation
     - attack.t1053.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

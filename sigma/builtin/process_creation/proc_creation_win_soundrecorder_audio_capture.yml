@@ -1,5 +1,8 @@
 title: Audio Capture via SoundRecorder
-id: 83865853-59aa-449e-9600-74b9d89a6d6e
+id: ebef59bf-5a12-af67-8a95-a282ae4bdaf6
+related:
+    - id: 83865853-59aa-449e-9600-74b9d89a6d6e
+      type: derived
 status: test
 description: Detect attacker collecting audio via SoundRecorder application.
 references:
@@ -11,6 +14,7 @@ modified: 2021/11/27
 tags:
     - attack.collection
     - attack.t1123
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Suspicious NTLM Authentication on the Printer Spooler Service
-id: bb76d96b-821c-47cf-944b-7ce377864492
+id: 7fd1971c-8117-58b7-9bfd-d42cda435945
+related:
+    - id: bb76d96b-821c-47cf-944b-7ce377864492
+      type: derived
 status: test
 description: Detects a privilege elevation attempt by coercing NTLM authentication on the Printer Spooler service
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.privilege_escalation
     - attack.credential_access
     - attack.t1212
+    - sysmon
 logsource:
     category: process_creation
     product: windows

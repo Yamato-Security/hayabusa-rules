@@ -1,5 +1,8 @@
 title: New Process Created Via Taskmgr.EXE
-id: 3d7679bd-0c00-440c-97b0-3f204273e6c7
+id: 09c3b6b8-4904-bec5-4fc1-d69447e6ff3b
+related:
+    - id: 3d7679bd-0c00-440c-97b0-3f204273e6c7
+      type: derived
 status: test
 description: Detects the creation of a process via the Windows task manager. This might be an attempt to bypass UAC
 references:
@@ -10,6 +13,7 @@ modified: 2024/01/18
 tags:
     - attack.defense_evasion
     - attack.t1036
+    - sysmon
 logsource:
     category: process_creation
     product: windows

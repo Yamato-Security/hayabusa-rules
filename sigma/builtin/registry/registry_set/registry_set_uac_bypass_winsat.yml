@@ -1,5 +1,8 @@
 title: UAC Bypass Abusing Winsat Path Parsing - Registry
-id: 6597be7b-ac61-4ac8-bef4-d3ec88174853
+id: c5041759-c026-94ae-a6d4-6e6bfbfa3d0c
+related:
+    - id: 6597be7b-ac61-4ac8-bef4-d3ec88174853
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass using a path parsing issue in winsat.exe (UACMe 52)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: registry_set
     product: windows

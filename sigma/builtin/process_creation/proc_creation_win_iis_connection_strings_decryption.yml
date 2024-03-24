@@ -1,5 +1,8 @@
 title: Microsoft IIS Connection Strings Decryption
-id: 97dbf6e2-e436-44d8-abee-4261b24d3e41
+id: c9722d26-25e3-6e45-3950-85182a7a1b35
+related:
+    - id: 97dbf6e2-e436-44d8-abee-4261b24d3e41
+      type: derived
 status: test
 description: Detects use of aspnet_regiis to decrypt Microsoft IIS connection strings. An attacker with Microsoft IIS web server access via a webshell or alike can decrypt and dump any hardcoded connection strings, such as the MSSQL service account password using aspnet_regiis command.
 references:
@@ -10,6 +13,7 @@ modified: 2022/12/30
 tags:
     - attack.credential_access
     - attack.t1003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

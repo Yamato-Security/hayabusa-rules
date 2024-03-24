@@ -1,5 +1,8 @@
 title: Gpscript Execution
-id: 1e59c230-6670-45bf-83b0-98903780607e
+id: 0a1228c0-6754-8156-d07f-6aa2daece740
+related:
+    - id: 1e59c230-6670-45bf-83b0-98903780607e
+      type: derived
 status: experimental
 description: Detects the execution of the LOLBIN gpscript, which executes logon or startup scripts configured in Group Policy
 references:
@@ -11,6 +14,7 @@ modified: 2023/06/14
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     product: windows
     category: process_creation

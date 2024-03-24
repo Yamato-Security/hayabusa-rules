@@ -1,5 +1,8 @@
 title: Phishing Pattern ISO in Archive
-id: fcdf69e5-a3d3-452a-9724-26f2308bf2b1
+id: e690ad80-ba5d-6c78-f689-97c9bdad6517
+related:
+    - id: fcdf69e5-a3d3-452a-9724-26f2308bf2b1
+      type: derived
 status: test
 description: Detects cases in which an ISO files is opend within an archiver like 7Zip or Winrar, which is a sign of phishing as threat actors put small ISO files in archives as email attachments to bypass certain filters and protective measures (mark of web)
 references:
@@ -10,6 +13,7 @@ date: 2022/06/07
 tags:
     - attack.initial_access
     - attack.t1566
+    - sysmon
 logsource:
     category: process_creation
     product: windows

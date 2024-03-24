@@ -1,5 +1,8 @@
 title: Indirect Command Execution By Program Compatibility Wizard
-id: b97cd4b1-30b8-4a9d-bd72-6293928d52bc
+id: f4b28578-b356-1cbb-4554-acd9a8b62c9b
+related:
+    - id: b97cd4b1-30b8-4a9d-bd72-6293928d52bc
+      type: derived
 status: test
 description: Detect indirect command execution via Program Compatibility Assistant pcwrun.exe
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.t1218
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

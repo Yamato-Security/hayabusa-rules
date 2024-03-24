@@ -1,5 +1,8 @@
 title: HackTool - KrbRelayUp Execution
-id: 12827a56-61a4-476a-a9cb-f3068f191073
+id: 6408b665-07d6-1525-496f-24511bfff69c
+related:
+    - id: 12827a56-61a4-476a-a9cb-f3068f191073
+      type: derived
 status: test
 description: Detects KrbRelayUp used to perform a universal no-fix local privilege escalation in Windows domain environments where LDAP signing is not enforced
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1558.003
     - attack.lateral_movement
     - attack.t1550.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

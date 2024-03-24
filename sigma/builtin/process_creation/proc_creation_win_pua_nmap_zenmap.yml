@@ -1,5 +1,8 @@
 title: PUA - Nmap/Zenmap Execution
-id: f6ecd1cf-19b8-4488-97f6-00f0924991a3
+id: 45b0c0bb-7d7a-7e71-e757-cdd2508c0105
+related:
+    - id: f6ecd1cf-19b8-4488-97f6-00f0924991a3
+      type: derived
 status: test
 description: Detects usage of namp/zenmap. Adversaries may attempt to get a listing of services running on remote hosts, including those that may be vulnerable to remote software exploitation
 references:
@@ -11,6 +14,7 @@ modified: 2023/12/11
 tags:
     - attack.discovery
     - attack.t1046
+    - sysmon
 logsource:
     category: process_creation
     product: windows

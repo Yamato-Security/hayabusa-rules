@@ -1,5 +1,8 @@
 title: Userdomain Variable Enumeration
-id: 43311e65-84d8-42a5-b3d4-c94d9b67038f
+id: a0611cee-4fe8-b36f-b9a7-8c31f5d9977b
+related:
+    - id: 43311e65-84d8-42a5-b3d4-c94d9b67038f
+      type: derived
 status: test
 description: Detects suspicious enumeration of the domain the user is associated with.
 references:
@@ -10,6 +13,7 @@ date: 2023/02/09
 tags:
     - attack.discovery
     - attack.t1016
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Ping Hex IP
-id: 1a0d4aba-7668-4365-9ce4-6d79ab088dfd
+id: 8f1f0cfc-418f-58d0-6c0a-aa9299b3d5e5
+related:
+    - id: 1a0d4aba-7668-4365-9ce4-6d79ab088dfd
+      type: derived
 status: test
 description: Detects a ping command that uses a hex encoded IP address
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.t1140
     - attack.t1027
+    - sysmon
 logsource:
     category: process_creation
     product: windows

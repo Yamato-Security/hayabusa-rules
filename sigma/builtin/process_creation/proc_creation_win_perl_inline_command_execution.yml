@@ -1,5 +1,8 @@
 title: Perl Inline Command Execution
-id: f426547a-e0f7-441a-b63e-854ac5bdf54d
+id: 1c7255e9-5677-0dce-20d7-83f42f4a517c
+related:
+    - id: f426547a-e0f7-441a-b63e-854ac5bdf54d
+      type: derived
 status: test
 description: Detects execution of perl using the "-e"/"-E" flags. This is could be used as a way to launch a reverse shell or execute live perl code.
 references:
@@ -10,6 +13,7 @@ date: 2023/01/02
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

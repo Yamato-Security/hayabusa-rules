@@ -1,5 +1,8 @@
 title: PowerShell Web Download
-id: 6e897651-f157-4d8f-aaeb-df8151488385
+id: 0b1811c8-8c1e-c6bb-1af2-2fe3b42a6b56
+related:
+    - id: 6e897651-f157-4d8f-aaeb-df8151488385
+      type: derived
 status: test
 description: Detects suspicious ways to download files or content using PowerShell
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.execution
     - attack.t1059.001
     - attack.t1105
+    - sysmon
 logsource:
     product: windows
     category: process_creation

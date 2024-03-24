@@ -1,5 +1,8 @@
 title: Use of Wfc.exe
-id: 49be8799-7b4d-4fda-ad23-cafbefdebbc5
+id: 735b333c-168f-1517-ce6e-44604578243f
+related:
+    - id: 49be8799-7b4d-4fda-ad23-cafbefdebbc5
+      type: derived
 status: test
 description: The Workflow Command-line Compiler can be used for AWL bypass and is listed in Microsoft's recommended block rules.
 references:
@@ -10,6 +13,7 @@ date: 2022/06/01
 tags:
     - attack.defense_evasion
     - attack.t1127
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Potential PowerShell Obfuscation Via Reversed Commands
-id: b6b49cd1-34d6-4ead-b1bf-176e9edba9a4
+id: 98aa5a08-85d3-1d55-d8be-07f7570e76ad
+related:
+    - id: b6b49cd1-34d6-4ead-b1bf-176e9edba9a4
+      type: derived
 status: test
 description: Detects the presence of reversed PowerShell commands in the CommandLine. This is often used as a method of obfuscation by attackers
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

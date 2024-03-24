@@ -1,5 +1,8 @@
 title: TA505 Dropper Load Pattern
-id: 18cf6cf0-39b0-4c22-9593-e244bdc9a2d4
+id: 0a67f769-527a-e79d-fa05-a4bbdcd6fcc4
+related:
+    - id: 18cf6cf0-39b0-4c22-9593-e244bdc9a2d4
+      type: derived
 status: deprecated
 description: Detects mshta loaded by wmiprvse as parent as used by TA505 malicious documents
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.g0092
     - attack.t1106
+    - sysmon
 logsource:
     category: process_creation
     product: windows

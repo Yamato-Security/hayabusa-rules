@@ -1,5 +1,8 @@
 title: Suspicious Scheduled Task Name As GUID
-id: ff2fff64-4cd6-4a2b-ba7d-e28a30bbe66b
+id: 470da37d-268f-d626-f90a-04ef23655a27
+related:
+    - id: ff2fff64-4cd6-4a2b-ba7d-e28a30bbe66b
+      type: derived
 status: test
 description: Detects creation of a scheduled task with a GUID like name
 references:
@@ -10,6 +13,7 @@ date: 2022/10/31
 tags:
     - attack.execution
     - attack.t1053.005
+    - sysmon
 logsource:
     product: windows
     category: process_creation

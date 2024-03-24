@@ -1,5 +1,8 @@
 title: PUA - DIT Snapshot Viewer
-id: d3b70aad-097e-409c-9df2-450f80dc476b
+id: 835ff144-018a-4ec5-3788-ea773f0fd869
+related:
+    - id: d3b70aad-097e-409c-9df2-450f80dc476b
+      type: derived
 status: test
 description: Detects the use of Ditsnap tool, an inspection tool for Active Directory database, ntds.dit.
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/21
 tags:
     - attack.credential_access
     - attack.t1003.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

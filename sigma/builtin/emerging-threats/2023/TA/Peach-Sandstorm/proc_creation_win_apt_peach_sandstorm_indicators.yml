@@ -1,5 +1,8 @@
 title: Peach Sandstorm APT Process Activity Indicators
-id: 2e7bbd54-2f26-476e-b4a1-ba5f1a012614
+id: ad6cf96f-fa18-2ab2-281f-bbffecb4ab3a
+related:
+    - id: 2e7bbd54-2f26-476e-b4a1-ba5f1a012614
+      type: derived
 status: experimental
 description: Detects process creation activity related to Peach Sandstorm APT
 references:
@@ -10,6 +13,7 @@ date: 2024/01/15
 tags:
     - attack.execution
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

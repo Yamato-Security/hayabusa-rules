@@ -1,5 +1,8 @@
 title: Domain Trust Discovery
-id: 77815820-246c-47b8-9741-e0def3f57308
+id: d5dc5032-aa74-54e8-76e0-3d264adc2ea0
+related:
+    - id: 77815820-246c-47b8-9741-e0def3f57308
+      type: derived
 status: deprecated
 description: Detects a discovery of domain trusts.
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/04
 tags:
     - attack.discovery
     - attack.t1482
+    - sysmon
 logsource:
     category: process_creation
     product: windows

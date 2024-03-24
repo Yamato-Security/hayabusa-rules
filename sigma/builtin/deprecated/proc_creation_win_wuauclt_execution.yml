@@ -1,5 +1,8 @@
 title: Windows Update Client LOLBIN
-id: d7825193-b70a-48a4-b992-8b5b3015cc11
+id: a1901cc9-34ea-0ae3-68a7-07397e0d8338
+related:
+    - id: d7825193-b70a-48a4-b992-8b5b3015cc11
+      type: derived
 status: deprecated
 description: Detects code execution via the Windows Update client (wuauclt)
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.t1105
     - attack.t1218
+    - sysmon
 logsource:
     product: windows
     category: process_creation

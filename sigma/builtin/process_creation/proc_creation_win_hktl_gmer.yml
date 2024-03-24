@@ -1,5 +1,8 @@
 title: HackTool - GMER Rootkit Detector and Remover Execution
-id: 9082ff1f-88ab-4678-a3cc-5bcff99fc74d
+id: 52ddd559-9234-130a-cd5d-8be4384d1224
+related:
+    - id: 9082ff1f-88ab-4678-a3cc-5bcff99fc74d
+      type: derived
 status: test
 description: Detects the execution GMER tool based on image and hash fields.
 references:
@@ -9,6 +12,7 @@ date: 2022/10/05
 modified: 2023/02/13
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

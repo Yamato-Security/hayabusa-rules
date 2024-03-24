@@ -1,10 +1,5 @@
 title: Hide Schedule Task Via Index Value Tamper
-id: 5b16df71-8615-4f7f-ac9b-6c43c0509e61
-related:
-    - id: acd74772-5f88-45c7-956b-6a7b36c294d2
-      type: similar
-    - id: 526cc8bc-1cdc-48ad-8b26-f19bff969cec
-      type: similar
+id: 8f22d1f4-6491-fcf7-858d-c2e73bcb8c48
 status: experimental
 description: |
     Detects when the "index" value of a scheduled task is modified from the registry
@@ -17,6 +12,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562
+    - sysmon
 logsource:
     category: registry_set
     product: windows

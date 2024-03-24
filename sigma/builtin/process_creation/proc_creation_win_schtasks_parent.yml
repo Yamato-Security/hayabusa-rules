@@ -1,5 +1,8 @@
 title: Suspicious Add Scheduled Task Parent
-id: 9494479d-d994-40bf-a8b1-eea890237021
+id: f0e5d329-4070-a553-6ff1-1842415b9bc8
+related:
+    - id: 9494479d-d994-40bf-a8b1-eea890237021
+      type: derived
 status: test
 description: Detects suspicious scheduled task creations from a parent stored in a temporary folder
 references:
@@ -10,6 +13,7 @@ modified: 2022/06/02
 tags:
     - attack.execution
     - attack.t1053.005
+    - sysmon
 logsource:
     product: windows
     category: process_creation

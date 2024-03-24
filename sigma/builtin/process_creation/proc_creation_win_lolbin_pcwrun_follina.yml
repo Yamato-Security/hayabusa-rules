@@ -1,5 +1,8 @@
 title: Execute Pcwrun.EXE To Leverage Follina
-id: 6004abd0-afa4-4557-ba90-49d172e0a299
+id: c94695cb-a047-b9fd-ad81-7c51224d6fd0
+related:
+    - id: 6004abd0-afa4-4557-ba90-49d172e0a299
+      type: derived
 status: test
 description: Detects indirect command execution via Program Compatibility Assistant "pcwrun.exe" leveraging the follina (CVE-2022-30190) vulnerability
 references:
@@ -10,6 +13,7 @@ tags:
     - attack.defense_evasion
     - attack.t1218
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

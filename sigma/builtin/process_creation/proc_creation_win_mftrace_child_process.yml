@@ -1,5 +1,8 @@
 title: Potential Mftrace.EXE Abuse
-id: 3d48c9d3-1aa6-418d-98d3-8fd3c01a564e
+id: 62ff6ff0-2ab6-4498-2d8a-7aaf4d8bdbb1
+related:
+    - id: 3d48c9d3-1aa6-418d-98d3-8fd3c01a564e
+      type: derived
 status: experimental
 description: Detects child processes of the "Trace log generation tool for Media Foundation Tools" (Mftrace.exe) which can abused to execute arbitrary binaries.
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/03
 tags:
     - attack.defense_evasion
     - attack.t1127
+    - sysmon
 logsource:
     category: process_creation
     product: windows

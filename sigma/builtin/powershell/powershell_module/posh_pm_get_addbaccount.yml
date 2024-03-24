@@ -1,5 +1,8 @@
 title: Suspicious Get-ADDBAccount Usage
-id: b140afd9-474b-4072-958e-2ebb435abd68
+id: 85b06a92-2ad6-ef34-57c3-fac694f74095
+related:
+    - id: b140afd9-474b-4072-958e-2ebb435abd68
+      type: derived
 status: test
 description: Detects suspicious invocation of the Get-ADDBAccount script that reads from a ntds.dit file and may be used to get access to credentials without using any credential dumpers
 references:
