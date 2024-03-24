@@ -98,7 +98,7 @@ def transform_windash(obj: dict):
                 obj[key] = value
             elif isinstance(value, list):
                 x = set([item for item in value] + [conv(item) for item in value])
-                obj[key] = list(x)
+                obj[key] = sorted(list(x))
             elif isinstance(value, str):
                 obj[key] = [value, conv(value)]
             else:
