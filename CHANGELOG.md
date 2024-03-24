@@ -1,5 +1,12 @@
 # Changes
 
+## v2.13.0 [2024/03/24]
+
+- Newly created rules are assigned with new UUIDv4 IDs. (#629) (@fukusuket)
+- Fixed a bug where `logsource_mapping.py` was creating rules with `near` conditions. (#632) (@fukusuket)
+- Refactored `logsource_mapping.py` and adding unit tests. (#627) (@fukusuket)
+- Updated `exclude_rules.txt`. (@fukusuket)
+
 ## v2.13.0 [2024/03/22]
 
 The `null` keyword was converted to an empty string. This may have been a regression when comments were left as is.
