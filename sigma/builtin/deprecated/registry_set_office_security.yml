@@ -1,5 +1,8 @@
 title: Office Security Settings Changed
-id: a166f74e-bf44-409d-b9ba-ea4b2dd8b3cd
+id: ea79a782-319f-b5bd-9293-cab2134f5c43
+related:
+    - id: a166f74e-bf44-409d-b9ba-ea4b2dd8b3cd
+      type: derived
 status: deprecated
 description: Detects registry changes to Office macro settings. The TrustRecords contain information on executed macro-enabled documents. (see references)
 references:
@@ -12,6 +15,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     category: registry_set
     product: windows

@@ -1,5 +1,8 @@
 title: File Deletion Via Del
-id: 379fa130-190e-4c3f-b7bc-6c8e834485f3
+id: 2e35d215-673f-ecff-67ad-c9fc3e4ffb87
+related:
+    - id: 379fa130-190e-4c3f-b7bc-6c8e834485f3
+      type: derived
 status: test
 description: |
     Detects execution of the builtin "del"/"erase" commands in order to delete files.
@@ -15,6 +18,7 @@ modified: 2024/03/05
 tags:
     - attack.defense_evasion
     - attack.t1070.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -31,12 +35,12 @@ detection:
             - 'erase '
     selection_flags:
         CommandLine|contains:
-            - ' /q'
-            - ' -s'
-            - ' -q'
-            - ' /s'
             - ' -f'
+            - ' -q'
+            - ' -s'
             - ' /f'
+            - ' /q'
+            - ' /s'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - False positives levels will differ Depending on the environment. You can use a combination of ParentImage and other keywords from the CommandLine field to filter legitimate activity

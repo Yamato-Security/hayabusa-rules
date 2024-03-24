@@ -1,5 +1,8 @@
 title: Cscript/Wscript Uncommon Script Extension Execution
-id: 99b7460d-c9f1-40d7-a316-1f36f61d52ee
+id: 7f7e34fc-8a05-170b-7892-a5b0aefe2983
+related:
+    - id: 99b7460d-c9f1-40d7-a316-1f36f61d52ee
+      type: derived
 status: experimental
 description: Detects Wscript/Cscript executing a file with an uncommon (i.e. non-script) extension
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.t1059.005
     - attack.t1059.007
+    - sysmon
 logsource:
     category: process_creation
     product: windows

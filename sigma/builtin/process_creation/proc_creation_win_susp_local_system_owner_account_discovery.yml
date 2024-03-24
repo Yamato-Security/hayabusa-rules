@@ -1,5 +1,8 @@
 title: Local Accounts Discovery
-id: 502b42de-4306-40b4-9596-6f590c81f073
+id: 70d8efc3-4098-d71c-be3c-59f75ccb6019
+related:
+    - id: 502b42de-4306-40b4-9596-6f590c81f073
+      type: derived
 status: test
 description: Local accounts, System Owner/User discovery using operating systems utilities
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.discovery
     - attack.t1033
     - attack.t1087.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Suspicious Windows ANONYMOUS LOGON Local Account Created
-id: 1bbf25b9-8038-4154-a50b-118f2a32be27
+id: e5c627ea-fa27-df99-0573-e47092dc4a98
+related:
+    - id: 1bbf25b9-8038-4154-a50b-118f2a32be27
+      type: derived
 status: test
 description: Detects the creation of suspicious accounts similar to ANONYMOUS LOGON, such as using additional spaces. Created as an covering detection for exclusion of Logon Type 3 from ANONYMOUS LOGON accounts.
 references:

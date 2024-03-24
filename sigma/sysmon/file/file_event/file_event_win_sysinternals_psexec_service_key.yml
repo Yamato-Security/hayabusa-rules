@@ -1,5 +1,8 @@
 title: PSEXEC Remote Execution File Artefact
-id: 304afd73-55a5-4bb9-8c21-0b1fc84ea9e4
+id: 6920b414-8c78-c4fd-ae0a-c185882825e9
+related:
+    - id: 304afd73-55a5-4bb9-8c21-0b1fc84ea9e4
+      type: derived
 status: test
 description: Detects creation of the PSEXEC key file. Which is created anytime a PsExec command is executed. It gets written to the file system and will be recorded in the USN Journal on the target system
 references:

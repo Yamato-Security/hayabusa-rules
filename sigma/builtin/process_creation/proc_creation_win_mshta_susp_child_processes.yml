@@ -1,5 +1,8 @@
 title: Suspicious MSHTA Child Process
-id: 03cc0c25-389f-4bf8-b48d-11878079f1ca
+id: 49fcee15-4a91-2599-357b-6a1abe3d7cf4
+related:
+    - id: 03cc0c25-389f-4bf8-b48d-11878079f1ca
+      type: derived
 status: test
 description: Detects a suspicious process spawning from an "mshta.exe" process, which could be indicative of a malicious HTA script execution
 references:
@@ -13,6 +16,7 @@ tags:
     - car.2013-02-003
     - car.2013-03-001
     - car.2014-04-003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,5 @@
 title: Suspicious Windows Service Tampering
-id: ce72ef99-22f1-43d4-8695-419dcb5d9330
+id: 6d90711a-851e-f07c-530d-9d33909bfd85
 related:
     - id: eb87818d-db5d-49cc-a987-d5da331fbd90
       type: derived
@@ -7,6 +7,8 @@ related:
       type: obsoletes
     - id: 7fd4bb39-12d0-45ab-bb36-cebabc73dc7b
       type: obsoletes
+    - id: ce72ef99-22f1-43d4-8695-419dcb5d9330
+      type: derived
 status: experimental
 description: Detects the usage of binaries such as 'net', 'sc' or 'powershell' in order to stop, pause or delete critical or important Windows services such as AV, Backup, etc. As seen being used in some ransomware scripts
 references:

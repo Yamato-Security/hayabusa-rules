@@ -1,5 +1,8 @@
 title: Firewall Rule Deleted Via Netsh.EXE
-id: 1a5fefe6-734f-452e-a07d-fc1c35bce4b2
+id: f4b9cf98-c3c6-4a42-a20e-6728d79f8fec
+related:
+    - id: 1a5fefe6-734f-452e-a07d-fc1c35bce4b2
+      type: derived
 status: test
 description: Detects the removal of a port or application rule in the Windows Firewall configuration using netsh
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/10
 tags:
     - attack.defense_evasion
     - attack.t1562.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

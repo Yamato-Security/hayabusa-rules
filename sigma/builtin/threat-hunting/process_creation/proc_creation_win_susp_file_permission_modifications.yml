@@ -1,5 +1,8 @@
 title: File or Folder Permissions Modifications
-id: 37ae075c-271b-459b-8d7b-55ad5f993dd8
+id: 2fbf12bc-cfa8-081e-6e1c-f7a08543c781
+related:
+    - id: 37ae075c-271b-459b-8d7b-55ad5f993dd8
+      type: derived
 status: test
 description: Detects a file or folder's permissions being modified or tampered with.
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.defense_evasion
     - attack.t1222.001
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Process Access via TrolleyExpress Exclusion
-id: 4c0aaedc-154c-4427-ada0-d80ef9c9deb6
+id: 06305885-4321-1104-1a1d-5f6dcddf76af
+related:
+    - id: 4c0aaedc-154c-4427-ada0-d80ef9c9deb6
+      type: derived
 status: test
 description: Detects a possible process memory dump that uses the white-listed Citrix TrolleyExpress.exe filename as a way to dump the lsass process memory
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1218.011
     - attack.credential_access
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

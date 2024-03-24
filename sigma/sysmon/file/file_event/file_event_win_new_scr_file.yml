@@ -1,5 +1,8 @@
 title: SCR File Write Event
-id: c048f047-7e2a-4888-b302-55f509d4a91d
+id: d89fb881-3dbe-79ad-c7b4-ee428fc34441
+related:
+    - id: c048f047-7e2a-4888-b302-55f509d4a91d
+      type: derived
 status: experimental
 description: Detects the creation of screensaver files (.scr) outside of system folders. Attackers may execute an application as an ".SCR" file using "rundll32.exe desk.cpl,InstallScreenSaver" for example.
 references:

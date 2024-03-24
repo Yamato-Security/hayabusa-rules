@@ -1,5 +1,8 @@
 title: Dotnet.exe Exec Dll and Execute Unsigned Code LOLBIN
-id: d80d5c81-04ba-45b4-84e4-92eba40e0ad3
+id: 7fe031ee-5c6c-0eea-fe28-fb72cbbe1aed
+related:
+    - id: d80d5c81-04ba-45b4-84e4-92eba40e0ad3
+      type: derived
 status: test
 description: dotnet.exe will execute any DLL and execute unsigned code
 references:
@@ -12,6 +15,7 @@ modified: 2023/02/04
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

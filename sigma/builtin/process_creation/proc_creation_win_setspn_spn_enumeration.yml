@@ -1,5 +1,8 @@
 title: Potential SPN Enumeration Via Setspn.EXE
-id: 1eeed653-dbc8-4187-ad0c-eeebb20e6599
+id: 0d186f78-d83c-0c4b-100c-cbdc93891947
+related:
+    - id: 1eeed653-dbc8-4187-ad0c-eeebb20e6599
+      type: derived
 status: test
 description: Detects service principal name (SPN) enumeration used for Kerberoasting
 references:
@@ -11,6 +14,7 @@ modified: 2023/10/23
 tags:
     - attack.credential_access
     - attack.t1558.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

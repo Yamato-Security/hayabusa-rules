@@ -1,8 +1,5 @@
 title: Uncommon Extension In Keyboard Layout IME File Registry Value
-id: b888e3f2-224d-4435-b00b-9dd66e9ea1f1
-related:
-    - id: 9d8f9bb8-01af-4e15-a3a2-349071530530
-      type: derived
+id: dacb1ee4-05cc-995a-adee-964a19774888
 status: experimental
 description: |
     Detects usage of Windows Input Method Editor (IME) keyboard layout feature, which allows an attacker to load a DLL into the process after sending the WM_INPUTLANGCHANGEREQUEST message.
@@ -15,6 +12,7 @@ date: 2023/11/21
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     product: windows
     category: registry_set

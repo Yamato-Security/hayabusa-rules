@@ -1,5 +1,8 @@
 title: Suspicious Execution of Sc to Delete AV Services
-id: 7fd4bb39-12d0-45ab-bb36-cebabc73dc7b
+id: 84bff3a1-2282-883e-eaff-6e74ffbf1e5f
+related:
+    - id: 7fd4bb39-12d0-45ab-bb36-cebabc73dc7b
+      type: derived
 status: deprecated
 description: Detects when attackers use "sc.exe" to delete AV services from the system in order to avoid detection
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

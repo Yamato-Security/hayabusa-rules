@@ -1,5 +1,8 @@
 title: Suspicious GrpConv Execution
-id: f14e169e-9978-4c69-acb3-1cff8200bc36
+id: bf85cbac-5a6f-8e8c-535a-0c786ee46919
+related:
+    - id: f14e169e-9978-4c69-acb3-1cff8200bc36
+      type: derived
 status: test
 description: Detects the suspicious execution of a utility to convert Windows 3.x .grp files or for persistence purposes by malicious software or actors
 references:
@@ -9,6 +12,7 @@ date: 2022/05/19
 tags:
     - attack.persistence
     - attack.t1547
+    - sysmon
 logsource:
     category: process_creation
     product: windows

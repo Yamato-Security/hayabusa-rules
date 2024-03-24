@@ -1,5 +1,8 @@
 title: Potentially Suspicious Rundll32 Activity
-id: e593cf51-88db-4ee1-b920-37e89012a3c9
+id: 756c6a71-c6c7-f447-b851-823221c5d2fc
+related:
+    - id: e593cf51-88db-4ee1-b920-37e89012a3c9
+      type: derived
 status: test
 description: Detects suspicious execution of rundll32, with specific calls to some DLLs with known LOLBIN functionalities
 references:
@@ -15,6 +18,7 @@ modified: 2023/05/17
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

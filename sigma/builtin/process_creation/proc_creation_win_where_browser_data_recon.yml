@@ -1,5 +1,8 @@
 title: Suspicious Where Execution
-id: 725a9768-0f5e-4cb3-aec2-bc5719c6831a
+id: e9c3cf8c-ba2f-d937-b4c5-8f5e3f692a11
+related:
+    - id: 725a9768-0f5e-4cb3-aec2-bc5719c6831a
+      type: derived
 status: test
 description: |
     Adversaries may enumerate browser bookmarks to learn more about compromised hosts.
@@ -13,6 +16,7 @@ modified: 2022/06/29
 tags:
     - attack.discovery
     - attack.t1217
+    - sysmon
 logsource:
     category: process_creation
     product: windows

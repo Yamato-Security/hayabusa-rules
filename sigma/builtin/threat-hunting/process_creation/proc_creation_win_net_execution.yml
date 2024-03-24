@@ -1,5 +1,8 @@
 title: Net.EXE Execution
-id: 183e7ea8-ac4b-4c23-9aec-b3dac4e401ac
+id: e0f16539-f1cb-5cb9-0004-f3a040346952
+related:
+    - id: 183e7ea8-ac4b-4c23-9aec-b3dac4e401ac
+      type: derived
 status: test
 description: Detects execution of "Net.EXE".
 references:
@@ -26,6 +29,7 @@ tags:
     - attack.t1021.002
     - attack.s0039
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

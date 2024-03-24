@@ -1,5 +1,8 @@
 title: Potential Remote Desktop Tunneling
-id: 8a3038e8-9c9d-46f8-b184-66234a160f6f
+id: 32f1537a-1af8-ef18-4ff0-71b68b6b84ec
+related:
+    - id: 8a3038e8-9c9d-46f8-b184-66234a160f6f
+      type: derived
 status: test
 description: Detects potential use of an SSH utility to establish RDP over a reverse SSH Tunnel. This can be used by attackers to enable routing of network packets that would otherwise not reach their intended destination.
 references:
@@ -9,6 +12,7 @@ date: 2022/09/27
 tags:
     - attack.lateral_movement
     - attack.t1021
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Active Directory Structure Export Via Csvde.EXE
-id: e5d36acd-acb4-4c6f-a13f-9eb203d50099
+id: be45d499-4cd7-c4a6-727e-e52c6770468e
+related:
+    - id: e5d36acd-acb4-4c6f-a13f-9eb203d50099
+      type: derived
 status: test
 description: Detects the execution of "csvde.exe" in order to export organizational Active Directory structure.
 references:
@@ -10,6 +13,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/03/14
 tags:
     - attack.exfiltration
+    - sysmon
 logsource:
     category: process_creation
     product: windows

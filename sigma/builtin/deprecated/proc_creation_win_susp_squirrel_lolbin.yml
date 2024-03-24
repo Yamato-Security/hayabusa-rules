@@ -1,5 +1,8 @@
 title: Squirrel Lolbin
-id: fa4b21c9-0057-4493-b289-2556416ae4d7
+id: 6dd18e44-e4a2-1c08-3d0e-f4dc7e2fa9cc
+related:
+    - id: fa4b21c9-0057-4493-b289-2556416ae4d7
+      type: derived
 status: deprecated
 description: Detects Possible Squirrel Packages Manager as Lolbin
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.execution
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

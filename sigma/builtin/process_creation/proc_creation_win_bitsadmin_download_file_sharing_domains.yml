@@ -1,5 +1,8 @@
 title: Suspicious Download From File-Sharing Website Via Bitsadmin
-id: 8518ed3d-f7c9-4601-a26c-f361a4256a0c
+id: 23c16dc8-5f28-940b-9094-092e89b8727f
+related:
+    - id: 8518ed3d-f7c9-4601-a26c-f361a4256a0c
+      type: derived
 status: experimental
 description: Detects usage of bitsadmin downloading a file from a suspicious domain
 references:
@@ -18,6 +21,7 @@ tags:
     - attack.t1197
     - attack.s0190
     - attack.t1036.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

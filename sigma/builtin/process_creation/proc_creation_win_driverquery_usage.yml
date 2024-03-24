@@ -1,8 +1,5 @@
 title: DriverQuery.EXE Execution
-id: a20def93-0709-4eae-9bd2-31206e21e6b2
-related:
-    - id: 9fc3072c-dc8f-4bf7-b231-18950000fadd
-      type: similar
+id: 6c78dafc-594b-ab99-d6da-cafcb37ab087
 status: experimental
 description: Detect usage of the "driverquery" utility. Which can be used to perform reconnaissance on installed drivers
 references:
@@ -14,6 +11,7 @@ date: 2023/01/19
 modified: 2023/09/29
 tags:
     - attack.discovery
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -38,5 +36,5 @@ detection:
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Legitimate use by third party tools in order to investigate installed drivers
-level: medium # Level could be reduced to low if this utility is often used in your environment
+level: medium
 ruletype: Sigma

@@ -1,5 +1,8 @@
 title: Cloudflared Tunnel Execution
-id: 9a019ffc-3580-4c9d-8d87-079f7e8d3fd4
+id: 0fea9c26-5302-3b51-7884-b9ed47e74157
+related:
+    - id: 9a019ffc-3580-4c9d-8d87-079f7e8d3fd4
+      type: derived
 status: experimental
 description: Detects execution of the "cloudflared" tool to connect back to a tunnel. This was seen used by threat actors to maintain persistence and remote access to compromised networks.
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1102
     - attack.t1090
     - attack.t1572
+    - sysmon
 logsource:
     category: process_creation
     product: windows

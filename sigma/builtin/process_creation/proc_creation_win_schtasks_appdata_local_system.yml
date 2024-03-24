@@ -1,5 +1,8 @@
 title: Suspicious Schtasks Execution AppData Folder
-id: c5c00f49-b3f9-45a6-997e-cfdecc6e1967
+id: 6b789465-3c6e-9af1-e00a-929db8f324d1
+related:
+    - id: c5c00f49-b3f9-45a6-997e-cfdecc6e1967
+      type: derived
 status: test
 description: Detects the creation of a schtask that executes a file from C:\Users\<USER>\AppData\Local
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.persistence
     - attack.t1053.005
     - attack.t1059.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

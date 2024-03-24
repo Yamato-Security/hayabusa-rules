@@ -1,5 +1,8 @@
 title: Disable Internal Tools or Feature in Registry
-id: e2482f8d-3443-4237-b906-cc145d87a076
+id: ebfabc1f-964a-69f3-60d7-e027eaaf1022
+related:
+    - id: e2482f8d-3443-4237-b906-cc145d87a076
+      type: derived
 status: experimental
 description: Detects registry modifications that change features of internal Windows tools (malware like Agent Tesla uses this technique)
 references:
@@ -14,6 +17,7 @@ modified: 2023/11/20
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     category: registry_set
     product: windows

@@ -1,5 +1,8 @@
 title: Renamed PaExec Execution
-id: 7b0666ad-3e38-4e3d-9bab-78b06de85f7b
+id: 0735aa09-dd22-f1af-f7d6-e654a71f6613
+related:
+    - id: 7b0666ad-3e38-4e3d-9bab-78b06de85f7b
+      type: derived
 status: deprecated
 description: Detects execution of renamed paexec via imphash and executable product string
 references:
@@ -15,6 +18,7 @@ tags:
     - car.2013-05-009
     - attack.execution
     - attack.t1569.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

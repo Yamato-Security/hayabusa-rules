@@ -1,5 +1,8 @@
 title: Visual Studio Code Tunnel Execution
-id: 90d6bd71-dffb-4989-8d86-a827fedd6624
+id: 2dca5a53-e0e7-287d-3c41-45e454bceadc
+related:
+    - id: 90d6bd71-dffb-4989-8d86-a827fedd6624
+      type: derived
 status: experimental
 description: Detects Visual Studio Code tunnel execution. Attackers can abuse this functionality to establish a C2 channel
 references:
@@ -11,6 +14,7 @@ date: 2023/10/25
 tags:
     - attack.command_and_control
     - attack.t1071.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

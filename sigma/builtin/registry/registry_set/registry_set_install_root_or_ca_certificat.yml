@@ -1,5 +1,8 @@
 title: New Root or CA or AuthRoot Certificate to Store
-id: d223b46b-5621-4037-88fe-fda32eead684
+id: 8365c772-65e3-7f23-1606-2a2ecbd20235
+related:
+    - id: d223b46b-5621-4037-88fe-fda32eead684
+      type: derived
 status: experimental
 description: Detects the addition of new root, CA or AuthRoot certificates to the Windows registry
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/17
 tags:
     - attack.impact
     - attack.t1490
+    - sysmon
 logsource:
     category: registry_set
     product: windows

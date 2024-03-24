@@ -1,5 +1,8 @@
 title: File Decoded From Base64/Hex Via Certutil.EXE
-id: cc9cbe82-7bc0-4ef5-bc23-bbfb83947be7
+id: 1d0387b6-6de7-eb5c-ffe9-ee892ff26f07
+related:
+    - id: cc9cbe82-7bc0-4ef5-bc23-bbfb83947be7
+      type: derived
 status: test
 description: Detects the execution of certutil with either the "decode" or "decodehex" flags to decode base64 or hex encoded files. This can be abused by attackers to decode an encoded payload before execution
 references:
@@ -15,6 +18,7 @@ modified: 2024/03/05
 tags:
     - attack.defense_evasion
     - attack.t1027
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -28,9 +32,9 @@ detection:
     selection_cli:
         CommandLine|contains:
             - '-decode '
-            - '/decodehex '
-            - '/decode '
             - '-decodehex '
+            - '/decode '
+            - '/decodehex '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

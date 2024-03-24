@@ -1,5 +1,8 @@
 title: Potentially Over Permissive Permissions Granted Using Dsacls.EXE
-id: 01c42d3c-242d-4655-85b2-34f1739632f7
+id: a81385de-1365-3d8d-2778-5d914a66d61e
+related:
+    - id: 01c42d3c-242d-4655-85b2-34f1739632f7
+      type: derived
 status: test
 description: Detects usage of Dsacls to grant over permissive permissions
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/04
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

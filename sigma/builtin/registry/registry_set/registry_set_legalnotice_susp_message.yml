@@ -1,5 +1,8 @@
 title: Potential Ransomware Activity Using LegalNotice Message
-id: 8b9606c9-28be-4a38-b146-0e313cc232c1
+id: dcbfe53c-e933-cfb7-d9ce-8f03726f9637
+related:
+    - id: 8b9606c9-28be-4a38-b146-0e313cc232c1
+      type: derived
 status: experimental
 description: Detect changes to the "LegalNoticeCaption" or "LegalNoticeText" registry values where the message set contains keywords often used in ransomware ransom messages
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.impact
     - attack.t1491.001
+    - sysmon
 logsource:
     product: windows
     category: registry_set

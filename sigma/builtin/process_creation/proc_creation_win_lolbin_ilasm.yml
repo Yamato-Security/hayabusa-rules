@@ -1,5 +1,8 @@
 title: Ilasm Lolbin Use Compile C-Sharp
-id: 850d55f9-6eeb-4492-ad69-a72338f65ba4
+id: 5ea0b54f-98b4-7cc7-6c38-01a53470b4e4
+related:
+    - id: 850d55f9-6eeb-4492-ad69-a72338f65ba4
+      type: derived
 status: test
 description: Detect use of Ilasm.exe to compile c# code into dll or exe.
 references:
@@ -11,6 +14,7 @@ modified: 2022/05/16
 tags:
     - attack.defense_evasion
     - attack.t1127
+    - sysmon
 logsource:
     product: windows
     category: process_creation

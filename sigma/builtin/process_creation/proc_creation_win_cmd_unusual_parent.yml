@@ -1,5 +1,8 @@
 title: Unusual Parent Process For Cmd.EXE
-id: 4b991083-3d0e-44ce-8fc4-b254025d8d4b
+id: 370b959a-526f-4355-c41d-8388206d423a
+related:
+    - id: 4b991083-3d0e-44ce-8fc4-b254025d8d4b
+      type: derived
 status: experimental
 description: Detects suspicious parent process for cmd.exe
 references:
@@ -10,6 +13,7 @@ modified: 2023/12/05
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

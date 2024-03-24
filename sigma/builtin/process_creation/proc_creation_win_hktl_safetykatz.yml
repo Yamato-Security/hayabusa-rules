@@ -1,5 +1,8 @@
 title: HackTool - SafetyKatz Execution
-id: b1876533-4ed5-4a83-90f3-b8645840a413
+id: f7214fe4-985b-b820-4816-01cc5cd40601
+related:
+    - id: b1876533-4ed5-4a83-90f3-b8645840a413
+      type: derived
 status: test
 description: Detects the execution of the hacktool SafetyKatz via PE information and default Image name
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/04
 tags:
     - attack.credential_access
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

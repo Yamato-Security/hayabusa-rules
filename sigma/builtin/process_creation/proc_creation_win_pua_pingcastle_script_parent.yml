@@ -1,8 +1,5 @@
 title: PUA - PingCastle Execution From Potentially Suspicious Parent
-id: b37998de-a70b-4f33-b219-ec36bf433dc0
-related:
-    - id: b1cb4ab6-ac31-43f4-adf1-d9d08957419c
-      type: derived
+id: ac70393b-10a3-1934-e063-2bff18e8a37c
 status: experimental
 description: |
     Detects the execution of PingCastle, a tool designed to quickly assess the Active Directory security level via a script located in a potentially suspicious or uncommon location.
@@ -19,6 +16,7 @@ date: 2024/01/11
 tags:
     - attack.reconnaissance
     - attack.t1595
+    - sysmon
 logsource:
     category: process_creation
     product: windows

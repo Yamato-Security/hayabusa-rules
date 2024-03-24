@@ -1,5 +1,8 @@
 title: Suspicious Msiexec Execute Arbitrary DLL
-id: 6f4191bb-912b-48a8-9ce7-682769541e6d
+id: 0c52293c-57fb-c251-5f09-4da3e0776891
+related:
+    - id: 6f4191bb-912b-48a8-9ce7-682769541e6d
+      type: derived
 status: test
 description: |
     Adversaries may abuse msiexec.exe to proxy execution of malicious payloads.
@@ -14,6 +17,7 @@ modified: 2024/03/13
 tags:
     - attack.defense_evasion
     - attack.t1218.007
+    - sysmon
 logsource:
     category: process_creation
     product: windows

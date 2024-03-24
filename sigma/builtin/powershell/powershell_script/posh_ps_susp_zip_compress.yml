@@ -1,5 +1,5 @@
 title: Zip A Folder With PowerShell For Staging In Temp - PowerShell Script
-id: b7a3c9a3-09ea-4934-8864-6a32cacd98d9 # PowerShell Script
+id: 7778d03c-e7bd-53bb-1f84-6557e3ecf12d
 related:
     - id: 71ff406e-b633-4989-96ec-bc49d825a412 # PowerShell Classic
       type: similar
@@ -7,6 +7,8 @@ related:
       type: similar
     - id: 85a8e5ba-bd03-4bfb-bbfa-a4409a8f8b98 # Process Creation
       type: similar
+    - id: b7a3c9a3-09ea-4934-8864-6a32cacd98d9
+      type: derived
 status: test
 description: |
     Detects PowerShell scripts that make use of the "Compress-Archive" Cmdlet in order to compress folders and files where the output is stored in a potentially suspicious location that is used often by malware for exfiltration.

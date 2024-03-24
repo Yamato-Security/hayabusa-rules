@@ -1,8 +1,5 @@
 title: Arbitrary File Download Via IMEWDBLD.EXE
-id: 863218bd-c7d0-4c52-80cd-0a96c09f54af
-related:
-    - id: 8d7e392e-9b28-49e1-831d-5949c6281228
-      type: derived
+id: 9a2b890c-d67f-9cbf-6350-4365c0828269
 status: experimental
 description: Detects usage of "IMEWDBLD.exe" to download arbitrary files
 references:
@@ -14,6 +11,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: DumpStack.log Defender Evasion
-id: 4f647cfa-b598-4e12-ad69-c68dd16caef8
+id: 9550441e-5f01-6f0a-60db-abd27009e95d
+related:
+    - id: 4f647cfa-b598-4e12-ad69-c68dd16caef8
+      type: derived
 status: test
 description: Detects the use of the filename DumpStack.log to evade Microsoft Defender
 references:
@@ -9,6 +12,7 @@ date: 2022/01/06
 modified: 2022/06/17
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

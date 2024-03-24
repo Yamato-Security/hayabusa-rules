@@ -1,5 +1,8 @@
 title: Service Started/Stopped Via Wmic.EXE
-id: 0b7163dc-7eee-4960-af17-c0cd517f92da
+id: 36fe1761-03ba-cf23-48dc-4de20028381f
+related:
+    - id: 0b7163dc-7eee-4960-af17-c0cd517f92da
+      type: derived
 status: test
 description: Detects usage of wmic to start or stop a service
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/14
 tags:
     - attack.execution
     - attack.t1047
+    - sysmon
 logsource:
     category: process_creation
     product: windows

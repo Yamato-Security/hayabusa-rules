@@ -1,5 +1,8 @@
 title: File Download And Execution Via IEExec.EXE
-id: 9801abb8-e297-4dbf-9fbd-57dde0e830ad
+id: b7adfc19-5e32-e2d7-a70c-a28e9a844564
+related:
+    - id: 9801abb8-e297-4dbf-9fbd-57dde0e830ad
+      type: derived
 status: test
 description: Detects execution of the IEExec utility to download and execute files
 references:
@@ -10,6 +13,7 @@ modified: 2023/11/09
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

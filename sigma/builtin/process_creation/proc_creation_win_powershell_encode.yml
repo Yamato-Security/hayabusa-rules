@@ -1,5 +1,8 @@
 title: Suspicious Execution of Powershell with Base64
-id: fb843269-508c-4b76-8b8d-88679db22ce7
+id: 5464890a-e53b-c991-756a-8ac37655adca
+related:
+    - id: fb843269-508c-4b76-8b8d-88679db22ce7
+      type: derived
 status: test
 description: Commandline to launch powershell with a base64 payload
 references:
@@ -12,6 +15,7 @@ modified: 2023/01/05
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

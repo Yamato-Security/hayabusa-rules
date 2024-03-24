@@ -1,5 +1,8 @@
 title: Dism Remove Online Package
-id: 43e32da2-fdd0-4156-90de-50dfd62636f9
+id: aab62ba9-1795-b6b5-47f8-75e49b89b59d
+related:
+    - id: 43e32da2-fdd0-4156-90de-50dfd62636f9
+      type: derived
 status: test
 description: Deployment Image Servicing and Management tool. DISM is used to enumerate, install, uninstall, configure, and update features and packages in Windows images
 references:
@@ -11,6 +14,7 @@ modified: 2022/08/26
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Windows Defender Service Disabled
-id: e1aa95de-610a-427d-b9e7-9b46cfafbe6a
+id: 7f5a4070-c4d2-ba36-ab1f-378da90ddf45
+related:
+    - id: e1aa95de-610a-427d-b9e7-9b46cfafbe6a
+      type: derived
 status: experimental
 description: Detects when an attacker or tool disables the  Windows Defender service (WinDefend) via the registry
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     product: windows
     category: registry_set

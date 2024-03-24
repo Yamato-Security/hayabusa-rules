@@ -1,5 +1,8 @@
 title: InfDefaultInstall.exe .inf Execution
-id: ce7cf472-6fcc-490a-9481-3786840b5d9b
+id: f0e123c3-0e38-7799-a7bb-c5682449e2e8
+related:
+    - id: ce7cf472-6fcc-490a-9481-3786840b5d9b
+      type: derived
 status: test
 description: Executes SCT script using scrobj.dll from a command in entered into a specially prepared INF file.
 references:
@@ -11,6 +14,7 @@ modified: 2022/10/09
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

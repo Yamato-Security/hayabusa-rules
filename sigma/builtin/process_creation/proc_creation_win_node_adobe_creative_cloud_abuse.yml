@@ -1,5 +1,8 @@
 title: Node Process Executions
-id: df1f26d3-bea7-4700-9ea2-ad3e990cf90e
+id: 74925938-de32-0417-5a62-b63a5d0dd01a
+related:
+    - id: df1f26d3-bea7-4700-9ea2-ad3e990cf90e
+      type: derived
 status: test
 description: Detects the execution of other scripts using the Node executable packaged with Adobe Creative Cloud
 references:
@@ -10,6 +13,7 @@ tags:
     - attack.defense_evasion
     - attack.t1127
     - attack.t1059.007
+    - sysmon
 logsource:
     category: process_creation
     product: windows

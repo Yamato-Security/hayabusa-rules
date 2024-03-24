@@ -1,5 +1,8 @@
 title: Potential Persistence Via TypedPaths
-id: 086ae989-9ca6-4fe7-895a-759c5544f247
+id: e0f39f6d-5bc7-83ca-9a1f-4e67316af212
+related:
+    - id: 086ae989-9ca6-4fe7-895a-759c5544f247
+      type: derived
 status: experimental
 description: Detects modification addition to the 'TypedPaths' key in the user or admin registry from a non standard application. Which might indicate persistence attempt
 references:
@@ -10,6 +13,7 @@ date: 2022/08/22
 modified: 2023/08/17
 tags:
     - attack.persistence
+    - sysmon
 logsource:
     category: registry_set
     product: windows

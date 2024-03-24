@@ -1,5 +1,8 @@
 title: Lazarus Activity Apr21
-id: 4a12fa47-c735-4032-a214-6fab5b120670
+id: 528921e1-f356-7cca-49a4-c5e1402eb356
+related:
+    - id: 4a12fa47-c735-4032-a214-6fab5b120670
+      type: derived
 status: deprecated
 description: Detects different process creation events as described in Malwarebytes's threat report on Lazarus group activity
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.g0032
     - attack.execution
     - attack.t1106
+    - sysmon
 logsource:
     category: process_creation
     product: windows

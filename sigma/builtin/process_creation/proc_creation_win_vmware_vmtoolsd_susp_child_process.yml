@@ -1,5 +1,8 @@
 title: VMToolsd Suspicious Child Process
-id: 5687f942-867b-4578-ade7-1e341c46e99a
+id: 5161ecbd-ced9-5f55-3dba-cfb5e38cf9d1
+related:
+    - id: 5687f942-867b-4578-ade7-1e341c46e99a
+      type: derived
 status: experimental
 description: Detects suspicious child process creations of VMware Tools process which may indicate persistence setup
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.execution
     - attack.persistence
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

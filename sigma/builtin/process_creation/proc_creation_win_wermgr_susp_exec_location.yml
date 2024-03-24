@@ -1,8 +1,5 @@
 title: Suspicious Execution Location Of Wermgr.EXE
-id: 5394fcc7-aeb2-43b5-9a09-cac9fc5edcd5
-related:
-    - id: 396f6630-f3ac-44e3-bfc8-1b161bc00c4e
-      type: similar
+id: cb9078dd-dd0d-01f3-eee3-a3dfddf5858e
 status: experimental
 description: Detects suspicious Windows Error Reporting manager (wermgr.exe) execution location.
 references:
@@ -14,6 +11,7 @@ date: 2022/10/14
 modified: 2023/08/23
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

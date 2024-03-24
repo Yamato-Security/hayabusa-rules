@@ -1,5 +1,8 @@
 title: Esentutl Volume Shadow Copy Service Keys
-id: 5aad0995-46ab-41bd-a9ff-724f41114971
+id: f6fed793-a359-2cae-0383-6ec6a9aee77b
+related:
+    - id: 5aad0995-46ab-41bd-a9ff-724f41114971
+      type: derived
 status: test
 description: Detects the volume shadow copy service initialization and processing via esentutl. Registry keys such as HKLM\\System\\CurrentControlSet\\Services\\VSS\\Diag\\VolSnap\\Volume are captured.
 references:
@@ -10,6 +13,7 @@ modified: 2022/12/25
 tags:
     - attack.credential_access
     - attack.t1003.002
+    - sysmon
 logsource:
     category: registry_event
     product: windows

@@ -1,5 +1,8 @@
 title: DumpMinitool Execution
-id: dee0a7a3-f200-4112-a99b-952196d81e42
+id: 7fba96c8-5c12-aafa-9f68-5c0c7fd6e592
+related:
+    - id: dee0a7a3-f200-4112-a99b-952196d81e42
+      type: derived
 status: test
 description: Detects the use of "DumpMinitool.exe" a tool that allows the dump of process memory via the use of the "MiniDumpWriteDump"
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.defense_evasion
     - attack.t1036
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

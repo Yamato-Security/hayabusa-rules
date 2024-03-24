@@ -1,5 +1,8 @@
 title: New Service Creation
-id: 7fe71fc9-de3b-432a-8d57-8c809efc10ab
+id: f3c0ce89-d7e4-b1be-b79d-265254701fe6
+related:
+    - id: 7fe71fc9-de3b-432a-8d57-8c809efc10ab
+      type: derived
 status: deprecated
 description: Detects creation of a new service.
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.persistence
     - attack.privilege_escalation
     - attack.t1543.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

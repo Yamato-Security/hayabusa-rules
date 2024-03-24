@@ -1,5 +1,8 @@
 title: Scheduled Task Created - Registry
-id: 93ff0ceb-e0ef-4586-8cd8-a6c277d738e3
+id: c6cda933-68be-134e-fe2e-71ee945f0f69
+related:
+    - id: 93ff0ceb-e0ef-4586-8cd8-a6c277d738e3
+      type: derived
 status: experimental
 description: Detects the creation of a scheduled task via Registry keys.
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1053.005
     - car.2013-08-001
     - detection.threat_hunting
+    - sysmon
 logsource:
     product: windows
     category: registry_event

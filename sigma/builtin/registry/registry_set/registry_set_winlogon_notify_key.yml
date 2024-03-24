@@ -1,5 +1,8 @@
 title: Winlogon Notify Key Logon Persistence
-id: bbf59793-6efb-4fa1-95ca-a7d288e52c88
+id: 16505b6b-b744-b451-e1cc-2bf1ecc9e7df
+related:
+    - id: bbf59793-6efb-4fa1-95ca-a7d288e52c88
+      type: derived
 status: test
 description: |
     Adversaries may abuse features of Winlogon to execute DLLs and/or executables when a user logs in.
@@ -12,6 +15,7 @@ modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1547.004
+    - sysmon
 logsource:
     category: registry_set
     product: windows

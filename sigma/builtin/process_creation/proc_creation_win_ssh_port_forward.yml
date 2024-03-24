@@ -1,5 +1,8 @@
 title: Port Forwarding Activity Via SSH.EXE
-id: 327f48c1-a6db-4eb8-875a-f6981f1b0183
+id: 9f52bf0b-cd07-33a3-f9c1-6cf08889812a
+related:
+    - id: 327f48c1-a6db-4eb8-875a-f6981f1b0183
+      type: derived
 status: experimental
 description: Detects port forwarding activity via SSH.exe
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1572
     - attack.t1021.001
     - attack.t1021.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

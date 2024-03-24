@@ -1,5 +1,8 @@
 title: Potential Initial Access via DLL Search Order Hijacking
-id: dbbd9f66-2ed3-4ca2-98a4-6ea985dd1a1c
+id: cb825374-4d9d-b80e-f002-e588e99d3a43
+related:
+    - id: dbbd9f66-2ed3-4ca2-98a4-6ea985dd1a1c
+      type: derived
 status: test
 description: Detects attempts to create a DLL file to a known desktop application dependencies folder such as Slack, Teams or OneDrive and by an unusual process. This may indicate an attempt to load a malicious module via DLL search order hijacking.
 references:

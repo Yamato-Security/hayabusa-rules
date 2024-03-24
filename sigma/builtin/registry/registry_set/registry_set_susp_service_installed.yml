@@ -1,5 +1,8 @@
 title: Suspicious Service Installed
-id: f2485272-a156-4773-82d7-1d178bc4905b
+id: 60953210-fd32-ddac-1118-a569c8452fd3
+related:
+    - id: f2485272-a156-4773-82d7-1d178bc4905b
+      type: derived
 status: test
 description: |
     Detects installation of NalDrv or PROCEXP152 services via registry-keys to non-system32 folders.
@@ -12,6 +15,7 @@ modified: 2023/08/17
 tags:
     - attack.t1562.001
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: registry_set
     product: windows

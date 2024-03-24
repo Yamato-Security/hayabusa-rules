@@ -1,5 +1,8 @@
 title: LOLBAS Data Exfiltration by DataSvcUtil.exe
-id: e290b10b-1023-4452-a4a9-eb31a9013b3a
+id: 30f60c05-7105-c523-3ab6-698b29aebbce
+related:
+    - id: e290b10b-1023-4452-a4a9-eb31a9013b3a
+      type: derived
 status: test
 description: Detects when a user performs data exfiltration by using DataSvcUtil.exe
 references:
@@ -14,6 +17,7 @@ modified: 2022/05/16
 tags:
     - attack.exfiltration
     - attack.t1567
+    - sysmon
 logsource:
     category: process_creation
     product: windows

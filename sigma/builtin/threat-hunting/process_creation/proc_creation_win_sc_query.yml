@@ -1,5 +1,8 @@
 title: SC.EXE Query Execution
-id: 57712d7a-679c-4a41-a913-87e7175ae429
+id: 1a3d7d59-1928-edd5-afaa-ffb4018bf777
+related:
+    - id: 57712d7a-679c-4a41-a913-87e7175ae429
+      type: derived
 status: test
 description: Detects execution of "sc.exe" to query information about registered services on the system
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.discovery
     - attack.t1007
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Visual Studio Code Tunnel Shell Execution
-id: f4a623c2-4ef5-4c33-b811-0642f702c9f1
+id: 88689b5a-5cf9-4b6b-f596-66cc471db969
+related:
+    - id: f4a623c2-4ef5-4c33-b811-0642f702c9f1
+      type: derived
 status: experimental
 description: Detects the execution of a shell (powershell, bash, wsl...) via Visual Studio Code tunnel. Attackers can abuse this functionality to establish a C2 channel and execute arbitrary commands on the system.
 references:
@@ -11,6 +14,7 @@ date: 2023/10/25
 tags:
     - attack.command_and_control
     - attack.t1071.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Sticky Key Like Backdoor Usage - Registry
-id: baca5663-583c-45f9-b5dc-ea96a22ce542
+id: 255a8d48-2f51-b8e1-ed5c-4063555a7569
+related:
+    - id: baca5663-583c-45f9-b5dc-ea96a22ce542
+      type: derived
 status: test
 description: Detects the usage and installation of a backdoor that uses an option to register a malicious debugger for built-in tools that are accessible in the login screen
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1546.008
     - car.2014-11-003
     - car.2014-11-008
+    - sysmon
 logsource:
     category: registry_event
     product: windows

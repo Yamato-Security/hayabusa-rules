@@ -1,5 +1,8 @@
 title: Potential Process Execution Proxy Via CL_Invocation.ps1
-id: a0459f02-ac51-4c09-b511-b8c9203fc429
+id: 8b1a1dbd-8084-e219-f9ee-15c286aab6c9
+related:
+    - id: a0459f02-ac51-4c09-b511-b8c9203fc429
+      type: derived
 status: test
 description: Detects calls to "SyncInvoke" that is part of the "CL_Invocation.ps1" script to proxy execution using "System.Diagnostics.Process"
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1216
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Suspicious VBoxDrvInst.exe Parameters
-id: b7b19cb6-9b32-4fc4-a108-73f19acfe262
+id: 512d7248-20c4-a7bb-650b-19b15c46e2a2
+related:
+    - id: b7b19cb6-9b32-4fc4-a108-73f19acfe262
+      type: derived
 status: test
 description: |
     Detect VBoxDrvInst.exe run with parameters allowing processing INF file.
@@ -14,6 +17,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     category: process_creation
     product: windows

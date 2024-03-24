@@ -1,5 +1,8 @@
 title: HackTool - Quarks PwDump Execution
-id: 0685b176-c816-4837-8e7b-1216f346636b
+id: b192c555-7ec6-6836-9df6-a81347c77e35
+related:
+    - id: 0685b176-c816-4837-8e7b-1216f346636b
+      type: derived
 status: test
 description: Detects usage of the Quarks PwDump tool via commandline arguments
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/05
 tags:
     - attack.credential_access
     - attack.t1003.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Devtoolslauncher.exe Executes Specified Binary
-id: cc268ac1-42d9-40fd-9ed3-8c4e1a5b87e6
+id: 415d9b8e-8ea7-ce1d-44e5-f124d411e636
+related:
+    - id: cc268ac1-42d9-40fd-9ed3-8c4e1a5b87e6
+      type: derived
 status: test
 description: The Devtoolslauncher.exe executes other binary
 references:
@@ -11,6 +14,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

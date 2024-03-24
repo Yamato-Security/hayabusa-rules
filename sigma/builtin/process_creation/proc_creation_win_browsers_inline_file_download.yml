@@ -1,5 +1,8 @@
 title: File Download From Browser Process Via Inline URL
-id: 94771a71-ba41-4b6e-a757-b531372eaab6
+id: 96fd693f-cd31-d232-84e6-212a9dd1c530
+related:
+    - id: 94771a71-ba41-4b6e-a757-b531372eaab6
+      type: derived
 status: test
 description: Detects execution of a browser process with a URL argument pointing to a file with a potentially interesting extension. This can be abused to download arbitrary files or to hide from the user for example by launching the browser in a minimized state.
 references:
@@ -11,6 +14,7 @@ modified: 2023/11/09
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

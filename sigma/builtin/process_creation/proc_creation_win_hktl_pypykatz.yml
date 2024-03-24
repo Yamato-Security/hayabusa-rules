@@ -1,5 +1,8 @@
 title: HackTool - Pypykatz Credentials Dumping Activity
-id: a29808fd-ef50-49ff-9c7a-59a9b040b404
+id: d3b62eee-982b-e3f3-e106-d83048e4cf0d
+related:
+    - id: a29808fd-ef50-49ff-9c7a-59a9b040b404
+      type: derived
 status: test
 description: Detects the usage of "pypykatz" to obtain stored credentials. Adversaries may attempt to extract credential material from the Security Account Manager (SAM) database through Windows registry where the SAM database is stored
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/05
 tags:
     - attack.credential_access
     - attack.t1003.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Excel Proxy Executing Regsvr32 With Payload
-id: 9d1c72f5-43f0-4da5-9320-648cf2099dd0
+id: 00de24c5-9b44-0aac-e2c5-0d1fc1af7203
+related:
+    - id: 9d1c72f5-43f0-4da5-9320-648cf2099dd0
+      type: derived
 status: deprecated
 description: |
     Excel called wmic to finally proxy execute regsvr32 with the payload.
@@ -23,7 +26,6 @@ logsource:
     product: windows
     category: process_creation
 detection:
-    #useful_information: add more LOLBins to the rules logic of your choice.
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational

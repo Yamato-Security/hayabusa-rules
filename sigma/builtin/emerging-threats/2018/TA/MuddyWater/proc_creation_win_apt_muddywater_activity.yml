@@ -1,5 +1,8 @@
 title: Potential MuddyWater APT Activity
-id: 36222790-0d43-4fe8-86e4-674b27809543
+id: 0f27e458-cb56-857e-1e9a-630975f5984a
+related:
+    - id: 36222790-0d43-4fe8-86e4-674b27809543
+      type: derived
 status: test
 description: Detects potential Muddywater APT activity
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.g0069
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

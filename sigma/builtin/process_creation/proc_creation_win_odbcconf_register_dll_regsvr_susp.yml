@@ -1,8 +1,5 @@
 title: Potentially Suspicious DLL Registered Via Odbcconf.EXE
-id: ba4cfc11-d0fa-4d94-bf20-7c332c412e76
-related:
-    - id: 9f0a8bf3-a65b-440a-8c1e-5cb1547c8e70
-      type: derived
+id: 953dba36-324e-646a-d6e5-ef62aedd2205
 status: experimental
 description: Detects execution of "odbcconf" with the "REGSVR" action where the DLL in question doesn't contain a ".dll" extension. Which is often used as a method to evade defenses.
 references:
@@ -14,6 +11,7 @@ date: 2023/05/22
 tags:
     - attack.defense_evasion
     - attack.t1218.008
+    - sysmon
 logsource:
     category: process_creation
     product: windows

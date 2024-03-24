@@ -1,5 +1,8 @@
 title: Potential Command Line Path Traversal Evasion Attempt
-id: 1327381e-6ab0-4f38-b583-4c1b8346a56b
+id: 2cc522c8-300b-2344-e384-3db7df590412
+related:
+    - id: 1327381e-6ab0-4f38-b583-4c1b8346a56b
+      type: derived
 status: test
 description: Detects potential evasion or obfuscation attempts using bogus path traversal via the commandline
 references:
@@ -11,6 +14,7 @@ modified: 2023/03/29
 tags:
     - attack.defense_evasion
     - attack.t1036
+    - sysmon
 logsource:
     category: process_creation
     product: windows

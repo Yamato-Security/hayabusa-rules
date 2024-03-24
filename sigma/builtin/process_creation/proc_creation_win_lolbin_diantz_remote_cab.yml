@@ -1,5 +1,8 @@
 title: Suspicious Diantz Download and Compress Into a CAB File
-id: 185d7418-f250-42d0-b72e-0c8b70661e93
+id: 4657b559-a0fa-d23b-e35c-9cde37b20f8c
+related:
+    - id: 185d7418-f250-42d0-b72e-0c8b70661e93
+      type: derived
 status: test
 description: Download and compress a remote file and store it in a cab file on local machine.
 references:
@@ -10,6 +13,7 @@ modified: 2022/08/13
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

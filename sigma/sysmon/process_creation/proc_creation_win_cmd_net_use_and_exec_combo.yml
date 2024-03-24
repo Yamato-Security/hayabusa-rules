@@ -1,5 +1,8 @@
 title: Suspicious File Execution From Internet Hosted WebDav Share
-id: f0507c0f-a3a2-40f5-acc6-7f543c334993
+id: 614bd734-a2e9-e8d8-41d0-c4350aef6f23
+related:
+    - id: f0507c0f-a3a2-40f5-acc6-7f543c334993
+      type: derived
 status: test
 description: Detects the execution of the "net use" command to mount a WebDAV server and then immediately execute some content in it. As seen being used in malicious LNK files
 references:

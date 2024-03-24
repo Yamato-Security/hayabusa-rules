@@ -1,10 +1,5 @@
 title: Service Security Descriptor Tampering Via Sc.EXE
-id: 98c5aeef-32d5-492f-b174-64a691896d25
-related:
-    - id: 99cf1e02-00fb-4c0d-8375-563f978dfd37 # Deny Service Access
-      type: similar
-    - id: a537cfc3-4297-4789-92b5-345bfd845ad0 # Specific Technique
-      type: similar
+id: 6cbe870d-ed2f-e585-6d9e-201323d379a7
 status: test
 description: Detection of sc.exe utility adding a new service with special permission which hides that service.
 references:
@@ -20,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1574.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

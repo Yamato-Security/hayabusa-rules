@@ -1,5 +1,8 @@
 title: Shell32 DLL Execution in Suspicious Directory
-id: 32b96012-7892-429e-b26c-ac2bf46066ff
+id: 54783800-bea8-9a66-c11d-9aab8da467eb
+related:
+    - id: 32b96012-7892-429e-b26c-ac2bf46066ff
+      type: derived
 status: test
 description: Detects shell32.dll executing a DLL in a suspicious directory
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

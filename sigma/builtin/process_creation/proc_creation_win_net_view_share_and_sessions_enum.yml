@@ -1,5 +1,8 @@
 title: Share And Session Enumeration Using Net.EXE
-id: 62510e69-616b-4078-b371-847da438cc03
+id: 9fc52937-cf49-786a-b1b0-3dfe6dd280ec
+related:
+    - id: 62510e69-616b-4078-b371-847da438cc03
+      type: derived
 status: stable
 description: Detects attempts to enumerate file shares, printer shares and sessions using "net.exe" with the "view" flag.
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/21
 tags:
     - attack.discovery
     - attack.t1018
+    - sysmon
 logsource:
     category: process_creation
     product: windows

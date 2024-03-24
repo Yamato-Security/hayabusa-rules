@@ -1,5 +1,8 @@
 title: Suspicious PowerShell IEX Execution Patterns
-id: 09576804-7a05-458e-a817-eb718ca91f54
+id: 814014e5-bfa2-e72a-4f31-6155fab87672
+related:
+    - id: 09576804-7a05-458e-a817-eb718ca91f54
+      type: derived
 status: test
 description: Detects suspicious ways to run Invoke-Execution using IEX alias
 references:
@@ -11,6 +14,7 @@ modified: 2022/11/28
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

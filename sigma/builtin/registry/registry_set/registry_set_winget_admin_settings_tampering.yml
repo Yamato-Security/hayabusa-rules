@@ -1,5 +1,8 @@
 title: Winget Admin Settings Modification
-id: 6db5eaf9-88f7-4ed9-af7d-9ef2ad12f236
+id: 4d50dc2c-f2bf-a039-820d-65c415ab31ee
+related:
+    - id: 6db5eaf9-88f7-4ed9-af7d-9ef2ad12f236
+      type: derived
 status: experimental
 description: Detects changes to the AppInstaller (winget) admin settings. Such as enabling local manifest installations or disabling installer hash checks
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.persistence
+    - sysmon
 logsource:
     product: windows
     category: registry_set

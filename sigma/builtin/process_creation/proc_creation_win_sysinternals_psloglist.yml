@@ -1,5 +1,8 @@
 title: Suspicious Use of PsLogList
-id: aae1243f-d8af-40d8-ab20-33fc6d0c55bc
+id: 22698f6a-6197-0acb-d0f8-39939e9af18f
+related:
+    - id: aae1243f-d8af-40d8-ab20-33fc6d0c55bc
+      type: derived
 status: test
 description: Detects usage of the PsLogList utility to dump event log in order to extract admin accounts and perform account discovery or delete events logs
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1087
     - attack.t1087.001
     - attack.t1087.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -34,16 +38,16 @@ detection:
             - ' system'
     selection_cli_flags:
         CommandLine|contains:
-            - ' -s'
-            - ' /s'
-            - ' /c'
-            - ' -d'
-            - ' /g'
-            - ' /d'
             - ' -c'
-            - ' -x'
-            - ' /x'
+            - ' -d'
             - ' -g'
+            - ' -s'
+            - ' -x'
+            - ' /c'
+            - ' /d'
+            - ' /g'
+            - ' /s'
+            - ' /x'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Another tool that uses the command line switches of PsLogList

@@ -1,5 +1,8 @@
 title: Lolbin Unregmp2.exe Use As Proxy
-id: 727454c0-d851-48b0-8b89-385611ab0704
+id: fbf93b53-f074-9501-418b-f1d43360e2cb
+related:
+    - id: 727454c0-d851-48b0-8b89-385611ab0704
+      type: derived
 status: test
 description: Detect usage of the "unregmp2.exe" binary as a proxy to launch a custom version of "wmpnscfg.exe"
 references:
@@ -9,6 +12,7 @@ date: 2022/12/29
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

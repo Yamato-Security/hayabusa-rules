@@ -1,10 +1,5 @@
 title: Malicious PowerShell Commandlets - ProcessCreation
-id: 02030f2f-6199-49ec-b258-ea71b07e03dc
-related:
-    - id: 89819aa4-bbd6-46bc-88ec-c7f7fe30efa6
-      type: derived
-    - id: 7d0d0329-0ef1-4e84-a9f5-49500f9d7c6c
-      type: similar
+id: 097acc6f-8384-1ffd-c4af-993cdf49dff6
 status: experimental
 description: Detects Commandlet names from well-known PowerShell exploitation frameworks
 references:
@@ -40,6 +35,7 @@ tags:
     - attack.t1069.002
     - attack.t1069
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

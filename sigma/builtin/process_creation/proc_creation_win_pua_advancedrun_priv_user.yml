@@ -1,8 +1,5 @@
 title: PUA - AdvancedRun Suspicious Execution
-id: fa00b701-44c6-4679-994d-5a18afa8a707
-related:
-    - id: d2b749ee-4225-417e-b20e-a8d2193cbb84
-      type: similar
+id: a407b6c9-ae1a-6fb2-a44d-24de12a2e2f7
 status: test
 description: Detects the execution of AdvancedRun utility in the context of the TrustedInstaller, SYSTEM, Local Service or Network Service accounts
 references:
@@ -17,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1134.002
+    - sysmon
 logsource:
     product: windows
     category: process_creation

@@ -1,5 +1,8 @@
 title: Registry Modification to Hidden File Extension
-id: 5df86130-4e95-4a54-90f7-26541b40aec2
+id: 88665d21-f330-6799-62f0-724746a160d7
+related:
+    - id: 5df86130-4e95-4a54-90f7-26541b40aec2
+      type: derived
 status: test
 description: Hides the file extension through modification of the registry
 references:
@@ -12,6 +15,7 @@ modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1137
+    - sysmon
 logsource:
     category: registry_set
     product: windows

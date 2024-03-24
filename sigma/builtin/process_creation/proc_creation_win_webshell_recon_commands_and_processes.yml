@@ -1,5 +1,8 @@
 title: Webshell Detection With Command Line Keywords
-id: bed2a484-9348-4143-8a8a-b801c979301c
+id: b89edd67-19bc-8e17-7967-2c47614dadee
+related:
+    - id: bed2a484-9348-4143-8a8a-b801c979301c
+      type: derived
 status: test
 description: Detects certain command line parameters often used during reconnaissance activity via web shells
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1018
     - attack.t1033
     - attack.t1087
+    - sysmon
 logsource:
     category: process_creation
     product: windows

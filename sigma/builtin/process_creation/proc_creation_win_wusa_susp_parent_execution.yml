@@ -1,5 +1,8 @@
 title: Wusa.EXE Executed By Parent Process Located In Suspicious Location
-id: ef64fc9c-a45e-43cc-8fd8-7d75d73b4c99
+id: 12bc26c7-41c4-101d-3d26-8419d0725870
+related:
+    - id: ef64fc9c-a45e-43cc-8fd8-7d75d73b4c99
+      type: derived
 status: experimental
 description: |
     Detects execution of the "wusa.exe" (Windows Update Standalone Installer) utility by a parent process that is located in a suspicious location.
@@ -9,6 +12,7 @@ author: X__Junior (Nextron Systems)
 date: 2023/11/26
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

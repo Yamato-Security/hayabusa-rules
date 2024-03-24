@@ -1,8 +1,5 @@
 title: Potentially Suspicious Execution Of Regasm/Regsvcs With Uncommon Extension
-id: e9f8f8cc-07cc-4e81-b724-f387db9175e4
-related:
-    - id: cc368ed0-2411-45dc-a222-510ace303cb2
-      type: derived
+id: ba17b43d-ff78-598e-3e48-6f7f77abce52
 status: test
 description: Detects potentially suspicious execution of the Regasm/Regsvcs utilities with an uncommon extension.
 references:
@@ -14,6 +11,7 @@ date: 2023/02/13
 tags:
     - attack.defense_evasion
     - attack.t1218.009
+    - sysmon
 logsource:
     category: process_creation
     product: windows

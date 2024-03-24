@@ -1,5 +1,8 @@
 title: XSL Script Execution Via WMIC.EXE
-id: 05c36dd6-79d6-4a9a-97da-3db20298ab2d
+id: d90fcd50-5835-4b80-6d1a-c708404a142c
+related:
+    - id: 05c36dd6-79d6-4a9a-97da-3db20298ab2d
+      type: derived
 status: test
 description: |
     Detects the execution of WMIC with the "format" flag to potentially load XSL files.
@@ -13,6 +16,7 @@ modified: 2024/03/05
 tags:
     - attack.defense_evasion
     - attack.t1220
+    - sysmon
 logsource:
     category: process_creation
     product: windows

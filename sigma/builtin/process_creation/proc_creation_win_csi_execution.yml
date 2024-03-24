@@ -1,5 +1,8 @@
 title: Suspicious Csi.exe Usage
-id: 40b95d31-1afc-469e-8d34-9a3a667d058e
+id: 655cb0fd-79c4-949b-b842-e1fcf2e1e527
+related:
+    - id: 40b95d31-1afc-469e-8d34-9a3a667d058e
+      type: derived
 status: test
 description: Csi.exe is a signed binary from Microsoft that comes with Visual Studio and provides C# interactive capabilities. It can be used to run C# code from a file passed as a parameter in command line. Early version of this utility provided with Microsoft “Roslyn” Community Technology Preview was named 'rcsi.exe'
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1072
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

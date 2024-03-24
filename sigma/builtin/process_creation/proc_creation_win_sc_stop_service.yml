@@ -1,8 +1,5 @@
 title: Stop Windows Service Via Sc.EXE
-id: 81bcb81b-5b1f-474b-b373-52c871aaa7b1
-related:
-    - id: eb87818d-db5d-49cc-a987-d5da331fbd90
-      type: obsoletes
+id: 115267f9-0227-94b2-f6ef-56939bd2c693
 status: test
 description: Detects the stopping of a Windows service via the "sc.exe" utility
 references:
@@ -13,6 +10,7 @@ modified: 2024/01/18
 tags:
     - attack.impact
     - attack.t1489
+    - sysmon
 logsource:
     category: process_creation
     product: windows

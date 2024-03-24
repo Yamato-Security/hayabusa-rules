@@ -1,5 +1,8 @@
 title: Disable Administrative Share Creation at Startup
-id: c7dcacd0-cc59-4004-b0a4-1d6cdebe6f3e
+id: 2946c058-5b67-3779-9a29-6cd622926e09
+related:
+    - id: c7dcacd0-cc59-4004-b0a4-1d6cdebe6f3e
+      type: derived
 status: test
 description: Administrative shares are hidden network shares created by Microsoft Windows NT operating systems that grant system administrators remote access to every disk volume on a network-connected system
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1070.005
+    - sysmon
 logsource:
     category: registry_set
     product: windows

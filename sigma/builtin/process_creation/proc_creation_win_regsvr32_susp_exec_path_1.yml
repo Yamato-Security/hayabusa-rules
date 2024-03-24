@@ -1,8 +1,5 @@
 title: Regsvr32 Execution From Potential Suspicious Location
-id: 9525dc73-0327-438c-8c04-13c0e037e9da
-related:
-    - id: 8e2b24c9-4add-46a0-b4bb-0057b4e6187d
-      type: obsoletes
+id: bc5fbebe-3d3b-0833-ff7d-34a3c035c017
 status: experimental
 description: Detects execution of regsvr32 where the DLL is located in a potentially suspicious location.
 references:
@@ -13,6 +10,7 @@ date: 2023/05/26
 tags:
     - attack.defense_evasion
     - attack.t1218.010
+    - sysmon
 logsource:
     category: process_creation
     product: windows

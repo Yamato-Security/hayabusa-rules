@@ -1,12 +1,5 @@
 title: Potential Provlaunch.EXE Binary Proxy Execution Abuse
-id: 7f5d1c9a-3e83-48df-95a7-2b98aae6c13c
-related:
-    - id: f9999590-1f94-4a34-a91e-951e47bedefd # CLI Abuse
-      type: similar
-    - id: 2a4b3e61-9d22-4e4a-b60f-6e8f0cde6f25 # CLI Registry
-      type: similar
-    - id: 7021255e-5db3-4946-a8b9-0ba7a4644a69 # Registry
-      type: similar
+id: 0e400d25-3298-763d-1813-3fe64dbdb2b0
 status: experimental
 description: Detects child processes of "provlaunch.exe" which might indicate potential abuse to proxy execution.
 references:
@@ -17,6 +10,7 @@ date: 2023/08/08
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

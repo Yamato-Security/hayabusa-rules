@@ -1,8 +1,10 @@
 title: Suspicious Msiexec Quiet Install From Remote Location
-id: 8150732a-0c9d-4a99-82b9-9efb9b90c40c
+id: b117dadf-4189-39b3-608b-14aee1e50fbf
 related:
     - id: f7b5f842-a6af-4da5-9e95-e32478f3cd2f
       type: similar
+    - id: 8150732a-0c9d-4a99-82b9-9efb9b90c40c
+      type: derived
 status: test
 description: Detects usage of Msiexec.exe to install packages hosted remotely quietly
 references:
@@ -28,14 +30,14 @@ detection:
         # Note that there is no space before and after the arguments because it's possible to write a commandline as such
         # Example: msiexec -q/i [MSI Package]
         CommandLine|contains:
-            - -package
-            - /package
             - -a
             - -i
+            - -j
+            - -package
+            - /a
             - /i
             - /j
-            - -j
-            - /a
+            - /package
     selection_quiet:
         CommandLine|contains:
             - -q

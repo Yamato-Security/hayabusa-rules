@@ -1,5 +1,8 @@
 title: File Download Using Notepad++ GUP Utility
-id: 44143844-0631-49ab-97a0-96387d6b2d7c
+id: f2a1b260-bd4a-52e8-6aea-b4ce040025e5
+related:
+    - id: 44143844-0631-49ab-97a0-96387d6b2d7c
+      type: derived
 status: test
 description: Detects execution of the Notepad++ updater (gup) from a process other than Notepad++ to download files.
 references:
@@ -10,6 +13,7 @@ modified: 2023/03/02
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Potential DLL File Download Via PowerShell Invoke-WebRequest
-id: 0f0450f3-8b47-441e-a31b-15a91dc243e2
+id: 7b1d6a26-339a-db21-8b7d-55f848967cdd
+related:
+    - id: 0f0450f3-8b47-441e-a31b-15a91dc243e2
+      type: derived
 status: test
 description: Detects potential DLL files being downloaded using the PowerShell Invoke-WebRequest cmdlet
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.t1059.001
     - attack.t1105
+    - sysmon
 logsource:
     product: windows
     category: process_creation

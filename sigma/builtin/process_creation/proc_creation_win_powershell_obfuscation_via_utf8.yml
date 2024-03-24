@@ -1,5 +1,8 @@
 title: Potential PowerShell Obfuscation Via WCHAR
-id: e312efd0-35a1-407f-8439-b8d434b438a6
+id: e0e9ccfe-20b3-2dca-ffe5-0e6c86ad22bc
+related:
+    - id: e312efd0-35a1-407f-8439-b8d434b438a6
+      type: derived
 status: test
 description: Detects suspicious encoded character syntax often used for defense evasion
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1059.001
     - attack.defense_evasion
     - attack.t1027
+    - sysmon
 logsource:
     category: process_creation
     product: windows

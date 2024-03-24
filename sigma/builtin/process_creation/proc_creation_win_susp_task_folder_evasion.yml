@@ -1,5 +1,8 @@
 title: Tasks Folder Evasion
-id: cc4e02ba-9c06-48e2-b09e-2500cace9ae0
+id: f671b855-3ea9-045a-c84d-36fc3884e2c7
+related:
+    - id: cc4e02ba-9c06-48e2-b09e-2500cace9ae0
+      type: derived
 status: test
 description: |
     The Tasks folder in system32 and syswow64 are globally writable paths.
@@ -16,6 +19,7 @@ tags:
     - attack.persistence
     - attack.execution
     - attack.t1574.002
+    - sysmon
 logsource:
     product: windows
     category: process_creation

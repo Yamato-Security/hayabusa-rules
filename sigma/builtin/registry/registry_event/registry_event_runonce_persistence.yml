@@ -1,5 +1,8 @@
 title: Run Once Task Configuration in Registry
-id: c74d7efc-8826-45d9-b8bb-f04fac9e4eff
+id: f00c4059-0241-7fee-4186-e8d0b5741cba
+related:
+    - id: c74d7efc-8826-45d9-b8bb-f04fac9e4eff
+      type: derived
 status: test
 description: Rule to detect the configuration of Run Once registry key. Configured payload can be run by runonce.exe /AlternateShellStartup
 references:
@@ -11,6 +14,7 @@ modified: 2022/04/04
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: registry_event

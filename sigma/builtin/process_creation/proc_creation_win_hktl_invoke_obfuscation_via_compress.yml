@@ -1,5 +1,8 @@
 title: Invoke-Obfuscation COMPRESS OBFUSCATION
-id: 7eedcc9d-9fdb-4d94-9c54-474e8affc0c7
+id: f52ac08e-65ef-a059-20d3-1eca726c6659
+related:
+    - id: 7eedcc9d-9fdb-4d94-9c54-474e8affc0c7
+      type: derived
 status: test
 description: Detects Obfuscated Powershell via COMPRESS OBFUSCATION
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

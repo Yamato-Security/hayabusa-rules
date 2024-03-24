@@ -1,5 +1,8 @@
 title: Potential CobaltStrike Process Patterns
-id: f35c5d71-b489-4e22-a115-f003df287317
+id: c78a9b49-3e9d-b00c-9e65-90d9f30bbe50
+related:
+    - id: f35c5d71-b489-4e22-a115-f003df287317
+      type: derived
 status: test
 description: Detects potential process patterns related to Cobalt Strike beacon activity
 references:
@@ -11,6 +14,7 @@ modified: 2023/03/29
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Suspicious Driver Install by pnputil.exe
-id: a2ea3ae7-d3d0-40a0-a55c-25a45c87cac1
+id: a4547750-0b4d-019c-4808-0da01680cddb
+related:
+    - id: a2ea3ae7-d3d0-40a0-a55c-25a45c87cac1
+      type: derived
 status: test
 description: Detects when a possible suspicious driver is being installed via pnputil.exe lolbin
 references:
@@ -11,6 +14,7 @@ modified: 2022/10/09
 tags:
     - attack.persistence
     - attack.t1547
+    - sysmon
 logsource:
     category: process_creation
     product: windows

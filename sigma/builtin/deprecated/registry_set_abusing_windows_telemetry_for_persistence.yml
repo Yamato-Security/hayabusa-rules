@@ -1,5 +1,8 @@
 title: Abusing Windows Telemetry For Persistence - Registry
-id: 4e8d5fd3-c959-441f-a941-f73d0cdcdca5
+id: 7c470022-ced9-05c4-b9fc-5aff8e5f4dce
+related:
+    - id: 4e8d5fd3-c959-441f-a941-f73d0cdcdca5
+      type: derived
 status: deprecated
 description: |
     Windows telemetry makes use of the binary CompatTelRunner.exe to run a variety of commands and perform the actual telemetry collections.
@@ -15,6 +18,7 @@ tags:
     - attack.persistence
     - attack.t1112
     - attack.t1053
+    - sysmon
 logsource:
     product: windows
     category: registry_set

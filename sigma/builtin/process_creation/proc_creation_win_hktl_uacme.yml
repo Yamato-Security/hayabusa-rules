@@ -1,5 +1,8 @@
 title: HackTool - UACMe Akagi Execution
-id: d38d2fa4-98e6-4a24-aff1-410b0c9ad177
+id: b23c27a3-ce02-1abb-0aa3-f1376bd9d0bd
+related:
+    - id: d38d2fa4-98e6-4a24-aff1-410b0c9ad177
+      type: derived
 status: test
 description: Detects the execution of UACMe, a tool used for UAC bypasses, via default PE metadata
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

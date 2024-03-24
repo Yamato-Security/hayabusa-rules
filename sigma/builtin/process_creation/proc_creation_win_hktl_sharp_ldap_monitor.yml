@@ -1,5 +1,8 @@
 title: HackTool - SharpLDAPmonitor Execution
-id: 9f8fc146-1d1a-4dbf-b8fd-dfae15e08541
+id: e5c800a5-3e9b-b168-6ef9-6f47f8a19124
+related:
+    - id: 9f8fc146-1d1a-4dbf-b8fd-dfae15e08541
+      type: derived
 status: test
 description: Detects execution of the SharpLDAPmonitor. Which can monitor the creation, deletion and changes to LDAP objects.
 references:
@@ -9,6 +12,7 @@ date: 2022/12/30
 modified: 2023/02/14
 tags:
     - attack.discovery
+    - sysmon
 logsource:
     product: windows
     category: process_creation

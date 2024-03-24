@@ -1,5 +1,8 @@
 title: Sysmon Discovery Via Default Driver Altitude Using Findstr.EXE
-id: 37db85d1-b089-490a-a59a-c7b6f984f480
+id: 47822e3c-eec8-de57-f1ee-b9b2ebce42ac
+related:
+    - id: 37db85d1-b089-490a-a59a-c7b6f984f480
+      type: derived
 status: test
 description: Detects usage of "findstr" with the argument "385201". Which could indicate potential discovery of an installed Sysinternals Sysmon service using the default driver altitude (even if the name is changed).
 references:

@@ -1,5 +1,8 @@
 title: Suspicious Execution of Shutdown to Log Out
-id: ec290c06-9b6b-4338-8b6b-095c0f284f10
+id: 4aab609a-ee21-b8ac-c046-68400df5cd4e
+related:
+    - id: ec290c06-9b6b-4338-8b6b-095c0f284f10
+      type: derived
 status: test
 description: Detects the rare use of the command line tool shutdown to logoff a user
 references:
@@ -10,6 +13,7 @@ date: 2022/10/01
 tags:
     - attack.impact
     - attack.t1529
+    - sysmon
 logsource:
     category: process_creation
     product: windows

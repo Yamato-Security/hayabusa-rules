@@ -1,5 +1,8 @@
 title: Potential SquiblyTwo Technique Execution
-id: 8d63dadf-b91b-4187-87b6-34a1114577ea
+id: b9b053da-68a6-d372-9780-828406597122
+related:
+    - id: 8d63dadf-b91b-4187-87b6-34a1114577ea
+      type: derived
 status: test
 description: Detects potential SquiblyTwo attack technique with possible renamed WMIC via Imphash and OriginalFileName fields
 references:
@@ -17,6 +20,7 @@ tags:
     - attack.execution
     - attack.t1059.005
     - attack.t1059.007
+    - sysmon
 logsource:
     category: process_creation
     product: windows

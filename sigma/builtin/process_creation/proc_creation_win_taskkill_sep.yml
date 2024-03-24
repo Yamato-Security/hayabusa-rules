@@ -1,5 +1,8 @@
 title: Taskkill Symantec Endpoint Protection
-id: 4a6713f6-3331-11ed-a261-0242ac120002
+id: 4ca79cb2-f424-4b29-861c-91cc27599d11
+related:
+    - id: 4a6713f6-3331-11ed-a261-0242ac120002
+      type: derived
 status: test
 description: |
     Detects one of the possible scenarios for disabling Symantec Endpoint Protection.
@@ -14,6 +17,7 @@ date: 2022/09/13
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

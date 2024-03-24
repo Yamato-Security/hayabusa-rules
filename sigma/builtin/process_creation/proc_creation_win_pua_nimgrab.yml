@@ -1,5 +1,8 @@
 title: PUA - Nimgrab Execution
-id: 74a12f18-505c-4114-8d0b-8448dd5485c6
+id: a860f5c4-f0f1-4566-1d72-4ff887bc2538
+related:
+    - id: 74a12f18-505c-4114-8d0b-8448dd5485c6
+      type: derived
 status: test
 description: Detects the usage of nimgrab, a tool bundled with the Nim programming framework and used for downloading files.
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/13
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

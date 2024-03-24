@@ -1,5 +1,8 @@
 title: Invoke-Obfuscation Via Use Rundll32
-id: 36c5146c-d127-4f85-8e21-01bf62355d5a
+id: 300c09ba-ba6b-5fea-7022-567fa5593c41
+related:
+    - id: 36c5146c-d127-4f85-8e21-01bf62355d5a
+      type: derived
 status: deprecated
 description: Detects Obfuscated Powershell via use Rundll32 in Scripts
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

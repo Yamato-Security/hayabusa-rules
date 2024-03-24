@@ -1,5 +1,8 @@
 title: Turla Group Lateral Movement
-id: c601f20d-570a-4cde-a7d6-e17f99cb8e7f
+id: 43b8a8bc-fb6b-2385-d4a0-7efb8523c625
+related:
+    - id: c601f20d-570a-4cde-a7d6-e17f99cb8e7f
+      type: derived
 status: test
 description: Detects automated lateral movement by Turla group
 references:
@@ -17,6 +20,7 @@ tags:
     - attack.t1083
     - attack.t1135
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

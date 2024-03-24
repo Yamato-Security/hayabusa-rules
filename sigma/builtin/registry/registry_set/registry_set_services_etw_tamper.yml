@@ -1,5 +1,8 @@
 title: ETW Logging Disabled For SCM
-id: 4f281b83-0200-4b34-bf35-d24687ea57c2
+id: 2c7799c7-bf70-0033-f2e0-e2ae59d4385b
+related:
+    - id: 4f281b83-0200-4b34-bf35-d24687ea57c2
+      type: derived
 status: experimental
 description: Detects changes to the "TracingDisabled" key in order to disable ETW logging for services.exe (SCM)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1112
     - attack.t1562
+    - sysmon
 logsource:
     product: windows
     category: registry_set

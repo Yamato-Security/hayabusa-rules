@@ -1,5 +1,8 @@
 title: Boot Configuration Tampering Via Bcdedit.EXE
-id: 1444443e-6757-43e4-9ea4-c8fc705f79a2
+id: 2660fe06-fcf6-19f2-3233-b50236d5ff13
+related:
+    - id: 1444443e-6757-43e4-9ea4-c8fc705f79a2
+      type: derived
 status: stable
 description: Detects the use of the bcdedit command to tamper with the boot configuration data. This technique is often times used by malware or attackers as a destructive way before launching ransomware.
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/15
 tags:
     - attack.impact
     - attack.t1490
+    - sysmon
 logsource:
     category: process_creation
     product: windows

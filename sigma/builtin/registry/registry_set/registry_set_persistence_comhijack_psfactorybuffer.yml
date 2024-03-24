@@ -1,5 +1,8 @@
 title: Potential PSFactoryBuffer COM Hijacking
-id: 243380fa-11eb-4141-af92-e14925e77c1b
+id: d3c2b07c-075b-b06e-926a-3c74236f7b42
+related:
+    - id: 243380fa-11eb-4141-af92-e14925e77c1b
+      type: derived
 status: experimental
 description: Detects changes to the PSFactory COM InProcServer32 registry. This technique was used by RomCom to create persistence storing a malicious DLL.
 references:
@@ -13,6 +16,7 @@ modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1546.015
+    - sysmon
 logsource:
     category: registry_set
     product: windows

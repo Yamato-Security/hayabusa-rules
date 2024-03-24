@@ -1,5 +1,8 @@
 title: Suspicious High IntegrityLevel Conhost Legacy Option
-id: 3037d961-21e9-4732-b27a-637bcc7bf539
+id: 5ede905b-ba07-4607-d2f1-ae3b552a752f
+related:
+    - id: 3037d961-21e9-4732-b27a-637bcc7bf539
+      type: derived
 status: test
 description: ForceV1 asks for information directly from the kernel space. Conhost connects to the console application. High IntegrityLevel means the process is running with elevated privileges, such as an Administrator context.
 references:
@@ -11,6 +14,7 @@ date: 2022/12/09
 tags:
     - attack.defense_evasion
     - attack.t1202
+    - sysmon
 logsource:
     product: windows
     category: process_creation

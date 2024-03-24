@@ -1,5 +1,8 @@
 title: Files Added To An Archive Using Rar.EXE
-id: 6f3e2987-db24-4c78-a860-b4f4095a7095
+id: 4033fb39-b0df-89aa-584b-12d73c5e5bd6
+related:
+    - id: 6f3e2987-db24-4c78-a860-b4f4095a7095
+      type: derived
 status: test
 description: Detects usage of "rar" to add files to an archive for potential compression. An adversary may compress data (e.g. sensitive documents) that is collected prior to exfiltration in order to make it portable and minimize the amount of data sent over the network.
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/05
 tags:
     - attack.collection
     - attack.t1560.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

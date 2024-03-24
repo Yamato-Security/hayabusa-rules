@@ -1,5 +1,8 @@
 title: Sdclt Child Processes
-id: da2738f2-fadb-4394-afa7-0a0674885afa
+id: 63a8494a-3c4b-3902-2efc-f0ed49065b75
+related:
+    - id: da2738f2-fadb-4394-afa7-0a0674885afa
+      type: derived
 status: test
 description: A General detection for sdclt spawning new processes. This could be an indicator of sdclt being used for bypass UAC techniques.
 references:
@@ -11,6 +14,7 @@ modified: 2021/11/27
 tags:
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

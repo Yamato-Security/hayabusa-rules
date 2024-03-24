@@ -1,5 +1,8 @@
 title: Terminal Service Process Spawn
-id: 1012f107-b8f1-4271-af30-5aed2de89b39
+id: 032bb10e-8458-5ec6-07a8-f8afda01adb0
+related:
+    - id: 1012f107-b8f1-4271-af30-5aed2de89b39
+      type: derived
 status: test
 description: Detects a process spawned by the terminal service server process (this could be an indicator for an exploitation of CVE-2019-0708)
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.lateral_movement
     - attack.t1210
     - car.2013-07-002
+    - sysmon
 logsource:
     product: windows
     category: process_creation

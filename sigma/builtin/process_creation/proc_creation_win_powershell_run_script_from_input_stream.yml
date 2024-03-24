@@ -1,5 +1,8 @@
 title: Run PowerShell Script from Redirected Input Stream
-id: c83bf4b5-cdf0-437c-90fa-43d734f7c476
+id: 112d0b77-1699-f5e9-45f6-7e80e17de0a0
+related:
+    - id: c83bf4b5-cdf0-437c-90fa-43d734f7c476
+      type: derived
 status: test
 description: Detects PowerShell script execution via input stream redirect
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

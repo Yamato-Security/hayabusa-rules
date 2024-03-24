@@ -1,5 +1,8 @@
 title: File Download Via Bitsadmin
-id: d059842b-6b9d-4ed1-b5c3-5b89143c6ede
+id: 7a530794-a84d-d066-45bb-1d94d7f2dfc0
+related:
+    - id: d059842b-6b9d-4ed1-b5c3-5b89143c6ede
+      type: derived
 status: test
 description: Detects usage of bitsadmin downloading a file
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1197
     - attack.s0190
     - attack.t1036.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

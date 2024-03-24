@@ -1,8 +1,10 @@
 title: Potential WinAPI Calls Via PowerShell Scripts
-id: 03d83090-8cba-44a0-b02f-0b756a050306
+id: edeeb148-ce01-b5b8-a531-3b364b7fd191
 related:
     - id: ba3f5c1b-6272-4119-9dbd-0bc8d21c2702
       type: similar
+    - id: 03d83090-8cba-44a0-b02f-0b756a050306
+      type: derived
 status: experimental
 description: Detects use of WinAPI functions in PowerShell scripts
 references:
@@ -19,7 +21,6 @@ logsource:
     category: ps_script
     definition: 'Requirements: Script Block Logging must be enabled'
 detection:
-    # Note: Add more suspicious combinations in the form of different selections
     ps_script:
         EventID: 4104
         Channel:

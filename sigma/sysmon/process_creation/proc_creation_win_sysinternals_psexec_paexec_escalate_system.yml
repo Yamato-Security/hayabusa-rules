@@ -1,8 +1,10 @@
 title: PsExec/PAExec Escalation to LOCAL SYSTEM
-id: 8834e2f7-6b4b-4f09-8906-d2276470ee23
+id: 35a1b8ac-6471-4538-be56-2a8c4261351c
 related:
     - id: 207b0396-3689-42d9-8399-4222658efc99 # Generic rule based on similar cli flags
       type: similar
+    - id: 8834e2f7-6b4b-4f09-8906-d2276470ee23
+      type: derived
 status: test
 description: Detects suspicious commandline flags used by PsExec and PAExec to escalate a command line to LOCAL_SYSTEM rights
 references:
@@ -25,24 +27,24 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_sys: # Escalation to LOCAL_SYSTEM
         CommandLine|contains:
-            - ' -s -i powershell'
-            - ' -s cmd'
-            - ' /i /s cmd'
-            - ' -s -i cmd'
-            - ' /s cmd'
-            - ' -s -i pwsh'
-            - ' -s pwsh'
             - ' -i -s cmd'
+            - ' -i -s powershell'
+            - ' -i -s pwsh'
+            - ' -s -i cmd'
+            - ' -s -i powershell'
+            - ' -s -i pwsh'
+            - ' -s cmd'
+            - ' -s powershell'
+            - ' -s pwsh'
+            - ' /i /s cmd'
             - ' /i /s powershell'
-            - ' /s /i powershell'
             - ' /i /s pwsh'
+            - ' /s /i cmd'
+            - ' /s /i powershell'
+            - ' /s /i pwsh'
+            - ' /s cmd'
             - ' /s powershell'
             - ' /s pwsh'
-            - ' /s /i pwsh'
-            - ' -i -s powershell'
-            - ' -s powershell'
-            - ' /s /i cmd'
-            - ' -i -s pwsh'
     selection_other:
         CommandLine|contains:
             - psexec

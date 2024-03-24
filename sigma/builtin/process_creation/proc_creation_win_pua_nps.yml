@@ -1,5 +1,8 @@
 title: PUA - NPS Tunneling Tool Execution
-id: 68d37776-61db-42f5-bf54-27e87072d17e
+id: f096d3e4-a0dc-1035-8028-34c72c5504c6
+related:
+    - id: 68d37776-61db-42f5-bf54-27e87072d17e
+      type: derived
 status: test
 description: Detects the use of NPS, a port forwarding and intranet penetration proxy server
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/04
 tags:
     - attack.command_and_control
     - attack.t1090
+    - sysmon
 logsource:
     category: process_creation
     product: windows

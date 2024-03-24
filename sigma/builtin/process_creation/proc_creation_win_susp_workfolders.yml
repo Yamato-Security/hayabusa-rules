@@ -1,5 +1,8 @@
 title: Execution via WorkFolders.exe
-id: 0bbc6369-43e3-453d-9944-cae58821c173
+id: f57976f9-310f-c36f-c17a-0efb253e7f94
+related:
+    - id: 0bbc6369-43e3-453d-9944-cae58821c173
+      type: derived
 status: test
 description: Detects using WorkFolders.exe to execute an arbitrary control.exe
 references:
@@ -10,6 +13,7 @@ modified: 2022/12/25
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

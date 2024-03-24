@@ -1,5 +1,8 @@
 title: Suspicious Service Installation Script
-id: 70f00d10-60b2-4f34-b9a0-dc3df3fe762a
+id: 778c7f2b-32f5-e591-5c4a-01e47388475c
+related:
+    - id: 70f00d10-60b2-4f34-b9a0-dc3df3fe762a
+      type: derived
 status: test
 description: Detects suspicious service installation scripts
 references:
@@ -24,9 +27,9 @@ detection:
     selection_cmd_flags:
         ImagePath|contains:
             - ' -c '
-            - ' /c '
             - ' -k '
             - ' -r '
+            - ' /c '
             - ' /k '
             - ' /r '
     selection_binaries:

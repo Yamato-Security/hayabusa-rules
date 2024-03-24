@@ -1,5 +1,8 @@
 title: Lace Tempest Malware Loader Execution
-id: 745ea50b-9673-4ba7-9426-cb45cf4a8e6d
+id: d7cc678c-bf6e-c88c-9c51-68ac731baa8b
+related:
+    - id: 745ea50b-9673-4ba7-9426-cb45cf4a8e6d
+      type: derived
 status: experimental
 description: Detects execution of a specific binary based on filename and hash used by Lace Tempest to load additional malware as reported by SysAid Team
 references:
@@ -9,6 +12,7 @@ date: 2023/11/09
 tags:
     - attack.execution
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

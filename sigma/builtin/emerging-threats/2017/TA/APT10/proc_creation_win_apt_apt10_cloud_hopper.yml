@@ -1,5 +1,8 @@
 title: Potential APT10 Cloud Hopper Activity
-id: 966e4016-627f-44f7-8341-f394905c361f
+id: b0e856a7-d88c-046d-8874-70a60f6bd627
+related:
+    - id: 966e4016-627f-44f7-8341-f394905c361f
+      type: derived
 status: test
 description: Detects potential process and execution activity related to APT10 Cloud Hopper operation
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.g0045
     - attack.t1059.005
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

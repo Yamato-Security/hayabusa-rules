@@ -1,5 +1,8 @@
 title: Rundll32 UNC Path Execution
-id: 5cdb711b-5740-4fb2-ba88-f7945027afac
+id: 6b7e9ce2-c343-23e5-2bf3-223f82753b6f
+related:
+    - id: 5cdb711b-5740-4fb2-ba88-f7945027afac
+      type: derived
 status: test
 description: Detects rundll32 execution where the DLL is located on a remote location (share)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.t1021.002
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

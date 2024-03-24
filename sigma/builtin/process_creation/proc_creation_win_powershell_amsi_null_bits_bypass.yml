@@ -1,8 +1,5 @@
 title: Potential AMSI Bypass Using NULL Bits
-id: 92a974db-ab84-457f-9ec0-55db83d7a825
-related:
-    - id: fa2559c8-1197-471d-9cdd-05a0273d4522
-      type: similar
+id: 9b9bf6cd-1e4c-25a1-5857-4e6793b53d32
 status: experimental
 description: Detects usage of special strings/null bits in order to potentially bypass AMSI functionalities
 references:
@@ -13,6 +10,7 @@ modified: 2023/05/09
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

@@ -1,5 +1,8 @@
 title: System Network Connections Discovery Via Net.EXE
-id: 1c67a717-32ba-409b-a45d-0fb704a73a81
+id: 5e078b34-047a-505f-5c16-344bc38300ff
+related:
+    - id: 1c67a717-32ba-409b-a45d-0fb704a73a81
+      type: derived
 status: test
 description: Adversaries may attempt to get a listing of network connections to or from the compromised system they are currently accessing or from remote systems by querying for information over the network.
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/21
 tags:
     - attack.discovery
     - attack.t1049
+    - sysmon
 logsource:
     category: process_creation
     product: windows

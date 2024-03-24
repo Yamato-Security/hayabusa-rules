@@ -1,5 +1,8 @@
 title: Potentially Suspicious Network Connection To Notion API
-id: 7e9cf7b6-e827-11ed-a05b-15959c120003
+id: ea175d19-ef74-487b-c686-fc4d49aadb26
+related:
+    - id: 7e9cf7b6-e827-11ed-a05b-15959c120003
+      type: derived
 status: test
 description: Detects a non-browser process communicating with the Notion API. This could indicate potential use of a covert C2 channel such as "OffensiveNotion C2"
 references:

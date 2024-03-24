@@ -1,5 +1,8 @@
 title: LSASS Process Reconnaissance Via Findstr.EXE
-id: fe63010f-8823-4864-a96b-a7b4a0f7b929
+id: 5705250b-888d-01e5-36cf-4302564a99bf
+related:
+    - id: fe63010f-8823-4864-a96b-a7b4a0f7b929
+      type: derived
 status: experimental
 description: Detects findstring commands that include the keyword lsass, which indicates recon actviity for the LSASS process PID
 references:
@@ -10,6 +13,7 @@ modified: 2023/11/11
 tags:
     - attack.credential_access
     - attack.t1552.006
+    - sysmon
 logsource:
     category: process_creation
     product: windows

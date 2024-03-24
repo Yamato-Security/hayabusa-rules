@@ -1,5 +1,8 @@
 title: ScreenSaver Registry Key Set
-id: 40b6e656-4e11-4c0c-8772-c1cc6dae34ce
+id: a6cf9f0e-8857-2bf6-bf8f-ebe833b09125
+related:
+    - id: 40b6e656-4e11-4c0c-8772-c1cc6dae34ce
+      type: derived
 status: experimental
 description: Detects registry key established after masqueraded .scr file execution using Rundll32 through desk.cpl
 references:
@@ -12,6 +15,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     product: windows
     category: registry_set

@@ -1,5 +1,8 @@
 title: Remote Code Execute via Winrm.vbs
-id: 9df0dd3a-1a5c-47e3-a2bc-30ed177646a0
+id: 3c178fa3-3914-652f-7007-f1d6f385c2ed
+related:
+    - id: 9df0dd3a-1a5c-47e3-a2bc-30ed177646a0
+      type: derived
 status: test
 description: Detects an attempt to execute code or create service on remote host via winrm.vbs.
 references:
@@ -12,6 +15,7 @@ modified: 2023/03/03
 tags:
     - attack.defense_evasion
     - attack.t1216
+    - sysmon
 logsource:
     category: process_creation
     product: windows

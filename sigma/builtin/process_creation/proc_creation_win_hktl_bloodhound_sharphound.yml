@@ -1,5 +1,8 @@
 title: HackTool - Bloodhound/Sharphound Execution
-id: f376c8a7-a2d0-4ddc-aa0c-16c17236d962
+id: 37366c60-8aea-e3e5-bae7-3c24e54f629b
+related:
+    - id: f376c8a7-a2d0-4ddc-aa0c-16c17236d962
+      type: derived
 status: test
 description: Detects command line parameters used by Bloodhound and Sharphound hack tools
 references:
@@ -17,6 +20,7 @@ tags:
     - attack.t1069.002
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

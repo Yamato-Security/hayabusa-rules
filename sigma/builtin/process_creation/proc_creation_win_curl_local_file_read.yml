@@ -1,5 +1,8 @@
 title: Local File Read Using Curl.EXE
-id: aa6f6ea6-0676-40dd-b510-6e46f02d8867
+id: 0ac56170-1ec2-0fcb-1654-0178ffa1487b
+related:
+    - id: aa6f6ea6-0676-40dd-b510-6e46f02d8867
+      type: derived
 status: experimental
 description: Detects execution of "curl.exe" with the "file://" protocol handler in order to read local files.
 references:
@@ -8,6 +11,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/07/27
 tags:
     - attack.execution
+    - sysmon
 logsource:
     product: windows
     category: process_creation

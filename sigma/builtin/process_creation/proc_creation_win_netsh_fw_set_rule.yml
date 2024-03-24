@@ -1,5 +1,8 @@
 title: Firewall Rule Update Via Netsh.EXE
-id: a70dcb37-3bee-453a-99df-d0c683151be6
+id: 982b7732-cb4f-a678-742f-12975f002ced
+related:
+    - id: a70dcb37-3bee-453a-99df-d0c683151be6
+      type: derived
 status: test
 description: Detects execution of netsh with the "advfirewall" and the "set" option in order to set new values for properties of a existing rule
 references:
@@ -8,6 +11,7 @@ author: X__Junior (Nextron Systems)
 date: 2023/07/18
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: HackTool - CrackMapExec PowerShell Obfuscation
-id: 6f8b3439-a203-45dc-a88b-abf57ea15ccf
+id: 296d5364-4c6f-d2ea-601c-12477b9e4053
+related:
+    - id: 6f8b3439-a203-45dc-a88b-abf57ea15ccf
+      type: derived
 status: test
 description: The CrachMapExec pentesting framework implements a PowerShell obfuscation with some static strings detected by this rule.
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1059.001
     - attack.defense_evasion
     - attack.t1027.005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

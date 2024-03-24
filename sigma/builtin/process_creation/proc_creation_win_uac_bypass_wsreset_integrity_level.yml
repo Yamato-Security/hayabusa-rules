@@ -1,5 +1,8 @@
 title: UAC Bypass WSReset
-id: 89a9a0e0-f61a-42e5-8957-b1479565a658
+id: f5d5ba97-4424-eaa9-ead1-528529dbee28
+related:
+    - id: 89a9a0e0-f61a-42e5-8957-b1479565a658
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass via WSReset usable by default sysmon-config
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: CredUI.DLL Loaded By Uncommon Process
-id: 9ae01559-cf7e-4f8e-8e14-4c290a1b4784
+id: 1a758eb2-7a22-fb9e-a476-58d15c8f7501
+related:
+    - id: 9ae01559-cf7e-4f8e-8e14-4c290a1b4784
+      type: derived
 status: experimental
 description: Detects loading of "credui.dll" and related DLLs by an uncommon process. Attackers might leverage this DLL for potential use of "CredUIPromptForCredentials" or "CredUnPackAuthenticationBufferW".
 references:

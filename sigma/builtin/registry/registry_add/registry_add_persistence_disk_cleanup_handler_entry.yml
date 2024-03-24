@@ -1,5 +1,8 @@
 title: Potential Persistence Via Disk Cleanup Handler - Registry
-id: d4f4e0be-cf12-439f-9e25-4e2cdcf7df5a
+id: e3adf6e1-6fbf-d4fe-ee8f-a000db6d64c8
+related:
+    - id: d4f4e0be-cf12-439f-9e25-4e2cdcf7df5a
+      type: derived
 status: test
 description: |
     Detects when an attacker modifies values of the Disk Cleanup Handler in the registry to achieve persistence.
@@ -16,6 +19,7 @@ date: 2022/07/21
 modified: 2023/02/07
 tags:
     - attack.persistence
+    - sysmon
 logsource:
     product: windows
     category: registry_add

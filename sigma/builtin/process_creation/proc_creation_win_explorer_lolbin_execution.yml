@@ -1,5 +1,8 @@
 title: Proxy Execution Via Explorer.exe
-id: 9eb271b9-24ae-4cd4-9465-19cfc1047f3e
+id: 4519a945-f840-1570-0add-773bb923bedc
+related:
+    - id: 9eb271b9-24ae-4cd4-9465-19cfc1047f3e
+      type: derived
 status: test
 description: Attackers can use explorer.exe for evading defense mechanisms
 references:
@@ -10,6 +13,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

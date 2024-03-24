@@ -1,5 +1,8 @@
 title: Potential Configuration And Service Reconnaissance Via Reg.EXE
-id: 970007b7-ce32-49d0-a4a4-fbef016950bd
+id: 1441d7b2-4429-f275-3f6d-ba7c9718c13b
+related:
+    - id: 970007b7-ce32-49d0-a4a4-fbef016950bd
+      type: derived
 status: test
 description: Detects the usage of "reg.exe" in order to query reconnaissance information from the registry. Adversaries may interact with the Windows registry to gather information about credentials, the system, configuration, and installed software.
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.discovery
     - attack.t1012
     - attack.t1007
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Tap Installer Execution
-id: 99793437-3e16-439b-be0f-078782cf953d
+id: 9bce1ab7-f1d3-6e4c-e5ae-6cdb2b974218
+related:
+    - id: 99793437-3e16-439b-be0f-078782cf953d
+      type: derived
 status: test
 description: Well-known TAP software installation. Possible preparation for data exfiltration using tunneling techniques
 references:
@@ -10,6 +13,7 @@ modified: 2023/12/11
 tags:
     - attack.exfiltration
     - attack.t1048
+    - sysmon
 logsource:
     category: process_creation
     product: windows

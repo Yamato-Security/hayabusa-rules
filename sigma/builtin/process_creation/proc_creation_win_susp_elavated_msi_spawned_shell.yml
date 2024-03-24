@@ -1,5 +1,8 @@
 title: Always Install Elevated MSI Spawned Cmd And Powershell
-id: 1e53dd56-8d83-4eb4-a43e-b790a05510aa
+id: 3679f255-d90a-49da-389c-bb16db65853c
+related:
+    - id: 1e53dd56-8d83-4eb4-a43e-b790a05510aa
+      type: derived
 status: test
 description: Detects Windows Installer service (msiexec.exe) spawning "cmd" or "powershell"
 references:
@@ -10,6 +13,7 @@ modified: 2022/10/20
 tags:
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     product: windows
     category: process_creation

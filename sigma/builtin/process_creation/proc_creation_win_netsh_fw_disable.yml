@@ -1,5 +1,8 @@
 title: Firewall Disabled via Netsh.EXE
-id: 57c4bf16-227f-4394-8ec7-1b745ee061c3
+id: 228eaacb-c113-c297-5804-6247ce9a2393
+related:
+    - id: 57c4bf16-227f-4394-8ec7-1b745ee061c3
+      type: derived
 status: test
 description: Detects netsh commands that turns off the Windows firewall
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.defense_evasion
     - attack.t1562.004
     - attack.s0108
+    - sysmon
 logsource:
     category: process_creation
     product: windows

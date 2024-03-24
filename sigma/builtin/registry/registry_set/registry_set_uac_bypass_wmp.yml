@@ -1,5 +1,8 @@
 title: UAC Bypass Using Windows Media Player - Registry
-id: 5f9db380-ea57-4d1e-beab-8a2d33397e93
+id: 42974e40-8ef8-03fa-d9ca-4d3522a5b239
+related:
+    - id: 5f9db380-ea57-4d1e-beab-8a2d33397e93
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass using Windows Media Player osksupport.dll (UACMe 32)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: registry_set
     product: windows

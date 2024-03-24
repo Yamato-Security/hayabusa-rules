@@ -1,5 +1,8 @@
 title: Potential Powershell ReverseShell Connection
-id: edc2f8ae-2412-4dfd-b9d5-0c57727e70be
+id: 0e017e81-3278-cb76-d706-690f05a18a0e
+related:
+    - id: edc2f8ae-2412-4dfd-b9d5-0c57727e70be
+      type: derived
 status: stable
 description: Detects usage of the "TcpClient" class. Which can be abused to establish remote connections and reverse-shells. As seen used by the Nishang "Invoke-PowerShellTcpOneLine" reverse shell and other.
 references:
@@ -12,6 +15,7 @@ modified: 2023/04/05
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

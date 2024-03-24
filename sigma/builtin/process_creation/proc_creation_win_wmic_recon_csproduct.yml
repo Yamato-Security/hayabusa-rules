@@ -1,5 +1,8 @@
 title: Hardware Model Reconnaissance Via Wmic.EXE
-id: 3e3ceccd-6c06-48b8-b5ff-ab1d25db8c1d
+id: ac40503f-520c-79c6-d0e8-3a32c8cec7eb
+related:
+    - id: 3e3ceccd-6c06-48b8-b5ff-ab1d25db8c1d
+      type: derived
 status: test
 description: Detects the execution of WMIC with the "csproduct" which is used to obtain information such as hardware models and vendor information
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.t1047
     - car.2016-03-002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Certificate Exported Via Certutil.EXE
-id: 3ffd6f51-e6c1-47b7-94b4-c1e61d4117c5
+id: 5dd528dc-d144-18ab-88ff-fca3158b68c5
+related:
+    - id: 3ffd6f51-e6c1-47b7-94b4-c1e61d4117c5
+      type: derived
 status: test
 description: Detects the execution of the certutil with the "exportPFX" flag which allows the utility to export certificates.
 references:
@@ -10,6 +13,7 @@ modified: 2024/03/05
 tags:
     - attack.defense_evasion
     - attack.t1027
+    - sysmon
 logsource:
     category: process_creation
     product: windows

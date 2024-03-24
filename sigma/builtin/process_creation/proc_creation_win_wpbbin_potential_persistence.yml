@@ -1,5 +1,8 @@
 title: UEFI Persistence Via Wpbbin - ProcessCreation
-id: 4abc0ec4-db5a-412f-9632-26659cddf145
+id: 1f9094b1-f522-539a-f715-fd13acf3cd22
+related:
+    - id: 4abc0ec4-db5a-412f-9632-26659cddf145
+      type: derived
 status: test
 description: Detects execution of the binary "wpbbin" which is used as part of the UEFI based persistence method described in the reference section
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.persistence
     - attack.defense_evasion
     - attack.t1542.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

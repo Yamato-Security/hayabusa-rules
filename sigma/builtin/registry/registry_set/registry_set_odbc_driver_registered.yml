@@ -1,5 +1,8 @@
 title: New ODBC Driver Registered
-id: 3390fbef-c98d-4bdd-a863-d65ed7c610dd
+id: f3d16bf4-2de2-b0e3-b8dc-37b2ca82c1cf
+related:
+    - id: 3390fbef-c98d-4bdd-a863-d65ed7c610dd
+      type: derived
 status: experimental
 description: Detects the registration of a new ODBC driver.
 references:
@@ -9,6 +12,7 @@ date: 2023/05/23
 modified: 2023/08/17
 tags:
     - attack.persistence
+    - sysmon
 logsource:
     category: registry_set
     product: windows

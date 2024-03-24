@@ -1,5 +1,8 @@
 title: Suspicious Invoke-WebRequest Execution With DirectIP
-id: 1edff897-9146-48d2-9066-52e8d8f80a2f
+id: b3de6fc6-2aa5-32aa-2172-7e989f524bb1
+related:
+    - id: 1edff897-9146-48d2-9066-52e8d8f80a2f
+      type: derived
 status: test
 description: Detects calls to PowerShell with Invoke-WebRequest cmdlet using direct IP access
 references:
@@ -9,6 +12,7 @@ date: 2023/04/21
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

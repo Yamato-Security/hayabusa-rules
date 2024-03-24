@@ -1,8 +1,5 @@
 title: Potential Suspicious Registry File Imported Via Reg.EXE
-id: 62e0298b-e994-4189-bc87-bc699aa62d97
-related:
-    - id: 73bba97f-a82d-42ce-b315-9182e76c57b1
-      type: derived
+id: 7ebc545f-8b8d-1d34-7a2e-99467ab1008d
 status: test
 description: Detects the import of '.reg' files from suspicious paths using the 'reg.exe' utility
 references:
@@ -13,6 +10,7 @@ modified: 2023/02/05
 tags:
     - attack.t1112
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

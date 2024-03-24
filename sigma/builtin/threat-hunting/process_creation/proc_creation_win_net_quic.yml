@@ -1,8 +1,5 @@
 title: SMB over QUIC Via Net.EXE
-id: 2238d337-42fb-4971-9a68-63570f2aede4
-related:
-    - id: 6df07c3b-8456-4f8b-87bb-fe31ec964cae
-      type: similar
+id: 1907e117-0636-2197-9e4a-c6f58a1f30e7
 status: experimental
 description: Detects the mounting of Windows SMB shares over QUIC, which can be an unexpected event in some enterprise environments.
 references:
@@ -14,6 +11,7 @@ tags:
     - attack.lateral_movement
     - attack.t1570
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

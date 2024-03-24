@@ -1,5 +1,8 @@
 title: New ActiveScriptEventConsumer Created Via Wmic.EXE
-id: ebef4391-1a81-4761-a40a-1db446c0e625
+id: a23f9412-323f-fd1c-1c72-ac38fdedc079
+related:
+    - id: ebef4391-1a81-4761-a40a-1db446c0e625
+      type: derived
 status: test
 description: Detects WMIC executions in which an event consumer gets created. This could be used to establish persistence
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/14
 tags:
     - attack.persistence
     - attack.t1546.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

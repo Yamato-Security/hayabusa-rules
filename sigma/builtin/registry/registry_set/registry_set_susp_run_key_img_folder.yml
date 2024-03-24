@@ -1,5 +1,8 @@
 title: New RUN Key Pointing to Suspicious Folder
-id: 02ee49e2-e294-4d0f-9278-f5b3212fc588
+id: 2c97b46f-dbd7-bf78-71c0-86ed4a55c654
+related:
+    - id: 02ee49e2-e294-4d0f-9278-f5b3212fc588
+      type: derived
 status: experimental
 description: Detects suspicious new RUN key element pointing to an executable in a suspicious folder
 references:
@@ -10,6 +13,7 @@ modified: 2023/12/11
 tags:
     - attack.persistence
     - attack.t1547.001
+    - sysmon
 logsource:
     category: registry_set
     product: windows

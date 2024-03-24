@@ -1,5 +1,8 @@
 title: Tunneling Tool Execution
-id: c75309a3-59f8-4a8d-9c2c-4c927ad50555
+id: 613ea969-381a-6723-e44f-9202a3e64638
+related:
+    - id: c75309a3-59f8-4a8d-9c2c-4c927ad50555
+      type: derived
 status: test
 description: Detects the execution of well known tools that can be abused for data exfiltration and tunneling.
 author: Daniil Yugoslavskiy, oscd.community
@@ -14,6 +17,7 @@ tags:
     - attack.t1572
     - attack.t1071.001
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

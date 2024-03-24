@@ -1,5 +1,8 @@
 title: Modify User Shell Folders Startup Value
-id: 9c226817-8dc9-46c2-a58d-66655aafd7dc
+id: ba919d03-0c34-c3c3-272c-ec0656c3d10c
+related:
+    - id: 9c226817-8dc9-46c2-a58d-66655aafd7dc
+      type: derived
 status: experimental
 description: Detect modification of the startup key to a path where a payload could be stored to be launched during startup
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.persistence
     - attack.privilege_escalation
     - attack.t1547.001
+    - sysmon
 logsource:
     product: windows
     category: registry_set

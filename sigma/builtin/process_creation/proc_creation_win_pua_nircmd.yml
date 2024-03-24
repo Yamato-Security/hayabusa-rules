@@ -1,5 +1,8 @@
 title: PUA - NirCmd Execution
-id: 4e2ed651-1906-4a59-a78a-18220fca1b22
+id: 61e02907-aae8-db6e-46be-fbbed3a0a0d3
+related:
+    - id: 4e2ed651-1906-4a59-a78a-18220fca1b22
+      type: derived
 status: test
 description: Detects the use of NirCmd tool for command execution, which could be the result of legitimate administrative activity
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.execution
     - attack.t1569.002
     - attack.s0029
+    - sysmon
 logsource:
     category: process_creation
     product: windows

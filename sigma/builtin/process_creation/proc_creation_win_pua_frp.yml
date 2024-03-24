@@ -1,5 +1,8 @@
 title: PUA - Fast Reverse Proxy (FRP) Execution
-id: 32410e29-5f94-4568-b6a3-d91a8adad863
+id: 68ad4ec6-5204-d63f-155f-0ad495ef92b3
+related:
+    - id: 32410e29-5f94-4568-b6a3-d91a8adad863
+      type: derived
 status: test
 description: Detects the use of Fast Reverse Proxy. frp is a fast reverse proxy to help you expose a local server behind a NAT or firewall to the Internet.
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/04
 tags:
     - attack.command_and_control
     - attack.t1090
+    - sysmon
 logsource:
     category: process_creation
     product: windows

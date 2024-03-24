@@ -1,5 +1,8 @@
 title: HackTool - Covenant PowerShell Launcher
-id: c260b6db-48ba-4b4a-a76f-2f67644e99d2
+id: 12b4859c-0eeb-091f-3b96-09ffcd5e9a9a
+related:
+    - id: c260b6db-48ba-4b4a-a76f-2f67644e99d2
+      type: derived
 status: test
 description: Detects suspicious command lines used in Covenant luanchers
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.t1059.001
     - attack.t1564.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

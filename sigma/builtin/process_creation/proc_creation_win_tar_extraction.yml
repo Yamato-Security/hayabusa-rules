@@ -1,5 +1,8 @@
 title: Compressed File Extraction Via Tar.EXE
-id: bf361876-6620-407a-812f-bfe11e51e924
+id: 740e34bc-7ca6-ebba-db66-9b466f9c7558
+related:
+    - id: bf361876-6620-407a-812f-bfe11e51e924
+      type: derived
 status: experimental
 description: |
     Detects execution of "tar.exe" in order to extract compressed file.
@@ -15,6 +18,7 @@ tags:
     - attack.exfiltration
     - attack.t1560
     - attack.t1560.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

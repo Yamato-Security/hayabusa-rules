@@ -1,5 +1,8 @@
 title: Webshell Hacking Activity Patterns
-id: 4ebc877f-4612-45cb-b3a5-8e3834db36c9
+id: e9d7e7bb-dbe4-56a1-850c-ec7fe52e1521
+related:
+    - id: 4ebc877f-4612-45cb-b3a5-8e3834db36c9
+      type: derived
 status: test
 description: |
     Detects certain parent child patterns found in cases in which a web shell is used to perform certain credential dumping or exfiltration activities on a compromised system
@@ -19,7 +22,6 @@ logsource:
     category: process_creation
     product: windows
 detection:
-   # Webserver
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational

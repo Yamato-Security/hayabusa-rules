@@ -1,5 +1,8 @@
 title: Procdump Execution
-id: 2e65275c-8288-4ab4-aeb7-6274f58b6b20
+id: 9dd8cfb3-e15d-dfe4-ac54-004a540f3279
+related:
+    - id: 2e65275c-8288-4ab4-aeb7-6274f58b6b20
+      type: derived
 status: test
 description: Detects usage of the SysInternals Procdump utility
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1036
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

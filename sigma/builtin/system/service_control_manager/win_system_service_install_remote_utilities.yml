@@ -1,5 +1,8 @@
 title: Remote Utilities Host Service Install
-id: 85cce894-dd8b-4427-a958-5cc47a4dc9b9
+id: 97bd461f-b35e-a243-c697-06cc0539d7e3
+related:
+    - id: 85cce894-dd8b-4427-a958-5cc47a4dc9b9
+      type: derived
 status: test
 description: Detects Remote Utilities Host service installation on the target system.
 references:
@@ -12,14 +15,6 @@ logsource:
     product: windows
     service: system
 detection:
-    # Example:
-    #   <EventData>
-    #       <Data Name="ServiceName">Remote Utilities - Host</Data>
-    #       <Data Name="ImagePath">"C:\Program Files (x86)\Remote Utilities - Host\rutserv.exe" -service</Data>
-    #       <Data Name="ServiceType">user mode service</Data>
-    #       <Data Name="StartType">auto start</Data>
-    #       <Data Name="AccountName">LocalSystem</Data>
-    #   </EventData>
     system:
         Channel: System
     selection_root:

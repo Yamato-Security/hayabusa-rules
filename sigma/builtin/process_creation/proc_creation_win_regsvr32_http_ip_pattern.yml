@@ -1,5 +1,8 @@
 title: Potentially Suspicious Regsvr32 HTTP IP Pattern
-id: 2dd2c217-bf68-437a-b57c-fe9fd01d5de8
+id: a49d1313-b65e-0401-130b-8e929805577f
+related:
+    - id: 2dd2c217-bf68-437a-b57c-fe9fd01d5de8
+      type: derived
 status: experimental
 description: Detects regsvr32 execution to download and install DLLs located remotely where the address is an IP address.
 references:
@@ -12,6 +15,7 @@ modified: 2023/05/24
 tags:
     - attack.defense_evasion
     - attack.t1218.010
+    - sysmon
 logsource:
     category: process_creation
     product: windows
