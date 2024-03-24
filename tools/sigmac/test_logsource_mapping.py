@@ -44,7 +44,7 @@ class TestLogSourceMapper(TestCase):
     def test_get_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
         self.assertEqual(ls.get_condition("select1 and select2", [], dict()),
-                          "process_creation and (select1 and select2)")
+                         "process_creation and (select1 and select2)")
 
     def test_get_single_condition(self):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
@@ -54,13 +54,13 @@ class TestLogSourceMapper(TestCase):
         ls = LogSource(category="process_creation", service="sysmon", channel="hoge", event_id=None)
         condition = "select | count(TargetUserName) by Workstation > 10"
         self.assertEqual(ls.get_condition(condition, [], dict()),
-                          "(process_creation and select) | count(TargetUserName) by Workstation > 10")
+                         "(process_creation and select) | count(TargetUserName) by Workstation > 10")
 
     def test_get_aggregation_conversion_field_condition(self):
         ls = LogSource(category="process_creation", service="Security", channel="hoge", event_id=4688)
         condition = "select | count(Image) by Workstation > 10"
         self.assertEqual(ls.get_condition(condition, [], {"Image": "NewProcessName"}),
-                          "(process_creation and select) | count(NewProcessName) by Workstation > 10")
+                         "(process_creation and select) | count(NewProcessName) by Workstation > 10")
 
     def test_get_logsources(self):
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -123,29 +123,25 @@ class TestLogSourceMapper(TestCase):
         self.assertTrue(ls.is_detectable({"selection": {"EventType": "CreateKey" }}))
         self.assertTrue(ls.is_detectable({"selection": {'TargetObject|endswith': 'software'}, 'condition': 'selection'}))
 
-    def test_transform_transform_windash_recursive_1(self):
-        d = {
-            "selection_1": {
-                "ImagePath|contains|windash": [" -c "]
-            },
-            "selection_2": {
-                "ImagePath|contains|windash":  "-c"
-            },
-            "selection_3": {
-                "ImagePath|contains": "cscript"
-            }
+    def test_transform__windash_recursive_1(self):
+        input = {
+            "selection_1": {"ImagePath|contains|windash": [" -c "]},
+            "selection_2": {"ImagePath|contains|windash":  "-c"},
+            "selection_3": {"ImagePath|contains": "cscript"},
+            "selection_4": {"ImagePath|contains|all|windash'": ["-c", "-k"]}
+        }
+        expected = {
+            "selection_1": {"ImagePath|contains": [" -c ", " /c "]},
+            "selection_2": {"ImagePath|contains": ["-c", "/c"]},
+            "selection_3": {"ImagePath|contains": "cscript"},
+            "selection_4": {"ImagePath|contains|all'": ["-c", "-k"]}
         }
 
-        e = {
-            "selection_1": {
-                "ImagePath|contains": [" -c ", " /c "]
-            },
-            "selection_2": {
-                "ImagePath|contains": ["-c", "/c"]
-            },
-            "selection_3": {
-                "ImagePath|contains": "cscript"
-            }
-        }
-        res = LogsourceConverter.transform_transform_windash_recursive(d)
-        self.assertTrue(e, res)
+        res = transform_windash_recursive(input)
+        self.assertTrue(res, expected)
+
+    def test_assign_uuid(self):
+        original_uuid = "557e3885-7a7e-40b7-8b69-1e5e658ca1d1"
+        inp = {"title": "X", "id": original_uuid, "related": [{"id": "a", "type": "similar"}]}
+        res = assign_uuid_for_convert_rules(inp, "abc")
+        self.assertEqual(res, {"title":"X", "id": "04428db4-0588-7e14-0c46-c99384f8fc4c", "related": [{'id': 'a', 'type': 'similar'}, {"id": original_uuid, "type": "derived"}]})

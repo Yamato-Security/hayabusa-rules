@@ -25,6 +25,7 @@ https://python-poetry.org/docs/#installation
 `logsource_mapping.py` is a tool to convert the `logsource` field of Sigma rules to Hayabusa format.
 Since `Hayabusa` at the moment does not support `logsource` for filtering on `Channel` and `EventID` fields and rewriting field names when necessary, we use the following `yaml` mapping files to convert the contents of `logsource` to the `detection` and `condition` fields.
 - sysmon.yaml
+- windows-antivirus.yaml
 - windows-audit.yaml
 - windows-services.yaml
 
