@@ -1,5 +1,8 @@
 title: Use Of The SFTP.EXE Binary As A LOLBIN
-id: a85ffc3a-e8fd-4040-93bf-78aff284d801
+id: 2211d14a-9a4c-d937-2a25-6428d586be6c
+related:
+    - id: a85ffc3a-e8fd-4040-93bf-78aff284d801
+      type: derived
 status: test
 description: Detects the usage of the "sftp.exe" binary as a LOLBIN by abusing the "-D" flag
 references:
@@ -10,6 +13,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: ImagingDevices Unusual Parent/Child Processes
-id: f11f2808-adb4-46c0-802a-8660db50fa99
+id: bee3c5b9-5fce-49e8-2301-d000d81eba6e
+related:
+    - id: f11f2808-adb4-46c0-802a-8660db50fa99
+      type: derived
 status: test
 description: Detects unusual parent or children of the ImagingDevices.exe (Windows Contacts) process as seen being used with Bumblebee activity
 references:
@@ -10,6 +13,7 @@ modified: 2022/12/29
 tags:
     - attack.defense_evasion
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

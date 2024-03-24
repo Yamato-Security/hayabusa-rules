@@ -1,5 +1,8 @@
 title: Potential Persistence Via Shim Database Modification
-id: dfb5b4e8-91d0-4291-b40a-e3b0d3942c45
+id: bc03960b-bb9d-b48c-e6cd-73b6e8d17d74
+related:
+    - id: dfb5b4e8-91d0-4291-b40a-e3b0d3942c45
+      type: derived
 status: experimental
 description: |
     Adversaries may establish persistence and/or elevate privileges by executing malicious content triggered by application shims.
@@ -14,6 +17,7 @@ modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1546.011
+    - sysmon
 logsource:
     category: registry_set
     product: windows

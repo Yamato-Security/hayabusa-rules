@@ -1,5 +1,8 @@
 title: Unusually Long PowerShell CommandLine
-id: d0d28567-4b9a-45e2-8bbc-fb1b66a1f7f6
+id: 9d361072-2d35-e275-87b6-4915aa2beab8
+related:
+    - id: d0d28567-4b9a-45e2-8bbc-fb1b66a1f7f6
+      type: derived
 status: test
 description: Detects unusually long PowerShell command lines with a length of 1000 characters or more
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.t1059.001
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

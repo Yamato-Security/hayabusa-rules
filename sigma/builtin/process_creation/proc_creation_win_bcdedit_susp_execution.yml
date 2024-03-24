@@ -1,5 +1,8 @@
 title: Potential Ransomware or Unauthorized MBR Tampering Via Bcdedit.EXE
-id: c9fbe8e9-119d-40a6-9b59-dd58a5d84429
+id: d6747b91-0f0d-b0e6-e128-10f8dd2feb2e
+related:
+    - id: c9fbe8e9-119d-40a6-9b59-dd58a5d84429
+      type: derived
 status: test
 description: Detects potential malicious and unauthorized usage of bcdedit.exe
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1070
     - attack.persistence
     - attack.t1542.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: DLL Sideloading by VMware Xfer Utility
-id: ebea773c-a8f1-42ad-a856-00cb221966e8
+id: ae9cee89-1554-68ec-26d5-616c9e234796
+related:
+    - id: ebea773c-a8f1-42ad-a856-00cb221966e8
+      type: derived
 status: test
 description: Detects execution of VMware Xfer utility (VMwareXferlogs.exe) from the non-default directory which may be an attempt to sideload arbitrary DLL
 references:
@@ -9,6 +12,7 @@ date: 2022/08/02
 tags:
     - attack.defense_evasion
     - attack.t1574.002
+    - sysmon
 logsource:
     product: windows
     category: process_creation

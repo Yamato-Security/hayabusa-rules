@@ -1,5 +1,8 @@
 title: Suspicious File Download From IP Via Wget.EXE - Paths
-id: 40aa399c-7b02-4715-8e5f-73572b493f33
+id: 2c2fe733-6ef3-9d44-210c-fb4011ee1944
+related:
+    - id: 40aa399c-7b02-4715-8e5f-73572b493f33
+      type: derived
 status: experimental
 description: Detects potentially suspicious file downloads directly from IP addresses and stored in suspicious locations using Wget.exe
 references:
@@ -8,6 +11,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2024/02/23
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

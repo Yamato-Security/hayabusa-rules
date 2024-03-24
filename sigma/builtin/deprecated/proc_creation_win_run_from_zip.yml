@@ -1,5 +1,8 @@
 title: Run from a Zip File
-id: 1a70042a-6622-4a2b-8958-267625349abf
+id: 0557765a-6dad-b15a-5cf0-d92eef2b33ab
+related:
+    - id: 1a70042a-6622-4a2b-8958-267625349abf
+      type: derived
 status: deprecated
 description: Payloads may be compressed, archived, or encrypted in order to avoid detection
 references:
@@ -10,6 +13,7 @@ modified: 2023/03/05
 tags:
     - attack.impact
     - attack.t1485
+    - sysmon
 logsource:
     category: process_creation
     product: windows

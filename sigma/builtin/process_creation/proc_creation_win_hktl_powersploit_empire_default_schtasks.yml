@@ -1,5 +1,8 @@
 title: HackTool - Default PowerSploit/Empire Scheduled Task Creation
-id: 56c217c3-2de2-479b-990f-5c109ba8458f
+id: 532fbfdd-28df-ea62-93c5-a2d9f558f9d7
+related:
+    - id: 56c217c3-2de2-479b-990f-5c109ba8458f
+      type: derived
 status: test
 description: Detects the creation of a schtask via PowerSploit or Empire Default Configuration.
 references:
@@ -18,6 +21,7 @@ tags:
     - car.2013-08-001
     - attack.t1053.005
     - attack.t1059.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

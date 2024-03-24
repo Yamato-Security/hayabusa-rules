@@ -1,5 +1,8 @@
 title: Process Memory Dumped Via RdrLeakDiag.EXE
-id: 6355a919-2e97-4285-a673-74645566340d
+id: 4d7489b1-282a-3c79-a3fe-e852cdea4515
+related:
+    - id: 6355a919-2e97-4285-a673-74645566340d
+      type: derived
 status: deprecated
 description: Detects uses of the rdrleakdiag.exe LOLOBIN utility to dump process memory
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1036
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

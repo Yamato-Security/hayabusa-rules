@@ -1,5 +1,8 @@
 title: Suspicious Extrac32 Execution
-id: aa8e035d-7be4-48d3-a944-102aec04400d
+id: 1a6983b5-f09c-767b-3ebe-349e7cde3c8e
+related:
+    - id: aa8e035d-7be4-48d3-a944-102aec04400d
+      type: derived
 status: test
 description: Download or Copy file with Extrac32
 references:
@@ -10,6 +13,7 @@ modified: 2022/08/13
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: UAC Bypass Using Consent and Comctl32 - Process
-id: 1ca6bd18-0ba0-44ca-851c-92ed89a61085
+id: fae361cc-c4b0-0935-1b15-79113e3f6198
+related:
+    - id: 1ca6bd18-0ba0-44ca-851c-92ed89a61085
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass using consent.exe and comctl32.dll (UACMe 22)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

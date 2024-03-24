@@ -1,5 +1,8 @@
 title: HackTool - DInjector PowerShell Cradle Execution
-id: d78b5d61-187d-44b6-bf02-93486a80de5a
+id: 9b584978-0d93-f10c-988d-ff3657f59e09
+related:
+    - id: d78b5d61-187d-44b6-bf02-93486a80de5a
+      type: derived
 status: test
 description: Detects the use of the Dinject PowerShell cradle based on the specific flags
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/04
 tags:
     - attack.defense_evasion
     - attack.t1055
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Set TimeProviders DllName
-id: e88a6ddc-74f7-463b-9b26-f69fc0d2ce85
+id: 49f0ef07-1fcf-1ac7-54ee-8cfbb34caf06
+related:
+    - id: e88a6ddc-74f7-463b-9b26-f69fc0d2ce85
+      type: derived
 status: experimental
 description: |
     Detects processes setting a new DLL in DllName in under HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W32Time\TimeProvider.
@@ -14,6 +17,7 @@ tags:
     - attack.persistence
     - attack.privilege_escalation
     - attack.t1547.003
+    - sysmon
 logsource:
     category: registry_set
     product: windows

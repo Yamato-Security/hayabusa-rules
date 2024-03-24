@@ -1,5 +1,8 @@
 title: Import LDAP Data Interchange Format File Via Ldifde.EXE
-id: 6f535e01-ca1f-40be-ab8d-45b19c0c8b7f
+id: b2ddfc0a-7a51-8f49-c832-7fe48811fafc
+related:
+    - id: 6f535e01-ca1f-40be-ab8d-45b19c0c8b7f
+      type: derived
 status: test
 description: |
     Detects the execution of "Ldifde.exe" with the import flag "-i". The can be abused to include HTTP-based arguments which will allow the arbitrary download of files from a remote server.

@@ -1,5 +1,8 @@
 title: Path To Screensaver Binary Modified
-id: 67a6c006-3fbe-46a7-9074-2ba3b82c3000
+id: f5a1f729-ff8c-577e-2d33-a209e00bf7f3
+related:
+    - id: 67a6c006-3fbe-46a7-9074-2ba3b82c3000
+      type: derived
 status: test
 description: Detects value modification of registry key containing path to binary used as screensaver.
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.persistence
     - attack.privilege_escalation
     - attack.t1546.002
+    - sysmon
 logsource:
     category: registry_event
     product: windows

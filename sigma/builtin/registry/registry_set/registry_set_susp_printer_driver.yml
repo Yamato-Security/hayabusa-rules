@@ -1,5 +1,8 @@
 title: Suspicious Printer Driver Empty Manufacturer
-id: e0813366-0407-449a-9869-a2db1119dc41
+id: 21c41e20-e274-bd0e-e22d-072fc5e0962d
+related:
+    - id: e0813366-0407-449a-9869-a2db1119dc41
+      type: derived
 status: test
 description: Detects a suspicious printer driver installation with an empty Manufacturer value
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.privilege_escalation
     - attack.t1574
     - cve.2021.1675
+    - sysmon
 logsource:
     category: registry_set
     product: windows

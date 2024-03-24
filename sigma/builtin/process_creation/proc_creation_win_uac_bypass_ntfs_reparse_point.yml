@@ -1,5 +1,8 @@
 title: UAC Bypass Using NTFS Reparse Point - Process
-id: 39ed3c80-e6a1-431b-9df3-911ac53d08a7
+id: 560853ca-0b24-2e95-ff72-810e13f675fa
+related:
+    - id: 39ed3c80-e6a1-431b-9df3-911ac53d08a7
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass using NTFS reparse point and wusa.exe DLL hijacking (UACMe 36)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

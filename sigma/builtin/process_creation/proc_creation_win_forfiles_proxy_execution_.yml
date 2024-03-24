@@ -1,10 +1,5 @@
 title: Forfiles Command Execution
-id: 9aa5106d-bce3-4b13-86df-3a20f1d5cf0b
-related:
-    - id: a85cf4e3-56ee-4e79-adeb-789f8fb209a8
-      type: obsoletes
-    - id: fa47597e-90e9-41cd-ab72-c3b74cfb0d02
-      type: obsoletes
+id: 140c6c67-8cac-1d16-5654-bf2221dc7542
 status: test
 description: |
     Detects the execution of "forfiles" with the "/c" flag.
@@ -19,6 +14,7 @@ modified: 2024/03/05
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

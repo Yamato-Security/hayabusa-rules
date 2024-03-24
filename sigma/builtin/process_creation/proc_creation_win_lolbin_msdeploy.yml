@@ -1,5 +1,8 @@
 title: Execute Files with Msdeploy.exe
-id: 646bc99f-6682-4b47-a73a-17b1b64c9d34
+id: c0cc4271-ed56-6236-e21a-e9db92f30d97
+related:
+    - id: 646bc99f-6682-4b47-a73a-17b1b64c9d34
+      type: derived
 status: test
 description: Detects file execution using the msdeploy.exe lolbin
 references:
@@ -12,6 +15,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

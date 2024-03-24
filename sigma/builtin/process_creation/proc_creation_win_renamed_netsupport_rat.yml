@@ -1,5 +1,8 @@
 title: Renamed NetSupport RAT Execution
-id: 0afbd410-de03-4078-8491-f132303cb67d
+id: 3c984729-2b64-a817-b1cd-cbcbe6b6087a
+related:
+    - id: 0afbd410-de03-4078-8491-f132303cb67d
+      type: derived
 status: test
 description: Detects the execution of a renamed "client32.exe" (NetSupport RAT) via Imphash, Product and OriginalFileName strings
 references:
@@ -9,6 +12,7 @@ date: 2022/09/19
 modified: 2023/02/04
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

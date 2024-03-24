@@ -1,5 +1,8 @@
 title: Suspicious File Download Using Office Application
-id: 0c79148b-118e-472b-bdb7-9b57b444cc19
+id: dc86094c-5f6f-895a-e92a-8b82229db6b7
+related:
+    - id: 0c79148b-118e-472b-bdb7-9b57b444cc19
+      type: derived
 status: test
 description: Detects the usage of one of three Microsoft office applications (Word, Excel, PowerPoint) to download arbitrary files
 references:
@@ -13,6 +16,7 @@ modified: 2023/02/04
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

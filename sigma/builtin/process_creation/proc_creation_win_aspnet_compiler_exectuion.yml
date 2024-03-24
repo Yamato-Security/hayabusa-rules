@@ -1,12 +1,5 @@
 title: AspNetCompiler Execution
-id: a01b8329-5953-4f73-ae2d-aa01e1f35f00 # Exec
-related:
-    - id: 9ccba514-7cb6-4c5c-b377-700758f2f120 # SuspChild
-      type: similar
-    - id: 4c7f49ee-2638-43bb-b85b-ce676c30b260 # TMP File
-      type: similar
-    - id: 9f50fe98-fe5c-4a2d-86c7-fad7f63ed622 # Susp Paths
-      type: similar
+id: e20075e6-6784-9276-2205-4f452684a4cc
 status: test
 description: Detects execution of "aspnet_compiler.exe" which can be abused to compile and execute C# code.
 references:
@@ -18,6 +11,7 @@ modified: 2023/08/14
 tags:
     - attack.defense_evasion
     - attack.t1127
+    - sysmon
 logsource:
     category: process_creation
     product: windows

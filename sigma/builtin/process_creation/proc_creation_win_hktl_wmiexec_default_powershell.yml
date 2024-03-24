@@ -1,5 +1,8 @@
 title: HackTool - Wmiexec Default Powershell Command
-id: 022eaba8-f0bf-4dd9-9217-4604b0bb3bb0
+id: 8d0b4349-4a33-f9c1-b911-e922e9ed2f63
+related:
+    - id: 022eaba8-f0bf-4dd9-9217-4604b0bb3bb0
+      type: derived
 status: test
 description: Detects the execution of PowerShell with a specific flag sequence that is used by the Wmiexec script
 references:
@@ -9,6 +12,7 @@ date: 2023/03/08
 tags:
     - attack.defense_evasion
     - attack.lateral_movement
+    - sysmon
 logsource:
     category: process_creation
     product: windows

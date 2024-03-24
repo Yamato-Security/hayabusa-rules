@@ -1,6 +1,9 @@
 title: Lateral Movement Indicator ConDrv
-id: 29d31aee-30f4-4006-85a9-a4a02d65306c
-status: deprecated #Too many FP
+id: 6683ccd7-da7a-b988-1683-7f7a1bf72bf6
+related:
+    - id: 29d31aee-30f4-4006-85a9-a4a02d65306c
+      type: derived
+status: deprecated
 description: This event was observed on the target host during lateral movement. The process name within the event contains the process spawned post compromise. Account Name within the event contains the compromised user account name. This event should to be correlated with 4624 and 4688 for further intrusion context.
 author: Janantha Marasinghe
 date: 2021/04/27

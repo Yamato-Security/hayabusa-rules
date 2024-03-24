@@ -1,5 +1,8 @@
 title: Abusing Print Executable
-id: bafac3d6-7de9-4dd9-8874-4a1194b493ed
+id: 6e8f01f5-1282-1217-9c7a-9b84824e30a7
+related:
+    - id: bafac3d6-7de9-4dd9-8874-4a1194b493ed
+      type: derived
 status: test
 description: Attackers can use print.exe for remote file copy
 references:
@@ -11,6 +14,7 @@ modified: 2022/07/07
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

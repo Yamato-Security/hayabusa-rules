@@ -1,5 +1,8 @@
 title: System File Execution Location Anomaly
-id: e4a6b256-3e47-40fc-89d2-7a477edd6915
+id: dff28edb-8cbf-0aa6-a92e-123f013ce755
+related:
+    - id: e4a6b256-3e47-40fc-89d2-7a477edd6915
+      type: derived
 status: experimental
 description: Detects a Windows program executable started from a suspicious folder
 references:
@@ -11,6 +14,7 @@ modified: 2023/10/18
 tags:
     - attack.defense_evasion
     - attack.t1036
+    - sysmon
 logsource:
     category: process_creation
     product: windows

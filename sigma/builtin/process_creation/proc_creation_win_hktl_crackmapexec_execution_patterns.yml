@@ -1,5 +1,8 @@
 title: HackTool - CrackMapExec Execution Patterns
-id: 058f4380-962d-40a5-afce-50207d36d7e2
+id: a4a76a8b-fc4f-2887-8edc-9a4d71e5c86b
+related:
+    - id: 058f4380-962d-40a5-afce-50207d36d7e2
+      type: derived
 status: stable
 description: Detects various execution patterns of the CrackMapExec pentesting framework
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1059.003
     - attack.t1059.001
     - attack.s0106
+    - sysmon
 logsource:
     category: process_creation
     product: windows

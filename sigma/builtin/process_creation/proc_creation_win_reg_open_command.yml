@@ -1,5 +1,8 @@
 title: Suspicious Reg Add Open Command
-id: dd3ee8cc-f751-41c9-ba53-5a32ed47e563
+id: bfa46528-db30-f4b6-d9b2-afca48a92538
+related:
+    - id: dd3ee8cc-f751-41c9-ba53-5a32ed47e563
+      type: derived
 status: test
 description: Threat actors performed dumping of SAM, SECURITY and SYSTEM registry hives using DelegateExecute key
 references:
@@ -10,6 +13,7 @@ modified: 2022/12/25
 tags:
     - attack.credential_access
     - attack.t1003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

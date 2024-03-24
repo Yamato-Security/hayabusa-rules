@@ -1,5 +1,8 @@
 title: Self Extracting Package Creation Via Iexpress.EXE From Potentially Suspicious Location
-id: b2b048b0-7857-4380-b0fb-d3f0ab820b71
+id: a7944d3d-06b7-216c-4729-082795c44495
+related:
+    - id: b2b048b0-7857-4380-b0fb-d3f0ab820b71
+      type: derived
 status: experimental
 description: |
     Detects the use of iexpress.exe to create binaries via Self Extraction Directive (SED) files located in potentially suspicious locations.
@@ -19,7 +22,6 @@ logsource:
     category: process_creation
     product: windows
 detection:
-    # VT Query: behavior_processes:"iexpress.exe" and behavior_processes:"/n /q /m" and behavior_processes:"*.sed*" and p:5+
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational

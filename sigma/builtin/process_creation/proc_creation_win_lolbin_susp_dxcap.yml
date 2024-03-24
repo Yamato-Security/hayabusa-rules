@@ -1,5 +1,8 @@
 title: Application Whitelisting Bypass via Dxcap.exe
-id: 60f16a96-db70-42eb-8f76-16763e333590
+id: 502f2034-8929-9fd1-10fc-732a817671b7
+related:
+    - id: 60f16a96-db70-42eb-8f76-16763e333590
+      type: derived
 status: test
 description: Detects execution of of Dxcap.exe
 references:
@@ -11,6 +14,7 @@ modified: 2022/06/09
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

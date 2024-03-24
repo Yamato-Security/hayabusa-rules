@@ -1,5 +1,8 @@
 title: Greedy File Deletion Using Del
-id: 204b17ae-4007-471b-917b-b917b315c5db
+id: a0d3fa7f-7155-4aef-0428-ccfae2e54d9f
+related:
+    - id: 204b17ae-4007-471b-917b-b917b315c5db
+      type: derived
 status: experimental
 description: Detects execution of the "del" builtin command to remove files using greedy/wildcard expression. This is often used by malware to delete content of folders that perhaps contains the initial malware infection or to delete evidence.
 references:
@@ -11,12 +14,11 @@ modified: 2023/09/11
 tags:
     - attack.defense_evasion
     - attack.t1070.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows
 detection:
-    # Example:
-    #   del C:\ProgramData\*.dll & exit
     process_creation:
         EventID: 4688
         Channel: Security

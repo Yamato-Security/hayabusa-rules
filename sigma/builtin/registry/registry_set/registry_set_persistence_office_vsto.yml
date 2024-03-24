@@ -1,5 +1,8 @@
 title: Potential Persistence Via Visual Studio Tools for Office
-id: 9d15044a-7cfe-4d23-8085-6ebc11df7685
+id: 9f3a2bef-c9ee-ce47-c8eb-d746addb05ac
+related:
+    - id: 9d15044a-7cfe-4d23-8085-6ebc11df7685
+      type: derived
 status: experimental
 description: Detects persistence via Visual Studio Tools for Office (VSTO) add-ins in Office applications.
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/28
 tags:
     - attack.t1137.006
     - attack.persistence
+    - sysmon
 logsource:
     category: registry_set
     product: windows

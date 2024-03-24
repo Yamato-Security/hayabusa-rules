@@ -1,5 +1,8 @@
 title: Suspicious Spool Service Child Process
-id: dcdbc940-0bff-46b2-95f3-2d73f848e33b
+id: 9acd90a3-770d-023f-0b71-92c461984dcc
+related:
+    - id: dcdbc940-0bff-46b2-95f3-2d73f848e33b
+      type: derived
 status: test
 description: Detects suspicious print spool service (spoolsv.exe) child processes.
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1203
     - attack.privilege_escalation
     - attack.t1068
+    - sysmon
 logsource:
     category: process_creation
     product: windows

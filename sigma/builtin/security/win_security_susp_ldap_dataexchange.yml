@@ -1,5 +1,8 @@
 title: Suspicious LDAP-Attributes Used
-id: d00a9a72-2c09-4459-ad03-5e0a23351e36
+id: 925d441a-37b4-0afa-1d98-809b5df5fd06
+related:
+    - id: d00a9a72-2c09-4459-ad03-5e0a23351e36
+      type: derived
 status: test
 description: Detects the usage of particular AttributeLDAPDisplayNames, which are known for data exchange via LDAP by the tool LDAPFragger and are additionally not commonly used in companies.
 references:

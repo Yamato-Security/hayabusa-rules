@@ -1,8 +1,5 @@
 title: Potential Arbitrary DLL Load Using Winword
-id: f7375e28-5c14-432f-b8d1-1db26c832df3
-related:
-    - id: 2621b3a6-3840-4810-ac14-a02426086171
-      type: obsoletes
+id: eacb8d30-18b2-df70-fb8e-b5b8bb773983
 status: test
 description: Detects potential DLL sideloading using the Microsoft Office winword process via the '/l' flag.
 references:
@@ -13,6 +10,7 @@ modified: 2023/03/29
 tags:
     - attack.defense_evasion
     - attack.t1202
+    - sysmon
 logsource:
     category: process_creation
     product: windows

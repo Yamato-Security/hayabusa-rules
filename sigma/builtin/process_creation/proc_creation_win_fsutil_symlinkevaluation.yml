@@ -1,5 +1,8 @@
 title: Fsutil Behavior Set SymlinkEvaluation
-id: c0b2768a-dd06-4671-8339-b16ca8d1f27f
+id: 7e75fbd5-4501-e7c8-deb1-b24ea8448793
+related:
+    - id: c0b2768a-dd06-4671-8339-b16ca8d1f27f
+      type: derived
 status: test
 description: |
     A symbolic link is a type of file that contains a reference to another file.
@@ -13,6 +16,7 @@ modified: 2023/01/19
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

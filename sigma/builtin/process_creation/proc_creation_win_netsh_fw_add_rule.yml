@@ -1,5 +1,8 @@
 title: New Firewall Rule Added Via Netsh.EXE
-id: cd5cfd80-aa5f-44c0-9c20-108c4ae12e3c
+id: 5a3de052-774a-c805-ef2c-a9b71abecc0a
+related:
+    - id: cd5cfd80-aa5f-44c0-9c20-108c4ae12e3c
+      type: derived
 status: test
 description: Detects the addition of a new rule to the Windows firewall via netsh
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1562.004
     - attack.s0246
+    - sysmon
 logsource:
     category: process_creation
     product: windows

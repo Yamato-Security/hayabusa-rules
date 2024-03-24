@@ -1,5 +1,8 @@
 title: Winnti Malware HK University Campaign
-id: 3121461b-5aa0-4a41-b910-66d25524edbb
+id: 3f469afc-3a19-1d2e-3bb7-e4d0e8354880
+related:
+    - id: 3121461b-5aa0-4a41-b910-66d25524edbb
+      type: derived
 status: test
 description: Detects specific process characteristics of Winnti malware noticed in Dec/Jan 2020 in a campaign against Honk Kong universities
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1574.002
     - attack.g0044
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

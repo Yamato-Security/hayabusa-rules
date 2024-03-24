@@ -1,8 +1,5 @@
 title: APT29 2018 Phishing Campaign CommandLine Indicators
-id: 7453575c-a747-40b9-839b-125a0aae324b
-related:
-    - id: 033fe7d6-66d1-4240-ac6b-28908009c71f
-      type: obsoletes
+id: a9a106d5-22d5-d9b2-c10f-60f4cd7e055d
 status: stable
 description: Detects indicators of APT 29 (Cozy Bear) phishing-campaign as reported by mandiant
 references:
@@ -17,6 +14,7 @@ tags:
     - attack.execution
     - attack.t1218.011
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Renamed PingCastle Binary Execution
-id: 2433a154-bb3d-42e4-86c3-a26bdac91c45
+id: 1ed119fb-d90b-67da-05fa-d4890256c2eb
+related:
+    - id: 2433a154-bb3d-42e4-86c3-a26bdac91c45
+      type: derived
 status: experimental
 description: Detects the execution of a renamed "PingCastle" binary based on the PE metadata fields.
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1059
     - attack.defense_evasion
     - attack.t1202
+    - sysmon
 logsource:
     category: process_creation
     product: windows

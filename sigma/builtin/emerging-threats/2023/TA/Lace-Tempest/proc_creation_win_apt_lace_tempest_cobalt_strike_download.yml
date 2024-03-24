@@ -1,5 +1,8 @@
 title: Lace Tempest Cobalt Strike Download
-id: aa5b0a40-ed88-46aa-9fdc-0337b379ca9d
+id: 9cf64f9c-ca0e-07b8-3d01-106dac73ef8b
+related:
+    - id: aa5b0a40-ed88-46aa-9fdc-0337b379ca9d
+      type: derived
 status: experimental
 description: Detects specific command line execution used by Lace Tempest to download Cobalt Strike as reported by SysAid Team
 references:
@@ -9,6 +12,7 @@ date: 2023/11/09
 tags:
     - attack.execution
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

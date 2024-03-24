@@ -1,5 +1,8 @@
 title: UAC Bypass Using DismHost
-id: 853e74f9-9392-4935-ad3b-2e8c040dae86
+id: 2c256f43-053a-3f93-b183-27b3a5d312ed
+related:
+    - id: 853e74f9-9392-4935-ad3b-2e8c040dae86
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass using DismHost DLL hijacking (UACMe 63)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

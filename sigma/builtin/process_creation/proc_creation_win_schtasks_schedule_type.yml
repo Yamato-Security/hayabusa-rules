@@ -1,8 +1,5 @@
 title: Suspicious Schtasks Schedule Types
-id: 24c8392b-aa3c-46b7-a545-43f71657fe98
-related:
-    - id: 7a02e22e-b885-4404-b38b-1ddc7e65258a
-      type: similar
+id: 03483409-2c67-3117-debd-eaa756713643
 status: test
 description: Detects scheduled task creations or modification on a suspicious schedule type
 references:
@@ -14,6 +11,7 @@ date: 2022/09/09
 tags:
     - attack.execution
     - attack.t1053.005
+    - sysmon
 logsource:
     product: windows
     category: process_creation

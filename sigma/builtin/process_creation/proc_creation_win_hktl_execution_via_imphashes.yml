@@ -1,5 +1,8 @@
 title: Hacktool Execution - Imphash
-id: 24e3e58a-646b-4b50-adef-02ef935b9fc8
+id: c416d10a-a8ea-a1f4-b713-88a713a0b154
+related:
+    - id: 24e3e58a-646b-4b50-adef-02ef935b9fc8
+      type: derived
 status: test
 description: Detects the execution of different Windows based hacktools via their import hash (imphash) even if the files have been renamed
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.credential_access
     - attack.t1588.002
     - attack.t1003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

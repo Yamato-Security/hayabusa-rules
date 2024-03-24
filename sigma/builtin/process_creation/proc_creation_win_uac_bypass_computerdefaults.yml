@@ -1,5 +1,8 @@
 title: UAC Bypass Tools Using ComputerDefaults
-id: 3c05e90d-7eba-4324-9972-5d7f711a60a8
+id: f8836306-dba7-b71c-033f-6a42b39ae975
+related:
+    - id: 3c05e90d-7eba-4324-9972-5d7f711a60a8
+      type: derived
 status: test
 description: Detects tools such as UACMe used to bypass UAC with computerdefaults.exe (UACMe 59)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

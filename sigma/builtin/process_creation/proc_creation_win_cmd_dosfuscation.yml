@@ -1,5 +1,8 @@
 title: Potential Dosfuscation Activity
-id: a77c1610-fc73-4019-8e29-0f51efc04a51
+id: 6edef6e7-c67d-20e2-44cd-62afc03872c2
+related:
+    - id: a77c1610-fc73-4019-8e29-0f51efc04a51
+      type: derived
 status: test
 description: Detects possible payload obfuscation via the commandline
 references:
@@ -11,6 +14,7 @@ modified: 2023/03/06
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

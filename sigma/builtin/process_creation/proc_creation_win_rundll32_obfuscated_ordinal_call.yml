@@ -1,5 +1,8 @@
 title: Potential Obfuscated Ordinal Call Via Rundll32
-id: 43fa5350-db63-4b8f-9a01-789a427074e1
+id: b7049a0d-bb27-adf6-2c62-501b4398af4d
+related:
+    - id: 43fa5350-db63-4b8f-9a01-789a427074e1
+      type: derived
 status: experimental
 description: Detects execution of "rundll32" with potential obfuscated ordinal calls
 references:
@@ -8,6 +11,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/05/17
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

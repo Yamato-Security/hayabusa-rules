@@ -1,5 +1,8 @@
 title: UAC Bypass Using ChangePK and SLUI
-id: 503d581c-7df0-4bbe-b9be-5840c0ecc1fc
+id: 6f1c48cf-ca24-9def-3a7c-bd81baec1f58
+related:
+    - id: 503d581c-7df0-4bbe-b9be-5840c0ecc1fc
+      type: derived
 status: test
 description: Detects an UAC bypass that uses changepk.exe and slui.exe (UACMe 61)
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

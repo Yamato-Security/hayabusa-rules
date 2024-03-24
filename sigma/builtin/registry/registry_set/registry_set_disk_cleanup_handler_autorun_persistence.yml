@@ -1,5 +1,8 @@
 title: Persistence Via Disk Cleanup Handler - Autorun
-id: d4e2745c-f0c6-4bde-a3ab-b553b3f693cc
+id: 844e4a35-c606-6b5d-8390-52c55b9f09b5
+related:
+    - id: d4e2745c-f0c6-4bde-a3ab-b553b3f693cc
+      type: derived
 status: experimental
 description: |
     Detects when an attacker modifies values of the Disk Cleanup Handler in the registry to achieve persistence via autorun.
@@ -16,6 +19,7 @@ date: 2022/07/21
 modified: 2023/08/17
 tags:
     - attack.persistence
+    - sysmon
 logsource:
     category: registry_set
     product: windows

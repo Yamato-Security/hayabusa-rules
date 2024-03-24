@@ -1,5 +1,8 @@
 title: REGISTER_APP.VBS Proxy Execution
-id: 1c8774a0-44d4-4db0-91f8-e792359c70bd
+id: 7a6b455d-a8d7-2cba-6d4e-05d8c6c9278c
+related:
+    - id: 1c8774a0-44d4-4db0-91f8-e792359c70bd
+      type: derived
 status: test
 description: Detects the use of a Microsoft signed script 'REGISTER_APP.VBS' to register a VSS/VDS Provider as a COM+ application.
 references:
@@ -9,6 +12,7 @@ date: 2022/08/19
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Office Applications Spawning Wmi Cli Alternate
-id: 04f5363a-6bca-42ff-be70-0d28bf629ead
+id: 5ffab4e3-fa0b-4adc-c733-2754d5d2e20a
+related:
+    - id: 04f5363a-6bca-42ff-be70-0d28bf629ead
+      type: derived
 status: deprecated
 description: Initial execution of malicious document calls wmic to execute the file with regsvr32
 references:
@@ -14,11 +17,11 @@ tags:
     - attack.t1218.010
     - attack.execution
     - attack.defense_evasion
+    - sysmon
 logsource:
     product: windows
     category: process_creation
 detection:
-    #useful_information: Add more office applications to the rule logic of choice
     process_creation:
         EventID: 4688
         Channel: Security

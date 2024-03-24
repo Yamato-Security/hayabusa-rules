@@ -1,5 +1,8 @@
 title: Winrar Execution in Non-Standard Folder
-id: 4ede543c-e098-43d9-a28f-dd784a13132f
+id: 91a429e4-2bb4-05ef-b164-545b86f9ba8e
+related:
+    - id: 4ede543c-e098-43d9-a28f-dd784a13132f
+      type: derived
 status: test
 description: Detects a suspicious winrar execution in a folder which is not the default installation folder
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/31
 tags:
     - attack.collection
     - attack.t1560.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

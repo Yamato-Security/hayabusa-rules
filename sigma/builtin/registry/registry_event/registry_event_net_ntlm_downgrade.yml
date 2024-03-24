@@ -1,5 +1,8 @@
 title: NetNTLM Downgrade Attack - Registry
-id: d67572a0-e2ec-45d6-b8db-c100d14b8ef2
+id: 3387665f-9c44-56db-5cb9-a35e48689376
+related:
+    - id: d67572a0-e2ec-45d6-b8db-c100d14b8ef2
+      type: derived
 status: test
 description: Detects NetNTLM downgrade attack
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1562.001
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: registry_event

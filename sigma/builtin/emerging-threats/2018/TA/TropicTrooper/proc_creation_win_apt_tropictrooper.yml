@@ -1,5 +1,8 @@
 title: TropicTrooper Campaign November 2018
-id: 8c7090c3-e0a0-4944-bd08-08c3a0cecf79
+id: cf360c1a-7d6f-5e83-28e6-2a8388debb83
+related:
+    - id: 8c7090c3-e0a0-4944-bd08-08c3a0cecf79
+      type: derived
 status: stable
 description: Detects TropicTrooper activity, an actor who targeted high-profile organizations in the energy and food and beverage sectors in Asia
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.t1059.001
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

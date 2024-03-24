@@ -1,5 +1,8 @@
 title: Suspicious Environment Variable Has Been Registered
-id: 966315ef-c5e1-4767-ba25-fce9c8de3660
+id: 59a208e8-d58f-efd0-e693-48703d554101
+related:
+    - id: 966315ef-c5e1-4767-ba25-fce9c8de3660
+      type: derived
 status: test
 description: Detects the creation of user-specific or system-wide environment variables via the registry. Which contains suspicious commands and strings
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.persistence
+    - sysmon
 logsource:
     product: windows
     category: registry_set

@@ -1,5 +1,8 @@
 title: Use of FSharp Interpreters
-id: b96b2031-7c17-4473-afe7-a30ce714db29
+id: 5c7dd694-d4dd-a0a8-ea44-8357ca998b69
+related:
+    - id: b96b2031-7c17-4473-afe7-a30ce714db29
+      type: derived
 status: test
 description: The FSharp Interpreters, FsiAnyCpu.exe and FSi.exe, can be used for AWL bypass and is listed in Microsoft recommended block rules.
 references:
@@ -12,6 +15,7 @@ date: 2022/06/02
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

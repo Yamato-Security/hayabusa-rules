@@ -1,5 +1,8 @@
 title: Remote Access Tool - ScreenConnect Installation Execution
-id: 75bfe6e6-cd8e-429e-91d3-03921e1d7962
+id: 16e1adf7-4ed1-54b8-0031-41fd83c53349
+related:
+    - id: 75bfe6e6-cd8e-429e-91d3-03921e1d7962
+      type: derived
 status: test
 description: Detects ScreenConnect program starts that establish a remote access to a system.
 references:
@@ -10,6 +13,7 @@ modified: 2024/02/26
 tags:
     - attack.initial_access
     - attack.t1133
+    - sysmon
 logsource:
     category: process_creation
     product: windows

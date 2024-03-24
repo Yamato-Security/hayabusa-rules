@@ -1,5 +1,8 @@
 title: Potential Mpclient.DLL Sideloading Via OfflineScannerShell.EXE Execution
-id: 02b18447-ea83-4b1b-8805-714a8a34546a
+id: bbfa2296-5f8e-96c6-f1fd-0e0bcda268dc
+related:
+    - id: 02b18447-ea83-4b1b-8805-714a8a34546a
+      type: derived
 status: test
 description: |
     Detects execution of Windows Defender "OfflineScannerShell.exe" from its non standard directory.
@@ -12,6 +15,7 @@ modified: 2023/08/03
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

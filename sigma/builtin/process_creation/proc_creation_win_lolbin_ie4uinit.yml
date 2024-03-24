@@ -1,5 +1,8 @@
 title: Ie4uinit Lolbin Use From Invalid Path
-id: d3bf399f-b0cf-4250-8bb4-dfc192ab81dc
+id: a296b8da-2f61-8a80-7fa6-f2063c0b5969
+related:
+    - id: d3bf399f-b0cf-4250-8bb4-dfc192ab81dc
+      type: derived
 status: test
 description: Detect use of ie4uinit.exe to execute commands from a specially prepared ie4uinit.inf file from a directory other than the usual directories
 references:
@@ -11,6 +14,7 @@ modified: 2022/05/16
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     product: windows
     category: process_creation

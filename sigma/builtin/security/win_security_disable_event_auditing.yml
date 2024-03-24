@@ -1,7 +1,9 @@
 title: Windows Event Auditing Disabled
-id: 69aeb277-f15f-4d2d-b32a-55e883609563
+id: 83d7b3c2-220e-60e8-4aad-98e206e841ba
 related:
     - id: ab4561b1-6c7e-48a7-ad08-087cfb9ce8f1
+      type: derived
+    - id: 69aeb277-f15f-4d2d-b32a-55e883609563
       type: derived
 status: test
 description: |
@@ -50,5 +52,5 @@ detection:
     condition: security and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown
-level: low # Increase this after a testing period in your environment
+level: low
 ruletype: Sigma

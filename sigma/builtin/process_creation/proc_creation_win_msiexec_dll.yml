@@ -1,5 +1,8 @@
 title: DllUnregisterServer Function Call Via Msiexec.EXE
-id: 84f52741-8834-4a8c-a413-2eb2269aa6c8
+id: 802f2f6f-fab8-e8d2-bb45-6ad7a2f8f4a7
+related:
+    - id: 84f52741-8834-4a8c-a413-2eb2269aa6c8
+      type: derived
 status: test
 description: Detects MsiExec loading a DLL and calling its DllUnregisterServer function
 references:
@@ -12,6 +15,7 @@ modified: 2024/03/13
 tags:
     - attack.defense_evasion
     - attack.t1218.007
+    - sysmon
 logsource:
     product: windows
     category: process_creation

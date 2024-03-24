@@ -1,5 +1,8 @@
 title: PowerShell Execution With Potential Decryption Capabilities
-id: 434c08ba-8406-4d15-8b24-782cb071a691
+id: 6b615673-d368-2deb-8281-a7ff75887a8c
+related:
+    - id: 434c08ba-8406-4d15-8b24-782cb071a691
+      type: derived
 status: experimental
 description: Detects PowerShell commands that decrypt an ".LNK" "file to drop the next stage of the malware.
 references:
@@ -9,6 +12,7 @@ date: 2023/06/30
 modified: 2023/12/05
 tags:
     - attack.execution
+    - sysmon
 logsource:
     product: windows
     category: process_creation

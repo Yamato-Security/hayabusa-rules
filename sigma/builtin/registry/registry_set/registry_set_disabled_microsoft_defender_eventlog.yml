@@ -1,5 +1,8 @@
 title: Disabled Windows Defender Eventlog
-id: fcddca7c-b9c0-4ddf-98da-e1e2d18b0157
+id: 7b78e30a-de66-08da-7417-5b735a074ba2
+related:
+    - id: fcddca7c-b9c0-4ddf-98da-e1e2d18b0157
+      type: derived
 status: experimental
 description: Detects the disabling of the Windows Defender eventlog as seen in relation to Lockbit 3.0 infections
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: registry_set
     product: windows

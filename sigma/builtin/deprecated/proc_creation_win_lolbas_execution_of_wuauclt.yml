@@ -1,5 +1,8 @@
 title: Monitoring Wuauclt.exe For Lolbas Execution Of DLL
-id: ba1bb0cb-73da-42de-ad3a-de10c643a5d0
+id: 86c08df9-01b6-6556-09cc-9ac6feb774e8
+related:
+    - id: ba1bb0cb-73da-42de-ad3a-de10c643a5d0
+      type: derived
 status: experimental
 description: Adversaries can abuse wuauclt.exe (Windows Update client) to run code execution by specifying an arbitrary DLL.
 references:
@@ -33,4 +36,5 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1218
+    - sysmon
 ruletype: Sigma

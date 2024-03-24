@@ -1,5 +1,8 @@
 title: PUA - Wsudo Suspicious Execution
-id: bdeeabc9-ff2a-4a51-be59-bb253aac7891
+id: 0052946a-1593-6881-f638-b14ac2efcff8
+related:
+    - id: bdeeabc9-ff2a-4a51-be59-bb253aac7891
+      type: derived
 status: test
 description: Detects usage of wsudo (Windows Sudo Utility). Which is a tool that let the user execute programs with different permissions (System, Trusted Installer, Administrator...etc)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.privilege_escalation
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

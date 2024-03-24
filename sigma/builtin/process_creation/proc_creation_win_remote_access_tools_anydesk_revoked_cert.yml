@@ -1,5 +1,8 @@
 title: Remote Access Tool - AnyDesk Execution With Known Revoked Signing Certificate
-id: 41f407b5-3096-44ea-a74f-96d04fbc41be
+id: 2bd79a93-cca3-3280-f400-f38c499e263e
+related:
+    - id: 41f407b5-3096-44ea-a74f-96d04fbc41be
+      type: derived
 status: experimental
 description: |
     Detects the execution of an AnyDesk binary with a version prior to 8.0.8.
@@ -14,6 +17,7 @@ date: 2024/02/08
 tags:
     - attack.execution
     - attack.initial_access
+    - sysmon
 logsource:
     product: windows
     category: process_creation

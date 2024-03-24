@@ -1,5 +1,8 @@
 title: Reconnaissance Activity Using BuiltIn Commands
-id: 2887e914-ce96-435f-8105-593937e90757
+id: e7ce8bbd-3976-853e-eb57-e2ca8dcbf67c
+related:
+    - id: 2887e914-ce96-435f-8105-593937e90757
+      type: derived
 status: unsupported
 description: Detects execution of a set of builtin commands often used in recon stages by different attack groups
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1087
     - attack.t1082
     - car.2016-03-001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

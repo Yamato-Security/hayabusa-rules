@@ -1,5 +1,8 @@
 title: Execution From Webserver Root Folder
-id: 35efb964-e6a5-47ad-bbcd-19661854018d
+id: 612adf3c-4f2f-852b-487d-3930de4337ed
+related:
+    - id: 35efb964-e6a5-47ad-bbcd-19661854018d
+      type: derived
 status: test
 description: |
     Detects a program executing from a web server root folder. Use this rule to hunt for potential interesting activity such as webshell or backdoors
@@ -12,6 +15,7 @@ tags:
     - attack.persistence
     - attack.t1505.003
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

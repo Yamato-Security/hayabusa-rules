@@ -1,5 +1,8 @@
 title: Enabling COR Profiler Environment Variables
-id: ad89044a-8f49-4673-9a55-cbd88a1b374f
+id: 4b44d428-f676-8642-3d97-3eb23a44d818
+related:
+    - id: ad89044a-8f49-4673-9a55-cbd88a1b374f
+      type: derived
 status: test
 description: Detects .NET Framework CLR and .NET Core CLR "cor_enable_profiling" and "cor_profiler" variables being set and configured.
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.privilege_escalation
     - attack.defense_evasion
     - attack.t1574.012
+    - sysmon
 logsource:
     category: registry_set
     product: windows

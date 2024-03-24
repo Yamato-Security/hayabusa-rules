@@ -1,5 +1,8 @@
 title: Rundll32 Execution With Uncommon DLL Extension
-id: c3a99af4-35a9-4668-879e-c09aeb4f2bdf
+id: d6ede5f4-8daa-4a92-6e5f-9cd3ca86089c
+related:
+    - id: c3a99af4-35a9-4668-879e-c09aeb4f2bdf
+      type: derived
 status: experimental
 description: Detects the execution of rundll32 with a command line that doesn't contain a common extension
 references:
@@ -10,6 +13,7 @@ modified: 2024/02/09
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

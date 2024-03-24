@@ -1,5 +1,8 @@
 title: Disable Windows IIS HTTP Logging
-id: e4ed6030-ffe5-4e6a-8a8a-ab3c1ab9d94e
+id: 3682c181-3b54-0cf3-cfdb-1d800bb7b125
+related:
+    - id: e4ed6030-ffe5-4e6a-8a8a-ab3c1ab9d94e
+      type: derived
 status: test
 description: Disables HTTP logging on a Windows IIS web server as seen by Threat Group 3390 (Bronze Union)
 references:
@@ -10,6 +13,7 @@ modified: 2023/01/22
 tags:
     - attack.defense_evasion
     - attack.t1562.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

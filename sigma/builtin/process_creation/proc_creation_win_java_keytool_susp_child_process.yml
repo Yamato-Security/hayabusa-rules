@@ -1,5 +1,8 @@
 title: Suspicious Shells Spawn by Java Utility Keytool
-id: 90fb5e62-ca1f-4e22-b42e-cc521874c938
+id: cb8f70fe-80c4-48c0-0473-656666b52064
+related:
+    - id: 90fb5e62-ca1f-4e22-b42e-cc521874c938
+      type: derived
 status: test
 description: Detects suspicious shell spawn from Java utility keytool process (e.g. adselfservice plus exploitation)
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.initial_access
     - attack.persistence
     - attack.privilege_escalation
+    - sysmon
 logsource:
     category: process_creation
     product: windows

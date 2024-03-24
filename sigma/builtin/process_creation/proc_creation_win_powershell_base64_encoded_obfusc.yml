@@ -1,5 +1,8 @@
 title: Suspicious Obfuscated PowerShell Code
-id: 8d01b53f-456f-48ee-90f6-bc28e67d4e35
+id: 90b43135-d789-00ee-977c-ed235554c372
+related:
+    - id: 8d01b53f-456f-48ee-90f6-bc28e67d4e35
+      type: derived
 status: test
 description: Detects suspicious UTF16 and base64 encoded and often obfuscated PowerShell code often used in command lines
 references:
@@ -9,6 +12,7 @@ date: 2022/07/11
 modified: 2023/02/14
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

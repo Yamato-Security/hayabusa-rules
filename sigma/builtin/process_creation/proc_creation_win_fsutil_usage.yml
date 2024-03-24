@@ -1,5 +1,8 @@
 title: Fsutil Suspicious Invocation
-id: add64136-62e5-48ea-807e-88638d02df1e
+id: 8b3afca9-f927-14ee-58f5-238c5f845d71
+related:
+    - id: add64136-62e5-48ea-807e-88638d02df1e
+      type: derived
 status: stable
 description: |
     Detects suspicious parameters of fsutil (deleting USN journal, configuring it with small size, etc).
@@ -18,6 +21,7 @@ tags:
     - attack.impact
     - attack.t1070
     - attack.t1485
+    - sysmon
 logsource:
     category: process_creation
     product: windows

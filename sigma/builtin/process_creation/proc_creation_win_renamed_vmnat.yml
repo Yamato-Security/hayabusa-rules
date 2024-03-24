@@ -1,5 +1,8 @@
 title: Renamed Vmnat.exe Execution
-id: 7b4f794b-590a-4ad4-ba18-7964a2832205
+id: 1b1b02a4-a05e-91ba-1b44-223149bb165f
+related:
+    - id: 7b4f794b-590a-4ad4-ba18-7964a2832205
+      type: derived
 status: test
 description: Detects renamed vmnat.exe or portable version that can be used for DLL side-loading
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/03
 tags:
     - attack.defense_evasion
     - attack.t1574.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

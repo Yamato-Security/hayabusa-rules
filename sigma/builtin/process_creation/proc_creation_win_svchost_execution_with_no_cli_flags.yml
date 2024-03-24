@@ -1,5 +1,8 @@
 title: Suspect Svchost Activity
-id: 16c37b52-b141-42a5-a3ea-bbe098444397
+id: bb0ae7bd-c963-0404-061e-ae3c6b866830
+related:
+    - id: 16c37b52-b141-42a5-a3ea-bbe098444397
+      type: derived
 status: test
 description: It is extremely abnormal for svchost.exe to spawn without any CLI arguments and is normally observed when a malicious process spawns the process and injects code into the process memory space.
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1055
+    - sysmon
 logsource:
     category: process_creation
     product: windows

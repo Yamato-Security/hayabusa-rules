@@ -1,5 +1,8 @@
 title: Suspicious Runscripthelper.exe
-id: eca49c87-8a75-4f13-9c73-a5a29e845f03
+id: f93df83e-4e70-cffa-f5d8-2b7c77d7bb45
+related:
+    - id: eca49c87-8a75-4f13-9c73-a5a29e845f03
+      type: derived
 status: test
 description: Detects execution of powershell scripts via Runscripthelper.exe
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1059
     - attack.defense_evasion
     - attack.t1202
+    - sysmon
 logsource:
     category: process_creation
     product: windows

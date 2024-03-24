@@ -1,5 +1,8 @@
 title: Renamed NirCmd.EXE Execution
-id: 264982dc-dbad-4dce-b707-1e0d3e0f73d9
+id: 16cbfcd0-0576-f6ed-80cd-3842131614b0
+related:
+    - id: 264982dc-dbad-4dce-b707-1e0d3e0f73d9
+      type: derived
 status: experimental
 description: Detects the execution of a renamed "NirCmd.exe" binary based on the PE metadata fields.
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1059
     - attack.defense_evasion
     - attack.t1202
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,8 +1,5 @@
 title: Potential Renamed Rundll32 Execution
-id: 2569ed8c-1147-498a-9b8c-2ad3656b10ed
-related:
-    - id: 0ba1da6d-b6ce-4366-828c-18826c9de23e
-      type: derived
+id: 04f5d1ee-1b2f-dc73-a3fd-a7277cb56195
 status: test
 description: Detects when 'DllRegisterServer' is called in the commandline and the image is not rundll32. This could mean that the 'rundll32' utility has been renamed in order to avoid detection
 references:
@@ -13,6 +10,7 @@ date: 2022/08/22
 modified: 2023/02/03
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

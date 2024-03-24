@@ -1,5 +1,8 @@
 title: Application Whitelisting Bypass via Dnx.exe
-id: 81ebd28b-9607-4478-bf06-974ed9d53ed7
+id: e56b0b7d-eb03-5756-d3c4-1b29390fa86e
+related:
+    - id: 81ebd28b-9607-4478-bf06-974ed9d53ed7
+      type: derived
 status: test
 description: Execute C# code located in the consoleapp folder
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.t1218
     - attack.t1027.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Potential DLL Injection Or Execution Using Tracker.exe
-id: 148431ce-4b70-403d-8525-fcc2993f29ea
+id: 8f82ce6b-dc46-1b1e-3024-baa24253e735
+related:
+    - id: 148431ce-4b70-403d-8525-fcc2993f29ea
+      type: derived
 status: test
 description: Detects potential DLL injection and execution using "Tracker.exe"
 references:
@@ -10,6 +13,7 @@ modified: 2023/01/09
 tags:
     - attack.defense_evasion
     - attack.t1055.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Copy From Or To Admin Share Or Sysvol Folder
-id: 855bc8b5-2ae8-402e-a9ed-b889e6df1900
+id: 6646eced-c21d-4c5f-dae2-0a7a43be1d5c
+related:
+    - id: 855bc8b5-2ae8-402e-a9ed-b889e6df1900
+      type: derived
 status: test
 description: Detects a copy command or a copy utility execution to or from an Admin share or remote
 references:
@@ -17,6 +20,7 @@ tags:
     - attack.t1039
     - attack.t1048
     - attack.t1021.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

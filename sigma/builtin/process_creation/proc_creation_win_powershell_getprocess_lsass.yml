@@ -1,5 +1,8 @@
 title: PowerShell Get-Process LSASS
-id: b2815d0d-7481-4bf0-9b6c-a4c48a94b349
+id: 0ac2cb1c-3284-c46e-dd61-1fd81302ad3c
+related:
+    - id: b2815d0d-7481-4bf0-9b6c-a4c48a94b349
+      type: derived
 status: test
 description: Detects a "Get-Process" cmdlet and it's aliases on lsass process, which is in almost all cases a sign of malicious activity
 references:
@@ -10,6 +13,7 @@ modified: 2023/01/05
 tags:
     - attack.credential_access
     - attack.t1552.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

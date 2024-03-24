@@ -1,10 +1,5 @@
 title: Disable Windows Defender Functionalities Via Registry Keys
-id: 0eb46774-f1ab-4a74-8238-1155855f2263
-related:
-    - id: a64e4198-c1c8-46a5-bc9c-324c86455fd4
-      type: obsoletes
-    - id: fd115e64-97c7-491f-951c-fc8da7e042fa
-      type: obsoletes
+id: 14e19d39-b1be-4903-56be-684b57d45e16
 status: experimental
 description: Detects when attackers or tools disable Windows Defender functionalities via the Windows registry
 references:
@@ -21,6 +16,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     product: windows
     category: registry_set

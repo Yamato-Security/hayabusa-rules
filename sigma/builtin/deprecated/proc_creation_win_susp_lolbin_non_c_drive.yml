@@ -1,5 +1,8 @@
 title: Wscript Execution from Non C Drive
-id: 5b80cf53-3a46-4adc-960b-05ec19348d74
+id: 5f55c592-7555-3ca2-5d49-f1b7b74454ab
+related:
+    - id: 5b80cf53-3a46-4adc-960b-05ec19348d74
+      type: derived
 status: deprecated
 description: Detects Wscript or Cscript executing from a drive other than C. This has been observed with Qakbot executing from within a mounted ISO file.
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/29
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

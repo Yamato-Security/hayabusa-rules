@@ -1,5 +1,8 @@
 title: Potentially Suspicious Child Process Of ClickOnce Application
-id: 67bc0e75-c0a9-4cfc-8754-84a505b63c04
+id: 66a0246c-c8ba-1f83-d729-7de76ec64ee7
+related:
+    - id: 67bc0e75-c0a9-4cfc-8754-84a505b63c04
+      type: derived
 status: experimental
 description: Detects potentially suspicious child processes of a ClickOnce deployment application
 references:
@@ -9,6 +12,7 @@ date: 2023/06/12
 tags:
     - attack.execution
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

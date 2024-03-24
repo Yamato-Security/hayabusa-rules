@@ -1,5 +1,8 @@
 title: Renamed CURL.EXE Execution
-id: 7530cd3d-7671-43e3-b209-976966f6ea48
+id: 1d2ca093-7316-fabc-9a8d-0bbba2f0129d
+related:
+    - id: 7530cd3d-7671-43e3-b209-976966f6ea48
+      type: derived
 status: experimental
 description: Detects the execution of a renamed "CURL.exe" binary based on the PE metadata fields
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1059
     - attack.defense_evasion
     - attack.t1202
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Copying Sensitive Files with Credential Data
-id: e7be6119-fc37-43f0-ad4f-1f3f99be2f9f
+id: 1c39c2aa-7a13-2826-f8c5-48a453dfd562
+related:
+    - id: e7be6119-fc37-43f0-ad4f-1f3f99be2f9f
+      type: derived
 status: test
 description: Files with well-known filenames (sensitive files with credential data) copying
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1003.003
     - car.2013-07-001
     - attack.s0404
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Potential Attachment Manager Settings Associations Tamper
-id: a9b6c011-ab69-4ddb-bc0a-c4f21c80ec47
+id: 8d3cb1da-3cc0-2448-a467-9b5a2bd3c4c0
+related:
+    - id: a9b6c011-ab69-4ddb-bc0a-c4f21c80ec47
+      type: derived
 status: experimental
 description: Detects tampering with attachment manager settings policies associations to lower the default file type risks (See reference for more information)
 references:
@@ -10,6 +13,7 @@ date: 2022/08/01
 modified: 2023/08/17
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: registry_set
     product: windows

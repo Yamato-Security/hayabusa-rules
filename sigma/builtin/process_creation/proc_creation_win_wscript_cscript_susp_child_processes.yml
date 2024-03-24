@@ -1,5 +1,8 @@
 title: Cscript/Wscript Potentially Suspicious Child Process
-id: b6676963-0353-4f88-90f5-36c20d443c6a
+id: 70fe889c-0d1e-71e8-542d-a7ca05a0fef6
+related:
+    - id: b6676963-0353-4f88-90f5-36c20d443c6a
+      type: derived
 status: experimental
 description: |
     Detects potentially suspicious child processes of Wscript/Cscript. These include processes such as rundll32 with uncommon exports or PowerShell spawning rundll32 or regsvr32.
@@ -13,6 +16,7 @@ date: 2023/05/15
 modified: 2024/01/02
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

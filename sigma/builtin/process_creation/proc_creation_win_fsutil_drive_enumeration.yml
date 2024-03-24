@@ -1,5 +1,8 @@
 title: Fsutil Drive Enumeration
-id: 63de06b9-a385-40b5-8b32-73f2b9ef84b6
+id: 0521efb1-8519-4e3b-16a4-d3b360abc475
+related:
+    - id: 63de06b9-a385-40b5-8b32-73f2b9ef84b6
+      type: derived
 status: test
 description: Attackers may leverage fsutil to enumerated connected drives.
 references:
@@ -11,6 +14,7 @@ modified: 2022/07/14
 tags:
     - attack.discovery
     - attack.t1120
+    - sysmon
 logsource:
     category: process_creation
     product: windows

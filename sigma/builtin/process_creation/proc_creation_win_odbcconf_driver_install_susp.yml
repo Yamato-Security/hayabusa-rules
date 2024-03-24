@@ -1,8 +1,5 @@
 title: Suspicious Driver/DLL Installation Via Odbcconf.EXE
-id: cb0fe7c5-f3a3-484d-aa25-d350a7912729
-related:
-    - id: 3f5491e2-8db8-496b-9e95-1029fce852d4
-      type: derived
+id: 62b1b4bc-937a-d9ed-a691-7887aae49630
 status: experimental
 description: Detects execution of "odbcconf" with the "INSTALLDRIVER" action where the driver doesn't contain a ".dll" extension. This is often used as a defense evasion method.
 references:
@@ -14,6 +11,7 @@ date: 2023/05/23
 tags:
     - attack.defense_evasion
     - attack.t1218.008
+    - sysmon
 logsource:
     category: process_creation
     product: windows

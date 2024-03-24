@@ -1,8 +1,5 @@
 title: CodePage Modification Via MODE.COM
-id: d48c5ffa-3b02-4c0f-9a9e-3c275650dd0e
-related:
-    - id: 12fbff88-16b5-4b42-9754-cd001a789fb3
-      type: derived
+id: b25c6710-2d0f-f815-6c97-ba13c1680f88
 status: experimental
 description: |
     Detects a CodePage modification using the "mode.com" utility.
@@ -18,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.t1036
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

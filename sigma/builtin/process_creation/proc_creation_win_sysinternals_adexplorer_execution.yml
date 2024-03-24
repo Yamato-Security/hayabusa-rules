@@ -1,8 +1,5 @@
 title: Active Directory Database Snapshot Via ADExplorer
-id: 9212f354-7775-4e28-9c9f-8f0a4544e664
-related:
-    - id: ef61af62-bc74-4f58-b49b-626448227652
-      type: derived
+id: f9b2ffc9-5ec5-9898-b546-301c85fa3892
 status: test
 description: Detects the execution of Sysinternals ADExplorer with the "-snapshot" flag in order to save a local copy of the active directory database.
 references:
@@ -13,6 +10,7 @@ tags:
     - attack.credential_access
     - attack.t1552.001
     - attack.t1003.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

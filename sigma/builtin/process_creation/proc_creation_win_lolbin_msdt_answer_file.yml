@@ -1,5 +1,8 @@
 title: Execute MSDT Via Answer File
-id: 9c8c7000-3065-44a8-a555-79bcba5d9955
+id: aac97665-0e43-e14b-bc3c-bbefd72790dd
+related:
+    - id: 9c8c7000-3065-44a8-a555-79bcba5d9955
+      type: derived
 status: test
 description: Detects execution of "msdt.exe" using an answer file which is simulating the legitimate way of calling msdt via "pcwrun.exe" (For example from the compatibility tab)
 references:
@@ -10,6 +13,7 @@ tags:
     - attack.defense_evasion
     - attack.t1218
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

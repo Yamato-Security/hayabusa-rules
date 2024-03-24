@@ -1,5 +1,8 @@
 title: New Port Forwarding Rule Added Via Netsh.EXE
-id: 322ed9ec-fcab-4f67-9a34-e7c6aef43614
+id: cfe8471d-2e7f-9e55-aa92-3b117789d6a6
+related:
+    - id: 322ed9ec-fcab-4f67-9a34-e7c6aef43614
+      type: derived
 status: test
 description: Detects the execution of netsh commands that configure a new port forwarding (PortProxy) rule
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.defense_evasion
     - attack.command_and_control
     - attack.t1090
+    - sysmon
 logsource:
     category: process_creation
     product: windows

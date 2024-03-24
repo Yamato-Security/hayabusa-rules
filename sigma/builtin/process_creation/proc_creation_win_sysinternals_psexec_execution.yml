@@ -1,5 +1,8 @@
 title: Psexec Execution
-id: 730fc21b-eaff-474b-ad23-90fd265d4988
+id: adbf9c6f-f765-81c9-b566-460d75f15e4a
+related:
+    - id: 730fc21b-eaff-474b-ad23-90fd265d4988
+      type: derived
 status: test
 description: Detects user accept agreement execution in psexec commandline
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.execution
     - attack.t1569
     - attack.t1021
+    - sysmon
 logsource:
     category: process_creation
     product: windows

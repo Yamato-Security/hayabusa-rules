@@ -1,5 +1,8 @@
 title: Suspicious Command Patterns In Scheduled Task Creation
-id: f2c64357-b1d2-41b7-849f-34d2682c0fad
+id: 7c9f3379-969f-2e9a-5a03-cc75e44fffd0
+related:
+    - id: f2c64357-b1d2-41b7-849f-34d2682c0fad
+      type: derived
 status: experimental
 description: Detects scheduled task creation using "schtasks" that contain potentially suspicious or uncommon commands
 references:
@@ -12,6 +15,7 @@ modified: 2023/12/21
 tags:
     - attack.execution
     - attack.t1053.005
+    - sysmon
 logsource:
     product: windows
     category: process_creation

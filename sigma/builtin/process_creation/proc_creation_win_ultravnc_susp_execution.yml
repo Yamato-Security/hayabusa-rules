@@ -1,5 +1,8 @@
 title: Suspicious UltraVNC Execution
-id: 871b9555-69ca-4993-99d3-35a59f9f3599
+id: e6f654c0-1d07-0204-f77c-f791d88e44d0
+related:
+    - id: 871b9555-69ca-4993-99d3-35a59f9f3599
+      type: derived
 status: test
 description: Detects suspicious UltraVNC command line flag combination that indicate a auto reconnect upon execution, e.g. startup (as seen being used by Gamaredon threat group)
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.lateral_movement
     - attack.g0047
     - attack.t1021.005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

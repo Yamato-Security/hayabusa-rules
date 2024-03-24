@@ -1,5 +1,8 @@
 title: Potential Russian APT Credential Theft Activity
-id: b83f5166-9237-4b5e-9cd4-7b5d52f4d8ee
+id: 3743899d-8da9-a497-6649-9838de358f7e
+related:
+    - id: b83f5166-9237-4b5e-9cd4-7b5d52f4d8ee
+      type: derived
 status: stable
 description: Detects Russian group activity as described in Global Threat Report 2019 by Crowdstrike
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1552.001
     - attack.t1003.003
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

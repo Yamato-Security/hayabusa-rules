@@ -1,5 +1,8 @@
 title: Mstsc.EXE Execution With Local RDP File
-id: 5fdce3ac-e7f9-4ecd-a3aa-a4d78ebbf0af
+id: b089b249-149b-dfae-0fa9-53aef8435346
+related:
+    - id: 5fdce3ac-e7f9-4ecd-a3aa-a4d78ebbf0af
+      type: derived
 status: test
 description: Detects potential RDP connection via Mstsc using a local ".rdp" file
 references:
@@ -11,6 +14,7 @@ modified: 2023/04/30
 tags:
     - attack.command_and_control
     - attack.t1219
+    - sysmon
 logsource:
     category: process_creation
     product: windows

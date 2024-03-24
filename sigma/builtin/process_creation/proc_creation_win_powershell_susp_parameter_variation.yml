@@ -1,5 +1,8 @@
 title: Suspicious PowerShell Parameter Substring
-id: 36210e0d-5b19-485d-a087-c096088885f0
+id: f0dcd1c8-56d8-8dd0-b4d1-4e8b9a04a6c6
+related:
+    - id: 36210e0d-5b19-485d-a087-c096088885f0
+      type: derived
 status: test
 description: Detects suspicious PowerShell invocation with a parameter substring
 references:
@@ -10,6 +13,7 @@ modified: 2022/07/14
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

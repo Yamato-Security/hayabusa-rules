@@ -1,5 +1,8 @@
 title: SQL Client Tools PowerShell Session Detection
-id: a746c9b8-a2fb-4ee5-a428-92bee9e99060
+id: e9206567-a61e-a398-07ce-db2684eef47d
+related:
+    - id: a746c9b8-a2fb-4ee5-a428-92bee9e99060
+      type: derived
 status: test
 description: |
     This rule detects execution of a PowerShell code through the sqltoolsps.exe utility, which is included in the standard set of utilities supplied with the Microsoft SQL Server Management studio.
@@ -15,6 +18,7 @@ tags:
     - attack.t1059.001
     - attack.defense_evasion
     - attack.t1127
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: XBAP Execution From Uncommon Locations Via PresentationHost.EXE
-id: d22e2925-cfd8-463f-96f6-89cec9d9bc5f
+id: 7466d932-270d-a4c2-5851-05e1557ee730
+related:
+    - id: d22e2925-cfd8-463f-96f6-89cec9d9bc5f
+      type: derived
 status: test
 description: |
     Detects the execution of ".xbap" (Browser Applications) files via PresentationHost.EXE from an uncommon location. These files can be abused to run malicious ".xbap" files any bypass AWL
@@ -12,6 +15,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

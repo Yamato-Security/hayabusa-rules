@@ -1,5 +1,8 @@
 title: Process Reconnaissance Via Wmic.EXE
-id: 221b251a-357a-49a9-920a-271802777cc0
+id: c77efdd5-f664-66dc-23fb-73ab8e695b53
+related:
+    - id: 221b251a-357a-49a9-920a-271802777cc0
+      type: derived
 status: test
 description: Detects the execution of "wmic" with the "process" flag, which adversary might use to list processes running on the compromised host or list installed software hotfixes and patches.
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/14
 tags:
     - attack.execution
     - attack.t1047
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: DNS-over-HTTPS Enabled by Registry
-id: 04b45a8a-d11d-49e4-9acc-4a1b524407a5
+id: 22adc86b-0198-3dfd-0cc2-f686d342be66
+related:
+    - id: 04b45a8a-d11d-49e4-9acc-4a1b524407a5
+      type: derived
 status: test
 description: |
     Detects when a user enables DNS-over-HTTPS.
@@ -17,6 +20,7 @@ tags:
     - attack.defense_evasion
     - attack.t1140
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: registry_set

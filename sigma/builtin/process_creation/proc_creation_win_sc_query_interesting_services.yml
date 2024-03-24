@@ -1,5 +1,8 @@
 title: Interesting Service Enumeration Via Sc.EXE
-id: e83e8899-c9b2-483b-b355-5decc942b959
+id: 75a50ccd-ba64-66cd-de19-003e2f044761
+related:
+    - id: e83e8899-c9b2-483b-b355-5decc942b959
+      type: derived
 status: experimental
 description: |
     Detects the enumeration and query of interesting and in some cases sensitive services on the system via "sc.exe".
@@ -11,6 +14,7 @@ author: Swachchhanda Shrawan Poudel
 date: 2024/02/12
 tags:
     - attack.t1003
+    - sysmon
 logsource:
     product: windows
     category: process_creation

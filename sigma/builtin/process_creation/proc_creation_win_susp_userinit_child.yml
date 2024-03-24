@@ -1,5 +1,8 @@
 title: Suspicious Userinit Child Process
-id: b655a06a-31c0-477a-95c2-3726b83d649d
+id: fc42ea9c-4c0d-4a66-b3b7-34b2a831f588
+related:
+    - id: b655a06a-31c0-477a-95c2-3726b83d649d
+      type: derived
 status: test
 description: Detects a suspicious child process of userinit
 references:
@@ -10,6 +13,7 @@ modified: 2022/12/09
 tags:
     - attack.defense_evasion
     - attack.t1055
+    - sysmon
 logsource:
     category: process_creation
     product: windows

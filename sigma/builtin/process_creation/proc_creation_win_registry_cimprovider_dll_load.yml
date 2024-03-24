@@ -1,5 +1,8 @@
 title: DLL Execution Via Register-cimprovider.exe
-id: a2910908-e86f-4687-aeba-76a5f996e652
+id: 0d101a61-8aa2-979a-93db-fff8ad1a96aa
+related:
+    - id: a2910908-e86f-4687-aeba-76a5f996e652
+      type: derived
 status: test
 description: Detects using register-cimprovider.exe to execute arbitrary dll file.
 references:
@@ -11,6 +14,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1574
+    - sysmon
 logsource:
     category: process_creation
     product: windows

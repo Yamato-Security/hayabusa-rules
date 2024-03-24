@@ -1,5 +1,8 @@
 title: Potential APT-C-12 BlueMushroom DLL Load Activity Via Regsvr32
-id: bd70d3f8-e60e-4d25-89f0-0b5a9cff20e0
+id: c3a27568-59dc-1d9d-e90f-dd041655ebdf
+related:
+    - id: bd70d3f8-e60e-4d25-89f0-0b5a9cff20e0
+      type: derived
 status: test
 description: Detects potential BlueMushroom DLL loading activity via regsvr32 from AppData Local
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1218.010
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

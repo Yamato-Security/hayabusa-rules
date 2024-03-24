@@ -1,5 +1,8 @@
 title: Suspicious Powershell In Registry Run Keys
-id: 8d85cf08-bf97-4260-ba49-986a2a65129c
+id: 886d79ab-1307-d072-9729-18305985ebad
+related:
+    - id: 8d85cf08-bf97-4260-ba49-986a2a65129c
+      type: derived
 status: experimental
 description: Detects potential PowerShell commands or code within registry run keys
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1547.001
+    - sysmon
 logsource:
     category: registry_set
     product: windows

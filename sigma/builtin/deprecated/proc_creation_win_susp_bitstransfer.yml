@@ -1,5 +1,8 @@
 title: Suspicious Bitstransfer via PowerShell
-id: cd5c8085-4070-4e22-908d-a5b3342deb74
+id: dc28bbe4-14ec-d765-8514-2ff2ff532e24
+related:
+    - id: cd5c8085-4070-4e22-908d-a5b3342deb74
+      type: derived
 status: deprecated
 description: Detects transferring files from system on a server bitstransfer Powershell cmdlets
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.exfiltration
     - attack.persistence
     - attack.t1197
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Suspicious Advpack Call Via Rundll32.EXE
-id: a1473adb-5338-4a20-b4c3-126763e2d3d3
+id: afdc65aa-8680-da5e-c417-fc0432a76cd1
+related:
+    - id: a1473adb-5338-4a20-b4c3-126763e2d3d3
+      type: derived
 status: experimental
 description: Detects execution of "rundll32" calling "advpack.dll" with potential obfuscated ordinal calls in order to leverage the "RegisterOCX" function
 references:
@@ -9,6 +12,7 @@ author: Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems
 date: 2023/05/17
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

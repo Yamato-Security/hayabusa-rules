@@ -1,8 +1,5 @@
 title: Python Spawning Pretty TTY on Windows
-id: 480e7e51-e797-47e3-8d72-ebfce65b6d8d
-related:
-    - id: 899133d5-4d7c-4a7f-94ee-27355c879d90
-      type: derived
+id: 4e16e266-e27d-ab29-fd78-e04352a8aee7
 status: test
 description: Detects python spawning a pretty tty
 references:
@@ -12,6 +9,7 @@ date: 2022/06/03
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

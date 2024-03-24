@@ -1,5 +1,8 @@
 title: Service Registry Key Deleted Via Reg.EXE
-id: 05b2aa93-1210-42c8-8d9a-2fcc13b284f5
+id: 3559f022-c7da-a217-5e49-9934bcf0b06b
+related:
+    - id: 05b2aa93-1210-42c8-8d9a-2fcc13b284f5
+      type: derived
 status: test
 description: Detects execution of "reg.exe" commands with the "delete" flag on services registry key. Often used by attacker to remove AV software services
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/04
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

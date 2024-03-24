@@ -1,5 +1,8 @@
 title: Suspicious Program Location Whitelisted In Firewall Via Netsh.EXE
-id: a35f5a72-f347-4e36-8895-9869b0d5fc6d
+id: 98622a71-2d8e-2959-2a0c-8caffeacea13
+related:
+    - id: a35f5a72-f347-4e36-8895-9869b0d5fc6d
+      type: derived
 status: test
 description: Detects Netsh command execution that whitelists a program located in a suspicious location in the Windows Firewall
 references:
@@ -11,6 +14,7 @@ modified: 2023/12/11
 tags:
     - attack.defense_evasion
     - attack.t1562.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

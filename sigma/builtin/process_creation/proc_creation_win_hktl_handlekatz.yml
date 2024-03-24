@@ -1,5 +1,8 @@
 title: HackTool - HandleKatz LSASS Dumper Execution
-id: ca621ba5-54ab-4035-9942-d378e6fcde3c
+id: e9ec99cd-f425-c533-3e51-bf39335dbe29
+related:
+    - id: ca621ba5-54ab-4035-9942-d378e6fcde3c
+      type: derived
 status: test
 description: Detects the use of HandleKatz, a tool that demonstrates the usage of cloned handles to Lsass in order to create an obfuscated memory dump of the same
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/04
 tags:
     - attack.credential_access
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

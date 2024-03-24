@@ -1,5 +1,8 @@
 title: HackTool - CrackMapExec Process Patterns
-id: f26307d8-14cd-47e3-a26b-4b4769f24af6
+id: 991e932e-5798-025f-120d-6f19994ad2a4
+related:
+    - id: f26307d8-14cd-47e3-a26b-4b4769f24af6
+      type: derived
 status: test
 description: Detects suspicious process patterns found in logs when CrackMapExec is used
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/13
 tags:
     - attack.credential_access
     - attack.t1003.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

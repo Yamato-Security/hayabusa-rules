@@ -1,5 +1,8 @@
 title: HackTool - CrackMapExec Execution
-id: 42a993dd-bb3e-48c8-b372-4d6684c4106c
+id: a3bc9093-f23e-f622-8deb-a18609cc33d8
+related:
+    - id: 42a993dd-bb3e-48c8-b372-4d6684c4106c
+      type: derived
 status: test
 description: This rule detect common flag combinations used by CrackMapExec in order to detect its use even if the binary has been replaced.
 references:
@@ -22,6 +25,7 @@ tags:
     - attack.t1059.001
     - attack.t1110
     - attack.t1201
+    - sysmon
 logsource:
     category: process_creation
     product: windows

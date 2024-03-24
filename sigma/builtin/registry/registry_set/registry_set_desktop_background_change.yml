@@ -1,8 +1,5 @@
 title: Potentially Suspicious Desktop Background Change Via Registry
-id: 85b88e05-dadc-430b-8a9e-53ff1cd30aae
-related:
-    - id: 8cbc9475-8d05-4e27-9c32-df960716c701
-      type: similar
+id: e368acaa-a5b7-0fab-0997-8f0f1db5f99a
 status: experimental
 description: |
     Detects regsitry value settings that would replace the user's desktop background.
@@ -21,6 +18,7 @@ tags:
     - attack.impact
     - attack.t1112
     - attack.t1491.001
+    - sysmon
 logsource:
     product: windows
     category: registry_set

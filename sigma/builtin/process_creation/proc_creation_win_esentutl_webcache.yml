@@ -1,5 +1,8 @@
 title: Esentutl Steals Browser Information
-id: 6a69f62d-ce75-4b57-8dce-6351eb55b362
+id: 115e60c2-cee5-d274-5b18-9313cca77106
+related:
+    - id: 6a69f62d-ce75-4b57-8dce-6351eb55b362
+      type: derived
 status: test
 description: One way Qbot steals sensitive information is by extracting browser data from Internet Explorer and Microsoft Edge by using the built-in utility esentutl.exe
 references:
@@ -12,6 +15,7 @@ modified: 2024/03/05
 tags:
     - attack.collection
     - attack.t1005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

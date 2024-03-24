@@ -1,5 +1,8 @@
 title: Potential COM Object Hijacking Via TreatAs Subkey - Registry
-id: 9b0f8a61-91b2-464f-aceb-0527e0a45020
+id: 6b4b0ded-e40c-4d49-68f0-b78339d9587e
+related:
+    - id: 9b0f8a61-91b2-464f-aceb-0527e0a45020
+      type: derived
 status: test
 description: Detects COM object hijacking via TreatAs subkey
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/07
 tags:
     - attack.persistence
     - attack.t1546.015
+    - sysmon
 logsource:
     category: registry_add
     product: windows

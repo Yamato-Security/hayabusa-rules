@@ -1,5 +1,8 @@
 title: Suspicious Download from Office Domain
-id: 00d49ed5-4491-4271-a8db-650a4ef6f8c1
+id: b8f11c05-4178-dd22-a155-a560b4974008
+related:
+    - id: 00d49ed5-4491-4271-a8db-650a4ef6f8c1
+      type: derived
 status: test
 description: Detects suspicious ways to download files from Microsoft domains that are used to store attachments in Emails or OneNote documents
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.command_and_control
     - attack.t1105
     - attack.t1608
+    - sysmon
 logsource:
     product: windows
     category: process_creation

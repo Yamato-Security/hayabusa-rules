@@ -1,5 +1,8 @@
 title: Leviathan Registry Key Activity
-id: 70d43542-cd2d-483c-8f30-f16b436fd7db
+id: 09b9f622-28c3-d403-0447-f3858c57995e
+related:
+    - id: 70d43542-cd2d-483c-8f30-f16b436fd7db
+      type: derived
 status: test
 description: Detects registry key used by Leviathan APT in Malaysian focused campaign
 references:
@@ -10,6 +13,7 @@ modified: 2023/09/19
 tags:
     - attack.persistence
     - attack.t1547.001
+    - sysmon
 logsource:
     category: registry_event
     product: windows

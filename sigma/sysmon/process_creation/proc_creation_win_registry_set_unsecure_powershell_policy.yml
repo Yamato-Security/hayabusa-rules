@@ -1,5 +1,5 @@
 title: Potential PowerShell Execution Policy Tampering - ProcCreation
-id: cf2e938e-9a3e-4fe8-a347-411642b28a9f
+id: 20f9f0ca-0132-e9b1-d376-268fb6359f5f
 related:
     - id: fad91067-08c5-4d1a-8d8c-d96a21b37814 # ProcCreation Registry
       type: similar
@@ -7,6 +7,8 @@ related:
       type: similar
     - id: 61d0475c-173f-4844-86f7-f3eebae1c66b # PowerShell ScriptBlock
       type: similar
+    - id: cf2e938e-9a3e-4fe8-a347-411642b28a9f
+      type: derived
 status: test
 description: Detects changes to the PowerShell execution policy registry key in order to bypass signing requirements for script execution from the CommandLine
 references:

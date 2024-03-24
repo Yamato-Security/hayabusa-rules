@@ -1,8 +1,5 @@
 title: Add Windows Capability Via PowerShell Cmdlet
-id: b36d01a3-ddaf-4804-be18-18a6247adfcd
-related:
-    - id: 155c7fd5-47b4-49b2-bbeb-eb4fab335429
-      type: similar
+id: 5ee853eb-9d4f-e140-fd4d-c6c6e65e27bf
 status: experimental
 description: Detects usage of the "Add-WindowsCapability" cmdlet to add Windows capabilities. Notable capabilities could be "OpenSSH" and others.
 references:
@@ -13,6 +10,7 @@ date: 2023/01/22
 modified: 2023/05/09
 tags:
     - attack.execution
+    - sysmon
 logsource:
     product: windows
     category: process_creation

@@ -1,5 +1,8 @@
 title: Potentially Suspicious File Download From File Sharing Domain Via PowerShell.EXE
-id: b6e04788-29e1-4557-bb14-77f761848ab8
+id: a84f4bc1-ba9a-517d-9339-0a232578cf27
+related:
+    - id: b6e04788-29e1-4557-bb14-77f761848ab8
+      type: derived
 status: experimental
 description: Detects potentially suspicious file downloads from file sharing domains using PowerShell.exe
 references:
@@ -11,6 +14,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2024/02/23
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

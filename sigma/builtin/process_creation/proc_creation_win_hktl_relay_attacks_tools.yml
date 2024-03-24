@@ -1,5 +1,8 @@
 title: Potential SMB Relay Attack Tool Execution
-id: 5589ab4f-a767-433c-961d-c91f3f704db1
+id: 024e903d-9124-23ff-2ce8-f59651a961ea
+related:
+    - id: 5589ab4f-a767-433c-961d-c91f3f704db1
+      type: derived
 status: test
 description: Detects different hacktools used for relay attacks on Windows for privilege escalation
 references:
@@ -15,6 +18,7 @@ modified: 2023/02/14
 tags:
     - attack.execution
     - attack.t1557.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

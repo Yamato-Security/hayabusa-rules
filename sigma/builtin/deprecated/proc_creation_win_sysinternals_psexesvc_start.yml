@@ -1,5 +1,8 @@
 title: PsExec Service Start
-id: 3ede524d-21cc-472d-a3ce-d21b568d8db7
+id: 0dc4e02b-cd15-c6bf-f6ef-134ff49fa620
+related:
+    - id: 3ede524d-21cc-472d-a3ce-d21b568d8db7
+      type: derived
 status: deprecated
 description: Detects a PsExec service start
 author: Florian Roth (Nextron Systems)
@@ -9,6 +12,7 @@ tags:
     - attack.execution
     - attack.s0029
     - attack.t1569.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

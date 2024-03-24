@@ -1,5 +1,8 @@
 title: Mint Sandstorm - AsperaFaspex Suspicious Process Execution
-id: 91048c0d-5b81-4b85-a099-c9ee4fb87979
+id: 4e26299f-1fd3-fa5e-1aad-a0c22275e7ae
+related:
+    - id: 91048c0d-5b81-4b85-a099-c9ee4fb87979
+      type: derived
 status: test
 description: Detects suspicious execution from AsperaFaspex as seen used by Mint Sandstorm
 references:
@@ -10,6 +13,7 @@ modified: 2023/04/25
 tags:
     - attack.execution
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

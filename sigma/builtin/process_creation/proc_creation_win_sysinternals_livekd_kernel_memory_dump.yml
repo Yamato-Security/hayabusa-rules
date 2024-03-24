@@ -1,5 +1,8 @@
 title: Kernel Memory Dump Via LiveKD
-id: c7746f1c-47d3-43d6-8c45-cd1e54b6b0a2
+id: 37cf7844-0508-0f79-123b-7bb4a92b5bf3
+related:
+    - id: c7746f1c-47d3-43d6-8c45-cd1e54b6b0a2
+      type: derived
 status: experimental
 description: Detects execution of LiveKD with the "-m" flag to potentially dump the kernel memory
 references:
@@ -11,6 +14,7 @@ date: 2023/05/16
 modified: 2024/03/13
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

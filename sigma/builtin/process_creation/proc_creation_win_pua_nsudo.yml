@@ -1,5 +1,8 @@
 title: PUA - NSudo Execution
-id: 771d1eb5-9587-4568-95fb-9ec44153a012
+id: 09a60700-1c45-a4bf-7b17-5d1e036f4b78
+related:
+    - id: 771d1eb5-9587-4568-95fb-9ec44153a012
+      type: derived
 status: test
 description: Detects the use of NSudo tool for command execution
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.execution
     - attack.t1569.002
     - attack.s0029
+    - sysmon
 logsource:
     category: process_creation
     product: windows

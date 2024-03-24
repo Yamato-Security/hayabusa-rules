@@ -1,5 +1,8 @@
 title: Uninstall Sysinternals Sysmon
-id: 6a5f68d1-c4b5-46b9-94ee-5324892ea939
+id: e1344b7a-c6ce-4117-4e54-c1865cba57df
+related:
+    - id: 6a5f68d1-c4b5-46b9-94ee-5324892ea939
+      type: derived
 status: test
 description: Detects the removal of Sysmon, which could be a potential attempt at defense evasion
 references:
@@ -10,6 +13,7 @@ modified: 2024/03/13
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

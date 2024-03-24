@@ -1,5 +1,8 @@
 title: Suspicious Characters in CommandLine
-id: 2c0d2d7b-30d6-4d14-9751-7b9113042ab9
+id: c4c78b6f-2ead-8d39-dc1b-9ab4e88fc5b6
+related:
+    - id: 2c0d2d7b-30d6-4d14-9751-7b9113042ab9
+      type: derived
 status: deprecated
 description: Detects suspicious Unicode characters in the command line, which could be a sign of obfuscation or defense evasion
 references:
@@ -9,6 +12,7 @@ date: 2022/04/27
 modified: 2023/03/03
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     product: windows
     category: process_creation

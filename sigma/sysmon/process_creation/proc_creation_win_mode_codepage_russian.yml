@@ -1,7 +1,9 @@
 title: CodePage Modification Via MODE.COM To Russian Language
-id: 12fbff88-16b5-4b42-9754-cd001a789fb3
+id: 071f3ed4-13e1-2767-8274-ac2bf95c5e47
 related:
     - id: d48c5ffa-3b02-4c0f-9a9e-3c275650dd0e
+      type: derived
+    - id: 12fbff88-16b5-4b42-9754-cd001a789fb3
       type: derived
 status: experimental
 description: |
@@ -22,8 +24,6 @@ logsource:
     category: process_creation
     product: windows
 detection:
-    # VT Query: behavior:"mode con cp select=1251"
-    # VT Query: behavior:"mode con cp select=866"
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational

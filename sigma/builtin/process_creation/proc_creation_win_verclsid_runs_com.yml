@@ -1,5 +1,8 @@
 title: Verclsid.exe Runs COM Object
-id: d06be4b9-8045-428b-a567-740a26d9db25
+id: f95fb96e-dacc-23fa-9a80-f509e7973c9f
+related:
+    - id: d06be4b9-8045-428b-a567-740a26d9db25
+      type: derived
 status: test
 description: Detects when verclsid.exe is used to run COM object via GUID
 references:
@@ -12,6 +15,7 @@ modified: 2022/07/11
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

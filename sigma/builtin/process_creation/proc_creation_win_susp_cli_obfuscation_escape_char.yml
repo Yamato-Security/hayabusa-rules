@@ -1,5 +1,8 @@
 title: Potential Commandline Obfuscation Using Escape Characters
-id: f0cdd048-82dc-4f7a-8a7a-b87a52b6d0fd
+id: 77f78d0c-79a5-d749-2130-9bea40bef10a
+related:
+    - id: f0cdd048-82dc-4f7a-8a7a-b87a52b6d0fd
+      type: derived
 status: test
 description: Detects potential commandline obfuscation using known escape characters
 references:
@@ -14,6 +17,7 @@ modified: 2023/03/03
 tags:
     - attack.defense_evasion
     - attack.t1140
+    - sysmon
 logsource:
     category: process_creation
     product: windows

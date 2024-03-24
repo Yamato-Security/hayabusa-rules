@@ -1,5 +1,8 @@
 title: Suspicious Service Path Modification
-id: 138d3531-8793-4f50-a2cd-f291b2863d78
+id: 9a71e218-8397-8c6b-22e0-fc805c7e6571
+related:
+    - id: 138d3531-8793-4f50-a2cd-f291b2863d78
+      type: derived
 status: test
 description: Detects service path modification via the "sc" binary to a suspicious command or path
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.persistence
     - attack.privilege_escalation
     - attack.t1543.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

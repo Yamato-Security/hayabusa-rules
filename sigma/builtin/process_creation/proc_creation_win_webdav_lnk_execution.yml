@@ -1,8 +1,5 @@
 title: Potentially Suspicious WebDAV LNK Execution
-id: 1412aa78-a24c-4abd-83df-767dfb2c5bbe
-related:
-    - id: f0507c0f-a3a2-40f5-acc6-7f543c334993
-      type: similar
+id: a2325ec9-0dd9-e21d-c39b-3e8dc0f36213
 status: experimental
 description: Detects possible execution via LNK file accessed on a WebDAV server.
 references:
@@ -14,6 +11,7 @@ tags:
     - attack.execution
     - attack.t1059.001
     - attack.t1204
+    - sysmon
 logsource:
     category: process_creation
     product: windows

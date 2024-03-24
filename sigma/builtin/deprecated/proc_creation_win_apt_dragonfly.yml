@@ -1,5 +1,8 @@
 title: CrackMapExecWin
-id: 04d9079e-3905-4b70-ad37-6bdf11304965
+id: 9fcbb5dc-f858-0445-bcf4-ade441a89dc3
+related:
+    - id: 04d9079e-3905-4b70-ad37-6bdf11304965
+      type: derived
 status: deprecated
 description: Detects CrackMapExecWin Activity as Described by NCSC
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.discovery
     - attack.t1110
     - attack.t1087
+    - sysmon
 logsource:
     category: process_creation
     product: windows

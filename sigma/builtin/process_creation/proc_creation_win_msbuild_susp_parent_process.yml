@@ -1,5 +1,8 @@
 title: Suspicious Msbuild Execution By Uncommon Parent Process
-id: 33be4333-2c6b-44f4-ae28-102cdbde0a31
+id: 1a4e84c2-b143-1ac5-61c9-00faf74cb62a
+related:
+    - id: 33be4333-2c6b-44f4-ae28-102cdbde0a31
+      type: derived
 status: test
 description: Detects suspicious execution of 'Msbuild.exe' by a uncommon parent process
 references:
@@ -9,6 +12,7 @@ author: frack113
 date: 2022/11/17
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

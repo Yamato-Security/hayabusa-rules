@@ -1,5 +1,8 @@
 title: APT29
-id: 033fe7d6-66d1-4240-ac6b-28908009c71f
+id: 9f2a9424-8e85-d783-1735-f72375b3b6d8
+related:
+    - id: 033fe7d6-66d1-4240-ac6b-28908009c71f
+      type: derived
 status: deprecated
 description: This method detects a suspicious PowerShell command line combination as used by APT29 in a campaign against U.S. think tanks.
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.execution
     - attack.g0016
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

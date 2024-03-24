@@ -1,8 +1,5 @@
 title: AgentExecutor PowerShell Execution
-id: 7efd2c8d-8b18-45b7-947d-adfe9ed04f61
-related:
-    - id: c0b40568-b1e9-4b03-8d6c-b096da6da9ab
-      type: similar
+id: e3c946f5-fbf9-ed84-e993-6f80a6467aae
 status: test
 description: Detects execution of the AgentExecutor.exe binary. Which can be abused as a LOLBIN to execute powershell scripts with the ExecutionPolicy "Bypass" or any binary named "powershell.exe" located in the path provided by 6th positional argument
 author: Nasreddine Bencherchali (Nextron Systems), memory-shards
@@ -15,6 +12,7 @@ date: 2022/12/24
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

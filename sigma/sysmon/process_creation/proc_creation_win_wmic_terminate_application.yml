@@ -1,7 +1,9 @@
 title: Application Terminated Via Wmic.EXE
-id: 49d9671b-0a0a-4c09-8280-d215bfd30662
+id: 8d0c8c02-73f2-1577-de09-5ddbc3cf9df6
 related:
     - id: 847d5ff3-8a31-4737-a970-aeae8fe21765 # Uninstall Security Products
+      type: derived
+    - id: 49d9671b-0a0a-4c09-8280-d215bfd30662
       type: derived
 status: experimental
 description: Detects calls to the "terminate" function via wmic in order to kill an application

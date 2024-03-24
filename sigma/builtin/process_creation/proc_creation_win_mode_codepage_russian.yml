@@ -1,8 +1,5 @@
 title: CodePage Modification Via MODE.COM To Russian Language
-id: 12fbff88-16b5-4b42-9754-cd001a789fb3
-related:
-    - id: d48c5ffa-3b02-4c0f-9a9e-3c275650dd0e
-      type: derived
+id: 54a21dac-be5a-04d2-da18-4bdd55216fa0
 status: experimental
 description: |
     Detects a CodePage modification using the "mode.com" utility to Russian language.
@@ -17,12 +14,11 @@ date: 2024/01/17
 tags:
     - attack.defense_evasion
     - attack.t1036
+    - sysmon
 logsource:
     category: process_creation
     product: windows
 detection:
-    # VT Query: behavior:"mode con cp select=1251"
-    # VT Query: behavior:"mode con cp select=866"
     process_creation:
         EventID: 4688
         Channel: Security

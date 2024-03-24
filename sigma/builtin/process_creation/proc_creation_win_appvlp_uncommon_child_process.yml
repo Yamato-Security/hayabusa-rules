@@ -1,5 +1,8 @@
 title: Uncommon Child Process Of Appvlp.EXE
-id: 9c7e131a-0f2c-4ae0-9d43-b04f4e266d43
+id: 3b38d2cf-7ccd-53a3-5491-424880982502
+related:
+    - id: 9c7e131a-0f2c-4ae0-9d43-b04f4e266d43
+      type: derived
 status: test
 description: |
     Detects uncommon child processes of Appvlp.EXE
@@ -15,6 +18,7 @@ tags:
     - attack.t1218
     - attack.defense_evasion
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Automated Collection Command Prompt
-id: f576a613-2392-4067-9d1a-9345fb58d8d1
+id: b99e1330-4add-8df6-a3ab-1425cde93e31
+related:
+    - id: f576a613-2392-4067-9d1a-9345fb58d8d1
+      type: derived
 status: test
 description: Once established within a system or network, an adversary may use automated techniques for collecting internal data.
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1119
     - attack.credential_access
     - attack.t1552.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

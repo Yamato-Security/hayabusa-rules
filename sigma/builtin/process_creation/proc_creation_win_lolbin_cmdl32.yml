@@ -1,5 +1,8 @@
 title: Suspicious Cmdl32 Execution
-id: f37aba28-a9e6-4045-882c-d5004043b337
+id: 9c5b92ea-7921-f006-6f7b-a5f9ce49a774
+related:
+    - id: f37aba28-a9e6-4045-882c-d5004043b337
+      type: derived
 status: test
 description: lolbas Cmdl32 is use to download a payload to evade antivirus
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.defense_evasion
     - attack.t1218
     - attack.t1202
+    - sysmon
 logsource:
     category: process_creation
     product: windows

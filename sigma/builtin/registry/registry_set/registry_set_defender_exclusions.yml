@@ -1,8 +1,5 @@
 title: Windows Defender Exclusions Added - Registry
-id: a982fc9c-6333-4ffb-a51d-addb04e8b529
-related:
-    - id: 1321dc4e-a1fe-481d-a016-52c45f0c8b4f
-      type: derived
+id: c86baf10-abab-0f8f-88a2-e51640a26b5c
 status: test
 description: Detects the Setting of Windows Defender Exclusions
 references:
@@ -13,6 +10,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     product: windows
     category: registry_set

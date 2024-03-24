@@ -1,5 +1,8 @@
 title: Suspicious Child Process Of Manage Engine ServiceDesk
-id: cea2b7ea-792b-405f-95a1-b903ea06458f
+id: fa8c67ae-ace2-9a11-43d7-c5b5954ce489
+related:
+    - id: cea2b7ea-792b-405f-95a1-b903ea06458f
+      type: derived
 status: experimental
 description: Detects suspicious child processes of the "Manage Engine ServiceDesk Plus" Java web service
 references:
@@ -12,6 +15,7 @@ modified: 2023/08/29
 tags:
     - attack.command_and_control
     - attack.t1102
+    - sysmon
 logsource:
     category: process_creation
     product: windows

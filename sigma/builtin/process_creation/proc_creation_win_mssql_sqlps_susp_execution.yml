@@ -1,5 +1,8 @@
 title: Detection of PowerShell Execution via Sqlps.exe
-id: 0152550d-3a26-4efd-9f0e-54a0b28ae2f3
+id: 550c629f-0dc6-83a7-efce-0afef9c45e4c
+related:
+    - id: 0152550d-3a26-4efd-9f0e-54a0b28ae2f3
+      type: derived
 status: test
 description: |
     This rule detects execution of a PowerShell code through the sqlps.exe utility, which is included in the standard set of utilities supplied with the MSSQL Server.
@@ -16,6 +19,7 @@ tags:
     - attack.t1059.001
     - attack.defense_evasion
     - attack.t1127
+    - sysmon
 logsource:
     category: process_creation
     product: windows

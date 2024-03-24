@@ -1,5 +1,5 @@
 title: Diskshadow Script Mode Execution
-id: 0c2f8629-7129-4a8a-9897-7e0768f13ff2
+id: d283e6ec-5139-fad4-cbdb-2909d45c639b
 related:
     - id: fa1a7e52-3d02-435b-81b8-00da14dd66c1 # Diskshadow Script Mode - Execution From Potential Suspicious Location
       type: similar
@@ -9,6 +9,8 @@ related:
       type: similar
     - id: 56b1dde8-b274-435f-a73a-fb75eb81262a # Diskshadow Child Process Spawned
       type: similar
+    - id: 0c2f8629-7129-4a8a-9897-7e0768f13ff2
+      type: derived
 status: test
 description: |
     Detects execution of "Diskshadow.exe" in script mode using the "/s" flag. Attackers often abuse "diskshadow" to execute scripts that deleted the shadow copies on the systems. Investigate the content of the scripts and its location.

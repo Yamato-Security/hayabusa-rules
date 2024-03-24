@@ -1,5 +1,8 @@
 title: Suspicious SYSTEM User Process Creation
-id: 2617e7ed-adb7-40ba-b0f3-8f9945fe6c09
+id: 0ce3d50b-989b-895d-96cd-f820e09f2e18
+related:
+    - id: 2617e7ed-adb7-40ba-b0f3-8f9945fe6c09
+      type: derived
 status: test
 description: Detects a suspicious process creation as SYSTEM user (suspicious program or command line parameter)
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1134
     - attack.t1003
     - attack.t1027
+    - sysmon
 logsource:
     category: process_creation
     product: windows

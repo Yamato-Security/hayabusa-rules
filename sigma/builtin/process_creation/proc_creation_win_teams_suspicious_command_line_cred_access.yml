@@ -1,5 +1,8 @@
 title: Potentially Suspicious Command Targeting Teams Sensitive Files
-id: d2eb17db-1d39-41dc-b57f-301f6512fa75
+id: d1521b48-cb82-dd9a-0d90-4e3a69b29fb2
+related:
+    - id: d2eb17db-1d39-41dc-b57f-301f6512fa75
+      type: derived
 status: experimental
 description: |
     Detects a commandline containing references to the Microsoft Teams database or cookies files from a process other than Teams.
@@ -13,6 +16,7 @@ modified: 2023/12/18
 tags:
     - attack.credential_access
     - attack.t1528
+    - sysmon
 logsource:
     product: windows
     category: process_creation

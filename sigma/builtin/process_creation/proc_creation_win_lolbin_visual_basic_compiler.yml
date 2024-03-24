@@ -1,5 +1,8 @@
 title: Visual Basic Command Line Compiler Usage
-id: 7b10f171-7f04-47c7-9fa2-5be43c76e535
+id: c321b26c-a257-c5cc-1fb8-5496e91a7381
+related:
+    - id: 7b10f171-7f04-47c7-9fa2-5be43c76e535
+      type: derived
 status: test
 description: Detects successful code compilation via Visual Basic Command Line Compiler that utilizes Windows Resource to Object Converter.
 references:
@@ -10,6 +13,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1027.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Pandemic Registry Key
-id: 47e0852a-cf81-4494-a8e6-31864f8c86ed
+id: a36fab91-8874-79c8-32cb-b2a0117d5a0b
+related:
+    - id: 47e0852a-cf81-4494-a8e6-31864f8c86ed
+      type: derived
 status: test
 description: Detects Pandemic Windows Implant
 references:
@@ -11,6 +14,7 @@ modified: 2022/10/09
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: registry_event
     product: windows

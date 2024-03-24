@@ -1,5 +1,8 @@
 title: Suspicious Git Clone
-id: aef9d1f1-7396-4e92-a927-4567c7a495c1
+id: 87086e53-d522-cb93-c0a0-04cd9f2e91d3
+related:
+    - id: aef9d1f1-7396-4e92-a927-4567c7a495c1
+      type: derived
 status: test
 description: Detects execution of "git" in order to clone a remote repository that contain suspicious keywords which might be suspicious
 references:
@@ -10,6 +13,7 @@ modified: 2023/01/10
 tags:
     - attack.reconnaissance
     - attack.t1593.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

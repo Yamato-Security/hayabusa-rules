@@ -1,5 +1,8 @@
 title: Suspicious Process Patterns NTDS.DIT Exfil
-id: 8bc64091-6875-4881-aaf9-7bd25b5dda08
+id: 1fb003fd-3505-dd3d-39c9-067a836b7257
+related:
+    - id: 8bc64091-6875-4881-aaf9-7bd25b5dda08
+      type: derived
 status: test
 description: Detects suspicious process patterns used in NTDS.DIT exfiltration
 references:
@@ -16,6 +19,7 @@ modified: 2022/11/10
 tags:
     - attack.credential_access
     - attack.t1003.003
+    - sysmon
 logsource:
     product: windows
     category: process_creation

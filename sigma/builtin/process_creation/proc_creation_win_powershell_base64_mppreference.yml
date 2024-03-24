@@ -1,5 +1,8 @@
 title: Powershell Base64 Encoded MpPreference Cmdlet
-id: c6fb44c6-71f5-49e6-9462-1425d328aee3
+id: 8d302e8b-d95c-0027-59e0-a3c179726623
+related:
+    - id: c6fb44c6-71f5-49e6-9462-1425d328aee3
+      type: derived
 status: test
 description: Detects base64 encoded "MpPreference" PowerShell cmdlet code that tries to modifies or tamper with Windows Defender AV
 references:
@@ -12,6 +15,7 @@ modified: 2023/01/30
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

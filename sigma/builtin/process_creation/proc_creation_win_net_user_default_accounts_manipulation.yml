@@ -1,5 +1,8 @@
 title: Suspicious Manipulation Of Default Accounts Via Net.EXE
-id: 5b768e71-86f2-4879-b448-81061cbae951
+id: 6fb2f8df-d6fd-c7e4-80e4-ba8fc1466ccc
+related:
+    - id: 5b768e71-86f2-4879-b448-81061cbae951
+      type: derived
 status: test
 description: Detects suspicious manipulations of default accounts such as 'administrator' and 'guest'. For example 'enable' or 'disable' accounts or change the password...etc
 references:
@@ -12,6 +15,7 @@ modified: 2023/02/21
 tags:
     - attack.collection
     - attack.t1560.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Potential Crypto Mining Activity
-id: 66c3b204-9f88-4d0a-a7f7-8a57d521ca55
+id: c3538d2c-107c-a590-509c-957631b1eaf2
+related:
+    - id: 66c3b204-9f88-4d0a-a7f7-8a57d521ca55
+      type: derived
 status: stable
 description: Detects command line parameters or strings often used by crypto miners
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/13
 tags:
     - attack.impact
     - attack.t1496
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Change User Account Associated with the FAX Service
-id: e3fdf743-f05b-4051-990a-b66919be1743
+id: 96a90fb0-3747-35a8-d9c5-dcc7d373c57c
+related:
+    - id: e3fdf743-f05b-4051-990a-b66919be1743
+      type: derived
 status: test
 description: Detect change of the user account associated with the FAX service to avoid the escalation problem.
 references:
@@ -11,6 +14,7 @@ modified: 2022/12/30
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: registry_set

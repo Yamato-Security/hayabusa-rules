@@ -1,5 +1,8 @@
 title: Install New Package Via Winget Local Manifest
-id: 313d6012-51a0-4d93-8dfc-de8553239e25
+id: afee1b7e-2430-1880-34e2-eb2ae5bf07ff
+related:
+    - id: 313d6012-51a0-4d93-8dfc-de8553239e25
+      type: derived
 status: test
 description: |
     Detects usage of winget to install applications via manifest file. Adversaries can abuse winget to download payloads remotely and execute them.
@@ -16,6 +19,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

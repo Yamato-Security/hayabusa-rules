@@ -1,8 +1,10 @@
 title: Suspicious Cabinet File Execution Via Msdt.EXE
-id: dc4576d4-7467-424f-9eee-fd2b02855fe0
+id: a18f1ba5-d32c-a267-36ad-5a07c909e19e
 related:
     - id: 6545ce61-a1bd-4119-b9be-fcbee42c0cf3
       type: obsoletes
+    - id: dc4576d4-7467-424f-9eee-fd2b02855fe0
+      type: derived
 status: test
 description: Detects execution of msdt.exe using the "cab" flag which could indicates suspicious diagcab files with embedded answer files leveraging CVE-2022-30190
 references:

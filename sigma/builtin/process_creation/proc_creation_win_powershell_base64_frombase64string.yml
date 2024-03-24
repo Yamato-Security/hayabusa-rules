@@ -1,5 +1,8 @@
 title: PowerShell Base64 Encoded FromBase64String Cmdlet
-id: fdb62a13-9a81-4e5c-a38f-ea93a16f6d7c
+id: fb3e5ab0-ed05-d894-23b3-a28ca8b237ba
+related:
+    - id: fdb62a13-9a81-4e5c-a38f-ea93a16f6d7c
+      type: derived
 status: test
 description: Detects usage of a base64 encoded "FromBase64String" cmdlet in a process command line
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1140
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

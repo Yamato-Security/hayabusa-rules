@@ -1,5 +1,8 @@
 title: Wlrmdr.EXE Uncommon Argument Or Child Process
-id: 9cfc00b6-bfb7-49ce-9781-ef78503154bb
+id: 0331991b-8942-aa87-70c4-84360f95b7ce
+related:
+    - id: 9cfc00b6-bfb7-49ce-9781-ef78503154bb
+      type: derived
 status: test
 description: |
     Detects the execution of "Wlrmdr.exe" with the "-u" command line flag which allows anything passed to it to be an argument of the ShellExecute API, which would allow an attacker to execute arbitrary binaries.
@@ -13,6 +16,7 @@ modified: 2024/03/06
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -27,12 +31,18 @@ detection:
         - OriginalFileName: WLRMNDR.EXE
     selection_child_cli:
         CommandLine|contains|all:
-            - '-s '
+            - '/u '
+            - '/t '
             - '-f '
-            - '-t '
+            - '/s '
             - '-m '
-            - '-a '
+            - '-s '
             - '-u '
+            - '/f '
+            - '-a '
+            - '/m '
+            - '-t '
+            - '/a '
     filter_main_winlogon:
         ParentProcessName: C:\Windows\System32\winlogon.exe
     filter_main_empty:

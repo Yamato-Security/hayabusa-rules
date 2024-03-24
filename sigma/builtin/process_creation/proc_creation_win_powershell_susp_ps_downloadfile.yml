@@ -1,5 +1,8 @@
 title: PowerShell DownloadFile
-id: 8f70ac5f-1f6f-4f8e-b454-db19561216c5
+id: c095d894-f021-b42f-054d-9727ada91e6a
+related:
+    - id: 8f70ac5f-1f6f-4f8e-b454-db19561216c5
+      type: derived
 status: test
 description: Detects the execution of powershell, a WebClient object creation and the invocation of DownloadFile in a single command line
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.command_and_control
     - attack.t1104
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

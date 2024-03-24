@@ -1,8 +1,5 @@
 title: Whoami.EXE Execution From Privileged Process
-id: 79ce34ca-af29-4d0e-b832-fc1b377020db
-related:
-    - id: 80167ada-7a12-41ed-b8e9-aa47195c66a1
-      type: obsoletes
+id: b78e620c-3115-0c6d-ea3e-4ad5d55c1217
 status: experimental
 description: Detects the execution of "whoami.exe" by privileged accounts that are often abused by threat actors
 references:
@@ -15,6 +12,7 @@ tags:
     - attack.privilege_escalation
     - attack.discovery
     - attack.t1033
+    - sysmon
 logsource:
     category: process_creation
     product: windows

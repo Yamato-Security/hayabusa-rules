@@ -1,5 +1,8 @@
 title: New Self Extracting Package Created Via IExpress.EXE
-id: c2b478fc-09bf-40b2-8768-ab3ec8d61c9a
+id: bc8a6370-9950-1a63-7ece-7feed9d18e57
+related:
+    - id: c2b478fc-09bf-40b2-8768-ab3ec8d61c9a
+      type: derived
 status: experimental
 description: |
     Detects the "iexpress.exe" utility creating self-extracting packages.
@@ -16,6 +19,7 @@ tags:
     - attack.defense_evasion
     - attack.t1218
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

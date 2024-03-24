@@ -1,5 +1,8 @@
 title: Invoke-Obfuscation VAR+ Launcher
-id: 27aec9c9-dbb0-4939-8422-1742242471d0
+id: 612594ec-e080-cbd7-b223-76411581dea7
+related:
+    - id: 27aec9c9-dbb0-4939-8422-1742242471d0
+      type: derived
 status: test
 description: Detects Obfuscated use of Environment Variables to execute PowerShell
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

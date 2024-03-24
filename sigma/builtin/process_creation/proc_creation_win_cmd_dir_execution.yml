@@ -1,5 +1,8 @@
 title: File Enumeration Via Dir Command
-id: 7c9340a9-e2ee-4e43-94c5-c54ebbea1006
+id: d2fa11c1-82e2-42db-8f24-39f38b6ea6ba
+related:
+    - id: 7c9340a9-e2ee-4e43-94c5-c54ebbea1006
+      type: derived
 status: test
 description: |
     Detects usage of the "dir" command part of Widows CMD with the "/S" command line flag in order to enumerate files in a specified directory and all subdirectories.
@@ -11,6 +14,7 @@ modified: 2024/03/06
 tags:
     - attack.discovery
     - attack.t1217
+    - sysmon
 logsource:
     category: process_creation
     product: windows

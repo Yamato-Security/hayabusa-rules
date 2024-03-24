@@ -1,5 +1,8 @@
 title: HackTool - Hydra Password Bruteforce Execution
-id: aaafa146-074c-11eb-adc1-0242ac120002
+id: 77f6e2f1-7fec-6f30-aa0e-cec73ad32fc1
+related:
+    - id: aaafa146-074c-11eb-adc1-0242ac120002
+      type: derived
 status: test
 description: Detects command line parameters used by Hydra password guessing hack tool
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.credential_access
     - attack.t1110
     - attack.t1110.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

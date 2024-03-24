@@ -1,5 +1,8 @@
 title: Discovery of a System Time
-id: b243b280-65fe-48df-ba07-6ddea7646427
+id: 9d637e7d-578d-a370-8149-78de1277654c
+related:
+    - id: b243b280-65fe-48df-ba07-6ddea7646427
+      type: derived
 status: test
 description: Identifies use of various commands to query a systems time. This technique may be used before executing a scheduled task or to discover the time zone of a target system.
 references:
@@ -11,6 +14,7 @@ modified: 2022/06/28
 tags:
     - attack.discovery
     - attack.t1124
+    - sysmon
 logsource:
     category: process_creation
     product: windows

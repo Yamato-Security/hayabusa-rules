@@ -1,5 +1,8 @@
 title: Run PowerShell Script from ADS
-id: 45a594aa-1fbd-4972-a809-ff5a99dd81b8
+id: d6a5fc1c-e0e9-bcc2-daed-22823802b707
+related:
+    - id: 45a594aa-1fbd-4972-a809-ff5a99dd81b8
+      type: derived
 status: test
 description: Detects PowerShell script execution from Alternate Data Stream (ADS)
 references:
@@ -10,6 +13,7 @@ modified: 2022/07/14
 tags:
     - attack.defense_evasion
     - attack.t1564.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

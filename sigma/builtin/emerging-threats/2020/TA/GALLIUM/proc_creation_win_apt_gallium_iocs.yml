@@ -1,5 +1,8 @@
 title: GALLIUM IOCs
-id: 440a56bf-7873-4439-940a-1c8a671073c2
+id: 120cec36-8844-a53c-1c57-6209f893a037
+related:
+    - id: 440a56bf-7873-4439-940a-1c8a671073c2
+      type: derived
 status: test
 description: Detects artifacts associated with GALLIUM cyber espionage group as reported by Microsoft Threat Intelligence Center in the December 2019 report.
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1071
     - attack.g0093
     - detection.emerging_threats
+    - sysmon
 logsource:
     product: windows
     category: process_creation

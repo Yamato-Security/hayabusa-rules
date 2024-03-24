@@ -1,5 +1,8 @@
 title: UAC Bypass Using PkgMgr and DISM
-id: a743ceba-c771-4d75-97eb-8a90f7f4844c
+id: 08a52423-1768-5eb8-726f-bfae99db5f64
+related:
+    - id: a743ceba-c771-4d75-97eb-8a90f7f4844c
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass using pkgmgr.exe and dism.exe (UACMe 23)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

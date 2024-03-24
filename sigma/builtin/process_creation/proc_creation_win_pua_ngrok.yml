@@ -1,5 +1,8 @@
 title: PUA - Ngrok Execution
-id: ee37eb7c-a4e7-4cd5-8fa4-efa27f1c3f31
+id: d873d8e0-160c-2599-93cf-2700ca72b2d2
+related:
+    - id: ee37eb7c-a4e7-4cd5-8fa4-efa27f1c3f31
+      type: derived
 status: test
 description: |
     Detects the use of Ngrok, a utility used for port forwarding and tunneling, often used by threat actors to make local protected services publicly available.
@@ -18,6 +21,7 @@ modified: 2023/02/21
 tags:
     - attack.command_and_control
     - attack.t1572
+    - sysmon
 logsource:
     category: process_creation
     product: windows

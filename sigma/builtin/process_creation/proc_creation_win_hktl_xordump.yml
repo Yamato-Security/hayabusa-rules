@@ -1,5 +1,8 @@
 title: HackTool - XORDump Execution
-id: 66e563f9-1cbd-4a22-a957-d8b7c0f44372
+id: e11f3d67-9772-748c-2a6a-e825964efe89
+related:
+    - id: 66e563f9-1cbd-4a22-a957-d8b7c0f44372
+      type: derived
 status: test
 description: Detects suspicious use of XORDump process memory dumping utility
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1036
     - attack.t1003.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

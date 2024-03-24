@@ -1,5 +1,8 @@
 title: Stop Windows Service
-id: eb87818d-db5d-49cc-a987-d5da331fbd90
+id: 5e1aa8a2-0c7e-a580-4093-894302350358
+related:
+    - id: eb87818d-db5d-49cc-a987-d5da331fbd90
+      type: derived
 status: deprecated
 description: Detects a Windows service to be stopped
 author: Jakob Weinzettl, oscd.community, Nasreddine Bencherchali
@@ -8,6 +11,7 @@ modified: 2023/03/05
 tags:
     - attack.impact
     - attack.t1489
+    - sysmon
 logsource:
     category: process_creation
     product: windows

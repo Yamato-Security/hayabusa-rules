@@ -1,5 +1,8 @@
 title: Disable Windows Firewall by Registry
-id: e78c408a-e2ea-43cd-b5ea-51975cf358c0
+id: d84ec9a7-296b-e4d1-d97c-daa11eee226b
+related:
+    - id: e78c408a-e2ea-43cd-b5ea-51975cf358c0
+      type: derived
 status: experimental
 description: Detect set EnableFirewall to 0 to disable the Windows firewall
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.004
+    - sysmon
 logsource:
     category: registry_set
     product: windows

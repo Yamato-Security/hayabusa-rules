@@ -1,5 +1,8 @@
 title: Old TLS1.0/TLS1.1 Protocol Version Enabled
-id: 439957a7-ad86-4a8f-9705-a28131c6821b
+id: f1d2e557-5935-d1b7-cc8a-48563f722f9c
+related:
+    - id: 439957a7-ad86-4a8f-9705-a28131c6821b
+      type: derived
 status: experimental
 description: Detects applications or users re-enabling old TLS versions by setting the "Enabled" value to "1" for the "Protocols" registry key.
 references:
@@ -8,6 +11,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/09/05
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: registry_set
     product: windows

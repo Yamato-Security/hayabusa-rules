@@ -1,5 +1,8 @@
 title: Forfiles.EXE Child Process Masquerading
-id: f53714ec-5077-420e-ad20-907ff9bb2958
+id: 2c07a97e-11a9-6cbd-1515-d9d875444222
+related:
+    - id: f53714ec-5077-420e-ad20-907ff9bb2958
+      type: derived
 status: experimental
 description: |
     Detects the execution of "forfiles" from a non-default location, in order to potentially spawn a custom "cmd.exe" from the current working directory.
@@ -10,6 +13,7 @@ date: 2024/01/05
 tags:
     - attack.defense_evasion
     - attack.t1036
+    - sysmon
 logsource:
     category: process_creation
     product: windows

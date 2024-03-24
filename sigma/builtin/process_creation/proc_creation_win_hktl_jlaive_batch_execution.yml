@@ -1,5 +1,8 @@
 title: HackTool - Jlaive In-Memory Assembly Execution
-id: 0a99eb3e-1617-41bd-b095-13dc767f3def
+id: 39720fd3-7163-2a97-3e2d-287a6b761820
+related:
+    - id: 0a99eb3e-1617-41bd-b095-13dc767f3def
+      type: derived
 status: test
 description: Detects the use of Jlaive to execute assemblies in a copied PowerShell
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/22
 tags:
     - attack.execution
     - attack.t1059.003
+    - sysmon
 logsource:
     product: windows
     category: process_creation

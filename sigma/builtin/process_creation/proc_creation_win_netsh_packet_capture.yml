@@ -1,5 +1,8 @@
 title: New Network Trace Capture Started Via Netsh.EXE
-id: d3c3861d-c504-4c77-ba55-224ba82d0118
+id: 8750a67b-7c72-11af-21f3-3e37ed642ab4
+related:
+    - id: d3c3861d-c504-4c77-ba55-224ba82d0118
+      type: derived
 status: test
 description: Detects the execution of netsh with the "trace" flag in order to start a network capture
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.discovery
     - attack.credential_access
     - attack.t1040
+    - sysmon
 logsource:
     category: process_creation
     product: windows

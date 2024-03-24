@@ -1,5 +1,8 @@
 title: PUA - Advanced Port Scanner Execution
-id: 54773c5f-f1cc-4703-9126-2f797d96a69d
+id: 3ea85a25-dba7-a10e-8a48-9aa4dc65abb9
+related:
+    - id: 54773c5f-f1cc-4703-9126-2f797d96a69d
+      type: derived
 status: test
 description: Detects the use of Advanced Port Scanner.
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.discovery
     - attack.t1046
     - attack.t1135
+    - sysmon
 logsource:
     category: process_creation
     product: windows
