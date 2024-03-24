@@ -1,5 +1,8 @@
 title: WMI Remote Command Execution
-id: e42af9df-d90b-4306-b7fb-05c863847ebd
+id: f58bcb01-a76b-cc94-f698-29be1afd376b
+related:
+    - id: e42af9df-d90b-4306-b7fb-05c863847ebd
+      type: derived
 status: deprecated
 description: An adversary might use WMI to execute commands on a remote system
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/14
 tags:
     - attack.execution
     - attack.t1047
+    - sysmon
 logsource:
     category: process_creation
     product: windows

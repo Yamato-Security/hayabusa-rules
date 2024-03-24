@@ -1,5 +1,8 @@
 title: Bypass UAC via CMSTP
-id: e66779cc-383e-4224-a3a4-267eeb585c40
+id: e6b6d67d-434b-039b-029d-55391089a033
+related:
+    - id: e66779cc-383e-4224-a3a4-267eeb585c40
+      type: derived
 status: test
 description: Detect commandline usage of Microsoft Connection Manager Profile Installer (cmstp.exe) to install specially formatted local .INF files
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.defense_evasion
     - attack.t1548.002
     - attack.t1218.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

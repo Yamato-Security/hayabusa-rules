@@ -1,5 +1,8 @@
 title: Potential Amazon SSM Agent Hijacking
-id: d20ee2f4-822c-4827-9e15-41500b1fff10
+id: 00ca290b-102c-83b3-ff90-2781c070cf8e
+related:
+    - id: d20ee2f4-822c-4827-9e15-41500b1fff10
+      type: derived
 status: experimental
 description: Detects potential Amazon SSM agent hijack attempts as outlined in the Mitiga research report.
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.command_and_control
     - attack.persistence
     - attack.t1219
+    - sysmon
 logsource:
     category: process_creation
     product: windows

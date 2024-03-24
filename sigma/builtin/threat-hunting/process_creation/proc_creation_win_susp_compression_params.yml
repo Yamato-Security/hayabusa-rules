@@ -1,5 +1,8 @@
 title: Potentially Suspicious Compression Tool Parameters
-id: 27a72a60-7e5e-47b1-9d17-909c9abafdcd
+id: 17ce724d-58b5-3ac7-6918-9e7c4483fe0b
+related:
+    - id: 27a72a60-7e5e-47b1-9d17-909c9abafdcd
+      type: derived
 status: test
 description: Detects potentially suspicious command line arguments of common data compression tools
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.collection
     - attack.t1560.001
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

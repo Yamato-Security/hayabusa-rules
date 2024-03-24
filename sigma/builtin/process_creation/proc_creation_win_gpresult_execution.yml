@@ -1,5 +1,8 @@
 title: Gpresult Display Group Policy Information
-id: e56d3073-83ff-4021-90fe-c658e0709e72
+id: 5c8771ec-db48-4d8e-8701-02680fde2531
+related:
+    - id: e56d3073-83ff-4021-90fe-c658e0709e72
+      type: derived
 status: test
 description: Detects cases in which a user uses the built-in Windows utility gpresult to display the Resultant Set of Policy (RSoP) information
 references:
@@ -12,6 +15,7 @@ date: 2022/05/01
 tags:
     - attack.discovery
     - attack.t1615
+    - sysmon
 logsource:
     product: windows
     category: process_creation

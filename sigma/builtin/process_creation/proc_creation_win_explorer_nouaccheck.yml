@@ -1,5 +1,8 @@
 title: Explorer NOUACCHECK Flag
-id: 534f2ef7-e8a2-4433-816d-c91bccde289b
+id: b408292c-4fa0-410a-a192-4228c81af02e
+related:
+    - id: 534f2ef7-e8a2-4433-816d-c91bccde289b
+      type: derived
 status: test
 description: Detects suspicious starts of explorer.exe that use the /NOUACCHECK flag that allows to run all sub processes of that newly started explorer.exe without any UAC checks
 references:
@@ -10,6 +13,7 @@ modified: 2022/04/21
 tags:
     - attack.defense_evasion
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

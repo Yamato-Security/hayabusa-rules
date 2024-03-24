@@ -1,5 +1,8 @@
 title: Console CodePage Lookup Via CHCP
-id: 7090adee-82e2-4269-bd59-80691e7c6338
+id: 4b0aa79e-235b-069f-608c-2b31582e2a04
+related:
+    - id: 7090adee-82e2-4269-bd59-80691e7c6338
+      type: derived
 status: experimental
 description: Detects use of chcp to look up the system locale value as part of host discovery
 references:
@@ -27,12 +30,12 @@ detection:
             - 'chcp '
             - 'chcp  '
         ParentCommandLine|contains:
-            - ' /k '
-            - ' /r '
-            - ' -k '
             - ' -c '
+            - ' -k '
             - ' -r '
             - ' /c '
+            - ' /k '
+            - ' /r '
     condition: process_creation and selection
 falsepositives:
     - During Anaconda update the 'conda.exe' process will eventually execution the 'chcp' command.

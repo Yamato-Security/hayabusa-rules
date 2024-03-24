@@ -1,5 +1,8 @@
 title: Run Whoami as SYSTEM
-id: 80167ada-7a12-41ed-b8e9-aa47195c66a1
+id: 9586750a-6351-1543-241d-6d76087e4b01
+related:
+    - id: 80167ada-7a12-41ed-b8e9-aa47195c66a1
+      type: derived
 status: deprecated
 description: Detects a whoami.exe executed by LOCAL SYSTEM. This may be a sign of a successful local privilege escalation.
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.privilege_escalation
     - attack.discovery
     - attack.t1033
+    - sysmon
 logsource:
     category: process_creation
     product: windows

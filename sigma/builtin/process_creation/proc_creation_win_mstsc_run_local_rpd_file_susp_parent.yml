@@ -1,5 +1,8 @@
 title: Mstsc.EXE Execution From Uncommon Parent
-id: ff3b6b39-e765-42f9-bb2c-ea6761e0e0f6
+id: fdd2fe27-5f29-7b4f-0381-22bac2ea7c0a
+related:
+    - id: ff3b6b39-e765-42f9-bb2c-ea6761e0e0f6
+      type: derived
 status: test
 description: Detects potential RDP connection via Mstsc using a local ".rdp" file located in suspicious locations.
 references:
@@ -10,6 +13,7 @@ date: 2023/04/18
 modified: 2023/04/18
 tags:
     - attack.lateral_movement
+    - sysmon
 logsource:
     category: process_creation
     product: windows

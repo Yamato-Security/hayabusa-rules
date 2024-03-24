@@ -1,8 +1,5 @@
 title: Scripting/CommandLine Process Spawned Regsvr32
-id: ab37a6ec-6068-432b-a64e-2c7bf95b1d22
-related:
-    - id: 8e2b24c9-4add-46a0-b4bb-0057b4e6187d
-      type: obsoletes
+id: f4ef60dd-b493-97a1-92db-e8a8146be6a4
 status: experimental
 description: Detects various command line and scripting engines/processes such as "PowerShell", "Wscript", "Cmd", etc. spawning a "regsvr32" instance.
 references:
@@ -13,6 +10,7 @@ date: 2023/05/26
 tags:
     - attack.defense_evasion
     - attack.t1218.010
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -37,5 +35,5 @@ detection:
 falsepositives:
     - Legitimate ".bat", ".hta", ".ps1" or ".vbs" scripts leverage legitimately often. Apply additional filter and exclusions as necessary
     - Some legitimate Windows services
-level: medium # Can be reduced to low if you experience a ton of FP
+level: medium
 ruletype: Sigma

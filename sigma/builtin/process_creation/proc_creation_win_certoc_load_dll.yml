@@ -1,8 +1,5 @@
 title: DLL Loaded via CertOC.EXE
-id: 242301bc-f92f-4476-8718-78004a6efd9f
-related:
-    - id: 84232095-ecca-4015-b0d7-7726507ee793
-      type: similar
+id: 471f9aca-34da-a143-18bc-d54d121778dd
 status: test
 description: Detects when a user installs certificates by using CertOC.exe to loads the target DLL file.
 references:
@@ -15,6 +12,7 @@ modified: 2024/03/05
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

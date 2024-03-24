@@ -1,5 +1,8 @@
 title: Regsvr32 DLL Execution With Uncommon Extension
-id: 50919691-7302-437f-8e10-1fe088afa145
+id: 0931c657-0f5b-cc80-ce24-bb4f81b15b02
+related:
+    - id: 50919691-7302-437f-8e10-1fe088afa145
+      type: derived
 status: test
 description: Detects a "regsvr32" execution where the DLL doesn't contain a common file extension.
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1574
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

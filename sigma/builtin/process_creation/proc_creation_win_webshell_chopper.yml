@@ -1,5 +1,8 @@
 title: Chopper Webshell Process Pattern
-id: fa3c117a-bc0d-416e-a31b-0c0e80653efb
+id: b5028244-965b-dd46-d698-f480c7c963e5
+related:
+    - id: fa3c117a-bc0d-416e-a31b-0c0e80653efb
+      type: derived
 status: test
 description: Detects patterns found in process executions cause by China Chopper like tiny (ASPX) webshells
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1018
     - attack.t1033
     - attack.t1087
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Always Install Elevated Windows Installer
-id: cd951fdc-4b2f-47f5-ba99-a33bf61e3770
+id: f4e44868-e934-1170-ff1e-dc154741e18b
+related:
+    - id: cd951fdc-4b2f-47f5-ba99-a33bf61e3770
+      type: derived
 status: test
 description: Detects Windows Installer service (msiexec.exe) trying to install MSI packages with SYSTEM privilege
 references:
@@ -10,6 +13,7 @@ modified: 2023/03/23
 tags:
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     product: windows
     category: process_creation

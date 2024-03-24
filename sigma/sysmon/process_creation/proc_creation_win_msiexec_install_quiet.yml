@@ -1,5 +1,8 @@
 title: Msiexec Quiet Installation
-id: 79a87aa6-e4bd-42fc-a5bb-5e6fbdcd62f5
+id: fc35d332-34f6-c515-293e-6c2b7eb68a1f
+related:
+    - id: 79a87aa6-e4bd-42fc-a5bb-5e6fbdcd62f5
+      type: derived
 status: test
 description: |
     Adversaries may abuse msiexec.exe to proxy execution of malicious payloads.
@@ -29,14 +32,14 @@ detection:
         # Note that there is no space before and after the arguments because it's possible to write a commandline as such
         # Example: msiexec -q/i [MSI Package]
         CommandLine|contains:
+            - -a
             - -i
+            - -j
             - -package
-            - /i
             - /a
+            - /i
             - /j
             - /package
-            - -a
-            - -j
     selection_quiet:
         CommandLine|contains:
             - -q

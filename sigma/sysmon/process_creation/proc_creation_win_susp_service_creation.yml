@@ -1,7 +1,9 @@
 title: Suspicious New Service Creation
-id: 17a1be64-8d88-40bf-b5ff-a4f7a50ebcc8
+id: 0ce9dce4-f00a-84e1-4367-5b0c3e9d1446
 related:
     - id: 7fe71fc9-de3b-432a-8d57-8c809efc10ab
+      type: derived
+    - id: 17a1be64-8d88-40bf-b5ff-a4f7a50ebcc8
       type: derived
 status: test
 description: Detects creation of a new service via "sc" command or the powershell "new-service" cmdlet with suspicious binary paths

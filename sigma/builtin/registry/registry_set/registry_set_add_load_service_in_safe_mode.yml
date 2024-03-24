@@ -1,5 +1,8 @@
 title: Registry Persistence via Service in Safe Mode
-id: 1547e27c-3974-43e2-a7d7-7f484fb928ec
+id: 4e584b07-47af-0e21-5779-6585650ca16e
+related:
+    - id: 1547e27c-3974-43e2-a7d7-7f484fb928ec
+      type: derived
 status: experimental
 description: Detects the modification of the registry to allow a driver or service to persist in Safe Mode.
 references:
@@ -11,6 +14,7 @@ modified: 2023/10/27
 tags:
     - attack.defense_evasion
     - attack.t1564.001
+    - sysmon
 logsource:
     category: registry_set
     product: windows

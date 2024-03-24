@@ -1,5 +1,8 @@
 title: MERCURY APT Activity
-id: a62298a3-1fe0-422f-9a68-ffbcbc5a123d
+id: 48adf0e2-62e3-9147-1be4-087852d3a4a5
+related:
+    - id: a62298a3-1fe0-422f-9a68-ffbcbc5a123d
+      type: derived
 status: test
 description: Detects suspicious command line patterns seen being used by MERCURY APT
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1059.001
     - attack.g0069
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

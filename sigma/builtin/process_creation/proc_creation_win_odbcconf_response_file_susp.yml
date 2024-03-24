@@ -1,10 +1,5 @@
 title: Suspicious Response File Execution Via Odbcconf.EXE
-id: 2d32dd6f-3196-4093-b9eb-1ad8ab088ca5
-related:
-    - id: 5f03babb-12db-4eec-8c82-7b4cb5580868
-      type: derived
-    - id: 65d2be45-8600-4042-b4c0-577a1ff8a60e
-      type: obsoletes
+id: bf24bd95-9545-2701-9d44-5f8a6769a3bb
 status: experimental
 description: Detects execution of "odbcconf" with the "-f" flag in order to load a response file with a non-".rsp" extension.
 references:
@@ -17,6 +12,7 @@ modified: 2024/03/13
 tags:
     - attack.defense_evasion
     - attack.t1218.008
+    - sysmon
 logsource:
     category: process_creation
     product: windows

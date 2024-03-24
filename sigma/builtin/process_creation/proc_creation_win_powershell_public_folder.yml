@@ -1,5 +1,8 @@
 title: Execution of Powershell Script in Public Folder
-id: fb9d3ff7-7348-46ab-af8c-b55f5fbf39b4
+id: cc44ef1f-3f00-4bc6-c537-2858c567e845
+related:
+    - id: fb9d3ff7-7348-46ab-af8c-b55f5fbf39b4
+      type: derived
 status: test
 description: This rule detects execution of PowerShell scripts located in the "C:\Users\Public" folder
 references:
@@ -10,6 +13,7 @@ modified: 2022/07/14
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

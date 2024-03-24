@@ -1,5 +1,8 @@
 title: Java Running with Remote Debugging
-id: 8f88e3f6-2a49-48f5-a5c4-2f7eedf78710
+id: e78082d8-696f-c684-d72a-e1b29ffbcc74
+related:
+    - id: 8f88e3f6-2a49-48f5-a5c4-2f7eedf78710
+      type: derived
 status: test
 description: Detects a JAVA process running with remote debugging allowing more than just localhost to connect
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/01
 tags:
     - attack.t1203
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,7 +1,9 @@
 title: Invoke-Obfuscation VAR+ Launcher
-id: 3e27b010-2cf2-4577-8ef0-3ea44aaea0dc
+id: 6e3b5c4d-639e-74b9-9031-753e1d61e641
 related:
     - id: 8ca7004b-e620-4ecb-870e-86129b5b8e75
+      type: derived
+    - id: 3e27b010-2cf2-4577-8ef0-3ea44aaea0dc
       type: derived
 description: Detects Obfuscated use of Environment Variables to execute PowerShell
 status: unsupported
@@ -29,5 +31,4 @@ detection:
 falsepositives:
     - Unknown
 level: high
-
 ruletype: Sigma

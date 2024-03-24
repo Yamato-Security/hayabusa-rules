@@ -1,5 +1,8 @@
 title: HackTool - Empire PowerShell Launch Parameters
-id: 79f4ede3-402e-41c8-bc3e-ebbf5f162581
+id: 5f6038bc-96f3-de3a-2b59-fb22aefe871a
+related:
+    - id: 79f4ede3-402e-41c8-bc3e-ebbf5f162581
+      type: derived
 status: test
 description: Detects suspicious powershell command line parameters used in Empire
 references:
@@ -13,6 +16,7 @@ modified: 2023/02/21
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

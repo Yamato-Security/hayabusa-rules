@@ -1,5 +1,8 @@
 title: Invoke-Obfuscation VAR++ LAUNCHER OBFUSCATION
-id: e9f55347-2928-4c06-88e5-1a7f8169942e
+id: b7f2ba3f-b64d-9b62-1e90-ebefd17f3b94
+related:
+    - id: e9f55347-2928-4c06-88e5-1a7f8169942e
+      type: derived
 status: test
 description: Detects Obfuscated Powershell via VAR++ LAUNCHER
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

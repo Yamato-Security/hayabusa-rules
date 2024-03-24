@@ -1,5 +1,8 @@
 title: Hiding Files with Attrib.exe
-id: 4281cb20-2994-4580-aa63-c8b86d019934
+id: 3fc98f17-3322-83c7-6332-d7813d88d4f1
+related:
+    - id: 4281cb20-2994-4580-aa63-c8b86d019934
+      type: derived
 status: test
 description: Detects usage of attrib.exe to hide files from users.
 references:
@@ -11,6 +14,7 @@ modified: 2023/03/14
 tags:
     - attack.defense_evasion
     - attack.t1564.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

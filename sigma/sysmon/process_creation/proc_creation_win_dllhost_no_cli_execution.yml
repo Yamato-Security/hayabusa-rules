@@ -1,5 +1,8 @@
 title: Dllhost.EXE Execution Anomaly
-id: e7888eb1-13b0-4616-bd99-4bc0c2b054b9
+id: 70300074-0781-e5a7-a0c7-6cb2229e02c3
+related:
+    - id: e7888eb1-13b0-4616-bd99-4bc0c2b054b9
+      type: derived
 status: experimental
 description: Detects a "dllhost" process spawning with no commandline arguments which is very rare to happen and could indicate process injection activity or malware mimicking similar system processes.
 references:

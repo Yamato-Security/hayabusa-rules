@@ -1,5 +1,8 @@
 title: Disable Security Events Logging Adding Reg Key MiniNt
-id: 919f2ef0-be2d-4a7a-b635-eb2b41fde044
+id: 36ef53bd-ce38-b8b6-b163-c7ff42107ecb
+related:
+    - id: 919f2ef0-be2d-4a7a-b635-eb2b41fde044
+      type: derived
 status: test
 description: Detects the addition of a key 'MiniNt' to the registry. Upon a reboot, Windows Event Log service will stopped write events.
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1562.001
     - attack.t1112
+    - sysmon
 logsource:
     category: registry_event
     product: windows

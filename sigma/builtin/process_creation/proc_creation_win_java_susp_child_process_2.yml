@@ -1,8 +1,5 @@
 title: Shell Process Spawned by Java.EXE
-id: dff1e1cc-d3fd-47c8-bfc2-aeb878a754c0
-related:
-    - id: 0d34ed8b-1c12-4ff2-828c-16fc860b766d
-      type: similar
+id: 15e3c45c-06b7-5da5-4bc0-66cf00fcc185
 status: test
 description: Detects shell spawned from Java host process, which could be a sign of exploitation (e.g. log4j exploitation)
 references:
@@ -14,6 +11,7 @@ tags:
     - attack.initial_access
     - attack.persistence
     - attack.privilege_escalation
+    - sysmon
 logsource:
     category: process_creation
     product: windows

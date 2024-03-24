@@ -1,5 +1,8 @@
 title: Possible Applocker Bypass
-id: 82a19e3a-2bfe-4a91-8c0d-5d4c98fbb719
+id: 6e17c2a5-a828-97d2-c2f4-223c82264f3c
+related:
+    - id: 82a19e3a-2bfe-4a91-8c0d-5d4c98fbb719
+      type: derived
 status: deprecated
 description: Detects execution of executables that can be used to bypass Applocker whitelisting
 references:
@@ -16,6 +19,7 @@ tags:
     - attack.t1127.001
     - attack.t1218.005
     - attack.t1218   # no way to map 1:1, so the technique level is required
+    - sysmon
 logsource:
     category: process_creation
     product: windows

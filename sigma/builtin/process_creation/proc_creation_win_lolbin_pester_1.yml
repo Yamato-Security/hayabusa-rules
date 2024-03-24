@@ -1,5 +1,8 @@
 title: Execute Code with Pester.bat
-id: 59e938ff-0d6d-4dc3-b13f-36cc28734d4e
+id: f9558484-5f9f-17f3-06a0-774afccc35e1
+related:
+    - id: 59e938ff-0d6d-4dc3-b13f-36cc28734d4e
+      type: derived
 status: test
 description: Detects code execution via Pester.bat (Pester - Powershell Modulte for testing)
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1059.001
     - attack.defense_evasion
     - attack.t1216
+    - sysmon
 logsource:
     category: process_creation
     product: windows

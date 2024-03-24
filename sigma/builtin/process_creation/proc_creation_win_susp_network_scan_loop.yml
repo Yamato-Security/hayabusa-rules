@@ -1,5 +1,8 @@
 title: Suspicious Scan Loop Network
-id: f8ad2e2c-40b6-4117-84d7-20b89896ab23
+id: 0d996232-49fa-9bae-0ee6-ad86ec993064
+related:
+    - id: f8ad2e2c-40b6-4117-84d7-20b89896ab23
+      type: derived
 status: test
 description: Adversaries may attempt to get a listing of other systems by IP address, hostname, or other logical identifier on a network that may be used for Lateral Movement from the current system
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1059
     - attack.discovery
     - attack.t1018
+    - sysmon
 logsource:
     category: process_creation
     product: windows

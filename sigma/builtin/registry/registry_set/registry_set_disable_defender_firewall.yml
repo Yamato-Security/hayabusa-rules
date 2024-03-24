@@ -1,5 +1,8 @@
 title: Disable Microsoft Defender Firewall via Registry
-id: 974515da-6cc5-4c95-ae65-f97f9150ec7f
+id: 0b5acb16-e364-ec25-c330-4c4868819d39
+related:
+    - id: 974515da-6cc5-4c95-ae65-f97f9150ec7f
+      type: derived
 status: test
 description: Adversaries may disable or modify system firewalls in order to bypass controls limiting network usage
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.004
+    - sysmon
 logsource:
     category: registry_set
     product: windows

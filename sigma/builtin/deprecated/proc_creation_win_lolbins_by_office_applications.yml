@@ -1,5 +1,8 @@
 title: New Lolbin Process by Office Applications
-id: 23daeb52-e6eb-493c-8607-c4f0246cb7d8
+id: 0fce2028-5a0d-536d-eafa-a00a85f184be
+related:
+    - id: 23daeb52-e6eb-493c-8607-c4f0246cb7d8
+      type: derived
 status: deprecated
 description: This rule will monitor any office apps that spins up a new LOLBin process. This activity is pretty suspicious and should be investigated.
 references:
@@ -18,11 +21,11 @@ tags:
     - attack.t1218.010
     - attack.execution
     - attack.defense_evasion
+    - sysmon
 logsource:
     product: windows
     category: process_creation
 detection:
-    #useful_information: add more LOLBins to the rules logic of your choice.
     process_creation:
         EventID: 4688
         Channel: Security

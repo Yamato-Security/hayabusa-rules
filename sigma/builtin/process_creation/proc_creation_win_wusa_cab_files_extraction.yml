@@ -1,5 +1,8 @@
 title: Wusa Extracting Cab Files
-id: 59b39960-5f9d-4a49-9cef-1e4d2c1d0cb9
+id: 8a9c93e5-e67a-2190-d912-b0f9a3711b17
+related:
+    - id: 59b39960-5f9d-4a49-9cef-1e4d2c1d0cb9
+      type: derived
 status: test
 description: Detects usage of the "wusa.exe" (Windows Update Standalone Installer) utility to extract cab using the "/extract" argument which is not longer supported. This could indicate an attacker using an old technique
 references:
@@ -8,6 +11,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/08/04
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

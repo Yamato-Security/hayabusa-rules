@@ -1,5 +1,8 @@
 title: UAC Bypass Using MSConfig Token Modification - Process
-id: ad92e3f9-7eb6-460e-96b1-582b0ccbb980
+id: 47705ba8-0a49-a7e0-328a-4001dcc919a4
+related:
+    - id: ad92e3f9-7eb6-460e-96b1-582b0ccbb980
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass using a msconfig GUI hack (UACMe 55)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

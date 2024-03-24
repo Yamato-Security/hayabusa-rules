@@ -1,5 +1,8 @@
 title: LSASS Access From Potentially White-Listed Processes
-id: 4be8b654-0c01-4c9d-a10c-6b28467fc651
+id: 15f4cf85-bf21-fc2e-1892-1318353ab8fb
+related:
+    - id: 4be8b654-0c01-4c9d-a10c-6b28467fc651
+      type: derived
 status: test
 description: |
     Detects a possible process memory dump that uses a white-listed filename like TrolleyExpress.exe as a way to dump the LSASS process memory without Microsoft Defender interference

@@ -1,8 +1,5 @@
 title: Renamed PAExec Execution
-id: c4e49831-1496-40cf-8ce1-b53f942b02f9
-related:
-    - id: 7b0666ad-3e38-4e3d-9bab-78b06de85f7b
-      type: obsoletes
+id: a9910308-e7f1-40cf-2e3b-07571ce4a0be
 status: test
 description: Detects execution of renamed version of PAExec. Often used by attackers
 references:
@@ -14,6 +11,7 @@ modified: 2023/02/14
 tags:
     - attack.defense_evasion
     - attack.t1202
+    - sysmon
 logsource:
     category: process_creation
     product: windows

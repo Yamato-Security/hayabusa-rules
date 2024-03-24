@@ -1,5 +1,8 @@
 title: Permission Misconfiguration Reconnaissance Via Findstr.EXE
-id: 47e4bab7-c626-47dc-967b-255608c9a920
+id: 6cf859b8-6805-3164-4f58-acb0feb11cbf
+related:
+    - id: 47e4bab7-c626-47dc-967b-255608c9a920
+      type: derived
 status: experimental
 description: Detects usage of findstr with the "EVERYONE" or "BUILTIN" keywords. This is seen being used in combination with "icacls" to look for misconfigured files or folders permissions
 references:
@@ -10,6 +13,7 @@ modified: 2023/11/11
 tags:
     - attack.credential_access
     - attack.t1552.006
+    - sysmon
 logsource:
     category: process_creation
     product: windows

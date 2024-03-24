@@ -1,5 +1,8 @@
 title: Arbitrary File Download Via GfxDownloadWrapper.EXE
-id: eee00933-a761-4cd0-be70-c42fe91731e7
+id: 84707330-6ce4-b159-4432-712646f49a7b
+related:
+    - id: eee00933-a761-4cd0-be70-c42fe91731e7
+      type: derived
 status: test
 description: Detects execution of GfxDownloadWrapper.exe with a URL as an argument to download file.
 references:
@@ -10,6 +13,7 @@ modified: 2023/10/18
 tags:
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

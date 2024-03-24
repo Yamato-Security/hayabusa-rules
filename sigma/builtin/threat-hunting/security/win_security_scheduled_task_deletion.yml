@@ -1,5 +1,8 @@
 title: Scheduled Task Deletion
-id: 4f86b304-3e02-40e3-aa5d-e88a167c9617
+id: 68d6fb03-e325-2ed1-a429-abac7adf7ba3
+related:
+    - id: 4f86b304-3e02-40e3-aa5d-e88a167c9617
+      type: derived
 status: test
 description: Detects scheduled task deletion events. Scheduled tasks are likely to be deleted if not used for persistence. Malicious Software often creates tasks directly under the root node e.g. \TASKNAME
 references:

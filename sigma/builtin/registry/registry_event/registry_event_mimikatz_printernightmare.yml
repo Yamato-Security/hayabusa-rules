@@ -1,5 +1,8 @@
 title: PrinterNightmare Mimikatz Driver Name
-id: ba6b9e43-1d45-4d3c-a504-1043a64c8469
+id: 33feb9a9-afd4-3403-46c9-13a7b4a62b80
+related:
+    - id: ba6b9e43-1d45-4d3c-a504-1043a64c8469
+      type: derived
 status: test
 description: Detects static QMS 810 and mimikatz driver name used by Mimikatz as exploited in CVE-2021-1675 and CVE-2021-34527
 references:
@@ -16,6 +19,7 @@ tags:
     - attack.t1204
     - cve.2021.1675
     - cve.2021.34527
+    - sysmon
 logsource:
     product: windows
     category: registry_event

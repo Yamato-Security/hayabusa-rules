@@ -1,8 +1,5 @@
 title: CMD Shell Output Redirect
-id: 4f4eaa9f-5ad4-410c-a4be-bc6132b0175a
-related:
-    - id: 8e0bb260-d4b2-4fff-bb8d-3f82118e6892
-      type: similar
+id: 168763f9-a5fa-29af-e778-ed5054fe3044
 status: test
 description: Detects the use of the redirection character ">" to redicrect information in commandline
 references:
@@ -13,6 +10,7 @@ modified: 2023/03/07
 tags:
     - attack.discovery
     - attack.t1082
+    - sysmon
 logsource:
     category: process_creation
     product: windows

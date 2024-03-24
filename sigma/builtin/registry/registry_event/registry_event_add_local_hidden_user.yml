@@ -1,5 +1,8 @@
 title: Creation of a Local Hidden User Account by Registry
-id: 460479f3-80b7-42da-9c43-2cc1d54dbccd
+id: 447c311d-5d73-52c3-d10c-a1205258cf04
+related:
+    - id: 460479f3-80b7-42da-9c43-2cc1d54dbccd
+      type: derived
 status: test
 description: Sysmon registry detection of a local hidden user account.
 references:
@@ -10,6 +13,7 @@ modified: 2022/08/05
 tags:
     - attack.persistence
     - attack.t1136.001
+    - sysmon
 logsource:
     product: windows
     category: registry_event

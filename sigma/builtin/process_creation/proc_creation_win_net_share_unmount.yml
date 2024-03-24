@@ -1,5 +1,8 @@
 title: Unmount Share Via Net.EXE
-id: cb7c4a03-2871-43c0-9bbb-18bbdb079896
+id: 65bb4129-82c6-f4f5-d2e1-7089e8799d2e
+related:
+    - id: cb7c4a03-2871-43c0-9bbb-18bbdb079896
+      type: derived
 status: test
 description: Detects when when a mounted share is removed. Adversaries may remove share connections that are no longer useful in order to clean up traces of their operation
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/21
 tags:
     - attack.defense_evasion
     - attack.t1070.005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

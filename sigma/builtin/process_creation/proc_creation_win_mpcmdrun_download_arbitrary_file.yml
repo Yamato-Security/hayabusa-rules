@@ -1,5 +1,8 @@
 title: File Download Via Windows Defender MpCmpRun.EXE
-id: 46123129-1024-423e-9fae-43af4a0fa9a5
+id: b331fafb-1ddd-52ca-9bc6-1ef1b08828b0
+related:
+    - id: 46123129-1024-423e-9fae-43af4a0fa9a5
+      type: derived
 status: test
 description: Detects the use of Windows Defender MpCmdRun.EXE to download files
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1218
     - attack.command_and_control
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows

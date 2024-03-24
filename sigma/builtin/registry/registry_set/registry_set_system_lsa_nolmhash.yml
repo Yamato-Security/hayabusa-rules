@@ -1,8 +1,5 @@
 title: Enable LM Hash Storage
-id: c420410f-c2d8-4010-856b-dffe21866437
-related:
-    - id: 98dedfdd-8333-49d4-9f23-d7018cccae53 # process_creation
-      type: similar
+id: 3649e76a-4f74-b4bf-7b6e-511fc789a746
 status: experimental
 description: |
     Detects changes to the "NoLMHash" registry value in order to allow Windows to store LM Hashes.
@@ -16,6 +13,7 @@ date: 2023/12/15
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: registry_set

@@ -1,8 +1,5 @@
 title: HackTool - SharpChisel Execution
-id: cf93e05e-d798-4d9e-b522-b0248dc61eaf
-related:
-    - id: 8b0e12da-d3c3-49db-bb4f-256703f380e5
-      type: similar
+id: b580d34f-60c7-757b-d2d5-f622237ad56f
 status: test
 description: Detects usage of the Sharp Chisel via the commandline arguments
 references:
@@ -14,6 +11,7 @@ modified: 2023/02/13
 tags:
     - attack.command_and_control
     - attack.t1090.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

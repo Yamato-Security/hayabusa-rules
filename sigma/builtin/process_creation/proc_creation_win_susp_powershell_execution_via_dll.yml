@@ -1,5 +1,8 @@
 title: Potential PowerShell Execution Via DLL
-id: 6812a10b-60ea-420c-832f-dfcc33b646ba
+id: 52aeb4d7-4368-4da4-c717-f3b016a01d64
+related:
+    - id: 6812a10b-60ea-420c-832f-dfcc33b646ba
+      type: derived
 status: test
 description: |
     Detects potential PowerShell execution from a DLL instead of the usual PowerShell process as seen used in PowerShdll.
@@ -12,6 +15,7 @@ modified: 2024/03/07
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

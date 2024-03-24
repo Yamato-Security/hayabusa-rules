@@ -1,5 +1,8 @@
 title: Rundll32 Registered COM Objects
-id: f1edd233-30b5-4823-9e6a-c4171b24d316
+id: a405c36d-82ac-5145-4a6a-8451f4ed7205
+related:
+    - id: f1edd233-30b5-4823-9e6a-c4171b24d316
+      type: derived
 status: test
 description: load malicious registered COM objects
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.privilege_escalation
     - attack.persistence
     - attack.t1546.015
+    - sysmon
 logsource:
     category: process_creation
     product: windows

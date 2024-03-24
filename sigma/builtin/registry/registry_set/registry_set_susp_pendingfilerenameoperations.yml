@@ -1,5 +1,8 @@
 title: Potential PendingFileRenameOperations Tamper
-id: 4eec988f-7bf0-49f1-8675-1e6a510b3a2a
+id: cddc552b-0261-3637-470e-9296ae9dd79f
+related:
+    - id: 4eec988f-7bf0-49f1-8675-1e6a510b3a2a
+      type: derived
 status: test
 description: Detect changes to the "PendingFileRenameOperations" registry key from uncommon or suspicious images lcoations to stage currently used files for rename after reboot.
 references:
@@ -13,6 +16,7 @@ date: 2023/01/27
 tags:
     - attack.defense_evasion
     - attack.t1036.003
+    - sysmon
 logsource:
     category: registry_set
     product: windows

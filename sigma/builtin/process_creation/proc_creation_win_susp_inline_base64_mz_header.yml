@@ -1,5 +1,8 @@
 title: Base64 MZ Header In CommandLine
-id: 22e58743-4ac8-4a9f-bf19-00a0428d8c5f
+id: 2c104dbe-603a-a438-f3a4-85ff1018ffc1
+related:
+    - id: 22e58743-4ac8-4a9f-bf19-00a0428d8c5f
+      type: derived
 status: test
 description: Detects encoded base64 MZ header in the commandline
 references:
@@ -8,6 +11,7 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/07/12
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

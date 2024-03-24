@@ -1,5 +1,8 @@
 title: Suspicious Add Scheduled Task From User AppData Temp
-id: 43f487f0-755f-4c2a-bce7-d6d2eec2fcf8
+id: cb56735d-37c1-c9ff-010a-4f31ee20e531
+related:
+    - id: 43f487f0-755f-4c2a-bce7-d6d2eec2fcf8
+      type: derived
 status: deprecated
 description: schtasks.exe create task from user AppData\Local\Temp
 references:
@@ -10,6 +13,7 @@ modified: 2023/03/14
 tags:
     - attack.execution
     - attack.t1053.005
+    - sysmon
 logsource:
     product: windows
     category: process_creation

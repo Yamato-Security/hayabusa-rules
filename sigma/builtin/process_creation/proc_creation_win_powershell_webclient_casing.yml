@@ -1,5 +1,8 @@
 title: Net WebClient Casing Anomalies
-id: c86133ad-4725-4bd0-8170-210788e0a7ba
+id: 7d6acc1b-aef6-8fb8-8b37-50e258273f6a
+related:
+    - id: c86133ad-4725-4bd0-8170-210788e0a7ba
+      type: derived
 status: test
 description: Detects PowerShell command line contents that include a suspicious abnormal casing in the Net.Webclient (e.g. nEt.WEbCliEnT) string as used in obfuscation techniques
 references:
@@ -10,6 +13,7 @@ modified: 2023/01/05
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

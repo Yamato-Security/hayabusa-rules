@@ -1,5 +1,8 @@
 title: Uncommon Child Process Spawned By Odbcconf.EXE
-id: 8e3c7994-131e-4ba5-b6ea-804d49113a26
+id: e05fd36e-2242-ac32-2c73-8e345a62cc85
+related:
+    - id: 8e3c7994-131e-4ba5-b6ea-804d49113a26
+      type: derived
 status: experimental
 description: Detects an uncommon child process of "odbcconf.exe" binary which normally shouldn't have any child processes.
 references:
@@ -11,6 +14,7 @@ date: 2023/05/22
 tags:
     - attack.defense_evasion
     - attack.t1218.008
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,8 +1,5 @@
 title: Imports Registry Key From an ADS
-id: 0b80ade5-6997-4b1d-99a1-71701778ea61
-related:
-    - id: 73bba97f-a82d-42ce-b315-9182e76c57b1
-      type: similar
+id: 430ca46d-025b-b3cc-6fac-e01c57fee153
 status: test
 description: Detects the import of a alternate datastream to the registry with regedit.exe.
 references:
@@ -14,6 +11,7 @@ modified: 2024/03/13
 tags:
     - attack.t1112
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -31,12 +29,12 @@ detection:
         CommandLine|re: :[^ \\]
     filter:
         CommandLine|contains:
-            - ' /e '
+            - ' -a '
+            - ' -c '
             - ' -e '
             - ' /a '
-            - ' -c '
             - ' /c '
-            - ' -a '
+            - ' /e '
     condition: process_creation and (all of selection_* and not filter)
 fields:
     - ParentProcessName

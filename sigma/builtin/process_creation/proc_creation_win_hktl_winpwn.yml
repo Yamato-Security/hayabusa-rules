@@ -1,8 +1,5 @@
 title: HackTool - WinPwn Execution
-id: d557dc06-62e8-4468-a8e8-7984124908ce
-related:
-    - id: 851fd622-b675-4d26-b803-14bc7baa517a
-      type: similar
+id: e644857f-3d08-b5e8-61be-9e01a3706716
 status: experimental
 description: |
     Detects commandline keywords indicative of potential usge of the tool WinPwn. A tool for Windows and Active Directory reconnaissance and exploitation.
@@ -28,6 +25,7 @@ tags:
     - attack.t1552.001
     - attack.t1555
     - attack.t1555.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

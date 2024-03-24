@@ -1,5 +1,8 @@
 title: Process Start From Suspicious Folder
-id: dca91cfd-d7ab-4c66-8da7-ee57d487b35b
+id: 24e2ce91-6438-41b5-d23e-48e775ae72bd
+related:
+    - id: dca91cfd-d7ab-4c66-8da7-ee57d487b35b
+      type: derived
 status: deprecated
 description: Detects process start from rare or uncommon folders like temporary folder or folders that usually don't contain executable files
 references:
@@ -10,6 +13,7 @@ modified: 2022/11/03
 tags:
     - attack.execution
     - attack.t1204
+    - sysmon
 logsource:
     category: process_creation
     product: windows

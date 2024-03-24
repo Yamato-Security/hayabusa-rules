@@ -1,5 +1,8 @@
 title: Regedit as Trusted Installer
-id: 883835a7-df45-43e4-bf1d-4268768afda4
+id: 897d8214-575a-533d-6b1e-a21219da4532
+related:
+    - id: 883835a7-df45-43e4-bf1d-4268768afda4
+      type: derived
 status: test
 description: Detects a regedit started with TrustedInstaller privileges or by ProcessHacker.exe
 references:
@@ -10,6 +13,7 @@ modified: 2022/10/09
 tags:
     - attack.privilege_escalation
     - attack.t1548
+    - sysmon
 logsource:
     category: process_creation
     product: windows

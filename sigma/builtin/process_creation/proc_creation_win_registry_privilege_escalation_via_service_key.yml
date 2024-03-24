@@ -1,5 +1,8 @@
 title: Potential Privilege Escalation via Service Permissions Weakness
-id: 0f9c21f1-6a73-4b0e-9809-cb562cb8d981
+id: c9ee66ac-639b-5403-8384-6c70ecdcddc1
+related:
+    - id: 0f9c21f1-6a73-4b0e-9809-cb562cb8d981
+      type: derived
 status: test
 description: Detect modification of services configuration (ImagePath, FailureCommand and ServiceDLL) in registry by processes with Medium integrity level
 references:
@@ -11,6 +14,7 @@ modified: 2023/01/30
 tags:
     - attack.privilege_escalation
     - attack.t1574.011
+    - sysmon
 logsource:
     product: windows
     category: process_creation

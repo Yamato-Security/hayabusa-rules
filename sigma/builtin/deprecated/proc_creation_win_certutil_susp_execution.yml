@@ -1,5 +1,8 @@
 title: Suspicious Certutil Command Usage
-id: e011a729-98a6-4139-b5c4-bf6f6dd8239a
+id: 540f0d7f-8d92-2c4b-ce07-2be23d582ede
+related:
+    - id: e011a729-98a6-4139-b5c4-bf6f6dd8239a
+      type: derived
 status: deprecated
 description: Detects a suspicious Microsoft certutil execution with sub commands like 'decode' sub command, which is sometimes used to decode malicious code
 references:
@@ -23,6 +26,7 @@ tags:
     - attack.g0049
     - attack.g0075
     - attack.g0096
+    - sysmon
 logsource:
     category: process_creation
     product: windows

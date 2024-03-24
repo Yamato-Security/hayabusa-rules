@@ -1,5 +1,8 @@
 title: Suspicious RunAs-Like Flag Combination
-id: 50d66fb0-03f8-4da0-8add-84e77d12a020
+id: 775ae677-184d-c90f-016f-f337fd79aa75
+related:
+    - id: 50d66fb0-03f8-4da0-8add-84e77d12a020
+      type: derived
 status: test
 description: Detects suspicious command line flags that let the user set a target user and command as e.g. seen in PsExec-like tools
 references:
@@ -8,6 +11,7 @@ author: Florian Roth (Nextron Systems)
 date: 2022/11/11
 tags:
     - attack.privilege_escalation
+    - sysmon
 logsource:
     category: process_creation
     product: windows

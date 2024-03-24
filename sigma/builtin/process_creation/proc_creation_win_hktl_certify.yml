@@ -1,5 +1,8 @@
 title: HackTool - Certify Execution
-id: 762f2482-ff21-4970-8939-0aa317a886bb
+id: ff27f8e8-0d0c-7ee1-fc19-a2d8cd69186a
+related:
+    - id: 762f2482-ff21-4970-8939-0aa317a886bb
+      type: derived
 status: test
 description: Detects Certify a tool for Active Directory certificate abuse based on PE metadata characteristics and common command line arguments.
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.discovery
     - attack.credential_access
     - attack.t1649
+    - sysmon
 logsource:
     category: process_creation
     product: windows

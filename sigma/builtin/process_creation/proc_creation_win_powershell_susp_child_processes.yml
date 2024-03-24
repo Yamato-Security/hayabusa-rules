@@ -1,5 +1,8 @@
 title: Potentially Suspicious PowerShell Child Processes
-id: e4b6d2a7-d8a4-4f19-acbd-943c16d90647
+id: 56ff2d1a-cadd-2622-f049-458f96d44a39
+related:
+    - id: e4b6d2a7-d8a4-4f19-acbd-943c16d90647
+      type: derived
 status: experimental
 description: Detects potentially suspicious child processes spawned by PowerShell
 references:
@@ -10,6 +13,7 @@ modified: 2023/05/30
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

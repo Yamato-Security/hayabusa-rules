@@ -1,5 +1,8 @@
 title: HackTool - CoercedPotato Execution
-id: e8d34729-86a4-4140-adfd-0a29c2106307
+id: 75a96fdd-ec6a-1351-5cf2-00b8606831fe
+related:
+    - id: e8d34729-86a4-4140-adfd-0a29c2106307
+      type: derived
 status: experimental
 description: Detects the use of CoercedPotato, a tool for privilege escalation
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1055
+    - sysmon
 logsource:
     category: process_creation
     product: windows

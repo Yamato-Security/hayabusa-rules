@@ -1,5 +1,8 @@
 title: Direct Autorun Keys Modification
-id: 24357373-078f-44ed-9ac4-6d334a668a11
+id: 9137ba87-68d5-272d-9ada-3803321cb4c4
+related:
+    - id: 24357373-078f-44ed-9ac4-6d334a668a11
+      type: derived
 status: test
 description: Detects direct modification of autostart extensibility point (ASEP) in registry using reg.exe.
 references:
@@ -10,6 +13,7 @@ modified: 2022/08/04
 tags:
     - attack.persistence
     - attack.t1547.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Potential ACTINIUM Persistence Activity
-id: e1118a8f-82f5-44b3-bb6b-8a284e5df602
+id: 08d5c383-090f-b317-6fdd-e815d17f2ab6
+related:
+    - id: e1118a8f-82f5-44b3-bb6b-8a284e5df602
+      type: derived
 status: test
 description: Detects specific process parameters as used by ACTINIUM scheduled task persistence creation.
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1053
     - attack.t1053.005
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

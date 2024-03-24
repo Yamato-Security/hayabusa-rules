@@ -1,5 +1,8 @@
 title: Potentially Suspicious ODBC Driver Registered
-id: e4d22291-f3d5-4b78-9a0c-a1fbaf32a6a4
+id: d61e6c48-1d69-1942-c9e5-4244f12fc88e
+related:
+    - id: e4d22291-f3d5-4b78-9a0c-a1fbaf32a6a4
+      type: derived
 status: experimental
 description: Detects the registration of a new ODBC driver where the driver is located in a potentially suspicious location
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1003
+    - sysmon
 logsource:
     category: registry_set
     product: windows

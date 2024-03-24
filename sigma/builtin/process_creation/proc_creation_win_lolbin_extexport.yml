@@ -1,5 +1,8 @@
 title: Suspicious Extexport Execution
-id: fb0b815b-f5f6-4f50-970f-ffe21f253f7a
+id: 27784707-1245-1352-019e-2ece1694aa9e
+related:
+    - id: fb0b815b-f5f6-4f50-970f-ffe21f253f7a
+      type: derived
 status: test
 description: Extexport.exe loads dll and is execute from other folder the original path
 references:
@@ -10,6 +13,7 @@ modified: 2022/05/16
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

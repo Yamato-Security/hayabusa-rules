@@ -1,5 +1,8 @@
 title: PUA - Potential PE Metadata Tamper Using Rcedit
-id: 0c92f2e6-f08f-4b73-9216-ecb0ca634689
+id: ae609e1c-eb91-f3a5-50b2-e6d70abc4c8b
+related:
+    - id: 0c92f2e6-f08f-4b73-9216-ecb0ca634689
+      type: derived
 status: test
 description: Detects the use of rcedit to potentially alter executable PE metadata properties, which could conceal efforts to rename system utilities for defense evasion.
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1036
     - attack.t1027.005
     - attack.t1027
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: MMC20 Lateral Movement
-id: f1f3bf22-deb2-418d-8cce-e1a45e46a5bd
+id: 57e2b3e2-fb28-0497-4729-aa536a2a5089
+related:
+    - id: f1f3bf22-deb2-418d-8cce-e1a45e46a5bd
+      type: derived
 status: test
 description: Detects MMC20.Application Lateral Movement; specifically looks for the spawning of the parent MMC.exe with a command line of "-Embedding" as a child of svchost.exe
 references:
@@ -11,6 +14,7 @@ modified: 2021/11/27
 tags:
     - attack.execution
     - attack.t1021.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

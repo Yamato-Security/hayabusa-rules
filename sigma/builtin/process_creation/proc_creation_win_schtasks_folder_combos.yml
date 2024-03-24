@@ -1,5 +1,8 @@
 title: Schtasks From Suspicious Folders
-id: 8a8379b8-780b-4dbf-b1e9-31c8d112fefb
+id: 3098e48f-fecd-881b-462e-38104798a111
+related:
+    - id: 8a8379b8-780b-4dbf-b1e9-31c8d112fefb
+      type: derived
 status: test
 description: Detects scheduled task creations that have suspicious action command and folder combinations
 references:
@@ -10,6 +13,7 @@ modified: 2022/11/18
 tags:
     - attack.execution
     - attack.t1053.005
+    - sysmon
 logsource:
     product: windows
     category: process_creation

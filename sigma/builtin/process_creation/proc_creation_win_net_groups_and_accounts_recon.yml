@@ -1,5 +1,8 @@
 title: Suspicious Group And Account Reconnaissance Activity Using Net.EXE
-id: d95de845-b83c-4a9a-8a6a-4fc802ebf6c0
+id: 233231d1-9636-f53b-5bc9-0b43d4d9a539
+related:
+    - id: d95de845-b83c-4a9a-8a6a-4fc802ebf6c0
+      type: derived
 status: test
 description: |
     Detects suspicious reconnaissance command line activity on Windows systems using Net.EXE
@@ -15,6 +18,7 @@ tags:
     - attack.discovery
     - attack.t1087.001
     - attack.t1087.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,8 +1,10 @@
 title: Insensitive Subfolder Search Via Findstr.EXE
-id: 04936b66-3915-43ad-a8e5-809eadfd1141
+id: 8a6a87c5-b34d-ecfb-6a0b-6244bf5a57d1
 related:
     - id: bf6c39fc-e203-45b9-9538-05397c1b4f3f
       type: obsoletes
+    - id: 04936b66-3915-43ad-a8e5-809eadfd1141
+      type: derived
 status: experimental
 description: |
     Detects execution of findstr with the "s" and "i" flags for a "subfolder" and "insensitive" search respectively. Attackers sometimes leverage this built-in utility to search the system for interesting files or filter through results of commands.

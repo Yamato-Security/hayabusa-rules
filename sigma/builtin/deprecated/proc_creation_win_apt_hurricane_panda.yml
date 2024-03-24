@@ -1,5 +1,8 @@
 title: Hurricane Panda Activity
-id: 0eb2107b-a596-422e-b123-b389d5594ed7
+id: 6c99d057-c73c-6771-1c7f-a352debc5b84
+related:
+    - id: 0eb2107b-a596-422e-b123-b389d5594ed7
+      type: derived
 status: deprecated
 description: Detects Hurricane Panda Activity
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.privilege_escalation
     - attack.g0009
     - attack.t1068
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: HackTool - RedMimicry Winnti Playbook Execution
-id: 95022b85-ff2a-49fa-939a-d7b8f56eeb9b
+id: a649199e-56ae-51bf-53e5-69e87b06e563
+related:
+    - id: 95022b85-ff2a-49fa-939a-d7b8f56eeb9b
+      type: derived
 status: test
 description: Detects actions caused by the RedMimicry Winnti playbook a automated breach emulations utility
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1106
     - attack.t1059.003
     - attack.t1218.011
+    - sysmon
 logsource:
     product: windows
     category: process_creation

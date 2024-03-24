@@ -1,5 +1,8 @@
 title: Renamed Office Binary Execution
-id: 0b0cd537-fc77-4e6e-a973-e53495c1083d
+id: dec77120-8770-3e22-b8d6-d109d5db9507
+related:
+    - id: 0b0cd537-fc77-4e6e-a973-e53495c1083d
+      type: derived
 status: test
 description: Detects the execution of a renamed office binary
 references:
@@ -9,6 +12,7 @@ date: 2022/12/20
 modified: 2023/11/13
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

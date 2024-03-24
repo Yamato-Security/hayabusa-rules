@@ -1,5 +1,8 @@
 title: Uncommon  Assistive Technology Applications Execution Via AtBroker.EXE
-id: f24bcaea-0cd1-11eb-adc1-0242ac120002
+id: d5a94ccf-58fd-7481-3683-e59fbf33e8c1
+related:
+    - id: f24bcaea-0cd1-11eb-adc1-0242ac120002
+      type: derived
 status: test
 description: Detects the start of a non built-in assistive technology applications via "Atbroker.EXE".
 references:
@@ -11,6 +14,7 @@ modified: 2024/03/06
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

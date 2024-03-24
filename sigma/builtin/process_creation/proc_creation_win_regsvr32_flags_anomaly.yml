@@ -1,5 +1,8 @@
 title: Potential Regsvr32 Commandline Flag Anomaly
-id: b236190c-1c61-41e9-84b3-3fe03f6d76b0
+id: 0b0db942-3c12-3469-b96f-420423d80dbb
+related:
+    - id: b236190c-1c61-41e9-84b3-3fe03f6d76b0
+      type: derived
 status: test
 description: Detects a potential command line flag anomaly related to "regsvr32" in which the "/i" flag is used without the "/n" which should be uncommon.
 references:
@@ -10,6 +13,7 @@ modified: 2024/03/13
 tags:
     - attack.defense_evasion
     - attack.t1218.010
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Windows Credential Manager Access via VaultCmd
-id: 58f50261-c53b-4c88-bd12-1d71f12eda4c
+id: af00bb3c-d23f-1210-525a-d8eaf94dd907
+related:
+    - id: 58f50261-c53b-4c88-bd12-1d71f12eda4c
+      type: derived
 status: test
 description: List credentials currently stored in Windows Credential Manager via the native Windows utility vaultcmd.exe
 references:
@@ -10,6 +13,7 @@ modified: 2022/05/13
 tags:
     - attack.credential_access
     - attack.t1555.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

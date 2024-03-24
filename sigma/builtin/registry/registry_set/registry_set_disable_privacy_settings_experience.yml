@@ -1,5 +1,8 @@
 title: Disable Privacy Settings Experience in Registry
-id: 0372e1f9-0fd2-40f7-be1b-a7b2b848fa7b
+id: 6728497e-f64d-54b9-cebf-4f2234da439a
+related:
+    - id: 0372e1f9-0fd2-40f7-be1b-a7b2b848fa7b
+      type: derived
 status: experimental
 description: Detects registry modifications that disable Privacy Settings Experience
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: registry_set
     product: windows

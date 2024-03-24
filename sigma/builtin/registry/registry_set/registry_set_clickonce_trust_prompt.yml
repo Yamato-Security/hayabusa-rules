@@ -1,5 +1,8 @@
 title: ClickOnce Trust Prompt Tampering
-id: ac9159cc-c364-4304-8f0a-d63fc1a0aabb
+id: 6dbd4cbc-13d1-1d53-1ce4-5ad27813a654
+related:
+    - id: ac9159cc-c364-4304-8f0a-d63fc1a0aabb
+      type: derived
 status: experimental
 description: Detects changes to the ClickOnce trust prompt registry key in order to enable an installation from different locations such as the Internet.
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     category: registry_set
     product: windows

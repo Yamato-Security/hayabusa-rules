@@ -1,5 +1,8 @@
 title: Suspicious Greedy Compression Using Rar.EXE
-id: afe52666-401e-4a02-b4ff-5d128990b8cb
+id: c69d626a-d3ae-8886-e19b-61a8ac00f96a
+related:
+    - id: afe52666-401e-4a02-b4ff-5d128990b8cb
+      type: derived
 status: experimental
 description: Detects RAR usage that creates an archive from a suspicious folder, either a system folder or one of the folders often used by attackers for staging purposes
 references:
@@ -15,7 +18,6 @@ logsource:
     product: windows
     category: process_creation
 detection:
-    # Example : rar.exe a -m5 -r -y -ta20210204000000 -hp1qazxcde32ws -v2560k Asia1Dpt-PC-c.rar c:\\*.doc c:\\*.docx c:\\*.xls c:\\*.xlsx c:\\*.pdf c:\\*.ppt c:\\*.pptx c:\\*.jpg c:\\*.txt >nul
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational

@@ -1,5 +1,8 @@
 title: Lazarus System Binary Masquerading
-id: 3f7f5b0b-5b16-476c-a85f-ab477f6dd24b
+id: c451e783-f3fc-738b-e5fb-e40879c5804a
+related:
+    - id: 3f7f5b0b-5b16-476c-a85f-ab477f6dd24b
+      type: derived
 status: test
 description: Detects binaries used by the Lazarus group which use system names but are executed and launched from non-default location
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.t1036.005
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

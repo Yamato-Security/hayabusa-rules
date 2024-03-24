@@ -1,8 +1,10 @@
 title: Potential Privilege Escalation To LOCAL SYSTEM
-id: 207b0396-3689-42d9-8399-4222658efc99
+id: 685f0be6-7bfb-0a89-52b3-c0e858bd9af3
 related:
     - id: 8834e2f7-6b4b-4f09-8906-d2276470ee23 # PsExec specific rule
       type: similar
+    - id: 207b0396-3689-42d9-8399-4222658efc99
+      type: derived
 status: test
 description: Detects unknown program using commandline flags usually used by tools such as PsExec and PAExec to start programs with SYSTEM Privileges
 references:
@@ -26,24 +28,24 @@ detection:
     selection:
         # Escalation to LOCAL_SYSTEM
         CommandLine|contains:
-            - ' -s pwsh'
-            - ' /i /s pwsh'
-            - ' /s /i powershell'
-            - ' /s pwsh'
-            - ' -s cmd'
-            - ' /s powershell'
-            - ' -s -i cmd'
-            - ' -i -s powershell'
             - ' -i -s cmd'
-            - ' -s powershell'
-            - ' /s /i pwsh'
-            - ' /i /s cmd'
+            - ' -i -s powershell'
             - ' -i -s pwsh'
-            - ' -s -i pwsh'
-            - ' /s /i cmd'
-            - ' /s cmd'
-            - ' /i /s powershell'
+            - ' -s -i cmd'
             - ' -s -i powershell'
+            - ' -s -i pwsh'
+            - ' -s cmd'
+            - ' -s powershell'
+            - ' -s pwsh'
+            - ' /i /s cmd'
+            - ' /i /s powershell'
+            - ' /i /s pwsh'
+            - ' /s /i cmd'
+            - ' /s /i powershell'
+            - ' /s /i pwsh'
+            - ' /s cmd'
+            - ' /s powershell'
+            - ' /s pwsh'
     filter_main_exclude_coverage:
         # This filter exclude strings covered by 8834e2f7-6b4b-4f09-8906-d2276470ee23
         CommandLine|contains:

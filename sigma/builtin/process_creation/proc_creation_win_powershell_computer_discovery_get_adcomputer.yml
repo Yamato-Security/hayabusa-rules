@@ -1,8 +1,5 @@
 title: Computer Discovery And Export Via Get-ADComputer Cmdlet
-id: 435e10e4-992a-4281-96f3-38b11106adde
-related:
-    - id: db885529-903f-4c5d-9864-28fe199e6370
-      type: similar
+id: 1a00950e-36a2-0312-33ae-1d272dc02169
 status: test
 description: Detects usage of the Get-ADComputer cmdlet to collect computer information and output it to a file
 references:
@@ -15,6 +12,7 @@ modified: 2022/11/17
 tags:
     - attack.discovery
     - attack.t1033
+    - sysmon
 logsource:
     category: process_creation
     product: windows

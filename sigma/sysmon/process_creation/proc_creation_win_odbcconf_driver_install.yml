@@ -1,8 +1,10 @@
 title: Driver/DLL Installation Via Odbcconf.EXE
-id: 3f5491e2-8db8-496b-9e95-1029fce852d4
+id: 1685394e-b632-d965-b5b6-9a446e2127c1
 related:
     - id: cb0fe7c5-f3a3-484d-aa25-d350a7912729
       type: similar
+    - id: 3f5491e2-8db8-496b-9e95-1029fce852d4
+      type: derived
 status: experimental
 description: Detects execution of "odbcconf" with "INSTALLDRIVER" which installs a new ODBC driver. Attackers abuse this to install and run malicious DLLs.
 references:

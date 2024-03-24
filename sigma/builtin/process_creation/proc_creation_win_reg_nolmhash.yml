@@ -1,8 +1,5 @@
 title: Enable LM Hash Storage - ProcCreation
-id: 98dedfdd-8333-49d4-9f23-d7018cccae53
-related:
-    - id: c420410f-c2d8-4010-856b-dffe21866437 # Registry
-      type: similar
+id: 310bf792-4e0d-b9ba-7dea-7512f8953921
 status: test
 description: |
     Detects changes to the "NoLMHash" registry value in order to allow Windows to store LM Hashes.
@@ -17,6 +14,7 @@ modified: 2023/12/22
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: process_creation

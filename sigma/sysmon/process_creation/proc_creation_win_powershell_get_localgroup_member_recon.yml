@@ -1,8 +1,10 @@
 title: Suspicious Reconnaissance Activity Using Get-LocalGroupMember Cmdlet
-id: c8a180d6-47a3-4345-a609-53f9c3d834fc
+id: 3dc36b6f-53d3-5bc0-8ad7-4c88fc8173b3
 related:
     - id: cef24b90-dddc-4ae1-a09a-8764872f69fc
       type: similar
+    - id: c8a180d6-47a3-4345-a609-53f9c3d834fc
+      type: derived
 status: test
 description: Detects suspicious reconnaissance command line activity on Windows systems using the PowerShell Get-LocalGroupMember Cmdlet
 references:
@@ -17,7 +19,6 @@ logsource:
     category: process_creation
     product: windows
 detection:
-    # Covers group and localgroup flags
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational

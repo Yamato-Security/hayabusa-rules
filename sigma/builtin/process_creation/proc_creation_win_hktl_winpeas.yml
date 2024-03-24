@@ -1,5 +1,8 @@
 title: HackTool - winPEAS Execution
-id: 98b53e78-ebaf-46f8-be06-421aafd176d9
+id: 02c0a52b-6536-ca47-ce99-cea982b9008a
+related:
+    - id: 98b53e78-ebaf-46f8-be06-421aafd176d9
+      type: derived
 status: test
 description: WinPEAS is a script that search for possible paths to escalate privileges on Windows hosts. The checks are explained on book.hacktricks.xyz
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1082
     - attack.t1087
     - attack.t1046
+    - sysmon
 logsource:
     category: process_creation
     product: windows

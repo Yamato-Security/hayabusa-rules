@@ -1,5 +1,8 @@
 title: PUA - CsExec Execution
-id: d08a2711-ee8b-4323-bdec-b7d85e892b31
+id: e96c2fac-d250-ed6f-8382-328d4faa876d
+related:
+    - id: d08a2711-ee8b-4323-bdec-b7d85e892b31
+      type: derived
 status: test
 description: Detects the use of the lesser known remote execution tool named CsExec a PsExec alternative
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1587.001
     - attack.execution
     - attack.t1569.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

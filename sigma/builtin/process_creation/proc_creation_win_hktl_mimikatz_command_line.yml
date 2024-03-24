@@ -1,5 +1,8 @@
 title: HackTool - Mimikatz Execution
-id: a642964e-bead-4bed-8910-1bb4d63e3b4d
+id: b0b6f0e2-8ed1-fa15-6ebb-cf992c0fd7ea
+related:
+    - id: a642964e-bead-4bed-8910-1bb4d63e3b4d
+      type: derived
 status: test
 description: Detection well-known mimikatz command line arguments
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1003.004
     - attack.t1003.005
     - attack.t1003.006
+    - sysmon
 logsource:
     category: process_creation
     product: windows

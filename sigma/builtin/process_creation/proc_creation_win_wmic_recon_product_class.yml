@@ -1,5 +1,8 @@
 title: Potential Product Class Reconnaissance Via Wmic.EXE
-id: e568650b-5dcd-4658-8f34-ded0b1e13992
+id: 4bfb861e-7df2-1670-f8ba-15b3d32325bf
+related:
+    - id: e568650b-5dcd-4658-8f34-ded0b1e13992
+      type: derived
 status: test
 description: Detects the execution of WMIC in order to get a list of firewall and antivirus products
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.execution
     - attack.t1047
     - car.2016-03-002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

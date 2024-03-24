@@ -1,5 +1,8 @@
 title: Exchange PowerShell Snap-Ins Usage
-id: 25676e10-2121-446e-80a4-71ff8506af47
+id: e51338a7-866e-5cc3-f8f9-7b12fc3aa56b
+related:
+    - id: 25676e10-2121-446e-80a4-71ff8506af47
+      type: derived
 status: test
 description: Detects adding and using Exchange PowerShell snap-ins to export mailbox data. As seen used by HAFNIUM and APT27
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1059.001
     - attack.collection
     - attack.t1114
+    - sysmon
 logsource:
     category: process_creation
     product: windows

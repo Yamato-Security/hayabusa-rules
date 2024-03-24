@@ -1,5 +1,8 @@
 title: ConvertTo-SecureString Cmdlet Usage Via CommandLine
-id: 74403157-20f5-415d-89a7-c505779585cf
+id: ebcee1df-9cac-a989-982c-08e181e9d5a8
+related:
+    - id: 74403157-20f5-415d-89a7-c505779585cf
+      type: derived
 status: test
 description: Detects usage of the "ConvertTo-SecureString" cmdlet via the commandline. Which is fairly uncommon and could indicate potential suspicious activity
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

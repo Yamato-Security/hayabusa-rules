@@ -1,5 +1,8 @@
 title: Changing Existing Service ImagePath Value Via Reg.EXE
-id: 9b0b7ac3-6223-47aa-a3fd-e8f211e637db
+id: 3c74726b-21b2-7edc-9091-a8cb4cd92eb0
+related:
+    - id: 9b0b7ac3-6223-47aa-a3fd-e8f211e637db
+      type: derived
 status: test
 description: |
     Adversaries may execute their own malicious payloads by hijacking the Registry entries used by services.
@@ -13,6 +16,7 @@ modified: 2024/03/13
 tags:
     - attack.persistence
     - attack.t1574.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

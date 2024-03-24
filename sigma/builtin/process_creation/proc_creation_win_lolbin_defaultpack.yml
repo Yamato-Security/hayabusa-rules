@@ -1,5 +1,8 @@
 title: Lolbin Defaultpack.exe Use As Proxy
-id: b2309017-4235-44fe-b5af-b15363011957
+id: 91d53283-959d-c486-79b7-288d5aa3be9c
+related:
+    - id: b2309017-4235-44fe-b5af-b15363011957
+      type: derived
 status: test
 description: Detect usage of the "defaultpack.exe" binary as a proxy to launch other programs
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.t1218
     - attack.defense_evasion
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

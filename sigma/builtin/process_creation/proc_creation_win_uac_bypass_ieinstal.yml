@@ -1,5 +1,8 @@
 title: UAC Bypass Using IEInstal - Process
-id: 80fc36aa-945e-4181-89f2-2f907ab6775d
+id: 27cc5ada-12cd-ee4a-3260-a00437b0ac13
+related:
+    - id: 80fc36aa-945e-4181-89f2-2f907ab6775d
+      type: derived
 status: test
 description: Detects the pattern of UAC Bypass using IEInstal.exe (UACMe 64)
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Suspicious Splwow64 Without Params
-id: 1f1a8509-2cbb-44f5-8751-8e1571518ce2
+id: a3eb659a-2a75-984c-1dd1-a034449b5d3a
+related:
+    - id: 1f1a8509-2cbb-44f5-8751-8e1571518ce2
+      type: derived
 status: test
 description: Detects suspicious Splwow64.exe process without any command line parameters
 references:
@@ -10,6 +13,7 @@ modified: 2022/12/25
 tags:
     - attack.defense_evasion
     - attack.t1202
+    - sysmon
 logsource:
     category: process_creation
     product: windows

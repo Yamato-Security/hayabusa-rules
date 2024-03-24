@@ -1,5 +1,8 @@
 title: Findstr Launching .lnk File
-id: 33339be3-148b-4e16-af56-ad16ec6c7e7b
+id: 091f16dc-7243-8589-626d-3f1fa16f326b
+related:
+    - id: 33339be3-148b-4e16-af56-ad16ec6c7e7b
+      type: derived
 status: test
 description: Detects usage of findstr to identify and execute a lnk file as seen within the HHS redirect attack
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1036
     - attack.t1202
     - attack.t1027.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

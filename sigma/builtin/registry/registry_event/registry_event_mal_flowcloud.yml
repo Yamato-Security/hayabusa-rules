@@ -1,5 +1,8 @@
 title: FlowCloud Malware
-id: 5118765f-6657-4ddb-a487-d7bd673abbf1
+id: 0b8e16f0-ba71-e4bd-3716-69afe0091614
+related:
+    - id: 5118765f-6657-4ddb-a487-d7bd673abbf1
+      type: derived
 status: test
 description: Detects FlowCloud malware from threat group TA410.
 references:
@@ -10,6 +13,7 @@ modified: 2022/10/09
 tags:
     - attack.persistence
     - attack.t1112
+    - sysmon
 logsource:
     product: windows
     category: registry_event

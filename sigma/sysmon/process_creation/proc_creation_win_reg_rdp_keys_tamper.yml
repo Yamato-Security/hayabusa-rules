@@ -1,5 +1,8 @@
 title: Potential Tampering With RDP Related Registry Keys Via Reg.EXE
-id: 0d5675be-bc88-4172-86d3-1e96a4476536
+id: 1a05d8fc-3873-baa1-d4ec-951eb588e1f3
+related:
+    - id: 0d5675be-bc88-4172-86d3-1e96a4476536
+      type: derived
 status: test
 description: Detects the execution of "reg.exe" for enabling/disabling the RDP service on the host by tampering with the 'CurrentControlSet\Control\Terminal Server' values
 references:

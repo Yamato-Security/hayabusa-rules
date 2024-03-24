@@ -1,5 +1,8 @@
 title: Potentially Suspicious Cabinet File Expansion
-id: 9f107a84-532c-41af-b005-8d12a607639f
+id: f8095356-407c-fb04-afa9-b637495e8d2b
+related:
+    - id: 9f107a84-532c-41af-b005-8d12a607639f
+      type: derived
 status: test
 description: Detects the expansion or decompression of cabinet files from potentially suspicious or uncommon locations, e.g. seen in Iranian MeteorExpress related attacks
 references:
@@ -11,6 +14,7 @@ modified: 2024/03/05
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

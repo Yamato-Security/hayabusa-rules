@@ -1,5 +1,8 @@
 title: HAFNIUM Exchange Exploitation Activity
-id: bbb2dedd-a0e3-46ab-ba6c-6c82ae7a9aa7
+id: be68dda9-dcd8-3f19-1263-fb0ec5c4f624
+related:
+    - id: bbb2dedd-a0e3-46ab-ba6c-6c82ae7a9aa7
+      type: derived
 status: test
 description: Detects activity observed by different researchers to be HAFNIUM group activity (or related) on Exchange servers
 references:
@@ -17,6 +20,7 @@ tags:
     - attack.t1053
     - attack.g0125
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

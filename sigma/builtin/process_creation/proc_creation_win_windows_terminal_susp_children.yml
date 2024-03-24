@@ -1,5 +1,8 @@
 title: Suspicious WindowsTerminal Child Processes
-id: 8de89e52-f6e1-4b5b-afd1-41ecfa300d48
+id: 3870935a-4632-088f-5f37-1baf2d7d56fe
+related:
+    - id: 8de89e52-f6e1-4b5b-afd1-41ecfa300d48
+      type: derived
 status: test
 description: Detects suspicious children spawned via the Windows Terminal application which could be a sign of persistence via WindowsTerminal (see references section)
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/14
 tags:
     - attack.execution
     - attack.persistence
+    - sysmon
 logsource:
     category: process_creation
     product: windows

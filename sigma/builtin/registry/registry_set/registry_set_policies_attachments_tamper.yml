@@ -1,5 +1,8 @@
 title: Potential Attachment Manager Settings Attachments Tamper
-id: ee77a5db-b0f3-4be2-bfd4-b58be1c6b15a
+id: fbab75d9-3bd2-3705-4511-3e0cf5a10fe4
+related:
+    - id: ee77a5db-b0f3-4be2-bfd4-b58be1c6b15a
+      type: derived
 status: experimental
 description: Detects tampering with attachment manager settings policies attachments (See reference for more information)
 references:
@@ -10,6 +13,7 @@ date: 2022/08/01
 modified: 2023/08/17
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: registry_set
     product: windows

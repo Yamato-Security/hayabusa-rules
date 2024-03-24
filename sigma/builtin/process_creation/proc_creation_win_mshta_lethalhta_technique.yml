@@ -1,5 +1,8 @@
 title: Potential LethalHTA Technique Execution
-id: ed5d72a6-f8f4-479d-ba79-02f6a80d7471
+id: f9884b6b-0ac3-139d-1ebe-a5587c9a51fd
+related:
+    - id: ed5d72a6-f8f4-479d-ba79-02f6a80d7471
+      type: derived
 status: test
 description: Detects potential LethalHTA technique where the "mshta.exe" is spawned by an "svchost.exe" process
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/07
 tags:
     - attack.defense_evasion
     - attack.t1218.005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

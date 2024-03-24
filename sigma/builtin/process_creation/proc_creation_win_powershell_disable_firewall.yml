@@ -1,8 +1,5 @@
 title: Windows Firewall Disabled via PowerShell
-id: 12f6b752-042d-483e-bf9c-915a6d06ad75
-related:
-    - id: 488b44e7-3781-4a71-888d-c95abfacf44d
-      type: similar
+id: bb0b061c-443d-7026-485e-32bd309fb7d9
 status: test
 description: Detects attempts to disable the Windows Firewall using PowerShell
 references:
@@ -13,6 +10,7 @@ modified: 2023/02/13
 tags:
     - attack.defense_evasion
     - attack.t1562
+    - sysmon
 logsource:
     category: process_creation
     product: windows

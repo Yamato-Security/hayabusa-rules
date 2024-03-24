@@ -1,5 +1,8 @@
 title: New Application in AppCompat
-id: 60936b49-fca0-4f32-993d-7415edcf9a5d
+id: bc9f1068-0677-5580-301a-add396842846
+related:
+    - id: 60936b49-fca0-4f32-993d-7415edcf9a5d
+      type: derived
 status: test
 description: A General detection for a new application in AppCompat. This indicates an application executing for the first time on an endpoint.
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/17
 tags:
     - attack.execution
     - attack.t1204.002
+    - sysmon
 logsource:
     product: windows
     category: registry_set

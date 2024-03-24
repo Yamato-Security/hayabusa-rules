@@ -1,5 +1,8 @@
 title: Suspicious Mshta.EXE Execution Patterns
-id: e32f92d1-523e-49c3-9374-bdb13b46a3ba
+id: 01ee4326-bf63-03dc-3a07-97129ea929cb
+related:
+    - id: e32f92d1-523e-49c3-9374-bdb13b46a3ba
+      type: derived
 status: test
 description: Detects suspicious mshta process execution patterns
 references:
@@ -12,6 +15,7 @@ modified: 2023/02/21
 tags:
     - attack.execution
     - attack.t1106
+    - sysmon
 logsource:
     category: process_creation
     product: windows

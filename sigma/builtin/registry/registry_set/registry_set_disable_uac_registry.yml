@@ -1,5 +1,8 @@
 title: Disable UAC Using Registry
-id: 48437c39-9e5f-47fb-af95-3d663c3f2919
+id: 6665e720-ff59-40c7-6fc2-63c2990aef5f
+related:
+    - id: 48437c39-9e5f-47fb-af95-3d663c3f2919
+      type: derived
 status: experimental
 description: Detects when an attacker tries to disable User Account Control (UAC) by changing its registry key HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA from 1 to 0
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.privilege_escalation
     - attack.defense_evasion
     - attack.t1548.002
+    - sysmon
 logsource:
     category: registry_set
     product: windows

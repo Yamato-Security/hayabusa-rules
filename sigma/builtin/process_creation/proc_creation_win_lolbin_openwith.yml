@@ -1,5 +1,8 @@
 title: OpenWith.exe Executes Specified Binary
-id: cec8e918-30f7-4e2d-9bfa-a59cc97ae60f
+id: 2c25a504-0f86-ca3f-43e0-5a40240a81fd
+related:
+    - id: cec8e918-30f7-4e2d-9bfa-a59cc97ae60f
+      type: derived
 status: test
 description: The OpenWith.exe executes other binary
 references:
@@ -11,6 +14,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

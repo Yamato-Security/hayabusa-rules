@@ -1,5 +1,8 @@
 title: HackTool - PPID Spoofing SelectMyParent Tool Execution
-id: 52ff7941-8211-46f9-84f8-9903efb7077d
+id: 86d129d1-cd78-4f07-9be8-edf76d9e2131
+related:
+    - id: 52ff7941-8211-46f9-84f8-9903efb7077d
+      type: derived
 status: test
 description: Detects the use of parent process ID spoofing tools like Didier Stevens tool SelectMyParent
 references:
@@ -13,6 +16,7 @@ modified: 2023/03/07
 tags:
     - attack.defense_evasion
     - attack.t1134.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

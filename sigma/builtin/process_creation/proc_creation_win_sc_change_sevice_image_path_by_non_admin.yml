@@ -1,5 +1,8 @@
 title: Possible Privilege Escalation via Weak Service Permissions
-id: d937b75f-a665-4480-88a5-2f20e9f9b22a
+id: ae65ef8c-318b-89f9-30d3-1f3bcfab81e9
+related:
+    - id: d937b75f-a665-4480-88a5-2f20e9f9b22a
+      type: derived
 status: test
 description: Detection of sc.exe utility spawning by user with Medium integrity level to change service ImagePath or FailureCommand
 references:
@@ -13,6 +16,7 @@ tags:
     - attack.defense_evasion
     - attack.privilege_escalation
     - attack.t1574.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

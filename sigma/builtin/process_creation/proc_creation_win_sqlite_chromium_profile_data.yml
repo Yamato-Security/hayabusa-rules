@@ -1,5 +1,8 @@
 title: SQLite Chromium Profile Data DB Access
-id: 24c77512-782b-448a-8950-eddb0785fc71
+id: 457a72af-e7d7-48c0-0f9f-cd793a1a2584
+related:
+    - id: 24c77512-782b-448a-8950-eddb0785fc71
+      type: derived
 status: test
 description: Detect usage of the "sqlite" binary to query databases in Chromium-based browsers for potential data stealing.
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1555.003
     - attack.collection
     - attack.t1005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

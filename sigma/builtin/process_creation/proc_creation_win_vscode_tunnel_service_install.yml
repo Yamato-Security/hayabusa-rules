@@ -1,5 +1,8 @@
 title: Visual Studio Code Tunnel Service Installation
-id: 30bf1789-379d-4fdc-900f-55cd0a90a801
+id: b9112bca-62a9-013b-2fba-56019745171c
+related:
+    - id: 30bf1789-379d-4fdc-900f-55cd0a90a801
+      type: derived
 status: experimental
 description: Detects the installation of VsCode tunnel (code-tunnel) as a service.
 references:
@@ -11,6 +14,7 @@ date: 2023/10/25
 tags:
     - attack.command_and_control
     - attack.t1071.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Potential Fake Instance Of Hxtsr.EXE Executed
-id: 4e762605-34a8-406d-b72e-c1a089313320
+id: 3135cfd1-5a2f-468b-9cf2-fbf03902985f
+related:
+    - id: 4e762605-34a8-406d-b72e-c1a089313320
+      type: derived
 status: test
 description: |
     HxTsr.exe is a Microsoft compressed executable file called Microsoft Outlook Communications.
@@ -13,11 +16,11 @@ modified: 2024/02/08
 tags:
     - attack.defense_evasion
     - attack.t1036
+    - sysmon
 logsource:
     product: windows
     category: process_creation
 detection:
-    # TODO: Link this to the more generic system process rule
     process_creation:
         EventID: 4688
         Channel: Security

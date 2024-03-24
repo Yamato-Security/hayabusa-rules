@@ -1,5 +1,8 @@
 title: Suspicious Scheduled Task Creation via Masqueraded XML File
-id: dd2a821e-3b07-4d3b-a9ac-929fe4c6ca0c
+id: 57b77c31-00b9-0cc8-2bba-b8620f34a730
+related:
+    - id: dd2a821e-3b07-4d3b-a9ac-929fe4c6ca0c
+      type: derived
 status: test
 description: Detects the creation of a scheduled task using the "-XML" flag with a file without the '.xml' extension. This behavior could be indicative of potential defense evasion attempt during persistence
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.persistence
     - attack.t1036.005
     - attack.t1053.005
+    - sysmon
 logsource:
     product: windows
     category: process_creation

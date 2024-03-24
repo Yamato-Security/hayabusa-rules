@@ -1,5 +1,8 @@
 title: Potential Rundll32 Execution With DLL Stored In ADS
-id: 9248c7e1-2bf3-4661-a22c-600a8040b446
+id: 86b3dc5a-8aaa-c378-77ea-e9d3d850d487
+related:
+    - id: 9248c7e1-2bf3-4661-a22c-600a8040b446
+      type: derived
 status: test
 description: Detects execution of rundll32 where the DLL being called is stored in an Alternate Data Stream (ADS).
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/08
 tags:
     - attack.defense_evasion
     - attack.t1564.004
+    - sysmon
 logsource:
     category: process_creation
     product: windows

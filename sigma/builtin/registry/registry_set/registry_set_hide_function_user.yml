@@ -1,5 +1,8 @@
 title: Registry Hide Function from User
-id: 5a93eb65-dffa-4543-b761-94aa60098fb6
+id: e95c5cb7-fd08-cb3b-14e8-d0a4287e6f68
+related:
+    - id: 5a93eb65-dffa-4543-b761-94aa60098fb6
+      type: derived
 status: test
 description: Detects registry modifications that hide internal tools or functions from the user (malware like Agent Tesla, Hermetic Wiper uses this technique)
 references:
@@ -10,6 +13,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     category: registry_set
     product: windows

@@ -1,5 +1,8 @@
 title: Potential AutoLogger Sessions Tampering
-id: f37b4bce-49d0-4087-9f5b-58bffda77316
+id: c561b602-ffb8-a69c-10ef-7c35000d7bca
+related:
+    - id: f37b4bce-49d0-4087-9f5b-58bffda77316
+      type: derived
 status: experimental
 description: Detects tampering with autologger trace sessions which is a technique used by attackers to disable logging
 references:
@@ -11,6 +14,7 @@ date: 2022/08/01
 modified: 2023/08/17
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: registry_set
     product: windows

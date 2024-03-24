@@ -1,5 +1,8 @@
 title: Email Exifiltration Via Powershell
-id: 312d0384-401c-4b8b-abdf-685ffba9a332
+id: 693a4b33-a1e3-3dbb-ecc3-19d6fbc9601a
+related:
+    - id: 312d0384-401c-4b8b-abdf-685ffba9a332
+      type: derived
 status: test
 description: Detects email exfiltration via powershell cmdlets
 references:
@@ -9,6 +12,7 @@ author: Nasreddine Bencherchali (Nextron Systems),  Azure-Sentinel (idea)
 date: 2022/09/09
 tags:
     - attack.exfiltration
+    - sysmon
 logsource:
     category: process_creation
     product: windows

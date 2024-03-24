@@ -1,8 +1,5 @@
 title: Sysinternals PsSuspend Execution
-id: 48bbc537-b652-4b4e-bd1d-281172df448f
-related:
-    - id: 4beb6ae0-f85b-41e2-8f18-8668abc8af78
-      type: similar
+id: c4cc0668-2b35-4884-9119-8a558a544a6d
 status: test
 description: Detects usage of Sysinternals PsSuspend which can be abused to suspend critical processes
 references:
@@ -14,6 +11,7 @@ tags:
     - attack.discovery
     - attack.persistence
     - attack.t1543.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

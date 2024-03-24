@@ -1,5 +1,8 @@
 title: Application Whitelisting Bypass via DLL Loaded by odbcconf.exe
-id: 65d2be45-8600-4042-b4c0-577a1ff8a60e
+id: ec8ef858-1a44-a7b3-821d-a85f6cdaa1c9
+related:
+    - id: 65d2be45-8600-4042-b4c0-577a1ff8a60e
+      type: derived
 status: deprecated
 description: Detects defence evasion attempt via odbcconf.exe execution to load DLL
 references:
@@ -13,6 +16,7 @@ modified: 2023/05/22
 tags:
     - attack.defense_evasion
     - attack.t1218.008
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: PowerShell Base64 Encoded IEX Cmdlet
-id: 88f680b8-070e-402c-ae11-d2914f2257f1
+id: e53219c7-ae63-0b28-f372-3dc6d8b00829
+related:
+    - id: 88f680b8-070e-402c-ae11-d2914f2257f1
+      type: derived
 status: test
 description: Detects usage of a base64 encoded "IEX" cmdlet in a process command line
 references:
@@ -10,6 +13,7 @@ modified: 2023/04/06
 tags:
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

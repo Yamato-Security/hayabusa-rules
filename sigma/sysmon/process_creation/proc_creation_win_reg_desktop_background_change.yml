@@ -1,8 +1,10 @@
 title: Potentially Suspicious Desktop Background Change Using Reg.EXE
-id: 8cbc9475-8d05-4e27-9c32-df960716c701
+id: d5d73f08-a7d0-5449-f48c-81262eabf806
 related:
     - id: 85b88e05-dadc-430b-8a9e-53ff1cd30aae
       type: similar
+    - id: 8cbc9475-8d05-4e27-9c32-df960716c701
+      type: derived
 status: experimental
 description: |
     Detects the execution of "reg.exe" to alter registry keys that would replace the user's desktop background.
@@ -26,7 +28,6 @@ logsource:
     product: windows
     category: process_creation
 detection:
-    # TODO: Improve this to also focus on variation using PowerShell and other CLI tools
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational

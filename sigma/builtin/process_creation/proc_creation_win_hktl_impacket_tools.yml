@@ -1,5 +1,8 @@
 title: HackTool - Impacket Tools Execution
-id: 4627c6ae-6899-46e2-aa0c-6ebcb1becd19
+id: 39a37f01-5f47-60db-1809-3aef76fc537a
+related:
+    - id: 4627c6ae-6899-46e2-aa0c-6ebcb1becd19
+      type: derived
 status: test
 description: Detects the execution of different compiled Windows binaries of the impacket toolset (based on names or part of their names - could lead to false positives)
 references:
@@ -10,6 +13,7 @@ modified: 2023/02/07
 tags:
     - attack.execution
     - attack.t1557.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Query Usage To Exfil Data
-id: 53ef0cef-fa24-4f25-a34a-6c72dfa2e6e2
+id: a3af3078-fe5d-0755-0f26-3833f03a1a6a
+related:
+    - id: 53ef0cef-fa24-4f25-a34a-6c72dfa2e6e2
+      type: derived
 status: test
 description: Detects usage of "query.exe" a system binary to exfil information such as "sessions" and "processes" for later use
 references:
@@ -9,6 +12,7 @@ date: 2022/08/01
 modified: 2023/01/19
 tags:
     - attack.execution
+    - sysmon
 logsource:
     category: process_creation
     product: windows

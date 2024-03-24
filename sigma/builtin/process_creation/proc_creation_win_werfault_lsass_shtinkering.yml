@@ -1,5 +1,8 @@
 title: Potential Credential Dumping Via WER
-id: 9a4ccd1a-3526-4d99-b980-9f9c5d3a6ff3
+id: fd5780a1-437f-d735-9ec2-8ed852b7c70f
+related:
+    - id: 9a4ccd1a-3526-4d99-b980-9f9c5d3a6ff3
+      type: derived
 status: test
 description: Detects potential credential dumping via Windows Error Reporting LSASS Shtinkering technique which uses the Windows Error Reporting to dump lsass
 references:
@@ -11,6 +14,7 @@ modified: 2022/12/09
 tags:
     - attack.credential_access
     - attack.t1003.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

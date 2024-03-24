@@ -1,5 +1,8 @@
 title: Greenbug Espionage Group Indicators
-id: 3711eee4-a808-4849-8a14-faf733da3612
+id: 66a8b7b5-8783-4815-24bb-0ad1640f23f3
+related:
+    - id: 3711eee4-a808-4849-8a14-faf733da3612
+      type: derived
 status: test
 description: Detects tools and process executions used by Greenbug in their May 2020 campaign as reported by Symantec
 references:
@@ -16,6 +19,7 @@ tags:
     - attack.defense_evasion
     - attack.t1036.005
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

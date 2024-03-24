@@ -1,8 +1,5 @@
 title: Suspicious Rundll32 Execution With Image Extension
-id: 4aa6040b-3f28-44e3-a769-9208e5feb5ec
-related:
-    - id: 089fc3d2-71e8-4763-a8a5-c97fbb0a403e
-      type: similar
+id: 74dee6c8-810b-ae34-e12e-ab1a91355d18
 status: test
 description: Detects the execution of Rundll32.exe with DLL files masquerading as image files
 references:
@@ -12,6 +9,7 @@ date: 2023/03/13
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

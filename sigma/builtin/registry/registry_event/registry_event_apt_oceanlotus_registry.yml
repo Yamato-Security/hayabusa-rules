@@ -1,5 +1,8 @@
 title: OceanLotus Registry Activity
-id: 4ac5fc44-a601-4c06-955b-309df8c4e9d4
+id: 91264309-c919-28fd-5fff-f994208d1f34
+related:
+    - id: 4ac5fc44-a601-4c06-955b-309df8c4e9d4
+      type: derived
 status: test
 description: Detects registry keys created in OceanLotus (also known as APT32) attacks
 references:
@@ -11,6 +14,7 @@ modified: 2023/09/28
 tags:
     - attack.defense_evasion
     - attack.t1112
+    - sysmon
 logsource:
     category: registry_event
     product: windows

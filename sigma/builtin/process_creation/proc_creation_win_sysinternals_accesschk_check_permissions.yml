@@ -1,5 +1,8 @@
 title: Permission Check Via Accesschk.EXE
-id: c625d754-6a3d-4f65-9c9a-536aea960d37
+id: 1ee3a188-7a90-b357-3e25-dd202515f11d
+related:
+    - id: c625d754-6a3d-4f65-9c9a-536aea960d37
+      type: derived
 status: test
 description: Detects the usage of the "Accesschk" utility, an access and privilege audit tool developed by SysInternal and often being abused by attacker to verify process privileges
 references:
@@ -13,6 +16,7 @@ modified: 2023/02/20
 tags:
     - attack.discovery
     - attack.t1069.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

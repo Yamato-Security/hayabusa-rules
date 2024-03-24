@@ -1,5 +1,8 @@
 title: IIS Native-Code Module Command Line Installation
-id: 9465ddf4-f9e4-4ebd-8d98-702df3a93239
+id: 144c93b7-e660-277e-cd3c-0141893803ea
+related:
+    - id: 9465ddf4-f9e4-4ebd-8d98-702df3a93239
+      type: derived
 status: test
 description: Detects suspicious IIS native-code module installations via command line
 references:
@@ -11,6 +14,7 @@ modified: 2024/03/13
 tags:
     - attack.persistence
     - attack.t1505.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

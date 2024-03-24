@@ -1,5 +1,8 @@
 title: WMI Backdoor Exchange Transport Agent
-id: 797011dc-44f4-4e6f-9f10-a8ceefbe566b
+id: 812c76e3-a745-515e-484b-d64d6f64c779
+related:
+    - id: 797011dc-44f4-4e6f-9f10-a8ceefbe566b
+      type: derived
 status: test
 description: Detects a WMI backdoor in Exchange Transport Agents via WMI event filters
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/08
 tags:
     - attack.persistence
     - attack.t1546.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

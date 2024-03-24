@@ -1,8 +1,5 @@
 title: Potential File Download Via MS-AppInstaller Protocol Handler
-id: 180c7c5c-d64b-4a63-86e9-68910451bc8b
-related:
-    - id: 7cff77e1-9663-46a3-8260-17f2e1aa9d0a
-      type: derived
+id: 04dd1706-97cc-c1bf-45db-6a9786736ab4
 status: experimental
 description: |
     Detects usage of the "ms-appinstaller" protocol handler via command line to potentially download arbitrary files via AppInstaller.EXE
@@ -15,6 +12,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

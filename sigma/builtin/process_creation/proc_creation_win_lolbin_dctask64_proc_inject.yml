@@ -1,5 +1,8 @@
 title: ZOHO Dctask64 Process Injection
-id: 6345b048-8441-43a7-9bed-541133633d7a
+id: 705fa07c-8ce4-2fcc-9d33-de2ac20c6369
+related:
+    - id: 6345b048-8441-43a7-9bed-541133633d7a
+      type: derived
 status: test
 description: Detects suspicious process injection using ZOHO's dctask64.exe
 references:
@@ -12,6 +15,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1055.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

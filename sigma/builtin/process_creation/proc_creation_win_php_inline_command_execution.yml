@@ -1,5 +1,8 @@
 title: Php Inline Command Execution
-id: d81871ef-5738-47ab-9797-7a9c90cd4bfb
+id: 4329e2b7-363d-b9dc-cbd5-6bbcc79a1b5b
+related:
+    - id: d81871ef-5738-47ab-9797-7a9c90cd4bfb
+      type: derived
 status: test
 description: Detects execution of php using the "-r" flag. This is could be used as a way to launch a reverse shell or execute live php code.
 references:
@@ -11,6 +14,7 @@ date: 2023/01/02
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Insecure Transfer Via Curl.EXE
-id: cb9cc1d1-e84e-4bdc-b7ad-c31b1b7908ec
+id: 4308f710-0e58-712f-6781-9323b7dc779e
+related:
+    - id: cb9cc1d1-e84e-4bdc-b7ad-c31b1b7908ec
+      type: derived
 status: experimental
 description: Detects execution of "curl.exe" with the "--insecure" flag.
 references:
@@ -8,6 +11,7 @@ author: X__Junior (Nextron Systems)
 date: 2023/06/30
 tags:
     - attack.execution
+    - sysmon
 logsource:
     product: windows
     category: process_creation

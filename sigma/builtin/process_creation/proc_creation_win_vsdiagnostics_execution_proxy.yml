@@ -1,5 +1,8 @@
 title: Potential Binary Proxy Execution Via VSDiagnostics.EXE
-id: ac1c92b4-ac81-405a-9978-4604d78cc47e
+id: ef5024d5-3303-f180-2b6c-186303099c26
+related:
+    - id: ac1c92b4-ac81-405a-9978-4604d78cc47e
+      type: derived
 status: experimental
 description: Detects execution of "VSDiagnostics.exe" with the "start" command in order to launch and proxy arbitrary binaries.
 references:
@@ -9,6 +12,7 @@ date: 2023/08/03
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,8 +1,5 @@
 title: Suspicious Copy From or To System Directory
-id: fff9d2b7-e11c-4a69-93d3-40ef66189767
-related:
-    - id: 855bc8b5-2ae8-402e-a9ed-b889e6df1900
-      type: derived
+id: 864f6704-33c0-cdec-c3fa-ae453ca199c1
 status: test
 description: |
     Detects a suspicious copy operation that tries to copy a program from system (System32, SysWOW64, WinSxS) directories to another on disk.
@@ -17,6 +14,7 @@ modified: 2023/08/29
 tags:
     - attack.defense_evasion
     - attack.t1036.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

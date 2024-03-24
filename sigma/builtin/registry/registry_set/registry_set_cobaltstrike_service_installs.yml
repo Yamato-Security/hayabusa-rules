@@ -1,5 +1,8 @@
 title: CobaltStrike Service Installations in Registry
-id: 61a7697c-cb79-42a8-a2ff-5f0cdfae0130
+id: 22ff751c-b2ff-1cd8-3e5b-3bd123b3a93e
+related:
+    - id: 61a7697c-cb79-42a8-a2ff-5f0cdfae0130
+      type: derived
 status: test
 description: |
     Detects known malicious service installs that appear in cases in which a Cobalt Strike beacon elevates privileges or lateral movement.
@@ -17,6 +20,7 @@ tags:
     - attack.t1021.002
     - attack.t1543.003
     - attack.t1569.002
+    - sysmon
 logsource:
     category: registry_set
     product: windows

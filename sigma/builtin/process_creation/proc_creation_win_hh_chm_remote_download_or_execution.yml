@@ -1,5 +1,8 @@
 title: Remote CHM File Download/Execution Via HH.EXE
-id: f57c58b3-ee69-4ef5-9041-455bf39aaa89
+id: e3cb371f-ecf2-9b45-e6ff-67bb63f48a48
+related:
+    - id: f57c58b3-ee69-4ef5-9041-455bf39aaa89
+      type: derived
 status: experimental
 description: Detects the usage of "hh.exe" to execute/download remotely hosted ".chm" files.
 references:
@@ -12,6 +15,7 @@ modified: 2024/01/31
 tags:
     - attack.defense_evasion
     - attack.t1218.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

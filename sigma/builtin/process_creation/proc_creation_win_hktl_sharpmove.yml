@@ -1,5 +1,8 @@
 title: HackTool - SharpMove Tool Execution
-id: 055fb54c-a8f4-4aee-bd44-f74cf30a0d9d
+id: a7c815fc-1c17-fb9b-3993-9508f7fe6f3f
+related:
+    - id: 055fb54c-a8f4-4aee-bd44-f74cf30a0d9d
+      type: derived
 status: experimental
 description: |
     Detects the execution of SharpMove, a .NET utility performing multiple tasks such as "Task Creation", "SCM" query, VBScript execution using WMI via its PE metadata and command line options.
@@ -11,6 +14,7 @@ date: 2024/01/29
 tags:
     - attack.lateral_movement
     - attack.t1021.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

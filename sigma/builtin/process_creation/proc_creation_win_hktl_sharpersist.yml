@@ -1,5 +1,8 @@
 title: HackTool - SharPersist Execution
-id: 26488ad0-f9fd-4536-876f-52fea846a2e4
+id: d60bae71-ab70-95e8-ce1c-c0226f62a597
+related:
+    - id: 26488ad0-f9fd-4536-876f-52fea846a2e4
+      type: derived
 status: test
 description: Detects the execution of the hacktool SharPersist - used to deploy various different kinds of persistence mechanisms
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/04
 tags:
     - attack.persistence
     - attack.t1053
+    - sysmon
 logsource:
     category: process_creation
     product: windows

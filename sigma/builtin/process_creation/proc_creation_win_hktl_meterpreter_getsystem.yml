@@ -1,5 +1,8 @@
 title: Potential Meterpreter/CobaltStrike Activity
-id: 15619216-e993-4721-b590-4c520615a67d
+id: d9505c25-324b-3a98-4f63-55ba6b677e07
+related:
+    - id: 15619216-e993-4721-b590-4c520615a67d
+      type: derived
 status: test
 description: Detects the use of getsystem Meterpreter/Cobalt Strike command by detecting a specific service starting
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.privilege_escalation
     - attack.t1134.001
     - attack.t1134.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: PUA - RunXCmd Execution
-id: 93199800-b52a-4dec-b762-75212c196542
+id: c9c7afb7-56ad-a3b2-ad8a-727beaa81d41
+related:
+    - id: 93199800-b52a-4dec-b762-75212c196542
+      type: derived
 status: test
 description: Detects the use of the RunXCmd tool to execute commands with System or TrustedInstaller accounts
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.execution
     - attack.t1569.002
     - attack.s0029
+    - sysmon
 logsource:
     category: process_creation
     product: windows

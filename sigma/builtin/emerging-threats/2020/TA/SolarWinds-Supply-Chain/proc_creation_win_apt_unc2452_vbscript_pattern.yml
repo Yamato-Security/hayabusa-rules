@@ -1,5 +1,8 @@
 title: Suspicious VBScript UN2452 Pattern
-id: 20c3f09d-c53d-4e85-8b74-6aa50e2f1b61
+id: c95593ac-8717-262b-cedb-792a55e2bd26
+related:
+    - id: 20c3f09d-c53d-4e85-8b74-6aa50e2f1b61
+      type: derived
 status: test
 description: Detects suspicious inline VBScript keywords as used by UNC2452
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.persistence
     - attack.t1547.001
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

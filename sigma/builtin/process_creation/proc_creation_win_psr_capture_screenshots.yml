@@ -1,5 +1,8 @@
 title: Screen Capture Activity Via Psr.EXE
-id: 2158f96f-43c2-43cb-952a-ab4580f32382
+id: 468cc04c-7017-cf17-29f4-4d2845397d91
+related:
+    - id: 2158f96f-43c2-43cb-952a-ab4580f32382
+      type: derived
 status: test
 description: Detects execution of Windows Problem Steps Recorder (psr.exe), a utility used to record the user screen and clicks.
 references:
@@ -12,6 +15,7 @@ modified: 2024/01/04
 tags:
     - attack.collection
     - attack.t1113
+    - sysmon
 logsource:
     category: process_creation
     product: windows

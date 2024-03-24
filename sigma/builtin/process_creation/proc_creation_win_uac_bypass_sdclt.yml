@@ -1,5 +1,8 @@
 title: Potential UAC Bypass Via Sdclt.EXE
-id: 40f9af16-589d-4984-b78d-8c2aec023197
+id: 541e3fb5-f235-d13c-cd97-2e31f774193b
+related:
+    - id: 40f9af16-589d-4984-b78d-8c2aec023197
+      type: derived
 status: test
 description: A General detection for sdclt being spawned as an elevated process. This could be an indicator of sdclt being used for bypass UAC techniques.
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.privilege_escalation
     - attack.defense_evasion
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Scheduled TaskCache Change by Uncommon Program
-id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
+id: 8c9b2605-a3a3-f822-afa4-e8d7abdf70e3
+related:
+    - id: 4720b7df-40c3-48fd-bbdf-fd4b3c464f0d
+      type: derived
 status: experimental
 description: Monitor the creation of a new key under 'TaskCache' when a new scheduled task is registered by a process that is not svchost.exe, which is suspicious
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.persistence
     - attack.t1053
     - attack.t1053.005
+    - sysmon
 logsource:
     category: registry_set
     product: windows

@@ -1,5 +1,8 @@
 title: Mint Sandstorm - Log4J Wstomcat Process Execution
-id: 7c97c625-0350-4f0a-8943-f6cadc88125e
+id: bc808841-697e-7b11-dc93-e0c729b17e87
+related:
+    - id: 7c97c625-0350-4f0a-8943-f6cadc88125e
+      type: derived
 status: test
 description: Detects Log4J Wstomcat process execution as seen in Mint Sandstorm activity
 references:
@@ -10,6 +13,7 @@ modified: 2023/11/29
 tags:
     - attack.execution
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

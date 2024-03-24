@@ -1,5 +1,8 @@
 title: Curl.EXE Execution With Custom UserAgent
-id: 3286d37a-00fd-41c2-a624-a672dcd34e60
+id: e0489e47-4c09-f300-bf19-14475e09c953
+related:
+    - id: 3286d37a-00fd-41c2-a624-a672dcd34e60
+      type: derived
 status: test
 description: Detects execution of curl.exe with custom useragent options
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.command_and_control
     - attack.t1071.001
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Custom Class Execution via Xwizard
-id: 53d4bb30-3f36-4e8a-b078-69d36c4a79ff
+id: 9229b93f-725b-ba48-a5e2-fd3ba4c5751b
+related:
+    - id: 53d4bb30-3f36-4e8a-b078-69d36c4a79ff
+      type: derived
 status: test
 description: Detects the execution of Xwizard tool with specific arguments which utilized to run custom class properties.
 references:
@@ -10,6 +13,7 @@ modified: 2021/11/27
 tags:
     - attack.defense_evasion
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

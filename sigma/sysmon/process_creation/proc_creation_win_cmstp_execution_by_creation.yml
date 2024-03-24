@@ -1,5 +1,8 @@
 title: CMSTP Execution Process Creation
-id: 7d4cdc5a-0076-40ca-aac8-f7e714570e47
+id: 2dd76507-5133-34c8-4f0c-e93f8199a179
+related:
+    - id: 7d4cdc5a-0076-40ca-aac8-f7e714570e47
+      type: derived
 status: stable
 description: Detects various indicators of Microsoft Connection Manager Profile Installer execution
 references:
@@ -18,7 +21,6 @@ logsource:
     category: process_creation
     product: windows
 detection:
-    # CMSTP Spawning Child Process
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational

@@ -1,5 +1,5 @@
 title: Diskshadow Child Process Spawned
-id: 56b1dde8-b274-435f-a73a-fb75eb81262a
+id: 75eb0c31-53fe-ccd0-381e-8ff30ea5f516
 related:
     - id: fa1a7e52-3d02-435b-81b8-00da14dd66c1 # Diskshadow Script Mode - Execution From Potential Suspicious Location
       type: similar
@@ -9,6 +9,8 @@ related:
       type: similar
     - id: 0c2f8629-7129-4a8a-9897-7e0768f13ff2 # Diskshadow Script Mode Execution
       type: similar
+    - id: 56b1dde8-b274-435f-a73a-fb75eb81262a
+      type: derived
 status: experimental
 description: Detects any child process spawning from "Diskshadow.exe". This could be due to executing Diskshadow in interpreter mode or script mode and using the "exec" flag to launch other applications.
 references:

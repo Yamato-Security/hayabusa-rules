@@ -1,5 +1,8 @@
 title: Script Interpreter Execution From Suspicious Folder
-id: 1228c958-e64e-4e71-92ad-7d429f4138ba
+id: 962dcd71-b0d7-ad49-1fe6-2966daf7a411
+related:
+    - id: 1228c958-e64e-4e71-92ad-7d429f4138ba
+      type: derived
 status: test
 description: Detects a suspicious script execution in temporary folders or folders accessible by environment variables
 references:
@@ -12,6 +15,7 @@ modified: 2023/06/16
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     category: process_creation
     product: windows

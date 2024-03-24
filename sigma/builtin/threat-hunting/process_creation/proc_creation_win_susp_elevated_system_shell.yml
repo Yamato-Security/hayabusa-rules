@@ -1,8 +1,5 @@
 title: Elevated System Shell Spawned
-id: 61065c72-5d7d-44ef-bf41-6a36684b545f
-related:
-    - id: 178e615d-e666-498b-9630-9ed363038101
-      type: similar
+id: a1facc19-608b-ffb7-9591-3063f27baa01
 status: experimental
 description: |
     Detects when a shell program such as the Windows command prompt or PowerShell is launched with system privileges. Use this rule to hunt for potential suspicious processes.
@@ -16,6 +13,7 @@ tags:
     - attack.execution
     - attack.t1059
     - detection.threat_hunting
+    - sysmon
 logsource:
     product: windows
     category: process_creation

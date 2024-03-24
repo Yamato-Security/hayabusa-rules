@@ -1,5 +1,8 @@
 title: Change Winevt Event Access Permission Via Registry
-id: 7d9263bd-dc47-4a58-bc92-5474abab390c
+id: 69cb5d0b-48e9-4795-d7bf-3b3051750973
+related:
+    - id: 7d9263bd-dc47-4a58-bc92-5474abab390c
+      type: derived
 status: experimental
 description: Detects tampering with the "ChannelAccess" registry key in order to change access to Windows event channel
 references:
@@ -12,6 +15,7 @@ modified: 2023/08/17
 tags:
     - attack.defense_evasion
     - attack.t1562.002
+    - sysmon
 logsource:
     category: registry_set
     product: windows

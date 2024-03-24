@@ -1,5 +1,8 @@
 title: Remotely Hosted HTA File Executed Via Mshta.EXE
-id: b98d0db6-511d-45de-ad02-e82a98729620
+id: 31ca06b4-e4e7-1456-557e-809415680296
+related:
+    - id: b98d0db6-511d-45de-ad02-e82a98729620
+      type: derived
 status: test
 description: Detects execution of the "mshta" utility with an argument containing the "http" keyword, which could indicate that an attacker is executing a remotely hosted malicious hta file
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1218.005
+    - sysmon
 logsource:
     category: process_creation
     product: windows

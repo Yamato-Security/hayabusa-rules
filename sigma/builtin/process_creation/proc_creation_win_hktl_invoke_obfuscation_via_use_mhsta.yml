@@ -1,5 +1,8 @@
 title: Invoke-Obfuscation Via Use MSHTA
-id: ac20ae82-8758-4f38-958e-b44a3140ca88
+id: 14fd1424-cb14-6945-1567-9017b4b23da5
+related:
+    - id: ac20ae82-8758-4f38-958e-b44a3140ca88
+      type: derived
 status: test
 description: Detects Obfuscated Powershell via use MSHTA in Scripts
 references:
@@ -12,6 +15,7 @@ tags:
     - attack.t1027
     - attack.execution
     - attack.t1059.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

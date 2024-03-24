@@ -1,5 +1,8 @@
 title: NetSupport Manager Service Install
-id: 2d510d8d-912b-45c5-b1df-36faa3d8c3f4
+id: ee415dc3-b7c0-9568-e6dd-878777ff237a
+related:
+    - id: 2d510d8d-912b-45c5-b1df-36faa3d8c3f4
+      type: derived
 status: test
 description: Detects NetSupport Manager service installation on the target system.
 references:
@@ -12,14 +15,6 @@ logsource:
     product: windows
     service: system
 detection:
-    # Example:
-    #   <EventData>
-    #       <Data Name="ServiceName">Client32</Data>
-    #       <Data Name="ImagePath">"C:\Program Files (x86)\NetSupport\NetSupport Manager\client32.exe" /* *</Data>
-    #       <Data Name="ServiceType">user mode service</Data>
-    #       <Data Name="StartType">auto start</Data>
-    #       <Data Name="AccountName">LocalSystem</Data>
-    #   </EventData>
     system:
         Channel: System
     selection_root:

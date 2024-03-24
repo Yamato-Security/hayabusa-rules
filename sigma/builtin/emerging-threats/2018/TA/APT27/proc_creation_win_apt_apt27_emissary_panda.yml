@@ -1,5 +1,8 @@
 title: APT27 - Emissary Panda Activity
-id: 9aa01d62-7667-4d3b-acb8-8cb5103e2014
+id: be49803e-4da4-cf35-ee6c-374478bf4232
+related:
+    - id: 9aa01d62-7667-4d3b-acb8-8cb5103e2014
+      type: derived
 status: test
 description: Detects the execution of DLL side-loading malware used by threat group Emissary Panda aka APT27
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1574.002
     - attack.g0027
     - detection.emerging_threats
+    - sysmon
 logsource:
     category: process_creation
     product: windows

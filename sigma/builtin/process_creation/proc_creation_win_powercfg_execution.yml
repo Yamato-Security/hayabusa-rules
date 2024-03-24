@@ -1,5 +1,8 @@
 title: Suspicious Powercfg Execution To Change Lock Screen Timeout
-id: f8d6a15e-4bc8-4c27-8e5d-2b10f0b73e5b
+id: deb3c0f1-0961-ecf5-5c89-8c7640d2b22f
+related:
+    - id: f8d6a15e-4bc8-4c27-8e5d-2b10f0b73e5b
+      type: derived
 status: test
 description: Detects suspicious execution of 'Powercfg.exe' to change lock screen timeout
 references:
@@ -9,6 +12,7 @@ author: frack113
 date: 2022/11/18
 tags:
     - attack.defense_evasion
+    - sysmon
 logsource:
     category: process_creation
     product: windows

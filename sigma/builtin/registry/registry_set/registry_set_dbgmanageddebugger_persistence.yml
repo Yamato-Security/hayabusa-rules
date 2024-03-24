@@ -1,5 +1,8 @@
 title: Potential Registry Persistence Attempt Via DbgManagedDebugger
-id: 9827ae57-3802-418f-994b-d5ecf5cd974b
+id: 8ce03c3b-7a99-449f-6af3-9f5f4685385b
+related:
+    - id: 9827ae57-3802-418f-994b-d5ecf5cd974b
+      type: derived
 status: experimental
 description: Detects the addition of the "Debugger" value to the "DbgManagedDebugger" key in order to achieve persistence. Which will get invoked when an application crashes
 references:
@@ -11,6 +14,7 @@ modified: 2023/08/17
 tags:
     - attack.persistence
     - attack.t1574
+    - sysmon
 logsource:
     category: registry_set
     product: windows

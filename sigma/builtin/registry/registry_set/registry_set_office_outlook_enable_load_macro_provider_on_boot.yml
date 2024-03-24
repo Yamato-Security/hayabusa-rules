@@ -1,5 +1,8 @@
 title: Potential Persistence Via Outlook LoadMacroProviderOnBoot Setting
-id: 396ae3eb-4174-4b9b-880e-dc0364d78a19
+id: 2f221db9-1924-551f-ad98-7f01d47c6c7e
+related:
+    - id: 396ae3eb-4174-4b9b-880e-dc0364d78a19
+      type: derived
 status: experimental
 description: Detects the modification of Outlook setting "LoadMacroProviderOnBoot" which if enabled allows the automatic loading of any configured VBA project/module
 references:
@@ -14,6 +17,7 @@ tags:
     - attack.t1137
     - attack.t1008
     - attack.t1546
+    - sysmon
 logsource:
     category: registry_set
     product: windows

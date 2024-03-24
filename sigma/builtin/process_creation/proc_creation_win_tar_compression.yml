@@ -1,5 +1,8 @@
 title: Compressed File Creation Via Tar.EXE
-id: 418a3163-3247-4b7b-9933-dcfcb7c52ea9
+id: eae2fe25-e367-9c8d-111c-fe4507f8e1be
+related:
+    - id: 418a3163-3247-4b7b-9933-dcfcb7c52ea9
+      type: derived
 status: experimental
 description: |
     Detects execution of "tar.exe" in order to create a compressed file.
@@ -15,6 +18,7 @@ tags:
     - attack.exfiltration
     - attack.t1560
     - attack.t1560.001
+    - sysmon
 logsource:
     product: windows
     category: process_creation

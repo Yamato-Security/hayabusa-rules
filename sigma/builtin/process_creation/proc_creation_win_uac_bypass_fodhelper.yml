@@ -1,5 +1,8 @@
 title: Bypass UAC via Fodhelper.exe
-id: 7f741dcf-fc22-4759-87b4-9ae8376676a2
+id: 274285c4-15a3-9ee1-1a76-fa05fa2b17e1
+related:
+    - id: 7f741dcf-fc22-4759-87b4-9ae8376676a2
+      type: derived
 status: test
 description: Identifies use of Fodhelper.exe to bypass User Account Control. Adversaries use this technique to execute privileged processes.
 references:
@@ -11,6 +14,7 @@ modified: 2021/11/27
 tags:
     - attack.privilege_escalation
     - attack.t1548.002
+    - sysmon
 logsource:
     category: process_creation
     product: windows

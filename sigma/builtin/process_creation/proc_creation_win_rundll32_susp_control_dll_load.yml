@@ -1,5 +1,8 @@
 title: Suspicious Control Panel DLL Load
-id: d7eb979b-c2b5-4a6f-a3a7-c87ce6763819
+id: 1f5db239-6608-ab63-3f89-95375c7872fc
+related:
+    - id: d7eb979b-c2b5-4a6f-a3a7-c87ce6763819
+      type: derived
 status: test
 description: Detects suspicious Rundll32 execution from control.exe as used by Equation Group and Exploit Kits
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/09
 tags:
     - attack.defense_evasion
     - attack.t1218.011
+    - sysmon
 logsource:
     category: process_creation
     product: windows

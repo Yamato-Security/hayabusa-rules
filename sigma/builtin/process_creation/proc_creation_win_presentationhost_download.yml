@@ -1,5 +1,8 @@
 title: Arbitrary File Download Via PresentationHost.EXE
-id: b124ddf4-778d-418e-907f-6dd3fc0d31cd
+id: 1a42614f-8e9e-d03e-5c6e-b4003ed85cf7
+related:
+    - id: b124ddf4-778d-418e-907f-6dd3fc0d31cd
+      type: derived
 status: test
 description: Detects usage of "PresentationHost" which is a utility that runs ".xbap" (Browser Applications) files to download arbitrary files
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.defense_evasion
     - attack.execution
     - attack.t1218
+    - sysmon
 logsource:
     category: process_creation
     product: windows

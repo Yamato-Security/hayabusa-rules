@@ -1,5 +1,8 @@
 title: Potential Arbitrary Code Execution Via Node.EXE
-id: 6640f31c-01ad-49b5-beb5-83498a5cd8bd
+id: da22844e-bd3b-4e67-433c-ff26e343600e
+related:
+    - id: 6640f31c-01ad-49b5-beb5-83498a5cd8bd
+      type: derived
 status: test
 description: Detects the execution node.exe which is shipped with multiple software such as VMware, Adobe...etc. In order to execute arbitrary code. For example to establish reverse shell as seen in Log4j attacks...etc
 references:
@@ -13,6 +16,7 @@ modified: 2023/02/03
 tags:
     - attack.defense_evasion
     - attack.t1127
+    - sysmon
 logsource:
     category: process_creation
     product: windows

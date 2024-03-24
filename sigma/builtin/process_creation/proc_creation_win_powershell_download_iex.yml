@@ -1,5 +1,8 @@
 title: PowerShell Download and Execution Cradles
-id: 85b0b087-eddf-4a2b-b033-d771fa2b9775
+id: 7c4af673-03d0-fd2c-2562-41ee96b4d36e
+related:
+    - id: 85b0b087-eddf-4a2b-b033-d771fa2b9775
+      type: derived
 status: test
 description: Detects PowerShell download and execution cradles.
 references:
@@ -11,6 +14,7 @@ modified: 2023/05/04
 tags:
     - attack.execution
     - attack.t1059
+    - sysmon
 logsource:
     product: windows
     category: process_creation

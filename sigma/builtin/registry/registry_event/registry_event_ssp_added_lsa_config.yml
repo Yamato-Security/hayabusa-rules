@@ -1,5 +1,8 @@
 title: Security Support Provider (SSP) Added to LSA Configuration
-id: eeb30123-9fbd-4ee8-aaa0-2e545bbed6dc
+id: a2b70475-be0a-993d-b01f-8ecf4bbd7576
+related:
+    - id: eeb30123-9fbd-4ee8-aaa0-2e545bbed6dc
+      type: derived
 status: test
 description: Detects the addition of a SSP to the registry. Upon a reboot or API call, SSP DLLs gain access to encrypted and plaintext passwords stored in Windows.
 references:
@@ -10,6 +13,7 @@ modified: 2022/08/09
 tags:
     - attack.persistence
     - attack.t1547.005
+    - sysmon
 logsource:
     category: registry_event
     product: windows

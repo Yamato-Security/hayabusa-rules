@@ -1,5 +1,8 @@
 title: Potential Data Exfiltration Via Curl.EXE
-id: 00bca14a-df4e-4649-9054-3f2aa676bc04
+id: c86d9b72-174d-552f-255d-2e3818a6b891
+related:
+    - id: 00bca14a-df4e-4649-9054-3f2aa676bc04
+      type: derived
 status: test
 description: Detects the execution of the "curl" process with "upload" flags. Which might indicate potential data exfiltration
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1567
     - attack.t1105
     - detection.threat_hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows

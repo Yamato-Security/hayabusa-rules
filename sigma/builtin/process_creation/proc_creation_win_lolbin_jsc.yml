@@ -1,5 +1,8 @@
 title: JSC Convert Javascript To Executable
-id: 52788a70-f1da-40dd-8fbd-73b5865d6568
+id: 4acb4c4c-6e64-9353-58fa-113832d88626
+related:
+    - id: 52788a70-f1da-40dd-8fbd-73b5865d6568
+      type: derived
 status: test
 description: Detects the execution of the LOLBIN jsc.exe used by .NET to compile javascript code to .exe or .dll format
 references:
@@ -9,6 +12,7 @@ date: 2022/05/02
 tags:
     - attack.defense_evasion
     - attack.t1127
+    - sysmon
 logsource:
     product: windows
     category: process_creation

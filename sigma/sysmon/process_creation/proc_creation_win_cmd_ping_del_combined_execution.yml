@@ -1,5 +1,8 @@
 title: Suspicious Ping/Del Command Combination
-id: 54786ddc-5b8a-11ed-9b6a-0242ac120002
+id: 7ef0d62d-2583-8eed-9f3f-5a7823a6ed15
+related:
+    - id: 54786ddc-5b8a-11ed-9b6a-0242ac120002
+      type: derived
 status: test
 description: Detects a method often used by ransomware. Which combines the "ping" to wait a couple of seconds and then "del" to delete the file in question. Its used to hide the file responsible for the initial infection for example
 references:
@@ -18,8 +21,6 @@ logsource:
     category: process_creation
     product: windows
 detection:
-    # Note: In the case of sysmon and similar logging utilities, see this discussion https://github.com/SigmaHQ/sigma/discussions/4277
-    # Example: "C:\Windows\System32\cmd.exe"  /C ping 127.0.0.7 -n 3 > Nul & fsutil file setZeroData offset=0 length=524288 "C:\Users\User\Desktop\lockbit\lockbit.exe" & Del /f /q "C:\Users\User\Desktop\lockbit\lockbit.exe".
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
@@ -31,10 +32,10 @@ detection:
         CommandLine|contains: Nul   # Covers "> Nul" and ">Nul "
     selection_del_param:
         CommandLine|contains:
-            - ' /q '
-            - ' /f '
-            - ' -q '
             - ' -f '
+            - ' -q '
+            - ' /f '
+            - ' /q '
     selection_all:
         CommandLine|contains|all:
             - ping   # Covers "ping" and "ping.exe"

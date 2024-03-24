@@ -1,5 +1,8 @@
 title: PUA - 3Proxy Execution
-id: f38a82d2-fba3-4781-b549-525efbec8506
+id: e43a9b6c-3df8-4f97-b870-474e24033f49
+related:
+    - id: f38a82d2-fba3-4781-b549-525efbec8506
+      type: derived
 status: test
 description: Detects the use of 3proxy, a tiny free proxy server
 references:
@@ -11,6 +14,7 @@ modified: 2023/02/21
 tags:
     - attack.command_and_control
     - attack.t1572
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: WMI Persistence - Script Event Consumer
-id: ec1d5e28-8f3b-4188-a6f8-6e8df81dc28e
+id: 87226774-feb7-cb9f-bb57-e19cc4fbfb1a
+related:
+    - id: ec1d5e28-8f3b-4188-a6f8-6e8df81dc28e
+      type: derived
 status: test
 description: Detects WMI script event consumers
 references:
@@ -11,6 +14,7 @@ tags:
     - attack.persistence
     - attack.privilege_escalation
     - attack.t1546.003
+    - sysmon
 logsource:
     category: process_creation
     product: windows

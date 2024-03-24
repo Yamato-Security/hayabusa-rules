@@ -1,5 +1,8 @@
 title: Windows Defender Definition Files Removed
-id: 9719a8aa-401c-41af-8108-ced7ec9cd75c
+id: d5e7858d-f6fa-9fe9-e747-ff3a3312244e
+related:
+    - id: 9719a8aa-401c-41af-8108-ced7ec9cd75c
+      type: derived
 status: test
 description: Adversaries may disable security tools to avoid possible detection of their tools and activities by removing Windows Defender Definition Files
 references:
@@ -11,6 +14,7 @@ modified: 2023/07/18
 tags:
     - attack.defense_evasion
     - attack.t1562.001
+    - sysmon
 logsource:
     category: process_creation
     product: windows

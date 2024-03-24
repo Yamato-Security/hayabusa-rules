@@ -1,5 +1,8 @@
 title: Remote Access Tool - AnyDesk Silent Installation
-id: 114e7f1c-f137-48c8-8f54-3088c24ce4b9
+id: 1ec0b8fb-050d-074d-7209-6c4c724f24cb
+related:
+    - id: 114e7f1c-f137-48c8-8f54-3088c24ce4b9
+      type: derived
 status: test
 description: Detects AnyDesk Remote Desktop silent installation. Which can be used by attackers to gain remote access.
 references:
@@ -11,6 +14,7 @@ modified: 2023/03/05
 tags:
     - attack.command_and_control
     - attack.t1219
+    - sysmon
 logsource:
     category: process_creation
     product: windows

@@ -1,5 +1,8 @@
 title: Abusing Findstr for Defense Evasion
-id: bf6c39fc-e203-45b9-9538-05397c1b4f3f
+id: f7b13249-d828-2008-3a24-1364b5609ab5
+related:
+    - id: bf6c39fc-e203-45b9-9538-05397c1b4f3f
+      type: derived
 status: deprecated
 description: Attackers can use findstr to hide their artifacts or search specific strings and evade defense mechanism
 references:
@@ -15,6 +18,7 @@ tags:
     - attack.t1564.004
     - attack.t1552.001
     - attack.t1105
+    - sysmon
 logsource:
     category: process_creation
     product: windows
