@@ -1,5 +1,9 @@
 # Changes
 
+## v2.13.0 [2024/03/27]
+
+- Updated the `proven_rules.txt` file. (@YamatoSecurity)
+
 ## v2.13.0 [2024/03/24]
 
 - Newly created rules are assigned with new UUIDv4 IDs. (#629) (@fukusuket)
