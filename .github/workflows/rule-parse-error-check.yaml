@@ -42,6 +42,7 @@ jobs:
 
       - name: check csv-timeline result
         run: |
+          cd hayabusa
           LATEST_VER=`git describe --tags --abbrev=0`
           COMMAND="./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep \"Rule parsing error\" | wc -l | grep 0"
           if COMMAND; then
