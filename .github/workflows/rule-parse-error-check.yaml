@@ -40,8 +40,12 @@ jobs:
             unzip *.zip
             chmod +x hayabusa-${LATEST_VER#v}-lin-x64-gnu
             ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u
-            ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep "Rule parsing error" | wc -l | grep 0
 
-      - name: check error log
-        if: steps.run-csv-timeline.outcome != 'success'
-        run: cat ./logs/*
+      - name: check csv-timeline result
+        id: run-csv-timeline
+        run: |
+          if ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep "Rule parsing error" | wc -l | grep 0; then
+              echo "No rule parse error."
+          else
+              cat ./logs/*
+          fi
