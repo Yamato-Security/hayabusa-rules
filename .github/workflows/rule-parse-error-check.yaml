@@ -28,7 +28,6 @@ jobs:
           path: hayabusa-sample-evtx
 
       - name: run csv-timeline
-        id: run-csv-timeline
         run: |
             cd hayabusa
             git fetch --prune --unshallow
@@ -42,7 +41,6 @@ jobs:
             ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u
 
       - name: check csv-timeline result
-        id: run-csv-timeline
         run: |
           if ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep "Rule parsing error" | wc -l | grep 0; then
               echo "No rule parse error."
