@@ -40,3 +40,4 @@ jobs:
             chmod +x hayabusa-${LATEST_VER#v}-lin-x64-gnu
             ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u
             ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep "Rule parsing error" | wc -l | grep 0
+          　if [ $? -ne 0 ]; then cat ./logs/*; false; fi
