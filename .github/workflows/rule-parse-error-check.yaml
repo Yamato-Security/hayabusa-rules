@@ -39,5 +39,17 @@ jobs:
             unzip *.zip
             chmod +x hayabusa-${LATEST_VER#v}-lin-x64-gnu
             ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u
-            ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep "Rule parsing error" | wc -l | grep 0
-            if [ $? -ne 0 ]; then cat ./logs/*; false; fi
+
+      - name: check csv-timeline result
+        shell: /usr/bin/bash {0}
+        run: |
+          cd hayabusa
+          LATEST_VER=`git describe --tags --abbrev=0`
+          cd tmp
+          ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep "Rule parsing error" | wc -l | grep 0
+          if [ $? -eq 0 ]; then
+              echo "No rule parse error."
+          else
+              cat ./logs/*
+              false
+          fi
