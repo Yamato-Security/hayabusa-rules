@@ -280,7 +280,7 @@ class LogsourceConverter:
         obj = create_obj(base_dir=None, file_name=self.sigma_path)
         keys = get_terminal_keys_recursive(obj["detection"], [])
         modifiers = {re.sub(r".*\|", "", k) for k in keys if "|" in k}
-        if modifiers and [m for m in modifiers if m not in ["all", "base64", "base64offset", "cidr", "contains", "endswith", "endswithfield", "equalsfield", "re", "startswith"]]:
+        if modifiers and [m for m in modifiers if m not in ["all", "base64", "base64offset", "cidr", "contains", "endswith", "endswithfield", "equalsfield", "re", "startswith", "windash"]]:
             LOGGER.error(f"This rule has incompatible field: {obj['detection']}. Conversion skipped.")
             return
         con = obj['detection']['condition']
