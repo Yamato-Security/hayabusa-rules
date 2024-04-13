@@ -1,4 +1,3 @@
-import json
 from unittest import TestCase
 from logsource_mapping import *
 
@@ -122,23 +121,6 @@ class TestLogSourceMapper(TestCase):
         self.assertTrue(ls.is_detectable({"selection": {"Details": "foo" }}))
         self.assertTrue(ls.is_detectable({"selection": {"EventType": "CreateKey" }}))
         self.assertTrue(ls.is_detectable({"selection": {'TargetObject|endswith': 'software'}, 'condition': 'selection'}))
-
-    def test_transform__windash_recursive_1(self):
-        input = {
-            "selection_1": {"ImagePath|contains|windash": [" -c "]},
-            "selection_2": {"ImagePath|contains|windash":  "-c"},
-            "selection_3": {"ImagePath|contains": "cscript"},
-            "selection_4": {"ImagePath|contains|all|windash'": ["-c", "-k"]}
-        }
-        expected = {
-            "selection_1": {"ImagePath|contains": [" -c ", " /c "]},
-            "selection_2": {"ImagePath|contains": ["-c", "/c"]},
-            "selection_3": {"ImagePath|contains": "cscript"},
-            "selection_4": {"ImagePath|contains|all'": ["-c", "-k"]}
-        }
-
-        res = transform_windash_recursive(input)
-        self.assertTrue(res, expected)
 
     def test_assign_uuid(self):
         original_uuid = "557e3885-7a7e-40b7-8b69-1e5e658ca1d1"

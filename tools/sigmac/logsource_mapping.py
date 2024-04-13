@@ -86,39 +86,6 @@ def convert_special_val(key: str, value: str | list[str]) -> str | list[str]:
             return [x.replace("HKLM", r"\REGISTRY\MACHINE").replace("HKU", r"\REGISTRY\USER") for x in value]
     return value
 
-def transform_windash(obj: dict):
-    if not isinstance(obj, dict):
-        return obj
-    conv = lambda s: s.replace("-", "/") if "-" in s else s.replace("/", "-")
-    for key, value in list(obj.items()):
-        if '|windash' in key:
-            del obj[key]
-            key = key.replace("|windash", "")
-            if '|all|windash' in key:
-                obj[key] = value
-            elif isinstance(value, list):
-                x = set([item for item in value] + [conv(item) for item in value])
-                obj[key] = sorted(list(x))
-            elif isinstance(value, str):
-                obj[key] = [value, conv(value)]
-            else:
-                obj[key] = value
-        else:
-            obj[key] = value
-def transform_windash_recursive(obj: dict) -> dict:
-    if isinstance(obj, dict):
-        for field_name, val in list(obj.items()):
-            if isinstance(val, list):
-                for item in val:
-                    transform_windash(item)
-            else:
-                transform_windash(val)
-    elif isinstance(obj, list):
-        for item in obj:
-            transform_windash(item)
-    return obj
-
-
 def assign_uuid_for_convert_rules(obj: dict, logsource_hash:str) -> dict:
     if "id" not in obj:
         return dict(obj)
@@ -313,7 +280,7 @@ class LogsourceConverter:
         obj = create_obj(base_dir=None, file_name=self.sigma_path)
         keys = get_terminal_keys_recursive(obj["detection"], [])
         modifiers = {re.sub(r".*\|", "", k) for k in keys if "|" in k}
-        if modifiers and [m for m in modifiers if m not in ["all", "base64", "base64offset", "cidr", "contains", "endswith", "endswithfield", "equalsfield", "re", "startswith", "windash"]]:
+        if modifiers and [m for m in modifiers if m not in ["all", "base64", "base64offset", "cidr", "contains", "endswith", "endswithfield", "equalsfield", "re", "startswith"]]:
             LOGGER.error(f"This rule has incompatible field: {obj['detection']}. Conversion skipped.")
             return
         con = obj['detection']['condition']
@@ -325,7 +292,6 @@ class LogsourceConverter:
         if not logsources:
             new_obj = copy.deepcopy(obj)
             new_obj['ruletype'] = 'Sigma'
-            transform_windash_recursive(new_obj["detection"])
             self.sigma_converted.append((False, new_obj))
             return  # ログソースマッピングにないcategory/serviceのため、変換処理はスキップ
 
@@ -359,7 +325,6 @@ class LogsourceConverter:
                 converted_fields = [field_map[f] for f in fields if f in field_map]
                 not_converted_fields = [f for f in fields if f not in field_map]
                 new_obj['fields'] = converted_fields + not_converted_fields
-            transform_windash_recursive(new_obj["detection"])
             new_obj['ruletype'] = 'Sigma'
             if ls.service == "sysmon":
                 self.sigma_converted.append((True, new_obj))
