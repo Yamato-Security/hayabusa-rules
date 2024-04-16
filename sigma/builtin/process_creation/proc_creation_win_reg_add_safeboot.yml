@@ -6,6 +6,7 @@ references:
     - https://redacted.com/blog/bianlian-ransomware-gang-gives-it-a-go/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/09/02
+modified: 2024/03/19
 tags:
     - attack.defense_evasion
     - attack.t1562.001
@@ -18,7 +19,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection_img:
-        - NewProcessName|endswith: reg.exe
+        - NewProcessName|endswith: \reg.exe
         - OriginalFileName: reg.exe
     selection_safeboot:
         CommandLine|contains: \SYSTEM\CurrentControlSet\Control\SafeBoot
