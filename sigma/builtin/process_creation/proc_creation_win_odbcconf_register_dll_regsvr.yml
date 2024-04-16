@@ -1,6 +1,6 @@
 title: New DLL Registered Via Odbcconf.EXE
 id: c70669f8-ed0f-df3b-f2a4-6e8605285bb1
-status: experimental
+status: test
 description: Detects execution of "odbcconf" with "REGSVR" in order to register a new DLL (equivalent to running regsvr32). Attackers abuse this to install and run malicious DLLs.
 references:
     - https://learn.microsoft.com/en-us/sql/odbc/odbcconf-exe?view=sql-server-ver16

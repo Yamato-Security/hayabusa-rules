@@ -1,6 +1,6 @@
 title: Suspicious Driver/DLL Installation Via Odbcconf.EXE
 id: 62b1b4bc-937a-d9ed-a691-7887aae49630
-status: experimental
+status: test
 description: Detects execution of "odbcconf" with the "INSTALLDRIVER" action where the driver doesn't contain a ".dll" extension. This is often used as a defense evasion method.
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/Odbcconf/

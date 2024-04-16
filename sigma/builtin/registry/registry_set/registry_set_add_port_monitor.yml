@@ -11,7 +11,7 @@ references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.010/T1547.010.md
 author: frack113
 date: 2021/12/30
-modified: 2023/08/17
+modified: 2024/03/25
 tags:
     - attack.persistence
     - attack.t1547.010
@@ -24,24 +24,24 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        ObjectName|startswith: \REGISTRY\MACHINE\System\CurrentControlSet\Control\Print\Monitors\
+        ObjectName|contains: \Control\Print\Monitors\
         NewValue|endswith: .dll
-    filter_cutepdf:
+    filter_optional_cutepdf:
         ProcessName: C:\Windows\System32\spoolsv.exe
-        ObjectName|contains: \System\CurrentControlSet\Control\Print\Monitors\CutePDF Writer Monitor v4.0\Driver
+        ObjectName|contains: \Control\Print\Monitors\CutePDF Writer Monitor v4.0\Driver
         NewValue: cpwmon64_v40.dll
         SubjectUserName|contains: # covers many language settings
             - AUTHORI
             - AUTORI
-    filter_leg1:
-        ObjectName|contains: Control\Print\Monitors\MONVNC\Driver
-    filter_leg2:
+    filter_optional_monvnc:
+        ObjectName|contains: \Control\Print\Monitors\MONVNC\Driver
+    filter_optional_vnc:
         ObjectName|contains|all:
             - Control\Print\Environments\
             - \Drivers\
             - \VNC Printer
-    condition: registry_set and (selection and not 1 of filter_*)
+    condition: registry_set and (selection and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
-level: high
+level: medium
 ruletype: Sigma

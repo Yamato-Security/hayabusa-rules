@@ -1,6 +1,6 @@
 title: Potentially Suspicious DLL Registered Via Odbcconf.EXE
 id: 953dba36-324e-646a-d6e5-ef62aedd2205
-status: experimental
+status: test
 description: Detects execution of "odbcconf" with the "REGSVR" action where the DLL in question doesn't contain a ".dll" extension. Which is often used as a method to evade defenses.
 references:
     - https://learn.microsoft.com/en-us/sql/odbc/odbcconf-exe?view=sql-server-ver16

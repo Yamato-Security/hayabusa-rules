@@ -28,13 +28,6 @@ detection:
     selection:
         TargetObject|contains: \SYSTEM\CurrentControlSet\services\null\Instance
     condition: registry_event and selection
-fields:
-    - EventID
-    - CommandLine
-    - ParentCommandLine
-    - Image
-    - User
-    - TargetObject
 falsepositives:
     - Unknown
 level: critical
