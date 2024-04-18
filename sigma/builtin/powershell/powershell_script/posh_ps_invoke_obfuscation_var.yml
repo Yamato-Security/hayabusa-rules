@@ -9,7 +9,7 @@ references:
     - https://github.com/SigmaHQ/sigma/issues/1009  # (Task 24)
 author: Jonathan Cheong, oscd.community
 date: 2020/10/15
-modified: 2022/12/02
+modified: 2024/04/05
 tags:
     - attack.defense_evasion
     - attack.t1027
@@ -26,7 +26,7 @@ detection:
             - Microsoft-Windows-PowerShell/Operational
             - PowerShellCore/Operational
     selection_4104:
-        ScriptBlockText|re: .*cmd.{0,5}(?:/c|/r)(?:\s|)"set\s[a-zA-Z]{3,6}.*(?:\{\d\}){1,}\\"\s+?-f(?:.*\)){1,}.*"
+        ScriptBlockText|re: cmd.{0,5}(?:/c|/r)(?:\s|)"set\s[a-zA-Z]{3,6}.*(?:\{\d\}){1,}\\"\s+?-f(?:.*\)){1,}.*"
     condition: ps_script and selection_4104
 falsepositives:
     - Unknown

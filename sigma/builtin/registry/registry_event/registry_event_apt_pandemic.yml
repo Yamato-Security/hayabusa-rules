@@ -25,13 +25,6 @@ detection:
     selection:
         ObjectName|contains: \SYSTEM\CurrentControlSet\services\null\Instance
     condition: registry_event and selection
-fields:
-    - ProcessName
-    - SubjectUserName
-    - ObjectName
-    - EventID
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: critical

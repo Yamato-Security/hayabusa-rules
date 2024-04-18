@@ -27,9 +27,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_flags:
-        CommandLine|contains:
-            - ' -ma '
-            - ' /ma '
+        CommandLine|contains|windash: ' -ma '
     selection_process:
         CommandLine|contains: ' ls' # Short for lsass
     condition: process_creation and (all of selection*)

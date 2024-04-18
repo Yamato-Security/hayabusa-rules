@@ -4,7 +4,9 @@ related:
     - id: b23818c7-e575-4d13-8012-332075ec0a2b
       type: derived
 status: experimental
-description: Detects when an attacker register a new IFilter for an extension. Microsoft Windows Search uses filters to extract the content of items for inclusion in a full-text index. You can extend Windows Search to index new or proprietary file types by writing filters to extract the content, and property handlers to extract the properties of files
+description: |
+    Detects when an attacker registers a new IFilter for an extension. Microsoft Windows Search uses filters to extract the content of items for inclusion in a full-text index.
+    You can extend Windows Search to index new or proprietary file types by writing filters to extract the content, and property handlers to extract the properties of files.
 references:
     - https://persistence-info.github.io/Data/ifilters.html
     - https://twitter.com/0gtweet/status/1468548924600459267
@@ -12,7 +14,7 @@ references:
     - https://github.com/gtworek/PSBits/blob/8d767892f3b17eefa4d0668f5d2df78e844f01d8/IFilter/Dll.cpp#L281-L308
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/07/21
-modified: 2023/08/17
+modified: 2024/03/26
 tags:
     - attack.persistence
     - sysmon
@@ -24,15 +26,13 @@ detection:
         EventID: 4657
         Channel: Security
     selection_ext:
-        ObjectName|startswith:
-            - \REGISTRY\MACHINE\SOFTWARE\Classes\.
-            - HKEY_LOCAL_MACHINE\SOFTWARE\Classes\.
-        ObjectName|contains: \PersistentHandler
+        ObjectName|contains|all:
+            - \SOFTWARE\Classes\.
+            - \PersistentHandler
     selection_clsid:
-        ObjectName|startswith:
-            - \REGISTRY\MACHINE\SOFTWARE\Classes\CLSID
-            - HKEY_LOCAL_MACHINE\SOFTWARE\Classes\CLSID
-        ObjectName|contains: \PersistentAddinsRegistered\{89BCB740-6119-101A-BCB7-00DD010655AF}
+        ObjectName|contains|all:
+            - \SOFTWARE\Classes\CLSID
+            - \PersistentAddinsRegistered\{89BCB740-6119-101A-BCB7-00DD010655AF}
     filter_default_targets:
         ObjectName|contains:
             - \CLSID\{4F46F75F-199F-4C63-8B7D-86D48FE7970C}\
@@ -65,7 +65,7 @@ detection:
             - \CLSID\{FB10BD80-A331-4e9e-9EB7-00279903AD99}\
     filter_generic_paths:
         ProcessName|startswith:
-            # We assume if an attacker has access to one of these directories. Then he already has admin.
+            # Note: We assume if an attacker has access to one of these directories. Then he already has admin.
             - C:\Windows\System32\
             - C:\Program Files (x86)\
             - C:\Program Files\

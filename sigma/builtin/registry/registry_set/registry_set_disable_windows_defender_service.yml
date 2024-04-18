@@ -1,4 +1,4 @@
-title: Windows Defender Service Disabled
+title: Windows Defender Service Disabled - Registry
 id: 7f5a4070-c4d2-ba36-ab1f-378da90ddf45
 related:
     - id: e1aa95de-610a-427d-b9e7-9b46cfafbe6a
@@ -10,7 +10,7 @@ references:
     - https://gist.github.com/anadr/7465a9fde63d41341136949f14c21105
 author: Ján Trenčanský, frack113, AlertIQ, Nasreddine Bencherchali
 date: 2022/08/01
-modified: 2023/08/17
+modified: 2024/03/25
 tags:
     - attack.defense_evasion
     - attack.t1562.001
@@ -23,7 +23,7 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        ObjectName: \REGISTRY\MACHINE\SYSTEM\CurrentControlSet\Services\WinDefend\Start
+        ObjectName|endswith: \Services\WinDefend\Start
         NewValue: DWORD (0x00000004)
     condition: registry_set and selection
 falsepositives:

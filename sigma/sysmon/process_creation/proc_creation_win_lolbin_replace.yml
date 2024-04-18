@@ -25,9 +25,7 @@ detection:
     selection:
         Image|endswith: \replace.exe
     argument:
-        CommandLine|contains:
-            - -a
-            - /a
+        CommandLine|contains|windash: -a
     condition: process_creation and (selection and argument)
 falsepositives:
     - Unknown

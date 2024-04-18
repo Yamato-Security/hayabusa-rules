@@ -24,9 +24,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_cmd:
         Image|endswith: \expand.exe
-        CommandLine|contains:
-            - '-F:'
-            - '/F:'
+        CommandLine|contains|windash: '-F:'
     selection_folders_1:
         CommandLine|contains:
             - :\Perflogs\

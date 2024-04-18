@@ -24,9 +24,7 @@ detection:
         OriginalFileName: LODCTR.EXE
         NewProcessName|endswith: \lodctr.exe
     selection_cli:
-        CommandLine|contains:
-            - ' -r'
-            - ' /r'
+        CommandLine|contains|windash: ' -r'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate usage by an administrator

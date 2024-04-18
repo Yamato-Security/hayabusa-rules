@@ -34,13 +34,10 @@ detection:
             - 'del '
             - 'erase '
     selection_flags:
-        CommandLine|contains:
-            - ' -f'
-            - ' -q'
-            - ' -s'
-            - ' /f'
-            - ' /q'
-            - ' /s'
+        CommandLine|contains|windash:
+            - ' -f' # Force deleting of read-only files.
+            - ' -s' # Delete specified files from all subdirectories.
+            - ' -q' # Quiet mode, do not ask if ok to delete on global wildcard
     condition: process_creation and (all of selection_*)
 falsepositives:
     - False positives levels will differ Depending on the environment. You can use a combination of ParentImage and other keywords from the CommandLine field to filter legitimate activity

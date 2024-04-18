@@ -25,17 +25,13 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_count:
-        CommandLine|contains:
-            - ' -n '
-            - ' /n '
+        CommandLine|contains|windash: ' -n '
     selection_nul:
         CommandLine|contains: Nul   # Covers "> Nul" and ">Nul "
     selection_del_param:
-        CommandLine|contains:
+        CommandLine|contains|windash:
             - ' -f '
             - ' -q '
-            - ' /f '
-            - ' /q '
     selection_all:
         CommandLine|contains|all:
             - ping   # Covers "ping" and "ping.exe"

@@ -31,9 +31,7 @@ detection:
             - SYSTEM\CurrentControlSet\Services\
             - ' ImagePath '
     selection_value:
-        CommandLine|contains:
-            - ' -d '
-            - ' /d '
+        CommandLine|contains|windash: ' -d '
     condition: process_creation and (all of selection*)
 falsepositives:
     - Unknown

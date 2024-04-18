@@ -24,9 +24,7 @@ detection:
         - NewProcessName|endswith: \odbcconf.exe
         - OriginalFileName: odbcconf.exe
     selection_cli:
-        CommandLine|contains:
-            - ' -f '
-            - ' /f '
+        CommandLine|contains|windash: ' -f '
     filter_main_rsp_ext:
         CommandLine|contains: .rsp
     filter_main_runonce_odbc:

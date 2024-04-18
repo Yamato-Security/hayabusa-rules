@@ -37,17 +37,12 @@ detection:
             - ' application'
             - ' system'
     selection_cli_flags:
-        CommandLine|contains:
-            - ' -c'
+        CommandLine|contains|windash:
             - ' -d'
-            - ' -g'
-            - ' -s'
             - ' -x'
-            - ' /c'
-            - ' /d'
-            - ' /g'
-            - ' /s'
-            - ' /x'
+            - ' -s'
+            - ' -c' # Clear event log after displaying
+            - ' -g' # Export an event log as an evt file.
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Another tool that uses the command line switches of PsLogList

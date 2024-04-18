@@ -27,9 +27,7 @@ detection:
         - Image|endswith: \msiexec.exe
         - OriginalFileName: \msiexec.exe
     selection_flag:
-        CommandLine|contains:
-            - ' -z '
-            - ' /z '
+        CommandLine|contains|windash: ' -z '
     selection_dll:
         CommandLine|contains: .dll
     condition: process_creation and (all of selection_*)

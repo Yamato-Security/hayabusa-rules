@@ -28,9 +28,7 @@ detection:
         - OriginalFileName: diskshadow.exe
         - NewProcessName|endswith: \diskshadow.exe
     selection_cli:
-        CommandLine|contains:
-            - '-s '
-            - '/s '
+        CommandLine|contains|windash: '-s '
     selection_paths:
         CommandLine|contains:
             # Note: Add additional susp paths based on your org needs
