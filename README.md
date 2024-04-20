@@ -7,11 +7,11 @@
 
 # About Hayabusa-Rules
 
-This is the repository containing curated sigma that detect attacks in Windows event logs.
-It is mainly used for [Hayabusa](https://github.com/Yamato-Security/hayabusa) detections rules as well as [Velociraptor](https://github.com/Velocidex/velociraptor)'s built-in sigma detection.
+This is a repository containing curated sigma rules that detect attacks in Windows event logs.
+It is mainly used for [Hayabusa](https://github.com/Yamato-Security/hayabusa) detections rules and config files, as well as [Velociraptor](https://github.com/Velocidex/velociraptor)'s built-in sigma detection.
 The advantage of using this repository over the [upstream sigma repository](https://github.com/SigmaHQ/sigma) is that we include only rules that most sigma-native tools should be able to parse.
 We also de-abstract the `logsource` field by adding the necessary `Channel`, `EventID`, etc... fields to the rules to make it easier to understand what the rule is filtering on and more importantly to reduce false positives.
-We also create new rules with converted field names and values for `process_creation` rules and `registry` based rules so that the sigma rules will not only detect on sysmon logs, but will detect on built-in Windows logs as well.
+We also create new rules with converted field names and values for `process_creation` rules and `registry` based rules so that the sigma rules will not only detect on Sysmon logs, but will detect on built-in Windows logs as well.
 
 # Companion Projects
 
