@@ -7,7 +7,11 @@
 
 # About Hayabusa-Rules
 
-This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabusa) detections rules.
+This is the repository containing curated sigma that detect attacks in Windows event logs.
+It is mainly used for [Hayabusa](https://github.com/Yamato-Security/hayabusa) detections rules as well as [Velociraptor](https://github.com/Velocidex/velociraptor)'s built-in sigma detection.
+The advantage of using this repository over the [upstream sigma repository](https://github.com/SigmaHQ/sigma) is that we include only rules that most sigma-native tools should be able to parse.
+We also de-abstract the `logsource` field by adding the necessary `Channel`, `EventID`, etc... fields to the rules to make it easier to understand what the rule is filtering on and more importantly to reduce false positives.
+We also create new rules with converted field names and values for `process_creation` rules and `registry` based rules so that the sigma rules will not only detect on sysmon logs, but will detect on built-in Windows logs as well.
 
 # Companion Projects
 
@@ -36,10 +40,10 @@ This is the repository for [hayabusa](https://github.com/Yamato-Security/hayabus
     - [EventData](#eventdata)
     - [Abnormal patterns in EventData](#abnormal-patterns-in-eventdata)
       - [Outputting field data from multiple field names with the same name](#outputting-field-data-from-multiple-field-names-with-the-same-name)
-  - [Pipe Modifiers](#pipe-modifiers)
-    - [Supported Sigma Pipe Modifiers](#supported-sigma-pipe-modifiers)
-    - [Extra Pipe Modifiers](#extra-pipe-modifiers)
-  - [Unsupported Pipe Modifiers](#unsupported-pipe-modifiers)
+  - [Field Modifiers](#field-modifiers)
+    - [Supported Sigma Field Modifiers](#supported-sigma-field-modifiers)
+    - [Extra Field Modifiers](#extra-field-modifiers)
+  - [Unsupported Field Modifiers](#unsupported-field-modifiers)
   - [Wildcards](#wildcards)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
     - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
@@ -463,10 +467,10 @@ For example:
 
 If you want to print out just the first `Data` field data, you can specify `%Data[1]%` in your `details:` alert string and only `rundll32.exe` will be outputted.
 
-## Pipe Modifiers
+## Field Modifiers
 
-A pipe can be used with eventkeys as shown below for matching strings.
-All of the conditions we have described so far use exact matches, but by using pipe modifiers, you can describe more flexible detection rules.
+A pipe character can be used with eventkeys as shown below for matching strings.
+All of the conditions we have described so far use exact matches, but by using field modifiers, you can describe more flexible detection rules.
 In the following example, if a value of `Data` contains the string  `EngineVersion=2`, it will match the condition.
 
 ```yaml
@@ -480,17 +484,19 @@ detection:
 
 String matches are case insensitive. However, they become case sensitive whenever `|re` or `|equalsfield` are used.
 
-### Supported Sigma Pipe Modifiers
+### Supported Sigma Field Modifiers
 
 - `|base64offset|contains`: Data will be encoded to base64 in three different ways depending on its position in the encoded string. This modifier will encoded a string to all three variations and check if the string is encoded somewhere in the base64 string.
 - `|cidr`: Matches on a IPv4 or IPv6 CIDR notation (Ex: `192.0.2.0/24`)
 - `|contains`: Checks if a word is contained in the data
 - `|contains|all`: Checks if multiple words are contained in the data
+- `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to a `/` character and check that variation as well.
+- `|contains|all|windash`: Same as `|contains|windash` but all of the keywords need to be present.
 - `|startswith`: Checks the string from the beginning
 - `|endswith`: Checks the end of the string
 - `|re`: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/latest/regex/#syntax> to learn how to write correct regular expressions.)
 > Caution: Regular expression syntax in sigma rules is still not defined so some sigma rules may not match correctly if they differ from the Rust regex syntax.
-- `'|all':`: This pipe modifier is different from those above because it does not get applied to a certain field but to all fields.
+- `'|all':`: This field modifier is different from those above because it does not get applied to a certain field but to all fields.
 
 In this example, both strings `Keyword-1` and `Keyword-2` need to exist but can exist anywhere in any field:
 ```
@@ -502,14 +508,14 @@ detection:
     condition: keywords
 ```
 
-### Extra Pipe Modifiers
+### Extra Field Modifiers
 
 The following modifiers are not in the sigma specification but have been added for very specific use cases.
 
 - `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
 - `|endswithfield`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` if they are different.
 
-## Unsupported Pipe Modifiers
+## Unsupported Field Modifiers
 
 The following modifiers are currently not supported so we do not include any rules from the sigma repository that use them:
 
@@ -519,7 +525,6 @@ The following modifiers are currently not supported so we do not include any rul
 - `lt`
 - `lte`
 - `utf16 / utf16le / utf16be / wide`
-- `windash`
 
 ## Wildcards
 
