@@ -1,16 +1,18 @@
-title: Xwizard DLL Sideloading
+title: Xwizard.EXE Execution From Non-Default Location
 id: 925bfe52-a936-1fd6-2856-b277d7bc99f5
 related:
     - id: 193d5ccd-6f59-40c6-b5b0-8e32d5ddd3d1
       type: derived
 status: test
-description: Detects the execution of Xwizard tool from the non-default directory which can be used to sideload a custom xwizards.dll
+description: |
+    Detects the execution of Xwizard tool from a non-default directory.
+    When executed from a non-default directory, this utility can be abused in order to side load a custom version of "xwizards.dll".
 references:
     - https://lolbas-project.github.io/lolbas/Binaries/Xwizard/
     - http://www.hexacorn.com/blog/2017/07/31/the-wizard-of-x-oppa-plugx-style/
 author: Christian Burkard (Nextron Systems)
 date: 2021/09/20
-modified: 2022/10/09
+modified: 2024/04/22
 tags:
     - attack.defense_evasion
     - attack.t1574.002
@@ -23,10 +25,13 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        Image|endswith: \xwizard.exe
-    filter:
-        Image|startswith: C:\Windows\System32\
-    condition: process_creation and (selection and not filter)
+        - Image|endswith: \xwizard.exe
+        - OriginalFileName: xwizard.exe
+    filter_main_legit_location:
+        Image|startswith:
+            - C:\Windows\System32\
+            - C:\Windows\SysWOW64\
+    condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Windows installed on non-C drive
 level: high
