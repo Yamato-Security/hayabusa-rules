@@ -1,5 +1,5 @@
 title: Renamed ZOHO Dctask64 Execution
-id: 26a9fe2b-f497-3ab3-c195-0aaad1dd6529
+id: a1c4d561-4570-151b-567c-47f2d420fc3e
 related:
     - id: 340a090b-c4e9-412e-bb36-b4b16fe96f9b
       type: derived
@@ -26,8 +26,8 @@ logsource:
     product: windows
 detection:
     process_creation:
-        EventID: 1
-        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 4688
+        Channel: Security
     selection:
         Hashes|contains:
             - 6834B1B94E49701D77CCB3C0895E1AFD   # Imphash
@@ -35,7 +35,7 @@ detection:
             - FAA2AC19875FADE461C8D89DCF2710A3   # Imphash
             - F1039CED4B91572AB7847D26032E6BBF   # Imphash
     filter_main_legit_name:
-        Image|endswith: \dctask64.exe
+        NewProcessName|endswith: \dctask64.exe
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

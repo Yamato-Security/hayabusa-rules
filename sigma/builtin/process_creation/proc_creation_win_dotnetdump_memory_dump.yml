@@ -1,10 +1,11 @@
 title: Process Memory Dump Via Dotnet-Dump
-id: 710141a6-96df-4507-08ac-edf04bc51874
+id: 33667ca9-e2d9-2762-b163-7e71780bc3b1
 related:
     - id: 53d8d3e1-ca33-4012-adf3-e05a4d652e34
       type: derived
 status: test
-description: Detects the execution of "dotnet-dump" with the "collect" flag. The execution could indicate potential process dumping of critical processes such as LSASS
+description: |
+    Detects the execution of "dotnet-dump" with the "collect" flag. The execution could indicate potential process dumping of critical processes such as LSASS.
 references:
     - https://learn.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-dump#dotnet-dump-collect
     - https://twitter.com/bohops/status/1635288066909966338
@@ -19,10 +20,10 @@ logsource:
     product: windows
 detection:
     process_creation:
-        EventID: 1
-        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 4688
+        Channel: Security
     selection_img:
-        - Image|endswith: \dotnet-dump.exe
+        - NewProcessName|endswith: \dotnet-dump.exe
         - OriginalFileName: dotnet-dump.dll
     selection_cli:
         CommandLine|contains: collect

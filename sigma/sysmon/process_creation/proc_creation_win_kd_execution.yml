@@ -9,6 +9,7 @@ references:
     - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023/05/15
+modified: 2024/04/24
 tags:
     - attack.defense_evasion
     - attack.privilege_escalation
@@ -26,5 +27,5 @@ detection:
     condition: process_creation and selection
 falsepositives:
     - Rare occasions of legitimate cases where kernel debugging is necessary in production. Investigation is required
-level: high
+level: medium
 ruletype: Sigma
