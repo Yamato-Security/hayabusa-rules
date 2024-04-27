@@ -21,27 +21,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: clone sigma
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: SigmaHQ/sigma
           path: sigma-repo
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
       - name: clone hayabusa rule repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: hayabusa-rules
 
       - name: clone hayabusa
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Yamato-Security/hayabusa
           submodules: recursive
           path: hayabusa
 
       - name: clone hayabusa-sample-evtx
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Yamato-Security/hayabusa-sample-evtx
           path: hayabusa-sample-evtx
@@ -94,14 +94,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: clone sigma
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: SigmaHQ/sigma
           path: sigma-repo
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
       - name: clone hayabusa rule repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: hayabusa-rules
 
@@ -147,7 +147,7 @@ jobs:
       - name: Create Pull Request
         if: env.change_exist == 'true'
         id: cpr
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@v6
         with:
           path: hayabusa-rules
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -161,7 +161,7 @@ jobs:
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created' # This only runs if there were sigma rules updates and a new PR was created.
-        uses: peter-evans/enable-pull-request-automerge@v2
+        uses: peter-evans/enable-pull-request-automerge@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
