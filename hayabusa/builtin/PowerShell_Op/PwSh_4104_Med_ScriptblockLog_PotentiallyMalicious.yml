@@ -14,8 +14,9 @@ logsource:
     description: Default with PwSh 5+ (Ex. Win 10+)
 detection:
     select_channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
     select_eid:
         EventID: 4104
     select_level_warning:

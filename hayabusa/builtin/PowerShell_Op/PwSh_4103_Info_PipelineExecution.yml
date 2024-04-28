@@ -14,8 +14,9 @@ logsource:
     description: Powershell module logging needs to be turned on.
 detection:
     select_channel:
-        - Microsoft-Windows-PowerShell/Operational
-        - PowerShellCore/Operational
+        Channel:
+            - Microsoft-Windows-PowerShell/Operational
+            - PowerShellCore/Operational
     select_eid:
         EventID: 4103
     condition: select_channel and select_eid
