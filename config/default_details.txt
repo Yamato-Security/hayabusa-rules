@@ -5,6 +5,7 @@ PowerShellCore, 4104, ScriptBlock: %ScriptBlockText%
 Microsoft-Windows-PowerShell, 4103, Payload: %Payload%
 Microsoft-Windows-PowerShell, 4104, ScriptBlock: %ScriptBlockText%
 Microsoft-Windows-Security-Auditing, 1102, User: %LogFileClearedSubjectUserName%
+Microsoft-Windows-Security-Auditing, 4611, LogonProc: %LogonProcessName% ¦ User: %SubjectUserName% ¦ LID: %SubjectLogonId% ¦ SID: %SubjectUserSid% ¦ Dom: %SubjectDomainName%
 Microsoft-Windows-Security-Auditing, 4624, Type: %LogonType% ¦ TgtUser: %TargetUserName% ¦ SrcComp: %WorkstationName% ¦ SrcIP: %IpAddress% ¦ LID: %TargetLogonId%
 Microsoft-Windows-Security-Auditing, 4625, Type: %LogonType% ¦ TgtUser: %TargetUserName% ¦ SrcComp: %WorkstationName% ¦ SrcIP: %IpAddress% ¦ AuthPkg: %AuthenticationPackageName% ¦ Proc: %ProcessName%
 Microsoft-Windows-Security-Auditing, 4648, TgtUser: %TargetUserName% ¦ SrcUser: %SubjectUserName% ¦ SrcIP: %IpAddress% ¦ Proc: %ProcessName% ¦ TgtSvr: %TargetInfo%
