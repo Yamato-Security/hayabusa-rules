@@ -1,15 +1,20 @@
-title: Disable UAC Using Registry
+title: UAC Disabled
 id: 56aa7436-715f-5aa2-dd48-916fa34bd24a
 related:
+    - id: c5f6a85d-b647-40f7-bbad-c10b66bab038
+      type: similar
+    - id: 0d7ceeef-3539-4392-8953-3dc664912714
+      type: similar
     - id: 48437c39-9e5f-47fb-af95-3d663c3f2919
       type: derived
-status: experimental
-description: Detects when an attacker tries to disable User Account Control (UAC) by changing its registry key HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA from 1 to 0
+status: stable
+description: |
+    Detects when an attacker tries to disable User Account Control (UAC) by setting the registry value "EnableLUA" to 0.
 references:
-    - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1548.002/T1548.002.md#atomic-test-8---disable-uac-using-regexe
+    - https://github.com/redcanaryco/atomic-red-team/blob/7e11e9b79583545f208a6dc3fa062f2ed443d999/atomics/T1548.002/T1548.002.md
 author: frack113
 date: 2022/01/05
-modified: 2023/08/17
+modified: 2024/05/10
 tags:
     - attack.privilege_escalation
     - attack.defense_evasion
@@ -23,7 +28,7 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        TargetObject|contains: SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA
+        TargetObject|contains: \Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA
         Details: DWORD (0x00000000)
     condition: registry_set and selection
 falsepositives:
