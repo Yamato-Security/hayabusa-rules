@@ -17,21 +17,21 @@ detection:
     process_creation:
         EventID: 4688
         Channel: Security
-    schtasks_exe:
+    selection:
         CommandLine|contains|all:
             - /delete
             - /tn
         CommandLine|contains:
             # Add more important tasks
-            - \Windows\SystemRestore\SR
-            - \Windows\Windows Defender\
             - \Windows\BitLocker
+            - \Windows\ExploitGuard
+            - \Windows\SystemRestore\SR
+            - \Windows\UpdateOrchestrator\
+            - \Windows\Windows Defender\
             - \Windows\WindowsBackup\
             - \Windows\WindowsUpdate\
-            - \Windows\UpdateOrchestrator\
-            - \Windows\ExploitGuard
         NewProcessName|endswith: \schtasks.exe
-    condition: process_creation and (all of schtasks_*)
+    condition: process_creation and selection
 falsepositives:
     - Unlikely
 level: high

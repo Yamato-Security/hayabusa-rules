@@ -29,9 +29,6 @@ detection:
             - \Temp\
         NewProcessName|endswith: \schtasks.exe
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Administrative activity
     - Software installation

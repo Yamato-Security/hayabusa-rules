@@ -46,7 +46,7 @@ detection:
             - \WinDefend
             - \wscsvc
             - \wuauserv
-    condition: process_creation and (selection_reg_add and 1 of selection_cli_*)
+    condition: process_creation and (all of selection_*)
 falsepositives:
     - Unlikely
 level: high

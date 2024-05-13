@@ -22,13 +22,13 @@ detection:
     process_creation:
         EventID: 4688
         Channel: Security
-    selection_mstsc:
+    selection:
         CommandLine|contains|all:
             - '-i '
             - '-u '
             - '-p '
         NewProcessName|endswith: \ruby.exe
-    condition: process_creation and (1 of selection_*)
+    condition: process_creation and selection
 falsepositives:
     - Unknown
 level: medium
