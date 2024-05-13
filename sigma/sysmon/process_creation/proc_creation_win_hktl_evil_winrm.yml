@@ -22,13 +22,13 @@ detection:
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
-    selection_mstsc:
+    selection:
         Image|endswith: \ruby.exe
         CommandLine|contains|all:
             - '-i '
             - '-u '
             - '-p '
-    condition: process_creation and (1 of selection_*)
+    condition: process_creation and selection
 falsepositives:
     - Unknown
 level: medium

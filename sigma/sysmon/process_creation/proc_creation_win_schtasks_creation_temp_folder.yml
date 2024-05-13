@@ -29,9 +29,6 @@ detection:
             - ' /sc once '
             - \Temp\
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Administrative activity
     - Software installation

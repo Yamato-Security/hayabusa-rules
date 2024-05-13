@@ -43,11 +43,11 @@ detection:
             - .ps1
             - .vbe
             - .vbs
-    filter:
+    filter_optional_installer:
         CommandLine|contains|all:
             - \Windows\TEMP\
             - .exe
-    condition: process_creation and (all of selection* and not filter)
+    condition: process_creation and (all of selection* and not 1 of filter_optional_*)
 falsepositives:
     - Unknown
 level: high

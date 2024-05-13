@@ -1,4 +1,4 @@
-title: Suspicious Execution Of PDQDeployRunner
+title: Potentially Suspicious Execution Of PDQDeployRunner
 id: 26de0206-5a40-c902-6fcf-8ab280a45735
 status: test
 description: Detects suspicious execution of "PDQDeployRunner" which is part of the PDQDeploy service stack that is responsible for executing commands and packages on a remote machines
@@ -6,6 +6,7 @@ references:
     - https://twitter.com/malmoeb/status/1550483085472432128
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022/07/22
+modified: 2024/05/02
 tags:
     - attack.execution
     - sysmon
@@ -17,39 +18,40 @@ detection:
         EventID: 4688
         Channel: Security
     selection_parent:
-        ParentProcessName|contains: PDQDeployRunner-
-    selection_susp:
+        ParentProcessName|contains: \PDQDeployRunner-
+    selection_child:
         # Improve this section by adding other suspicious processes, commandlines or paths
         - NewProcessName|endswith:
               # If you use any of the following processes legitimately comment them out
-              - \wscript.exe
-              - \cscript.exe
-              - \rundll32.exe
-              - \regsvr32.exe
-              - \wmic.exe
-              - \msiexec.exe
-              - \mshta.exe
-              - \csc.exe
-              - \dllhost.exe
-              - \certutil.exe
-              - \scriptrunner.exe
               - \bash.exe
+              - \certutil.exe
+              - \cmd.exe
+              - \csc.exe
+              - \cscript.exe
+              - \dllhost.exe
+              - \mshta.exe
+              - \msiexec.exe
+              - \regsvr32.exe
+              - \rundll32.exe
+              - \scriptrunner.exe
+              - \wmic.exe
+              - \wscript.exe
               - \wsl.exe
         - NewProcessName|contains:
-              - C:\Users\Public\
-              - C:\ProgramData\
-              - C:\Windows\TEMP\
+              - :\ProgramData\
+              - :\Users\Public\
+              - :\Windows\TEMP\
               - \AppData\Local\Temp
         - CommandLine|contains:
-              - 'iex '
-              - Invoke-
-              - DownloadString
-              - http
+              - ' -decode '
               - ' -enc '
               - ' -encodedcommand '
-              - FromBase64String
-              - ' -decode '
               - ' -w hidden'
+              - DownloadString
+              - FromBase64String
+              - http
+              - 'iex '
+              - Invoke-
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate use of the PDQDeploy tool to execute these commands
