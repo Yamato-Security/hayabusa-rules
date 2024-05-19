@@ -1,0 +1,37 @@
+Title: 'MSI Install'
+Channel: Application
+EventID: 1033
+RewriteFieldData:
+    Data[3]:
+        - '1033': 'English'
+        - '1041': 'Japanese'
+
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="MsiInstaller" /> 
+            <EventID Qualifiers="0">1033</EventID> 
+            <Version>0</Version> 
+            <Level>4</Level> 
+            <Task>0</Task> 
+            <Opcode>0</Opcode> 
+            <Keywords>0x80000000000000</Keywords> 
+            <TimeCreated SystemTime="2021-01-15T02:14:12.8708371Z" /> 
+            <EventRecordID>9294</EventRecordID> 
+            <Correlation /> 
+            <Execution ProcessID="0" ThreadID="0" /> 
+            <Channel>Application</Channel> 
+            <Computer>computer</Computer> 
+            <Security UserID="S-1-5-21-3619236619-1337548381-1329840446-1001" /> 
+        </System>
+        <EventData>
+            <Data>Epson Photo+</Data> 
+            <Data>3.3.0.0</Data> 
+            <Data>1033</Data> 
+            <Data>0</Data> 
+            <Data>Seiko Epson Corporation</Data> 
+            <Data>(NULL)</Data> 
+            <Data /> 
+            <Binary>7B41423937314134452D463636392D344538322D414646302D3343333444463736383535337D3030303061373633363232333031663565653439613432333666343761363438663639643030303030393034</Binary> 
+        </EventData>
+    </Event>
