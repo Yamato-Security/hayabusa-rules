@@ -1,6 +1,7 @@
 Title: 'Logon'
 Channel: Security
 EventID: 4624
+Provider_Name: Microsoft-Windows-Security-Auditing
 RewriteFieldData:
     ElevatedToken:
         - '%%1842': 'YES'

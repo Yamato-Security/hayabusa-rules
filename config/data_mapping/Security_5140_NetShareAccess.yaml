@@ -1,6 +1,7 @@
 Title: 'NetShare Access'
 Channel: Security
 EventID: 5140
+Provider_Name: Microsoft-Windows-Security-Auditing
 RewriteFieldData:
     AccessList:
         - '%%4416': 'READ_DATA' # Apparently will always be just this value.
