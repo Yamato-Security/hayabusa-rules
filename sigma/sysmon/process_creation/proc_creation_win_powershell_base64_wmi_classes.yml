@@ -6,7 +6,7 @@ related:
     - id: 1816994b-42e1-4fb1-afd2-134d88184f71
       type: derived
 status: test
-description: Detects calls to base64 encoded WMI class such as "Win32_Shadowcopy", "Win32_ScheduledJob", etc.
+description: Detects calls to base64 encoded WMI class such as "Win32_ShadowCopy", "Win32_ScheduledJob", etc.
 references:
     - https://github.com/Neo23x0/Raccine/blob/20a569fa21625086433dcce8bb2765d0ea08dcb6/yara/mal_revil.yar
 author: Christian Burkard (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
@@ -32,7 +32,7 @@ detection:
               - PowerShell.EXE
               - pwsh.dll
     selection_cli_shadowcopy:
-        # Win32_Shadowcopy
+        # Win32_ShadowCopy
         CommandLine|contains:
             - VwBpAG4AMwAyAF8AUwBoAGEAZABvAHcAYwBvAHAAeQ
             - cAaQBuADMAMgBfAFMAaABhAGQAbwB3AGMAbwBwAHkA
