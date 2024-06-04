@@ -64,7 +64,7 @@ jobs:
           cd -
           rm -rf hayabusa-rules/sigma/
           mkdir hayabusa-rules/sigma/
-          cp -r converted_rules/* hayabusa-rules/sigma/
+          cp -r sigma-to-hayabusa-converter/converted_rules/* hayabusa-rules/sigma/
 
       - name: run csv-timeline
         if: ${{!inputs.disable-rule-parse-error-check }}
@@ -129,7 +129,7 @@ jobs:
           cd -
           rm -rf hayabusa-rules/sigma/
           mkdir hayabusa-rules/sigma/
-          cp -r converted_rules/* hayabusa-rules/sigma/
+          cp -r sigma-to-hayabusa-converter/converted_rules/* hayabusa-rules/sigma/
 
       - name: Create Text
         id: create-text
