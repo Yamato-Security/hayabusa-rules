@@ -28,13 +28,10 @@ detection:
             - .reg
         CommandLine|re: :[^ \\]
     filter:
-        CommandLine|contains:
+        CommandLine|contains|windash:
+            - ' -e '
             - ' -a '
             - ' -c '
-            - ' -e '
-            - ' /a '
-            - ' /c '
-            - ' /e '
     condition: process_creation and (all of selection_* and not filter)
 fields:
     - ParentProcessName

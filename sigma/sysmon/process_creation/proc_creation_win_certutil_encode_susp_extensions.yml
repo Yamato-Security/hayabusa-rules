@@ -30,9 +30,7 @@ detection:
         - Image|endswith: \certutil.exe
         - OriginalFileName: CertUtil.exe
     selection_cli:
-        CommandLine|contains:
-            - -encode
-            - /encode
+        CommandLine|contains|windash: -encode
     selection_extension:
         CommandLine|contains:
             - .acl

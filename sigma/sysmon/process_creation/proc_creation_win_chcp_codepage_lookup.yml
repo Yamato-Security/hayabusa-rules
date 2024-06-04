@@ -24,18 +24,15 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         ParentImage|endswith: \cmd.exe
+        ParentCommandLine|contains|windash:
+            - ' -c '
+            - ' -r '
+            - ' -k '
         Image|endswith: \chcp.com
         CommandLine|endswith:
             - chcp
             - 'chcp '
             - 'chcp  '
-        ParentCommandLine|contains:
-            - ' -c '
-            - ' -k '
-            - ' -r '
-            - ' /c '
-            - ' /k '
-            - ' /r '
     condition: process_creation and selection
 falsepositives:
     - During Anaconda update the 'conda.exe' process will eventually execution the 'chcp' command.

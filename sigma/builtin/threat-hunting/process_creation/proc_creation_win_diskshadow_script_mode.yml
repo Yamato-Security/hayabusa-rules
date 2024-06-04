@@ -28,9 +28,7 @@ detection:
         - OriginalFileName: diskshadow.exe
         - NewProcessName|endswith: \diskshadow.exe
     selection_cli:
-        CommandLine|contains:
-            - '-s '
-            - '/s '
+        CommandLine|contains|windash: '-s '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Likely from legitimate backup scripts
