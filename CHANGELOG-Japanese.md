@@ -1,5 +1,9 @@
 # 変更点
 
+## v2.15.0 [2024/06/04]
+
+- windash修飾子(例: `|windash|contains`)は、Hayabusaのバージョン2.15.0からwindashをネイティブにサポートしたため、互換性のあるルールに変換せず、そのままにしている。 (#646) (@fukusuket)
+
 ## v2.13.0 [2024/03/27]
 
 - `proven_rules.txt`を更新した。 (@YamatoSecurity)
