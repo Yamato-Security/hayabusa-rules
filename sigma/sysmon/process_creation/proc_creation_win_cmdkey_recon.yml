@@ -27,9 +27,7 @@ detection:
         - Image|endswith: \cmdkey.exe
         - OriginalFileName: cmdkey.exe
     selection_cli:
-        CommandLine|contains:
-            - ' -l'
-            - ' /l'
+        CommandLine|contains|windash: ' -l'
     condition: process_creation and (all of selection*)
 fields:
     - CommandLine

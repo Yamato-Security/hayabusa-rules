@@ -23,9 +23,7 @@ detection:
         - NewProcessName|endswith: \regedit.exe
         - OriginalFileName: REGEDIT.EXE
     selection_cli_1:
-        CommandLine|contains:
-            - ' -E '
-            - ' /E '
+        CommandLine|contains|windash: ' -E '
     selection_cli_2:
         CommandLine|contains:
             - hklm

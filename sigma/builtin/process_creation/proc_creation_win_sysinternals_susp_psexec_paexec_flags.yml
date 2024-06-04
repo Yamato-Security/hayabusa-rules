@@ -22,25 +22,22 @@ detection:
         Channel: Security
     selection:
         # Escalation to LOCAL_SYSTEM
-        CommandLine|contains:
-            - ' -i -s cmd'
-            - ' -i -s powershell'
-            - ' -i -s pwsh'
-            - ' -s -i cmd'
-            - ' -s -i powershell'
-            - ' -s -i pwsh'
+        CommandLine|contains|windash:
+            # Note that you don't need to add the ".exe" part when using psexec/paexec
+            # The "-" can also be replaced with "/"
+            # The order of args isn't important
+            # "cmd" can be replaced by "powershell", "pwsh" or any other console like software
             - ' -s cmd'
-            - ' -s powershell'
+            - ' -s -i cmd'
+            - ' -i -s cmd'
+            # Pwsh (For PowerShell 7)
             - ' -s pwsh'
-            - ' /i /s cmd'
-            - ' /i /s powershell'
-            - ' /i /s pwsh'
-            - ' /s /i cmd'
-            - ' /s /i powershell'
-            - ' /s /i pwsh'
-            - ' /s cmd'
-            - ' /s powershell'
-            - ' /s pwsh'
+            - ' -s -i pwsh'
+            - ' -i -s pwsh'
+            # PowerShell (For PowerShell 5)
+            - ' -s powershell'
+            - ' -s -i powershell'
+            - ' -i -s powershell'
     filter_main_exclude_coverage:
         # This filter exclude strings covered by 8834e2f7-6b4b-4f09-8906-d2276470ee23
         CommandLine|contains:

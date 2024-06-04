@@ -33,13 +33,10 @@ detection:
             - ' /s '
             - .reg
     filter_1:
-        CommandLine|contains:
+        CommandLine|contains|windash:
+            - ' -e '
             - ' -a '
             - ' -c '
-            - ' -e '
-            - ' /a '
-            - ' /c '
-            - ' /e '
     filter_2:
         CommandLine|re: :[^ \\]       # to avoid intersection with ADS rule
     condition: process_creation and (all of selection_* and not all of filter_*)

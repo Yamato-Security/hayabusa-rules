@@ -24,9 +24,7 @@ detection:
         - NewProcessName|endswith: \certoc.exe
         - OriginalFileName: CertOC.exe
     selection_cli:
-        CommandLine|contains:
-            - ' -LoadDLL '
-            - ' /LoadDLL '
+        CommandLine|contains|windash: ' -LoadDLL '
     selection_paths:
         CommandLine|contains:
             - \Appdata\Local\Temp\

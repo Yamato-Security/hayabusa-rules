@@ -31,9 +31,7 @@ detection:
         - Image|endswith: \certutil.exe
         - OriginalFileName: CertUtil.exe
     selection_cli_add:
-        CommandLine|contains:
-            - -addstore
-            - /addstore
+        CommandLine|contains|windash: -addstore
     selection_cli_store:
         CommandLine|contains: root
     condition: process_creation and (all of selection_*)

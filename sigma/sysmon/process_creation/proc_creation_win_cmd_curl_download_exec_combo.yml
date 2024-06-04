@@ -24,14 +24,12 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
+        CommandLine|contains|windash: ' -c '
         CommandLine|contains|all:
             - 'curl '
             - http
             - -o
             - '&'
-        CommandLine|contains:
-            - ' -c '
-            - ' /c '
     condition: process_creation and selection
 falsepositives:
     - Unknown

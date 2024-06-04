@@ -30,19 +30,13 @@ detection:
         - NewProcessName|endswith: \wlrmdr.exe
         - OriginalFileName: WLRMNDR.EXE
     selection_child_cli:
-        CommandLine|contains|all:
-            - '-a '
-            - '-f '
-            - '-m '
+        CommandLine|contains|all|windash:
             - '-s '
+            - '-f '
             - '-t '
+            - '-m '
+            - '-a '
             - '-u '
-            - '/a '
-            - '/f '
-            - '/m '
-            - '/s '
-            - '/t '
-            - '/u '
     filter_main_winlogon:
         ParentProcessName: C:\Windows\System32\winlogon.exe
     filter_main_empty:

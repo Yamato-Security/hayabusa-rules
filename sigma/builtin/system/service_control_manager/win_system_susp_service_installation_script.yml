@@ -25,13 +25,10 @@ detection:
         Provider_Name: Service Control Manager
         EventID: 7045
     selection_cmd_flags:
-        ImagePath|contains:
+        ImagePath|contains|windash:
             - ' -c '
-            - ' -k '
             - ' -r '
-            - ' /c '
-            - ' /k '
-            - ' /r '
+            - ' -k '
     selection_binaries:
         ImagePath|contains:
             - cscript

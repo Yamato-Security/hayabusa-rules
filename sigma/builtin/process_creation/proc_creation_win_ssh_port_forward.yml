@@ -25,10 +25,8 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
+        CommandLine|contains|windash: ' -R '
         NewProcessName|endswith: \ssh.exe
-        CommandLine|contains:
-            - ' -R '
-            - ' /R '
     condition: process_creation and selection
 falsepositives:
     - Administrative activity using a remote port forwarding to a local port
