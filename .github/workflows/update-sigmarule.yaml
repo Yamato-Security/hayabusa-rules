@@ -40,6 +40,12 @@ jobs:
           submodules: recursive
           path: hayabusa
 
+      - name: clone sigma-to-hayabusa-converter
+        uses: actions/checkout@v3
+        with:
+          repository: Yamato-Security/sigma-to-hayabusa-converter
+          path: sigma-to-hayabusa-converter
+
       - name: clone hayabusa-sample-evtx
         uses: actions/checkout@v3
         with:
@@ -52,13 +58,13 @@ jobs:
 
       - name: Update sigma rules
         run: |
-          cd hayabusa-rules/tools/sigmac/
+          cd sigma-to-hayabusa-converter/
           poetry install --no-root
-          poetry run python logsource_mapping.py -r ../../../sigma-repo -o ../../../converted_rules
+          poetry run python sigma-to-hayabusa-converter.py -r ../sigma-repo -o converted_rules
           cd -
           rm -rf hayabusa-rules/sigma/
           mkdir hayabusa-rules/sigma/
-          cp -r converted_rules/* hayabusa-rules/sigma/
+          cp -r sigma-to-hayabusa-converter/converted_rules/* hayabusa-rules/sigma/
 
       - name: run csv-timeline
         if: ${{!inputs.disable-rule-parse-error-check }}
@@ -105,19 +111,25 @@ jobs:
         with:
           path: hayabusa-rules
 
+      - name: clone sigma-to-hayabusa-converter
+        uses: actions/checkout@v3
+        with:
+          repository: Yamato-Security/sigma-to-hayabusa-converter
+          path: sigma-to-hayabusa-converter
+
       - name: setup Poetry
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
 
       - name: Update sigma rules
         run: |
-          cd hayabusa-rules/tools/sigmac/
+          cd sigma-to-hayabusa-converter/
           poetry install --no-root
-          poetry run python logsource_mapping.py -r ../../../sigma-repo -o ../../../converted_rules
+          poetry run python sigma-to-hayabusa-converter.py -r ../sigma-repo -o converted_rules
           cd -
           rm -rf hayabusa-rules/sigma/
           mkdir hayabusa-rules/sigma/
-          cp -r converted_rules/* hayabusa-rules/sigma/
+          cp -r sigma-to-hayabusa-converter/converted_rules/* hayabusa-rules/sigma/
 
       - name: Create Text
         id: create-text
