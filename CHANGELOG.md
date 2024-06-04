@@ -1,5 +1,9 @@
 # Changes
 
+## v2.15.0 [2024/06/04]
+
+- The windash modifier (ex: `|windash|contains`) is now left as is and we do not convert these to more compatible rules now that Hayabusa supports windash natively as of version 2.15.0. (#646) (@fukusuket)
+
 ## v2.13.0 [2024/03/27]
 
 - Updated the `proven_rules.txt` file. (@YamatoSecurity)
