@@ -13,7 +13,7 @@ references:
     - https://github.com/binderlabs/DirCreate2System
 author: Florian Roth (Nextron Systems)
 date: 2022/10/14
-modified: 2023/08/23
+modified: 2024/06/20
 tags:
     - attack.defense_evasion
     - attack.privilege_escalation
@@ -46,7 +46,12 @@ detection:
             - \systeminfo.exe
             - \whoami.exe
             - \wscript.exe
-    condition: process_creation and selection
+    filter_main_rundll32:
+        Image|endswith: \rundll32.exe
+        CommandLine|contains|all:
+            - C:\Windows\system32\WerConCpl.dll
+            - LaunchErcApp -queuereporting
+    condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown
 level: high
