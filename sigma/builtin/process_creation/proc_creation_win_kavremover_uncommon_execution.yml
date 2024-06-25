@@ -22,11 +22,11 @@ detection:
         Channel: Security
     selection:
         CommandLine|contains: ' run run-cmd '
-    filter:
+    filter_main_legit_parents:
         ParentProcessName|endswith:
-            - \kavremover.exe   # When launched from kavremover.exe
             - \cleanapi.exe   # When launched from KES installer
-    condition: process_creation and (selection and not filter)
+            - \kavremover.exe   # When launched from kavremover.exe
+    condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown
 level: high
