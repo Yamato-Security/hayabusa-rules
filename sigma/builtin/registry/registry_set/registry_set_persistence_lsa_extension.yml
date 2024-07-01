@@ -3,7 +3,7 @@ id: e249ebd9-4719-fbd6-ad42-802038c12f87
 related:
     - id: 41f6531d-af6e-4c6e-918f-b946f2b85a36
       type: derived
-status: experimental
+status: test
 description: |
     Detects when an attacker modifies the "REG_MULTI_SZ" value named "Extensions" to include a custom DLL to achieve persistence via lsass.
     The "Extensions" list contains filenames of DLLs being automatically loaded by lsass.exe. Each DLL has its InitializeLsaExtension() method called after loading.
