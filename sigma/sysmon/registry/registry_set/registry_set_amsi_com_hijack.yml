@@ -3,7 +3,7 @@ id: 9dabdd6f-1d66-3300-d047-50d69bfccf17
 related:
     - id: 160d2780-31f7-4922-8b3a-efce30e63e96
       type: derived
-status: experimental
+status: test
 description: Detects changes to the AMSI come server registry key in order disable AMSI scanning functionalities. When AMSI attempts to starts its COM component, it will query its registered CLSID and return a non-existent COM server. This causes a load failure and prevents any scanning methods from being accessed, ultimately rendering AMSI useless
 references:
     - https://enigma0x3.net/2017/07/19/bypassing-amsi-via-com-server-hijacking/
