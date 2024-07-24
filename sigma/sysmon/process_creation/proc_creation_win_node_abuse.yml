@@ -24,19 +24,19 @@ detection:
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
-    selection:
+    selection_main:
         Image|endswith: \node.exe
         CommandLine|contains:
             - ' -e '
             - ' --eval '
     # Add more pattern of abuse as actions
-    action_reverse_shell:
+    selection_action_reverse_shell:
         CommandLine|contains|all:
             - .exec(
             - net.socket
             - .connect
             - child_process
-    condition: process_creation and (selection and 1 of action_*)
+    condition: process_creation and (selection_main and 1 of selection_action_*)
 falsepositives:
     - Unlikely
 level: high

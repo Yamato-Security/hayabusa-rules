@@ -1,10 +1,11 @@
-title: Disable of ETW Trace
+title: ETW Trace Evasion Activity
 id: cd82b32e-43bc-93cd-c842-5b6948cecfb7
 related:
     - id: a238b5d0-ce2d-4414-a676-7a531b3d13d6
       type: derived
 status: test
-description: Detects a command that clears or disables any ETW trace log which could indicate a logging evasion.
+description: |
+    Detects command line activity that tries to clear or disable any ETW trace log which could be a sign of logging evasion.
 references:
     - https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/wevtutil
     - https://abuse.io/lockergoga.txt
@@ -54,7 +55,7 @@ detection:
         CommandLine|contains|all:
             - Set-EtwTraceProvider
             - '0x11'
-    condition: process_creation and (1 of selection*)
+    condition: process_creation and (1 of selection_*)
 falsepositives:
     - Unknown
 level: high
