@@ -13,6 +13,11 @@ on:
        required: false
        type: boolean
        default: false
+     sigma_to_hayabusa_converter_branch:
+       description: Branch to use for sigma-to-hayabusa-converter
+       required: false
+       type: string
+       default: main
   schedule:
     - cron: '0 20 * * *'
 
@@ -45,6 +50,7 @@ jobs:
         with:
           repository: Yamato-Security/sigma-to-hayabusa-converter
           path: sigma-to-hayabusa-converter
+          ref: ${{ github.event.inputs.sigma_to_hayabusa_converter_branch }}
 
       - name: clone hayabusa-sample-evtx
         uses: actions/checkout@v3
@@ -116,6 +122,7 @@ jobs:
         with:
           repository: Yamato-Security/sigma-to-hayabusa-converter
           path: sigma-to-hayabusa-converter
+          ref: ${{ github.event.inputs.sigma_to_hayabusa_converter_branch }}
 
       - name: setup Poetry
         run: |
