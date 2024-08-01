@@ -1,10 +1,5 @@
 title: Add SafeBoot Keys Via Reg Utility
 id: e51a363c-2979-56e7-4526-c49be62e6062
-related:
-    - id: fc0e89b5-adb0-43c1-b749-c12a10ec37de
-      type: similar
-    - id: d7662ff6-9e97-4596-a61d-9839e32dee8d
-      type: derived
 status: test
 description: Detects execution of "reg.exe" commands with the "add" or "copy" flags on safe boot registry keys. Often used by attacker to allow the ransomware to work in safe mode as some security products do not
 references:
