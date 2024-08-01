@@ -1,5 +1,12 @@
 title: New Netsh Helper DLL Registered From A Suspicious Location
 id: 57fba93d-7938-c3fd-109b-6d1fb6037e2c
+related:
+    - id: 56321594-9087-49d9-bf10-524fe8479452
+      type: similar
+    - id: c90362e0-2df3-4e61-94fe-b37615814cb1
+      type: similar
+    - id: e7b18879-676e-4a0e-ae18-27039185a8e7
+      type: derived
 status: experimental
 description: |
     Detects changes to the Netsh registry key to add a new DLL value that is located on a suspicious location. This change might be an indication of a potential persistence attempt by adding a malicious Netsh helper
