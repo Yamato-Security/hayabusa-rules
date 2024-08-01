@@ -1,10 +1,5 @@
 title: Rundll32.EXE Calling DllRegisterServer Export Function Explicitly
 id: eccdceeb-5139-9a2f-8bfd-9235f5a36687
-related:
-    - id: 2569ed8c-1147-498a-9b8c-2ad3656b10ed # Renamed rundll32
-      type: similar
-    - id: d81a9fc6-55db-4461-b962-0e78fea5b0ad
-      type: derived
 status: experimental
 description: |
     Detects when the DLL export function 'DllRegisterServer' is called in the commandline by Rundll32 explicitly where the DLL is located in a non-standard path.
