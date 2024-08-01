@@ -1,6 +1,13 @@
 title: Potential Unquoted Service Path Reconnaissance Via Wmic.EXE
 id: e90d5723-9e13-61f4-569b-d8b4ac050c09
-status: experimental
+related:
+    - id: 09658312-bc27-4a3b-91c5-e49ab9046d1b # PowerShell Variant
+      type: similar
+    - id: 76f55eaa-d27f-4213-9d45-7b0e4b60bbae
+      type: similar
+    - id: 68bcd73b-37ef-49cb-95fc-edc809730be6
+      type: derived
+status: test
 description: Detects known WMI recon method to look for unquoted service paths using wmic. Often used by pentester and attacker enumeration scripts
 references:
     - https://github.com/nccgroup/redsnarf/blob/35949b30106ae543dc6f2bc3f1be10c6d9a8d40e/redsnarf.py
