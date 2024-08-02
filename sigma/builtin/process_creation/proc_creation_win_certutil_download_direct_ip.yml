@@ -1,5 +1,12 @@
 title: Suspicious File Downloaded From Direct IP Via Certutil.EXE
 id: e0c7a46a-e1c5-f3fd-6202-5fcf88ffeb16
+related:
+    - id: 19b08b1c-861d-4e75-a1ef-ea0c1baf202b # Direct IP download
+      type: similar
+    - id: 42a5f1e7-9603-4f6d-97ae-3f37d130d794 # File sharing download
+      type: similar
+    - id: 13e6fe51-d478-4c7e-b0f2-6da9b400a829
+      type: derived
 status: test
 description: Detects the execution of certutil with certain flags that allow the utility to download files from direct IPs.
 references:

@@ -1,5 +1,10 @@
 title: Uncommon Microsoft Office Trusted Location Added
 id: c22014de-7963-a2c6-ead7-9fded54d54f0
+related:
+    - id: a0bed973-45fa-4625-adb5-6ecdf9be70ac
+      type: derived
+    - id: f742bde7-9528-42e5-bd82-84f51a8387d2
+      type: derived
 status: test
 description: Detects changes to registry keys related to "Trusted Location" of Microsoft Office where the path is set to something uncommon. Attackers might add additional trusted locations to avoid macro security restrictions.
 references:
