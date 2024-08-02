@@ -1,5 +1,10 @@
 title: Suspicious FromBase64String Usage On Gzip Archive - Process Creation
 id: d4107fed-b19a-c873-993e-db24e6528e9f
+related:
+    - id: df69cb1d-b891-4cd9-90c7-d617d90100ce
+      type: similar
+    - id: d75d6b6b-adb9-48f7-824b-ac2e786efe1f
+      type: derived
 status: test
 description: Detects attempts of decoding a base64 Gzip archive via PowerShell. This technique is often used as a method to load malicious content into memory afterward.
 references:

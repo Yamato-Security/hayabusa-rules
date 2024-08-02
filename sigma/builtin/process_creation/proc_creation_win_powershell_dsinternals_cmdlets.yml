@@ -1,5 +1,10 @@
 title: DSInternals Suspicious PowerShell Cmdlets
 id: 15f30e45-8a75-9af7-3703-c6af70b3d9f5
+related:
+    - id: 846c7a87-8e14-4569-9d49-ecfd4276a01c
+      type: similar
+    - id: 43d91656-a9b2-4541-b7e2-6a9bd3a13f4e
+      type: derived
 status: experimental
 description: |
     Detects execution and usage of the DSInternals PowerShell module. Which can be used to perform what might be considered as suspicious activity such as dumping DPAPI backup keys or manipulating NTDS.DIT files.
