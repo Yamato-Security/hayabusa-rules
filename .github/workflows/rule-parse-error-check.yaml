@@ -38,7 +38,7 @@ jobs:
             curl -OL $URL
             unzip *.zip
             chmod +x hayabusa-2.16.0-lin-x64-gnu
-            ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u
+            ./hayabusa-2.16.0-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u
 
       - name: check csv-timeline result
         shell: /usr/bin/bash {0}
