@@ -78,13 +78,13 @@ jobs:
             cd hayabusa
             git fetch --prune --unshallow
             LATEST_VER=`git describe --tags --abbrev=0`
-            URL="https://github.com/Yamato-Security/hayabusa/releases/download/${LATEST_VER}/hayabusa-${LATEST_VER#v}-linux-intel.zip"
+            URL="https://github.com/Yamato-Security/hayabusa/releases/download/v2.16.0/hayabusa-2.16.0-linux-intel.zip"
             mkdir tmp
             cd tmp
             curl -OL $URL
             unzip *.zip
-            chmod +x hayabusa-${LATEST_VER#v}-lin-x64-gnu
-            ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv
+            chmod +x hayabusa-2.16.0-lin-x64-gnu
+            ./hayabusa-2.16.0-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv
 
       - name: check csv-timeline result
         if: ${{!inputs.disable-rule-parse-error-check }}
@@ -93,7 +93,7 @@ jobs:
           cd hayabusa
           LATEST_VER=`git describe --tags --abbrev=0`
           cd tmp
-          ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep "Rule parsing error" | wc -l | grep 0
+          ./hayabusa-2.16.0-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep "Rule parsing error" | wc -l | grep 0
           if [ $? -eq 0 ]; then
               echo "No rule parse error."
           else
