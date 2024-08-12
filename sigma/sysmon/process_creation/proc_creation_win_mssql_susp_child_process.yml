@@ -2,7 +2,7 @@ title: Suspicious Child Process Of SQL Server
 id: bd69d838-6595-3502-a5ac-6c931c6a9f67
 related:
     - id: 344482e4-a477-436c-aa70-7536d18a48c7
-      type: obsoletes
+      type: obsolete
     - id: 869b9ca7-9ea2-4a5a-8325-e80e62f75445
       type: derived
 status: test
@@ -10,14 +10,14 @@ description: Detects suspicious child processes of the SQLServer process. This c
 references:
     - Internal Research
 author: FPT.EagleEye Team, wagga
-date: 2020/12/11
-modified: 2023/05/04
+date: 2020-12-11
+modified: 2023-05-04
 tags:
     - attack.t1505.003
     - attack.t1190
-    - attack.initial_access
+    - attack.initial-access
     - attack.persistence
-    - attack.privilege_escalation
+    - attack.privilege-escalation
     - sysmon
 logsource:
     category: process_creation
