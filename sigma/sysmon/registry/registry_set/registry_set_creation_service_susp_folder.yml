@@ -2,7 +2,7 @@ title: Service Binary in Suspicious Folder
 id: 34dce0ba-57cc-c928-e260-eee4e8688c92
 related:
     - id: c0abc838-36b0-47c9-b3b3-a90c39455382
-      type: obsoletes
+      type: obsolete
     - id: a07f0359-4c90-4dc4-a681-8ffea40b4f47
       type: derived
 status: test
@@ -10,10 +10,10 @@ description: Detect the creation of a service with a service binary located in a
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1562.001/T1562.001.md
 author: Florian Roth (Nextron Systems), frack113
-date: 2022/05/02
-modified: 2023/08/17
+date: 2022-05-02
+modified: 2023-08-17
 tags:
-    - attack.defense_evasion
+    - attack.defense-evasion
     - attack.t1112
     - sysmon
 logsource:

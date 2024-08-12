@@ -2,7 +2,7 @@ title: Suspicious PowerShell Invocations - Specific - ProcessCreation
 id: 1c5c23b8-d4a3-0d4b-6116-74f8ddd96546
 related:
     - id: fce5f582-cc00-41e1-941a-c6fabf0fdb8c
-      type: obsoletes
+      type: obsolete
     - id: ae7fbf8e-f3cb-49fd-8db4-5f3bed522c71
       type: similar
     - id: 8ff28fdd-e2fa-4dfa-aeda-ef3d61c62090
@@ -14,9 +14,9 @@ description: Detects suspicious PowerShell invocation command parameters
 references:
     - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
-date: 2023/01/05
+date: 2023-01-05
 tags:
-    - attack.defense_evasion
+    - attack.defense-evasion
     - sysmon
 logsource:
     category: process_creation
