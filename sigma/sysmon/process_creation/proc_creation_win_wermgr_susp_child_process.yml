@@ -13,7 +13,7 @@ references:
     - https://github.com/binderlabs/DirCreate2System
 author: Florian Roth (Nextron Systems)
 date: 2022-10-14
-modified: 2024-06-20
+modified: 2024-08-29
 tags:
     - attack.defense-evasion
     - attack.privilege-escalation
@@ -50,7 +50,10 @@ detection:
         Image|endswith: \rundll32.exe
         CommandLine|contains|all:
             - C:\Windows\system32\WerConCpl.dll
-            - LaunchErcApp -queuereporting
+            - 'LaunchErcApp '
+        CommandLine|contains:
+            - -queuereporting
+            - -responsepester
     condition: process_creation and (selection and not 1 of filter_main_*)
 falsepositives:
     - Unknown

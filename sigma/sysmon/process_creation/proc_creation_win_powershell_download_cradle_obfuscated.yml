@@ -1,0 +1,37 @@
+title: Obfuscated PowerShell OneLiner Execution
+id: bdc6c9a1-f92b-7397-8405-64adcb0f598e
+related:
+    - id: 44e24481-6202-4c62-9127-5a0ae8e3fe3d
+      type: derived
+status: experimental
+description: Detects the execution of a specific OneLiner to download and execute powershell modules in memory.
+author: '@Kostastsale, @TheDFIRReport'
+references:
+    - https://thedfirreport.com/2022/05/09/seo-poisoning-a-gootloader-story/
+    - https://gist.github.com/mgeeky/3b11169ab77a7de354f4111aa2f0df38
+date: 2022-05-09
+tags:
+    - attack.defense-evasion
+    - attack.execution
+    - attack.t1059.001
+    - attack.t1562.001
+    - sysmon
+logsource:
+    product: windows
+    category: process_creation
+detection:
+    process_creation:
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
+    selection:
+        Image|endswith: \powershell.exe
+        CommandLine|contains|all:
+            - http://127.0.0.1
+            - '%{(IRM $_)}'
+            - .SubString.ToString()[67,72,64]-Join
+            - Import-Module
+    condition: process_creation and selection
+falsepositives:
+    - Unknown
+level: high
+ruletype: Sigma
