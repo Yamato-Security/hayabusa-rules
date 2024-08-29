@@ -20,7 +20,7 @@ references:
     - https://learn.microsoft.com/en-us/dotnet/framework/tools/regsvcs-exe-net-services-installation-tool
 author: Oleg Kolesnikov @securonix invrep_de, oscd.community, Florian Roth (Nextron Systems), Christian Burkard (Nextron Systems)
 date: 2020-10-23
-modified: 2023-12-02
+modified: 2024-08-15
 tags:
     - attack.defense-evasion
     - attack.t1218.011
@@ -47,20 +47,20 @@ detection:
     selection_regsvr32:
         CommandLine|endswith: regsvr32.exe
         NewProcessName|endswith: \regsvr32.exe
-    filter_main_edge_update:
-        ParentProcessName|contains|all:
-            - :\Users\
-            - \AppData\Local\Microsoft\EdgeUpdate\Install\{
-    filter_optional_chrome_installer:
-        # As reported in https://github.com/SigmaHQ/sigma/issues/4570
-        ParentCommandLine|contains: --uninstall --channel=stable
+    filter_optional_edge_update:
         CommandLine|endswith: rundll32.exe
-        ParentProcessName|contains|all:
-            - :\Users\
+        ParentProcessName|contains: \AppData\Local\Microsoft\EdgeUpdate\Install\{
+        NewProcessName|endswith: \rundll32.exe
+    filter_optional_chromium_installer:
+        # As reported in https://github.com/SigmaHQ/sigma/issues/4570 and others
+        ParentCommandLine|contains: '--uninstall '
+        CommandLine|endswith: rundll32.exe
+        ParentProcessName|contains:
+            - \AppData\Local\BraveSoftware\Brave-Browser\Application\
             - \AppData\Local\Google\Chrome\Application\
         ParentProcessName|endswith: \Installer\setup.exe
         NewProcessName|endswith: \rundll32.exe
-    condition: process_creation and (1 of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*)
+    condition: process_creation and (1 of selection_* and not 1 of filter_optional_*)
 falsepositives:
     - Unlikely
 level: high
