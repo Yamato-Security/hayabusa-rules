@@ -5,7 +5,7 @@ related:
       type: similar
     - id: ce2c44b5-a6ac-412a-afba-9e89326fa972
       type: derived
-status: experimental
+status: test
 description: |
     Detects execution of regsvr32 with the silent flag and no other flags on a DLL located in an uncommon or potentially suspicious location.
     When Regsvr32 is called in such a way, it implicitly calls the DLL export function 'DllRegisterServer'.

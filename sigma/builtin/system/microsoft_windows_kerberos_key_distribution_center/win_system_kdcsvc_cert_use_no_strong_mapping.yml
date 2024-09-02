@@ -3,7 +3,7 @@ id: 470e08fc-0b52-8769-10d3-5b5c1920327e
 related:
     - id: 993c2665-e6ef-40e3-a62a-e1a97686af79
       type: derived
-status: experimental
+status: test
 description: |
     Detects a user certificate that was valid but could not be mapped to a user in a strong way (such as via explicit mapping, key trust mapping, or a SID)
     This could be a sign of exploitation of the elevation of privilege vulnerabilities (CVE-2022-34691, CVE-2022-26931, CVE-2022-26923) that can occur when the KDC allows certificate spoofing by not requiring a strong mapping.
