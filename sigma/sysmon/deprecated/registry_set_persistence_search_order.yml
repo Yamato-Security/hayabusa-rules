@@ -1,15 +1,17 @@
 title: Potential Persistence Via COM Search Order Hijacking
-id: 20f7b927-82bf-9d38-6573-0ed63831fdc5
+id: 75a640ff-dea5-c405-c71f-3b221f5d3e3c
 related:
+    - id: 790317c0-0a36-4a6a-a105-6e576bf99a14
+      type: derived
     - id: a0ff33d8-79e4-4cef-b4f3-9dc4133ccd12
       type: derived
-status: test
+status: deprecated
 description: Detects potential COM object hijacking leveraging the COM Search Order
 references:
     - https://www.cyberbit.com/blog/endpoint-security/com-hijacking-windows-overlooked-security-vulnerability/
 author: Maxime Thiebaut (@0xThiebaut), oscd.community, Cédric Hien
 date: 2020-04-14
-modified: 2023-09-28
+modified: 2024-09-02
 tags:
     - attack.persistence
     - attack.t1546.015
@@ -19,78 +21,78 @@ logsource:
     product: windows
 detection:
     registry_set:
-        EventID: 4657
-        Channel: Security
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
     selection: # Detect new COM servers in the user hive
-        ObjectName|contains: \CLSID\
-        ObjectName|endswith: \InprocServer32\(Default)
+        TargetObject|contains: \CLSID\
+        TargetObject|endswith: \InprocServer32\(Default)
     filter_main_generic:
-        NewValue|contains: # Exclude privileged directories and observed FPs
+        Details|contains: # Exclude privileged directories and observed FPs
             - '%%systemroot%%\system32\'
             - '%%systemroot%%\SysWow64\'
     filter_main_onedrive:
-        NewValue|contains:
+        Details|contains:
             # Related To OneDrive
             - \AppData\Local\Microsoft\OneDrive\
             - \FileCoAuthLib64.dll
             - \FileSyncShell64.dll
             - \FileSyncApi64.dll
     filter_main_health_service:
-        ProcessName|endswith: :\WINDOWS\system32\SecurityHealthService.exe
+        Image|endswith: :\WINDOWS\system32\SecurityHealthService.exe
     filter_main_teams:
-        NewValue|contains|all:
+        Details|contains|all:
             - \AppData\Local\Microsoft\TeamsMeetingAddin\
             - \Microsoft.Teams.AddinLoader.dll
     filter_main_dropbox:
-        NewValue|contains|all:
+        Details|contains|all:
             - \AppData\Roaming\Dropbox\
             - \DropboxExt64.*.dll
     filter_main_trend_micro:
-        NewValue|endswith: TmopIEPlg.dll
+        Details|endswith: TmopIEPlg.dll   # TrendMicro osce
     filter_main_update:
-        ProcessName|endswith:
+        Image|endswith:
             - :\WINDOWS\system32\wuauclt.exe
             - :\WINDOWS\system32\svchost.exe
     filter_main_defender:
-        ProcessName|contains:
+        Image|contains:
             - :\ProgramData\Microsoft\Windows Defender\Platform\
             - :\Program Files\Windows Defender\
-        ProcessName|endswith: \MsMpEng.exe
+        Image|endswith: \MsMpEng.exe
     filter_main_nvidia:
-        NewValue|contains: \FileRepository\nvmdi.inf
+        Details|contains: \FileRepository\nvmdi.inf
     filter_main_edge:
-        ProcessName|endswith: \MicrosoftEdgeUpdateComRegisterShell64.exe
+        Image|endswith: \MicrosoftEdgeUpdateComRegisterShell64.exe
     filter_main_dx:
-        ProcessName|endswith: :\WINDOWS\SYSTEM32\dxdiag.exe
+        Image|endswith: :\WINDOWS\SYSTEM32\dxdiag.exe
     filter_main_python:
-        NewValue|endswith:
+        Details|endswith:
             - :\Windows\pyshellext.amd64.dll
             - :\Windows\pyshellext.dll
     filter_main_bonjourlib:
-        NewValue|endswith:
+        Details|endswith:
             - :\Windows\system32\dnssdX.dll
             - :\Windows\SysWOW64\dnssdX.dll
     filter_main_printextensionmanager:
-        NewValue|endswith: :\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
+        Details|endswith: :\Windows\system32\spool\drivers\x64\3\PrintConfig.dll
     filter_main_programfiles:
-        NewValue|contains:
+        Details|contains:
             - :\Program Files\
             - :\Program Files (x86)\
     filter_main_programdata:
-        NewValue|contains: :\ProgramData\Microsoft\
+        Details|contains: :\ProgramData\Microsoft\
     filter_main_gameservice:
-        NewValue|contains: :\WINDOWS\system32\GamingServicesProxy.dll
+        Details|contains: :\WINDOWS\system32\GamingServicesProxy.dll
     filter_main_poqexec:
-        ProcessName|endswith: :\Windows\System32\poqexec.exe
-        NewValue|contains: :\Windows\System32\Autopilot.dll
+        Image|endswith: :\Windows\System32\poqexec.exe
+        Details|contains: :\Windows\System32\Autopilot.dll
     filter_main_sec_health_svc:
-        ProcessName|endswith: :\Windows\system32\SecurityHealthService.exe
-        NewValue|contains: :\Windows\System32\SecurityHealth
+        Image|endswith: :\Windows\system32\SecurityHealthService.exe
+        Details|contains: :\Windows\System32\SecurityHealth
     filter_main_inprocserver:
-        ProcessName|endswith:
+        Image|endswith:
             - :\Windows\System32\poqexec.exe
             - :\Windows\System32\regsvr32.exe
-        ObjectName|endswith: \InProcServer32\(Default)
+        TargetObject|endswith: \InProcServer32\(Default)
     condition: registry_set and (selection and not 1 of filter_main_*)
 falsepositives:
     - Some installed utilities (i.e. OneDrive) may serve new COM objects at user-level
