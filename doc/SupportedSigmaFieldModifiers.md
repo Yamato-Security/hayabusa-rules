@@ -5,11 +5,11 @@
 | base64offsetǀcontains |             7 |                0 |
 | cased                 |             0 |                0 |
 | cidr                  |            34 |                0 |
-| contains              |          2739 |                9 |
+| contains              |          2745 |                9 |
 | containsǀall          |           972 |                0 |
 | containsǀallǀwindash  |             4 |                0 |
 | containsǀwindash      |            76 |                0 |
-| endswith              |          2897 |               34 |
+| endswith              |          2902 |               34 |
 | endswithfield         |             0 |                1 |
 | endswithǀwindash      |             1 |                0 |
 | equalsfield           |             0 |                1 |
@@ -27,12 +27,12 @@
 | base64ǀutf16le   |             0 |                0 |
 | base64ǀwide      |             0 |                0 |
 | containsǀexpand  |             1 |                0 |
-| expand           |             8 |                0 |
+| expand           |             9 |                0 |
 | fieldref         |             1 |                0 |
 | gt               |             0 |                0 |
 | gte              |             0 |                0 |
 | lt               |             0 |                0 |
 | lte              |             0 |                0 |
 
-Updated: 2024/09/04  
+Updated: 2024/09/06  
 Author: Fukusuke Takahashi
