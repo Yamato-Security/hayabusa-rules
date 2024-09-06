@@ -90,10 +90,16 @@ if __name__ == '__main__':
     markdown_str = markdown_str + pd.DataFrame(sorted(result_supported), columns=header).to_markdown(index=False)
     markdown_str = markdown_str + "\n\n# Hayabusa unsupported field modifiers\n"
     markdown_str = markdown_str + pd.DataFrame(sorted(result_unsupported), columns=header).to_markdown(index=False)
-    markdown_str = f"{markdown_str}\n\nUpdated: {datetime.datetime.now().strftime('%Y/%m/%d')}  \nAuthor: Fukusuke Takahashi"
-    Path(args.out_path).write_text(markdown_str)
-
+    current_markdown = Path(args.out_path)
+    if current_markdown.exists():
+        current_str = current_markdown.read_text(encoding='utf-8')
+        current_str = re.sub(r"Updated:.*", "", current_str, flags=re.DOTALL).strip()
+        if current_str == markdown_str.strip():
+            logging.info("No changes detected in the report. Skipping file write.")
+        else:
+            markdown_str = f"{markdown_str}\n\nUpdated: {datetime.datetime.now().strftime('%Y/%m/%d')}  \nAuthor: Fukusuke Takahashi"
+            Path(args.out_path).write_text(markdown_str)
+            logging.info(f'Markdown report generated and saved to {args.out_path}')
     end_time = time.time()
     execution_time = end_time - start_time
-    logging.info(f'Markdown report generated and saved to {args.out_path}')
     logging.info(f'Script execution completed in {execution_time:.2f} seconds')
