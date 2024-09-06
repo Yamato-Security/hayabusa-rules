@@ -3,7 +3,7 @@ name: Pipeline for creating supported modifier markdown
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 20 * * *'
+    - cron: '0 21 * * *'
 
 jobs:
   updateMarkDown:
@@ -43,7 +43,7 @@ jobs:
       - name: Create Text
         id: create-text
         run: |
-          pushd hayabusa
+          pushd hayabusa-rules-repo
           echo "action_date=$(date '+%Y-%m-%d  %H:%M:%S')" >> $GITHUB_ENV
           echo "change_exist=true" >> $GITHUB_ENV
           git_new=$(git diff --name-status --diff-filter=AC)
@@ -70,7 +70,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          path: hayabusa
+          path: hayabusa-rules-repo
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Sigma Rule Supported Modifier Update (${{ env.action_date }})
           branch: auto-sigma-supported-modifier-update
