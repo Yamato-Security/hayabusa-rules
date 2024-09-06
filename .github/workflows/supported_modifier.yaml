@@ -70,7 +70,7 @@ jobs:
         id: cpr
         uses: peter-evans/create-pull-request@v4
         with:
-          path: hayabusa
+          path: hayabusa-rules-repo
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: Sigma Rule Supported Modifier Update (${{ env.action_date }})
           branch: auto-sigma-supported-modifier-update
