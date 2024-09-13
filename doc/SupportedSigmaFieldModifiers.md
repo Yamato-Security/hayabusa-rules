@@ -5,11 +5,11 @@
 | base64offsetǀcontains |             7 |                0 |
 | cased                 |             0 |                0 |
 | cidr                  |            34 |                0 |
-| contains              |          2745 |                9 |
-| containsǀall          |           972 |                0 |
+| contains              |          2744 |                9 |
+| containsǀall          |           973 |                0 |
 | containsǀallǀwindash  |             4 |                0 |
 | containsǀwindash      |            76 |                0 |
-| endswith              |          2902 |               34 |
+| endswith              |          2903 |               34 |
 | endswithfield         |             0 |                1 |
 | endswithǀwindash      |             1 |                0 |
 | equalsfield           |             0 |                1 |
@@ -34,5 +34,5 @@
 | lt               |             0 |                0 |
 | lte              |             0 |                0 |
 
-Updated: 2024/09/06  
+Updated: 2024/09/13  
 Author: Fukusuke Takahashi
