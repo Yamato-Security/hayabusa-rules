@@ -26,7 +26,12 @@ detection:
             - 20
             - 21
         Channel: Microsoft-Windows-Sysmon/Operational
-    condition: wmi_event
+    selection:
+        EventID:
+            - 19
+            - 20
+            - 21
+    condition: wmi_event and selection
 falsepositives:
     - Exclude legitimate (vetted) use of WMI event subscription in your network
 level: medium
