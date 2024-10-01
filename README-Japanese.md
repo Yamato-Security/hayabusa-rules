@@ -647,7 +647,7 @@ detection:
 
 # 非推奨機能
 
-これらの機能は「Hayabusa」でサポートされていますが、今後ルール内で使用されることはありません。
+これらの機能はHayabusaでサポートされていますが、今後ルール内で使用されることはありません。
 
 ## イベントキー内のキーワードのネスト
 
@@ -689,7 +689,7 @@ Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemPro
 
 ## 集計条件
 
-この機能はHayabusaではまだサポートされているが、将来的にはSigmaのCorrelationルールに置き換えられる
+この機能はHayabusaではまだサポートされていますが、将来的にはSigmaのCorrelationルールに置き換えられます。
 
 ### 基本事項
 
