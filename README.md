@@ -519,9 +519,9 @@ This document is updated every time there is an update to Sigma or Hayabusa rule
 - `|fieldref`: Checks to see if the values in two fields are the same. This is the same as the `|equalsfield` modifier.
 - `|re`: Use case-sensitive regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/latest/regex/#syntax> to learn how to write supported regular expressions.)
     > Caution: [Regular expression syntax in Sigma rules](https://github.com/SigmaHQ/sigma-specification/blob/main/appendix/sigma-modifiers-appendix.md#regular-expression) uses PCRE with certain metacharacters for character classes, lookbehind, atomic grouping, etc... being unsupported. The Rust regex crate should be able to use all regular expressions in Sigma rules but there is a possibility of incompatibility. 
-- `re|i`: (Insensitive) Use case-insensitive regular expressions.
-- `re|m`: (Multi-line) Match across multiple lines. `^` / `$` match the start/end of line.
-- `re|s`: (Single-line) dot (`.`) matches all characters, including the newline character.
+- `|re|i`: (Insensitive) Use case-insensitive regular expressions.
+- `|re|m`: (Multi-line) Match across multiple lines. `^` / `$` match the start/end of line.
+- `|re|s`: (Single-line) dot (`.`) matches all characters, including the newline character.
 - `|startswith`: Checks the string from the beginning.
 
 ### Extra Field Modifiers

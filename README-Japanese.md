@@ -17,9 +17,13 @@ Windowsのイベントログから攻撃を検出するキュレーションさ�
 
 * [EnableWindowsLogSettings](https://github.com/Yamato-Security/EnableWindowsLogSettings) - Windowsイベントログを正しく設定するためのドキュメンテーションとスクリプト。
 * [Hayabusa](https://github.com/Yamato-Security/hayabusa/blob/main/README-Japanese.md) - Sigmaベースの脅威ハンティングと、Windowsイベントログのファストフォレンジックタイムライン生成ツール。
+* [Hayabusa Encoded Rules](https://github.com/Yamato-Security/hayabusa-encoded-rules) - このリポジトリと同じルールですが、ルールと設定ファイルは1つのファイルに保存され、アンチウイルスによる誤検知を防ぐためにXORされる。
+* [Hayabusa EVTX](https://github.com/Yamato-Security/hayabusa-evtx) - `evtx`クレートのよりメンテナンスされたフォーク。
 * [Hayabusa Sample EVTXs](https://github.com/Yamato-Security/hayabusa-sample-evtx) - Hayabusa/Sigma検出ルールをテストするためのサンプルevtxファイル。
+* [Presentations](https://github.com/Yamato-Security/Presentations) - ツールやリソースについて行った講演のプレゼンテーション。
+* [Sigma to Hayabusa Converter](https://github.com/Yamato-Security/sigma-to-hayabusa-converter) - 上流のWindowsイベントログベースのSigmaルールを使いやすい形式にキュレーションする。
 * [Takajo](https://github.com/Yamato-Security/takajo/blob/main/README-Japanese.md) - Hayabusa結果の解析ツール。
-* [WELA (Windows Event Log Analyzer)](https://github.com/Yamato-Security/WELA/blob/main/README-Japanese.md) - PowerShellで書かれたWindowsイベントログの解析ツール。
+* [WELA (Windows Event Log Analyzer)](https://github.com/Yamato-Security/WELA/blob/main/README-Japanese.md) - PowerShellで書かれたWindowsイベントログの解析ツール。(非推奨となり、Takajoに置き換えられた)
 
 # 目次
 
@@ -45,12 +49,13 @@ Windowsのイベントログから攻撃を検出するキュレーションさ�
     - [追加のフィールド修飾子](#追加のフィールド修飾子)
   - [対応していないフィールド修飾子](#対応していないフィールド修飾子)
   - [ワイルドカード](#ワイルドカード)
-  - [イベントキー内のキーワードのネスト](#イベントキー内のキーワードのネスト)
-    - [regexesとallowlistキーワード](#regexesとallowlistキーワード)
   - [null keyword](#null-keyword)
   - [condition (条件)](#condition-条件)
   - [notロジック](#notロジック)
-  - [aggregation condition](#aggregation-condition)
+- [非推奨機能](#非推奨機能)
+  - [イベントキー内のキーワードのネスト](#イベントキー内のキーワードのネスト)
+    - [regexesとallowlistキーワード](#regexesとallowlistキーワード)
+  - [集計条件](#集計条件)
     - [基本事項](#基本事項)
     - [countの4パターン](#countの4パターン)
     - [パターン1の例](#パターン1の例)
@@ -488,27 +493,37 @@ detection:
 
 ### 対応しているSigmaのフィールド修飾子
 
+サポートされているフィールド修飾子、サポートされていないフィールド修飾子、およびこれらの修飾子がSigmaとはHayabusaのルールで使用されている回数の現在の状況は、https://github.com/Yamato-Security/hayabusa-rules/blob/main/doc/SupportedSigmaFieldModifiers.md で確認できます。
+この文書は、SigmaやHayabusaのルールが更新されるたびに更新されます。
+
+- `'|all':`: このフィールド修飾子は、特定のフィールドに適用されるのではなく、すべてのフィールドに適用されるので、他の修飾子とは異なります
+
+    この例では、`Keyword-1`と`Keyword-2`という文字列の両方が存在する必要がありますが、任意のフィールドのどこにでも存在できます:
+    ```
+    detection:
+        keywords:
+            '|all':
+                - 'Keyword-1'
+                - 'Keyword-2'
+        condition: keywords
+    ```
+
 - `|base64offset|contains`: データは、エンコードされた文字列内の位置によって、3つの異なる方法でbase64にエンコードされます。この修飾子は、文字列を3つのバリエーションにエンコードし、その文字列がbase64文字列のどこかにエンコードされているかどうかをチェックします。
+- `|cased`: Make the search case-sensitive.
 - `|cidr`: IPv4またはIPv6のCIDR表記をチェックします。（例：`192.0.2.0/24`）
 - `|contains`: 指定された文字列が含まれることをチェックします。
 - `|contains|all`: 指定された複数の文字列が含まれることをチェックします。
-- `|contains|windash`: 文字列をそのままチェックするだけでなく、最初の`-`文字を`/`文字に変換し、そのバリエーションもチェックします。
 - `|contains|all|windash`: `contains|windash`と同じですが、すべてのキーワードが存在する必要があります。
-- `|startswith`: 指定された文字列で始まることをチェックします。
+- `|contains|windash`: 文字列をそのままチェックするだけでなく、最初の`-`文字を`/`文字に変換し、そのバリエーションもチェックします。
 - `|endswith`: 指定された文字列で終わることをチェックします。
-- `|re`: 正規表現を使用します。(正規表現の書き方については <https://docs.rs/regex/latest/regex/#syntax> を参照してください)。
-  > 注意: SigmaルールとHayabusaルールは正規表現の記法に一部差異があります。そのため、HayabusaではSigmaルールを正しく検知できない場合があります。
-- `'|all':`: このフィールド修飾子は、特定のフィールドに適用されるのではなく、すべてのフィールドに適用されるため、上記の修飾子とは異なります。
-
-この例では、`Keyword-1`と`Keyword-2`という文字列の両方が存在する必要がありますが、任意のフィールドのどこにでも存在できます:
-```
-detection:
-    keywords:
-        '|all':
-            - 'Keyword-1'
-            - 'Keyword-2'
-    condition: keywords
-```
+- `|endswith|windash`: 指定された文字列で終わることをチェックし、最初の`-`文字を`/`文字に変換し、そのバリエーションもチェックします。
+- `|fieldref`: 2つのフィールドの値が同じかどうかをチェックする。これは `|equalsfield` 修飾子と同じです。
+- `|re`: 大文字と小文字を区別する正規表現を使用する。 (regexクレートを使用しているので、サポートされている正規表現の書き方は以下のドキュメントを参照してください。 <https://docs.rs/regex/latest/regex/#syntax>)
+    > 注意: [Sigma ルールにおける正規表現の構文](https://github.com/SigmaHQ/sigma-specification/blob/main/appendix/sigma-modifiers-appendix.md#regular-expression) PCREを使用しており、文字クラス、ルックビハインド、アトミック・グルーピングなどの特定のメタ文字はサポートされていません。Rust regex crateはSigmaルールですべての正規表現を使用できるはずですが、互換性がない可能性があります。
+- `|re|i`: (Insensitive) 大文字小文字を区別しない正規表現を使用する。
+- `|re|m`: (Multi-line) 複数行にまたがってマッチする。`^` / `$` は行頭/行末にマッチする。
+- `|re|s`: (Single-line) ドット (`.`) は改行文字を含むすべての文字にマッチする。
+- `|startswith`: 指定された文字列で始まることをチェックします。
 
 ### 追加のフィールド修飾子
 
@@ -522,12 +537,15 @@ detection:
 
 以下の修飾子は、現在サポートされていないため、Sigmaリポジトリでこれらの修飾子を使用するルールは含まれていません:
 
+- `base64ǀutf16be`
+- `base64ǀutf16le`
+- `base64ǀwide`
+- `contains|expand`
 - `expand`
 - `gt`
 - `gte`
 - `lt`
 - `lte`
-- `utf16 / utf16le / utf16be / wide`
 
 ## ワイルドカード
 
@@ -552,43 +570,6 @@ detection:
 - ワイルドカード(`*`と`?`)はバックスラッシュでエスケープできます: `\*` と `\?`.
 - ワイルドカードの直前にバックスラッシュを使用する場合、 `\\*` または `\\?` と記述してください。
 - バックスラッシュを単独で使用する場合、エスケープは不要です。
-
-## イベントキー内のキーワードのネスト
-
-イベントキーには特定のキーワードをネストすることができます。
-
-```yaml
-detection:
-    selection:
-        Channel: System
-        EventID: 7045
-        ServiceName:
-            - value: malicious-service
-            - regexes: ./rules/config/regex/detectlist_suspicous_services.txt
-        ImagePath:
-            min_length: 1000
-            allowlist: ./rules/config/regex/allowlist_legitimate_services.txt
-    condition: selection
-```
-
-現在、指定できるキーワードは以下の通りです。
-
-- `value`: 文字列によるマッチング (ワイルドカードやパイプも指定可能)。
-- `min_length`: 指定された文字数以上の場合にマッチします。
-- `regexes`: 指定されたファイルに定義された正規表現に1つ以上に一致する場合、**条件にマッチした**ものとして扱われます。
-- `allowlist`: 指定されたファイルに定義された正規表現に1つ以上に一致する場合、**条件にマッチしてない**ものとして扱われます。
-
-### regexesとallowlistキーワード
-
-Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemProcess-WindowsService_MaliciousServiceInstalled.yml`のルールのために使う2つの正規表現ファイルが用意されています。
-
-- `./rules/config/regex/detectlist_suspicous_services.txt`: 怪しいサービス名を検知するためのものです。
-- `./rules/config/regex/allowlist_legitimate_services.txt`: 正規のサービスを許可するためのものです。
-
-`regexes` と `allowlist` で定義されたファイルの正規表現を変更すると、それらを参照するすべてのルールの動作を一度に変更できます。
-
-また、`regexes` と `allowlist` にはユーザーが独自で作成したファイルを指定することも可能です。
-デフォルトの `./rules/config/detectlist_suspicous_services.txt` と `./rules/config/allowlist_legitimate_services.txt` を参考にして、独自のファイルを作成してください。
 
 ## null keyword
 
@@ -664,7 +645,51 @@ detection:
     condition: selection and not filter
 ```
 
-## aggregation condition
+# 非推奨機能
+
+これらの機能は「Hayabusa」でサポートされていますが、今後ルール内で使用されることはありません。
+
+## イベントキー内のキーワードのネスト
+
+イベントキーには特定のキーワードをネストすることができます。
+
+```yaml
+detection:
+    selection:
+        Channel: System
+        EventID: 7045
+        ServiceName:
+            - value: malicious-service
+            - regexes: ./rules/config/regex/detectlist_suspicous_services.txt
+        ImagePath:
+            min_length: 1000
+            allowlist: ./rules/config/regex/allowlist_legitimate_services.txt
+    condition: selection
+```
+
+現在、指定できるキーワードは以下の通りです。
+
+- `value`: 文字列によるマッチング (ワイルドカードやパイプも指定可能)。
+- `min_length`: 指定された文字数以上の場合にマッチします。
+- `regexes`: 指定されたファイルに定義された正規表現に1つ以上に一致する場合、**条件にマッチした**ものとして扱われます。
+- `allowlist`: 指定されたファイルに定義された正規表現に1つ以上に一致する場合、**条件にマッチしてない**ものとして扱われます。
+
+### regexesとallowlistキーワード
+
+Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemProcess-WindowsService_MaliciousServiceInstalled.yml`のルールのために使う2つの正規表現ファイルが用意されています。
+
+- `./rules/config/regex/detectlist_suspicous_services.txt`: 怪しいサービス名を検知するためのものです。
+- `./rules/config/regex/allowlist_legitimate_services.txt`: 正規のサービスを許可するためのものです。
+
+`regexes` と `allowlist` で定義されたファイルの正規表現を変更すると、それらを参照するすべてのルールの動作を一度に変更できます。
+
+また、`regexes` と `allowlist` にはユーザーが独自で作成したファイルを指定することも可能です。
+デフォルトの `./rules/config/detectlist_suspicous_services.txt` と `./rules/config/allowlist_legitimate_services.txt` を参考にして、独自のファイルを作成してください。
+
+
+## 集計条件
+
+この機能はHayabusaではまだサポートされているが、将来的にはSigmaのCorrelationルールに置き換えられる
 
 ### 基本事項
 
@@ -759,7 +784,6 @@ CountルールのDetails出力は固定で、`[condition]`にcount条件と`[res
 
 ```yaml
 detection:
-detection:
     SELECTION_1:
         Channnel: Security
     SELECTION_2:
@@ -842,9 +866,7 @@ detection:
 
 # SigmaルールからHayabusaルール形式への自動変換
 
-SigmaルールからHayabusaルール形式に自動で変換する[ツール](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac)を作成しました。
-
-使用方法は[こちら](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac/README-Japanese.md)を参照してください。
+SigmaルールからHayabusaルール形式に自動で変換する[ツール](https://github.com/Yamato-Security/sigma-to-hayabusa-converter)を作成しました。
 
 # Twitter
 
