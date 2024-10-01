@@ -6,7 +6,7 @@
 | cased                 |             0 |                0 |
 | cidr                  |            34 |                0 |
 | contains              |          2744 |                9 |
-| containsǀall          |           973 |                0 |
+| containsǀall          |           977 |                0 |
 | containsǀallǀwindash  |             4 |                0 |
 | containsǀwindash      |            76 |                0 |
 | endswith              |          2905 |               34 |
@@ -34,5 +34,5 @@
 | lt               |             0 |                0 |
 | lte              |             0 |                0 |
 
-Updated: 2024/09/22  
+Updated: 2024/10/01  
 Author: Fukusuke Takahashi
