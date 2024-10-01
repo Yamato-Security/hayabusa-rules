@@ -1,5 +1,9 @@
 # Changes
 
+## v2.17.0 [2024/10/01]
+
+- Deprecate the use of regular expression wordlists (`regexes` and `allowlist` fields) inside rules. Instead, the regular expressions will be in normal lists inside the rule. (#725) (@yamatosecurity)
+
 ## v2.15.0 [2024/06/04]
 
 - The windash modifier (ex: `|windash|contains`) is now left as is and we do not convert these to more compatible rules now that Hayabusa supports windash natively as of version 2.15.0. (#646) (@fukusuket)
