@@ -5,7 +5,7 @@ related:
       type: derived
     - id: 4fe074b4-b833-4081-8f24-7dcfeca72b42
       type: derived
-status: experimental
+status: test
 description: |
     Detects execution of "findstr" to search for common names of security tools. Attackers often pipe the results of recon commands such as "tasklist" or "whoami" to "findstr" in order to filter out the results.
     This detection focuses on the keywords that the attacker might use as a filter.
