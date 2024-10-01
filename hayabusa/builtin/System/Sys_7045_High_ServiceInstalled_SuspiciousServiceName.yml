@@ -1,10 +1,10 @@
 author: Zach Mathis
 date: 2022/02/06
-modified: 2023/02/27
+modified: 2024/10/01
 
-title: 'Susp Svc Installed'
+title: 'Suspicous Service Name'
 details: 'Svc: %ServiceName% ¦ Path: %ImagePath% ¦ Acct: %AccountName% ¦ StartType: %StartType%'
-description: A new service was installed. (Possibly malware.)
+description: Tries to look for random-looking service names that are often used by malware for persistence.
 
 id: cc429813-21db-4019-b520-2f19648e1ef1
 level: high
@@ -16,13 +16,11 @@ detection:
     selection:
         Channel: 'System'
         EventID: 7045
-    selection_suspicious_keywords:
-        ImagePath|contains: 
-            - 'cmd'
-            - 'powershell'
-    condition: selection and selection_suspicious_keywords
+    selection_SuspiciousServiceNames:
+        ServiceName|re: '^[a-zA-Z]{16}'
+    condition: selection and selection_SuspiciousServiceNames
 falsepositives:
-    - 'normal system usage'
+    - Expect false positives are legitimate services will use names that look random.
 tags:
     - attack.persistence
     - attack.t1543.003

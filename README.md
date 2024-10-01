@@ -45,11 +45,12 @@ We also create new rules with converted field names and values for `process_crea
     - [Extra Field Modifiers](#extra-field-modifiers)
   - [Unsupported Field Modifiers](#unsupported-field-modifiers)
   - [Wildcards](#wildcards)
-  - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
-    - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
   - [null keyword](#null-keyword)
   - [condition](#condition)
   - [not logic](#not-logic)
+- [Deprecated features](#deprecated-features)
+  - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
+    - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
   - [Aggregation conditions (Count rules)](#aggregation-conditions-count-rules)
     - [Basics](#basics)
     - [Four patterns for aggregation conditions](#four-patterns-for-aggregation-conditions)
@@ -63,7 +64,7 @@ We also create new rules with converted field names and values for `process_crea
     - [Please do this](#please-do-this)
     - [Instead of](#instead-of-1)
     - [Please do this](#please-do-this-1)
-- [Converting sigma rules to hayabusa format](#converting-sigma-rules-to-hayabusa-format)
+- [Converting Sigma rules to Hayabusa format](#converting-sigma-rules-to-hayabusa-format)
 - [Twitter](#twitter)
 
 # About creating rule files
@@ -486,27 +487,38 @@ String matches are case insensitive. However, they become case sensitive wheneve
 
 ### Supported Sigma Field Modifiers
 
+You can check the current status of all of the supported and unsupported field modifiers as well as how many times these modifiers are used in Sigma and Hayabusa rules at https://github.com/Yamato-Security/hayabusa-rules/blob/main/doc/SupportedSigmaFieldModifiers.md .
+This document is updated every time there is an update to Sigma or Hayabusa rules.
+
+- `'|all':`: This field modifier is different from those above because it does not get applied to a certain field but to all fields.
+
+    In this example, both strings `Keyword-1` and `Keyword-2` need to exist but can exist anywhere in any field:
+    ```
+    detection:
+        keywords:
+            '|all':
+                - 'Keyword-1'
+                - 'Keyword-2'
+        condition: keywords
+    ```
+
 - `|base64offset|contains`: Data will be encoded to base64 in three different ways depending on its position in the encoded string. This modifier will encoded a string to all three variations and check if the string is encoded somewhere in the base64 string.
+- `|cased`: Make the search case-sensitive.
 - `|cidr`: Matches on a IPv4 or IPv6 CIDR notation (Ex: `192.0.2.0/24`)
 - `|contains`: Checks if a word is contained in the data
 - `|contains|all`: Checks if multiple words are contained in the data
-- `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to a `/` character and check that variation as well.
 - `|contains|all|windash`: Same as `|contains|windash` but all of the keywords need to be present.
-- `|startswith`: Checks the string from the beginning
-- `|endswith`: Checks the end of the string
-- `|re`: Use regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/latest/regex/#syntax> to learn how to write correct regular expressions.)
-> Caution: Regular expression syntax in sigma rules is still not defined so some sigma rules may not match correctly if they differ from the Rust regex syntax.
-- `'|all':`: This field modifier is different from those above because it does not get applied to a certain field but to all fields.
-
-In this example, both strings `Keyword-1` and `Keyword-2` need to exist but can exist anywhere in any field:
-```
-detection:
-    keywords:
-        '|all':
-            - 'Keyword-1'
-            - 'Keyword-2'
-    condition: keywords
-```
+- `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to a `/` character and check that variation as well.
+- `|endswith`: Checks the end of the string.
+- `|endswith|windash`: Checks the end of the string and performs variations for dashes.
+- `|exists`: Checks if a field exists.
+- `|fieldref`: Checks to see if the values in two fields are the same. This is the same as the `|equalsfield` modifier.
+- `|re`: Use case-sensitive regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/latest/regex/#syntax> to learn how to write supported regular expressions.)
+    > Caution: [Regular expression syntax in Sigma rules](https://github.com/SigmaHQ/sigma-specification/blob/main/appendix/sigma-modifiers-appendix.md#regular-expression) uses PCRE with certain metacharacters for character classes, lookbehind, atomic grouping, etc... being unsupported. The Rust regex crate should be able to use all regular expressions in Sigma rules but there is a possibility of incompatibility. 
+- `re|i`: (Insensitive) Use case-insensitive regular expressions.
+- `re|m`: (Multi-line) Match across multiple lines. `^` / `$` match the start/end of line.
+- `re|s`: (Single-line) dot (`.`) matches all characters, including the newline character.
+- `|startswith`: Checks the string from the beginning.
 
 ### Extra Field Modifiers
 
@@ -517,14 +529,17 @@ The following modifiers are not in the sigma specification but have been added f
 
 ## Unsupported Field Modifiers
 
-The following modifiers are currently not supported so we do not include any rules from the sigma repository that use them:
+The following modifiers are currently not supported, but currently only the `|expand` and `|contains|expand` modifiers are actually used in rules:
 
+- `base64ǀutf16be`
+- `base64ǀutf16le`
+- `base64ǀwide`
+- `contains|expand`
 - `expand`
 - `gt`
 - `gte`
 - `lt`
 - `lte`
-- `utf16 / utf16le / utf16be / wide`
 
 ## Wildcards
 
@@ -548,45 +563,6 @@ About escaping wildcards:
 - Wildcards (`*` and `?`) can be escaped by using a backslash: `\*`, `\?`.
 - If you want to use a backslash right before a wildcard then write `\\*` or `\\?`.
 - Escaping is not required if you are using backslashes by themselves.
-
-## Nesting keywords inside eventkeys
-
-Eventkeys can be nested with specific keywords.
-In the example below, the rule will match if the following are true:
-- `ServiceName` is called `malicious-service` or contains a regular expression in `./rules/config/regex/detectlist_suspicous_services.txt`.
-- `ImagePath` has a minimum of 1000 characters.
-- `ImagePath` does not have any matches in the `allowlist`.
-
-```yaml
-detection:
-    selection:
-        Channel: System
-        EventID: 7045
-        ServiceName:
-            - value: malicious-service
-            - regexes: ./rules/config/regex/detectlist_suspicous_services.txt
-        ImagePath:
-            min_length: 1000
-            allowlist: ./rules/config/regex/allowlist_legitimate_services.txt
-    condition: selection
-```
-
-Currently, the following keywords can be specified:
-- `value`: matches by string (wildcards and pipes can also be specified).
-- `min_length`: matches when the number of characters is greater than or equal to the specified number.
-- `regexes`: matches if one of the regular expressions in the file that you specify in this field matches.
-- `allowlist`: rule will be skipped if there is any match found in the list of regular expressions in the file that you specify in this field.
-
-### regexes and allowlist keywords
-
-Hayabusa has two built-in regular expression files used for the `./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemProcess-WindowsService_MaliciousServiceInstalled.yml` file:
-- `./rules/config/regex/detectlist_suspicous_services.txt`: to detect suspicious service names
-- `./rules/config/regex/allowlist_legitimate_services.txt`: to allow legitimate services
-
-Files defined in `regexes` and `allowlist` can be edited to change the behavior of all rules that reference them without having to change any rule file itself.
-
-You can also use different detectlist and allowlist textfiles that you create.
-Please refer to the built-in `./rules/config/regex/detectlist_suspicous_services.txt` and `./rules/config/regex/allowlist_legitimate_services.txt` when creating your own.
 
 ## null keyword
 
@@ -664,7 +640,51 @@ detection:
     condition: selection and not filter
 ```
 
+# Deprecated features
+
+These features are still supported in Hayabusa but will not be used inside rules in the future.
+
+## Nesting keywords inside eventkeys
+
+Eventkeys can be nested with specific keywords.
+In the example below, the rule will match if the following are true:
+- `ServiceName` is called `malicious-service` or contains a regular expression in `./rules/config/regex/detectlist_suspicous_services.txt`.
+- `ImagePath` has a minimum of 1000 characters.
+- `ImagePath` does not have any matches in the `allowlist`.
+
+```yaml
+detection:
+    selection:
+        Channel: System
+        EventID: 7045
+        ServiceName:
+            - value: malicious-service
+            - regexes: ./rules/config/regex/detectlist_suspicous_services.txt
+        ImagePath:
+            min_length: 1000
+            allowlist: ./rules/config/regex/allowlist_legitimate_services.txt
+    condition: selection
+```
+
+Currently, the following keywords can be specified:
+- `value`: matches by string (wildcards and pipes can also be specified).
+- `min_length`: matches when the number of characters is greater than or equal to the specified number.
+- `regexes`: matches if one of the regular expressions in the file that you specify in this field matches.
+- `allowlist`: rule will be skipped if there is any match found in the list of regular expressions in the file that you specify in this field.
+
+### regexes and allowlist keywords
+
+Hayabusa had two built-in regular expression files used for the `./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemProcess-WindowsService_MaliciousServiceInstalled.yml` file:
+- `./rules/config/regex/detectlist_suspicous_services.txt`: to detect suspicious service names
+- `./rules/config/regex/allowlist_legitimate_services.txt`: to allow legitimate services
+
+Files defined in `regexes` and `allowlist` can be edited to change the behavior of all rules that reference them without having to change any rule file itself.
+
+You can also use different detectlist and allowlist textfiles that you create.
+
 ## Aggregation conditions (Count rules)
+
+This is still supported in Hayabusa but will be replaced by Sigma correlation rules in the future.
 
 ### Basics
 
@@ -837,11 +857,9 @@ detection:
                and not filter_SubjectUserIsComputerAccount) and not filter_SystemAccounts and not filter_UsersAndTargetServerAreComputerAccounts
 ```
 
-# Converting sigma rules to hayabusa format
+# Converting Sigma rules to Hayabusa format
 
-We have created a backend for sigmac to convert rules from sigma to hayabusa format [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac).
-
-The documentation for how to use it is [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/tools/sigmac/README.md).
+We have created a backend to convert rules from Sigma to Hayabusa-compatible format [here](https://github.com/Yamato-Security/sigma-to-hayabusa-converter).
 
 # Twitter
 
