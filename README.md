@@ -18,7 +18,9 @@ We also create new rules with converted field names and values for `process_crea
 * [EnableWindowsLogSettings](https://github.com/Yamato-Security/EnableWindowsLogSettings) - documentation and scripts to properly enable Windows event logs.
 * [Hayabusa](https://github.com/Yamato-Security/hayabusa) - sigma-based threat hunting and fast forensics timeline generator for Windows event logs.
 * [Hayabusa Encoded Rules](https://github.com/Yamato-Security/hayabusa-encoded-rules) - The same as this repository but the rules and config files are stored in one file and XORed to prevent false positives from anti-virus.
+* [Hayabusa EVTX](https://github.com/Yamato-Security/hayabusa-evtx) - A more maintained fork of the `evtx` crate.
 * [Hayabusa Sample EVTXs](https://github.com/Yamato-Security/hayabusa-sample-evtx) - Sample evtx files to use for testing Hayabusa/Sigma detection rules.
+* [Presentations](https://github.com/Yamato-Security/Presentations) - Presentations from talks that we have given about our tools and resources.
 * [Sigma to Hayabusa Converter](https://github.com/Yamato-Security/sigma-to-hayabusa-converter) - Curates upstream Windows event log based Sigma rules into an easier to use form.
 * [Takajo](https://github.com/Yamato-Security/takajo) - Analyzer for hayabusa results.
 * [WELA (Windows Event Log Analyzer)](https://github.com/Yamato-Security/WELA) - An analyzer for Windows event logs written in PowerShell. (Deprecated and replaced by Takajo.)
