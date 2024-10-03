@@ -1,5 +1,9 @@
 # Changes
 
+## v2.17.0 [2024/10/03]
+
+- Bug fix: Two rules were causing errors because we deleted `rules/config/regex/LOLBAS_paths.txt`. The rules now do not reference any external file. (#730) (@yamatosecurity)
+
 ## v2.17.0 [2024/10/01]
 
 - Deprecate the use of regular expression wordlists (`regexes` and `allowlist` fields) inside rules. Instead, the regular expressions will be in normal lists inside the rule. (#725) (@yamatosecurity)
