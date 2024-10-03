@@ -9,8 +9,8 @@
 | containsǀall          |           977 |                0 |
 | containsǀallǀwindash  |             4 |                0 |
 | containsǀwindash      |            76 |                0 |
-| endswith              |          2905 |               34 |
-| endswithfield         |             0 |                1 |
+| endswith              |          2905 |              270 |
+| endswithfield         |             0 |                2 |
 | endswithǀwindash      |             1 |                0 |
 | equalsfield           |             0 |                1 |
 | exists                |             0 |                0 |
@@ -34,5 +34,5 @@
 | lt               |             0 |                0 |
 | lte              |             0 |                0 |
 
-Updated: 2024/10/02  
+Updated: 2024/10/03  
 Author: Fukusuke Takahashi
