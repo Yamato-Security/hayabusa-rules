@@ -1,30 +1,38 @@
-title: Suspicious Office Token Search Via CLI
-id: 9040711a-5958-aed6-ca57-ab80997eb33c
+title: Potentially Suspicious JWT Token Search Via CLI
+id: 81c5facb-4885-e062-fbf5-27475e21bba1
 related:
     - id: 6d3a3952-6530-44a3-8554-cf17c116c615
       type: derived
 status: test
-description: Detects possible search for office tokens via CLI by looking for the string "eyJ0eX". This string is used as an anchor to look for the start of the JWT token used by office and similar apps.
+description: |
+    Detects possible search for JWT tokens via CLI by looking for the string "eyJ0eX" or "eyJhbG".
+    This string is used as an anchor to look for the start of the JWT token used by microsoft office and similar apps.
 references:
     - https://mrd0x.com/stealing-tokens-from-office-applications/
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022-10-25
+modified: 2024-10-06
 tags:
     - attack.credential-access
     - attack.t1528
+    - sysmon
 logsource:
     category: process_creation
     product: windows
 detection:
     process_creation:
-        EventID: 4688
-        Channel: Security
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         CommandLine|contains:
             - eyJ0eXAiOi   # {"typ":
+            - eyJhbGciOi   # {"alg":
             - ' eyJ0eX'
             - ' "eyJ0eX"'
             - " 'eyJ0eX'"
+            - ' eyJhbG'
+            - ' "eyJhbG"'
+            - " 'eyJhbG'"
     condition: process_creation and selection
 falsepositives:
     - Unknown
