@@ -52,6 +52,13 @@ We also create new rules with converted field names and values for `process_crea
   - [null keyword](#null-keyword)
   - [condition](#condition)
   - [not logic](#not-logic)
+- [Sigma correlations](#sigma-correlations)
+  - [Event Count rule example:](#event-count-rule-example)
+    - [Correlation rule:](#correlation-rule)
+    - [Logon Failure (Wrong Password) rule:](#logon-failure-wrong-password-rule)
+    - [Logon Failure (Non-existant User) rule:](#logon-failure-non-existant-user-rule)
+    - [Event Count rule output:](#event-count-rule-output)
+  - [Value Count rule example:](#value-count-rule-example)
 - [Deprecated features](#deprecated-features)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
     - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
@@ -643,6 +650,107 @@ detection:
         - SubjectUserName: LOCAL SERVICE
     condition: selection and not filter
 ```
+
+# Sigma correlations
+
+We have implemented part of the Sigma version 2 correlations as defined [here](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md).
+
+Supported correlations:
+- Event Count (`event_count`)
+- Value Count (`value_count`)
+
+Unsupported correlations:
+- Temporal Proximity (`temporal`)
+- Ordered Temporal Proximity (`temporal_ordered`)
+
+## Event Count rule example:
+
+This example uses three rules to detect many logon failures due to wrong passwords or the user not existing.
+When the referenced rules match 3 or more times within 5 minutes, the correlation rule will alert providing infomation of the `Computer` and `SubStatus` fields.
+
+### Correlation rule:
+
+```
+title: Detect many failed logons
+id: 0e95725d-7320-415d-80f7-004da920fc11
+correlation:
+    type: event_count
+    rules:
+        - e87bd730-df45-4ae9-85de-6c75369c5d29 # Logon Failure (Wrong Password)
+        - 8afa97ce-a217-4f7c-aced-3e320a57756d # Logon Failure (User Does Not Exist)
+    group-by:
+        - Computer
+        - SubStatus
+    timespan: 5m
+    condition:
+        gte: 3
+```
+
+### Logon Failure (Wrong Password) rule:
+
+```
+title: Logon Failure (Wrong Password)
+id: e87bd730-df45-4ae9-85de-6c75369c5d29
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_basic:
+        Channel: Security
+        EventID: 4625
+    selection_wrong_password:
+        SubStatus: "0xc000006a" #Wrong password
+    condition: selection_basic and selection_wrong_password
+```
+
+### Logon Failure (Non-existant User) rule:
+
+```
+title: Logon Failure (User Does Not Exist)
+id: 8afa97ce-a217-4f7c-aced-3e320a57756d
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_basic:
+        Channel: Security
+        EventID: 4625
+    selection_user_not_exist:
+        SubStatus: "0xc0000064" #Username does not exist error
+    condition: selection_basic and selection_user_not_exist
+```
+
+This correlation rule and two referenced rules provide the same results as the following rule which uses the older `count` modifier:
+
+```
+title: Detect many failed logons
+logsource:
+  product: windows
+  service: security
+detection:
+  selection_basic:
+    Channel: Security
+    EventID: 4625
+  selection_error:
+    SubStatus:
+      - "0xc000006a" #Wrong password
+      - "0xc0000064" #Username does not exist error
+  condition: selection_basic and selection_error | count() by Computer,SubStatus >= 3
+  timeframe: 5m
+```
+
+### Event Count rule output:
+
+The rules above will create the following CSV output:
+```
+% ./hayabusa csv-timeline -d ../hayabusa-sample-evtx -o timeline.csv -r test -w -C
+% cat timeline.csv | grep -e "Correlation" -e "Aggregation"
+"2016-09-20 01:50:06.513 +09:00","Rule Title","high","-","-","-","-","Count:3558 ¦ Computer:DESKTOP-M5SN04R ¦ SubStatus:0xc000006a","-"
+"2021-05-20 21:49:52.315 +09:00","Detect many failed logons","high","-","-","-","-","Count:5 ¦ Computer:fs01.offsec.lan ¦ SubStatus:0xc0000064","-"
+"2021-05-22 05:43:22.562 +09:00","Detect many failed logons","high","-","-","-","-","Count:5 ¦ Computer:fs01.offsec.lan ¦ SubStatus:0xc000006a","-"
+```
+
+## Value Count rule example:
 
 # Deprecated features
 
