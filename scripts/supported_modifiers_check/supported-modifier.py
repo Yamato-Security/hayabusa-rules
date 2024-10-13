@@ -93,7 +93,7 @@ if __name__ == '__main__':
     current_markdown = Path(args.out_path)
     if current_markdown.exists():
         current_str = current_markdown.read_text(encoding='utf-8')
-        current_str = re.sub(r"Updated:.*", "", current_str, flags=re.DOTALL).strip()
+        current_str = re.sub(r"This document is being dynamically updated based on the latest rules. Last Update:.*", "", current_str, flags=re.DOTALL).strip()
         if current_str == markdown_str.strip():
             logging.info("No changes detected in the report. Skipping file write.")
         else:
