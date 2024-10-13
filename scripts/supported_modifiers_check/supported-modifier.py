@@ -32,8 +32,8 @@ def extract_keys_recursive(d) -> list[str]:
 def add_missing_modifiers(counter: Counter) -> Counter:
     check_strings = [
         'all', 'startswith', 'endswith', 'contains', 'exists', 'cased', 'windash', 're', 're|i', 're|m', 're|s',
-        'base64', 'base64offset', 'base64|utf16le', 'base64|utf16be', 'base64|utf16', 'base64|wide',
-        'lt', 'lte', 'gt', 'gte', 'cidr', 'expand', 'fieldref', 'equalsfield', 'endswithfield'
+        'base64', 'base64offset', 'utf16le|base64offset|contains', 'utf16be|base64offset|contains', 'utf16|base64offset|contains', 'wide|base64offset|contains',
+        'lt', 'lte', 'gt', 'gte', 'cidr', 'expand', 'fieldref', 'fieldref|endswith', 'equalsfield', 'endswithfield'
     ]
 
     for key in check_strings:
@@ -70,7 +70,7 @@ if __name__ == '__main__':
     sigma_key_counter = get_yml_detection_counts(args.sigma_path)
     hayabusa_key_counter = get_yml_detection_counts(args.hayabusa_path)
     header = ["Field Modifier", "Sigma Count", "Hayabusa Count"]
-    hayabusa_supported = {"all", "base64offset", "contains", "cidr", "windash", "endswith", "startswith", "re", "exists", "cased", "re", "re|i", "re|m", "re|s" , 'equalsfield', 'endswithfield'}
+    hayabusa_supported = {"all", "base64offset", "contains", "cidr", "windash", "endswith", "startswith", "re", "exists", "cased", "re", "re|i", "re|m", "re|s" , 'equalsfield', 'endswithfield', 'fieldref'}
 
     result_supported = []
     result_unsupported = []
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     current_markdown = Path(args.out_path)
     if current_markdown.exists():
         current_str = current_markdown.read_text(encoding='utf-8')
-        current_str = re.sub(r"Updated:.*", "", current_str, flags=re.DOTALL).strip()
+        current_str = re.sub(r"This document is being dynamically updated based on the latest rules. Last Update:.*", "", current_str, flags=re.DOTALL).strip()
         if current_str == markdown_str.strip():
             logging.info("No changes detected in the report. Skipping file write.")
         else:
