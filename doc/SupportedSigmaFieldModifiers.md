@@ -21,18 +21,19 @@
 | startswith            |           441 |                6 |
 
 # Hayabusa unsupported field modifiers
-| Field Modifier   |   Sigma Count |   Hayabusa Count |
-|:-----------------|--------------:|-----------------:|
-| base64ǀutf16be   |             0 |                0 |
-| base64ǀutf16le   |             0 |                0 |
-| base64ǀwide      |             0 |                0 |
-| containsǀexpand  |             1 |                0 |
-| expand           |             9 |                0 |
-| fieldref         |             1 |                0 |
-| gt               |             0 |                0 |
-| gte              |             0 |                0 |
-| lt               |             0 |                0 |
-| lte              |             0 |                0 |
+| Field Modifier                |   Sigma Count |   Hayabusa Count |
+|:------------------------------|--------------:|-----------------:|
+| containsǀexpand               |             1 |                0 |
+| expand                        |             9 |                0 |
+| fieldref                      |             1 |                0 |
+| gt                            |             0 |                0 |
+| gte                           |             0 |                0 |
+| lt                            |             0 |                0 |
+| lte                           |             0 |                0 |
+| utf16beǀbase64offsetǀcontains |             0 |                0 |
+| utf16leǀbase64offsetǀcontains |             0 |                0 |
+| utf16ǀbase64offsetǀcontains   |             0 |                0 |
+| wideǀbase64offsetǀcontains    |             0 |                0 |
 
-Updated: 2024/10/08  
+Updated: 2024/10/13  
 Author: Fukusuke Takahashi

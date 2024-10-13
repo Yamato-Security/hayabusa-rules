@@ -32,7 +32,7 @@ def extract_keys_recursive(d) -> list[str]:
 def add_missing_modifiers(counter: Counter) -> Counter:
     check_strings = [
         'all', 'startswith', 'endswith', 'contains', 'exists', 'cased', 'windash', 're', 're|i', 're|m', 're|s',
-        'base64', 'base64offset', 'base64|utf16le', 'base64|utf16be', 'base64|utf16', 'base64|wide',
+        'base64', 'base64offset', 'utf16le|base64offset|contains', 'utf16be|base64offset|contains', 'utf16|base64offset|contains', 'wide|base64offset|contains',
         'lt', 'lte', 'gt', 'gte', 'cidr', 'expand', 'fieldref', 'equalsfield', 'endswithfield'
     ]
 
