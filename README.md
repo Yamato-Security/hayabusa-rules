@@ -53,12 +53,21 @@ We also create new rules with converted field names and values for `process_crea
   - [condition](#condition)
   - [not logic](#not-logic)
 - [Sigma correlations](#sigma-correlations)
-  - [Event Count rule example:](#event-count-rule-example)
-    - [Correlation rule:](#correlation-rule)
-    - [Logon Failure (Wrong Password) rule:](#logon-failure-wrong-password-rule)
-    - [Logon Failure (Non-existant User) rule:](#logon-failure-non-existant-user-rule)
-    - [Event Count rule output:](#event-count-rule-output)
-  - [Value Count rule example:](#value-count-rule-example)
+  - [Event Count rules](#event-count-rules)
+    - [Event Count rule example:](#event-count-rule-example)
+      - [Event Count correlation rule:](#event-count-correlation-rule)
+      - [Event Count Logon Failure (Wrong Password) rule:](#event-count-logon-failure-wrong-password-rule)
+      - [Event Count Logon Failure (Non-existant User) rule:](#event-count-logon-failure-non-existant-user-rule)
+      - [Deprecated `count` rule example:](#deprecated-count-rule-example)
+      - [Improving the Event Count rule syntax](#improving-the-event-count-rule-syntax)
+      - [Event Count rule output:](#event-count-rule-output)
+  - [Value Count rules](#value-count-rules)
+    - [Value Count rule example:](#value-count-rule-example)
+      - [Value Count correlation rule:](#value-count-correlation-rule)
+      - [Value Count Logon Failure (Wrong Password) rule:](#value-count-logon-failure-wrong-password-rule)
+      - [Value Count Logon Failure (Non-existant User) rule:](#value-count-logon-failure-non-existant-user-rule)
+      - [Deprecated `count` modifier rule:](#deprecated-count-modifier-rule)
+      - [Value Count rule output:](#value-count-rule-output)
 - [Deprecated features](#deprecated-features)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
     - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
@@ -653,7 +662,7 @@ detection:
 
 # Sigma correlations
 
-We have implemented part of the Sigma version 2 correlations as defined [here](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md).
+We have implemented half of the Sigma version 2 correlations as defined [here](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md).
 
 Supported correlations:
 - Event Count (`event_count`)
@@ -663,12 +672,20 @@ Unsupported correlations:
 - Temporal Proximity (`temporal`)
 - Ordered Temporal Proximity (`temporal_ordered`)
 
-## Event Count rule example:
+## Event Count rules
 
-This example uses three rules to detect many logon failures due to wrong passwords or the user not existing.
+These are rules that count certain events and alert if too many or not enough number of these events occur within a timeframe.
+Common examples of detecting many events within a certain time period are for detecting password guessing attacks, password spray attacks and denial of service attacks.
+You could also use these rules to detect log source reliability issues, such as when certain events fall below a certain threshold.
+
+### Event Count rule example:
+
+The following example uses three rules to detect many logon failures due to wrong passwords or the user not existing, also known as a password guessing attack or brute force logon attack.
 When the referenced rules match 3 or more times within 5 minutes, the correlation rule will alert providing infomation of the `Computer` and `SubStatus` fields.
 
-### Correlation rule:
+> Note that we have only included the necessary fields in order to understand the concept.
+
+#### Event Count correlation rule:
 
 ```
 title: Detect many failed logons
@@ -686,7 +703,7 @@ correlation:
         gte: 3
 ```
 
-### Logon Failure (Wrong Password) rule:
+#### Event Count Logon Failure (Wrong Password) rule:
 
 ```
 title: Logon Failure (Wrong Password)
@@ -699,11 +716,11 @@ detection:
         Channel: Security
         EventID: 4625
     selection_wrong_password:
-        SubStatus: "0xc000006a" #Wrong password
+        SubStatus: "0xc000006a" # Wrong password
     condition: selection_basic and selection_wrong_password
 ```
 
-### Logon Failure (Non-existant User) rule:
+#### Event Count Logon Failure (Non-existant User) rule:
 
 ```
 title: Logon Failure (User Does Not Exist)
@@ -716,11 +733,13 @@ detection:
         Channel: Security
         EventID: 4625
     selection_user_not_exist:
-        SubStatus: "0xc0000064" #Username does not exist error
+        SubStatus: "0xc0000064" # Username does not exist error
     condition: selection_basic and selection_user_not_exist
 ```
 
-This correlation rule and two referenced rules provide the same results as the following rule which uses the older `count` modifier:
+#### Deprecated `count` rule example:
+
+The above correlation rule and two referenced rules provide the same results as the following rule which uses the older `count` modifier:
 
 ```
 title: Detect many failed logons
@@ -733,24 +752,74 @@ detection:
     EventID: 4625
   selection_error:
     SubStatus:
-      - "0xc000006a" #Wrong password
-      - "0xc0000064" #Username does not exist error
+      - "0xc000006a" # Wrong password
+      - "0xc0000064" # Username does not exist error
   condition: selection_basic and selection_error | count() by Computer,SubStatus >= 3
   timeframe: 5m
 ```
 
-### Event Count rule output:
+#### Improving the Event Count rule syntax
+
+
+
+#### Event Count rule output:
 
 The rules above will create the following CSV output:
 ```
-% ./hayabusa csv-timeline -d ../hayabusa-sample-evtx -o timeline.csv -r test -w -C
-% cat timeline.csv | grep -e "Correlation" -e "Aggregation"
+% ./hayabusa csv-timeline -d ../hayabusa-sample-evtx -o timeline.csv -r test.yml -w
+% cat timeline.csv
 "2016-09-20 01:50:06.513 +09:00","Rule Title","high","-","-","-","-","Count:3558 ¦ Computer:DESKTOP-M5SN04R ¦ SubStatus:0xc000006a","-"
 "2021-05-20 21:49:52.315 +09:00","Detect many failed logons","high","-","-","-","-","Count:5 ¦ Computer:fs01.offsec.lan ¦ SubStatus:0xc0000064","-"
 "2021-05-22 05:43:22.562 +09:00","Detect many failed logons","high","-","-","-","-","Count:5 ¦ Computer:fs01.offsec.lan ¦ SubStatus:0xc000006a","-"
 ```
 
-## Value Count rule example:
+## Value Count rules
+
+These rules counts the same events within a timeframe with  **different** values of a given field.
+
+Examples:
+- Network scans where a single source IP address tries to connect to many different destination IP addresses and/or ports.
+- Password spraying attacks where a single source fails to authenticate with many different users.
+- Detect tools like BloodHound that enumerate many high-privilege AD groups within a short timeframe.
+
+### Value Count rule example:
+
+
+
+> Note that we have only included the necessary fields in order to understand the concept.
+
+#### Value Count correlation rule:
+
+```
+xxx
+```
+
+#### Value Count Logon Failure (Wrong Password) rule:
+
+```
+xxx
+```
+
+#### Value Count Logon Failure (Non-existant User) rule:
+
+```
+xxx
+```
+
+#### Deprecated `count` modifier rule:
+
+The above correlation rule and two referenced rules provide the same results as the following rule which uses the older `count` modifier:
+
+```
+xxx
+```
+
+#### Value Count rule output:
+
+The rules above will create the following CSV output:
+```
+xxx
+```
 
 # Deprecated features
 
@@ -836,12 +905,19 @@ Aggregation conditions can be defined in the following format:
 
 1. No count argument or `by` keyword. Example: `selection | count() > 10`
    > If `selection` matches more than 10 times within the timeframe, the condition will match.
+   > These are replaced by Event Count correlation rules that do not use the `group-by` field.
 2. No count argument but there is a `by` keyword. Example: `selection | count() by IpAddress > 10`
    > `selection` will have to be true more than 10 times for the **same** `IpAddress`.
+   > These #2 rules are more common than the #1 rules.
+   > You can also specify multiple fields to group by. For example: `by IpAddress, Computer`
+   > These are replaced by Event Count correlation rules that do use the `group-by` field.
 3. There is a count argument but no `by` keyword. Example: `selection | count(TargetUserName) > 10`
    > If `selection` matches and `TargetUserName` is **different** more than 10 times within the timeframe, the condition will match.
+   > These are replaced by Value Count correlation rules that do not use the `group-by` field.
 4. There is both a count argument and `by` keyword. Example: `selection | count(Users) by IpAddress > 10`
    > For the **same** `IpAddress`, there will need to be more than 10 **different** `TargetUserName` in order for the condition to match.
+   > These #4 rules are more common than the #3 rules.
+   > These are replaced by Value Count correlation rules that use the `group-by` field.
 
 ### Pattern 1 example
 
