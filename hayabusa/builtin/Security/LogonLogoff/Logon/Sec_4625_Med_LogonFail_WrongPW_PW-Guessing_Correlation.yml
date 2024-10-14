@@ -15,7 +15,7 @@ tags:
 correlation:
     type: event_count
     rules:
-        - 5b0b75dc-9190-4047-b9a8-14164cee8a31
+        - incorrect_password
     group-by:
         - TargetUserName
         - TargetDomainName
@@ -36,6 +36,7 @@ ruletype: Hayabusa
 
 title: Failed Logon - Incorrect Password
 id: 5b0b75dc-9190-4047-b9a8-14164cee8a31
+name: incorrect_password
 related:
     - id: 35e8a0fc-60c2-46d7-ba39-aafb15b9854e
       type: obsolete
