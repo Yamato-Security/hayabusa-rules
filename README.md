@@ -55,19 +55,17 @@ We also create new rules with converted field names and values for `process_crea
 - [Sigma correlations](#sigma-correlations)
   - [Event Count rules](#event-count-rules)
     - [Event Count rule example:](#event-count-rule-example)
-      - [Event Count correlation rule:](#event-count-correlation-rule)
-      - [Event Count Logon Failure (Wrong Password) rule:](#event-count-logon-failure-wrong-password-rule)
-      - [Event Count Logon Failure (Non-existant User) rule:](#event-count-logon-failure-non-existant-user-rule)
-      - [Deprecated `count` rule example:](#deprecated-count-rule-example)
-      - [Improving the Event Count rule syntax](#improving-the-event-count-rule-syntax)
-      - [Event Count rule output:](#event-count-rule-output)
+    - [Event Count correlation rule:](#event-count-correlation-rule)
+    - [Failed Logon - Incorrect Password rule:](#failed-logon---incorrect-password-rule)
+    - [Deprecated `count` rule example:](#deprecated-count-rule-example)
+    - [Event Count rule output:](#event-count-rule-output)
   - [Value Count rules](#value-count-rules)
     - [Value Count rule example:](#value-count-rule-example)
-      - [Value Count correlation rule:](#value-count-correlation-rule)
-      - [Value Count Logon Failure (Wrong Password) rule:](#value-count-logon-failure-wrong-password-rule)
-      - [Value Count Logon Failure (Non-existant User) rule:](#value-count-logon-failure-non-existant-user-rule)
-      - [Deprecated `count` modifier rule:](#deprecated-count-modifier-rule)
-      - [Value Count rule output:](#value-count-rule-output)
+    - [Value Count correlation rule:](#value-count-correlation-rule)
+    - [Value Count Logon Failure (Non-existant User) rule:](#value-count-logon-failure-non-existant-user-rule)
+    - [Deprecated `count` modifier rule:](#deprecated-count-modifier-rule)
+    - [Value Count rule output:](#value-count-rule-output)
+  - [Notes on correlation rules](#notes-on-correlation-rules)
 - [Deprecated features](#deprecated-features)
   - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
     - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
@@ -680,146 +678,173 @@ You could also use these rules to detect log source reliability issues, such as 
 
 ### Event Count rule example:
 
-The following example uses three rules to detect many logon failures due to wrong passwords or the user not existing, also known as a password guessing attack or brute force logon attack.
-When the referenced rules match 3 or more times within 5 minutes, the correlation rule will alert providing infomation of the `Computer` and `SubStatus` fields.
+The following example uses two rules to detect password guessing attacks.
+There will be an alert when the referenced rule matches 5 or more times within 5 minutes and the `IpAddress` field is the same for those events.
 
 > Note that we have only included the necessary fields in order to understand the concept.
+> The full rule that this example is based on is located [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/hayabusa/builtin/Security/LogonLogoff/Logon/Sec_4625_Med_LogonFail_WrongPW_PW-Guessing_Correlation.yml) for your reference.
 
-#### Event Count correlation rule:
+### Event Count correlation rule:
 
-```
-title: Detect many failed logons
-id: 0e95725d-7320-415d-80f7-004da920fc11
+```yaml
+title: PW Guessing
+id: 23179f25-6fce-4827-bae1-b219deaf563e
 correlation:
     type: event_count
     rules:
-        - e87bd730-df45-4ae9-85de-6c75369c5d29 # Logon Failure (Wrong Password)
-        - 8afa97ce-a217-4f7c-aced-3e320a57756d # Logon Failure (User Does Not Exist)
+        - 5b0b75dc-9190-4047-b9a8-14164cee8a31
     group-by:
-        - Computer
-        - SubStatus
+        - IpAddress
     timespan: 5m
     condition:
-        gte: 3
+        gte: 5
 ```
 
-#### Event Count Logon Failure (Wrong Password) rule:
+### Failed Logon - Incorrect Password rule:
 
-```
-title: Logon Failure (Wrong Password)
-id: e87bd730-df45-4ae9-85de-6c75369c5d29
+```yaml
+title: Failed Logon - Incorrect Password
+id: 5b0b75dc-9190-4047-b9a8-14164cee8a31
 logsource:
     product: windows
     service: security
 detection:
-    selection_basic:
+    selection:
         Channel: Security
         EventID: 4625
-    selection_wrong_password:
-        SubStatus: "0xc000006a" # Wrong password
-    condition: selection_basic and selection_wrong_password
+        SubStatus: "0xc000006a" #Wrong password
+    filter:
+       IpAddress: "-"
+    condition: selection and not filter
 ```
 
-#### Event Count Logon Failure (Non-existant User) rule:
+### Deprecated `count` rule example:
 
-```
-title: Logon Failure (User Does Not Exist)
-id: 8afa97ce-a217-4f7c-aced-3e320a57756d
+The above correlation and referenced rules provide the same results as the following rule which uses the older `count` modifier:
+
+```yaml
+title: PW Guessing
 logsource:
     product: windows
     service: security
 detection:
-    selection_basic:
+    selection:
         Channel: Security
         EventID: 4625
-    selection_user_not_exist:
-        SubStatus: "0xc0000064" # Username does not exist error
-    condition: selection_basic and selection_user_not_exist
+        SubStatus: "0xc000006a" #Wrong password
+    filter:
+       IpAddress: "-"
+    condition: selection and not filter | count() by IpAddress >= 5
+    timeframe: 5m
 ```
+### Event Count rule output:
 
-#### Deprecated `count` rule example:
-
-The above correlation rule and two referenced rules provide the same results as the following rule which uses the older `count` modifier:
-
+The rules above will create the following output:
 ```
-title: Detect many failed logons
-logsource:
-  product: windows
-  service: security
-detection:
-  selection_basic:
-    Channel: Security
-    EventID: 4625
-  selection_error:
-    SubStatus:
-      - "0xc000006a" # Wrong password
-      - "0xc0000064" # Username does not exist error
-  condition: selection_basic and selection_error | count() by Computer,SubStatus >= 3
-  timeframe: 5m
-```
-
-#### Improving the Event Count rule syntax
-
-
-
-#### Event Count rule output:
-
-The rules above will create the following CSV output:
-```
-% ./hayabusa csv-timeline -d ../hayabusa-sample-evtx -o timeline.csv -r test.yml -w
-% cat timeline.csv
-"2016-09-20 01:50:06.513 +09:00","Rule Title","high","-","-","-","-","Count:3558 ¦ Computer:DESKTOP-M5SN04R ¦ SubStatus:0xc000006a","-"
-"2021-05-20 21:49:52.315 +09:00","Detect many failed logons","high","-","-","-","-","Count:5 ¦ Computer:fs01.offsec.lan ¦ SubStatus:0xc0000064","-"
-"2021-05-22 05:43:22.562 +09:00","Detect many failed logons","high","-","-","-","-","Count:5 ¦ Computer:fs01.offsec.lan ¦ SubStatus:0xc000006a","-"
+% ./hayabusa csv-timeline -d ../hayabusa-sample-evtx -r password-guessing-sample.yml -w
+% 
+Timestamp · RuleTitle · Level · Computer · Channel · EventID · RecordID · Details · ExtraFieldInfo
+2016-09-20 01:50:06.513 +09:00 · PW Guessing · med · DESKTOP-M5SN04R · Sec · 4625 · - · Count: 3558 ¦ IpAddress: 192.168.198.149 · -
 ```
 
 ## Value Count rules
 
-These rules counts the same events within a timeframe with  **different** values of a given field.
+These rules counts the same events within a time frame with  **different** values of a given field.
 
 Examples:
 - Network scans where a single source IP address tries to connect to many different destination IP addresses and/or ports.
 - Password spraying attacks where a single source fails to authenticate with many different users.
-- Detect tools like BloodHound that enumerate many high-privilege AD groups within a short timeframe.
+- Detect tools like BloodHound that enumerate many high-privilege AD groups within a short time frame.
 
 ### Value Count rule example:
 
-
+The following rule detects when an attacker is trying to guess usernames.
+That is, when the **same** source IP address (`IpAddress`) fails to logon with more than 3 **different** usernames (`TargetUserName`) within 5 minutes.
 
 > Note that we have only included the necessary fields in order to understand the concept.
+> The full rule that this example is based on is located [here](https://github.com/Yamato-Security/hayabusa-rules/tree/main/hayabusa/builtin/Security/LogonLogoff/Logon/Sec_4625_Med_LogonFail_UserGuessing_Correlation.yml) for your reference.
 
-#### Value Count correlation rule:
+### Value Count correlation rule:
 
-```
-xxx
-```
-
-#### Value Count Logon Failure (Wrong Password) rule:
-
-```
-xxx
-```
-
-#### Value Count Logon Failure (Non-existant User) rule:
-
-```
-xxx
-```
-
-#### Deprecated `count` modifier rule:
-
-The above correlation rule and two referenced rules provide the same results as the following rule which uses the older `count` modifier:
-
-```
-xxx
+```yaml
+title: User Guessing
+id: 0ae09af3-f30f-47c2-a31c-83e0b918eeee
+correlation:
+    type: value_count
+    rules:
+        - b2c74582-0d44-49fe-8faa-014dcdafee62
+    group-by:
+        - IpAddress
+    timespan: 5m
+    condition:
+        gt: 3
+        field: TargetUserName
 ```
 
-#### Value Count rule output:
+### Value Count Logon Failure (Non-existant User) rule:
 
-The rules above will create the following CSV output:
+```yaml
+title: Failed Logon - Non-Existant User
+id: b2c74582-0d44-49fe-8faa-014dcdafee62
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        Channel: Security
+        EventID: 4625
+        SubStatus: "0xc0000064" #Username does not exist
+    condition: selection
 ```
-xxx
+
+### Deprecated `count` modifier rule:
+
+The above correlation and referenced rules provide the same results as the following rule which uses the older `count` modifier:
+
 ```
+title: User Guessing
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        Channel: Security
+        EventID: 4625
+        SubStatus: "0xc0000064" #Username does not exist
+    condition: selection | count(TargetUserName) by IpAddress > 3 
+    timeframe: 5m
+```
+
+### Value Count rule output:
+
+The rules above will create the following output:
+```
+2018-08-23 23:24:22.523 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: ninja-labs/root/test@ninja-labs.com/sarutobi ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
+
+2018-08-28 08:03:13.770 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: root/sarutobi@ninja-labs.com/sarutobi/administrator@ninja-labs.com ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
+
+2018-09-01 12:51:58.346 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: root/admin@ninja-labs.com/admin/administrator@ninja-labs.com ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
+
+2018-09-02 03:55:13.007 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: root/admin@ninja-labs.com/administrator@ninja-labs.com/admin ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
+```
+
+## Notes on correlation rules
+
+1. You should include all of your correlation and referenced rules in a single file and separate them with a YAML separator of `---`.
+
+2. By default, referenced correlation rules will not be outputted. If you want to see the output of the referenced rules, then you need to add `generate: true` under `correlation`.
+
+    Example:
+    ```
+    correlation:
+        generate: true
+    ```
+3. You can use alias names instead of rule IDs when referencing rules in order to make things easier to understand.
+
+4. You can reference multiple rules.
+
+5. You can use multiple fields in `group-by`. If you do, then all of the values in those fields need to be the same or else you will not get an alert. Most of the time, you will write rules that filter on certain fields with `group-by` in order to reduce false positives, however, it is possible to omit `group-by` to create a more generic rule.
+
 
 # Deprecated features
 
@@ -871,7 +896,7 @@ This is still supported in Hayabusa but will be replaced by Sigma correlation ru
 
 The `condition` keyword described above implements not only `AND` and `OR` logic, but is also able to count or "aggregate" events.
 This function is called the "aggregation condition" and is specified by connecting a condition with a pipe.
-In this password spray detection example below, a conditional expression is used to determine if there are 5 or more `TargetUserName` values from one source `IpAddress` within a timeframe of 5 minutes.
+In this password spray detection example below, a conditional expression is used to determine if there are 5 or more `TargetUserName` values from one source `IpAddress` within a time frame of 5 minutes.
 
 ```yaml
 detection:
@@ -904,7 +929,7 @@ Aggregation conditions can be defined in the following format:
 ### Four patterns for aggregation conditions
 
 1. No count argument or `by` keyword. Example: `selection | count() > 10`
-   > If `selection` matches more than 10 times within the timeframe, the condition will match.
+   > If `selection` matches more than 10 times within the time frame, the condition will match.
    > These are replaced by Event Count correlation rules that do not use the `group-by` field.
 2. No count argument but there is a `by` keyword. Example: `selection | count() by IpAddress > 10`
    > `selection` will have to be true more than 10 times for the **same** `IpAddress`.
@@ -912,7 +937,7 @@ Aggregation conditions can be defined in the following format:
    > You can also specify multiple fields to group by. For example: `by IpAddress, Computer`
    > These are replaced by Event Count correlation rules that do use the `group-by` field.
 3. There is a count argument but no `by` keyword. Example: `selection | count(TargetUserName) > 10`
-   > If `selection` matches and `TargetUserName` is **different** more than 10 times within the timeframe, the condition will match.
+   > If `selection` matches and `TargetUserName` is **different** more than 10 times within the time frame, the condition will match.
    > These are replaced by Value Count correlation rules that do not use the `group-by` field.
 4. There is both a count argument and `by` keyword. Example: `selection | count(Users) by IpAddress > 10`
    > For the **same** `IpAddress`, there will need to be more than 10 **different** `TargetUserName` in order for the condition to match.
