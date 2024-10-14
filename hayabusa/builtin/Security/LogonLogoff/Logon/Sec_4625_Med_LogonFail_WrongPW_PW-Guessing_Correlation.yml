@@ -17,7 +17,13 @@ correlation:
     rules:
         - 5b0b75dc-9190-4047-b9a8-14164cee8a31
     group-by:
+        - TargetUserName
+        - TargetDomainName
         - IpAddress
+        - WorkstationName
+        - LogonType
+        - ProcessName
+        - LogonProcessName
     timespan: 5m
     condition:
         gte: 5
