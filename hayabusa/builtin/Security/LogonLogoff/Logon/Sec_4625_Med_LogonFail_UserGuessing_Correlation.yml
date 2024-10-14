@@ -15,7 +15,7 @@ tags:
 correlation:
     type: value_count
     rules:
-        - non_existant_user
+        - non_existent_user
     group-by:
         - IpAddress
         - LogonType
@@ -34,9 +34,9 @@ ruletype: Hayabusa
 
 ---
 
-title: Failed Logon - Non-Existant User
+title: Failed Logon - Non-Existent User
 id: b2c74582-0d44-49fe-8faa-014dcdafee62
-name: non_existant_user
+name: non_existent_user
 related:
     - id: 4574194d-e7ca-4356-a95c-21b753a1787e
       type: obsolete
