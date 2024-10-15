@@ -36,5 +36,5 @@
 | utf16ǀbase64offsetǀcontains   |             0 |                0 |
 | wideǀbase64offsetǀcontains    |             0 |                0 |
 
-Updated: 2024/10/14  
+Updated: 2024/10/15  
 Author: Fukusuke Takahashi
