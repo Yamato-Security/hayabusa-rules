@@ -36,5 +36,6 @@
 | utf16ǀbase64offsetǀcontains   |             0 |                0 |
 | wideǀbase64offsetǀcontains    |             0 |                0 |
 
-Updated: 2024/10/15  
+This document is being dynamically updated based on the latest rules.
+Last Update: 2024/10/16
 Author: Fukusuke Takahashi
