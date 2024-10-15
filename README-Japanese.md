@@ -52,6 +52,20 @@ Windowsのイベントログから攻撃を検出するキュレーションさ�
   - [null keyword](#null-keyword)
   - [condition (条件)](#condition-条件)
   - [notロジック](#notロジック)
+- [Sigma相関ルール](#Sigma相関ルール)
+  - [イベントカウントルール](#イベントカウントルール)
+    - [イベントカウントルールの例](#イベントカウントルールの例)
+    - [イベントカウント相関ルール](#イベントカウント相関ルール)
+    - [ログオン失敗 - 誤ったパスワード ルール](#ログオン失敗---誤ったパスワード-ルール)
+    - [非推奨の`count`ルールの例](#非推奨のcountルールの例)
+    - [イベントカウントルールの出力](#イベントカウントルールの出力)
+  - [値カウントルール](#値カウントルール)
+    - [値カウントルールの例](#値カウントルールの例)
+    - [値カウント相関ルール](#値カウント相関ルール)
+    - [値カウント ログオン失敗 (存在しないユーザー) ルール](#値カウント-ログオン失敗-(存在しないユーザー)-ルール)
+    - [非推奨の`count`修飾子ルール](#非推奨のcount修飾子ルール)
+    - [値カウントルールの出力](#値カウントルールの出力)
+  - [相関ルールの注意点](#相関ルールの注意点)
 - [非推奨機能](#非推奨機能)
   - [イベントキー内のキーワードのネスト](#イベントキー内のキーワードのネスト)
     - [regexesとallowlistキーワード](#regexesとallowlistキーワード)
@@ -472,8 +486,6 @@ detection:
 
 もし、最初の`Data`フィールドのデータだけを出力したい場合は、`details:`に `%Data[1]%` を指定すると `rundll32.exe`のみが出力されます。
 
-
-
 ## フィールド修飾子 (Field Modifiers)
 
 イベントキーにはフィールド修飾子を指定することができます。
@@ -517,6 +529,7 @@ detection:
 - `|contains|windash`: 文字列をそのままチェックするだけでなく、最初の`-`文字を`/`文字に変換し、そのバリエーションもチェックします。
 - `|endswith`: 指定された文字列で終わることをチェックします。
 - `|endswith|windash`: 指定された文字列で終わることをチェックし、最初の`-`文字を`/`文字に変換し、そのバリエーションもチェックします。
+- `|exists`: フィールドが存在するかをチェックします。
 - `|fieldref`: 2つのフィールドの値が同じかどうかをチェックする。これは `|equalsfield` 修飾子と同じです。
 - `|re`: 大文字と小文字を区別する正規表現を使用する。 (regexクレートを使用しているので、サポートされている正規表現の書き方は以下のドキュメントを参照してください。 <https://docs.rs/regex/latest/regex/#syntax>)
     > 注意: [Sigma ルールにおける正規表現の構文](https://github.com/SigmaHQ/sigma-specification/blob/main/appendix/sigma-modifiers-appendix.md#regular-expression) PCREを使用しており、文字クラス、ルックビハインド、アトミック・グルーピングなどの特定のメタ文字はサポートされていません。Rust regex crateはSigmaルールですべての正規表現を使用できるはずですが、互換性がない可能性があります。
@@ -644,6 +657,193 @@ detection:
         - SubjectUserName: LOCAL SERVICE
     condition: selection and not filter
 ```
+
+# Sigma相関ルール
+
+[こちら](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md)に定義されているSigmaバージョン2の相関ルールの半分を実装しています。
+
+サポートされている相関ルール:
+- イベントカウント (`event_count`)
+- 値カウント (`value_count`)
+
+サポートされていない相関ルール:
+- 時間的近接性 (`temporal`)
+- 順序付き時間的近接性 (`temporal_ordered`)
+
+## イベントカウントルール
+
+これらは特定のイベントをカウントし、一定の時間内にそのイベントが多すぎるか、または少なすぎる場合にアラートを発するルールです。
+一定の時間内に多数のイベントを検知する一般的な例として、パスワード推測攻撃、パスワードスプレー攻撃、サービス拒否攻撃の検出が挙げられます。
+また、これらのルールを使用して、特定のイベントが特定の閾値を下回った場合など、ログソースの信頼性に関する問題を検出することも可能です。
+
+### イベントカウントルールの例:
+
+次の例では、パスワード推測攻撃を検出するために2つのルールを使用しています。
+参照されるルールが5分以内に5回以上一致し、これらのイベントのIpAddressフィールドが同じ場合にアラートが発生します。
+
+> 概念を理解するために必要なフィールドのみを含めています。
+> この例に基づく完全なルールは[こちら](https://github.com/Yamato-Security/hayabusa-rules/tree/main/hayabusa/builtin/Security/LogonLogoff/Logon/Sec_4625_Med_LogonFail_WrongPW_PW-Guessing_Correlation.yml) にありますので、ご参照ください。
+
+### イベントカウント相関ルール:
+
+```yaml
+title: PW Guessing
+id: 23179f25-6fce-4827-bae1-b219deaf563e
+correlation:
+    type: event_count
+    rules:
+        - 5b0b75dc-9190-4047-b9a8-14164cee8a31
+    group-by:
+        - IpAddress
+    timespan: 5m
+    condition:
+        gte: 5
+```
+
+### ログオン失敗 - 誤ったパスワード ルール:
+
+```yaml
+title: Failed Logon - Incorrect Password
+id: 5b0b75dc-9190-4047-b9a8-14164cee8a31
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        Channel: Security
+        EventID: 4625
+        SubStatus: "0xc000006a" #Wrong password
+    filter:
+       IpAddress: "-"
+    condition: selection and not filter
+```
+
+### 非推奨の`count`ルールの例:
+
+上記の相関ルールおよび参照されているルールは、従来の`count`修飾子を使用した以下のルールと同じ結果を提供します。
+
+```yaml
+title: PW Guessing
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        Channel: Security
+        EventID: 4625
+        SubStatus: "0xc000006a" #Wrong password
+    filter:
+       IpAddress: "-"
+    condition: selection and not filter | count() by IpAddress >= 5
+    timeframe: 5m
+```
+### イベントカウントルールの出力:
+
+上記のルールは次の結果を出力します::
+```
+% ./hayabusa csv-timeline -d ../hayabusa-sample-evtx -r password-guessing-sample.yml -w
+% 
+Timestamp · RuleTitle · Level · Computer · Channel · EventID · RecordID · Details · ExtraFieldInfo
+2016-09-20 01:50:06.513 +09:00 · PW Guessing · med · DESKTOP-M5SN04R · Sec · 4625 · - · Count: 3558 ¦ IpAddress: 192.168.198.149 · -
+```
+
+## 値カウントルール
+
+これらのルールは、指定されたフィールドの**異なる**値を持つ同じイベントを一定の時間枠内でカウントします。
+
+例:
+- 1つの送信元IPアドレスが多数の異なる宛先IPアドレスやポートに接続しようとするネットワークスキャン
+- 1つの送信元が多数の異なるユーザーに対して認証に失敗するパスワードスプレー攻撃
+- 短時間で多数の高権限ADグループを列挙するBloodHoundのようなツールの検
+
+### 値カウントルールの例:
+
+次のルールは、攻撃者がユーザー名を推測しようとしている場合を検出します。
+つまり、**同じ**送信元IPアドレス (`IpAddress`) が5分以内に3つ以上の**異なる**ユーザー名 (`TargetUserName`) でログオンに失敗した場合です。
+
+> 概念を理解するために必要なフィールドのみを含めています。
+> この例に基づく完全なルールは[こちら](https://github.com/Yamato-Security/hayabusa-rules/tree/main/hayabusa/builtin/Security/LogonLogoff/Logon/Sec_4625_Med_LogonFail_UserGuessing_Correlation.yml)にありますので、ご参照ください。
+
+### 値カウント相関ルール:
+
+```yaml
+title: User Guessing
+id: 0ae09af3-f30f-47c2-a31c-83e0b918eeee
+correlation:
+    type: value_count
+    rules:
+        - b2c74582-0d44-49fe-8faa-014dcdafee62
+    group-by:
+        - IpAddress
+    timespan: 5m
+    condition:
+        gt: 3
+        field: TargetUserName
+```
+
+### 値カウント ログオン失敗 (存在しないユーザー) ルール:
+
+```yaml
+title: Failed Logon - Non-Existant User
+id: b2c74582-0d44-49fe-8faa-014dcdafee62
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        Channel: Security
+        EventID: 4625
+        SubStatus: "0xc0000064" #Username does not exist
+    condition: selection
+```
+
+### 非推奨の`count`修飾子ルール:
+
+上記の相関ルールおよび参照されているルールは、従来の`count`修飾子を使用した以下のルールと同じ結果を提供します:
+
+```
+title: User Guessing
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        Channel: Security
+        EventID: 4625
+        SubStatus: "0xc0000064" #Username does not exist
+    condition: selection | count(TargetUserName) by IpAddress > 3 
+    timeframe: 5m
+```
+
+### 値カウントルールの出力:
+
+上記のルールは次の結果を出力します:
+```
+2018-08-23 23:24:22.523 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: ninja-labs/root/test@ninja-labs.com/sarutobi ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
+
+2018-08-28 08:03:13.770 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: root/sarutobi@ninja-labs.com/sarutobi/administrator@ninja-labs.com ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
+
+2018-09-01 12:51:58.346 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: root/admin@ninja-labs.com/admin/administrator@ninja-labs.com ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
+
+2018-09-02 03:55:13.007 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: root/admin@ninja-labs.com/administrator@ninja-labs.com/admin ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
+```
+
+## 相関ルールの注意点
+
+1. すべての相関ルールおよび参照されているルールを1つのファイルに含め、YAMLの区切り文字である`---`で区切ってください
+
+2. デフォルトでは、参照された相関ルールの出力は行われません。参照ルールの出力を確認したい場合は、`correlation`の下に`generate: true`を追加する必要があります
+    例:
+    ```
+    correlation:
+        generate: true
+    ```
+3. ルールを参照する際に、ルールIDの代わりにエイリアス名を使用して、より理解しやすくすることができます
+
+4. 複数のルールを参照することができます
+
+5. `group-by`で複数のフィールドを使用することができます。その場合、これらのフィールドのすべての値が同じでないと、アラートは発生しません。多くの場合、誤検知を減らすために特定のフィールドを`group-by`でフィルタリングするルールを作成しますが、より汎用的なルールを作成するために `group-by`を省略することも可能です
+
 
 # 非推奨機能
 
