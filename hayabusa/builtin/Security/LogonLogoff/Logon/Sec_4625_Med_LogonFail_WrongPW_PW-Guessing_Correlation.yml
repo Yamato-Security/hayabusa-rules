@@ -55,7 +55,8 @@ detection:
         EventID: 4625
         SubStatus: "0xc000006a" #Wrong password
     filter:
-       IpAddress: "-"
+       - IpAddress: "-"
+       - TargetUserName|endswith: "$"
     condition: selection and not filter
 falsepositives:
 level: informational

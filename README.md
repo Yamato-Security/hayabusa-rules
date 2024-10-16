@@ -845,6 +845,8 @@ The rules above will create the following output:
 
 5. You can use multiple fields in `group-by`. If you do, then all of the values in those fields need to be the same or else you will not get an alert. Most of the time, you will write rules that filter on certain fields with `group-by` in order to reduce false positives, however, it is possible to omit `group-by` to create a more generic rule.
 
+6. The timestamp of the correlation rule will be the very beginning of the attack so you should check events after that to confirm if it is a false positive or not.
+
 
 # Deprecated features
 
