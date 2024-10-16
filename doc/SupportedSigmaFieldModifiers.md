@@ -9,7 +9,7 @@
 | containsǀall          |           975 |                0 |
 | containsǀallǀwindash  |             4 |                0 |
 | containsǀwindash      |            78 |                0 |
-| endswith              |          2908 |              270 |
+| endswith              |          2908 |              271 |
 | endswithfield         |             0 |                2 |
 | endswithǀwindash      |             2 |                0 |
 | equalsfield           |             0 |                1 |
