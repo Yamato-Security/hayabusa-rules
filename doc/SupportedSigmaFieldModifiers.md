@@ -36,6 +36,20 @@
 | utf16ǀbase64offsetǀcontains   |             0 |                0 |
 | wideǀbase64offsetǀcontains    |             0 |                0 |
 
-This document is being dynamically updated based on the latest rules.
-Last Update: 2024/10/16
+# Hayabusa supported correlation rules
+| Correlation Rule            |   Sigma Count |   Hayabusa Count |
+|:----------------------------|--------------:|-----------------:|
+| event_count                 |             0 |                0 |
+| event_count (with group-by) |             0 |                1 |
+| value_count                 |             0 |                0 |
+| value_count (with group-by) |             0 |                1 |
+
+# Hayabusa un-supported correlations rules
+| Correlation Rule               |   Sigma Count |   Hayabusa Count |
+|:-------------------------------|--------------:|-----------------:|
+| temporal_count                 |             0 |                0 |
+| temporal_count (with group-by) |             0 |                0 |
+
+This document is being dynamically updated based on the latest rules.  
+Last Update: 2024/10/18  
 Author: Fukusuke Takahashi
