@@ -832,7 +832,7 @@ The rules above will create the following output:
 
 1. You should include all of your correlation and referenced rules in a single file and separate them with a YAML separator of `---`.
 
-2. By default, referenced correlation rules will not be outputted. If you want to see the output of the referenced rules, then you need to add `generate: true` under `correlation`.
+2. By default, referenced correlation rules will not be outputted. If you want to see the output of the referenced rules, then you need to add `generate: true` under `correlation`. This is very useful to turn on and check when creating correlation rules.
 
     Example:
     ```
