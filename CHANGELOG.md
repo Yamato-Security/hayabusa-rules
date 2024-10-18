@@ -1,5 +1,9 @@
 # Changes
 
+## v.17.0 [2024/10/19]
+
+- Updated the Hayabusa `count` rules to correlation rules. (@yamatosecurity)
+
 ## v2.17.0 [2024/10/03]
 
 - Bug fix: Two rules were causing errors because we deleted `rules/config/regex/LOLBAS_paths.txt`. The rules now do not reference any external file. (#730) (@yamatosecurity)

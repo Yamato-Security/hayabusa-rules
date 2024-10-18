@@ -1,5 +1,9 @@
 # 変更点
 
+## v.17.0 [2024/10/19]
+
+- Hayabusaの`count`ルールを相関ルールに更新した。 (@yamatosecurity)
+
 ## v2.17.0 [2024/10/03]
 
 - バグ修正: `rules/config/regex/LOLBAS_paths.txt`を削除したため、２つのルールがエラーを起こしていた。ルールが外部のファイルを参照しないように修正した。 (#730) (@yamatosecurity)
