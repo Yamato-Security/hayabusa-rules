@@ -9,20 +9,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: clone hayabusa rule repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: hayabusa-rules
 
       - name: clone hayabusa
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Yamato-Security/hayabusa
           submodules: recursive
           path: hayabusa
 
       - name: clone hayabusa-sample-evtx
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Yamato-Security/hayabusa-sample-evtx
           path: hayabusa-sample-evtx
@@ -32,7 +32,7 @@ jobs:
             cd hayabusa
             git fetch --prune --unshallow
             LATEST_VER=`git describe --tags --abbrev=0`
-            URL="https://github.com/Yamato-Security/hayabusa/releases/download/${LATEST_VER}/hayabusa-${LATEST_VER#v}-linux-intel.zip"
+            URL="https://github.com/Yamato-Security/hayabusa/releases/download/${LATEST_VER}/hayabusa-${LATEST_VER#v}-lin-x64-gnu.zip"
             mkdir tmp
             cd tmp
             curl -OL $URL
