@@ -26,34 +26,34 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: clone sigma
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: SigmaHQ/sigma
           path: sigma-repo
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
       - name: clone hayabusa rule repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: hayabusa-rules
 
       - name: clone hayabusa
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Yamato-Security/hayabusa
           submodules: recursive
           path: hayabusa
 
       - name: clone sigma-to-hayabusa-converter
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Yamato-Security/sigma-to-hayabusa-converter
           path: sigma-to-hayabusa-converter
           ref: ${{ github.event.inputs.sigma_to_hayabusa_converter_branch }}
 
       - name: clone hayabusa-sample-evtx
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Yamato-Security/hayabusa-sample-evtx
           path: hayabusa-sample-evtx
@@ -106,19 +106,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: clone sigma
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: SigmaHQ/sigma
           path: sigma-repo
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
       - name: clone hayabusa rule repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           path: hayabusa-rules
 
       - name: clone sigma-to-hayabusa-converter
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Yamato-Security/sigma-to-hayabusa-converter
           path: sigma-to-hayabusa-converter
