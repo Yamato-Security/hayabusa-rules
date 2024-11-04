@@ -246,6 +246,7 @@ sample-evtx: |
 - `Exec` -> Execution
 - `FP` -> False Positive
 - `FW` -> Firewall
+- `GTW` -> Gateway
 - `Grp` -> Group
 - `Img` -> Image
 - `Inj` -> Injection

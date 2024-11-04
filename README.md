@@ -246,6 +246,7 @@ The following abbreviations are used in rules in order to make the output as con
 - `Exec` -> Execution
 - `FP` -> False Positive
 - `FW` -> Firewall
+- `GTW` -> Gateway
 - `Grp` -> Group
 - `Img` -> Image
 - `Inj` -> Injection
