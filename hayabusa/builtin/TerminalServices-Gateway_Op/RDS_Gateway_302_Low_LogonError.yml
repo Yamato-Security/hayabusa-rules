@@ -1,26 +1,29 @@
-author: Jordan Lloyd
-date: 2024/08/28
-modified: 2024/08/29
+author: Zach Mathis
+date: 2024/11/05
+modified: 2024/11/05
 
-title: RDS - User Connected to Gateway
-details:
-description:
+title: RDS GTW Logon Error
+details: 'TgtUser: %RdsGtwUsername% ¦ Resource: %RdsGtwResource% ¦ SrcIP: %RdsGtwIpAddress% ¦ Proto: %RdsGtwConnectionProtocol% ¦ AuthType: %RdsGtwAuthType% ¦ ErrorCode: %RdsGtwErrorCode%'
+description: 
 
-id: 27648a93-cfc0-4903-beb2-9395e784a484
-level: informational
-status: stable
+id: 24a04758-729d-4c43-9bd5-cccd31db80d0
+level: low
+status: test
 logsource:
     product: windows
 detection:
     selection:
         Channel: 'Microsoft-Windows-TerminalServices-Gateway/Operational'
         EventID: 302
-    condition: selection
+    filter:
+        RdsGtwErrorCode: 0
+    condition: selection and not filter
 falsepositives:
     - administrator
 tags:
     - RDP
     - attack.lateral_movement
+    - attack.initial_access
 references:
 ruletype: Hayabusa
 
@@ -48,11 +51,11 @@ sample-evtx: |
         <UserData>
             <EventInfo xmlns="aag">
                 <Username>DOMAIN\Administrator</Username> 
-                <IpAddress>122.6.150.75</IpAddress> 
+                <IpAddress>x.x.x.x</IpAddress> 
                 <AuthType /> 
                 <Resource>HOST.DOMAIN.COM</Resource> 
                 <ConnectionProtocol>HTTP</ConnectionProtocol> 
-                <ErrorCode>0</ErrorCode> 
+                <ErrorCode>10</ErrorCode> 
             </EventInfo>
         </UserData>
     </Event>
