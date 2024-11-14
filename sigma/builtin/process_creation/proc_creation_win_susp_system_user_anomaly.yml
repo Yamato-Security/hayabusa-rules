@@ -10,7 +10,7 @@ references:
     - https://tools.thehacker.recipes/mimikatz/modules
 author: Florian Roth (Nextron Systems), David ANDRE (additional keywords)
 date: 2021-12-20
-modified: 2024-07-22
+modified: 2024-11-11
 tags:
     - attack.credential-access
     - attack.defense-evasion
@@ -80,7 +80,10 @@ detection:
               - MiniDump    # Process dumping method apart from procdump
               - 'net user '
     filter_main_ping:
-        CommandLine|contains: ping 127.0.0.1 -n
+        CommandLine|contains|all:
+            - ping
+            - 127.0.0.1
+            - ' -n '
     filter_vs:
         ParentCommandLine|contains: \DismFoDInstall.cmd
         NewProcessName|endswith: \PING.EXE
