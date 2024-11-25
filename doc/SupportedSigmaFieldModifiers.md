@@ -5,7 +5,7 @@
 | base64offsetǀcontains |             7 |                0 |
 | cased                 |             0 |                0 |
 | cidr                  |            34 |                0 |
-| contains              |          2763 |               21 |
+| contains              |          2764 |               21 |
 | containsǀall          |           977 |                0 |
 | containsǀallǀwindash  |             4 |                0 |
 | containsǀwindash      |            78 |                0 |
@@ -51,5 +51,5 @@
 | temporal_count (with group-by) |             0 |                0 |
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2024/11/19  
+Last Update: 2024/11/25  
 Author: Fukusuke Takahashi
