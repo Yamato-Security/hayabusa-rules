@@ -16,5 +16,5 @@ This script will create a markdown table of the field modifiers being used by Si
 
 # Authors
 
-Fukusuke Takahashi
-Zach Mathis
+* Fukusuke Takahashi
+* Zach Mathis
