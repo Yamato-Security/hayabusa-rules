@@ -527,7 +527,7 @@ This document is updated every time there is an update to Sigma or Hayabusa rule
 - `|contains|all`: Checks if multiple words are contained in the data.
 - `|contains|all|windash`: Same as `|contains|windash` but all of the keywords need to be present.
 - `|contains|cased`: Checks if a field value contains a certain case-sensitive string.
-- `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to a `/` character and check that variation as well.
+- `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to `/`, `–` (en dash), `—` (em dash), and `―` (horizontal bar) character permutations.
 - `|endswith`: Checks if a field value ends with a certain string.
 - `|endswith|cased`: Checks if a field value ends with a certain case-sensitive string.
 - `|endswith|windash`: Checks the end of the string and performs variations for dashes.
