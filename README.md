@@ -526,8 +526,10 @@ This document is updated every time there is an update to Sigma or Hayabusa rule
 - `|contains`: Checks if a field value contains a certain string.
 - `|contains|all`: Checks if multiple words are contained in the data.
 - `|contains|all|windash`: Same as `|contains|windash` but all of the keywords need to be present.
+- `|contains|cased`: Checks if a field value contains a certain case-sensitive string.
 - `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to a `/` character and check that variation as well.
 - `|endswith`: Checks if a field value ends with a certain string.
+- `|endswith|cased`: Checks if a field value ends with a certain case-sensitive string.
 - `|endswith|windash`: Checks the end of the string and performs variations for dashes.
 - `|exists`: Checks if a field exists.
 - `|fieldref`: Checks to see if the values in two fields are the same. You can use `not` in the `condition` if you want to check if two fields are different.
@@ -544,6 +546,7 @@ This document is updated every time there is an update to Sigma or Hayabusa rule
 - `|re|m`: (Multi-line) Match across multiple lines. `^` / `$` match the start/end of line.
 - `|re|s`: (Single-line) dot (`.`) matches all characters, including the newline character.
 - `|startswith`: Checks if a field value starts with a certain string.
+- `|startswith|cased`: Checks if a field value starts with a certain case-sensitive string.
 - `|utf16|base64offset|contains`: Checks to see if a certain UTF-16 string is encoded inside a base64 string.
 - `|utf16be|base64offset|contains`: Checks to see if a certain UTF-16 big-endian string is encoded inside a base64 string.
 - `|utf16le|base64offset|contains`: Checks to see if a certain UTF-16 little-endian string is encoded inside a base64 string.
