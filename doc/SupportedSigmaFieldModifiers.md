@@ -15,7 +15,9 @@
 | equalsfield                   |             0 |                0 |
 | exists                        |             0 |                0 |
 | fieldref                      |             1 |                1 |
+| fieldrefǀcontains             |             0 |                0 |
 | fieldrefǀendswith             |             0 |                2 |
+| fieldrefǀstartswith           |             0 |                0 |
 | gt                            |             0 |                0 |
 | gte                           |             0 |                0 |
 | lt                            |             0 |                0 |
