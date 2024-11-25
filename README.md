@@ -544,10 +544,10 @@ This document is updated every time there is an update to Sigma or Hayabusa rule
 - `|re|m`: (Multi-line) Match across multiple lines. `^` / `$` match the start/end of line.
 - `|re|s`: (Single-line) dot (`.`) matches all characters, including the newline character.
 - `|startswith`: Checks if a field value starts with a certain string.
-- `utf16|base64offset|contains`: Checks to see if a certain UTF-16 string is encoded inside a base64 string.
-- `utf16be|base64offset|contains`: Checks to see if a certain UTF-16 big-endian string is encoded inside a base64 string.
-- `utf16le|base64offset|contains`: Checks to see if a certain UTF-16 little-endian string is encoded inside a base64 string.
-- `wide|base64offset|contains`: Alias for `utf16le|base64offset|contains`, checking for UTF-16 little-endian strings.
+- `|utf16|base64offset|contains`: Checks to see if a certain UTF-16 string is encoded inside a base64 string.
+- `|utf16be|base64offset|contains`: Checks to see if a certain UTF-16 big-endian string is encoded inside a base64 string.
+- `|utf16le|base64offset|contains`: Checks to see if a certain UTF-16 little-endian string is encoded inside a base64 string.
+- `|wide|base64offset|contains`: Alias for `utf16le|base64offset|contains`, checking for UTF-16 little-endian strings.
 
 ### Deprecated Field Modifiers
 
