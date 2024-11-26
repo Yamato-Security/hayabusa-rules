@@ -62,7 +62,7 @@ def get_yml_detection_counts(dir_path: str) -> (Counter, Counter):
     logging.info('Finished processing YAML files')
 
     sigma_modifiers = [
-        'all', 'startswith', 'endswith', 'contains', 'exists', 'cased', 'windash', 're', 're|i', 're|m', 're|s',
+        'all', 'startswith', 'endswith', 'contains', 'exists', 'cased', "contains|cased", "startswith|cased", "endswith|cased", 'windash', 're', 're|i', 're|m', 're|s',
         'base64', 'base64offset', 'utf16le|base64offset|contains', 'utf16be|base64offset|contains', 'utf16|base64offset|contains', 'wide|base64offset|contains',
         'lt', 'lte', 'gt', 'gte', 'cidr', 'expand', 'fieldref', 'fieldref|startswith', 'fieldref|contains','fieldref|endswith', 'equalsfield', 'endswithfield'
     ]
