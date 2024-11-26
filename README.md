@@ -46,7 +46,7 @@ We also create new rules with converted field names and values for `process_crea
       - [Outputting field data from multiple field names with the same name](#outputting-field-data-from-multiple-field-names-with-the-same-name)
   - [Field Modifiers](#field-modifiers)
     - [Supported Sigma Field Modifiers](#supported-sigma-field-modifiers)
-    - [Extra Field Modifiers](#extra-field-modifiers)
+    - [Deprecated Field Modifiers](#deprecated-field-modifiers)
   - [Unsupported Field Modifiers](#unsupported-field-modifiers)
   - [Wildcards](#wildcards)
   - [null keyword](#null-keyword)
@@ -520,45 +520,51 @@ This document is updated every time there is an update to Sigma or Hayabusa rule
                 - 'Keyword-2'
         condition: keywords
     ```
-
 - `|base64offset|contains`: Data will be encoded to base64 in three different ways depending on its position in the encoded string. This modifier will encoded a string to all three variations and check if the string is encoded somewhere in the base64 string.
-- `|cased`: Make the search case-sensitive.
-- `|cidr`: Matches on a IPv4 or IPv6 CIDR notation (Ex: `192.0.2.0/24`)
-- `|contains`: Checks if a word is contained in the data
-- `|contains|all`: Checks if multiple words are contained in the data
+- `|cased`: Makes the search case-sensitive.
+- `|cidr`: Checks if a field value matches on a IPv4 or IPv6 CIDR notation. (Ex: `192.0.2.0/24`)
+- `|contains`: Checks if a field value contains a certain string.
+- `|contains|all`: Checks if multiple words are contained in the data.
 - `|contains|all|windash`: Same as `|contains|windash` but all of the keywords need to be present.
-- `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to a `/` character and check that variation as well.
-- `|endswith`: Checks the end of the string.
+- `|contains|cased`: Checks if a field value contains a certain case-sensitive string.
+- `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to `/`, `–` (en dash), `—` (em dash), and `―` (horizontal bar) character permutations.
+- `|endswith`: Checks if a field value ends with a certain string.
+- `|endswith|cased`: Checks if a field value ends with a certain case-sensitive string.
 - `|endswith|windash`: Checks the end of the string and performs variations for dashes.
 - `|exists`: Checks if a field exists.
-- `|fieldref`: Checks to see if the values in two fields are the same. This is the same as the `|equalsfield` modifier.
+- `|fieldref`: Checks to see if the values in two fields are the same. You can use `not` in the `condition` if you want to check if two fields are different.
+- `|fieldref|contains`: Checks to see if the value of one field is contained in another field.
+- `|fieldref|endswith`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` to check if they are different.
+- `|fieldref|startswith`: Check if the field on the left starts with the string of the field on the right. You can use `not` in the `condition` to check if they are different.
+- `|gt`: Checks if a field value is greater than a certain number.
+- `|gte`: Checks if a field value is greater than or equal to a certain number.
+- `|lt`: Checks if a field value is less than a certain number.
+- `|lte`: Checks if a field value is less than or equal to a certain number.
 - `|re`: Use case-sensitive regular expressions. (We are using the regex crate so please out the documentation at <https://docs.rs/regex/latest/regex/#syntax> to learn how to write supported regular expressions.)
     > Caution: [Regular expression syntax in Sigma rules](https://github.com/SigmaHQ/sigma-specification/blob/main/appendix/sigma-modifiers-appendix.md#regular-expression) uses PCRE with certain metacharacters for character classes, lookbehind, atomic grouping, etc... being unsupported. The Rust regex crate should be able to use all regular expressions in Sigma rules but there is a possibility of incompatibility. 
 - `|re|i`: (Insensitive) Use case-insensitive regular expressions.
 - `|re|m`: (Multi-line) Match across multiple lines. `^` / `$` match the start/end of line.
 - `|re|s`: (Single-line) dot (`.`) matches all characters, including the newline character.
-- `|startswith`: Checks the string from the beginning.
+- `|startswith`: Checks if a field value starts with a certain string.
+- `|startswith|cased`: Checks if a field value starts with a certain case-sensitive string.
+- `|utf16|base64offset|contains`: Checks to see if a certain UTF-16 string is encoded inside a base64 string.
+- `|utf16be|base64offset|contains`: Checks to see if a certain UTF-16 big-endian string is encoded inside a base64 string.
+- `|utf16le|base64offset|contains`: Checks to see if a certain UTF-16 little-endian string is encoded inside a base64 string.
+- `|wide|base64offset|contains`: Alias for `utf16le|base64offset|contains`, checking for UTF-16 little-endian strings.
 
-### Extra Field Modifiers
+### Deprecated Field Modifiers
 
-The following modifiers are not in the sigma specification but have been added for very specific use cases.
+The following modifiers are now deprecated and replaced by modifiers that adhere more to the sigma specifications.
 
-- `|equalsfield`: Check if two fields have the same value. You can use `not` in the `condition` if you want to check if two fields are different.
-- `|endswithfield`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` if they are different.
+- `|equalsfield`: Now is replaced by `|fieldref`.
+- `|endswithfield`: Now is replaced by `|fieldref|endswith`.
 
 ## Unsupported Field Modifiers
 
-The following modifiers are currently not supported, but currently only the `|expand` and `|contains|expand` modifiers are actually used in rules:
+The following modifiers are currently not supported:
 
-- `base64ǀutf16be`
-- `base64ǀutf16le`
-- `base64ǀwide`
 - `contains|expand`
 - `expand`
-- `gt`
-- `gte`
-- `lt`
-- `lte`
 
 ## Wildcards
 

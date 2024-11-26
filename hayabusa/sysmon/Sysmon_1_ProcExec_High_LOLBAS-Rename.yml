@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2022/04/17
-modified: 2024/10/03
+modified: 2024/11/25
 
 title: 'LOLBAS Renamed'
 description: This is to detect when a LOLBAS (default Windows binary or script) was renamed in order to hide its execution. OringalFileName is the original filename in the PE header. From my tests, false positives should be low so I rated this as high.
@@ -136,7 +136,7 @@ detection:
         - OriginalFileName|endswith: 'xcopy.exe'
         - OriginalFileName|endswith: 'RoboCopy.exe'
     filter_OriginalFilenameAndProcessNameIsSame:
-        Image|endswithfield: OriginalFileName
+        Image|fieldref|endswith: OriginalFileName
     condition: selection_basic and selection_OriginalFilenameIsLOLBIN and not filter_OriginalFilenameAndProcessNameIsSame
 falsepositives:
 tags:

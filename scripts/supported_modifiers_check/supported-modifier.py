@@ -64,7 +64,7 @@ def get_yml_detection_counts(dir_path: str) -> (Counter, Counter):
     sigma_modifiers = [
         'all', 'startswith', 'endswith', 'contains', 'exists', 'cased', 'windash', 're', 're|i', 're|m', 're|s',
         'base64', 'base64offset', 'utf16le|base64offset|contains', 'utf16be|base64offset|contains', 'utf16|base64offset|contains', 'wide|base64offset|contains',
-        'lt', 'lte', 'gt', 'gte', 'cidr', 'expand', 'fieldref', 'fieldref|endswith', 'equalsfield', 'endswithfield'
+        'lt', 'lte', 'gt', 'gte', 'cidr', 'expand', 'fieldref', 'fieldref|startswith', 'fieldref|contains','fieldref|endswith', 'equalsfield', 'endswithfield'
     ]
     sigma_correlations = [
         "value_count", "value_count (with group-by)", "event_count", "event_count (with group-by)",
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     sigma_mod_counter, sigma_col_counter = get_yml_detection_counts(args.sigma_path)
     hayabusa_mod_counter, hayabusa_col_counter = get_yml_detection_counts(args.hayabusa_path)
 
-    hayabusa_supported_modifiers = {"all", "base64offset", "contains", "cidr", "windash", "endswith", "startswith", "re", "exists", "cased", "re", "re|i", "re|m", "re|s" , 'equalsfield', 'endswithfield', 'fieldref'}
+    hayabusa_supported_modifiers = {"all", "base64offset", "contains", "cidr", "windash", "endswith", "startswith", "re", "exists", "cased", "re", "re|i", "re|m", "re|s" , 'equalsfield', 'endswithfield', 'fieldref', 'gt', 'gte', 'lt', 'lte', 'utf16', 'utf16be', 'utf16le', 'wide'}
     mod_supported, mod_unsupported = categorize_modifiers(sigma_mod_counter, hayabusa_mod_counter, hayabusa_supported_modifiers)
 
     hayabusa_supported_modifiers = {"event_count", "event_count (with group-by)", "value_count", "value_count (with group-by)"}

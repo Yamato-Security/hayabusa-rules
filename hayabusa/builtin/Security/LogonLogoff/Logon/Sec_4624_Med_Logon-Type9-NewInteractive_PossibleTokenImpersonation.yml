@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2022/04/18
-modified: 2022/12/16
+modified: 2024/11/25
 
 title: Possible Token Impersonation
 description: Tries to detect token impersonation by tools like Cobalt Strike.
@@ -18,7 +18,7 @@ detection:
     selection_TokenImpersonationCharacteristics:
         LogonType: 9        # New Interactive
         ImpersonationLevel|contains: 1833 # It is actually %%1833 for Impersonation level of "Impersonation".
-        SubjectUserName|equalsfield: TargetUserName
+        SubjectUserName|fieldref: TargetUserName
     condition: selection_basic and selection_TokenImpersonationCharacteristics
 falsepositives:
     - normal system usage
