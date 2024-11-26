@@ -1,36 +1,26 @@
 # Hayabusa supported field modifiers
-| Field Modifier                |   Sigma Count |   Hayabusa Count |
-|:------------------------------|--------------:|-----------------:|
-| all                           |            13 |                0 |
-| base64offsetǀcontains         |             7 |                0 |
-| cased                         |             0 |                0 |
-| cidr                          |            34 |                0 |
-| contains                      |          2761 |               21 |
-| containsǀall                  |           977 |                0 |
-| containsǀallǀwindash          |             4 |                0 |
-| containsǀwindash              |            78 |                0 |
-| endswith                      |          2915 |              271 |
-| endswithfield                 |             0 |                0 |
-| endswithǀwindash              |             2 |                0 |
-| equalsfield                   |             0 |                0 |
-| exists                        |             0 |                0 |
-| fieldref                      |             1 |                1 |
-| fieldrefǀcontains             |             0 |                0 |
-| fieldrefǀendswith             |             0 |                2 |
-| fieldrefǀstartswith           |             0 |                0 |
-| gt                            |             0 |                0 |
-| gte                           |             0 |                0 |
-| lt                            |             0 |                0 |
-| lte                           |             0 |                0 |
-| re                            |           167 |               11 |
-| reǀi                          |             0 |                0 |
-| reǀm                          |             0 |                0 |
-| reǀs                          |             0 |                0 |
-| startswith                    |           443 |                6 |
-| utf16beǀbase64offsetǀcontains |             0 |                0 |
-| utf16leǀbase64offsetǀcontains |             0 |                0 |
-| utf16ǀbase64offsetǀcontains   |             0 |                0 |
-| wideǀbase64offsetǀcontains    |             0 |                0 |
+| Field Modifier        |   Sigma Count |   Hayabusa Count |
+|:----------------------|--------------:|-----------------:|
+| all                   |            13 |                0 |
+| base64offsetǀcontains |             7 |                0 |
+| cased                 |             0 |                0 |
+| cidr                  |            34 |                0 |
+| contains              |          2764 |               21 |
+| containsǀall          |           977 |                0 |
+| containsǀallǀwindash  |             4 |                0 |
+| containsǀwindash      |            78 |                0 |
+| endswith              |          2915 |              271 |
+| endswithfield         |             0 |                2 |
+| endswithǀwindash      |             2 |                0 |
+| equalsfield           |             0 |                1 |
+| exists                |             0 |                0 |
+| fieldref              |             1 |                0 |
+| fieldrefǀendswith     |             0 |                0 |
+| re                    |           167 |               11 |
+| reǀi                  |             0 |                0 |
+| reǀm                  |             0 |                0 |
+| reǀs                  |             0 |                0 |
+| startswith            |           443 |                6 |
 
 # Hayabusa unsupported field modifiers
 | Field Modifier   |   Sigma Count |   Hayabusa Count |
