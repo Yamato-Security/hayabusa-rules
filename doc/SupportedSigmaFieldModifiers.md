@@ -5,7 +5,7 @@
 | base64offsetǀcontains         |             7 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
-| contains                      |          2764 |               21 |
+| contains                      |          2763 |               21 |
 | containsǀall                  |           977 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
@@ -28,7 +28,7 @@
 | reǀi                          |             0 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
-| startswith                    |           443 |                6 |
+| startswith                    |           444 |                6 |
 | startswithǀcased              |             0 |                0 |
 | utf16beǀbase64offsetǀcontains |             0 |                0 |
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
@@ -56,5 +56,5 @@
 | temporal_count (with group-by) |             0 |                0 |
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2024/11/27  
+Last Update: 2024/11/29  
 Author: Fukusuke Takahashi
