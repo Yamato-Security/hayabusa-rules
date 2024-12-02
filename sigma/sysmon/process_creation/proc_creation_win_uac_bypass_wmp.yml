@@ -9,7 +9,7 @@ references:
     - https://github.com/hfiref0x/UACME
 author: Christian Burkard (Nextron Systems)
 date: 2021-08-23
-modified: 2022-10-09
+modified: 2024-12-01
 tags:
     - attack.defense-evasion
     - attack.privilege-escalation
@@ -22,18 +22,18 @@ detection:
     process_creation:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
-    selection1:
+    selection_img_1:
         Image: C:\Program Files\Windows Media Player\osk.exe
-        IntegrityLevel:
-            - High
-            - System
-    selection2:
+    selection_img_2:
         Image: C:\Windows\System32\cmd.exe
         ParentCommandLine: '"C:\Windows\system32\mmc.exe" "C:\Windows\system32\eventvwr.msc" /s'
+    selection_integrity:
         IntegrityLevel:
             - High
             - System
-    condition: process_creation and (1 of selection*)
+            - S-1-16-16384   # System
+            - S-1-16-12288   # High
+    condition: process_creation and (1 of selection_img_* and selection_integrity)
 falsepositives:
     - Unknown
 level: high
