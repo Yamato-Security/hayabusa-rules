@@ -10,7 +10,7 @@ references:
     - https://tools.thehacker.recipes/mimikatz/modules
 author: Florian Roth (Nextron Systems), David ANDRE (additional keywords)
 date: 2021-12-20
-modified: 2024-11-11
+modified: 2024-12-01
 tags:
     - attack.credential-access
     - attack.defense-evasion
@@ -26,7 +26,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        MandatoryLabel: S-1-16-16384
+        MandatoryLabel:
+            - S-1-16-16384
+            - None
         SubjectUserName|contains: # covers many language settings
             - AUTHORI
             - AUTORI

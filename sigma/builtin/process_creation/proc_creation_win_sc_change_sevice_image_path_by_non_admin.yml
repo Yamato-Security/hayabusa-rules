@@ -10,7 +10,7 @@ references:
     - https://pentestlab.blog/2017/03/30/weak-service-permissions/
 author: Teymur Kheirkhabarov
 date: 2019-10-26
-modified: 2022-07-14
+modified: 2024-12-01
 tags:
     - attack.persistence
     - attack.defense-evasion
@@ -25,7 +25,9 @@ detection:
         Channel: Security
     scbynonadmin:
         NewProcessName|endswith: \sc.exe
-        MandatoryLabel: S-1-16-8192
+        MandatoryLabel:
+            - S-1-16-8192
+            - None
     selection_binpath:
         CommandLine|contains|all:
             - config

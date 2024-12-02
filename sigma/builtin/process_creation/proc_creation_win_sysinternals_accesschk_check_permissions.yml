@@ -37,11 +37,6 @@ detection:
             - 'qwsu '
             - 'uwdqs '
     condition: process_creation and (all of selection*)
-fields:
-    - MandatoryLabel
-    - Product
-    - Description
-    - CommandLine
 falsepositives:
     - System administrator Usage
 level: medium
