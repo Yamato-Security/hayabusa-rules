@@ -10,7 +10,7 @@
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀwindash              |            78 |                0 |
-| endswith                      |          2916 |              271 |
+| endswith                      |          2918 |              271 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -56,5 +56,5 @@
 | temporal_count (with group-by) |             0 |                0 |
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2024/12/01  
+Last Update: 2024/12/04  
 Author: Fukusuke Takahashi
