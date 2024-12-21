@@ -68,7 +68,7 @@ def get_yml_detection_counts(dir_path: str) -> (Counter, Counter):
     ]
     sigma_correlations = [
         "value_count", "value_count (with group-by)", "event_count", "event_count (with group-by)",
-        "temporal_count", "temporal_count (with group-by)"
+        "temporal", "temporal (with group-by)", "temporal_ordered", "temporal_ordered (with group-by)"
     ]
     mod = count_modifiers(Counter(sorted(yml_detection_keys)), sigma_modifiers)
     cor = count_modifiers(Counter(sorted(yml_correlation_keys)), sigma_correlations)
@@ -103,10 +103,10 @@ if __name__ == '__main__':
     sigma_mod_counter, sigma_col_counter = get_yml_detection_counts(args.sigma_path)
     hayabusa_mod_counter, hayabusa_col_counter = get_yml_detection_counts(args.hayabusa_path)
 
-    hayabusa_supported_modifiers = {"all", "base64offset", "contains", "cidr", "windash", "endswith", "startswith", "re", "exists", "cased", "re", "re|i", "re|m", "re|s" , 'equalsfield', 'endswithfield', 'fieldref', 'gt', 'gte', 'lt', 'lte', 'utf16', 'utf16be', 'utf16le', 'wide'}
+    hayabusa_supported_modifiers = {"all", "base64offset", "contains", "cidr", "windash", "endswith", "expand", "startswith", "re", "exists", "cased", "re", "re|i", "re|m", "re|s" , 'equalsfield', 'endswithfield', 'fieldref', 'gt', 'gte', 'lt', 'lte', 'utf16', 'utf16be', 'utf16le', 'wide'}
     mod_supported, mod_unsupported = categorize_modifiers(sigma_mod_counter, hayabusa_mod_counter, hayabusa_supported_modifiers)
 
-    hayabusa_supported_modifiers = {"event_count", "event_count (with group-by)", "value_count", "value_count (with group-by)"}
+    hayabusa_supported_modifiers = {"event_count", "event_count (with group-by)", "value_count", "value_count (with group-by)", "temporal", "temporal (with group-by)", "temporal_ordered", "temporal_ordered (with group-by)"}
     col_supported, col_unsupported = categorize_modifiers(sigma_col_counter, hayabusa_col_counter, hayabusa_supported_modifiers)
 
     markdown_str = "# Hayabusa supported field modifiers\n"
