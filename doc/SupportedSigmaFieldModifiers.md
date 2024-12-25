@@ -9,6 +9,7 @@
 | containsǀall                  |           978 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
+| containsǀexpand               |             1 |                0 |
 | containsǀwindash              |            78 |                0 |
 | endswith                      |          2927 |              271 |
 | endswithfield                 |             0 |                0 |
@@ -16,6 +17,7 @@
 | endswithǀwindash              |             2 |                0 |
 | equalsfield                   |             0 |                0 |
 | exists                        |             0 |                0 |
+| expand                        |             9 |                0 |
 | fieldref                      |             1 |                1 |
 | fieldrefǀcontains             |             0 |                0 |
 | fieldrefǀendswith             |             0 |                2 |
@@ -36,25 +38,25 @@
 | wideǀbase64offsetǀcontains    |             0 |                0 |
 
 # Hayabusa unsupported field modifiers
-| Field Modifier   |   Sigma Count |   Hayabusa Count |
-|:-----------------|--------------:|-----------------:|
-| containsǀexpand  |             1 |                0 |
-| expand           |             9 |                0 |
+| Field Modifier   | Sigma Count   | Hayabusa Count   |
+|------------------|---------------|------------------|
 
 # Hayabusa supported correlation rules
-| Correlation Rule            |   Sigma Count |   Hayabusa Count |
-|:----------------------------|--------------:|-----------------:|
-| event_count                 |             0 |                0 |
-| event_count (with group-by) |             0 |                1 |
-| value_count                 |             0 |                0 |
-| value_count (with group-by) |             0 |                2 |
+| Correlation Rule                 |   Sigma Count |   Hayabusa Count |
+|:---------------------------------|--------------:|-----------------:|
+| event_count                      |             0 |                0 |
+| event_count (with group-by)      |             0 |                1 |
+| temporal                         |             0 |                0 |
+| temporal (with group-by)         |             0 |                0 |
+| temporal_ordered                 |             0 |                0 |
+| temporal_ordered (with group-by) |             0 |                0 |
+| value_count                      |             0 |                0 |
+| value_count (with group-by)      |             0 |                2 |
 
 # Hayabusa un-supported correlations rules
-| Correlation Rule               |   Sigma Count |   Hayabusa Count |
-|:-------------------------------|--------------:|-----------------:|
-| temporal_count                 |             0 |                0 |
-| temporal_count (with group-by) |             0 |                0 |
+| Correlation Rule   | Sigma Count   | Hayabusa Count   |
+|--------------------|---------------|------------------|
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2024/12/19  
+Last Update: 2024/12/21  
 Author: Fukusuke Takahashi
