@@ -47,7 +47,7 @@ We also create new rules with converted field names and values for `process_crea
   - [Field Modifiers](#field-modifiers)
     - [Supported Sigma Field Modifiers](#supported-sigma-field-modifiers)
     - [Deprecated Field Modifiers](#deprecated-field-modifiers)
-  - [Unsupported Field Modifiers](#unsupported-field-modifiers)
+    - [Expand Field Modifiers](#expand-field-modifiers)
   - [Wildcards](#wildcards)
   - [null keyword](#null-keyword)
   - [condition](#condition)
@@ -65,11 +65,17 @@ We also create new rules with converted field names and values for `process_crea
     - [Value Count Logon Failure (Non-existant User) rule:](#value-count-logon-failure-non-existant-user-rule)
     - [Deprecated `count` modifier rule:](#deprecated-count-modifier-rule)
     - [Value Count rule output:](#value-count-rule-output)
+  - [Temporal Proximity rules](#temporal-proximity-rules)
+    - [Temporal Proximity rule example:](#temporal-proximity-rule-example)
+    - [Temporal Proximity correlation rule:](#temporal-proximity-correlation-rule)
+  - [Ordered Temporal Proximity rules](#ordered-temporal-proximity-rules)
+    - [Temporal Proximity rule example:](#temporal-proximity-rule-example-1)
+    - [Temporal Proximity correlation rule:](#temporal-proximity-correlation-rule-1)
   - [Notes on correlation rules](#notes-on-correlation-rules)
 - [Deprecated features](#deprecated-features)
-  - [Nesting keywords inside eventkeys](#nesting-keywords-inside-eventkeys)
-    - [regexes and allowlist keywords](#regexes-and-allowlist-keywords)
-  - [Aggregation conditions (Count rules)](#aggregation-conditions-count-rules)
+  - [Deprecated special keywords](#deprecated-special-keywords)
+    - [regexes and allowlist keyword sample files](#regexes-and-allowlist-keyword-sample-files)
+  - [Deprecated aggregation conditions (`count` rules)](#deprecated-aggregation-conditions-count-rules)
     - [Basics](#basics)
     - [Four patterns for aggregation conditions](#four-patterns-for-aggregation-conditions)
     - [Pattern 1 example](#pattern-1-example)
@@ -506,8 +512,10 @@ String matches are case insensitive. However, they become case sensitive wheneve
 
 ### Supported Sigma Field Modifiers
 
-You can check the current status of all of the supported and unsupported field modifiers as well as how many times these modifiers are used in Sigma and Hayabusa rules at https://github.com/Yamato-Security/hayabusa-rules/blob/main/doc/SupportedSigmaFieldModifiers.md .
-This document is updated every time there is an update to Sigma or Hayabusa rules.
+Hayabusa is currently the only open-source tool that fully supports all of the Sigma specification.
+
+You can check the current status of all of the supported field modifiers as well as how many times these modifiers are used in Sigma and Hayabusa rules at https://github.com/Yamato-Security/hayabusa-rules/blob/main/doc/SupportedSigmaFieldModifiers.md .
+This document is dynamically updated every time there is an update to Sigma or Hayabusa rules.
 
 - `'|all':`: This field modifier is different from those above because it does not get applied to a certain field but to all fields.
 
@@ -527,11 +535,13 @@ This document is updated every time there is an update to Sigma or Hayabusa rule
 - `|contains|all`: Checks if multiple words are contained in the data.
 - `|contains|all|windash`: Same as `|contains|windash` but all of the keywords need to be present.
 - `|contains|cased`: Checks if a field value contains a certain case-sensitive string.
+- `|contains|expand`: Checks if a field value contains a string a list defined in a config file.
 - `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to `/`, `–` (en dash), `—` (em dash), and `―` (horizontal bar) character permutations.
 - `|endswith`: Checks if a field value ends with a certain string.
 - `|endswith|cased`: Checks if a field value ends with a certain case-sensitive string.
 - `|endswith|windash`: Checks the end of the string and performs variations for dashes.
 - `|exists`: Checks if a field exists.
+- `|expand`: Checks if a field value equals a string defined in a config file.
 - `|fieldref`: Checks to see if the values in two fields are the same. You can use `not` in the `condition` if you want to check if two fields are different.
 - `|fieldref|contains`: Checks to see if the value of one field is contained in another field.
 - `|fieldref|endswith`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` to check if they are different.
@@ -559,12 +569,12 @@ The following modifiers are now deprecated and replaced by modifiers that adhere
 - `|equalsfield`: Now is replaced by `|fieldref`.
 - `|endswithfield`: Now is replaced by `|fieldref|endswith`.
 
-## Unsupported Field Modifiers
+### Expand Field Modifiers
 
-The following modifiers are currently not supported:
+The `expand` field modifiers are unique in that they are the only field modifier that requires configuration beforehand to use.
+For example, they use placeholders such as `%DC-MACHINE-NAME%` and require a config file named `/config/expand/DC-MACHINE-NAME.txt` that contains all of the possible DC machine names.
 
-- `contains|expand`
-- `expand`
+How to configure this is explained more in detail [here](https://github.com/Yamato-Security/hayabusa?tab=readme-ov-file#expand-list-command).
 
 ## Wildcards
 
@@ -667,13 +677,11 @@ detection:
 
 # Sigma correlations
 
-We have implemented half of the Sigma version 2 correlations as defined [here](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md).
+We have implemented all of the Sigma version 2 correlations as defined [here](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md).
 
 Supported correlations:
 - Event Count (`event_count`)
 - Value Count (`value_count`)
-
-Unsupported correlations:
 - Temporal Proximity (`temporal`)
 - Ordered Temporal Proximity (`temporal_ordered`)
 
@@ -835,6 +843,51 @@ The rules above will create the following output:
 2018-09-02 03:55:13.007 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: root/admin@ninja-labs.com/administrator@ninja-labs.com/admin ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
 ```
 
+## Temporal Proximity rules
+
+All events defined by the rules referred by the rule field must occur in the time frame defined by timespan.
+The values of fields defined in `group-by` must all have the same value (ex: same host, user, etc...).
+
+### Temporal Proximity rule example:
+
+Example: Reconnaissance commands defined in three Sigma rules are invoked in arbitrary order within 5 minutes on a system by the same user.
+
+### Temporal Proximity correlation rule:
+
+```yaml
+correlation:
+    type: temporal
+    rules:
+        - recon_cmd_a
+        - recon_cmd_b
+        - recon_cmd_c
+    group-by:
+        - Computer
+        - User
+    timespan: 5m
+```
+
+## Ordered Temporal Proximity rules
+
+The `temporal_ordered` correlation type behaves like `temporal` and requires in addition that the events appear in the order provided in the `rules` attribute.
+
+### Temporal Proximity rule example:
+
+Example: many failed logins as defined above are followed by a successful login by of the same user account within 1 hour:
+
+### Temporal Proximity correlation rule:
+
+```yaml
+correlation:
+    type: temporal_ordered
+    rules:
+        - many_failed_logins
+        - successful_login
+    group-by:
+        - User
+    timespan: 1h
+```
+
 ## Notes on correlation rules
 
 1. You should include all of your correlation and referenced rules in a single file and separate them with a YAML separator of `---`.
@@ -857,11 +910,16 @@ The rules above will create the following output:
 
 # Deprecated features
 
-These features are still supported in Hayabusa but will not be used inside rules in the future.
+The deprecated special keywords and `count` aggregation are still supported in Hayabusa but will not be used inside rules in the future.
 
-## Nesting keywords inside eventkeys
+## Deprecated special keywords
 
-Eventkeys can be nested with specific keywords.
+Currently, the following special keywords can be specified:
+- `value`: matches by string (wildcards and pipes can also be specified).
+- `min_length`: matches when the number of characters is greater than or equal to the specified number.
+- `regexes`: matches if one of the regular expressions in the file that you specify in this field matches.
+- `allowlist`: rule will be skipped if there is any match found in the list of regular expressions in the file that you specify in this field.
+
 In the example below, the rule will match if the following are true:
 - `ServiceName` is called `malicious-service` or contains a regular expression in `./rules/config/regex/detectlist_suspicous_services.txt`.
 - `ImagePath` has a minimum of 1000 characters.
@@ -881,13 +939,7 @@ detection:
     condition: selection
 ```
 
-Currently, the following keywords can be specified:
-- `value`: matches by string (wildcards and pipes can also be specified).
-- `min_length`: matches when the number of characters is greater than or equal to the specified number.
-- `regexes`: matches if one of the regular expressions in the file that you specify in this field matches.
-- `allowlist`: rule will be skipped if there is any match found in the list of regular expressions in the file that you specify in this field.
-
-### regexes and allowlist keywords
+### regexes and allowlist keyword sample files
 
 Hayabusa had two built-in regular expression files used for the `./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemProcess-WindowsService_MaliciousServiceInstalled.yml` file:
 - `./rules/config/regex/detectlist_suspicous_services.txt`: to detect suspicious service names
@@ -897,7 +949,7 @@ Files defined in `regexes` and `allowlist` can be edited to change the behavior 
 
 You can also use different detectlist and allowlist textfiles that you create.
 
-## Aggregation conditions (Count rules)
+## Deprecated aggregation conditions (`count` rules)
 
 This is still supported in Hayabusa but will be replaced by Sigma correlation rules in the future.
 
