@@ -512,7 +512,7 @@ detection:
 
 ### 対応しているSigmaのフィールド修飾子
 
-Hayabusa is currently the only open-source tool that fully supports all of the Sigma specification.
+Hayabusaは現在、Sigma仕様のすべてを完全にサポートする唯一のオープンソースツールです。
 
 サポートされているフィールド修飾子、サポートされていないフィールド修飾子、およびこれらの修飾子がSigmaとはHayabusaのルールで使用されている回数の現在の状況は、https://github.com/Yamato-Security/hayabusa-rules/blob/main/doc/SupportedSigmaFieldModifiers.md で確認できます。
 この文書は、SigmaやHayabusaのルールが更新されるたびに更新されます。
