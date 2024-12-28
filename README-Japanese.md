@@ -47,7 +47,7 @@ Windowsのイベントログから攻撃を検出するキュレーションさ�
   - [フィールド修飾子 (Field Modifiers)](#フィールド修飾子-field-modifiers)
     - [対応しているSigmaのフィールド修飾子](#対応しているsigmaのフィールド修飾子)
     - [非推奨のフィールド修飾子](#非推奨のフィールド修飾子)
-  - [対応していないフィールド修飾子](#対応していないフィールド修飾子)
+    - [Expandフィールド修飾子](#Expandフィールド修飾子)
   - [ワイルドカード](#ワイルドカード)
   - [null keyword](#null-keyword)
   - [condition (条件)](#condition-条件)
@@ -65,11 +65,17 @@ Windowsのイベントログから攻撃を検出するキュレーションさ�
     - [値カウント ログオン失敗 (存在しないユーザー) ルール:](#値カウント-ログオン失敗-存在しないユーザー-ルール)
     - [非推奨の`count`修飾子ルール:](#非推奨のcount修飾子ルール)
     - [値カウントルールの出力:](#値カウントルールの出力)
+  - [Temporal Proximityルール](#temporal-proximityルール)
+    - [Temporal Proximityルールの例:](#temporal-proximityルールの例)
+    - [Temporal Proximity相関ルール:](#temporal-proximity相関ルール)
+  - [Ordered Temporal Proximityルール](#ordered-temporal-proximityルール)
+    - [Ordered Temporal Proximityルールの例:](#ordered-temporal-proximityルールの例)
+    - [Ordered Temporal Proximity相関ルール](#ordered-temporal-proximity相関ルール)
   - [相関ルールの注意点](#相関ルールの注意点)
 - [非推奨機能](#非推奨機能)
   - [イベントキー内のキーワードのネスト](#イベントキー内のキーワードのネスト)
     - [regexesとallowlistキーワード](#regexesとallowlistキーワード)
-  - [集計条件](#集計条件)
+  - [非推奨の集計条件countルール](#非推奨の集計条件countルール)
     - [基本事項](#基本事項)
     - [countの4パターン](#countの4パターン)
     - [パターン1の例](#パターン1の例)
@@ -506,6 +512,8 @@ detection:
 
 ### 対応しているSigmaのフィールド修飾子
 
+Hayabusa is currently the only open-source tool that fully supports all of the Sigma specification.
+
 サポートされているフィールド修飾子、サポートされていないフィールド修飾子、およびこれらの修飾子がSigmaとはHayabusaのルールで使用されている回数の現在の状況は、https://github.com/Yamato-Security/hayabusa-rules/blob/main/doc/SupportedSigmaFieldModifiers.md で確認できます。
 この文書は、SigmaやHayabusaのルールが更新されるたびに更新されます。
 
@@ -520,7 +528,6 @@ detection:
                 - 'Keyword-2'
         condition: keywords
     ```
-
 - `|base64offset|contains`: データは、エンコードされた文字列内の位置によって、3つの異なる方法でbase64にエンコードされます。この修飾子は、文字列を3つのバリエーションにエンコードし、その文字列がbase64文字列のどこかにエンコードされているかどうかをチェックします。
 - `|cased`: 大文字と小文字を区別して検索します。
 - `|cidr`: IPv4またはIPv6のCIDR表記をチェックします。（例：`192.0.2.0/24`）
@@ -528,11 +535,13 @@ detection:
 - `|contains|all`: 指定された複数の文字列が含まれることをチェックします。
 - `|contains|all|windash`: `contains|windash`と同じですが、すべてのキーワードが存在する必要があります。
 - `|contains|cased`: フィールドの値が指定された大文字小文字を区別する文字列を含むかをチェックします。
+- `|contains|expand`: Checks if a field value contains a string a list defined in a config file.
 - `|contains|windash`: 文字列をそのままチェックするだけでなく、最初の`-`文字を`/`文字に変換し、そのバリエーションもチェックします。
 - `|endswith`: 指定された文字列で終わることをチェックします。
 - `|endswith|cased`: フィールドの値が指定された大文字小文字を区別する文字列で終わることをチェックします。
 - `|endswith|windash`: 指定された文字列で終わることをチェックし、最初の`-`文字を`/`、`–` (en dash)、`—` (em dash)、`―` (horizontal bar)文字のバリエーションに変換し、チェックします。
 - `|exists`: フィールドが存在するかをチェックします。
+- `|expand`: Checks if a field value equals a string defined in a config file.
 - `|fieldref`: 2つのフィールドの値が同じかどうかをチェックする。これは `|equalsfield` 修飾子と同じです。
 - `|fieldref|contains`: 一方のフィールドの値がもう一方のフィールドに含まれているかどうかをチェックします。
 - `|fieldref|endswith`: 左側のフィールドが右側のフィールドの文字列で終わっているかどうかをチェックします。`condition` で `not` を使用することで、それらが異なるかどうかをチェックできます。
@@ -560,12 +569,12 @@ detection:
 - `|equalsfield`: 現在は`|fieldref`に置き換えられています。
 - `|endswithfield`: 現在は `|fieldref|endswith`に置き換えられています。
 
-## 対応していないフィールド修飾子
+### Expandフィールド修飾子
 
-以下の修飾子は現在サポートされていません:
+`expand`フィールド修飾子はユニークなもので、使用するために事前に設定を必要とする唯一のフィールド修飾子です。
+例えば、`%DC-MACHINE-NAME%`のようなプレースホルダーを使用し、すべてのDCマシン名を含む`/config/expand/DC-MACHINE-NAME.txt`という名前の設定ファイルを必要とします。
 
-- `contains|expand`
-- `expand`
+この設定方法については、[こちら](https://github.com/Yamato-Security/hayabusa?tab=readme-ov-file#expand-list-command)でさらに詳しく説明しています。
 
 ## ワイルドカード
 
@@ -667,13 +676,11 @@ detection:
 
 # Sigma相関ルール
 
-[こちら](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md)に定義されているSigmaバージョン2の相関ルールの半分を実装しています。
+[こちら](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md)に定義されているSigmaバージョン2の相関ルールのすべてを実装しています。
 
 サポートされている相関ルール:
 - イベントカウント (`event_count`)
 - 値カウント (`value_count`)
-
-サポートされていない相関ルール:
 - 時間的近接性 (`temporal`)
 - 順序付き時間的近接性 (`temporal_ordered`)
 
@@ -835,6 +842,51 @@ detection:
 2018-09-02 03:55:13.007 +09:00 · User Guessing · med · dmz-ftp · Sec · 4625 · - · Count: 4 ¦ TargetUserName: root/admin@ninja-labs.com/administrator@ninja-labs.com/admin ¦ IpAddress: - ¦ LogonType: 8 ¦ TargetDomainName:  ¦ ProcessName: C:\\Windows\\System32\\svchost.exe ¦ LogonProcessName: Advapi ¦ WorkstationName: DMZ-FTP · -
 ```
 
+## Temporal Proximityルール
+
+ルールフィールドで参照されるルールで定義されたすべてのイベントは、`timespan`で定義された時間内に発生しなければならない。
+`group-by` で定義されたフィールドの値はすべて同じ値でなければならない（例：同じホスト、ユーザーなど）。
+
+### Temporal Proximityルールの例:
+
+例: 3つのSigmaルールで定義された偵察コマンドが、同一ユーザーによってシステム上で5分以内に任意の順序で起動される
+
+### Temporal Proximity相関ルール:
+
+```yaml
+correlation:
+    type: temporal
+    rules:
+        - recon_cmd_a
+        - recon_cmd_b
+        - recon_cmd_c
+    group-by:
+        - Computer
+        - User
+    timespan: 5m
+```
+
+## Ordered Temporal Proximityルール
+
+`temporal_ordered` 相関タイプは `temporal` と同じように振る舞い、さらに `rules` 属性で指定された順番でイベントが現れることを要求する
+
+### Ordered Temporal Proximityルールの例:
+
+例：上記で定義されたログイン失敗が多数あり、その後1時間以内に同じユーザーアカウントでログインが成功した場合：
+
+### Ordered Temporal Proximity相関ルール:
+
+```yaml
+correlation:
+    type: temporal_ordered
+    rules:
+        - many_failed_logins
+        - successful_login
+    group-by:
+        - User
+    timespan: 1h
+```
+
 ## 相関ルールの注意点
 
 1. すべての相関ルールおよび参照されているルールを1つのファイルに含め、YAMLの区切り文字である`---`で区切ってください
@@ -875,7 +927,7 @@ detection:
     condition: selection
 ```
 
-現在、指定できるキーワードは以下の通りです。
+## 非推奨の特殊キーワード
 
 - `value`: 文字列によるマッチング (ワイルドカードやパイプも指定可能)。
 - `min_length`: 指定された文字数以上の場合にマッチします。
@@ -895,9 +947,9 @@ Hayabusaに`./rules/hayabusa/default/alerts/System/7045_CreateOrModiftySystemPro
 デフォルトの `./rules/config/detectlist_suspicous_services.txt` と `./rules/config/allowlist_legitimate_services.txt` を参考にして、独自のファイルを作成してください。
 
 
-## 集計条件
+## 非推奨の集計条件（'count'ルール）
 
-この機能はHayabusaではまだサポートされていますが、将来的にはSigmaのCorrelationルールに置き換えられます。
+非推奨の特殊キーワードと `count` 集計は、Hayabusaではまだサポートされていますが、今後ルール内では使用されません。
 
 ### 基本事項
 

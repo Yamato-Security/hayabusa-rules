@@ -69,8 +69,8 @@ We also create new rules with converted field names and values for `process_crea
     - [Temporal Proximity rule example:](#temporal-proximity-rule-example)
     - [Temporal Proximity correlation rule:](#temporal-proximity-correlation-rule)
   - [Ordered Temporal Proximity rules](#ordered-temporal-proximity-rules)
-    - [Temporal Proximity rule example:](#temporal-proximity-rule-example-1)
-    - [Temporal Proximity correlation rule:](#temporal-proximity-correlation-rule-1)
+    - [Ordered Temporal Proximity rule example:](#ordered-temporal-proximity-rule-example)
+    - [Ordered Temporal Proximity correlation rule:](#ordered-temporal-proximity-correlation-rule)
   - [Notes on correlation rules](#notes-on-correlation-rules)
 - [Deprecated features](#deprecated-features)
   - [Deprecated special keywords](#deprecated-special-keywords)
@@ -871,11 +871,11 @@ correlation:
 
 The `temporal_ordered` correlation type behaves like `temporal` and requires in addition that the events appear in the order provided in the `rules` attribute.
 
-### Temporal Proximity rule example:
+### Ordered Temporal Proximity rule example:
 
 Example: many failed logins as defined above are followed by a successful login by of the same user account within 1 hour:
 
-### Temporal Proximity correlation rule:
+### Ordered Temporal Proximity correlation rule:
 
 ```yaml
 correlation:
