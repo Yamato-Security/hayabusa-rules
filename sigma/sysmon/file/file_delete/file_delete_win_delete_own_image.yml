@@ -23,7 +23,7 @@ detection:
             - 26
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        TargetFilename|equalsfield: Image
+        TargetFilename|fieldref: Image
     condition: file_delete and selection
 falsepositives:
     - Some false positives are to be expected from uninstallers.
