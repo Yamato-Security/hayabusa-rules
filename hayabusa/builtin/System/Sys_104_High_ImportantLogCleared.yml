@@ -1,6 +1,6 @@
 author: Florian Roth (Nextron Systems), Tim Shelton, Zach Mathis
 date: 2020/11/08
-modified: 2023/02/23
+modified: 2025/02/10
 
 title: 'Important Log File Cleared'
 details: 'Log: %LogFileClearedChannel% ¦ User: %LogFileClearedSubjectUserName%'
@@ -36,7 +36,7 @@ falsepositives:
     - Rollout of log collection agents (the setup routine often includes a reset of the local Eventlog)
     - System provisioning (system reset before the golden image creation)
 tags:
-    - attack.defense_evasion
+    - attack.defense-evasion
     - attack.t1070.001
 references:
     - https://attack.mitre.org/techniques/T1070/001/

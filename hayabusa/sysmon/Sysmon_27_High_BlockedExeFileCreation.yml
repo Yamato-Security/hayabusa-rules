@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2022/09/01
-modified: 2023/01/13
+modified: 2025/02/10
 
 title: 'Blocked Exe File Creation'
 description: 'Sysmon blocked an .exe file from being written to disk based on various suspicious conditions.'
@@ -20,7 +20,7 @@ detection:
 falsepositives:
 tags:
     - sysmon
-    - attack.defense_evasion
+    - attack.defense-evasion
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
     - https://medium.com/@olafhartong/sysmon-14-0-fileblockexecutable-13d7ba3dff3e

@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2021/12/17
-modified: 2022/12/22
+modified: 2025/02/10
 
 title: 'Explicit Logon (Suspicious Process)'
 description: Alter on explicit credential logons with suspicous processes like powershell and wmic which are often abused by malware like Cobalt Strike.
@@ -35,8 +35,8 @@ detection:
 falsepositives:
     - normal system usage
 tags:
-    - attack.privilege_escalation
-    - attack.lateral_movement
+    - attack.privilege-escalation
+    - attack.lateral-movement
 references:
     - https://www.ultimatewindowssecurity.com/securitylog/encyclopedia/event.aspx?eventID=4648
 sample-evtx: ./EVTX-ATTACK-SAMPLES/Privilege Escalation/Runas_4624_4648_Webshell_CreateProcessAsUserA.evtx

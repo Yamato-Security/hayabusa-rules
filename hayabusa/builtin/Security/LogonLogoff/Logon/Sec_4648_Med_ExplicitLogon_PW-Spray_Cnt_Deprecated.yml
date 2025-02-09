@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2021/12/20
-modified: 2022/03/22
+modified: 2025/02/10
 
 title: PW Spray
 details: ''  #Cannot be used because this is a count rule
@@ -23,7 +23,7 @@ detection:
 falsepositives:
 tags:
     - attack.t1110.003
-    - attack.credential_access
+    - attack.credential-access
 references: https://attack.mitre.org/techniques/T1110/003/
 sample-evtx: ./hayabusa-sample-evtx/DeepBlueCLI/password-spray.evtx
 ruletype: Hayabusa

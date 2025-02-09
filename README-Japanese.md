@@ -47,7 +47,7 @@ Windowsのイベントログから攻撃を検出するキュレーションさ�
   - [フィールド修飾子 (Field Modifiers)](#フィールド修飾子-field-modifiers)
     - [対応しているSigmaのフィールド修飾子](#対応しているsigmaのフィールド修飾子)
     - [非推奨のフィールド修飾子](#非推奨のフィールド修飾子)
-    - [Expandフィールド修飾子](#Expandフィールド修飾子)
+    - [Expandフィールド修飾子](#expandフィールド修飾子)
   - [ワイルドカード](#ワイルドカード)
   - [null keyword](#null-keyword)
   - [condition (条件)](#condition-条件)
@@ -70,12 +70,13 @@ Windowsのイベントログから攻撃を検出するキュレーションさ�
     - [Temporal Proximity相関ルール:](#temporal-proximity相関ルール)
   - [Ordered Temporal Proximityルール](#ordered-temporal-proximityルール)
     - [Ordered Temporal Proximityルールの例:](#ordered-temporal-proximityルールの例)
-    - [Ordered Temporal Proximity相関ルール](#ordered-temporal-proximity相関ルール)
+    - [Ordered Temporal Proximity相関ルール:](#ordered-temporal-proximity相関ルール)
   - [相関ルールの注意点](#相関ルールの注意点)
 - [非推奨機能](#非推奨機能)
   - [イベントキー内のキーワードのネスト](#イベントキー内のキーワードのネスト)
+  - [非推奨の特殊キーワード](#非推奨の特殊キーワード)
     - [regexesとallowlistキーワード](#regexesとallowlistキーワード)
-  - [非推奨の集計条件countルール](#非推奨の集計条件countルール)
+  - [非推奨の集計条件（'count'ルール）](#非推奨の集計条件countルール)
     - [基本事項](#基本事項)
     - [countの4パターン](#countの4パターン)
     - [パターン1の例](#パターン1の例)
@@ -135,7 +136,7 @@ falsepositives:
     - unknown
 tags:
     - t1070.006
-    - attack.defense_evasion
+    - attack.defense-evasion
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
     - https://attack.mitre.org/techniques/T1070/006/
@@ -208,17 +209,17 @@ sample-evtx: |
 - **falsepositives [必須]**: 誤検知の可能性について記載を行います。例: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`。 不明な場合は `unknown` と記述してください。
 - **tags** [オプション]: [LOLBINS/LOLBAS](https://lolbas-project.github.io/)という手法を利用している場合、`lolbas` タグを追加してください。アラートを[MITRE ATT&CK](https://attack.mitre.org/) フレームワークにマッピングできる場合は、以下のリストから該当するものを追加してください。戦術ID（例：`attack.t1098`）を指定することも可能です。
   - `attack.reconnaissance` -> Reconnaissance (Recon)
-  - `attack.resource_development` -> Resource Development  (ResDev)
-  - `attack.initial_access` -> Initial Access (InitAccess)
+  - `attack.resource-development` -> Resource Development  (ResDev)
+  - `attack.initial-access` -> Initial Access (InitAccess)
   - `attack.execution` -> Execution (Exec)
   - `attack.persistence` -> Persistence (Persis)
-  - `attack.privilege_escalation` -> Privilege Escalation (PrivEsc)
-  - `attack.defense_evasion` -> Defense Evasion (Evas)
-  - `attack.credential_access` -> Credential Access (CredAccess)
+  - `attack.privilege-escalation` -> Privilege Escalation (PrivEsc)
+  - `attack.defense-evasion` -> Defense Evasion (Evas)
+  - `attack.credential-access` -> Credential Access (CredAccess)
   - `attack.discovery` -> Discovery (Disc)
-  - `attack.lateral_movement` -> Lateral Movement (LatMov)
+  - `attack.lateral-movement` -> Lateral Movement (LatMov)
   - `attack.collection` -> Collection (Collect)
-  - `attack.command_and_control` -> Command and Control (C2)
+  - `attack.command-and-control` -> Command and Control (C2)
   - `attack.exfiltration` -> Exfiltration (Exfil)
   - `attack.impact` -> Impact (Impact)
 - **references** [オプション]: 参考文献への任意のリンク。
