@@ -1,6 +1,6 @@
 author: Yusuke Matsui, Zach Mathis
 date: 2020/11/08
-modified: 2022/12/16
+modified: 2025/02/10
 
 title: 'Possible Kerberoasting (RC4 Kerberos Ticket Req)'
 description: 'Adversaries may abuse a valid Kerberos ticket-granting ticket (TGT) or sniff network traffic to obtain a ticket-granting service (TGS) ticket that may be vulnerable to Brute Force.'
@@ -20,7 +20,7 @@ detection:
 falsepositives:
     - legacy application
 tags:
-    - attack.credential_access
+    - attack.credential-access
     - attack.t1558.003
 references:
     - https://attack.mitre.org/techniques/T1558/003/

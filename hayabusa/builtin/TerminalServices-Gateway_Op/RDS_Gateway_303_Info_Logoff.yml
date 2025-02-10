@@ -1,6 +1,6 @@
 author: Jordan Lloyd
 date: 2024/08/28
-modified: 2024/11/05
+modified: 2025/02/10
 
 title: RDS GTW Logoff
 details: 'TgtUser: %RdsGtwUsername% ¦ Resource: %RdsGtwResource% ¦ SrcIP: %RdsGtwIpAddress% ¦ Proto: %RdsGtwConnectionProtocol% ¦ AuthType: %RdsGtwAuthType% ¦ ErrorCode: %RdsGtwErrorCode% ¦ BytesReceived: %RdsGtwBytesReceived% ¦ BytesTransfered: %RdsGtwBytesTransfered% ¦ SessionDuration: %RdsGtwSessionDuration%'
@@ -20,8 +20,8 @@ falsepositives:
     - administrator
 tags:
     - RDP
-    - attack.lateral_movement
-    - attack.initial_access
+    - attack.lateral-movement
+    - attack.initial-access
 references:
 ruletype: Hayabusa
 

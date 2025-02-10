@@ -1,6 +1,6 @@
 author: Yusuke Matsui, Zach Mathis
 date: 2020/11/08
-modified: 2022/11/14
+modified: 2025/02/10
 
 title: PwSh 2.0 Downgrade Attack
 details: 'Data: %Data[3]%' # %Data[1]% is the new engine state. %Data[2]% is the previous engine state. This info is also in %Data[3]% so is unneeded.
@@ -21,7 +21,7 @@ detection:
 falsepositives:
     - legacy applications
 tags:
-    - attack.defense_evasion
+    - attack.defense-evasion
     - attack.t1562.010
     - lolbas
 references:

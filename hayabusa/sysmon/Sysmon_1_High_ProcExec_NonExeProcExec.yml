@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2022/02/05
-modified: 2023/01/13
+modified: 2025/02/10
 
 title: Proc Exec (Non-Exe Filetype)
 description: Checks whether the image specified in a process creation event doesn't refer to an .exe file.
@@ -25,7 +25,7 @@ detection:
 falsepositives:
     - 'normal system usage'
 tags:
-    - attack.defense_evasion
+    - attack.defense-evasion
     - sysmon
 references:
     - Based on a sigma rule by Max Altgelt but re-written due to many false positives and potential for false negatives.

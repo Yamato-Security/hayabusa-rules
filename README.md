@@ -135,7 +135,7 @@ falsepositives:
     - unknown
 tags:
     - t1070.006
-    - attack.defense_evasion
+    - attack.defense-evasion
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
     - https://attack.mitre.org/techniques/T1070/006/
@@ -207,17 +207,17 @@ sample-evtx: |
 - **falsepositives [required]**: The possibilities for false positives. For example: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`. If it is unknown, please write `unknown`.
 - **tags** [optional]: If the technique is a [LOLBINS/LOLBAS](https://lolbas-project.github.io/) technique, please add the `lolbas` tag. If the alert can be mapped to a technique in the [MITRE ATT&CK](https://attack.mitre.org/) framework, please add the tactic ID (Example: `attack.t1098`) and any applicable tactics below:
   - `attack.reconnaissance` -> Reconnaissance (Recon)
-  - `attack.resource_development` -> Resource Development  (ResDev)
-  - `attack.initial_access` -> Initial Access (InitAccess)
+  - `attack.resource-development` -> Resource Development  (ResDev)
+  - `attack.initial-access` -> Initial Access (InitAccess)
   - `attack.execution` -> Execution (Exec)
   - `attack.persistence` -> Persistence (Persis)
-  - `attack.privilege_escalation` -> Privilege Escalation (PrivEsc)
-  - `attack.defense_evasion` -> Defense Evasion (Evas)
-  - `attack.credential_access` -> Credential Access (CredAccess)
+  - `attack.privilege-escalation` -> Privilege Escalation (PrivEsc)
+  - `attack.defense-evasion` -> Defense Evasion (Evas)
+  - `attack.credential-access` -> Credential Access (CredAccess)
   - `attack.discovery` -> Discovery (Disc)
-  - `attack.lateral_movement` -> Lateral Movement (LatMov)
+  - `attack.lateral-movement` -> Lateral Movement (LatMov)
   - `attack.collection` -> Collection (Collect)
-  - `attack.command_and_control` -> Command and Control (C2)
+  - `attack.command-and-control` -> Command and Control (C2)
   - `attack.exfiltration` -> Exfiltration (Exfil)
   - `attack.impact` -> Impact (Impact)
 - **references** [optional]: Any links to references.
