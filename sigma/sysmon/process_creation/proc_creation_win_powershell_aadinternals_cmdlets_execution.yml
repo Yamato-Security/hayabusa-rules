@@ -10,8 +10,9 @@ description: Detects ADDInternals Cmdlet execution. A tool for administering Azu
 references:
     - https://o365blog.com/aadinternals/
     - https://github.com/Gerenios/AADInternals
-author: Austin Songer (@austinsonger), Nasreddine Bencherchali (Nextron Systems)
+author: Austin Songer (@austinsonger), Nasreddine Bencherchali (Nextron Systems), Swachchhanda Shrawan Poudel (Nextron Systems)
 date: 2022-12-23
+modified: 2025-02-06
 tags:
     - attack.execution
     - attack.reconnaissance
@@ -29,6 +30,7 @@ detection:
     selection_img:
         - Image|endswith:
               - \powershell.exe
+              - \powershell_ise.exe
               - \pwsh.exe
         - OriginalFileName:
               - PowerShell.Exe
@@ -41,8 +43,10 @@ detection:
             - Disable-AADInt
             - Enable-AADInt
             - Export-AADInt
+            - Find-AADInt
             - Get-AADInt
             - Grant-AADInt
+            - Initialize-AADInt
             - Install-AADInt
             - Invoke-AADInt
             - Join-AADInt
@@ -51,11 +55,15 @@ detection:
             - Read-AADInt
             - Register-AADInt
             - Remove-AADInt
+            - Reset-AADInt
+            - Resolve-AADInt
             - Restore-AADInt
+            - Save-AADInt
             - Search-AADInt
             - Send-AADInt
             - Set-AADInt
             - Start-AADInt
+            - Unprotect-AADInt
             - Update-AADInt
     condition: process_creation and (all of selection_*)
 falsepositives:
