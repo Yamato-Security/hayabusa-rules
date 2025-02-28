@@ -32,6 +32,6 @@ detection:
         TargetFilename|endswith: \Wireshark\radius\dictionary.alcatel-lucent.aaa
     condition: file_delete and (selection and not 1 of filter_*)
 falsepositives:
-    - Legitime usage of SDelete
+    - Legitimate usage
 level: medium
 ruletype: Sigma
