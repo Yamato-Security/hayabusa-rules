@@ -77,6 +77,7 @@ Microsoft-Windows-Sysmon, 24, Proc: %Image% ¦ User: %User% ¦ CliInfo: %ClientI
 Microsoft-Windows-Sysmon, 25, Proc: %Image% ¦ Type: %Type% ¦ User: %User% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 26, Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 255, ID: %ID% ¦ Description: %Description%
+Service Control Manager, 7023, Svc: %param1% ¦ ErrorMsg: %param2%
 Service Control Manager, 7031, Svc: %param1% ¦ CrashCount: %param2% ¦ Action: %param5%
 Service Control Manager, 7045, Svc: %ServiceName% ¦ Path: %ImagePath% ¦ Acct: %AccountName% ¦ StartType: %StartType%
 Microsoft-Windows-Windows Firewall With Advanced Security, 2003, Profile: %Profiles% ¦ Type: %SettingType% ¦ Value: %SettingValueString% ¦ User: %ModifyingUser% ¦ App: %ModifyingApplication%
