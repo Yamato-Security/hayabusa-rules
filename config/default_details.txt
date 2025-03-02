@@ -18,6 +18,7 @@ Microsoft-Windows-Security-Auditing, 4699, Name: %TaskName% ¦ User: %SubjectUse
 Microsoft-Windows-Security-Auditing, 4720, TgtUser: %TargetUserName% ¦ TgtSID: %TargetSid%
 Microsoft-Windows-Security-Auditing, 4728, SrcSID: %MemberSid% ¦ TgtGrp: %TargetUserName% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4732, SrcSID: %MemberSid% ¦ TgtGrp: %TargetUserName% ¦ LID: %SubjectLogonId%
+Microsoft-Windows-Security-Auditing, 4741, Comp: %TargetUserName% ¦ CompSID: %TargetSid% ¦ SrcUser: %SubjectUserName% ¦ UserSID: %SubjectUserSid% ¦ LID: %SubjectLogonId%
 Microsoft-Windows-Security-Auditing, 4768, TgtUser: %TargetUserName% ¦ Svc: %ServiceName% ¦ SrcIP: %IpAddress% ¦ Status: %Status% ¦ PreAuthType: %PreAuthType%
 Microsoft-Windows-Security-Auditing, 4769, TgtUser: %TargetUserName% ¦ Svc: %ServiceName% ¦ SrcIP: %IpAddress% ¦ Status: %Status%
 Microsoft-Windows-Security-Auditing, 4776, TgtUser: %TargetUserName% ¦ SrcComp: %Workstation% ¦ Status: %Status%
@@ -76,6 +77,7 @@ Microsoft-Windows-Sysmon, 24, Proc: %Image% ¦ User: %User% ¦ CliInfo: %ClientI
 Microsoft-Windows-Sysmon, 25, Proc: %Image% ¦ Type: %Type% ¦ User: %User% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 26, Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 255, ID: %ID% ¦ Description: %Description%
+Service Control Manager, 7023, Svc: %param1% ¦ Error: %param2%
 Service Control Manager, 7031, Svc: %param1% ¦ CrashCount: %param2% ¦ Action: %param5%
 Service Control Manager, 7045, Svc: %ServiceName% ¦ Path: %ImagePath% ¦ Acct: %AccountName% ¦ StartType: %StartType%
 Microsoft-Windows-Windows Firewall With Advanced Security, 2003, Profile: %Profiles% ¦ Type: %SettingType% ¦ Value: %SettingValueString% ¦ User: %ModifyingUser% ¦ App: %ModifyingApplication%
