@@ -1,0 +1,22 @@
+author: Zach Mathis
+date: 2025/03/02
+modified: 2025/03/02
+
+title: Computer Account Created
+description: A computer account was created.
+
+id: 42a0a842-2b82-4b2d-8e44-5580fb6c38db
+level: informational
+status: stable
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        Channel: Security
+        EventID: 4741
+    condition: selection
+falsepositives:
+tags:
+references:
+ruletype: Hayabusa
