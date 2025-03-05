@@ -7,7 +7,7 @@ related:
       type: similar
     - id: e3652ba3-0ad8-4010-a957-b7ba369e7bac
       type: derived
-status: experimental
+status: test
 description: |
     Detects creation of a Python path configuration file (.pth) in Python library folders, which can be maliciously abused for code execution and persistence.
     Modules referenced by these files are run at every Python startup (v3.5+), regardless of whether the module is imported by the calling script.
