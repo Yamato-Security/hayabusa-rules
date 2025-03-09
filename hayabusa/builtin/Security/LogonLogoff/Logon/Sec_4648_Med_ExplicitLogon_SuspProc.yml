@@ -1,12 +1,12 @@
 author: Zach Mathis
 date: 2021/12/17
-modified: 2025/02/10
+modified: 2025/03/09
 
-title: 'Explicit Logon (Suspicious Process)'
-description: Alter on explicit credential logons with suspicous processes like powershell and wmic which are often abused by malware like Cobalt Strike.
+title: 'Explicit Logon Attempt (Susp Proc) - Possible Mimikatz PrivEsc'
+description: Detects explicit credential logons with suspicous processes like powershell and wmic which are often abused by malware like Cobalt Strike or Mimikatz for user impersonation.
 
 id: 7616e857-8e41-4976-bc21-811d122b9fc9
-level: medium
+level: high
 status: stable
 logsource:
     product: windows

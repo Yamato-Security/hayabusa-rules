@@ -2,7 +2,7 @@ author: Zach Mathis
 date: 2023/06/08
 modified: 2025/02/10
 
-title: Explicit Logon (Noisy)
+title: Explicit Logon Attempt (Noisy)
 description: |
     (From ultimatewindowsecurity.com)
     This log is generated when
@@ -13,6 +13,8 @@ description: |
     3. With User Account Control enabled, an end user runs a program requiring admin authority.  You will get this event where the process information is consent.exe.
        Unfortunately the Subject does not identify the end user.
     4. Logging on interactively to a server with a domain account. (Two 4624 events will also be generated.)
+    This logon event is unique in that it is logged on the source computer and not the target computer like most other logon events.
+    Also, it will be logged regardless of the logon being successful or not so consider it an attempt and not necessarily an actual successful logon.
 
 id: a5b3ebf0-141a-4264-b2ff-400c0d515fca
 level: informational
