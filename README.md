@@ -106,8 +106,8 @@ Example:
 ```yaml
 #Author section
 author: Zach Mathis
-date: 2022/03/22
-modified: 2022/04/17
+date: 2022-03-22
+modified: 2022-04-17
 
 #Alert section
 title: Possible Timestomping
