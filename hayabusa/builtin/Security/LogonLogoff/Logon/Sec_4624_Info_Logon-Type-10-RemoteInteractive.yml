@@ -8,6 +8,9 @@ description: Type 10 logons can be dangerous as the credentials (plaintext or ha
 id: a4e05f05-ff88-48b9-8524-a88c1c32fe19
 level: informational
 status: stable
+logsource:
+    product: windows
+    service: security
 detection:
     selection:
         Channel: Security
