@@ -107,8 +107,8 @@ HayabusaのルールをSigmaに修正し、コミュニティに還元しやす�
 ```yaml
 #作者セクション
 author: Zach Mathis
-date: 2022/03/22
-modified: 2022/04/17
+date: 2022-03-22
+modified: 2022-04-17
 
 #アラートセクション
 title: Possible Timestomping
