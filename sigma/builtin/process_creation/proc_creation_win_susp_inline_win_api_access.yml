@@ -11,7 +11,7 @@ references:
     - https://twitter.com/m417z/status/1566674631788007425
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022-09-06
-modified: 2023-01-09
+modified: 2025-03-06
 tags:
     - attack.execution
     - attack.t1106
@@ -74,8 +74,15 @@ detection:
     filter_optional_mpcmdrun:
         CommandLine|contains: GetLoadLibraryWAddress32
         NewProcessName|endswith: \MpCmdRun.exe
+    filter_optional_compatTelRunner:
+        CommandLine|contains:
+            - FreeHGlobal
+            - PtrToString
+            - kernel32
+            - CloseHandle
+        ParentProcessName|endswith: \CompatTelRunner.exe
     condition: process_creation and (selection and not 1 of filter_optional_*)
 falsepositives:
-    - Unknown
+    - Some legitimate action or applications may use these functions. Investigate further to determine the legitimacy of the activity.
 level: high
 ruletype: Sigma

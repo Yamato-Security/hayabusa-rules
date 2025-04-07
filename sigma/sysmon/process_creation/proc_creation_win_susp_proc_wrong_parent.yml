@@ -11,7 +11,7 @@ references:
     - https://www.13cubed.com/downloads/windows_process_genealogy_v2.pdf
 author: vburov
 date: 2019-02-23
-modified: 2022-02-14
+modified: 2025-03-06
 tags:
     - attack.defense-evasion
     - attack.t1036.003
@@ -49,7 +49,9 @@ detection:
         ParentImage|endswith: \MsMpEng.exe
     filter_null:
         - ParentImage: null
-        - ParentImage: '-'
+        - ParentImage:
+              - ''
+              - '-'
     condition: process_creation and (selection and not 1 of filter_*)
 falsepositives:
     - Some security products seem to spawn these
