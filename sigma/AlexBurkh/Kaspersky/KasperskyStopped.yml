@@ -1,0 +1,23 @@
+title: KES Stopped
+id: a902397c-6118-0a8f-7fab-3f8142297d87
+status: experimental
+description: Kaspersky Endpoint Security engine stopped
+author: AlexBurkh
+date: 2025-04-09
+modified: 2025-04-09
+tags:
+    - attack.defense_evasion
+logsource:
+    category: antivirus
+    product: Kaspersky Endpoint Security
+    service: KasperskyEndpointSecurity
+detection:
+    antivirus:
+        EventID:
+            - 236
+        Channel: Kaspersky Endpoint Security
+    condition: antivirus
+level: high
+falsepositives:
+    - legitimate stop by the system administrator is possible
+ruletype: Sigma

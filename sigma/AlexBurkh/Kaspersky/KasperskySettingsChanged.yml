@@ -1,0 +1,23 @@
+title: KES Config Changed
+id: a902397c-6118-0a8f-7fab-3f8142297d46
+status: experimental
+description: Kaspersky Endpoint Security config changed
+author: AlexBurkh
+date: 2025-04-09
+modified: 2025-04-09
+tags:
+    - attack.defense_evasion
+logsource:
+    category: antivirus
+    product: Kaspersky Endpoint Security
+    service: KasperskyEndpointSecurity
+detection:
+    antivirus:
+        EventID:
+            - 218
+        Channel: Kaspersky Endpoint Security
+    condition: antivirus
+level: medium
+falsepositives:
+    - legitimate config changes are possible
+ruletype: Sigma

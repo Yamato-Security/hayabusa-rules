@@ -1,0 +1,23 @@
+title: KES report cleared
+id: a902397c-6118-0a8f-7fab-3f8142297d22
+status: experimental
+description: Kaspersky Endpoint Security malware report cleared
+author: AlexBurkh
+date: 2025-04-09
+modified: 2025-04-09
+tags:
+    - attack.defense_evasion
+logsource:
+    category: antivirus
+    product: Kaspersky Endpoint Security
+    service: KasperskyEndpointSecurity
+detection:
+    antivirus:
+        EventID:
+            - 217
+        Channel: Kaspersky Endpoint Security
+    condition: antivirus
+level: medium
+falsepositives:
+    - it is possible to clear the report by itself due to overflow in accordance with the program settings
+ruletype: Sigma
