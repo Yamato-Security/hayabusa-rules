@@ -5,7 +5,7 @@
 | base64offsetǀcontains         |             7 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
-| contains                      |          2786 |               21 |
+| contains                      |          2788 |               21 |
 | containsǀall                  |           993 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
@@ -58,5 +58,5 @@
 |--------------------|---------------|------------------|
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/04/07  
+Last Update: 2025/04/10  
 Author: Fukusuke Takahashi
