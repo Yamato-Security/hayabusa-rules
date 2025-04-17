@@ -5,13 +5,13 @@
 | base64offsetǀcontains         |             7 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
-| contains                      |          2788 |               21 |
-| containsǀall                  |           993 |                0 |
+| contains                      |          2792 |               21 |
+| containsǀall                  |           996 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
 | containsǀwindash              |            78 |                0 |
-| endswith                      |          2945 |              273 |
+| endswith                      |          2951 |              273 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -26,11 +26,11 @@
 | gte                           |             0 |                0 |
 | lt                            |             0 |                0 |
 | lte                           |             0 |                0 |
-| re                            |           167 |               11 |
+| re                            |           168 |               11 |
 | reǀi                          |             0 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
-| startswith                    |           447 |                6 |
+| startswith                    |           448 |                6 |
 | startswithǀcased              |             0 |                0 |
 | utf16beǀbase64offsetǀcontains |             0 |                0 |
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
@@ -58,5 +58,5 @@
 |--------------------|---------------|------------------|
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/04/10  
+Last Update: 2025/04/17  
 Author: Fukusuke Takahashi
