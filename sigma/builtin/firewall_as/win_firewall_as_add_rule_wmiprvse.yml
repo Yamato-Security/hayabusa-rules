@@ -3,7 +3,7 @@ id: ac6e5dab-06d1-5064-a91c-0eb6246d22bd
 related:
     - id: eca81e8d-09e1-4d04-8614-c91f44fd0519
       type: derived
-status: experimental
+status: test
 description: |
     Detects the addition of a new "Allow" firewall rule by the WMI process (WmiPrvSE.EXE).
     This can occur if an attacker leverages PowerShell cmdlets such as "New-NetFirewallRule", or directly uses WMI CIM classes such as "MSFT_NetFirewallRule".
