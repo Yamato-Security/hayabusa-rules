@@ -11,7 +11,8 @@ level: medium
 status: test
 logsource:
     product: windows
-    service: powershell
+    service: powershell-classic
+    category: ps_classic_start
 detection:
     selection:
         Channel: 'Windows PowerShell'
