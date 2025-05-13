@@ -55,6 +55,7 @@ def process_file(file: str, yml_detection_keys: list[str], yml_correlation_keys:
 def get_yml_detection_counts(dir_path: str) -> (Counter, Counter):
     logging.info(f'Starting to process YAML files in directory: {dir_path}')
     yml_files = glob.glob(os.path.join(dir_path, '**', '*.yml'), recursive=True)
+    yml_files = [file for file in yml_files if '/tests' not in file]
     yml_detection_keys = []
     yml_correlation_keys = []
     for file in yml_files:
