@@ -221,7 +221,7 @@ sample-evtx: |
   - `attack.exfiltration` -> Exfiltration (Exfil)
   - `attack.impact` -> Impact (Impact)
 - **references** [optional]: Any links to references.
-- **ruletype [required]**: `Hayabusa` for hayabusa rules. Rules automatically converted from sigma Windows rules will be `Sigma`.
+- **ruletype [optional]**: `Hayabusa` for hayabusa rules. Rules automatically converted from sigma Windows rules will be `Sigma`.
 
 > ## Sample XML Event
 
