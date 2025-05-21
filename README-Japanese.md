@@ -223,7 +223,7 @@ sample-evtx: |
   - `attack.exfiltration` -> Exfiltration (Exfil)
   - `attack.impact` -> Impact (Impact)
 - **references** [オプション]: 参考文献への任意のリンク。
-- **ruletype [必須]**: Hayabusaルールには `Hayabusa` を指定します。SigmaのWindowsルールから自動変換されたルールは `Sigma` になります。
+- **ruletype [オプション]**: Hayabusaルールには `Hayabusa` を指定します。SigmaのWindowsルールから自動変換されたルールは `Sigma` になります。
 
 > ## Sample XML Event
 
