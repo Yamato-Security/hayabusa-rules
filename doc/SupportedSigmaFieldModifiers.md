@@ -5,8 +5,8 @@
 | base64offsetǀcontains         |             7 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
-| contains                      |          2811 |               21 |
-| containsǀall                  |           997 |                0 |
+| contains                      |          2812 |               21 |
+| containsǀall                  |           998 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
@@ -26,7 +26,7 @@
 | gte                           |             0 |                0 |
 | lt                            |             0 |                0 |
 | lte                           |             0 |                0 |
-| re                            |           168 |               11 |
+| re                            |           169 |               11 |
 | reǀi                          |             0 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
@@ -58,5 +58,5 @@
 |--------------------|---------------|------------------|
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/05/26  
+Last Update: 2025/05/27  
 Author: Fukusuke Takahashi
