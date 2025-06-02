@@ -5,7 +5,7 @@ related:
       type: similar
     - id: b61e87c0-50db-4b2e-8986-6a2be94b33b0
       type: derived
-status: experimental
+status: test
 description: |
     Detects changes to "DsrmAdminLogonBehavior" registry value.
     During a Domain Controller (DC) promotion, administrators create a Directory Services Restore Mode (DSRM) local administrator account with a password that rarely changes. The DSRM account is an “Administrator” account that logs in with the DSRM mode when the server is booting up to restore AD backups or recover the server from a failure.
