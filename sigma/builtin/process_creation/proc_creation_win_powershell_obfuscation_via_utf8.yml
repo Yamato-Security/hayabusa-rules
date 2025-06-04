@@ -1,4 +1,4 @@
-title: Potential PowerShell Obfuscation Via WCHAR
+title: Potential PowerShell Obfuscation Via WCHAR/CHAR
 id: e0e9ccfe-20b3-2dca-ffe5-0e6c86ad22bc
 related:
     - id: e312efd0-35a1-407f-8439-b8d434b438a6
@@ -9,7 +9,7 @@ references:
     - https://twitter.com/0gtweet/status/1281103918693482496
 author: Florian Roth (Nextron Systems)
 date: 2020-07-09
-modified: 2023-01-05
+modified: 2025-03-03
 tags:
     - attack.execution
     - attack.t1059.001
@@ -23,7 +23,9 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        CommandLine|contains: (WCHAR)0x
+        CommandLine|contains:
+            - '[char]0x'
+            - (WCHAR)0x
     condition: process_creation and selection
 falsepositives:
     - Unknown
