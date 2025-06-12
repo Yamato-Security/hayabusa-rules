@@ -14,6 +14,10 @@ references:
     - https://cybersecuritynews.com/rhysida-ransomware-attacking-windows/
 author: frack113
 date: 2024-05-03
+tags:
+    - attack.t1562.004
+    - detection.threat-hunting
+    - sysmon
 logsource:
     category: process_creation
     product: windows
@@ -38,6 +42,4 @@ detection:
 falsepositives:
     - Administrator script
 level: low
-tags:
-    - sysmon
 ruletype: Sigma
