@@ -5,13 +5,13 @@
 | base64offsetǀcontains         |             7 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
-| contains                      |          2824 |               21 |
+| contains                      |          2825 |               21 |
 | containsǀall                  |          1000 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
 | containsǀwindash              |            79 |                0 |
-| endswith                      |          2973 |              273 |
+| endswith                      |          2976 |              273 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -58,5 +58,5 @@
 |--------------------|---------------|------------------|
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/06/13  
+Last Update: 2025/06/23  
 Author: Fukusuke Takahashi
