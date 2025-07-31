@@ -6,12 +6,12 @@
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
 | contains                      |          2858 |               21 |
-| containsǀall                  |          1008 |                0 |
+| containsǀall                  |          1009 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
 | containsǀwindash              |            79 |                0 |
-| endswith                      |          3006 |              273 |
+| endswith                      |          3007 |              273 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -59,5 +59,5 @@
 |--------------------|---------------|------------------|
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/07/29  
+Last Update: 2025/07/31  
 Author: Fukusuke Takahashi
