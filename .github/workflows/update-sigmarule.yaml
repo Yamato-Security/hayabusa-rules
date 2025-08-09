@@ -96,18 +96,26 @@ jobs:
           ./hayabusa-${LATEST_VER#v}-lin-x64-gnu csv-timeline -d ../../hayabusa-sample-evtx -r ../../hayabusa-rules -w -o out.csv -D -n -u  -C | grep "Rule parsing error" | wc -l | grep 0
           if [ $? -eq 0 ]; then
               echo "No rule parse error."
+              echo "RULE_PARSE_ERROR=0" >> $GITHUB_ENV
           else
               cat ./logs/*
-              false
+              echo "RULE_PARSE_ERROR=1" >> $GITHUB_ENV
           fi
+          exit 0
+
       - name: Notify Slack
+        if: always()
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
           fields: job
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          if: failure()
+        run: |
+          if [ "${RULE_PARSE_ERROR}" = "1" ]; then
+            echo "Rule parse error detected"
+            exit 1
+          fi
 
   updateSigmaRule:
     needs: rule-parse-error-check
