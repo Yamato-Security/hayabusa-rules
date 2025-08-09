@@ -55,5 +55,10 @@ jobs:
           fi
 
       - name: Notify Slack
-        shell: /usr/bin/bash {0}
-        run: echo "TEST"
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: job
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          if: failure()
