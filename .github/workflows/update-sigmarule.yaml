@@ -107,7 +107,7 @@ jobs:
         if: env.RULE_PARSE_ERROR == '1'
         uses: 8398a7/action-slack@v3
         with:
-          status: ${{ job.status }}
+          status: failure
           fields: job
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
