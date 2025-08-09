@@ -112,6 +112,12 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
+      - name: Check rule parse error
+        if: env.RULE_PARSE_ERROR == '1'
+        run: |
+          echo "Rule parse error found. Please check the logs above."
+          exit 1
+
   updateSigmaRule:
     needs: rule-parse-error-check
     runs-on: ubuntu-latest
