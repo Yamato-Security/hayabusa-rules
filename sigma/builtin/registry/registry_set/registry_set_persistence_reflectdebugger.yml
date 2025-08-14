@@ -23,7 +23,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        OperationType: '%%1905'
         ObjectName|endswith: \Microsoft\Windows\Windows Error Reporting\Hangs\ReflectDebugger
     condition: registry_set and selection
 falsepositives:

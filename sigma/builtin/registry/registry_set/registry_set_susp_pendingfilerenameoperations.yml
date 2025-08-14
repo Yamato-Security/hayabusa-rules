@@ -26,7 +26,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection_main:
-        OperationType: '%%1905'
         ObjectName|contains: \CurrentControlSet\Control\Session Manager\PendingFileRenameOperations
     selection_susp_paths:
         ProcessName|contains:

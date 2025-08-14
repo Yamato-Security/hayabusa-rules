@@ -22,7 +22,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        OperationType: '%%1905'
         ObjectName|contains: \Software\Winternals\BGInfo\UserFields\
         NewValue|startswith: '4'
     condition: registry_set and selection

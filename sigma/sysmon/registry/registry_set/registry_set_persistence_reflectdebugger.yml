@@ -24,7 +24,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|endswith: \Microsoft\Windows\Windows Error Reporting\Hangs\ReflectDebugger
     condition: registry_set and selection
 falsepositives:

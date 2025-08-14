@@ -27,7 +27,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_main:
-        EventType: SetValue
         TargetObject|contains: \CurrentControlSet\Control\Session Manager\PendingFileRenameOperations
     selection_susp_paths:
         Image|contains:
