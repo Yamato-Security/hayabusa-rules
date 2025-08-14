@@ -23,7 +23,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|contains: \Software\Winternals\BGInfo\UserFields\
         Details|startswith: '6' # WMI
     condition: registry_set and selection

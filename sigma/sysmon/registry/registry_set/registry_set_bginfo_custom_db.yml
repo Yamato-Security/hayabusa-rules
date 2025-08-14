@@ -21,7 +21,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|endswith: \Software\Winternals\BGInfo\Database
     condition: registry_set and selection
 falsepositives:

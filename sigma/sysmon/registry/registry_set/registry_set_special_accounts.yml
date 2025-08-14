@@ -27,7 +27,6 @@ detection:
         EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: SetValue
         TargetObject|contains: \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\SpecialAccounts\UserList
         Details: DWORD (0x00000000)
     condition: registry_set and selection
