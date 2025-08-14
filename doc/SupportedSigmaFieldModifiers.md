@@ -6,12 +6,12 @@
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
 | contains                      |          2858 |               21 |
-| containsǀall                  |          1009 |                0 |
+| containsǀall                  |          1010 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
-| containsǀwindash              |            79 |                0 |
-| endswith                      |          3008 |              273 |
+| containsǀwindash              |            80 |                0 |
+| endswith                      |          3010 |              273 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -30,7 +30,7 @@
 | reǀi                          |             0 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
-| startswith                    |           463 |                6 |
+| startswith                    |           465 |                6 |
 | startswithǀcased              |             0 |                0 |
 | utf16beǀbase64offsetǀcontains |             0 |                0 |
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
@@ -59,5 +59,5 @@
 |--------------------|---------------|------------------|
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/08/06  
+Last Update: 2025/08/14  
 Author: Fukusuke Takahashi
