@@ -64,7 +64,7 @@ def get_yml_detection_counts(dir_path: str) -> (Counter, Counter):
 
     sigma_modifiers = [
         'all', 'startswith', 'endswith', 'contains', 'exists', 'cased', "contains|cased", "startswith|cased", "endswith|cased", 'windash', 're', 're|i', 're|m', 're|s',
-        'base64', 'base64offset', 'utf16le|base64offset|contains', 'utf16be|base64offset|contains', 'utf16|base64offset|contains', 'wide|base64offset|contains',
+        'base64', 'base64ǀcontains','base64offset', 'utf16le|base64offset|contains', 'utf16be|base64offset|contains', 'utf16|base64offset|contains', 'wide|base64offset|contains',
         'lt', 'lte', 'gt', 'gte', 'cidr', 'expand', 'fieldref', 'fieldref|startswith', 'fieldref|contains','fieldref|endswith', 'equalsfield', 'endswithfield'
     ]
     sigma_correlations = [
@@ -84,6 +84,8 @@ def categorize_modifiers(sigma_key_counter, hayabusa_key_counter, hayabusa_suppo
         supported_modifier = "Yes" if supported_modifier else "No"
         supported_modifier = "Yes" if k in hayabusa_supported else supported_modifier
         hayabusa_count = hayabusa_key_counter.get(k, 0)
+        if hayabusa_count == 0 and v == 0:
+            continue
         res = [k.strip('|').replace('|', 'ǀ'), v, hayabusa_count]
         if supported_modifier == "Yes":
             supported.append(res)
@@ -104,7 +106,7 @@ if __name__ == '__main__':
     sigma_mod_counter, sigma_col_counter = get_yml_detection_counts(args.sigma_path)
     hayabusa_mod_counter, hayabusa_col_counter = get_yml_detection_counts(args.hayabusa_path)
 
-    hayabusa_supported_modifiers = {"all", "base64offset", "contains", "cidr", "windash", "endswith", "expand", "startswith", "re", "exists", "cased", "re", "re|i", "re|m", "re|s" , 'equalsfield', 'endswithfield', 'fieldref', 'gt', 'gte', 'lt', 'lte', 'utf16', 'utf16be', 'utf16le', 'wide'}
+    hayabusa_supported_modifiers = {"all", "base64", "base64offset", "contains", "cidr", "windash", "endswith", "expand", "startswith", "re", "exists", "cased", "re", "re|i", "re|m", "re|s" , 'equalsfield', 'endswithfield', 'fieldref', 'gt', 'gte', 'lt', 'lte', 'utf16', 'utf16be', 'utf16le', 'wide'}
     mod_supported, mod_unsupported = categorize_modifiers(sigma_mod_counter, hayabusa_mod_counter, hayabusa_supported_modifiers)
 
     hayabusa_supported_modifiers = {"event_count", "event_count (with group-by)", "value_count", "value_count (with group-by)", "temporal", "temporal (with group-by)", "temporal_ordered", "temporal_ordered (with group-by)"}
@@ -113,12 +115,18 @@ if __name__ == '__main__':
     markdown_str = "# Hayabusa supported field modifiers\n"
     markdown_str = markdown_str + pd.DataFrame(sorted(mod_supported), columns=["Field Modifier", "Sigma Count", "Hayabusa Count"]).to_markdown(index=False)
     markdown_str = markdown_str + "\n\n# Hayabusa unsupported field modifiers\n"
-    markdown_str = markdown_str + pd.DataFrame(sorted(mod_unsupported), columns=["Field Modifier", "Sigma Count", "Hayabusa Count"]).to_markdown(index=False)
+    if mod_unsupported:
+        markdown_str = markdown_str + pd.DataFrame(sorted(mod_unsupported), columns=["Field Modifier", "Sigma Count", "Hayabusa Count"]).to_markdown(index=False)
+    else:
+        markdown_str = markdown_str + "Currently, everything is supported.\n"
 
     markdown_str = markdown_str + "\n\n# Hayabusa supported correlation rules\n"
     markdown_str = markdown_str + pd.DataFrame(sorted(col_supported), columns=["Correlation Rule", "Sigma Count", "Hayabusa Count"]).to_markdown(index=False)
-    markdown_str = markdown_str + "\n\n# Hayabusa un-supported correlations rules\n"
-    markdown_str = markdown_str + pd.DataFrame(sorted(col_unsupported), columns=["Correlation Rule", "Sigma Count", "Hayabusa Count"]).to_markdown(index=False)
+    markdown_str = markdown_str + "\n\n# Hayabusa unsupported correlations rules\n"
+    if col_unsupported:
+        markdown_str = markdown_str + pd.DataFrame(sorted(col_unsupported), columns=["Correlation Rule", "Sigma Count", "Hayabusa Count"]).to_markdown(index=False)
+    else:
+        markdown_str = markdown_str + "Currently, everything is supported.\n"
 
     markdown_str = markdown_str + "\n\nThis document is being dynamically updated based on the latest rules.  \n"
     current_markdown = Path(args.out_path)
