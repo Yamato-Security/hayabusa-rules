@@ -3,6 +3,7 @@
 |:------------------------------|--------------:|-----------------:|
 | all                           |            13 |                0 |
 | base64offsetǀcontains         |             7 |                0 |
+| base64ǀcontains               |             1 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
 | contains                      |          2858 |               21 |
@@ -38,9 +39,8 @@
 | wideǀbase64offsetǀcontains    |             2 |                0 |
 
 # Hayabusa unsupported field modifiers
-| Field Modifier   |   Sigma Count |   Hayabusa Count |
-|:-----------------|--------------:|-----------------:|
-| base64ǀcontains  |             1 |                0 |
+Currently, everything is supported.
+
 
 # Hayabusa supported correlation rules
 | Correlation Rule                 |   Sigma Count |   Hayabusa Count |
@@ -54,10 +54,10 @@
 | value_count                      |             0 |                0 |
 | value_count (with group-by)      |             0 |                2 |
 
-# Hayabusa un-supported correlations rules
-| Correlation Rule   | Sigma Count   | Hayabusa Count   |
-|--------------------|---------------|------------------|
+# Hayabusa unsupported correlations rules
+Currently, everything is supported.
+
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/08/14  
+Last Update: 2025/08/17  
 Author: Fukusuke Takahashi
