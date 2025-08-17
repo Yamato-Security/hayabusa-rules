@@ -88,8 +88,7 @@ def categorize_modifiers(sigma_key_counter, hayabusa_key_counter, hayabusa_suppo
         if supported_modifier == "Yes":
             supported.append(res)
         else:
-            if hayabusa_count != 0 and v != 0:
-                unsupported.append(res)
+            unsupported.append(res)
     return supported, unsupported
 
 
