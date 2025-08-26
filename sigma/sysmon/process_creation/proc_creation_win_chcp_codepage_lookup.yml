@@ -24,7 +24,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         ParentImage|endswith: \cmd.exe
-        ParentCommandLine|contains|windash:
+        ParentCommandLine|windash|contains:
             - ' -c '
             - ' -r '
             - ' -k '

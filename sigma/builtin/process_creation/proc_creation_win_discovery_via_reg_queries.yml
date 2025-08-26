@@ -23,7 +23,7 @@ detection:
         Channel: Security
     selection_cmd_reg:
         CommandLine|contains: query
-        CommandLine|contains|windash: -v
+        CommandLine|windash|contains: -v
         NewProcessName|endswith: \reg.exe
     selection_cmd_powershell:
         CommandLine|contains:

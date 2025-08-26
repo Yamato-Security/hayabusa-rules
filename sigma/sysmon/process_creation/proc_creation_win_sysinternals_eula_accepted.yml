@@ -24,7 +24,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        CommandLine|contains|windash: ' -accepteula'
+        CommandLine|windash|contains: ' -accepteula'
     condition: process_creation and selection
 falsepositives:
     - Legitimate use of SysInternals tools

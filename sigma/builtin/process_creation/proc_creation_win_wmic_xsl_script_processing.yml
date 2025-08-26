@@ -24,7 +24,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        CommandLine|contains|windash: -format       # wmic process list -FORMAT /? or wmic process list /FORMAT /?
+        CommandLine|windash|contains: -format       # wmic process list -FORMAT /? or wmic process list /FORMAT /?
         NewProcessName|endswith: \wmic.exe
     filter_main_known_format:
         CommandLine|contains:
