@@ -29,7 +29,7 @@ detection:
         - NewProcessName|endswith: \wlrmdr.exe
         - OriginalFileName: WLRMNDR.EXE
     selection_child_cli:
-        CommandLine|contains|all|windash:
+        CommandLine|windash|contains|all:
             - '-s '
             - '-f '
             - '-t '

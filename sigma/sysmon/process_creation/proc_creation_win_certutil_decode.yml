@@ -30,7 +30,7 @@ detection:
         - Image|endswith: \certutil.exe
         - OriginalFileName: CertUtil.exe
     selection_cli:
-        CommandLine|contains|windash:
+        CommandLine|windash|contains:
             - '-decode ' # Decode Base64
             - '-decodehex ' # Decode Hex
     condition: process_creation and (all of selection_*)

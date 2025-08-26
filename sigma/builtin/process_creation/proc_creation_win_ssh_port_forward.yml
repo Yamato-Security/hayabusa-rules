@@ -24,7 +24,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        CommandLine|contains|windash: ' -R '
+        CommandLine|windash|contains: ' -R '
         NewProcessName|endswith: \ssh.exe
     condition: process_creation and selection
 falsepositives:

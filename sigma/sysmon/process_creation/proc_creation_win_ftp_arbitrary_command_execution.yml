@@ -29,7 +29,7 @@ detection:
         - Image|endswith: \ftp.exe
         - OriginalFileName: ftp.exe
     selection_child_cli:
-        CommandLine|contains|windash: '-s:'
+        CommandLine|windash|contains: '-s:'
     condition: process_creation and (selection_parent or all of selection_child_*)
 falsepositives:
     - Unknown

@@ -30,7 +30,7 @@ detection:
         - Image|endswith: \msdt.exe
         - OriginalFileName: msdt.exe
     selection_cmd:
-        CommandLine|contains|windash: ' -cab '
+        CommandLine|windash|contains: ' -cab '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate usage of ".diagcab" files

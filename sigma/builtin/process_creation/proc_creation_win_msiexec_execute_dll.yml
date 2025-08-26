@@ -25,7 +25,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        CommandLine|contains|windash: ' -y'
+        CommandLine|windash|contains: ' -y'
         NewProcessName|endswith: \msiexec.exe
     filter_apple:
         CommandLine|contains:

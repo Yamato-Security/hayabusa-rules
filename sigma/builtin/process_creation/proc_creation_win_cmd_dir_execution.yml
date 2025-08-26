@@ -25,7 +25,7 @@ detection:
         - NewProcessName|endswith: \cmd.exe
         - OriginalFileName: Cmd.Exe
     selection_cli:
-        CommandLine|contains|windash: dir*-s
+        CommandLine|windash|contains: dir*-s
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Likely

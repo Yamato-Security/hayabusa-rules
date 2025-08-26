@@ -28,7 +28,7 @@ detection:
               - \livekd64.exe
         - OriginalFileName: livekd.exe
     selection_cli:
-        CommandLine|contains|windash: ' -m'
+        CommandLine|windash|contains: ' -m'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unlikely in production environment

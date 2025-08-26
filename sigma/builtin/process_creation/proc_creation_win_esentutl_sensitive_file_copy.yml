@@ -30,7 +30,7 @@ detection:
         - NewProcessName|endswith: \esentutl.exe
         - OriginalFileName: \esentutl.exe
     selection_esent_cli:
-        CommandLine|contains|windash:
+        CommandLine|windash|contains:
             - vss
             - ' /m '
             - ' /y '

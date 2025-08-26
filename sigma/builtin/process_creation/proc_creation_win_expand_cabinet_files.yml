@@ -22,7 +22,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection_cmd:
-        CommandLine|contains|windash: '-F:'
+        CommandLine|windash|contains: '-F:'
         NewProcessName|endswith: \expand.exe
     selection_folders_1:
         CommandLine|contains:

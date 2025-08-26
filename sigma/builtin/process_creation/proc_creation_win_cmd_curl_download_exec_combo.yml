@@ -23,7 +23,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection:
-        CommandLine|contains|windash: ' -c '
+        CommandLine|windash|contains: ' -c '
         CommandLine|contains|all:
             - 'curl '
             - http
