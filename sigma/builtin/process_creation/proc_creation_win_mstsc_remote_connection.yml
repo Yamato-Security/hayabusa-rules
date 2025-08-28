@@ -27,7 +27,7 @@ detection:
         - NewProcessName|endswith: \mstsc.exe
         - OriginalFileName: mstsc.exe
     selection_cli:
-        CommandLine|windash|contains: ' /v:'
+        CommandLine|contains|windash: ' /v:'
     filter_optional_wsl:
         # Example: mstsc.exe /v:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX /hvsocketserviceid:XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX /silent /wslg /plugin:WSLDVC /wslgsharedmemorypath:WSL\XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX\wslg C:\ProgramData\Microsoft\WSL\wslg.rdp
         CommandLine|contains: C:\ProgramData\Microsoft\WSL\wslg.rdp

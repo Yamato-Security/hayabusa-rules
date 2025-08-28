@@ -26,7 +26,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection_flags:
-        CommandLine|windash|contains: ' -ma '
+        CommandLine|contains|windash: ' -ma '
     selection_process:
         CommandLine|contains: ' ls' # Short for lsass
     condition: process_creation and (all of selection*)

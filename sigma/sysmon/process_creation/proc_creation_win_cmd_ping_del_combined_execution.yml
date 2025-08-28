@@ -25,11 +25,11 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_count:
-        CommandLine|windash|contains: ' -n '
+        CommandLine|contains|windash: ' -n '
     selection_nul:
         CommandLine|contains: Nul   # Covers "> Nul" and ">Nul "
     selection_del_param:
-        CommandLine|windash|contains:
+        CommandLine|contains|windash:
             - ' -f '
             - ' -q '
     selection_all:

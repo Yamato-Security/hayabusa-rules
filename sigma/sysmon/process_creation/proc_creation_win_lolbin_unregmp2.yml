@@ -25,7 +25,7 @@ detection:
         - Image|endswith: \unregmp2.exe
         - OriginalFileName: unregmp2.exe
     selection_cmd:
-        CommandLine|windash|contains: ' /HideWMP'
+        CommandLine|contains|windash: ' /HideWMP'
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

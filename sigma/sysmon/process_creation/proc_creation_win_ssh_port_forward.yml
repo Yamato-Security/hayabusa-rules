@@ -26,7 +26,7 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         Image|endswith: \ssh.exe
-        CommandLine|windash|contains: ' -R '
+        CommandLine|contains|windash: ' -R '
     condition: process_creation and selection
 falsepositives:
     - Administrative activity using a remote port forwarding to a local port

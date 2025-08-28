@@ -29,7 +29,7 @@ detection:
         CommandLine|contains|all:
             - install
             - module
-        CommandLine|windash|contains: '-name:'
+        CommandLine|contains|windash: '-name:'
     filter_iis_setup:
         ParentImage: C:\Windows\System32\inetsrv\iissetup.exe
     condition: process_creation and (all of selection_* and not 1 of filter_*)

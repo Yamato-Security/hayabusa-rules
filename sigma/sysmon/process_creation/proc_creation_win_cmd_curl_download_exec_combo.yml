@@ -24,7 +24,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        CommandLine|windash|contains: ' -c '
+        CommandLine|contains|windash: ' -c '
         CommandLine|contains|all:
             - 'curl '
             - http
