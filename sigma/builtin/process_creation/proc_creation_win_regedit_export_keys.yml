@@ -28,7 +28,7 @@ detection:
         - NewProcessName|endswith: \regedit.exe
         - OriginalFileName: REGEDIT.EXE
     selection_cli:
-        CommandLine|windash|contains: ' -E '
+        CommandLine|contains|windash: ' -E '
     filter_1:   # filters to avoid intersection with critical keys rule
         CommandLine|contains:
             - hklm

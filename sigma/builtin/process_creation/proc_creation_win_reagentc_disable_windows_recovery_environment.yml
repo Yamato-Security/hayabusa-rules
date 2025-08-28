@@ -27,7 +27,7 @@ detection:
         - NewProcessName|endswith: \reagentc.exe
         - OriginalFileName: reagentc.exe
     selection_cli:
-        CommandLine|windash|contains: /disable
+        CommandLine|contains|windash: /disable
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate administrative activity

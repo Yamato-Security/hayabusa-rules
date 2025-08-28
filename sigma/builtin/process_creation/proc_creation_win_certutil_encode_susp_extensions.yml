@@ -29,7 +29,7 @@ detection:
         - NewProcessName|endswith: \certutil.exe
         - OriginalFileName: CertUtil.exe
     selection_cli:
-        CommandLine|windash|contains: -encode
+        CommandLine|contains|windash: -encode
     selection_extension:
         CommandLine|contains:
             - .acl

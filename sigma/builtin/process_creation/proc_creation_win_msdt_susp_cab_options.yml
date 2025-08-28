@@ -29,7 +29,7 @@ detection:
         - NewProcessName|endswith: \msdt.exe
         - OriginalFileName: msdt.exe
     selection_cmd:
-        CommandLine|windash|contains: ' -cab '
+        CommandLine|contains|windash: ' -cab '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Legitimate usage of ".diagcab" files

@@ -30,7 +30,7 @@ detection:
             - ' ImagePath '
         NewProcessName|endswith: \reg.exe
     selection_value:
-        CommandLine|windash|contains: ' -d '
+        CommandLine|contains|windash: ' -d '
     condition: process_creation and (all of selection*)
 falsepositives:
     - Unknown

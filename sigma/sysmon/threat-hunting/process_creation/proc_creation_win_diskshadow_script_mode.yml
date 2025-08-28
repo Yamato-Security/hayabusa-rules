@@ -39,7 +39,7 @@ detection:
         - OriginalFileName: diskshadow.exe
         - Image|endswith: \diskshadow.exe
     selection_cli:
-        CommandLine|windash|contains: '-s '
+        CommandLine|contains|windash: '-s '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Likely from legitimate backup scripts

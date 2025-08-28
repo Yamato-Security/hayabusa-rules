@@ -25,7 +25,7 @@ detection:
         - Image|endswith: \certutil.exe
         - OriginalFileName: CertUtil.exe
     selection_cli:
-        CommandLine|windash|contains: '-exportPFX '
+        CommandLine|contains|windash: '-exportPFX '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - There legitimate reasons to export certificates. Investigate the activity to determine if it's benign

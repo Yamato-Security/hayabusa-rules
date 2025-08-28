@@ -30,9 +30,9 @@ detection:
             - ping   # Covers "ping" and "ping.exe"
             - 'copy '
     selection_cli_1:
-        CommandLine|windash|contains: ' -n ' # Count
+        CommandLine|contains|windash: ' -n ' # Count
     selection_cli_2:
-        CommandLine|windash|contains: ' -y '
+        CommandLine|contains|windash: ' -y '
     condition: process_creation and (all of selection_*)
 falsepositives:
     - Unknown

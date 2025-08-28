@@ -29,7 +29,7 @@ detection:
         - Image|endswith: \certoc.exe
         - OriginalFileName: CertOC.exe
     selection_cli:
-        CommandLine|windash|contains: ' -LoadDLL '
+        CommandLine|contains|windash: ' -LoadDLL '
     condition: process_creation and (all of selection_*)
 fields:
     - CommandLine
