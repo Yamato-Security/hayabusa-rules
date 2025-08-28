@@ -8,11 +8,14 @@
 | cidr                          |            34 |                0 |
 | contains                      |          2858 |               21 |
 | containsǀall                  |          1010 |                0 |
+| containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
+| containsǀwindash              |            80 |                0 |
 | endswith                      |          3010 |              273 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
+| endswithǀwindash              |             2 |                0 |
 | equalsfield                   |             0 |                0 |
 | exists                        |             0 |                0 |
 | expand                        |             9 |                0 |
@@ -34,9 +37,6 @@
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
 | utf16ǀbase64offsetǀcontains   |             0 |                0 |
 | wideǀbase64offsetǀcontains    |             2 |                0 |
-| windashǀcontains              |            80 |                0 |
-| windashǀcontainsǀall          |             4 |                0 |
-| windashǀendswith              |             2 |                0 |
 
 # Hayabusa unsupported field modifiers
 Currently, everything is supported.
@@ -59,5 +59,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/08/26  
+Last Update: 2025/08/28  
 Author: Fukusuke Takahashi
