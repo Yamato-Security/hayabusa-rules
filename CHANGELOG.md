@@ -1,6 +1,10 @@
 # Changes
 
-## v.17.0 [2024/10/19]
+## v3.5.0 [2025/09/16]
+
+- Updated all Hayabusa rules' date format to the latest Sigma specification. (#915) (@yamatosecurity)
+
+## v2.17.0 [2024/10/19]
 
 - Updated the Hayabusa `count` rules to correlation rules. (@yamatosecurity)
 
