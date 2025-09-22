@@ -11,9 +11,11 @@ references:
     - https://code.visualstudio.com/docs/remote/tunnels
 author: Nasreddine Bencherchali (Nextron Systems), citron_ninja
 date: 2023-10-25
+modified: 2025-10-29
 tags:
     - attack.command-and-control
     - attack.t1071.001
+    - attack.t1219
     - sysmon
 logsource:
     category: process_creation
@@ -28,7 +30,6 @@ detection:
     selection_tunnel_args:
         CommandLine|contains|all:
             - .exe tunnel
-            - '--name '
             - --accept-server-license-terms
     selection_parent_tunnel:
         ParentCommandLine|endswith: ' tunnel'
