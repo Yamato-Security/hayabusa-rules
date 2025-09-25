@@ -7,7 +7,7 @@
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
 | contains                      |          2869 |               21 |
-| containsǀall                  |          1015 |                0 |
+| containsǀall                  |          1016 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
@@ -59,5 +59,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/09/22  
+Last Update: 2025/09/25  
 Author: Fukusuke Takahashi
