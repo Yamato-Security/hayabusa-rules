@@ -6,13 +6,13 @@
 | base64ǀcontains               |             1 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
-| contains                      |          2885 |               21 |
-| containsǀall                  |          1017 |                0 |
+| contains                      |          2909 |               21 |
+| containsǀall                  |          1038 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
-| containsǀwindash              |            82 |                0 |
-| endswith                      |          3040 |              273 |
+| containsǀwindash              |            83 |                0 |
+| endswith                      |          3092 |              273 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -31,7 +31,7 @@
 | reǀi                          |             0 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
-| startswith                    |           468 |                6 |
+| startswith                    |           491 |                6 |
 | startswithǀcased              |             0 |                0 |
 | utf16beǀbase64offsetǀcontains |             0 |                0 |
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
@@ -59,5 +59,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/10/07  
+Last Update: 2025/10/09  
 Author: Fukusuke Takahashi
