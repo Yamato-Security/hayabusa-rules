@@ -15,7 +15,7 @@ references:
     - https://thedfirreport.com/2023/08/28/html-smuggling-leads-to-domain-wide-ransomware/
 author: Florian Roth (Nextron Systems), Markus Neis, Tim Shelton (HAWK.IO), Nasreddine Bencherchali (Nextron Systems)
 date: 2020-07-03
-modified: 2023-08-29
+modified: 2025-10-07
 tags:
     - attack.defense-evasion
     - attack.t1036.003
@@ -26,31 +26,41 @@ detection:
     process_creation:
         EventID: 4688
         Channel: Security
-    selection_cmd:
+    selection_img_cmd:
         CommandLine|contains: 'copy '
         NewProcessName|endswith: \cmd.exe
-    selection_pwsh:
+    selection_img_pwsh:
         CommandLine|contains:
             - copy-item
             - ' copy '
             - 'cpi '
             - ' cp '
         NewProcessName|endswith:
+            - \powershell_ise.exe
             - \powershell.exe
             - \pwsh.exe
-    selection_other:
+    selection_img_other:
         - NewProcessName|endswith:
               - \robocopy.exe
               - \xcopy.exe
         - OriginalFileName:
               - robocopy.exe
               - XCOPY.EXE
-    target:
+    selection_target:
         CommandLine|contains:
             - \System32
             - \SysWOW64
             - \WinSxS
-    condition: process_creation and (1 of selection_* and target)
+    filter_optional_avira:
+        CommandLine|contains|all:
+            - /c copy
+            - \Temp\
+            - \avira_system_speedup.exe
+        CommandLine|contains:
+            - C:\Program Files\Avira\
+            - C:\Program Files (x86)\Avira\
+        NewProcessName|endswith: \cmd.exe
+    condition: process_creation and (1 of selection_img_* and selection_target and not 1 of filter_optional_*)
 falsepositives:
     - Depend on scripts and administrative tools used in the monitored environment (For example an admin scripts like https://www.itexperience.net/sccm-batch-files-and-32-bits-processes-on-64-bits-os/)
     - When cmd.exe and xcopy.exe are called directly #  C:\Windows\System32\cmd.exe /c copy file1 file2
