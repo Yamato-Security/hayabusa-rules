@@ -21,10 +21,12 @@ detection:
     process_creation:
         EventID: 4688
         Channel: Security
-    selection_1:
+    selection_img:
+        - NewProcessName|endswith: \reg.exe
+        - OriginalFileName: reg.exe
+    selection_cli_add:
         CommandLine|contains: add       # to avoid intersection with discovery tactic rules
-        NewProcessName|endswith: \reg.exe
-    selection_2:
+    selection_cli_keys:
         CommandLine|contains:           # need to improve this list, there are plenty of ASEP reg keys
             - \software\Microsoft\Windows\CurrentVersion\Run   # Also covers the strings "RunOnce", "RunOnceEx", "RunServices", "RunServicesOnce"
             - \software\WOW6432Node\Microsoft\Windows\CurrentVersion\Run

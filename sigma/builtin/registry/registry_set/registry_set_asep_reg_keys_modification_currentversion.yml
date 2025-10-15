@@ -14,7 +14,7 @@ references:
     - https://oddvar.moe/2018/03/21/persistence-using-runonceex-hidden-from-autoruns-exe/
 author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin, oscd.community, Tim Shelton, frack113 (split)
 date: 2019-10-25
-modified: 2025-06-16
+modified: 2025-10-07
 tags:
     - attack.persistence
     - attack.t1547.001
@@ -25,9 +25,9 @@ detection:
     registry_set:
         EventID: 4657
         Channel: Security
-    current_version_base:
+    selection_current_version_base:
         ObjectName|contains: \SOFTWARE\Microsoft\Windows\CurrentVersion
-    current_version_keys:
+    selection_current_version_keys:
         ObjectName|contains:
             - \ShellServiceObjectDelayLoad
             - \Run\
@@ -49,7 +49,7 @@ detection:
             - \Authentication\PLAP Providers
             - \Authentication\Credential Providers
             - \Authentication\Credential Provider Filters
-    filter_all:
+    filter_main_all:
         - NewValue: (Empty)
         - ObjectName|endswith: \NgcFirst\ConsecutiveSwitchCount
         - ProcessName|endswith:
@@ -66,85 +66,111 @@ detection:
               - C:\Program Files\Everything\Everything.exe
               - C:\Program Files (x86)\Microsoft Office\root\integration\integrator.exe
               - C:\Program Files\Microsoft Office\root\integration\integrator.exe
-    filter_logonui:
+    filter_main_logonui:
         ProcessName: C:\Windows\system32\LogonUI.exe
         ObjectName|contains:
             - \Authentication\Credential Providers\{D6886603-9D2F-4EB2-B667-1971041FA96B}\
             - \Authentication\Credential Providers\{BEC09223-B018-416D-A0AC-523971B639F5}\
             - \Authentication\Credential Providers\{8AF662BF-65A0-4D0A-A540-A338A999D36F}\
             - \Authentication\Credential Providers\{27FBDB57-B613-4AF2-9D7E-4FA7A66C21AD}\
-    filter_edge:
+    filter_main_edge:
         ProcessName|startswith:
             - C:\Program Files (x86)\Microsoft\EdgeUpdate\Install\
             - C:\Program Files (x86)\Microsoft\EdgeWebView\
             - C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
-    filter_dropbox:
+    filter_main_officeclicktorun:
+        ProcessName|startswith:
+            - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
+            - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
+        ProcessName|endswith: \OfficeClickToRun.exe
+    filter_main_defender:
+        ProcessName: C:\Program Files\Windows Defender\MsMpEng.exe
+    filter_main_teams:
+        ProcessName|endswith: \Microsoft\Teams\current\Teams.exe
+        NewValue|contains: '\Microsoft\Teams\Update.exe --processStart '
+    filter_main_ctfmon:
+        ProcessName: C:\Windows\system32\userinit.exe
+        NewValue: ctfmon.exe /n
+    filter_optional_dropbox:
         ProcessName: C:\Windows\system32\regsvr32.exe
         ObjectName|contains: DropboxExt
         NewValue|endswith: A251-47B7-93E1-CDD82E34AF8B}
-    filter_opera:
+    filter_optional_opera_1:
         ObjectName|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Opera Browser Assistant
         NewValue: C:\Program Files\Opera\assistant\browser_assistant.exe
-    filter_itunes:
+    filter_optional_opera_2:
+        ObjectName|endswith: \Software\Microsoft\Windows\CurrentVersion\Run\Opera Stable
+        NewValue:
+            - C:\Program Files\Opera\launcher.exe
+            - C:\Program Files (x86)\Opera\launcher.exe
+    filter_optional_itunes:
         ObjectName|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\iTunesHelper
         NewValue: '"C:\Program Files\iTunes\iTunesHelper.exe"'
-    filter_zoom:
+    filter_optional_zoom:
         ObjectName|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce\zoommsirepair
         NewValue: '"C:\Program Files\Zoom\bin\installer.exe" /repair'
-    filter_greenshot:
+    filter_optional_greenshot:
         ObjectName|endswith: \SOFTWARE\Microsoft\Windows\CurrentVersion\Run\Greenshot
         NewValue: C:\Program Files\Greenshot\Greenshot.exe
-    filter_googledrive1:
+    filter_optional_googledrive1:
         ObjectName|endswith: \Software\Microsoft\Windows\CurrentVersion\Run\GoogleDriveFS
         NewValue|startswith: C:\Program Files\Google\Drive File Stream\
         NewValue|contains: \GoogleDriveFS.exe
-    filter_googledrive2:
+    filter_optional_googledrive2:
         ObjectName|contains: GoogleDrive
         NewValue:
             - '{CFE8B367-77A7-41D7-9C90-75D16D7DC6B6}'
             - '{A8E52322-8734-481D-A7E2-27B309EF8D56}'
             - '{C973DA94-CBDF-4E77-81D1-E5B794FBD146}'
             - '{51EF1569-67EE-4AD6-9646-E726C3FFC8A2}'
-    filter_onedrive:
+    filter_optional_onedrive:
         NewValue|startswith:
             - C:\Windows\system32\cmd.exe /q /c rmdir /s /q "C:\Users\
             - C:\Windows\system32\cmd.exe /q /c del /q "C:\Users\
         NewValue|contains: \AppData\Local\Microsoft\OneDrive\
-    filter_python:
+    filter_optional_python:
         ObjectName|contains: \Microsoft\Windows\CurrentVersion\RunOnce\{
         NewValue|contains|all:
             - \AppData\Local\Package Cache\{
             - '}\python-'
         NewValue|endswith: .exe" /burn.runonce
-    filter_officeclicktorun:
-        ProcessName|startswith:
-            - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
-            - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
-        ProcessName|endswith: \OfficeClickToRun.exe
-    filter_defender:
-        ProcessName: C:\Program Files\Windows Defender\MsMpEng.exe
-    filter_teams:
-        ProcessName|endswith: \Microsoft\Teams\current\Teams.exe
-        NewValue|contains: '\Microsoft\Teams\Update.exe --processStart '
-    filter_ctfmon:
-        ProcessName: C:\Windows\system32\userinit.exe
-        NewValue: ctfmon.exe /n
-    filter_AVG:
-        ProcessName|startswith: C:\Program Files\AVG\Antivirus\Setup\
+    filter_optional_AVG_setup:
+        ProcessName|contains:
+            - C:\Program Files\AVG\Antivirus\Setup\
+            - C:\Program Files (x86)\AVG\Antivirus\Setup\
+            - \instup.exe
         NewValue:
             - '"C:\Program Files\AVG\Antivirus\AvLaunch.exe" /gui'
             - '"C:\Program Files (x86)\AVG\Antivirus\AvLaunch.exe" /gui'
             - '{472083B0-C522-11CF-8763-00608CC02F24}'
-    filter_aurora_dashboard:
+            - '{472083B1-C522-11CF-8763-00608CC02F24}'
+    filter_optional_Avast:
+        ProcessName|contains:
+            - C:\Program Files\Avast Software\Avast\Setup\
+            - C:\Program Files (x86)\Avast Software\Avast\Setup\
+            - \instup.exe
+        NewValue:
+            - '"C:\Program Files\Avast Software\Avast\AvLaunch.exe" /gui'
+            - '"C:\Program Files (x86)\Avast Software\Avast\AvLaunch.exe" /gui'
+    filter_optional_AVG_avgtoolsvc:
+        ProcessName:
+            - C:\Program Files\AVG\Antivirus\avgToolsSvc.exe
+            - C:\Program Files (x86)\AVG\Antivirus\avgToolsSvc.exe
+        ObjectName|contains: \Software\Microsoft\Windows\CurrentVersion\Explorer\StartupApproved\Run\
+        NewValue: Binary Data
+    filter_optional_aurora_dashboard:
         ProcessName|endswith:
             - \aurora-agent-64.exe
             - \aurora-agent.exe
         ObjectName|endswith: \Microsoft\Windows\CurrentVersion\Run\aurora-dashboard
         NewValue: C:\Program Files\Aurora-Agent\tools\aurora-dashboard.exe
-    filter_everything:
+    filter_optional_everything:
         ObjectName|endswith: \Microsoft\Windows\CurrentVersion\Run\Everything
         NewValue|endswith: \Everything\Everything.exe" -startup
-    condition: registry_set and (all of current_version_* and not 1 of filter_*)
+    filter_optional_discord:
+        ObjectName|endswith: \Software\Microsoft\Windows\CurrentVersion\Run\Discord
+        NewValue|endswith: \Discord\Update.exe --processStart Discord.exe
+    condition: registry_set and (all of selection_* and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason
     - Legitimate administrator sets up autorun keys for legitimate reason
