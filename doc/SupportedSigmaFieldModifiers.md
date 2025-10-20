@@ -6,13 +6,13 @@
 | base64ǀcontains               |             1 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            34 |                0 |
-| contains                      |          2917 |               21 |
-| containsǀall                  |          1036 |                0 |
+| contains                      |          2923 |               21 |
+| containsǀall                  |          1043 |                0 |
 | containsǀallǀwindash          |             4 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
-| containsǀwindash              |            83 |                0 |
-| endswith                      |          3106 |              273 |
+| containsǀwindash              |            84 |                0 |
+| endswith                      |          3113 |              273 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -27,11 +27,11 @@
 | gte                           |             0 |                0 |
 | lt                            |             0 |                0 |
 | lte                           |             0 |                0 |
-| re                            |           170 |               11 |
+| re                            |           172 |               11 |
 | reǀi                          |             0 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
-| startswith                    |           493 |                6 |
+| startswith                    |           494 |                6 |
 | startswithǀcased              |             0 |                0 |
 | utf16beǀbase64offsetǀcontains |             0 |                0 |
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
@@ -59,5 +59,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2025/10/19  
+Last Update: 2025/10/20  
 Author: Fukusuke Takahashi
