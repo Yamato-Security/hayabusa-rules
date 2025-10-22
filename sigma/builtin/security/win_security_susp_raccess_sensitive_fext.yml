@@ -11,7 +11,7 @@ references:
     - Internal Research
 author: Samir Bousseaden
 date: 2019-04-03
-modified: 2022-10-09
+modified: 2025-10-17
 tags:
     - attack.collection
     - attack.t1039
@@ -35,7 +35,7 @@ detection:
             - .ost
             - .pst
             - .rdp
-            - \groups.xml
+            # - '\groups.xml'  # Commented out: groups.xml is accessed legitimately by Group Policy processing; high FP rate in enterprise environments
     condition: security and selection
 falsepositives:
     - Help Desk operator doing backup or re-imaging end user machine or backup software
