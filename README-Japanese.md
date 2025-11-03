@@ -677,7 +677,7 @@ detection:
 
 # Sigma相関ルール
 
-[こちら](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md)に定義されているSigmaバージョン2の相関ルールのすべてを実装しています。
+[こちら](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md)に定義されているSigmaバージョン2.0.0の相関ルールのすべてを実装しています。
 
 サポートされている相関ルール:
 - イベントカウント (`event_count`)
