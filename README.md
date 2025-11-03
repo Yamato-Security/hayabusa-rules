@@ -677,13 +677,15 @@ detection:
 
 # Sigma correlations
 
-We have implemented all of the Sigma version 2 correlations as defined [here](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md).
+We have implemented all of the Sigma version 2.0.0 correlations as defined [here](https://github.com/SigmaHQ/sigma-specification/blob/version_2/specification/sigma-correlation-rules-specification.md).
 
 Supported correlations:
 - Event Count (`event_count`)
 - Value Count (`value_count`)
 - Temporal Proximity (`temporal`)
 - Ordered Temporal Proximity (`temporal_ordered`)
+
+The new "metrics" correlation rules (`value_sum`, `value_avg`, `value_percentile`) released on September 12, 2025 in Sigma version 2.1.0 are currently not supported. 
 
 ## Event Count rules
 
