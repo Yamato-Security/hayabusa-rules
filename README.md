@@ -535,13 +535,13 @@ This document is dynamically updated every time there is an update to Sigma or H
 - `|contains|all`: Checks if multiple words are contained in the data.
 - `|contains|all|windash`: Same as `|contains|windash` but all of the keywords need to be present.
 - `|contains|cased`: Checks if a field value contains a certain case-sensitive string.
-- `|contains|expand`: Checks if a field value contains a string a list defined in a config file.
+- `|contains|expand`: Checks if a field value contains a string in the `expand` config file inside `/config/expand/`.
 - `|contains|windash`: Will check the string as-is, as well as convert the first `-` character to `/`, `–` (en dash), `—` (em dash), and `―` (horizontal bar) character permutations.
 - `|endswith`: Checks if a field value ends with a certain string.
 - `|endswith|cased`: Checks if a field value ends with a certain case-sensitive string.
 - `|endswith|windash`: Checks the end of the string and performs variations for dashes.
 - `|exists`: Checks if a field exists.
-- `|expand`: Checks if a field value equals a string defined in a config file.
+- `|expand`: Checks if a field value equals a string in the `expand` config file inside `/config/expand/`.
 - `|fieldref`: Checks to see if the values in two fields are the same. You can use `not` in the `condition` if you want to check if two fields are different.
 - `|fieldref|contains`: Checks to see if the value of one field is contained in another field.
 - `|fieldref|endswith`: Check if the field on the left ends with the string of the field on the right. You can use `not` in the `condition` to check if they are different.

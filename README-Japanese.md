@@ -536,13 +536,13 @@ Hayabusaは現在、Sigma仕様のすべてを完全にサポートする唯一�
 - `|contains|all`: 指定された複数の文字列が含まれることをチェックします。
 - `|contains|all|windash`: `contains|windash`と同じですが、すべてのキーワードが存在する必要があります。
 - `|contains|cased`: フィールドの値が指定された大文字小文字を区別する文字列を含むかをチェックします。
-- `|contains|expand`: Checks if a field value contains a string a list defined in a config file.
+- `|contains|expand`: フィールドの値に、`/config/expand/`内の`expand`設定ファイルに定義された文字列が含まれているかをチェックします。
 - `|contains|windash`: 文字列をそのままチェックするだけでなく、最初の`-`文字を`/`文字に変換し、そのバリエーションもチェックします。
 - `|endswith`: 指定された文字列で終わることをチェックします。
 - `|endswith|cased`: フィールドの値が指定された大文字小文字を区別する文字列で終わることをチェックします。
 - `|endswith|windash`: 指定された文字列で終わることをチェックし、最初の`-`文字を`/`、`–` (en dash)、`—` (em dash)、`―` (horizontal bar)文字のバリエーションに変換し、チェックします。
 - `|exists`: フィールドが存在するかをチェックします。
-- `|expand`: Checks if a field value equals a string defined in a config file.
+- `|expand`: フィールドの値が、`/config/expand/`内の`expand`設定ファイルに定義された文字列と一致するかをチェックします。
 - `|fieldref`: 2つのフィールドの値が同じかどうかをチェックする。これは `|equalsfield` 修飾子と同じです。
 - `|fieldref|contains`: 一方のフィールドの値がもう一方のフィールドに含まれているかどうかをチェックします。
 - `|fieldref|endswith`: 左側のフィールドが右側のフィールドの文字列で終わっているかどうかをチェックします。`condition` で `not` を使用することで、それらが異なるかどうかをチェックできます。
@@ -754,7 +754,7 @@ detection:
 ```
 ### イベントカウントルールの出力:
 
-上記のルールは次の結果を出力します::
+上記のルールは次の結果を出力します:
 ```
 % ./hayabusa csv-timeline -d ../hayabusa-sample-evtx -r password-guessing-sample.yml -w
 % 
@@ -767,9 +767,9 @@ Timestamp · RuleTitle · Level · Computer · Channel · EventID · RecordID ·
 これらのルールは、指定されたフィールドの**異なる**値を持つ同じイベントを一定の時間枠内でカウントします。
 
 例:
-- 1つの送信元IPアドレスが多数の異なる宛先IPアドレスやポートに接続しようとするネットワークスキャン
-- 1つの送信元が多数の異なるユーザーに対して認証に失敗するパスワードスプレー攻撃
-- 短時間で多数の高権限ADグループを列挙するBloodHoundのようなツールの検
+- 1つの送信元IPアドレスが多数の異なる宛先IPアドレスやポートに接続しようとするネットワークスキャンの検知
+- 1つの送信元が多数の異なるユーザーに対して認証に失敗するパスワードスプレー攻撃の検知
+- 短時間で多数の高権限ADグループを列挙するBloodHoundのようなツールの検知
 
 ### 値カウントルールの例:
 
@@ -816,7 +816,7 @@ detection:
 
 上記の相関ルールおよび参照されているルールは、従来の`count`修飾子を使用した以下のルールと同じ結果を提供します:
 
-```
+```yaml
 title: User Guessing
 logsource:
     product: windows
@@ -894,7 +894,7 @@ correlation:
 
 2. デフォルトでは、参照された相関ルールの出力は行われません。参照ルールの出力を確認したい場合は、`correlation`の下に`generate: true`を追加する必要があります。相関ルールを作成する際に有効にして結果を確認すると非常に便利です。
     例:
-    ```
+    ```yaml
     correlation:
         generate: true
     ```
