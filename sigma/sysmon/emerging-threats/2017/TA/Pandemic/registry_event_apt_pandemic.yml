@@ -1,5 +1,5 @@
 title: Pandemic Registry Key
-id: a36fab91-8874-79c8-32cb-b2a0117d5a0b
+id: ab1f1d04-b9ad-cb8e-1d57-2b0c92ff4698
 related:
     - id: 47e0852a-cf81-4494-a8e6-31864f8c86ed
       type: derived
@@ -14,15 +14,20 @@ modified: 2022-10-09
 tags:
     - attack.command-and-control
     - attack.t1105
+    - detection.emerging-threats
+    - sysmon
 logsource:
     category: registry_event
     product: windows
 detection:
     registry_event:
-        EventID: 4657
-        Channel: Security
+        EventID:
+            - 12
+            - 13
+            - 14
+        Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        ObjectName|contains: \SYSTEM\CurrentControlSet\services\null\Instance
+        TargetObject|contains: \SYSTEM\CurrentControlSet\services\null\Instance
     condition: registry_event and selection
 falsepositives:
     - Unknown
