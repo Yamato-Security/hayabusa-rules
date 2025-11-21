@@ -24,8 +24,8 @@ tags:
     - attack.t1071.001
     - sysmon
 logsource:
-    category: dns_query
     product: windows
+    category: dns_query
 detection:
     dns_query:
         EventID: 22
