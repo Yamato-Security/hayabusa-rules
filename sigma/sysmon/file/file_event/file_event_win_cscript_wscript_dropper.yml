@@ -38,9 +38,6 @@ detection:
             - .vba
             - .vbs
     condition: file_event and selection
-fields:
-    - Image
-    - TargetFilename
 falsepositives:
     - Unknown
 level: high

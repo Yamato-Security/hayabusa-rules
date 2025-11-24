@@ -30,11 +30,6 @@ detection:
           OperationType: '%%1904'
         - NewName: HKLM\SYSTEM\CurrentControlSet\Control\MiniNt
     condition: registry_event and selection
-fields:
-    - ProcessName
-    - ObjectName
-    - EventID
-    - NewName
 falsepositives:
     - Unknown
 level: high

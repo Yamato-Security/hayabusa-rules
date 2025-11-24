@@ -29,8 +29,6 @@ detection:
             - dll
         NewProcessName|endswith: \register-cimprovider.exe
     condition: process_creation and selection
-fields:
-    - CommandLine
 falsepositives:
     - Unknown
 level: medium

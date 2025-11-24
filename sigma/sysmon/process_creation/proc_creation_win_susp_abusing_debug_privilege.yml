@@ -49,11 +49,6 @@ detection:
             - ' route '
             - ' ADD '
     condition: process_creation and (all of selection_* and not filter)
-fields:
-    - ParentImage
-    - Image
-    - User
-    - CommandLine
 falsepositives:
     - Unknown
 level: high

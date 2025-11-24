@@ -54,8 +54,6 @@ detection:
             - BAAAA
             - CN=MicrosoftDNS
     condition: security and (1 of selection_*)
-fields:
-    - SubjectUserName # It is important to check the AccountName field to identify the user, it is likely an low-privileged account that has been compromised.
 falsepositives:
     - Unknown
 level: high

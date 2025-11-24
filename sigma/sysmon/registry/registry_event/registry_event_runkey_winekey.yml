@@ -28,11 +28,6 @@ detection:
     selection:
         TargetObject|endswith: Software\Microsoft\Windows\CurrentVersion\Run\Backup Mgr
     condition: registry_event and selection
-fields:
-    - ComputerName
-    - Image
-    - EventType
-    - TargetObject
 falsepositives:
     - Unknown
 level: high

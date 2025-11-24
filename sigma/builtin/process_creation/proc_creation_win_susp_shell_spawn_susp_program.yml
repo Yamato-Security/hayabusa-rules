@@ -64,12 +64,6 @@ detection:
         ParentProcessName|endswith: \mshta.exe
         NewProcessName|endswith: \mshta.exe
     condition: process_creation and (selection and not 1 of filter_*)
-fields:
-    - NewProcessName
-    - ParentProcessName
-    - CommandLine
-    - ParentCommandLine
-    - CurrentDirectory
 falsepositives:
     - Administrative scripts
     - Microsoft SCCM

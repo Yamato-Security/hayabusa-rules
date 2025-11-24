@@ -27,8 +27,6 @@ detection:
         Image|endswith: \Runscripthelper.exe
         CommandLine|contains: surfacecheck
     condition: process_creation and selection
-fields:
-    - CommandLine
 falsepositives:
     - Unknown
 level: medium

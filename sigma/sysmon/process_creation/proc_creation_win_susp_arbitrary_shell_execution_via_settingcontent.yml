@@ -28,10 +28,6 @@ detection:
     filter:
         CommandLine|contains: immersivecontrolpanel
     condition: process_creation and (selection and not filter)
-fields:
-    - ParentProcess
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: medium

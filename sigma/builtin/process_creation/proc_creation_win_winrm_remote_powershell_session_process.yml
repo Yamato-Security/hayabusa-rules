@@ -26,10 +26,6 @@ detection:
         - NewProcessName|endswith: \wsmprovhost.exe
         - ParentProcessName|endswith: \wsmprovhost.exe
     condition: process_creation and selection
-fields:
-    - SubjectUserName
-    - ComputerName
-    - CommandLine
 falsepositives:
     - Legitimate usage of remote Powershell, e.g. for monitoring purposes.
 level: medium

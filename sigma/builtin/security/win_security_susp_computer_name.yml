@@ -32,11 +32,6 @@ detection:
         TargetUserName|startswith: SAMTHEADMIN-
         TargetUserName|endswith: $
     condition: security and (1 of selection*)
-fields:
-    - EventID
-    - SamAccountName
-    - SubjectUserName
-    - TargetUserName
 falsepositives:
     - Unknown
 level: critical

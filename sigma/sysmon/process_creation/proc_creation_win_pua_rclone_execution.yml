@@ -56,10 +56,6 @@ detection:
             - multi-thread-streams
             - 'no-check-certificate '
     condition: process_creation and (selection_specific_options or all of selection_rclone_*)
-fields:
-    - CommandLine
-    - ParentCommandLine
-    - Details
 falsepositives:
     - Unknown
 level: high

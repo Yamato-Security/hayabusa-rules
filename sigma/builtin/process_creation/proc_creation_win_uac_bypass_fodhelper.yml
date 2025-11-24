@@ -25,10 +25,6 @@ detection:
     selection:
         ParentProcessName|endswith: \fodhelper.exe
     condition: process_creation and selection
-fields:
-    - SubjectUserName
-    - ComputerName
-    - CommandLine
 falsepositives:
     - Legitimate use of fodhelper.exe utility by legitimate user
 level: high

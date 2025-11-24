@@ -33,9 +33,6 @@ detection:
             - .jpeg
             - .png
     condition: file_event and (selection and not filter1 and not filter2)
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - False positives depend on scripts and administrative tools used in the monitored environment
 level: high

@@ -26,9 +26,6 @@ detection:
         UserName: ''
         ServerName|startswith: \1
     condition: smbclient_security and selection
-fields:
-    - Computer
-    - User
 falsepositives:
     - Account fallback reasons (after failed login with specific account)
 level: medium

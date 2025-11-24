@@ -25,11 +25,6 @@ detection:
     selection:
         ParentProcessName|endswith: \pcwrun.exe
     condition: process_creation and selection
-fields:
-    - SubjectUserName
-    - ComputerName
-    - ParentCommandLine
-    - CommandLine
 falsepositives:
     - Need to use extra processing with 'unique_count' / 'filter' to focus on outliers as opposed to commonly seen artifacts
     - Legit usage of scripts

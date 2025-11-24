@@ -32,9 +32,6 @@ detection:
     selection_re:
         CommandLine|re: :[^ \\]
     condition: process_creation and (all of selection_*)
-fields:
-    - ParentImage
-    - CommandLine
 falsepositives:
     - Unknown
 level: high

@@ -31,11 +31,6 @@ detection:
             - executeinf
         NewProcessName|endswith: \VBoxDrvInst.exe
     condition: process_creation and selection
-fields:
-    - SubjectUserName
-    - ComputerName
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Legitimate use of VBoxDrvInst.exe utility by VirtualBox Guest Additions installation process
 level: medium

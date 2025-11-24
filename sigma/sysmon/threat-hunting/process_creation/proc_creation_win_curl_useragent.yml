@@ -31,9 +31,6 @@ detection:
             - ' -A '
             - ' --user-agent '
     condition: process_creation and (all of selection_*)
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Scripts created by developers and admins
     - Administrative activity

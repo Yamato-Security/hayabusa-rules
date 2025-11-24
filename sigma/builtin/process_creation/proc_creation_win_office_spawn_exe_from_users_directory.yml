@@ -38,9 +38,6 @@ detection:
     filter:
         NewProcessName|endswith: \Teams.exe
     condition: process_creation and (selection and not filter)
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: high

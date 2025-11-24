@@ -24,8 +24,6 @@ detection:
     selection:
         - Install-TransportAgent
     condition: msexchange_management and selection
-fields:
-    - AssemblyPath
 falsepositives:
     - Legitimate installations of exchange TransportAgents. AssemblyPath is a good indicator for this.
 level: medium

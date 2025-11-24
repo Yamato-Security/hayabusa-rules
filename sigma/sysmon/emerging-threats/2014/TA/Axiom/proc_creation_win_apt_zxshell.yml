@@ -33,9 +33,6 @@ detection:
             - zxFunction
             - RemoteDiskXXXXX
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unlikely
 level: critical

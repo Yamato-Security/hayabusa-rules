@@ -42,9 +42,6 @@ detection:
     filter_empty:
         OriginalFileName: null
     condition: process_creation and (selection or ( renamed and not 1 of filter* ))
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: high

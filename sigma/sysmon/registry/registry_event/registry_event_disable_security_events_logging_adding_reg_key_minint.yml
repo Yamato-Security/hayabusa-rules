@@ -35,11 +35,6 @@ detection:
     # key rename
         - NewName: HKLM\SYSTEM\CurrentControlSet\Control\MiniNt
     condition: registry_event and selection
-fields:
-    - EventID
-    - Image
-    - TargetObject
-    - NewName
 falsepositives:
     - Unknown
 level: high

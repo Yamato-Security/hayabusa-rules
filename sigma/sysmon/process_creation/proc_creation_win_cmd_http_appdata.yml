@@ -32,9 +32,6 @@ detection:
             - ://
             - '%AppData%'
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - High
 level: medium

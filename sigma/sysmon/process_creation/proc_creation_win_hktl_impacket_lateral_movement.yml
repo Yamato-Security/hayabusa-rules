@@ -69,9 +69,6 @@ detection:
             - Windows\Temp\
             - '&1'
     condition: process_creation and (1 of selection_*)
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: high

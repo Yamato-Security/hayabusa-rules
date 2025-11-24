@@ -26,12 +26,6 @@ detection:
         ObjectType: Key
         ObjectName|endswith: \SAM
     condition: security and selection
-fields:
-    - ComputerName
-    - SubjectDomainName
-    - SubjectUserName
-    - ProcessName
-    - ObjectName
 falsepositives:
     - Unknown
 level: high

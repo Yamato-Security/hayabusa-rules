@@ -29,10 +29,6 @@ detection:
         ObjectName|contains: SYSTEM\
         ObjectName|endswith: \services\localNETService
     condition: registry_event and selection
-fields:
-    - ProcessName
-    - ObjectName
-    - TargetDetails
 falsepositives:
     - Unknown
 level: critical

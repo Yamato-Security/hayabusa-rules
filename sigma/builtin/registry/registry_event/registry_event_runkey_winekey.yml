@@ -24,11 +24,6 @@ detection:
     selection:
         ObjectName|endswith: Software\Microsoft\Windows\CurrentVersion\Run\Backup Mgr
     condition: registry_event and selection
-fields:
-    - ProcessName
-    - OperationType
-    - ObjectName
-    - ComputerName
 falsepositives:
     - Unknown
 level: high

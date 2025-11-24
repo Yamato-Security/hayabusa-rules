@@ -32,9 +32,6 @@ detection:
             - ' -Mailbox '
             - ' -FilePath \\\\'
     condition: ps_script and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: critical

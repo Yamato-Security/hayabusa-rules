@@ -35,9 +35,5 @@ detection:
               - \regsvr32.exe
         - NewProcessName|contains: \BITSADMIN
     condition: process_creation and (all of selection*)
-fields:
-    - NewProcessName
-    - CommandLine
-    - ParentCommandLine
 level: high
 ruletype: Sigma

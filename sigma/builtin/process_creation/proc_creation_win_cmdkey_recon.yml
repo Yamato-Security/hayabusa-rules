@@ -28,10 +28,6 @@ detection:
     selection_cli:
         CommandLine|contains|windash: ' -l'
     condition: process_creation and (all of selection*)
-fields:
-    - SubjectUserName
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Legitimate administrative tasks
 level: high

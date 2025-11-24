@@ -39,9 +39,6 @@ detection:
             - ' -a '
             - ' -c '
     condition: process_creation and (all of selection_* and not filter)
-fields:
-    - ParentImage
-    - CommandLine
 falsepositives:
     - Unknown
 level: high
