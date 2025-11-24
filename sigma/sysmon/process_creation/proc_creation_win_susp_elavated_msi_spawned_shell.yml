@@ -37,9 +37,6 @@ detection:
             - msi
         ParentImage|endswith: tmp
     condition: process_creation and (all of selection_*)
-fields:
-    - Image
-    - ParentImage
 falsepositives:
     - Unknown
 level: medium

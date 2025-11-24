@@ -29,9 +29,6 @@ detection:
             - ' -Mailbox '
             - ' -FilePath \\\\'
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: critical

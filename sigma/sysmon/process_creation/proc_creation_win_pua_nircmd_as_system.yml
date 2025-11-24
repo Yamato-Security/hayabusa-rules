@@ -27,9 +27,6 @@ detection:
     selection:
         CommandLine|contains: ' runassystem '
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Legitimate use by administrators
 level: high

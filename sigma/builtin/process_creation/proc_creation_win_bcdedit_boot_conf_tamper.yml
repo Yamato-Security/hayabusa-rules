@@ -34,10 +34,6 @@ detection:
               - recoveryenabled
               - no
     condition: process_creation and (all of selection_*)
-fields:
-    - SubjectUserName
-    - ComputerName
-    - CommandLine
 falsepositives:
     - Unlikely
 level: high

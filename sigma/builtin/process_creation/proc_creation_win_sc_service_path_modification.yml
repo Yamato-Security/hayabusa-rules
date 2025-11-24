@@ -51,9 +51,6 @@ detection:
             - \AppData\Local\Temp
         NewProcessName|endswith: \sc.exe
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unlikely
 level: high

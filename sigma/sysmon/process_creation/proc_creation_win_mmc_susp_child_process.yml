@@ -36,9 +36,5 @@ detection:
               - \regsvr32.exe
         - Image|contains: \BITSADMIN
     condition: process_creation and (all of selection*)
-fields:
-    - CommandLine
-    - Image
-    - ParentCommandLine
 level: high
 ruletype: Sigma

@@ -22,10 +22,6 @@ detection:
     selection:
         EventID: 4692
     condition: security and selection
-fields:
-    - ComputerName
-    - SubjectDomainName
-    - SubjectUserName
 falsepositives:
     - If a computer is a member of a domain, DPAPI has a backup mechanism to allow unprotection of the data. Which will trigger this event.
 level: medium

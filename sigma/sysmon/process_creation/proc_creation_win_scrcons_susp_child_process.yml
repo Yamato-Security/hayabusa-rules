@@ -38,9 +38,6 @@ detection:
             - \msiexec.exe
             - \msbuild.exe
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: high

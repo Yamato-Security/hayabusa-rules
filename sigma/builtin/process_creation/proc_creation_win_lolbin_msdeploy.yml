@@ -29,11 +29,6 @@ detection:
             - -dest:runCommand
         NewProcessName|endswith: \msdeploy.exe
     condition: process_creation and selection
-fields:
-    - SubjectUserName
-    - ComputerName
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - System administrator Usage
 level: medium

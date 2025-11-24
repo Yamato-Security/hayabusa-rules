@@ -30,11 +30,6 @@ detection:
             - -dest:runCommand
         Image|endswith: \msdeploy.exe
     condition: process_creation and selection
-fields:
-    - ComputerName
-    - User
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - System administrator Usage
 level: medium

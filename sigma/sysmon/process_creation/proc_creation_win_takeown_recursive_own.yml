@@ -28,9 +28,6 @@ detection:
             - '/f '
             - /r
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Scripts created by developers and admins
     - Administrative activity

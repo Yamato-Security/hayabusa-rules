@@ -40,9 +40,6 @@ detection:
             - \sam
             - \security
     condition: process_creation and (all of selection_* and not all of filter_*)
-fields:
-    - ParentImage
-    - CommandLine
 falsepositives:
     - Legitimate export of keys
 level: low

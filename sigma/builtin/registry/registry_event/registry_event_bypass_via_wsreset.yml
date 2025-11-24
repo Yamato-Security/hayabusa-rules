@@ -25,11 +25,6 @@ detection:
     selection:
         ObjectName|endswith: \AppX82a6gwre4fdg3bt635tn5ctqjf8msdd2\Shell\open\command
     condition: registry_event and selection
-fields:
-    - ProcessName
-    - OperationType
-    - ObjectName
-    - ComputerName
 falsepositives:
     - Unknown
 level: high

@@ -34,10 +34,6 @@ detection:
     filter:
         CommandLine|contains: \\\\
     condition: process_creation and (all of selection_* and not filter)
-fields:
-    - ComputerName
-    - User
-    - CommandLine
 falsepositives:
     - Legitimate use of net.exe utility by legitimate user
 level: low

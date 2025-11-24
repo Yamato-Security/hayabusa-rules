@@ -34,9 +34,6 @@ detection:
             - /c
             - chcp
     condition: process_creation and (all of selection_*)
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: high

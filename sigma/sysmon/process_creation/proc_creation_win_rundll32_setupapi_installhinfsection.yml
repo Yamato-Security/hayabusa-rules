@@ -31,11 +31,6 @@ detection:
             - setupapi.dll
             - InstallHinfSection
     condition: process_creation and selection
-fields:
-    - ComputerName
-    - User
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Scripts and administrative tools that use INF files for driver installation with setupapi.dll
 level: medium

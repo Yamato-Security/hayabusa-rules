@@ -36,9 +36,6 @@ detection:
             - msi
         ParentProcessName|endswith: tmp
     condition: process_creation and (all of selection_*)
-fields:
-    - NewProcessName
-    - ParentProcessName
 falsepositives:
     - Unknown
 level: medium

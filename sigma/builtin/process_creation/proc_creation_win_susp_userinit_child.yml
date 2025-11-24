@@ -32,9 +32,6 @@ detection:
     filter_main_null:
         NewProcessName: null
     condition: process_creation and (selection and not 1 of filter_main_*)
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Administrative scripts
 level: medium

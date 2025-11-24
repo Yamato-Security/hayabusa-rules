@@ -36,9 +36,6 @@ detection:
             - .cfg
             - cleanup.bin
     condition: file_event and (selection and not filter)
-fields:
-    - ComputerName
-    - TargetFilename
 falsepositives:
     - Unknown
 level: high

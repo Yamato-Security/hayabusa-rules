@@ -33,10 +33,6 @@ detection:
         TargetObject|contains: SYSTEM\
         TargetObject|endswith: \services\localNETService
     condition: registry_event and selection
-fields:
-    - Image
-    - TargetObject
-    - TargetDetails
 falsepositives:
     - Unknown
 level: critical

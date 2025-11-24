@@ -26,8 +26,6 @@ detection:
         CommandLine|contains: surfacecheck
         NewProcessName|endswith: \Runscripthelper.exe
     condition: process_creation and selection
-fields:
-    - CommandLine
 falsepositives:
     - Unknown
 level: medium

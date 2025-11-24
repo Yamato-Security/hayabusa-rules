@@ -27,10 +27,6 @@ detection:
         - Image|endswith: \wsmprovhost.exe
         - ParentImage|endswith: \wsmprovhost.exe
     condition: process_creation and selection
-fields:
-    - ComputerName
-    - User
-    - CommandLine
 falsepositives:
     - Legitimate usage of remote Powershell, e.g. for monitoring purposes.
 level: medium

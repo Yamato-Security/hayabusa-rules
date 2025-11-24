@@ -33,8 +33,5 @@ detection:
     condition: dns_query and (1 of selection*)
 falsepositives:
     - Unknown
-fields:
-    - Image
-    - CommandLine
 level: critical
 ruletype: Sigma

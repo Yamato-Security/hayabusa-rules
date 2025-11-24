@@ -29,11 +29,6 @@ detection:
             - esentutl
             - ' /p'
     condition: process_creation and selection
-fields:
-    - User
-    - CommandLine
-    - ParentCommandLine
-    - CurrentDirectory
 falsepositives:
     - To be determined
 level: medium

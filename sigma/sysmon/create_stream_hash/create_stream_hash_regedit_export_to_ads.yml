@@ -25,8 +25,6 @@ detection:
     selection:
         Image|endswith: \regedit.exe
     condition: create_stream_hash and selection
-fields:
-    - TargetFilename
 falsepositives:
     - Unknown
 level: high

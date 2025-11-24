@@ -29,11 +29,6 @@ detection:
             - ' -RemoveDefinitions'
             - ' -All'
     condition: process_creation and (all of selection_*)
-fields:
-    - SubjectUserName
-    - ComputerName
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: high

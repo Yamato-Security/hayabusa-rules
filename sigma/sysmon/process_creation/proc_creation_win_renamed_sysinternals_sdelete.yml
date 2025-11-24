@@ -29,11 +29,6 @@ detection:
             - \sdelete.exe
             - \sdelete64.exe
     condition: process_creation and (selection and not filter)
-fields:
-    - ComputerName
-    - User
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - System administrator usage
 level: high

@@ -52,9 +52,6 @@ detection:
             - C:\Windows\TEMP\
             - \AppData\Local\Temp
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unlikely
 level: high

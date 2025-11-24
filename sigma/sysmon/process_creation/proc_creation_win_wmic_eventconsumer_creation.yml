@@ -28,9 +28,6 @@ detection:
             - ActiveScriptEventConsumer
             - ' CREATE '
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Legitimate software creating script event consumers
 level: high

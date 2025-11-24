@@ -41,8 +41,5 @@ detection:
     condition: process_creation and (all of selection*)
 falsepositives:
     - Unknown
-fields:
-    - CommandLine
-    - ParentProcess
 level: high
 ruletype: Sigma

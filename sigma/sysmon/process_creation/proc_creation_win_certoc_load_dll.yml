@@ -31,9 +31,6 @@ detection:
     selection_cli:
         CommandLine|contains|windash: ' -LoadDLL '
     condition: process_creation and (all of selection_*)
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: medium

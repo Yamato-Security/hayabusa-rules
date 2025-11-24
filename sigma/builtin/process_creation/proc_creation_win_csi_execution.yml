@@ -36,11 +36,6 @@ detection:
     selection_cli:
         Company: Microsoft Corporation
     condition: process_creation and (all of selection*)
-fields:
-    - SubjectUserName
-    - ComputerName
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Legitimate usage by software developers
 level: medium

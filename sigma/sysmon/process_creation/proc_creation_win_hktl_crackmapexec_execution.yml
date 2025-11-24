@@ -79,10 +79,6 @@ detection:
             - ' 192.168.'
             - '/24 '
     condition: process_creation and (1 of selection_* or all of part_localauth*)
-fields:
-    - ComputerName
-    - User
-    - CommandLine
 falsepositives:
     - Unknown
 level: high

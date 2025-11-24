@@ -32,11 +32,6 @@ detection:
             - driver
             - executeinf
     condition: process_creation and selection
-fields:
-    - ComputerName
-    - User
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Legitimate use of VBoxDrvInst.exe utility by VirtualBox Guest Additions installation process
 level: medium

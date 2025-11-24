@@ -28,9 +28,6 @@ detection:
     filter_img:
         Image|endswith: \ftp.exe
     condition: process_creation and (selection_original and not filter_img)
-fields:
-    - CommandLine
-    - ParentImage
 falsepositives:
     - Unknown
 level: medium

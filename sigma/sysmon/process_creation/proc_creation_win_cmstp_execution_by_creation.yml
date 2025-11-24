@@ -27,10 +27,6 @@ detection:
     selection:
         ParentImage|endswith: \cmstp.exe
     condition: process_creation and selection
-fields:
-    - CommandLine
-    - ParentCommandLine
-    - Details
 falsepositives:
     - Legitimate CMSTP use (unlikely in modern enterprise environments)
 level: high

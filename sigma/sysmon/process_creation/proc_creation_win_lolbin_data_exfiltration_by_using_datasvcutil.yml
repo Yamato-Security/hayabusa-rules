@@ -34,11 +34,6 @@ detection:
         - Image|endswith: \DataSvcUtil.exe
         - OriginalFileName: DataSvcUtil.exe
     condition: process_creation and (all of selection*)
-fields:
-    - ComputerName
-    - User
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - DataSvcUtil.exe being used may be performed by a system administrator.
     - Verify whether the user identity, user agent, and/or hostname should be making changes in your environment.

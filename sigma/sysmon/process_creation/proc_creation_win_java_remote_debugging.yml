@@ -32,9 +32,6 @@ detection:
             - address=127.0.0.1
             - address=localhost
     condition: process_creation and (all of selection_* and not exclusion)
-fields:
-    - CommandLine
-    - ParentCommandLine
 falsepositives:
     - Unknown
 level: medium

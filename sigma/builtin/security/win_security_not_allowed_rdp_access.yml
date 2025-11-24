@@ -24,10 +24,6 @@ detection:
     selection:
         EventID: 4825
     condition: security and selection
-fields:
-    - EventCode
-    - AccountName
-    - ClientAddress
 falsepositives:
     - Valid user was not added to RDP group
 level: medium

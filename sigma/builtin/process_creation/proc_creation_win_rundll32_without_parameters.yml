@@ -28,12 +28,6 @@ detection:
             - rundll32.exe
             - rundll32
     condition: process_creation and selection
-fields:
-    - NewProcessName
-    - ParentProcessName
-    - ComputerName
-    - SubjectUserName
-    - CommandLine
 falsepositives:
     - False positives may occur if a user called rundll32 from CLI with no options
 level: high

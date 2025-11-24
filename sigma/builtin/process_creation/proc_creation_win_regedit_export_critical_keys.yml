@@ -39,9 +39,6 @@ detection:
             - \sam
             - \security
     condition: process_creation and (all of selection_*)
-fields:
-    - ParentProcessName
-    - CommandLine
 falsepositives:
     - Dumping hives for legitimate purpouse i.e. backup or forensic investigation
 level: high

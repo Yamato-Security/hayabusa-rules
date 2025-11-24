@@ -26,8 +26,6 @@ detection:
         CommandLine|re: 0x[a-fA-F0-9]{8}
         NewProcessName|endswith: \ping.exe
     condition: process_creation and selection
-fields:
-    - ParentCommandLine
 falsepositives:
     - Unlikely, because no sane admin pings IP addresses in a hexadecimal form
 level: high
