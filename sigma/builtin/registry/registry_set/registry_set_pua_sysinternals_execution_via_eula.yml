@@ -1,5 +1,5 @@
 title: PUA - Sysinternal Tool Execution - Registry
-id: 08427b1c-3ceb-9aa5-7d8d-84dfc1531fb8
+id: af922adb-02c2-1288-4d6b-ff5dae59b827
 related:
     - id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
       type: derived
@@ -9,23 +9,23 @@ references:
     - https://twitter.com/Moti_B/status/1008587936735035392
 author: Markus Neis
 date: 2017-08-28
-modified: 2023-02-07
+modified: 2025-10-26
 tags:
     - attack.resource-development
     - attack.t1588.002
 logsource:
     product: windows
-    category: registry_add
+    category: registry_set
 detection:
-    registry_add:
+    registry_set:
         EventID: 4657
         Channel: Security
     selection:
-        OperationType: '%%1904'
         ObjectName|endswith: \EulaAccepted
-    condition: registry_add and selection
+    condition: registry_set and selection
 falsepositives:
     - Legitimate use of SysInternals tools
     - Programs that use the same Registry Key
 level: low
+regression_tests_path: regression_data/windows/registry/registry_set/registry_set_pua_sysinternals_execution_via_eula/info.yml
 ruletype: Sigma

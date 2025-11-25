@@ -1,5 +1,5 @@
 title: Suspicious Execution Of Renamed Sysinternals Tools - Registry
-id: de568857-02a3-27ba-1d76-a6ebbaf813e4
+id: 290a000e-2c5b-2618-5a05-f4d92aca091c
 related:
     - id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
       type: derived
@@ -13,20 +13,19 @@ references:
     - Internal Research
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022-08-24
-modified: 2023-02-07
+modified: 2025-10-26
 tags:
     - attack.resource-development
     - attack.t1588.002
     - sysmon
 logsource:
     product: windows
-    category: registry_add
+    category: registry_set
 detection:
-    registry_add:
-        EventID: 12
+    registry_set:
+        EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: CreateKey
         TargetObject|contains:
             # Please add new values while respecting the alphabetical order
             - \Active Directory Explorer
@@ -68,8 +67,9 @@ detection:
             - \PsService.exe
             - \PsService64.exe
             - \sdelete.exe
-    condition: registry_add and (selection and not filter)
+    condition: registry_set and (selection and not filter)
 falsepositives:
     - Unlikely
 level: high
+regression_tests_path: regression_data/windows/registry/registry_set/registry_set_pua_sysinternals_renamed_execution_via_eula/info.yml
 ruletype: Sigma

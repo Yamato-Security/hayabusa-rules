@@ -11,7 +11,7 @@ references:
     - https://www.microsoft.com/security/blog/2022/04/12/tarrask-malware-uses-scheduled-tasks-for-defense-evasion/
 author: Sittikorn S
 date: 2022-04-15
-modified: 2023-02-08
+modified: 2025-10-25
 tags:
     - attack.defense-evasion
     - attack.t1562
@@ -24,7 +24,6 @@ detection:
         EventID: 12
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: DeleteKey
         TargetObject|contains|all:
             - \SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\
             - SD
@@ -32,4 +31,5 @@ detection:
 falsepositives:
     - Unknown
 level: medium
+regression_tests_path: regression_data/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_sd_value_removal/info.yml
 ruletype: Sigma

@@ -1,5 +1,5 @@
 title: PUA - Sysinternals Tools Execution - Registry
-id: cab7e60f-55aa-b72e-1943-4d3980028a43
+id: be58d79b-61ad-c011-c6ae-8189f6b67ed9
 related:
     - id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
       type: derived
@@ -13,20 +13,20 @@ references:
     - https://twitter.com/Moti_B/status/1008587936735035392
 author: Nasreddine Bencherchali (Nextron Systems)
 date: 2022-08-24
-modified: 2023-02-07
+modified: 2025-10-26
 tags:
     - attack.resource-development
     - attack.t1588.002
+    - sysmon
 logsource:
     product: windows
-    category: registry_add
+    category: registry_set
 detection:
-    registry_add:
-        EventID: 4657
-        Channel: Security
+    registry_set:
+        EventID: 13
+        Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        OperationType: '%%1904'
-        ObjectName|contains:
+        TargetObject|contains:
             - \Active Directory Explorer
             - \Handle
             - \LiveKd
@@ -36,10 +36,11 @@ detection:
             - \PsLoglist
             - \PsPasswd
             - \SDelete
-            - \Sysinternals
-        ObjectName|endswith: \EulaAccepted
-    condition: registry_add and selection
+            - \Sysinternals   # Global level https://twitter.com/leonzandman/status/1561736801953382400
+        TargetObject|endswith: \EulaAccepted
+    condition: registry_set and selection
 falsepositives:
     - Legitimate use of SysInternals tools. Filter the legitimate paths used in your environment
 level: medium
+regression_tests_path: regression_data/windows/registry/registry_set/registry_set_pua_sysinternals_susp_execution_via_eula/info.yml
 ruletype: Sigma
