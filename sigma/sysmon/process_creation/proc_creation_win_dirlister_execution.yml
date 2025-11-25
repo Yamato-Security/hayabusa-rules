@@ -24,9 +24,15 @@ detection:
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
         - OriginalFileName: DirLister.exe
-        - Image|endswith: \dirlister.exe
+        - Image|endswith: \DirLister.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate use by users
 level: low
+regression_tests_path: regression_data/windows/process_creation/proc_creation_win_dirlister_execution/info.yml
+simulation:
+    - type: atomic-red-team
+      name: Launch DirLister Executable
+      technique: T1083
+      atomic_guid: c5bec457-43c9-4a18-9a24-fe151d8971b7
 ruletype: Sigma

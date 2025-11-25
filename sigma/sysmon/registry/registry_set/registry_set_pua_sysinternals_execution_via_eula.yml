@@ -1,5 +1,5 @@
 title: PUA - Sysinternal Tool Execution - Registry
-id: 4a9e85db-93a9-f6c0-6452-b1df30b2fa3f
+id: f46d3809-deb6-059b-e5eb-28fd049214ef
 related:
     - id: 25ffa65d-76d8-4da5-a832-3f2b0136e133
       type: derived
@@ -9,24 +9,24 @@ references:
     - https://twitter.com/Moti_B/status/1008587936735035392
 author: Markus Neis
 date: 2017-08-28
-modified: 2023-02-07
+modified: 2025-10-26
 tags:
     - attack.resource-development
     - attack.t1588.002
     - sysmon
 logsource:
     product: windows
-    category: registry_add
+    category: registry_set
 detection:
-    registry_add:
-        EventID: 12
+    registry_set:
+        EventID: 13
         Channel: Microsoft-Windows-Sysmon/Operational
     selection:
-        EventType: CreateKey
         TargetObject|endswith: \EulaAccepted
-    condition: registry_add and selection
+    condition: registry_set and selection
 falsepositives:
     - Legitimate use of SysInternals tools
     - Programs that use the same Registry Key
 level: low
+regression_tests_path: regression_data/windows/registry/registry_set/registry_set_pua_sysinternals_execution_via_eula/info.yml
 ruletype: Sigma
