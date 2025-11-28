@@ -17,6 +17,7 @@ references:
     - https://mrd0x.com/filefix-clickfix-alternative/
 author: Swachchhanda Shrawan Poudel (Nextron Systems)
 date: 2025-11-04
+modified: 2025-11-26
 tags:
     - attack.execution
     - attack.t1204.004
@@ -31,7 +32,7 @@ detection:
         Channel: Security
     selection_explorer:
         CommandLine|contains: '#'
-        NewProcessName|endswith: \explorer.exe
+        ParentProcessName|endswith: \explorer.exe
     selection_space_variation:
         CommandLine|contains:
             -                # En Quad (U+2000)

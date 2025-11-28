@@ -17,6 +17,7 @@ references:
     - https://mrd0x.com/filefix-clickfix-alternative/
 author: Swachchhanda Shrawan Poudel (Nextron Systems)
 date: 2025-11-04
+modified: 2025-11-26
 tags:
     - attack.execution
     - attack.t1204.004
@@ -31,7 +32,7 @@ detection:
         EventID: 1
         Channel: Microsoft-Windows-Sysmon/Operational
     selection_explorer:
-        Image|endswith: \explorer.exe
+        ParentImage|endswith: \explorer.exe
         CommandLine|contains: '#'
     selection_space_variation:
         CommandLine|contains:
