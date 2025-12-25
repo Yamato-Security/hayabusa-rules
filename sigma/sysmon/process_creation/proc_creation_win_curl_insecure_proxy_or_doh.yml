@@ -1,5 +1,5 @@
 title: Insecure Proxy/DOH Transfer Via Curl.EXE
-id: b1d59fa0-c42c-0efd-027d-d7721d153420
+id: 286c1ff7-1bd6-b0c8-7e11-cd2c2e6eb437
 related:
     - id: 2c1486f5-02e8-4f86-9099-b97f2da4ed77
       type: derived
@@ -11,15 +11,16 @@ author: Nasreddine Bencherchali (Nextron Systems)
 date: 2023-07-27
 tags:
     - attack.execution
+    - sysmon
 logsource:
     product: windows
     category: process_creation
 detection:
     process_creation:
-        EventID: 4688
-        Channel: Security
+        EventID: 1
+        Channel: Microsoft-Windows-Sysmon/Operational
     selection_img:
-        - NewProcessName|endswith: \curl.exe
+        - Image|endswith: \curl.exe
         - OriginalFileName: curl.exe
     selection_cli:
         CommandLine|contains:
@@ -29,4 +30,5 @@ detection:
 falsepositives:
     - Access to badly maintained internal or development systems
 level: medium
+regression_tests_path: regression_data/rules/windows/process_creation/proc_creation_win_curl_insecure_proxy_or_doh/info.yml
 ruletype: Sigma
