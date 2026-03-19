@@ -9,18 +9,21 @@ related:
       type: derived
 status: experimental
 description: |
-    Detects WerFaultSecure.exe loading dbgcore.dll or dbghelp.dll which contains the MiniDumpWriteDump function.
-    The MiniDumpWriteDump function creates a minidump of a process by suspending all threads in the target process to ensure a consistent memory snapshot.
-    The EDR-Freeze technique abuses WerFaultSecure.exe running as a Protected Process Light (PPL) with WinTCB protection level to suspend EDR/AV processes.
-    By leveraging MiniDumpWriteDump's thread suspension behavior, edr-freeze allows malicious activity to execute undetected during the suspension period.
+    Detects the loading of dbgcore.dll or dbghelp.dll by WerFaultSecure.exe, which has been observed in EDR-Freeze attacks to suspend processes and evade detection.
+    However, this behavior has also been observed during normal software installations, so further investigation is required to confirm malicious activity.
+    When threat hunting, look for this activity in conjunction with other suspicious processes starting, network connections, or file modifications that occur shortly after the DLL load.
+    Pay special attention to timing - if other malicious activities occur during or immediately after this library loading, it may indicate EDR evasion attempts.
+    Also correlate with any EDR/AV process suspension events or gaps in security monitoring during the timeframe.
 references:
     - https://github.com/TwoSevenOneT/EDR-Freeze
     - https://blog.axelarator.net/hunting-for-edr-freeze/
 author: Swachchhanda Shrawan Poudel (Nextron Systems)
 date: 2025-11-27
+modified: 2026-01-09
 tags:
     - attack.defense-evasion
     - attack.t1562.001
+    - detection.threat-hunting
     - sysmon
 logsource:
     category: image_load
@@ -38,5 +41,5 @@ detection:
 falsepositives:
     - Unknown
 level: medium
-regression_tests_path: regression_data/rules/windows/image_load/image_load_win_werfaultsecure_dbgcore_dbghelp_load/info.yml
+regression_tests_path: regression_data/rules-threat-hunting/windows/image_load/image_load_win_werfaultsecure_dbgcore_dbghelp_load/info.yml
 ruletype: Sigma
