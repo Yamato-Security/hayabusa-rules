@@ -6,7 +6,7 @@
 | base64ǀcontains               |             1 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            35 |                0 |
-| contains                      |          3034 |               21 |
+| contains                      |          3035 |               21 |
 | containsǀall                  |          1069 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
@@ -58,5 +58,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2026/04/23  
+Last Update: 2026/04/24  
 Author: Fukusuke Takahashi
