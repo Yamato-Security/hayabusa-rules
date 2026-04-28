@@ -6,14 +6,17 @@ related:
     - id: baecf8fb-edbf-429f-9ade-31fc3f22b970
       type: derived
 status: test
-description: Detects modification of autostart extensibility point (ASEP) in registry.
+description: |
+    Detects modification of autostart extensibility point (ASEP) in registry. Adversaries may modify these keys to execute malicious code when Office files are opened.
+    There are various legitimate add-ins that also use these keys and this filter list might not be exhaustive.
+    Thus, it is recommended to review and tune filters for your environment to reduce false positives before deploying to production.
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1547.001/T1547.001.md
     - https://learn.microsoft.com/en-us/sysinternals/downloads/autoruns
     - https://gist.github.com/GlebSukhodolskiy/0fc5fa5f482903064b448890db1eaf9d # a list with registry keys
 author: Victor Sergeev, Daniil Yugoslavskiy, Gleb Sukhodolskiy, Timur Zinniatullin, oscd.community, Tim Shelton, frack113 (split)
 date: 2019-10-25
-modified: 2025-10-17
+modified: 2026-01-09
 tags:
     - attack.privilege-escalation
     - attack.persistence
@@ -40,12 +43,17 @@ detection:
             - test\Special\Perf
     filter_main_empty:
         NewValue: (Empty)
+    filter_main_null:
+        NewValue: null
     filter_main_known_addins:
         ProcessName|startswith:
             - C:\Program Files\Microsoft Office\
             - C:\Program Files (x86)\Microsoft Office\
+            - C:\PROGRA~2\MICROS~2\Office
             - C:\Windows\System32\msiexec.exe
+            - C:\Windows\SysWOW64\msiexec.exe
             - C:\Windows\System32\regsvr32.exe
+            - 'C:\Windows\SysWOW64\regsvr32.exe '
         ObjectName|contains:
             - \Excel\Addins\AdHocReportingExcelClientLib.AdHocReportingExcelClientAddIn.1\
             - \Excel\Addins\ExcelPlugInShell.PowerMapConnect\
@@ -56,9 +64,11 @@ detection:
             - \Outlook\AddIns\ColleagueImport.ColleagueImportAddin\
             - \Outlook\AddIns\EvernoteCC.EvernoteContactConnector\
             - \Outlook\AddIns\EvernoteOLRD.Connect\
+            - \Outlook\Addins\\OneNote.OutlookAddin
+            - \Outlook\Addins\DriveFSExtensionLib.Connect\
+            - \Outlook\Addins\GoogleAppsSync.Connect\
             - \Outlook\Addins\Microsoft.VbaAddinForOutlook.1\
             - \Outlook\Addins\OcOffice.OcForms\
-            - \Outlook\Addins\\OneNote.OutlookAddin
             - \Outlook\Addins\OscAddin.Connect\
             - \Outlook\Addins\OutlookChangeNotifier.Connect\
             - \Outlook\Addins\UCAddin.LyncAddin.1
@@ -70,6 +80,11 @@ detection:
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\
             - C:\Program Files\Common Files\Microsoft Shared\ClickToRun\Updates\
         ProcessName|endswith: \OfficeClickToRun.exe
+    filter_main_vsto:
+        ProcessName|startswith:
+            - C:\Program Files\Common Files\Microsoft Shared\VSTO\
+            - C:\Program Files (x86)\Microsoft Shared\VSTO\
+        ProcessName|endswith: \VSTOInstaller.exe
     filter_optional_avg:
         ProcessName:
             - C:\Program Files\AVG\Antivirus\RegSvr.exe
@@ -82,7 +97,7 @@ detection:
         ObjectName|contains: \Microsoft\Office\Outlook\Addins\Avast.AsOutExt\
     condition: registry_set and (all of selection_office_* and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
-    - Legitimate software automatically (mostly, during installation) sets up autorun keys for legitimate reason
-    - Legitimate administrator sets up autorun keys for legitimate reason
+    - Legitimate software or add-in installations and administrative configurations
+    - Automatic registry modifications during legitimate software installations
 level: medium
 ruletype: Sigma
