@@ -135,7 +135,7 @@ falsepositives:
     - unknown
 tags:
     - t1070.006
-    - attack.defense-evasion
+    - attack.stealth
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
     - https://attack.mitre.org/techniques/T1070/006/
@@ -212,7 +212,8 @@ sample-evtx: |
   - `attack.execution` -> Execution (Exec)
   - `attack.persistence` -> Persistence (Persis)
   - `attack.privilege-escalation` -> Privilege Escalation (PrivEsc)
-  - `attack.defense-evasion` -> Defense Evasion (Evas)
+  - `attack.stealth` -> Stealth (Stealth)
+  - `attack.defense-impairment` -> Defense Impairment (DefImpair)
   - `attack.credential-access` -> Credential Access (CredAccess)
   - `attack.discovery` -> Discovery (Disc)
   - `attack.lateral-movement` -> Lateral Movement (LatMov)
