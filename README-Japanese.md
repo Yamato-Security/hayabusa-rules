@@ -207,7 +207,7 @@ sample-evtx: |
 - **logsource [required]**: Sigmaルールと互換性があるようにSigmaのlogsource定義と同様。
 - **detection  [必須]**: 検知ロジックはここに入ります。(以下で説明します。)
 - **falsepositives [必須]**: 誤検知の可能性について記載を行います。例: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`。 不明な場合は `unknown` と記述してください。
-- **tags** [オプション]: [LOLBINS/LOLBAS](https://lolbas-project.github.io/)という手法を利用している場合、`lolbas` タグを追加してください。アラートを[MITRE ATT&CK](https://attack.mitre.org/) フレームワークにマッピングできる場合は、以下のリストから該当するものを追加してください（[ATT&CK v19](https://medium.com/mitre-attack/attack-v19-ff329cb65d66)対応済み）。戦術ID（例：`attack.t1098`）を指定することも可能です。
+- **tags** [オプション]: [LOLBINS/LOLBAS](https://lolbas-project.github.io/)という手法を利用している場合、`lolbas` タグを追加してください。アラートを[MITRE ATT&CK](https://attack.mitre.org/) フレームワークにマッピングできる場合は、以下のリストから該当するものを追加してください。戦術ID（例：`attack.t1098`）を指定することも可能です。
   - `attack.reconnaissance` -> Reconnaissance (Recon)
   - `attack.resource-development` -> Resource Development  (ResDev)
   - `attack.initial-access` -> Initial Access (InitAccess)

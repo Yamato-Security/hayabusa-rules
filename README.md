@@ -205,7 +205,7 @@ sample-evtx: |
 - **logsource [required]**: While this is not actually used by Hayabusa at the moment, we define logsource in the same way as sigma in order to be compatible with sigma rules.
 - **detection  [required]**: The detection logic goes here. (Explained below.)
 - **falsepositives [required]**: The possibilities for false positives. For example: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`. If it is unknown, please write `unknown`.
-- **tags** [optional]: If the technique is a [LOLBINS/LOLBAS](https://lolbas-project.github.io/) technique, please add the `lolbas` tag. If the alert can be mapped to a technique in the [MITRE ATT&CK](https://attack.mitre.org/) framework, please add the tactic ID (Example: `attack.t1098`) and any applicable tactics below (updated for [ATT&CK v19](https://medium.com/mitre-attack/attack-v19-ff329cb65d66)):
+- **tags** [optional]: If the technique is a [LOLBINS/LOLBAS](https://lolbas-project.github.io/) technique, please add the `lolbas` tag. If the alert can be mapped to a technique in the [MITRE ATT&CK](https://attack.mitre.org/) framework, please add the tactic ID (Example: `attack.t1098`) and any applicable tactics below:
   - `attack.reconnaissance` -> Reconnaissance (Recon)
   - `attack.resource-development` -> Resource Development  (ResDev)
   - `attack.initial-access` -> Initial Access (InitAccess)
