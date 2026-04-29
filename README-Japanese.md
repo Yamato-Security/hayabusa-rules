@@ -214,8 +214,8 @@ sample-evtx: |
   - `attack.execution` -> Execution (Exec)
   - `attack.persistence` -> Persistence (Persis)
   - `attack.privilege-escalation` -> Privilege Escalation (PrivEsc)
-  - `attack.stealth` -> Stealth (Stealth) ※ ATT&CK v19でDefense Evasionから名称変更
-  - `attack.defense-impairment` -> Defense Impairment (DefImpair) ※ ATT&CK v19でDefense Evasionから分割された新しい戦術
+  - `attack.stealth` -> Stealth (Stealth)
+  - `attack.defense-impairment` -> Defense Impairment (DefImpair)
   - `attack.credential-access` -> Credential Access (CredAccess)
   - `attack.discovery` -> Discovery (Disc)
   - `attack.lateral-movement` -> Lateral Movement (LatMov)
