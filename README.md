@@ -135,7 +135,7 @@ falsepositives:
     - unknown
 tags:
     - t1070.006
-    - attack.defense-evasion
+    - attack.stealth
 references:
     - https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
     - https://attack.mitre.org/techniques/T1070/006/
@@ -205,14 +205,15 @@ sample-evtx: |
 - **logsource [required]**: While this is not actually used by Hayabusa at the moment, we define logsource in the same way as sigma in order to be compatible with sigma rules.
 - **detection  [required]**: The detection logic goes here. (Explained below.)
 - **falsepositives [required]**: The possibilities for false positives. For example: `system administrator`, `normal user usage`, `normal system usage`, `legacy application`, `security team`, `none`. If it is unknown, please write `unknown`.
-- **tags** [optional]: If the technique is a [LOLBINS/LOLBAS](https://lolbas-project.github.io/) technique, please add the `lolbas` tag. If the alert can be mapped to a technique in the [MITRE ATT&CK](https://attack.mitre.org/) framework, please add the tactic ID (Example: `attack.t1098`) and any applicable tactics below:
+- **tags** [optional]: If the technique is a [LOLBINS/LOLBAS](https://lolbas-project.github.io/) technique, please add the `lolbas` tag. If the alert can be mapped to a technique in the [MITRE ATT&CK](https://attack.mitre.org/) framework, please add the tactic ID (Example: `attack.t1098`) and any applicable tactics below (updated for [ATT&CK v19](https://medium.com/mitre-attack/attack-v19-ff329cb65d66)):
   - `attack.reconnaissance` -> Reconnaissance (Recon)
   - `attack.resource-development` -> Resource Development  (ResDev)
   - `attack.initial-access` -> Initial Access (InitAccess)
   - `attack.execution` -> Execution (Exec)
   - `attack.persistence` -> Persistence (Persis)
   - `attack.privilege-escalation` -> Privilege Escalation (PrivEsc)
-  - `attack.defense-evasion` -> Defense Evasion (Evas)
+  - `attack.stealth` -> Stealth (Stealth) ※ Renamed from Defense Evasion in ATT&CK v19
+  - `attack.defense-impairment` -> Defense Impairment (DefImpair) ※ New tactic added in ATT&CK v19 (split from Defense Evasion)
   - `attack.credential-access` -> Credential Access (CredAccess)
   - `attack.discovery` -> Discovery (Disc)
   - `attack.lateral-movement` -> Lateral Movement (LatMov)
