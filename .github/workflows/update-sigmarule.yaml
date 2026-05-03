@@ -24,36 +24,38 @@ on:
 jobs:
   rule-parse-error-check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - name: clone sigma
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: SigmaHQ/sigma
           path: sigma-repo
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
       - name: clone hayabusa rule repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           path: hayabusa-rules
 
       - name: clone hayabusa
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: Yamato-Security/hayabusa
           submodules: recursive
           path: hayabusa
 
       - name: clone sigma-to-hayabusa-converter
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: Yamato-Security/sigma-to-hayabusa-converter
           path: sigma-to-hayabusa-converter
           ref: ${{ github.event.inputs.sigma_to_hayabusa_converter_branch }}
 
       - name: clone hayabusa-sample-evtx
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: Yamato-Security/hayabusa-sample-evtx
           path: hayabusa-sample-evtx
@@ -105,7 +107,7 @@ jobs:
 
       - name: Notify Slack
         if: env.RULE_PARSE_ERROR == '1'
-        uses: 8398a7/action-slack@v3
+        uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
         with:
           status: failure
           fields: job
@@ -121,21 +123,24 @@ jobs:
   updateSigmaRule:
     needs: rule-parse-error-check
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: clone sigma
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: SigmaHQ/sigma
           path: sigma-repo
           token: ${{ secrets.GITHUB_TOKEN }} ## This is necessary for executing on a local machine by act(Local GitHub Action Runner). We have to specify the github token explicitly.
 
       - name: clone hayabusa rule repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           path: hayabusa-rules
 
       - name: clone sigma-to-hayabusa-converter
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           repository: Yamato-Security/sigma-to-hayabusa-converter
           path: sigma-to-hayabusa-converter
@@ -183,7 +188,7 @@ jobs:
       - name: Create Pull Request
         if: env.change_exist == 'true'
         id: cpr
-        uses: peter-evans/create-pull-request@v4
+        uses: peter-evans/create-pull-request@38e0b6e68b4c852a5500a94740f0e535e0d7ba54 # v4.2.4
         with:
           path: hayabusa-rules
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -197,7 +202,7 @@ jobs:
 
       - name: Enable Pull Request Automerge
         if: steps.cpr.outputs.pull-request-operation == 'created' # This only runs if there were sigma rules updates and a new PR was created.
-        uses: peter-evans/enable-pull-request-automerge@v2
+        uses: peter-evans/enable-pull-request-automerge@684fed02ccc9b5eefcf7d40b65b3cd44255bd5bc # v2.5.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
@@ -205,7 +210,7 @@ jobs:
 
       - name: upload change log
         if: env.change_exist == 'true'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: changed_rule_log
           path: ${{ github.workspace }}/changed_rule.logs
