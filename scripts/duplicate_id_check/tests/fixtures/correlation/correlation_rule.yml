@@ -1,0 +1,26 @@
+title: Correlation - many failed logons
+id: 00000000-0000-0000-0000-0000000000c1
+status: test
+correlation:
+    type: event_count
+    rules:
+        - failed_logon
+    group-by:
+        - TargetUserName
+    timespan: 5m
+    condition:
+        gte: 5
+ruletype: Hayabusa
+---
+title: Failed Logon
+id: 00000000-0000-0000-0000-0000000000c2
+name: failed_logon
+status: test
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 4625
+    condition: selection
+ruletype: Hayabusa

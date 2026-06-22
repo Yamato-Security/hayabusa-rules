@@ -1,0 +1,11 @@
+title: Duplicate Rule B (copied from A, id not regenerated)
+id: 00000000-0000-0000-0000-000000000001
+status: test
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection:
+        EventID: 1
+    condition: selection
+ruletype: Hayabusa

@@ -1,0 +1,11 @@
+title: Clean Rule A
+id: 00000000-0000-0000-0000-0000000000a1
+status: test
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 4624
+    condition: selection
+ruletype: Hayabusa
