@@ -5,8 +5,8 @@ rule is copied to create a new one, it is easy to forget to regenerate this
 `id`, leaving two rules that share the same UUID. A duplicate id silently
 shadows a detection and breaks any tooling that addresses rules by their id.
 
-This script scans every `.yml` rule, reads the top-level `id` of every YAML
-document (correlation rules hold several documents in one file), and exits with
+This script scans every `.yml`/`.yaml` rule, reads the top-level `id` of every
+YAML document (correlation rules hold several documents in one file), and exits with
 a non-zero status if any id is used more than once. It is wired into CI
 (`.github/workflows/duplicate-id-check.yaml`) so a pull request that introduces
 a duplicate id fails before it can be merged. See issue

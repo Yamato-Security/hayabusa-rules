@@ -27,20 +27,26 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 
 
 def iter_yaml_files(paths: list[str], excludes: tuple[str, ...] = ()) -> list[str]:
-    """Return a de-duplicated, sorted list of ``.yml`` files under ``paths``.
+    """Return a de-duplicated, sorted list of YAML rule files under ``paths``.
 
-    A file is skipped if its normalised path contains any string in
-    ``excludes`` (matched with surrounding separators so that ``tests`` only
-    matches a ``tests`` path component, not a substring of a file name).
+    Both ``.yml`` and ``.yaml`` files are collected (Sigma permits either
+    extension). A file is skipped if its path contains any string in
+    ``excludes``. Both the candidate path and the exclude patterns are
+    normalised to forward slashes before matching, so a pattern such as
+    ``/scripts/`` works identically on POSIX and Windows. The match uses
+    surrounding slashes so that ``tests`` only matches a ``tests`` path
+    component, not a substring of a file name.
     """
+    norm_excludes = tuple(ex.replace(os.sep, '/') for ex in excludes)
     seen: set[str] = set()
     for p in paths:
-        for f in glob.glob(os.path.join(p, '**', '*.yml'), recursive=True):
-            norm = os.path.normpath(f)
-            haystack = f'{os.sep}{norm}{os.sep}'
-            if any(ex in haystack for ex in excludes):
-                continue
-            seen.add(norm)
+        for pattern in ('*.yml', '*.yaml'):
+            for f in glob.glob(os.path.join(p, '**', pattern), recursive=True):
+                norm = os.path.normpath(f)
+                haystack = f"/{norm.replace(os.sep, '/')}/"
+                if any(ex in haystack for ex in norm_excludes):
+                    continue
+                seen.add(norm)
     return sorted(seen)
 
 
@@ -69,13 +75,35 @@ def find_duplicates(id_locations: dict[str, list[tuple[str, int]]]) -> dict[str,
     return {rid: locs for rid, locs in id_locations.items() if len(locs) > 1}
 
 
+def _annotation_path(path: str) -> str:
+    """Return a path suitable for a GitHub Actions ``::error file=`` annotation.
+
+    The linter is invoked from ``scripts/duplicate_id_check`` in CI, so the
+    scanned paths are relative and contain ``../..``. GitHub only renders an
+    annotation when ``file=`` is a path inside the workspace with no ``..``
+    segments, so resolve the absolute path and make it relative to
+    ``GITHUB_WORKSPACE`` (falling back to the original path when it lies
+    outside the workspace, e.g. local runs).
+    """
+    workspace = os.environ.get('GITHUB_WORKSPACE')
+    if not workspace:
+        return path.replace(os.sep, '/')
+    try:
+        rel = os.path.relpath(os.path.realpath(path), os.path.realpath(workspace))
+    except ValueError:
+        return path.replace(os.sep, '/')
+    if rel.startswith('..'):
+        return path.replace(os.sep, '/')
+    return rel.replace(os.sep, '/')
+
+
 def report(duplicates: dict[str, list[tuple[str, int]]]) -> None:
     """Print a human-readable report plus GitHub Actions error annotations."""
     for rid, locs in sorted(duplicates.items()):
         logging.error(f'Duplicate rule id {rid} is used by {len(locs)} rules:')
         for f, idx in locs:
             logging.error(f'    - {f} (document #{idx})')
-            print(f'::error file={f}::Duplicate rule id {rid} '
+            print(f'::error file={_annotation_path(f)}::Duplicate rule id {rid} '
                   f'(also used elsewhere) at document #{idx}')
 
 

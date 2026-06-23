@@ -13,6 +13,8 @@ FIXTURES = Path(__file__).resolve().parent / 'fixtures'
 
 def _load_module():
     spec = importlib.util.spec_from_file_location('duplicate_id_check', SCRIPT)
+    assert spec is not None and spec.loader is not None, (
+        f'could not create an import spec for {SCRIPT}')
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
