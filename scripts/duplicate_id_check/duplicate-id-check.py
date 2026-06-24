@@ -30,12 +30,13 @@ def iter_yaml_files(paths: list[str], excludes: tuple[str, ...] = ()) -> list[st
     """Return a de-duplicated, sorted list of YAML rule files under ``paths``.
 
     Both ``.yml`` and ``.yaml`` files are collected (Sigma permits either
-    extension). A file is skipped if its path contains any string in
-    ``excludes``. Both the candidate path and the exclude patterns are
-    normalised to forward slashes before matching, so a pattern such as
-    ``/scripts/`` works identically on POSIX and Windows. The match uses
-    surrounding slashes so that ``tests`` only matches a ``tests`` path
-    component, not a substring of a file name.
+    extension). A file is skipped if its normalised (forward-slash) path
+    contains any of ``excludes`` as a plain substring; both the candidate
+    path and the exclude patterns are normalised to forward slashes first,
+    so a pattern such as ``/scripts/`` works identically on POSIX and
+    Windows. Because the match is a plain substring, a bare pattern such as
+    ``tests`` also matches e.g. ``latest`` — wrap it in slashes
+    (``/tests/``) to match only a whole path component.
     """
     norm_excludes = tuple(ex.replace(os.sep, '/') for ex in excludes)
     seen: set[str] = set()
@@ -102,9 +103,10 @@ def report(duplicates: dict[str, list[tuple[str, int]]]) -> None:
     for rid, locs in sorted(duplicates.items()):
         logging.error(f'Duplicate rule id {rid} is used by {len(locs)} rules:')
         for f, idx in locs:
-            logging.error(f'    - {f} (document #{idx})')
+            # Document numbers are shown 1-based for humans; idx stays 0-based internally.
+            logging.error(f'    - {f} (document #{idx + 1})')
             print(f'::error file={_annotation_path(f)}::Duplicate rule id {rid} '
-                  f'(also used elsewhere) at document #{idx}')
+                  f'(also used elsewhere) at document #{idx + 1}')
 
 
 def main(argv: list[str] | None = None) -> int:
