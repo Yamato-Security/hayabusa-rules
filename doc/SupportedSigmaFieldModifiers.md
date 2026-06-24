@@ -6,12 +6,12 @@
 | base64ǀcontains               |             1 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            35 |                0 |
-| contains                      |          3060 |               21 |
+| contains                      |          3064 |               21 |
 | containsǀall                  |          1077 |                0 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             1 |                0 |
-| containsǀwindash              |           107 |                0 |
-| endswith                      |          3245 |              273 |
+| containsǀwindash              |           108 |                0 |
+| endswith                      |          3246 |              273 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -26,11 +26,11 @@
 | gte                           |             0 |                0 |
 | lt                            |             0 |                0 |
 | lte                           |             0 |                0 |
-| re                            |           187 |               11 |
+| re                            |           188 |               11 |
 | reǀi                          |             1 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
-| startswith                    |           533 |                6 |
+| startswith                    |           535 |                6 |
 | startswithǀcased              |             0 |                0 |
 | utf16beǀbase64offsetǀcontains |             0 |                0 |
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
@@ -58,5 +58,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2026/06/19  
+Last Update: 2026/06/24  
 Author: Fukusuke Takahashi
