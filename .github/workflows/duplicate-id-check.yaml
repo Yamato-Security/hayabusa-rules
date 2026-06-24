@@ -1,0 +1,33 @@
+name: Duplicate rule id check
+
+on:
+  workflow_dispatch:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  duplicate-id-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone hayabusa rule repo
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          path: hayabusa-rules
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6.2.0
+        with:
+          python-version: '3.x'
+          architecture: 'x64'
+
+      - name: Setup Poetry
+        run: curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Check for duplicate rule ids
+        run: |
+          cd hayabusa-rules/scripts/duplicate_id_check
+          poetry install --no-root
+          poetry run python duplicate-id-check.py ../../hayabusa ../../sigma

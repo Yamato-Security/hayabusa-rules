@@ -1,0 +1,11 @@
+title: Duplicate Rule A
+id: 00000000-0000-0000-0000-000000000001
+status: test
+logsource:
+    product: windows
+    service: security
+detection:
+    selection:
+        EventID: 4688
+    condition: selection
+ruletype: Hayabusa
