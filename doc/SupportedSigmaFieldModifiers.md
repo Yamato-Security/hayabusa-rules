@@ -11,7 +11,7 @@
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             3 |                0 |
 | containsǀwindash              |           109 |                0 |
-| endswith                      |          3273 |              273 |
+| endswith                      |          3277 |              273 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -30,7 +30,7 @@
 | reǀi                          |             2 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
-| startswith                    |           551 |                6 |
+| startswith                    |           552 |                6 |
 | startswithǀcased              |             0 |                0 |
 | utf16beǀbase64offsetǀcontains |             0 |                0 |
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
@@ -58,5 +58,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2026/08/19  
+Last Update: 2026/09/01  
 Author: Fukusuke Takahashi
