@@ -1,0 +1,57 @@
+author: Defa Mulya Pratama
+date: 2026-10-07
+
+title: 'Susp CmdLine (Possible Inhibit System Recovery)'
+description: |
+    Detects commands commonly used by ransomware and destructive malware to inhibit system recovery, such as deleting or resizing Volume Shadow Copies, deleting backup catalogs, or disabling Windows automatic recovery.
+    This rule uses the built-in Windows Security "Process Creation" event (4688) so that it works without Sysmon. Command line auditing must be enabled.
+details: 'Process: %NewProcessName% ¦ CmdLine: %CommandLine% ¦ Parent: %ParentProcessName% ¦ User: %SubjectUserName% ¦ PID: %NewProcessId%'
+
+id: db13c364-2254-4247-8c53-da1a7c4bdb78
+level: high
+status: test
+logsource:
+    product: windows
+    service: security
+    description: Process Creation with command line option logging needs to be turned on.
+detection:
+    selection_base:
+        Channel: Security
+        EventID: 4688
+    selection_cmd_vssadmin_delete:
+        NewProcessName|endswith: '\vssadmin.exe'
+        CommandLine|contains|all:
+            - 'delete'
+            - 'shadows'
+    selection_cmd_vssadmin_resize:
+        NewProcessName|endswith: '\vssadmin.exe'
+        CommandLine|contains|all:
+            - 'resize'
+            - 'shadowstorage'
+    selection_cmd_wmic_shadow:
+        NewProcessName|endswith: '\wmic.exe'
+        CommandLine|contains|all:
+            - 'shadowcopy'
+            - 'delete'
+    selection_cmd_wbadmin:
+        NewProcessName|endswith: '\wbadmin.exe'
+        CommandLine|contains|all:
+            - 'delete'
+            - 'catalog'
+    selection_cmd_bcdedit:
+        NewProcessName|endswith: '\bcdedit.exe'
+        CommandLine|contains:
+            - 'recoveryenabled no'
+            - 'recoveryenabled off'
+            - 'ignoreallfailures'
+    condition: selection_base and 1 of selection_cmd_*
+falsepositives:
+    - Legitimate administrative maintenance of shadow copies or backups, which is uncommon and should be verified.
+tags:
+    - attack.impact
+    - attack.t1490
+references:
+    - https://attack.mitre.org/techniques/T1490/
+    - https://redcanary.com/blog/threat-detection/its-all-fun-and-games-until-ransomware-deletes-the-shadow-copies/
+sample-evtx:
+ruletype: Hayabusa
