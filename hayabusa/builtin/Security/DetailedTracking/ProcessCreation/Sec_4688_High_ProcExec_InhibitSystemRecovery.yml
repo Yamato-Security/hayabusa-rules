@@ -5,7 +5,6 @@ title: 'Susp CmdLine (Possible Inhibit System Recovery)'
 description: |
     Detects commands commonly used by ransomware and destructive malware to inhibit system recovery, such as deleting or resizing Volume Shadow Copies, deleting backup catalogs, or disabling Windows automatic recovery.
     This rule uses the built-in Windows Security "Process Creation" event (4688) so that it works without Sysmon. Command line auditing must be enabled.
-details: 'Process: %NewProcessName% ¦ CmdLine: %CommandLine% ¦ Parent: %ParentProcessName% ¦ User: %SubjectUserName% ¦ PID: %NewProcessId%'
 
 id: db13c364-2254-4247-8c53-da1a7c4bdb78
 level: high
