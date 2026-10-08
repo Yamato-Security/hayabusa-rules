@@ -1,0 +1,92 @@
+author: Defa Mulya Pratama
+date: 2026-10-07
+
+title: 'Susp CmdLine (Possible Inhibit System Recovery)'
+description: |
+    Detects commands commonly used by ransomware and destructive malware to inhibit system recovery, such as deleting or resizing Volume Shadow Copies, deleting backup catalogs, or disabling Windows automatic recovery.
+    This rule uses the built-in Windows Security "Process Creation" event (4688) so that it works without Sysmon. Command line auditing must be enabled.
+
+id: db13c364-2254-4247-8c53-da1a7c4bdb78
+level: high
+status: test
+logsource:
+    product: windows
+    service: security
+    description: Process Creation with command line option logging needs to be turned on.
+detection:
+    selection_base:
+        Channel: Security
+        EventID: 4688
+    selection_cmd_vssadmin_delete:
+        NewProcessName|endswith: '\vssadmin.exe'
+        CommandLine|contains|all:
+            - 'delete'
+            - 'shadows'
+    selection_cmd_vssadmin_resize:
+        NewProcessName|endswith: '\vssadmin.exe'
+        CommandLine|contains|all:
+            - 'resize'
+            - 'shadowstorage'
+    selection_cmd_wmic_shadow:
+        NewProcessName|endswith: '\wmic.exe'
+        CommandLine|contains|all:
+            - 'shadowcopy'
+            - 'delete'
+    selection_cmd_wbadmin:
+        NewProcessName|endswith: '\wbadmin.exe'
+        CommandLine|contains|all:
+            - 'delete'
+            - 'catalog'
+    selection_cmd_bcdedit:
+        NewProcessName|endswith: '\bcdedit.exe'
+        CommandLine|contains:
+            - 'recoveryenabled no'
+            - 'recoveryenabled off'
+            - 'ignoreallfailures'
+    condition: selection_base and 1 of selection_cmd_*
+falsepositives:
+    - Legitimate administrative maintenance of shadow copies or backups, which is uncommon and should be verified.
+tags:
+    - attack.impact
+    - attack.t1490
+references:
+    - https://attack.mitre.org/techniques/T1490/
+    - https://redcanary.com/blog/threat-detection/its-all-fun-and-games-until-ransomware-deletes-the-shadow-copies/
+sample-evtx: |
+    <?xml version="1.0"?>
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+      <System>
+        <Provider Name="Microsoft-Windows-Security-Auditing" Guid="{54849625-5478-4994-A5BA-3E3B0328C30D}"/>
+        <EventID>4688</EventID>
+        <Version>2</Version>
+        <Level>0</Level>
+        <Task>13312</Task>
+        <Opcode>0</Opcode>
+        <Keywords>0x8020000000000000</Keywords>
+        <TimeCreated SystemTime="2026-10-08T03:21:07.159387500Z"/>
+        <EventRecordID>284512</EventRecordID>
+        <Correlation/>
+        <Execution ProcessID="4" ThreadID="6292"/>
+        <Channel>Security</Channel>
+        <Computer>wef.windomain.local</Computer>
+        <Security/>
+      </System>
+      <EventData>
+        <Data Name="SubjectUserSid">S-1-5-18</Data>
+        <Data Name="SubjectUserName">WEF$</Data>
+        <Data Name="SubjectDomainName">WINDOMAIN</Data>
+        <Data Name="SubjectLogonId">0x3e7</Data>
+        <Data Name="NewProcessId">0x1a40</Data>
+        <Data Name="NewProcessName">C:\Windows\System32\vssadmin.exe</Data>
+        <Data Name="TokenElevationType">%%1936</Data>
+        <Data Name="ProcessId">0x24c</Data>
+        <Data Name="CommandLine">vssadmin delete shadows /all /quiet</Data>
+        <Data Name="TargetUserSid">S-1-0-0</Data>
+        <Data Name="TargetUserName">-</Data>
+        <Data Name="TargetDomainName">-</Data>
+        <Data Name="TargetLogonId">0x0</Data>
+        <Data Name="ParentProcessName">C:\Windows\System32\cmd.exe</Data>
+        <Data Name="MandatoryLabel">S-1-16-16384</Data>
+      </EventData>
+    </Event>
+ruletype: Hayabusa

@@ -1,0 +1,96 @@
+author: Defa Mulya Pratama
+date: 2026-10-08
+
+title: 'Susp CmdLine (Possible Inhibit System Recovery)'
+description: |
+    Detects commands commonly used by ransomware and destructive malware to inhibit system recovery, such as deleting or resizing Volume Shadow Copies, deleting backup catalogs, or disabling Windows automatic recovery.
+    This is the Sysmon process creation (EventID 1) version of the Security 4688 rule.
+
+id: db1fa879-6d12-4bd1-b947-ee5dc565c55e
+level: high
+status: test
+logsource:
+    product: windows
+    service: sysmon
+detection:
+    selection_base:
+        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 1
+    selection_cmd_vssadmin_delete:
+        Image|endswith: '\vssadmin.exe'
+        CommandLine|contains|all:
+            - 'delete'
+            - 'shadows'
+    selection_cmd_vssadmin_resize:
+        Image|endswith: '\vssadmin.exe'
+        CommandLine|contains|all:
+            - 'resize'
+            - 'shadowstorage'
+    selection_cmd_wmic_shadow:
+        Image|endswith: '\wmic.exe'
+        CommandLine|contains|all:
+            - 'shadowcopy'
+            - 'delete'
+    selection_cmd_wbadmin:
+        Image|endswith: '\wbadmin.exe'
+        CommandLine|contains|all:
+            - 'delete'
+            - 'catalog'
+    selection_cmd_bcdedit:
+        Image|endswith: '\bcdedit.exe'
+        CommandLine|contains:
+            - 'recoveryenabled no'
+            - 'recoveryenabled off'
+            - 'ignoreallfailures'
+    condition: selection_base and 1 of selection_cmd_*
+falsepositives:
+    - Legitimate administrative maintenance of shadow copies or backups, which is uncommon and should be verified.
+tags:
+    - attack.impact
+    - attack.t1490
+references:
+    - https://attack.mitre.org/techniques/T1490/
+    - https://redcanary.com/blog/threat-detection/its-all-fun-and-games-until-ransomware-deletes-the-shadow-copies/
+sample-evtx: |
+    <Event xmlns="http://schemas.microsoft.com/win/2004/08/events/event">
+        <System>
+            <Provider Name="Microsoft-Windows-Sysmon" Guid="{5770385F-C22A-43E0-BF4C-06F5698FFBD9}"/>
+            <EventID>1</EventID>
+            <Version>5</Version>
+            <Level>4</Level>
+            <Task>1</Task>
+            <Opcode>0</Opcode>
+            <Keywords>0x8000000000000000</Keywords>
+            <TimeCreated SystemTime="2026-10-08T03:21:07.278109800Z"/>
+            <EventRecordID>7649</EventRecordID>
+            <Correlation/>
+            <Execution ProcessID="2044" ThreadID="2092"/>
+            <Channel>Microsoft-Windows-Sysmon/Operational</Channel>
+            <Computer>IEWIN7</Computer>
+            <Security UserID="S-1-5-18"/>
+        </System>
+        <EventData>
+            <Data Name="RuleName">-</Data>
+            <Data Name="UtcTime">2026-10-08 03:21:07.278</Data>
+            <Data Name="ProcessGuid">{365ABB72-9AA6-5D04-0000-00109C850F00}</Data>
+            <Data Name="ProcessId">2280</Data>
+            <Data Name="Image">C:\Windows\System32\vssadmin.exe</Data>
+            <Data Name="FileVersion">10.0.19041.1 (WinBuild.160101.0800)</Data>
+            <Data Name="Description">Volume Shadow Copy Service administrative command-line tool</Data>
+            <Data Name="Product">Microsoft Windows Operating System</Data>
+            <Data Name="Company">Microsoft Corporation</Data>
+            <Data Name="CommandLine">vssadmin delete shadows /all /quiet</Data>
+            <Data Name="CurrentDirectory">C:\Windows\system32\</Data>
+            <Data Name="User">IEWIN7\IEUser</Data>
+            <Data Name="LogonGuid">{365ABB72-98E4-5D04-0000-0020A4350100}</Data>
+            <Data Name="LogonId">0x135a4</Data>
+            <Data Name="TerminalSessionId">1</Data>
+            <Data Name="IntegrityLevel">High</Data>
+            <Data Name="Hashes">SHA1=0000000000000000000000000000000000000000</Data>
+            <Data Name="ParentProcessGuid">{365ABB72-9972-5D04-0000-0010F0490C00}</Data>
+            <Data Name="ParentProcessId">3660</Data>
+            <Data Name="ParentImage">C:\Windows\System32\cmd.exe</Data>
+            <Data Name="ParentCommandLine">cmd.exe /c vssadmin delete shadows /all /quiet</Data>
+        </EventData>
+    </Event>
+ruletype: Hayabusa
