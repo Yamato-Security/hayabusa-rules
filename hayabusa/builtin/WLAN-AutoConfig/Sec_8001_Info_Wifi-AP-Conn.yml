@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2020-11-08
-modified: 2022-06-21
+modified: 2026-10-14
 
 title: Wifi AP Conn
 details: 'SSID: %SSID% ¦ Type: %AuthenticationAlgorithm% ¦ BSSType: %BSSType%'
@@ -13,7 +13,7 @@ logsource:
     product: windows
 detection:
     selection:
-        Channel: Microsoft-Windows-WLAN-AutoConfig
+        Channel: Microsoft-Windows-WLAN-AutoConfig/Operational
         EventID: 8001
     condition: selection
 falsepositives:
