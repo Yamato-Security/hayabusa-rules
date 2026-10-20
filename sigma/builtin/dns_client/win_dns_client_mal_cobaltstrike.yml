@@ -1,5 +1,5 @@
 title: Suspicious Cobalt Strike DNS Beaconing - DNS Client
-id: f0b3a5e9-e4ee-ed23-3b27-4dd30c5974c8
+id: 81044606-0597-3b0d-c000-a976304c9570
 related:
     - id: f356a9c4-effd-4608-bbf8-408afd5cd006
       type: similar
@@ -21,7 +21,7 @@ logsource:
     definition: 'Requirements: Microsoft-Windows-DNS Client Events/Operational Event Log must be enabled/collected in order to receive the events.'
 detection:
     dns_client:
-        Channel: Microsoft-Windows-DNS Client Events/Operational
+        Channel: Microsoft-Windows-DNS-Client/Operational
     selection_eid:
         EventID: 3008
     selection_query_1:
