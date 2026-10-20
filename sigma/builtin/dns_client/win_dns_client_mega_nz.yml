@@ -1,5 +1,5 @@
 title: DNS Query To MEGA Hosting Website - DNS Client
-id: 14b17417-8ae7-ff8e-fe36-28aaa337ccd5
+id: b23f739e-2ff3-1773-0393-fa8b6fa5d695
 related:
     - id: 613c03ba-0779-4a53-8a1f-47f914a4ded3
       type: similar
@@ -20,7 +20,7 @@ logsource:
     definition: 'Requirements: Microsoft-Windows-DNS Client Events/Operational Event Log must be enabled/collected in order to receive the events.'
 detection:
     dns_client:
-        Channel: Microsoft-Windows-DNS Client Events/Operational
+        Channel: Microsoft-Windows-DNS-Client/Operational
     selection:
         EventID: 3008
         QueryName|contains: userstorage.mega.co.nz

@@ -1,5 +1,5 @@
 title: DNS Query for Anonfiles.com Domain - DNS Client
-id: 2abf05fa-98f2-d00b-6a6a-12d07e55233e
+id: eccf9d52-bd30-0ec7-dac9-8f0005287356
 related:
     - id: 065cceea-77ec-4030-9052-fc0affea7110
       type: similar
@@ -20,7 +20,7 @@ logsource:
     definition: 'Requirements: Microsoft-Windows-DNS Client Events/Operational Event Log must be enabled/collected in order to receive the events.'
 detection:
     dns_client:
-        Channel: Microsoft-Windows-DNS Client Events/Operational
+        Channel: Microsoft-Windows-DNS-Client/Operational
     selection:
         EventID: 3008
         QueryName|contains: .anonfiles.com

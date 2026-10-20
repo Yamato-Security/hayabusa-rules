@@ -1,29 +1,28 @@
 title: Registry Explorer Policy Modification
-id: 5ddf348a-147b-c281-291c-28591533e03b
+id: 239ba06d-b7b1-2237-ec7e-0f41d80ff78b
 related:
     - id: 1c3121ed-041b-4d97-a075-07f54f20fb4a
       type: derived
-status: test
+status: deprecated
 description: Detects registry modifications that disable internal tools or functions in explorer (malware like Agent Tesla uses this technique)
 references:
     - https://github.com/redcanaryco/atomic-red-team/blob/f339e7da7d05f6057fdfcdd3742bfcf365fee2a9/atomics/T1112/T1112.md
 author: frack113
 date: 2022-03-18
-modified: 2023-08-17
+modified: 2026-10-18
 tags:
     - attack.persistence
     - attack.defense-impairment
     - attack.t1112
-    - sysmon
 logsource:
     category: registry_set
     product: windows
 detection:
     registry_set:
-        EventID: 13
-        Channel: Microsoft-Windows-Sysmon/Operational
+        EventID: 4657
+        Channel: Security
     selection_set_1:
-        TargetObject|endswith:
+        ObjectName|endswith:
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoLogOff
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoDesktop
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoRun
@@ -34,7 +33,7 @@ detection:
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoSetTaskbar
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoPropertiesMyDocuments
             - SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\NoTrayContextMenu
-        Details: DWORD (0x00000001)
+        NewValue: DWORD (0x00000001)
     condition: registry_set and selection_set_1
 falsepositives:
     - Legitimate admin script

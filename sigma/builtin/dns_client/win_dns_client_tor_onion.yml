@@ -1,5 +1,5 @@
 title: Query Tor Onion Address - DNS Client
-id: e1b0fd63-1017-1597-ec08-3f9e1021e564
+id: 178fd94a-09bc-d16c-7fce-96dd3dab304c
 related:
     - id: b55ca2a3-7cff-4dda-8bdd-c7bfa63bf544
       type: similar
@@ -24,7 +24,7 @@ logsource:
     definition: 'Requirements: Microsoft-Windows-DNS Client Events/Operational Event Log must be enabled/collected in order to receive the events.'
 detection:
     dns_client:
-        Channel: Microsoft-Windows-DNS Client Events/Operational
+        Channel: Microsoft-Windows-DNS-Client/Operational
     selection:
         EventID: 3008
         QueryName|endswith:
