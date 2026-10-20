@@ -107,12 +107,12 @@ jobs:
 
       - name: Notify Slack
         if: env.RULE_PARSE_ERROR == '1'
-        uses: 8398a7/action-slack@77eaa4f1c608a7d68b38af4e3f739dcd8cba273e # v3.19.0
+        uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
         with:
-          status: failure
-          fields: job
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: ":no_entry: Failed GitHub Actions\nWorkflow: ${{ github.workflow }}\nJob: ${{ github.job }}\nRun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
       - name: check rule parse error status
         if: env.RULE_PARSE_ERROR == '1'
