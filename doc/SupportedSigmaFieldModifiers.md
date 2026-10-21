@@ -5,19 +5,19 @@
 | base64offsetǀcontains         |             7 |                0 |
 | base64ǀcontains               |             1 |                0 |
 | cased                         |             0 |                0 |
-| cidr                          |            35 |                0 |
-| contains                      |          3114 |               23 |
-| containsǀall                  |          1093 |                8 |
+| cidr                          |            36 |                0 |
+| contains                      |          3119 |               23 |
+| containsǀall                  |          1094 |                8 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             3 |                0 |
 | containsǀwindash              |           111 |                0 |
-| endswith                      |          3298 |              283 |
+| endswith                      |          3307 |              283 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
 | equalsfield                   |             0 |                0 |
 | exists                        |             0 |                0 |
-| expand                        |            18 |                0 |
+| expand                        |            20 |                0 |
 | fieldref                      |             4 |                1 |
 | fieldrefǀcontains             |             0 |                0 |
 | fieldrefǀendswith             |             0 |                2 |
@@ -27,10 +27,10 @@
 | lt                            |             0 |                0 |
 | lte                           |             0 |                0 |
 | re                            |           189 |               11 |
-| reǀi                          |             3 |                0 |
+| reǀi                          |             4 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
-| startswith                    |           557 |                6 |
+| startswith                    |           560 |                6 |
 | startswithǀcased              |             0 |                0 |
 | utf16beǀbase64offsetǀcontains |             0 |                0 |
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
@@ -58,5 +58,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2026/10/19  
+Last Update: 2026/10/21  
 Author: Fukusuke Takahashi
