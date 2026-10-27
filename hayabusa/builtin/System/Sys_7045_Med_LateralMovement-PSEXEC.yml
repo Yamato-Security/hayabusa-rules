@@ -1,6 +1,6 @@
 author: Zach Mathis
 date: 2022-02-06
-modified: 2025-02-10
+modified: 2026-10-27
 
 title: PSExec Lateral Movement
 details: 'Svc: %ServiceName% ¦ Path: %ImagePath% ¦ Acct: %AccountName% ¦ StartType: %StartType%'
@@ -17,7 +17,7 @@ detection:
         Channel: System
         EventID: 7045
     selection_PSEXESVC_in_service:
-        Service: PSEXESVC
+        ServiceName: PSEXESVC
     selection_PSEXESVC_in_path:
         ImagePath|contains: PSEXESVC
     condition: selection and (selection_PSEXESVC_in_service or selection_PSEXESVC_in_path)
