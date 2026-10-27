@@ -1,49 +1,26 @@
 Alias,EventKey
-CategoryName,Event.EventData.Category Name
 Channel,Event.System.Channel
 Computer,Event.System.Computer
 ComputerName,Event.System.Computer
-DetectionUser,Event.EventData.Detection User
-DeviceInstanceID,Event.UserData.InstallDeviceID.DeviceInstanceID
-DomainName,Event.EventData.SubjectDomainName
-DriverDescription,Event.UserData.InstallDeviceID.DriverDescription
-DriverProvider,Event.UserData.InstallDeviceID.DriverProvider
-DvrFmwk2003InstanceId,Event.UserData.UMDFHostDeviceArrivalBegin.InstanceId
-DvrFmwkInstanceId,Event.UserData.UMDFHostDeviceRequest.InstanceId
 EventID,Event.System.EventID
 ExecutionProcessID,Event.System.Execution_attributes.ProcessID
-image,Event.EventData.Image
-Imphash,Event.EventData.Hashes
-InstallStatus,Event.UserData.InstallDeviceID.InstallStatus
-InstanceID,Event.UserData.UMDFHostDeviceArrivalBegin.InstanceId
-JobTitle,Event.EventData.name
 Keywords,Event.System.Keywords
 Level,Event.System.Level
-LogFileClearedChannel,Event.UserData.LogFileCleared.Channel
-LogFileClearedSubjectUserName,Event.UserData.LogFileCleared.SubjectUserName
-Message,Event.EventData
-New_Value,Event.EventData.New Value
-OperationEssStartedNamespaceName,Event.UserData.Operation_EssStarted.NamespaceName
-OperationEssStartedPossibleCause,Event.UserData.Operation_EssStarted.PossibleCause
-OperationEssStartedProcessid,Event.UserData.Operation_EssStarted.Processid
-OperationEssStartedProvider,Event.UserData.Operation_EssStarted.Provider
-OperationEssStartedQuery,Event.UserData.Operation_EssStarted.Query
-OperationEssStartedUser,Event.UserData.Operation_EssStarted.User
-OriginalFilename,Event.EventData.OriginalFileName
 ProviderName,Event.System.Provider_attributes.Name
 Provider_Name,Event.System.Provider_attributes.Name
-query,Event.EventData.Query
-RdsGtwErrorCode,Event.UserData.EventInfo.ErrorCode
-RdsGtwUsername,Event.UserData.EventInfo.Username
-RdsGtwIpAddress,Event.UserData.EventInfo.IpAddress
-RdsGtwAuthType,Event.UserData.EventInfo.AuthType
-RdsGtwResource,Event.UserData.EventInfo.Resource
-RdsGtwConnectionProtocol,Event.UserData.EventInfo.ConnectionProtocol
-RdsGtwBytesReceived,Event.UserData.EventInfo.BytesReceived
-RdsGtwBytesTransfered,Event.UserData.EventInfo.BytesTransfered
-RdsGtwSessionDuration,Event.UserData.EventInfo.SessionDuration
-SAMAccountName,Event.EventData.SamAccountName
 SecurityUserID,Event.System.Security_attributes.UserID
+Version,Event.System.Version
+CategoryName,Event.EventData.Category Name
+DetectionUser,Event.EventData.Detection User
+DomainName,Event.EventData.SubjectDomainName
+image,Event.EventData.Image
+Imphash,Event.EventData.Hashes
+JobTitle,Event.EventData.name
+Message,Event.EventData
+New_Value,Event.EventData.New Value
+OriginalFilename,Event.EventData.OriginalFileName
+query,Event.EventData.Query
+SAMAccountName,Event.EventData.SamAccountName
 service,Event.EventData.Service
 SeverityID,Event.EventData.Severity ID
 SeverityName,Event.EventData.Severity Name
@@ -52,6 +29,31 @@ Source_Name,Event.EventData.Source Name
 TaskDate,Event.EventData.TaskContent
 ThreatName,Event.EventData.Threat Name
 Url,Event.EventData.url
+WindowsDefenderProcessName,Event.EventData.Process Name
+DeviceInstanceID,Event.UserData.InstallDeviceID.DeviceInstanceID
+DriverDescription,Event.UserData.InstallDeviceID.DriverDescription
+DriverProvider,Event.UserData.InstallDeviceID.DriverProvider
+DvrFmwk2003InstanceId,Event.UserData.UMDFHostDeviceArrivalBegin.InstanceId
+DvrFmwkInstanceId,Event.UserData.UMDFHostDeviceRequest.InstanceId
+InstallStatus,Event.UserData.InstallDeviceID.InstallStatus
+InstanceID,Event.UserData.UMDFHostDeviceArrivalBegin.InstanceId
+LogFileClearedChannel,Event.UserData.LogFileCleared.Channel
+LogFileClearedSubjectUserName,Event.UserData.LogFileCleared.SubjectUserName
+OperationEssStartedNamespaceName,Event.UserData.Operation_EssStarted.NamespaceName
+OperationEssStartedPossibleCause,Event.UserData.Operation_EssStarted.PossibleCause
+OperationEssStartedProcessid,Event.UserData.Operation_EssStarted.Processid
+OperationEssStartedProvider,Event.UserData.Operation_EssStarted.Provider
+OperationEssStartedQuery,Event.UserData.Operation_EssStarted.Query
+OperationEssStartedUser,Event.UserData.Operation_EssStarted.User
+RdsGtwAuthType,Event.UserData.EventInfo.AuthType
+RdsGtwBytesReceived,Event.UserData.EventInfo.BytesReceived
+RdsGtwBytesTransfered,Event.UserData.EventInfo.BytesTransfered
+RdsGtwConnectionProtocol,Event.UserData.EventInfo.ConnectionProtocol
+RdsGtwErrorCode,Event.UserData.EventInfo.ErrorCode
+RdsGtwIpAddress,Event.UserData.EventInfo.IpAddress
+RdsGtwResource,Event.UserData.EventInfo.Resource
+RdsGtwSessionDuration,Event.UserData.EventInfo.SessionDuration
+RdsGtwUsername,Event.UserData.EventInfo.Username
 UserDataAddress,Event.UserData.EventXML.Address
 UserDataCode,Event.UserData.Operation_StartedOperational.Code
 UserDataConsumer,Event.UserData.Operation_ESStoConsumerBinding.CONSUMER
@@ -70,6 +72,4 @@ UserDataProviderPath,Event.UserData.Operation_StartedOperational.ProviderPath
 UserDataQuery,Event.UserData.Operation_TemporaryEssStarted.Query
 UserDataSessionID,Event.UserData.EventXML.SessionID
 UserDataUser,Event.UserData.EventXML.User
-Version,Event.System.Version
-WindowsDefenderProcessName,Event.EventData.Process Name
 WMI-UserDataUser,Event.UserData.Operation_TemporaryEssStarted.User
