@@ -10,7 +10,7 @@ references:
     - https://www.eideon.com/2018-03-02-THL03-WMIBackdoors/
 author: Florian Roth (Nextron Systems), Gleb Sukhodolskiy, Timur Zinniatullin oscd.community
 date: 2017-08-22
-modified: 2022-02-10
+modified: 2026-10-27
 tags:
     - attack.persistence
     - attack.privilege-escalation
@@ -32,10 +32,10 @@ detection:
     wmi_filter_registration:
         EventID: 5859
     filter_scmevent:
-        Provider: SCM Event Provider
-        Query: select * from MSFT_SCMEventLogEvent
-        User: S-1-5-32-544
-        PossibleCause: Permanent
+        OperationEssStartedProvider: SCM Event Provider
+        OperationEssStartedQuery: select * from MSFT_SCMEventLogEvent
+        OperationEssStartedUser: S-1-5-32-544
+        OperationEssStartedPossibleCause: Permanent
     condition: wmi and (( (wmi_filter_to_consumer_binding and consumer_keywords) or (wmi_filter_registration) ) and not filter_scmevent)
 falsepositives:
     - Unknown (data set is too small; further testing needed)
