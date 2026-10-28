@@ -1,5 +1,5 @@
 Provider, EID, Details
-Microsoft-Windows-Bits-Client, 3, JobTitle: %jobTitle% ¦ JobID: %jobId% ¦ JobOwner: %jobOwner% ¦ Proc: %processPath% ¦ PID: %ProcessId%
+Microsoft-Windows-Bits-Client, 3, JobTitle: %jobTitle% ¦ JobID: %jobId% ¦ JobOwner: %jobOwner% ¦ Proc: %processPath% ¦ PID: %processId%
 PowerShellCore, 4103, Payload: %Payload%
 PowerShellCore, 4104, ScriptBlock: %ScriptBlockText%
 Microsoft-Windows-PowerShell, 4103, Payload: %Payload%
@@ -51,7 +51,7 @@ Microsoft-Windows-Security-Auditing, 6281, Path: %param1%
 Microsoft-Windows-Security-Auditing, 4692, User: %SubjectUserName% ¦ SID: %SubjectUserSid% ¦ Domain: %SubjectDomainName% ¦ MasterKeyId: %MasterKeyId% ¦ RecoveryServer: %RecoveryServer% ¦ RecoveryKeyId: %RecoveryKeyId% ¦ FailureReason: %FailureReason%
 Microsoft-Windows-Security-Auditing, 5038, Path: %param1%
 Microsoft-Windows-Sysmon, 1, Cmdline: %CommandLine% ¦ Proc: %Image% ¦ User: %User% ¦ ParentCmdline: %ParentCommandLine% ¦ LID: %LogonId% ¦ LGUID: %LogonGuid% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid% ¦ ParentPID: %ParentProcessId% ¦ ParentPGUID: %ParentProcessGuid% ¦ Description: %Description% ¦ Product: %Product% ¦ Company: %Company% ¦ Hashes: %Hashes%
-Microsoft-Windows-Sysmon, 2, Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ CreationTime: %CreationUtcTime% ¦ PreviousTime: %PreviousCreationUtcTime% ¦ PID: %PID% ¦ PGUID: %ProcessGuid%
+Microsoft-Windows-Sysmon, 2, Path: %TargetFilename% ¦ Proc: %Image% ¦ User: %User% ¦ CreationTime: %CreationUtcTime% ¦ PreviousTime: %PreviousCreationUtcTime% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 3, Initiated: %Initiated% ¦ Proto: %Protocol% ¦ SrcIP: %SourceIp% ¦ SrcPort: %SourcePort% ¦ SrcHost: %SourceHostname% ¦ TgtIP: %DestinationIp% ¦ TgtPort: %DestinationPort% ¦ TgtHost: %DestinationHostname% ¦ User: %User% ¦ Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
 Microsoft-Windows-Sysmon, 4, State: %State% ¦ SysmonVer: %SysmonVersion% ¦ SchemaVer: %SchemaVersion%
 Microsoft-Windows-Sysmon, 5, Proc: %Image% ¦ PID: %ProcessId% ¦ PGUID: %ProcessGuid%
@@ -88,13 +88,13 @@ MSExchange CmdletLogs, 6, Data: %Data%
 Microsoft-Windows-Windows Defender, 1013, Time: %Timestamp% ¦ User: %User%
 Microsoft-Windows-Windows Defender, 1116, Threat: %ThreatName% ¦ Severity: %SeverityName% ¦ Type: %CategoryName% ¦ User: %DetectionUser% ¦ Path: %Path% ¦ Proc: %WindowsDefenderProcessName%
 Microsoft-Windows-PrintService, 301, DeletedPrinter: %Param1%
-Microsoft-Windows-PrintService, 302, PrinterDeletionPending: %PrinterDeletionPending%
+Microsoft-Windows-PrintService, 302, PrinterDeletionPending: %Param1%
 Microsoft-Windows-PrintService, 823, OldDefaultPrinter: %OldDefaultPrinter% ¦ NewDefaultPrinter: %NewDefaultPrinter% ¦ Status: %Status% ¦ Module: %Module%
 Microsoft-Windows-PrintService, 848, PrinterName: %PrinterName% ¦ ShareName: %ShareName%
 Microsoft-Windows-PrintService, 849, PrinterName: %PrinterName% ¦ ShareName: %ShareName%
 Microsoft-Windows-PrintService, 354, Printer: %Param1% ¦ DLL: %Param2% ¦ Error: %Param3%
-Microsoft-Windows-PrintService, 300, PrinterCreated: %PrinterCreated%
-Microsoft-Windows-WMI-Activity, 5859, Namespace: %OperationEssStartedNamespaceName% ¦ Query: %UserDataQuery% ¦ SID: %OperationEssStartedUser% ¦ PID: %OperationEssStartedProcessid% ¦ Provider: %OperationEssStartedProvider% ¦ PossibleCause: %OperationEssStartedPossibleCause%
+Microsoft-Windows-PrintService, 300, PrinterCreated: %Param1%
+Microsoft-Windows-WMI-Activity, 5859, Namespace: %OperationEssStartedNamespaceName% ¦ Query: %OperationEssStartedQuery% ¦ SID: %OperationEssStartedUser% ¦ PID: %OperationEssStartedProcessid% ¦ Provider: %OperationEssStartedProvider% ¦ PossibleCause: %OperationEssStartedPossibleCause%
 Microsoft-Windows-DriverFrameworks-UserMode, 2003, Device: %DvrFmwk2003InstanceId%
 Microsoft-Windows-DriverFrameworks-UserMode, 2102, Device: %DvrFmwkInstanceId%
 Microsoft-Windows-DriverFrameworks-UserMode, 2100, Device: %DvrFmwkInstanceId%
