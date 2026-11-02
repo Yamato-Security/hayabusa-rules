@@ -11,7 +11,7 @@
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             3 |                0 |
 | containsǀwindash              |           111 |                0 |
-| endswith                      |          3307 |              283 |
+| endswith                      |          3308 |              283 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -58,5 +58,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2026/10/21  
+Last Update: 2026/11/02  
 Author: Fukusuke Takahashi
