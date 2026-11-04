@@ -1,0 +1,107 @@
+author: Rory Wagner
+date: 2026-11-03
+modified: 2026-11-03
+
+title: 'Possible Pass-the-Certificate (PKINIT Kerberos TGT Req)'
+details: 'TgtUser: %TargetUserName% ¦ SrcIP: %IpAddress% ¦ TktOptions: %TicketOptions% ¦ TktEncType: %TicketEncryptionType% ¦ CertIssuer: %CertIssuerName% ¦ CertSerial: %CertSerialNumber% ¦ CertThumbprint: %CertThumbprint%'
+description: 'Detects a successful Kerberos TGT request authenticated with a certificate via PKINIT. Pass-the-certificate tools such as Rubeus, Certipy and gettgtpkinit generate this after a certificate is stolen or forged, for example through a vulnerable ADCS template or a coerced machine certificate. Unlike the PetitPotam rule, this also covers user accounts. Smart card and Windows Hello for Business logons also use PKINIT, so baseline the normal certificate issuers and accounts. The native Windows client usually sends ticket options 0x40810010, while Rubeus and Certipy both send 0x40800010. The certificate serial can be matched against CA events 4886 and 4887.'
+
+id: bf1f5d78-f393-42ae-9fb2-ab942461f98a
+level: medium
+status: test
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_basic:
+        Channel: Security
+        EventID: 4768
+        Status: '0x0'           #Successful TGT request
+        PreAuthType: '16'       #PA-PK-AS-REQ, certificate pre-authentication (PKINIT)
+    filter_NoCertificate:       #Cert fields are only populated when a certificate was used
+        - CertThumbprint: ''
+        - CertThumbprint: '-'
+    filter_Localhost:
+        IpAddress:
+            - '::1'
+            - '127.0.0.1'
+    condition: selection_basic and not filter_NoCertificate and not filter_Localhost
+falsepositives:
+    - smart card logons
+    - Windows Hello for Business certificate trust and key trust logons
+    - device certificate authentication
+tags:
+    - attack.credential-access
+    - attack.t1649
+    - attack.lateral-movement
+    - attack.t1550
+references:
+    - https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-10/security/threat-protection/auditing/event-4768
+    - https://specterops.io/blog/2021/06/17/certified-pre-owned/
+    - https://github.com/splunk/attack_data/tree/master/datasets/attack_techniques/T1649/certify_abuse
+sample-message: |
+    A Kerberos authentication ticket (TGT) was requested.
+
+    Account Information:
+    	Account Name:		victim_admin_user
+    	Supplied Realm Name:	attack_range
+    	User ID:			attack_range\victim_admin_user
+
+    Service Information:
+    	Service Name:		krbtgt
+    	Service ID:		attack_range\krbtgt
+
+    Network Information:
+    	Client Address:		192.168.1.10
+    	Client Port:		49314
+
+    Additional Information:
+    	Ticket Options:		0x40800010
+    	Result Code:		0x0
+    	Ticket Encryption Type:	0x12
+    	Pre-Authentication Type:	16
+
+    Certificate Information:
+    	Certificate Issuer Name:		Attack Range Cert Authority
+    	Certificate Serial Number:	7F00049982010D5A76DE2C8AD0000000012345
+    	Certificate Thumbprint:		F4B9F00E378950153F18C0E8C5F38DBCF1712345
+
+    Certificate information is only provided if a certificate was used for pre-authentication.
+
+    Pre-authentication types, ticket options, encryption types and result codes are defined in RFC 4120.
+sample-evtx: |
+    <Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'>
+        <System>
+            <Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-A5BA-3E3B0328C30D}'/>
+            <EventID>4768</EventID>
+            <Version>0</Version>
+            <Level>0</Level>
+            <Task>14339</Task>
+            <Opcode>0</Opcode>
+            <Keywords>0x8020000000000000</Keywords>
+            <TimeCreated SystemTime='2023-06-09T14:48:52.1252039Z'/>
+            <EventRecordID>1830975591</EventRecordID>
+            <Correlation/>
+            <Execution ProcessID='844' ThreadID='8416'/>
+            <Channel>Security</Channel>
+            <Computer>dc.attack_range.local</Computer>
+            <Security/>
+        </System>
+        <EventData>
+            <Data Name='TargetUserName'>victim_admin_user</Data>
+            <Data Name='TargetDomainName'>attack_range</Data>
+            <Data Name='TargetSid'>attack_range\victim_admin_user</Data>
+            <Data Name='ServiceName'>krbtgt</Data>
+            <Data Name='ServiceSid'>attack_range\krbtgt</Data>
+            <Data Name='TicketOptions'>0x40800010</Data>
+            <Data Name='Status'>0x0</Data>
+            <Data Name='TicketEncryptionType'>0x12</Data>
+            <Data Name='PreAuthType'>16</Data>
+            <Data Name='IpAddress'>192.168.1.10</Data>
+            <Data Name='IpPort'>49314</Data>
+            <Data Name='CertIssuerName'>Attack Range Cert Authority</Data>
+            <Data Name='CertSerialNumber'>7F00049982010D5A76DE2C8AD0000000012345</Data>
+            <Data Name='CertThumbprint'>F4B9F00E378950153F18C0E8C5F38DBCF1712345</Data>
+        </EventData>
+    </Event>
+ruletype: Hayabusa
