@@ -12,7 +12,7 @@ references:
     - https://twitter.com/pabraeken/status/993298228840992768
 author: Agro (@agro_sev) oscd.communitly
 date: 2020-10-13
-modified: 2022-02-25
+modified: 2026-10-31
 tags:
     - attack.execution
     - attack.stealth
@@ -28,7 +28,7 @@ detection:
     selection:
         - NewProcessName|endswith: \sqltoolsps.exe
         - ParentProcessName|endswith: \sqltoolsps.exe
-        - OriginalFileName: \sqltoolsps.exe
+        - OriginalFileName: sqltoolsps.exe
     filter:
         ParentProcessName|endswith: \smss.exe
     condition: process_creation and (selection and not filter)
