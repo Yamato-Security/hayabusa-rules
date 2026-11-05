@@ -11,7 +11,7 @@ references:
     - https://twitter.com/mrd0x/status/1460597833917251595
 author: Austin Songer @austinsonger, Florian Roth (Nextron Systems), Nasreddine Bencherchali (Nextron Systems)
 date: 2021-11-26
-modified: 2024-06-21
+modified: 2026-11-05
 tags:
     - attack.credential-access
     - attack.t1003.001
@@ -23,7 +23,7 @@ detection:
         EventID: 4688
         Channel: Security
     selection_dump:
-        NewProcessName|startswith: :\Program Files
+        NewProcessName|startswith: C:\Program Files
         NewProcessName|contains: \Microsoft Visual Studio\
         NewProcessName|endswith: \dump64.exe
     selection_tools_procdump:

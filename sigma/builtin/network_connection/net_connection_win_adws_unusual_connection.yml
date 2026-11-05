@@ -11,6 +11,7 @@ references:
     - https://github.com/FalconForceTeam/FalconFriday/blob/a9219dfcfd89836f34660223f47d766982bdce46/Discovery/ADWS_Connection_from_Unexpected_Binary-Win.md
 author: '@kostastsale'
 date: 2024-01-26
+modified: 2026-11-05
 tags:
     - attack.discovery
     - attack.t1087
@@ -27,13 +28,20 @@ detection:
     filter_main_dsac:
         Application: \device\harddiskvolume?\Windows\system32\dsac.exe
     filter_main_ms_monitoring_agent:
-        Application: \device\harddiskvolume?\Program Files\Microsoft Monitoring Agent\
+        Application|startswith: \device\harddiskvolume?\Program Files\Microsoft Monitoring Agent\
     filter_main_powershell:
-        Application|startswith:
+        Application:
+            - \device\harddiskvolume?\Program Files\PowerShell\7-preview\pwsh.exe
             - \device\harddiskvolume?\Program Files\PowerShell\7\pwsh.exe
-            - \device\harddiskvolume?\Program Files\PowerShell\7-preview\pwsh.ex
-            - \device\harddiskvolume?\Windows\System32\WindowsPowerShell\
-            - \device\harddiskvolume?\Windows\SysWOW64\WindowsPowerShell\
+            - \device\harddiskvolume?\Windows\System32\WindowsPowerShell\v1.0\powershell_ise.exe
+            - \device\harddiskvolume?\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+            - \device\harddiskvolume?\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell_ise.exe
+            - \device\harddiskvolume?\Windows\SysWOW64\WindowsPowerShell\v1.0\powershell.exe
+    filter_main_pwsh_preview:
+        Application|contains:
+            - \device\harddiskvolume?\Program Files\WindowsApps\Microsoft.PowerShellPreview
+            - \AppData\Local\Microsoft\WindowsApps\Microsoft.PowerShellPreview
+        Application|endswith: \pwsh.exe
     condition: network_connection and (selection and not 1 of filter_main_*)
 falsepositives:
     - ADWS is used by a number of legitimate applications that need to interact with Active Directory. These applications should be added to the allow-listing to avoid false positives.
