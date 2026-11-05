@@ -6,12 +6,12 @@
 | base64ǀcontains               |             1 |                0 |
 | cased                         |             0 |                0 |
 | cidr                          |            36 |                0 |
-| contains                      |          3122 |               23 |
+| contains                      |          3123 |               23 |
 | containsǀall                  |          1094 |                8 |
 | containsǀcased                |             0 |                0 |
 | containsǀexpand               |             3 |                0 |
 | containsǀwindash              |           111 |                0 |
-| endswith                      |          3310 |              283 |
+| endswith                      |          3313 |              283 |
 | endswithfield                 |             0 |                0 |
 | endswithǀcased                |             0 |                0 |
 | endswithǀwindash              |             2 |                0 |
@@ -58,5 +58,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2026/11/04  
+Last Update: 2026/11/05  
 Author: Fukusuke Takahashi
