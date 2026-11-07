@@ -9,7 +9,7 @@ references:
     - https://web.archive.org/web/20200925032237/https://threathunterplaybook.com/notebooks/windows/02_execution/WIN-190410151110.html
 author: Roberto Rodriguez @Cyb3rWard0g (rule), oscd.community (improvements)
 date: 2019-09-12
-modified: 2025-02-28
+modified: 2026-11-05
 tags:
     - attack.execution
     - attack.t1059.001
@@ -33,7 +33,7 @@ detection:
             - :\Windows\System32\CompatTelRunner.exe
             - :\Windows\SysWOW64\explorer.exe
     filter_main_windows_update:
-        ParentProcessName: :\$WINDOWS.~BT\Sources\SetupHost.exe
+        ParentProcessName|endswith: :\$WINDOWS.~BT\Sources\SetupHost.exe
     filter_optional_vscode:
         # Triggered by VsCode when you open a Shell inside the workspace
         ParentCommandLine|contains: ' --ms-enable-electron-run-as-node '

@@ -15,6 +15,7 @@ references:
     - Internal Research
 author: Josh Nickels, Qi Nan
 date: 2024-03-11
+modified: 2026-11-05
 tags:
     - attack.persistence
     - attack.initial-access
@@ -28,8 +29,8 @@ detection:
         Channel: Security
     selection:
         CommandLine|endswith: TeamViewer_Desktop.exe --IPCport 5939 --Module 1
-        NewProcessName: TeamViewer_Desktop.exe
-        ParentProcessName: TeamViewer_Service.exe
+        NewProcessName|endswith: \TeamViewer_Desktop.exe
+        ParentProcessName|endswith: \TeamViewer_Service.exe
     condition: process_creation and selection
 falsepositives:
     - Legitimate usage of TeamViewer
