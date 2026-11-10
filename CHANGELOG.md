@@ -2,6 +2,7 @@
 
 ## Unreleased [xxxx/xx/xx]
 
+- `pivot-keywords-list` now writes four files: `Users` (`SubjectUserName`, `TargetUserName` and `User` combined), `IP Addresses` (all source and destination IP address fields combined), `Processes` and `Command Lines`. The logon ID and `Source Computers` (`WorkstationName`) categories are removed: logon IDs only mean something with their host and logon time, and workstation names were mostly random names from brute-force attempts. (@YamatoSecurity)
 - Add scoped Defender `Old_Value` and `Feature_Name` aliases for the raw `Old Value` and `Feature Name` fields. Keep Security and SMB field names unchanged. (sigma-to-hayabusa-converter #57) (@YamatoSecurity)
 
 ## v3.5.0 [2025/09/16]
