@@ -25,7 +25,7 @@ detection:
         Channel: Microsoft-Windows-Windows Defender/Operational
     selection:
         EventID: 1121
-        ProcessName|endswith:
+        WindowsDefenderProcessName|endswith:
             - \wmiprvse.exe
             - \psexesvc.exe
     condition: windefend and selection

@@ -23,9 +23,6 @@ detection:
         EventID: 4657
         Channel: Security
     selection:
-        EventID:
-            - 12
-            - 13
         ObjectName|contains: SYSTEM\
         ObjectName|endswith: \services\localNETService
     condition: registry_event and selection

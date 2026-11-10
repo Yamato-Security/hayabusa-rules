@@ -24,12 +24,12 @@ detection:
         EventID: 1121
         Path|endswith: \lsass.exe
     filter_thor:
-        ProcessName|startswith: C:\Windows\Temp\asgard2-agent\
-        ProcessName|endswith:
+        WindowsDefenderProcessName|startswith: C:\Windows\Temp\asgard2-agent\
+        WindowsDefenderProcessName|endswith:
             - \thor64.exe
             - \thor.exe
     filter_exact:
-        ProcessName:
+        WindowsDefenderProcessName:
             - C:\Windows\System32\atiesrxx.exe
             - C:\Windows\System32\CompatTelRunner.exe
             - C:\Windows\System32\msiexec.exe
@@ -39,7 +39,7 @@ detection:
             - C:\Windows\System32\wbem\WmiPrvSE.exe
             - C:\Windows\SysWOW64\msiexec.exe
     filter_begins:
-        ProcessName|startswith:
+        WindowsDefenderProcessName|startswith:
             - C:\Windows\System32\DriverStore\
             - C:\WINDOWS\Installer\
             - C:\Program Files\
