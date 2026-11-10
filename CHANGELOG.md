@@ -1,5 +1,9 @@
 # Changes
 
+## Unreleased [xxxx/xx/xx]
+
+- Add scoped Defender `Old_Value` and `Feature_Name` aliases for the raw `Old Value` and `Feature Name` fields. Keep Security and SMB field names unchanged. (sigma-to-hayabusa-converter #57) (@YamatoSecurity)
+
 ## v3.5.0 [2025/09/16]
 
 - Updated all Hayabusa rules' date format to the latest Sigma specification. (#915) (@yamatosecurity)
