@@ -2,6 +2,7 @@
 
 ## Unreleased [xxxx/xx/xx]
 
+- `pivot-keywords-list` の出力を4ファイルにした: `Users`（`SubjectUserName`、`TargetUserName`、`User` をまとめたもの）、`IP Addresses`（送信元と宛先のIPアドレスのフィールドをまとめたもの）、`Processes`、`Command Lines`。ログオンIDと `Source Computers`（`WorkstationName`）のカテゴリは削除した。ログオンIDはホストとログオン時刻が分からないと意味がなく、ワークステーション名はブルートフォース攻撃によるランダムな名前がほとんどだったため。(@YamatoSecurity)
 - Defender の生フィールド `Old Value` と `Feature Name` に対応する `Old_Value` と `Feature_Name` のエイリアスを追加。Security と SMB のフィールド名は変更しない。(sigma-to-hayabusa-converter #57) (@YamatoSecurity)
 
 ## v3.5.0 [2025/09/16]
