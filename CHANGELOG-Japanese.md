@@ -1,5 +1,9 @@
 # 変更点
 
+## Unreleased [xxxx/xx/xx]
+
+- Defender の生フィールド `Old Value` と `Feature Name` に対応する `Old_Value` と `Feature_Name` のエイリアスを追加。Security と SMB のフィールド名は変更しない。(sigma-to-hayabusa-converter #57) (@YamatoSecurity)
+
 ## v3.5.0 [2025/09/16]
 
 - Hayabusaの全ルールの日付形式を最新のSigma仕様に更新しました。 (#915) (@yamatosecurity)
