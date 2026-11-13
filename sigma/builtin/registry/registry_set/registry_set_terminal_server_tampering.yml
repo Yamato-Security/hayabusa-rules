@@ -41,7 +41,7 @@ references:
     - https://www.trendmicro.com/en_us/research/25/i/unmasking-the-gentlemen-ransomware.html
 author: Samir Bousseaden, David ANDRE, Roberto Rodriguez @Cyb3rWard0g, Nasreddine Bencherchali
 date: 2022-08-06
-modified: 2025-11-22
+modified: 2026-11-12
 tags:
     - attack.persistence
     - attack.defense-impairment
@@ -53,7 +53,7 @@ detection:
     registry_set:
         EventID: 4657
         Channel: Security
-    selection_shadow:
+    selection_ts_shadow:
         ObjectName|contains:
             - \Control\Terminal Server\
             - \Windows NT\Terminal Services\
@@ -63,7 +63,7 @@ detection:
             - DWORD (0x00000002)   # Full Control without user’s permission
             - DWORD (0x00000003)   # View Session with user’s permission
             - DWORD (0x00000004)   # View Session without user’s permission
-    selection_terminal_services_key:
+    selection_ts_key:
         ObjectName|contains:
             - \Control\Terminal Server\
             - \Windows NT\Terminal Services\
@@ -73,18 +73,46 @@ detection:
             - \fAllowUnsolicited
             - \fAllowUnsolicitedFullControl
         NewValue: DWORD (0x00000001)
-    selection_tamper_only:
+    selection_ts_tamper_only:
         # Any changes to these keys should be suspicious and looked at
-        ObjectName|contains:
-            - \Control\Terminal Server\InitialProgram
-            - \Control\Terminal Server\WinStations\RDP-Tcp\InitialProgram
-            - \services\TermService\Parameters\ServiceDll
-            - \Terminal Server\WinStations\RDP-Tcp\SecurityLayer
-            - \Windows NT\Terminal Services\InitialProgram
+        - ObjectName|contains:
+              - \Control\Terminal Server\InitialProgram
+              - \Control\Terminal Server\WinStations\RDP-Tcp\InitialProgram
+              - \Terminal Server\WinStations\RDP-Tcp\SecurityLayer
+              - \Windows NT\Terminal Services\InitialProgram
+        - ObjectName|endswith: \services\TermService\Parameters\ServiceDll
     filter_main_securitylayer_tls:
         ObjectName|endswith: \SecurityLayer
         NewValue: DWORD (0x00000002)
-    condition: registry_set and ((selection_shadow or selection_terminal_services_key or selection_tamper_only) and not 1 of filter_main_*)
+    filter_main_termsrv_dll:
+        ObjectName|endswith: \services\TermService\Parameters\ServiceDll
+        NewValue:
+            - '%%SystemRoot%%\System32\termsrv.dll'
+            - '%%SystemRoot%%\SysWOW64\termsrv.dll'
+            - '%%windir%%\System32\termsrv.dll'
+            - '%%windir%%\SysWOW64\termsrv.dll'
+            - '%SystemRoot%\System32\termsrv.dll'
+            - '%SystemRoot%\SysWOW64\termsrv.dll'
+            - '%windir%\System32\termsrv.dll'
+            - '%windir%\SysWOW64\termsrv.dll'
+            - C:\Windows\System32\termsrv.dll
+            - C:\Windows\SysWOW64\termsrv.dll
+    filter_main_initialprog_empty:
+        ObjectName|contains:
+            - \Control\Terminal Server\InitialProgram
+            - \Control\Terminal Server\WinStations\RDP-Tcp\InitialProgram
+            - \Windows NT\Terminal Services\InitialProgram
+        NewValue:
+            - (Empty)
+            - ''
+    filter_optional_container_worker:
+        ProcessName|startswith:
+            - C:\Windows\System32\
+            - C:\Windows\SysWOW64\
+            - C:\Windows\WinSxS\
+        ProcessName|endswith: \containerworker.exe
+        ObjectName|contains: \Windows\Containers\Layers\
+    condition: registry_set and (1 of selection_ts_* and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Some of the keys mentioned here could be modified by an administrator while setting group policy (it should be investigated either way)
 level: high

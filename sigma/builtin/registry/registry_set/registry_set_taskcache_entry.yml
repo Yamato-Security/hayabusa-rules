@@ -10,7 +10,7 @@ references:
     - https://labs.f-secure.com/blog/scheduled-task-tampering/
 author: Syed Hasan (@syedhasan009)
 date: 2021-06-18
-modified: 2025-10-22
+modified: 2026-11-12
 tags:
     - attack.privilege-escalation
     - attack.execution
@@ -37,6 +37,12 @@ detection:
             - Microsoft\Windows\Flighting\OneSettings\RefreshCache\Index
     filter_main_mousocoreworker:
         ProcessName|endswith: C:\Windows\System32\MoUsoCoreWorker.exe
+    filter_main_microsoft_sd:
+        SubjectUserName|contains: # covers many language settings
+            - AUTHORI
+            - AUTORI
+        ObjectName|endswith: SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\TaskCache\Tree\Microsoft\SD
+        NewValue: Binary Data
     filter_main_services:
         ProcessName|endswith: C:\Windows\System32\services.exe
     filter_main_tiworker:
@@ -65,6 +71,13 @@ detection:
         ProcessName: System
     filter_main_runtimebroker:
         ProcessName: C:\Windows\System32\RuntimeBroker.exe
+    filter_optional_container_worker:
+        ProcessName|startswith:
+            - C:\Windows\System32\
+            - C:\Windows\SysWOW64\
+            - C:\Windows\WinSxS\
+        ProcessName|endswith: \containerworker.exe
+        ObjectName|contains: \Windows\Containers\Layers\
     filter_optional_dropbox_updater:
         ProcessName:
             - C:\Program Files (x86)\Dropbox\Update\DropboxUpdate.exe
