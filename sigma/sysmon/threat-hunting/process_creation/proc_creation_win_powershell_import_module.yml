@@ -42,6 +42,6 @@ detection:
             - Tools\Microsoft.VisualStudio.DevShell.dll
     condition: process_creation and (all of selection_* and not 1 of filter_main_*)
 falsepositives:
-    - Depending on the environement, many legitimate scripts will import modules inline. This rule is targeted for hunting purposes.
+    - Depending on the environment, many legitimate scripts will import modules inline. This rule is targeted for hunting purposes.
 level: low
 ruletype: Sigma

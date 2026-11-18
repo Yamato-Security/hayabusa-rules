@@ -5,7 +5,7 @@ related:
       type: derived
 status: test
 description: |
-    Detects the setting of the environement variable "windir" to a non default value.
+    Detects the setting of the environment variable "windir" to a non default value.
     Attackers often abuse this variable in order to trigger a UAC bypass via the "SilentCleanup" task.
     The SilentCleanup task located in %windir%\system32\cleanmgr.exe is an auto-elevated task that can be abused to elevate any file with administrator privileges without prompting UAC.
 references:

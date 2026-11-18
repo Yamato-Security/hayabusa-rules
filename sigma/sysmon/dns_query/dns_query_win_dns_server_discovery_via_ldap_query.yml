@@ -47,6 +47,6 @@ detection:
     condition: dns_query and (selection and not 1 of filter_main_* and not 1 of filter_optional_*)
 falsepositives:
     - Likely
-# Note: Incrase the level once a baseline is established
+# Note: Increase the level once a baseline is established
 level: low
 ruletype: Sigma
