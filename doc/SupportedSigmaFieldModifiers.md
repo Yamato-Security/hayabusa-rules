@@ -30,7 +30,7 @@
 | reǀi                          |             5 |                0 |
 | reǀm                          |             0 |                0 |
 | reǀs                          |             0 |                0 |
-| startswith                    |           568 |                6 |
+| startswith                    |           569 |                6 |
 | startswithǀcased              |             0 |                0 |
 | utf16beǀbase64offsetǀcontains |             0 |                0 |
 | utf16leǀbase64offsetǀcontains |             0 |                0 |
@@ -58,5 +58,5 @@ Currently, everything is supported.
 
 
 This document is being dynamically updated based on the latest rules.  
-Last Update: 2026/11/18  
+Last Update: 2026/11/23  
 Author: Fukusuke Takahashi
